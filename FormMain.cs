@@ -64,12 +64,10 @@ namespace crash
 
         private void menuItemDisconnect_Click(object sender, EventArgs e)
         {
-            if(Client != null && Client.Connected)
-            {
-                Client.Close();
-                lblConnectionStatus.ForeColor = Color.Red;
-                lblConnectionStatus.Text = "Not connected";
-            }
+            if(Client != null && Client.Connected)            
+                Client.Close();                            
+            lblConnectionStatus.ForeColor = Color.Red;
+            lblConnectionStatus.Text = "Not connected";
             Client = null;
         }
 
@@ -81,7 +79,7 @@ namespace crash
                 return;
             }
             NetworkStream serverStream = Client.GetStream();
-            byte[] outStream = System.Text.Encoding.ASCII.GetBytes("hello\r\n");
+            byte[] outStream = System.Text.Encoding.ASCII.GetBytes("hello");
             serverStream.Write(outStream, 0, outStream.Length);
             serverStream.Flush();
 
@@ -99,7 +97,7 @@ namespace crash
                 return;
             }
             NetworkStream serverStream = Client.GetStream();
-            byte[] outStream = System.Text.Encoding.ASCII.GetBytes("close\r\n");
+            byte[] outStream = System.Text.Encoding.ASCII.GetBytes("close");
             serverStream.Write(outStream, 0, outStream.Length);
             serverStream.Flush();
 

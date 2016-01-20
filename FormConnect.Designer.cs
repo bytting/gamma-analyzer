@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOk = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbIP = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.tbPort = new System.Windows.Forms.TextBox();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.tbIP = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -52,6 +52,28 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(393, 26);
             this.panel1.TabIndex = 0;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnCancel.Location = new System.Drawing.Point(192, 0);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(99, 26);
+            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnOk
+            // 
+            this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOk.Location = new System.Drawing.Point(291, 0);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(102, 26);
+            this.btnOk.TabIndex = 0;
+            this.btnOk.Text = "Ok";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // panel2
             // 
@@ -71,15 +93,17 @@
             this.panel3.Size = new System.Drawing.Size(127, 109);
             this.panel3.TabIndex = 2;
             // 
-            // panel4
+            // label2
             // 
-            this.panel4.Controls.Add(this.tbPort);
-            this.panel4.Controls.Add(this.tbIP);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(127, 30);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(266, 109);
-            this.panel4.TabIndex = 3;
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label2.Location = new System.Drawing.Point(0, 19);
+            this.label2.Margin = new System.Windows.Forms.Padding(3);
+            this.label2.Name = "label2";
+            this.label2.Padding = new System.Windows.Forms.Padding(3);
+            this.label2.Size = new System.Drawing.Size(32, 19);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Port";
             // 
             // label1
             // 
@@ -93,25 +117,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "IP address";
             // 
-            // tbIP
+            // panel4
             // 
-            this.tbIP.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tbIP.Location = new System.Drawing.Point(0, 0);
-            this.tbIP.Name = "tbIP";
-            this.tbIP.Size = new System.Drawing.Size(266, 20);
-            this.tbIP.TabIndex = 0;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Location = new System.Drawing.Point(0, 19);
-            this.label2.Margin = new System.Windows.Forms.Padding(3);
-            this.label2.Name = "label2";
-            this.label2.Padding = new System.Windows.Forms.Padding(3);
-            this.label2.Size = new System.Drawing.Size(32, 19);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Port";
+            this.panel4.Controls.Add(this.tbPort);
+            this.panel4.Controls.Add(this.tbIP);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(127, 30);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(266, 109);
+            this.panel4.TabIndex = 3;
             // 
             // tbPort
             // 
@@ -121,27 +135,13 @@
             this.tbPort.Size = new System.Drawing.Size(266, 20);
             this.tbPort.TabIndex = 1;
             // 
-            // btnOk
+            // tbIP
             // 
-            this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(291, 0);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(102, 26);
-            this.btnOk.TabIndex = 0;
-            this.btnOk.Text = "Ok";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(192, 0);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(99, 26);
-            this.btnCancel.TabIndex = 1;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.tbIP.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tbIP.Location = new System.Drawing.Point(0, 0);
+            this.tbIP.Name = "tbIP";
+            this.tbIP.Size = new System.Drawing.Size(266, 20);
+            this.tbIP.TabIndex = 0;
             // 
             // FormConnect
             // 
