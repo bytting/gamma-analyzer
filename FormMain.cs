@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Data;
 using System.Net;
 using System.Net.Sockets;
@@ -26,12 +27,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace crash
 {
     public partial class FormMain : Form
     {
         public TcpClient Client = null;
+        NetworkStream ClientStream = null;
+        StreamReader ClientReader = null;
+        StreamWriter ClientWriter = null;
 
         public FormMain()
         {
@@ -55,7 +60,11 @@ namespace crash
             FormConnect form = new FormConnect();
             if(form.ShowDialog() == DialogResult.OK)
             {
-                Client = form.Client;                
+                Client = form.Client;
+                ClientStream = Client.GetStream();
+                ClientReader = new StreamReader(ClientStream);
+                ClientWriter = new StreamWriter(ClientStream);
+
                 string peer = ((IPEndPoint)Client.Client.RemoteEndPoint).Address.ToString();
                 lblConnectionStatus.ForeColor = Color.Green;
                 lblConnectionStatus.Text = "Connected to " + peer;
@@ -64,11 +73,18 @@ namespace crash
 
         private void menuItemDisconnect_Click(object sender, EventArgs e)
         {
-            if(Client != null && Client.Connected)            
-                Client.Close();                            
-            lblConnectionStatus.ForeColor = Color.Red;
-            lblConnectionStatus.Text = "Not connected";
+            if(Client != null && Client.Connected)
+            {
+                ClientWriter.Close();
+                ClientReader.Close();
+                Client.Close();
+            }
+            ClientWriter = null;
+            ClientReader = null;
             Client = null;
+
+            lblConnectionStatus.ForeColor = Color.Red;
+            lblConnectionStatus.Text = "Not connected";            
         }
 
         private void btnSendHello_Click(object sender, EventArgs e)
@@ -78,15 +94,15 @@ namespace crash
                 MessageBox.Show("Not connected");
                 return;
             }
-            NetworkStream serverStream = Client.GetStream();
-            byte[] outStream = System.Text.Encoding.ASCII.GetBytes("hello");
-            serverStream.Write(outStream, 0, outStream.Length);
-            serverStream.Flush();
 
-            byte[] inStream = new byte[1024];
-            serverStream.Read(inStream, 0, inStream.Length);
-            string returndata = System.Text.Encoding.ASCII.GetString(inStream);
-            tbInfo.Text += Environment.NewLine + returndata;
+            Proto.Request msg = new Proto.Request("controller", "ping", null);
+            string json = JsonConvert.SerializeObject(msg);            
+            
+            ClientWriter.Write(json);
+            ClientWriter.Flush();            
+
+            string response = ClientReader.ReadLine();
+            tbInfo.Text += Environment.NewLine + response;            
         }
 
         private void btnSendClose_Click(object sender, EventArgs e)
@@ -96,15 +112,15 @@ namespace crash
                 MessageBox.Show("Not connected");
                 return;
             }
-            NetworkStream serverStream = Client.GetStream();
-            byte[] outStream = System.Text.Encoding.ASCII.GetBytes("close");
-            serverStream.Write(outStream, 0, outStream.Length);
-            serverStream.Flush();
 
-            byte[] inStream = new byte[1024];
-            serverStream.Read(inStream, 0, inStream.Length);
-            string returndata = System.Text.Encoding.ASCII.GetString(inStream);
-            tbInfo.Text += Environment.NewLine + returndata;
+            Proto.Request msg = new Proto.Request("controller", "close", null);
+            string json = JsonConvert.SerializeObject(msg);
+
+            ClientWriter.Write(json);
+            ClientWriter.Flush();
+
+            string response = ClientReader.ReadLine();
+            tbInfo.Text += Environment.NewLine + response;            
         }        
     }
 }
