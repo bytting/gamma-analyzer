@@ -75,12 +75,12 @@ namespace crash
         {
             if(Client != null && Client.Connected)
             {
-                ClientWriter.Close();
                 ClientReader.Close();
+                ClientWriter.Close();
                 Client.Close();
             }
-            ClientWriter = null;
             ClientReader = null;
+            ClientWriter = null;            
             Client = null;
 
             lblConnectionStatus.ForeColor = Color.Red;
@@ -102,6 +102,7 @@ namespace crash
             ClientWriter.Flush();            
 
             string response = ClientReader.ReadLine();
+
             tbInfo.Text += Environment.NewLine + response;            
         }
 

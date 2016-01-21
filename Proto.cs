@@ -20,6 +20,6 @@ namespace crash
             public string service;
             public string command;
             public string[] arguments;
-        }
+        }        
     }
 }
