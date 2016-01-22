@@ -13,7 +13,7 @@ namespace crash
 {    
     public partial class FormConnect : Form
     {
-        public TcpClient Client = new TcpClient();
+        public TcpClient Client = null;
 
         public FormConnect()
         {
@@ -27,7 +27,7 @@ namespace crash
         }
 
         private void btnOk_Click(object sender, EventArgs e)
-        {
+        {            
             if (String.IsNullOrEmpty(tbIP.Text))
             {
                 MessageBox.Show("No IP address provided");
@@ -42,6 +42,7 @@ namespace crash
             
             try
             {
+                Client = new TcpClient();
                 string ip = tbIP.Text;
                 int port = Convert.ToInt32(tbPort.Text);
 

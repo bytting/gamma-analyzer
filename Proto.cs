@@ -8,18 +8,18 @@ namespace crash
 {
     public static class Proto
     {
-        public class Request
+        public class Message
         {
-            public Request(string srv, string cmd, string[] args)
-            {
-                service = srv;
+            public Message(string cmd, Dictionary<string, string> args)
+            {            
                 command = cmd;
-                arguments = args;
+                arguments = new Dictionary<string, string>();
+                if(args != null)
+                    arguments = args;
             }
-
-            public string service;
+            
             public string command;
-            public string[] arguments;
+            public Dictionary<string, string> arguments;
         }        
     }
 }

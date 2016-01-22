@@ -38,6 +38,8 @@ namespace crash
         StreamReader ClientReader = null;
         StreamWriter ClientWriter = null;
 
+        FormConnect form = new FormConnect();
+
         public FormMain()
         {
             InitializeComponent();
@@ -56,8 +58,13 @@ namespace crash
         }
 
         private void menuItemConnect_Click(object sender, EventArgs e)
-        {            
-            FormConnect form = new FormConnect();
+        {
+            if (Client != null && Client.Connected)
+            {
+                MessageBox.Show("Already connected");
+                return;
+            }
+
             if(form.ShowDialog() == DialogResult.OK)
             {
                 Client = form.Client;
@@ -94,8 +101,8 @@ namespace crash
                 MessageBox.Show("Not connected");
                 return;
             }
-
-            Proto.Request msg = new Proto.Request("controller", "ping", null);
+            
+            Proto.Message msg = new Proto.Message("ping", null);            
             string json = JsonConvert.SerializeObject(msg);            
             
             ClientWriter.Write(json);
@@ -114,13 +121,34 @@ namespace crash
                 return;
             }
 
-            Proto.Request msg = new Proto.Request("controller", "close", null);
+            Proto.Message msg = new Proto.Message("close", null);
             string json = JsonConvert.SerializeObject(msg);
 
             ClientWriter.Write(json);
             ClientWriter.Flush();
 
             string response = ClientReader.ReadLine();
+            tbInfo.Text += Environment.NewLine + response;            
+        }
+
+        private void btnSendSession_Click(object sender, EventArgs e)
+        {
+            if (Client == null || !Client.Connected)
+            {
+                MessageBox.Show("Not connected");
+                return;
+            }
+
+            Proto.Message msg = new Proto.Message("new_session", null);
+            msg.arguments.Add("spec_length", "3");
+            msg.arguments.Add("spec_delay", "1");
+            string json = JsonConvert.SerializeObject(msg);
+
+            ClientWriter.Write(json);
+            ClientWriter.Flush();
+
+            string response = ClientReader.ReadLine();
+
             tbInfo.Text += Environment.NewLine + response;            
         }        
     }

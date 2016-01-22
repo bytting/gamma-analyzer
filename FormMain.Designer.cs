@@ -31,22 +31,23 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.status = new System.Windows.Forms.StatusStrip();
-            this.tools = new System.Windows.Forms.ToolStrip();
-            this.btnConnect = new System.Windows.Forms.ToolStripButton();
             this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemDisconnect = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
+            this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.status = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tools = new System.Windows.Forms.ToolStrip();
+            this.btnConnect = new System.Windows.Forms.ToolStripButton();
+            this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.tabs = new System.Windows.Forms.TabControl();
             this.pageSettings = new System.Windows.Forms.TabPage();
-            this.pageSpectrometry = new System.Windows.Forms.TabPage();
-            this.tbInfo = new System.Windows.Forms.TextBox();
-            this.btnSendHello = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
+            this.btnSendHello = new System.Windows.Forms.Button();
+            this.tbInfo = new System.Windows.Forms.TextBox();
+            this.pageSpectrometry = new System.Windows.Forms.TabPage();
+            this.btnSendSession = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -75,10 +76,29 @@
             this.menuItemFile.Size = new System.Drawing.Size(37, 20);
             this.menuItemFile.Text = "&File";
             // 
+            // menuItemConnect
+            // 
+            this.menuItemConnect.Name = "menuItemConnect";
+            this.menuItemConnect.Size = new System.Drawing.Size(133, 22);
+            this.menuItemConnect.Text = "&Connect";
+            this.menuItemConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
+            // 
+            // menuItemDisconnect
+            // 
+            this.menuItemDisconnect.Name = "menuItemDisconnect";
+            this.menuItemDisconnect.Size = new System.Drawing.Size(133, 22);
+            this.menuItemDisconnect.Text = "&Disconnect";
+            this.menuItemDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            // 
             // menuItemExit
             // 
             this.menuItemExit.Name = "menuItemExit";
-            this.menuItemExit.Size = new System.Drawing.Size(152, 22);
+            this.menuItemExit.Size = new System.Drawing.Size(133, 22);
             this.menuItemExit.Text = "E&xit";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
@@ -91,6 +111,11 @@
             this.status.Size = new System.Drawing.Size(963, 22);
             this.status.TabIndex = 1;
             this.status.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // tools
             // 
@@ -114,25 +139,6 @@
             this.btnConnect.Text = "toolStripButton1";
             this.btnConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
             // 
-            // menuItemConnect
-            // 
-            this.menuItemConnect.Name = "menuItemConnect";
-            this.menuItemConnect.Size = new System.Drawing.Size(152, 22);
-            this.menuItemConnect.Text = "&Connect";
-            this.menuItemConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
-            // 
-            // menuItemDisconnect
-            // 
-            this.menuItemDisconnect.Name = "menuItemDisconnect";
-            this.menuItemDisconnect.Size = new System.Drawing.Size(152, 22);
-            this.menuItemDisconnect.Text = "&Disconnect";
-            this.menuItemDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
             // btnDisconnect
             // 
             this.btnDisconnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -142,11 +148,6 @@
             this.btnDisconnect.Size = new System.Drawing.Size(23, 22);
             this.btnDisconnect.Text = "toolStripButton1";
             this.btnDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // lblConnectionStatus
             // 
@@ -169,6 +170,7 @@
             // pageSettings
             // 
             this.pageSettings.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pageSettings.Controls.Add(this.btnSendSession);
             this.pageSettings.Controls.Add(this.btnSendClose);
             this.pageSettings.Controls.Add(this.btnSendHello);
             this.pageSettings.Controls.Add(this.tbInfo);
@@ -178,6 +180,35 @@
             this.pageSettings.Size = new System.Drawing.Size(955, 512);
             this.pageSettings.TabIndex = 0;
             this.pageSettings.Text = "Settings";
+            // 
+            // btnSendClose
+            // 
+            this.btnSendClose.Location = new System.Drawing.Point(780, 40);
+            this.btnSendClose.Name = "btnSendClose";
+            this.btnSendClose.Size = new System.Drawing.Size(75, 23);
+            this.btnSendClose.TabIndex = 2;
+            this.btnSendClose.Text = "Send close";
+            this.btnSendClose.UseVisualStyleBackColor = true;
+            this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
+            // 
+            // btnSendHello
+            // 
+            this.btnSendHello.Location = new System.Drawing.Point(34, 25);
+            this.btnSendHello.Name = "btnSendHello";
+            this.btnSendHello.Size = new System.Drawing.Size(75, 23);
+            this.btnSendHello.TabIndex = 1;
+            this.btnSendHello.Text = "Send hello";
+            this.btnSendHello.UseVisualStyleBackColor = true;
+            this.btnSendHello.Click += new System.EventHandler(this.btnSendHello_Click);
+            // 
+            // tbInfo
+            // 
+            this.tbInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tbInfo.Location = new System.Drawing.Point(3, 145);
+            this.tbInfo.Multiline = true;
+            this.tbInfo.Name = "tbInfo";
+            this.tbInfo.Size = new System.Drawing.Size(949, 364);
+            this.tbInfo.TabIndex = 0;
             // 
             // pageSpectrometry
             // 
@@ -189,34 +220,15 @@
             this.pageSpectrometry.TabIndex = 1;
             this.pageSpectrometry.Text = "Spectrometry";
             // 
-            // tbInfo
+            // btnSendSession
             // 
-            this.tbInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tbInfo.Location = new System.Drawing.Point(3, 145);
-            this.tbInfo.Multiline = true;
-            this.tbInfo.Name = "tbInfo";
-            this.tbInfo.Size = new System.Drawing.Size(949, 364);
-            this.tbInfo.TabIndex = 0;
-            // 
-            // btnSendHello
-            // 
-            this.btnSendHello.Location = new System.Drawing.Point(148, 40);
-            this.btnSendHello.Name = "btnSendHello";
-            this.btnSendHello.Size = new System.Drawing.Size(75, 23);
-            this.btnSendHello.TabIndex = 1;
-            this.btnSendHello.Text = "Send hello";
-            this.btnSendHello.UseVisualStyleBackColor = true;
-            this.btnSendHello.Click += new System.EventHandler(this.btnSendHello_Click);
-            // 
-            // btnSendClose
-            // 
-            this.btnSendClose.Location = new System.Drawing.Point(299, 39);
-            this.btnSendClose.Name = "btnSendClose";
-            this.btnSendClose.Size = new System.Drawing.Size(75, 23);
-            this.btnSendClose.TabIndex = 2;
-            this.btnSendClose.Text = "Send close";
-            this.btnSendClose.UseVisualStyleBackColor = true;
-            this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
+            this.btnSendSession.Location = new System.Drawing.Point(145, 25);
+            this.btnSendSession.Name = "btnSendSession";
+            this.btnSendSession.Size = new System.Drawing.Size(75, 23);
+            this.btnSendSession.TabIndex = 3;
+            this.btnSendSession.Text = "New session";
+            this.btnSendSession.UseVisualStyleBackColor = true;
+            this.btnSendSession.Click += new System.EventHandler(this.btnSendSession_Click);
             // 
             // FormMain
             // 
@@ -266,6 +278,7 @@
         private System.Windows.Forms.Button btnSendClose;
         private System.Windows.Forms.Button btnSendHello;
         private System.Windows.Forms.TextBox tbInfo;
+        private System.Windows.Forms.Button btnSendSession;
     }
 }
 
