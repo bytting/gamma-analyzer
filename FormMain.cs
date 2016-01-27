@@ -25,6 +25,7 @@ using System.Net.Sockets;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
@@ -34,9 +35,7 @@ namespace crash
     public partial class FormMain : Form
     {
         public TcpClient Client = null;
-        NetworkStream ClientStream = null;
-        StreamReader ClientReader = null;
-        StreamWriter ClientWriter = null;
+        NetworkStream ClientStream = null;                
 
         FormConnect form = new FormConnect();
 
@@ -68,9 +67,7 @@ namespace crash
             if(form.ShowDialog() == DialogResult.OK)
             {
                 Client = form.Client;
-                ClientStream = Client.GetStream();
-                ClientReader = new StreamReader(ClientStream);
-                ClientWriter = new StreamWriter(ClientStream);
+                ClientStream = Client.GetStream();                                
 
                 string peer = ((IPEndPoint)Client.Client.RemoteEndPoint).Address.ToString();
                 lblConnectionStatus.ForeColor = Color.Green;
@@ -80,15 +77,9 @@ namespace crash
 
         private void menuItemDisconnect_Click(object sender, EventArgs e)
         {
-            if(Client != null && Client.Connected)
-            {
-                ClientReader.Close();
-                ClientWriter.Close();
-                Client.Close();
-            }
-            ClientReader = null;
-            ClientWriter = null;            
-            Client = null;
+            if(Client != null && Client.Connected)            
+                Client.Close();                            
+            Client = null;            
 
             lblConnectionStatus.ForeColor = Color.Red;
             lblConnectionStatus.Text = "Not connected";            
@@ -101,16 +92,20 @@ namespace crash
                 MessageBox.Show("Not connected");
                 return;
             }
+                        
+            Proto.Message msg = new Proto.Message("ping", null);
+            Proto.IO.SendMessage(ClientStream, msg);
             
-            Proto.Message msg = new Proto.Message("ping", null);            
-            string json = JsonConvert.SerializeObject(msg);            
-            
-            ClientWriter.Write(json);
-            ClientWriter.Flush();            
+            Thread.Sleep(2000);
 
-            string response = ClientReader.ReadLine();
-
-            tbInfo.Text += Environment.NewLine + response;            
+            if(Proto.IO.RecvMessage(ClientStream, ref msg))
+            {
+                tbInfo.Text += Environment.NewLine + "Object read, command: " + msg.command + Environment.NewLine;
+            }
+            else
+            {
+                tbInfo.Text += Environment.NewLine + "No object read" + Environment.NewLine;
+            }            
         }
 
         private void btnSendClose_Click(object sender, EventArgs e)
@@ -122,13 +117,18 @@ namespace crash
             }
 
             Proto.Message msg = new Proto.Message("close", null);
-            string json = JsonConvert.SerializeObject(msg);
+            Proto.IO.SendMessage(ClientStream, msg);
 
-            ClientWriter.Write(json);
-            ClientWriter.Flush();
+            Thread.Sleep(2000);
 
-            string response = ClientReader.ReadLine();
-            tbInfo.Text += Environment.NewLine + response;            
+            if (Proto.IO.RecvMessage(ClientStream, ref msg))
+            {
+                tbInfo.Text += Environment.NewLine + "Object read, command: " + msg.command + Environment.NewLine;
+            }
+            else
+            {
+                tbInfo.Text += Environment.NewLine + "No object read" + Environment.NewLine;
+            }
         }
 
         private void btnSendSession_Click(object sender, EventArgs e)
@@ -140,16 +140,18 @@ namespace crash
             }
 
             Proto.Message msg = new Proto.Message("new_session", null);
-            msg.arguments.Add("spec_length", "3");
-            msg.arguments.Add("spec_delay", "1");
-            string json = JsonConvert.SerializeObject(msg);
+            Proto.IO.SendMessage(ClientStream, msg);
 
-            ClientWriter.Write(json);
-            ClientWriter.Flush();
+            Thread.Sleep(2000);
 
-            string response = ClientReader.ReadLine();
-
-            tbInfo.Text += Environment.NewLine + response;            
-        }        
+            if (Proto.IO.RecvMessage(ClientStream, ref msg))
+            {
+                tbInfo.Text += Environment.NewLine + "Object read, command: " + msg.command + Environment.NewLine;
+            }
+            else
+            {
+                tbInfo.Text += Environment.NewLine + "No object read" + Environment.NewLine;
+            }
+        }
     }
 }
