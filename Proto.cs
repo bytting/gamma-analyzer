@@ -48,8 +48,9 @@ namespace crash
                 return true;
             }
 
-            public static bool RecvMessage(NetworkStream stream, ref Message msg)
+            public static bool RecvMessage(NetworkStream stream, out Message msg)
             {
+                msg = null;
                 if (!stream.DataAvailable)
                     return false;
 

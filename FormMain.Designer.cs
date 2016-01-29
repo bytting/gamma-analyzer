@@ -43,11 +43,12 @@
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.tabs = new System.Windows.Forms.TabControl();
             this.pageSettings = new System.Windows.Forms.TabPage();
+            this.btnStopNetService = new System.Windows.Forms.Button();
+            this.btnSendSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
             this.btnSendHello = new System.Windows.Forms.Button();
-            this.tbInfo = new System.Windows.Forms.TextBox();
+            this.tbLog = new System.Windows.Forms.TextBox();
             this.pageSpectrometry = new System.Windows.Forms.TabPage();
-            this.btnSendSession = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -170,16 +171,37 @@
             // pageSettings
             // 
             this.pageSettings.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pageSettings.Controls.Add(this.btnStopNetService);
             this.pageSettings.Controls.Add(this.btnSendSession);
             this.pageSettings.Controls.Add(this.btnSendClose);
             this.pageSettings.Controls.Add(this.btnSendHello);
-            this.pageSettings.Controls.Add(this.tbInfo);
+            this.pageSettings.Controls.Add(this.tbLog);
             this.pageSettings.Location = new System.Drawing.Point(4, 22);
             this.pageSettings.Name = "pageSettings";
             this.pageSettings.Padding = new System.Windows.Forms.Padding(3);
             this.pageSettings.Size = new System.Drawing.Size(955, 512);
             this.pageSettings.TabIndex = 0;
             this.pageSettings.Text = "Settings";
+            // 
+            // btnStopNetService
+            // 
+            this.btnStopNetService.Location = new System.Drawing.Point(780, 90);
+            this.btnStopNetService.Name = "btnStopNetService";
+            this.btnStopNetService.Size = new System.Drawing.Size(75, 23);
+            this.btnStopNetService.TabIndex = 4;
+            this.btnStopNetService.Text = "Stop service";
+            this.btnStopNetService.UseVisualStyleBackColor = true;
+            this.btnStopNetService.Click += new System.EventHandler(this.btnStopNetService_Click);
+            // 
+            // btnSendSession
+            // 
+            this.btnSendSession.Location = new System.Drawing.Point(145, 25);
+            this.btnSendSession.Name = "btnSendSession";
+            this.btnSendSession.Size = new System.Drawing.Size(75, 23);
+            this.btnSendSession.TabIndex = 3;
+            this.btnSendSession.Text = "New session";
+            this.btnSendSession.UseVisualStyleBackColor = true;
+            this.btnSendSession.Click += new System.EventHandler(this.btnSendSession_Click);
             // 
             // btnSendClose
             // 
@@ -201,14 +223,14 @@
             this.btnSendHello.UseVisualStyleBackColor = true;
             this.btnSendHello.Click += new System.EventHandler(this.btnSendHello_Click);
             // 
-            // tbInfo
+            // tbLog
             // 
-            this.tbInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tbInfo.Location = new System.Drawing.Point(3, 145);
-            this.tbInfo.Multiline = true;
-            this.tbInfo.Name = "tbInfo";
-            this.tbInfo.Size = new System.Drawing.Size(949, 364);
-            this.tbInfo.TabIndex = 0;
+            this.tbLog.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tbLog.Location = new System.Drawing.Point(3, 145);
+            this.tbLog.Multiline = true;
+            this.tbLog.Name = "tbLog";
+            this.tbLog.Size = new System.Drawing.Size(949, 364);
+            this.tbLog.TabIndex = 0;
             // 
             // pageSpectrometry
             // 
@@ -219,16 +241,6 @@
             this.pageSpectrometry.Size = new System.Drawing.Size(955, 512);
             this.pageSpectrometry.TabIndex = 1;
             this.pageSpectrometry.Text = "Spectrometry";
-            // 
-            // btnSendSession
-            // 
-            this.btnSendSession.Location = new System.Drawing.Point(145, 25);
-            this.btnSendSession.Name = "btnSendSession";
-            this.btnSendSession.Size = new System.Drawing.Size(75, 23);
-            this.btnSendSession.TabIndex = 3;
-            this.btnSendSession.Text = "New session";
-            this.btnSendSession.UseVisualStyleBackColor = true;
-            this.btnSendSession.Click += new System.EventHandler(this.btnSendSession_Click);
             // 
             // FormMain
             // 
@@ -243,6 +255,7 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Crash";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
@@ -277,8 +290,9 @@
         private System.Windows.Forms.TabPage pageSpectrometry;
         private System.Windows.Forms.Button btnSendClose;
         private System.Windows.Forms.Button btnSendHello;
-        private System.Windows.Forms.TextBox tbInfo;
+        private System.Windows.Forms.TextBox tbLog;
         private System.Windows.Forms.Button btnSendSession;
+        private System.Windows.Forms.Button btnStopNetService;
     }
 }
 

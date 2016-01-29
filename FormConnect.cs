@@ -13,7 +13,8 @@ namespace crash
 {    
     public partial class FormConnect : Form
     {
-        public TcpClient Client = null;
+        public string IP;
+        public string Port;
 
         public FormConnect()
         {
@@ -39,21 +40,11 @@ namespace crash
                 MessageBox.Show("No port provided");
                 return;
             }
-            
-            try
-            {
-                Client = new TcpClient();
-                string ip = tbIP.Text;
-                int port = Convert.ToInt32(tbPort.Text);
 
-                Client.Connect(ip, port);
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }            
+            IP = tbIP.Text;
+            Port = tbPort.Text;
+            DialogResult = DialogResult.OK;
+            Close();                        
         }
     }
 }
