@@ -3,7 +3,7 @@ error - message
 
 connect - host, port
 connect_ok - host, port
-connect_failed - host, port
+connect_failed - host, port, message
 
 disconnect
 disconnect_ok

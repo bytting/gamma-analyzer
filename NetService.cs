@@ -51,12 +51,12 @@ namespace crash
                         dispatchSendMsg(sendMsg);                
 
                 if (ClientStream != null)
-                    while (RecvMessage(ClientStream)) ;
+                    while (RecvData(ClientStream)) ;
 
-                while (ExtractMessage(out recvMsg))                
+                while (RecvMessage(out recvMsg))                
                     dispatchRecvMsg(recvMsg);                
 
-                Thread.Sleep(1);
+                Thread.Sleep(5);
             }            
         }
 
@@ -90,7 +90,7 @@ namespace crash
                     else
                     {
                         msg.command = "connect_failed";
-                        msg.arguments.Add("message", "Unable to connect");
+                        msg.arguments.Add("message", "Connection failed");
                         recvq.Add(msg);                        
                     }
                     break;

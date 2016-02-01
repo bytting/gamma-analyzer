@@ -29,7 +29,7 @@ namespace crash
     {
         List<byte> recvBuffer = new List<byte>();
 
-        public bool SendMessage(NetworkStream stream, Proto.Message msg)
+        private bool SendMessage(NetworkStream stream, Proto.Message msg)
         {
             string json = JsonConvert.SerializeObject(msg);
 
@@ -50,7 +50,7 @@ namespace crash
             return true;
         }
 
-        public bool RecvMessage(NetworkStream stream)
+        private bool RecvData(NetworkStream stream)
         {            
             if (!stream.DataAvailable)
                 return false;            
@@ -72,7 +72,7 @@ namespace crash
             return true;
         }
 
-        public bool ExtractMessage(out Proto.Message msg)
+        private bool RecvMessage(out Proto.Message msg)
         {
             msg = null;
 
@@ -97,58 +97,6 @@ namespace crash
 
             return true;
         }
-
-        /*public bool RecvMessage(NetworkStream stream, out Proto.Message msg)
-        {
-            msg = null;
-            if (!stream.DataAvailable)
-                return false;
-
-            MemoryStream response = null;
-            BinaryReader breader = null;
-
-            try
-            {
-                int totlen = 0, len = 0;
-                response = new MemoryStream(1024 * 1024);
-                byte[] buffer = new byte[1024];
-
-                while (true)
-                {
-                    if (!stream.DataAvailable)
-                        break;
-
-                    len = stream.Read(buffer, 0, buffer.Length);
-                    if (len <= 0)
-                        break;
-
-                    response.Write(buffer, totlen, len);
-                    totlen += len;
-                }
-
-                response.Seek(0, SeekOrigin.Begin);
-
-                if (totlen > 4)
-                {
-                    breader = new BinaryReader(response);
-                    int siz = BigToHost(breader.ReadInt32());
-                    byte[] bytes = new byte[siz];
-                    breader.Read(bytes, 0, siz);
-                    string json = Encoding.UTF8.GetString(bytes);
-                    msg = JsonConvert.DeserializeObject<Proto.Message>(json);
-                }
-                else return false;
-            }
-            finally
-            {
-                if (breader != null)
-                    breader.Close();
-                if (response != null)
-                    response.Close();
-            }
-
-            return true;
-        }*/
 
         static byte[] HostToBig(int value)
         {

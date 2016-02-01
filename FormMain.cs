@@ -55,7 +55,7 @@ namespace crash
             while (!netThread.IsAlive);            
             
             timer = new System.Windows.Forms.Timer();
-            timer.Interval = 8;
+            timer.Interval = 10;
             timer.Tick += timer_Tick;
             timer.Start();
         }
@@ -87,9 +87,9 @@ namespace crash
 
                 case "connect_failed":
                     lblConnectionStatus.ForeColor = Color.Red;
-                    lblConnectionStatus.Text = "Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"];
-                    log("Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"]);
-                    break;
+                    lblConnectionStatus.Text = "Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"] + " " + msg.arguments["message"];
+                    log("Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"] + " " + msg.arguments["message"]);
+                    break;                
 
                 case "disconnect_ok":
                     lblConnectionStatus.ForeColor = Color.Red;
