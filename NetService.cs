@@ -21,12 +21,11 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Net.Sockets;
 
 namespace crash
 {
-    public class NetService
+    public partial class NetService
     {
         private volatile bool running;
         private TcpClient Client = null;
@@ -45,18 +44,19 @@ namespace crash
         {            
             while (running)
             {
-                while(sendq.Count > 0)
-                {
-                    Proto.Message msg;
-                    if (sendq.TryTake(out msg, 10))
-                        dispatchSendMsg(msg);                        
-                }
+                Proto.Message sendMsg, recvMsg;
 
-                Proto.Message recvMsg;
-                if (ClientStream != null && Proto.IO.RecvMessage(ClientStream, out recvMsg))                
-                    dispatchRecvMsg(recvMsg);                                        
+                while(sendq.Count > 0)                
+                    if (sendq.TryTake(out sendMsg))
+                        dispatchSendMsg(sendMsg);                
 
-                Thread.Sleep(10);
+                if (ClientStream != null)
+                    while (RecvMessage(ClientStream)) ;
+
+                while (ExtractMessage(out recvMsg))                
+                    dispatchRecvMsg(recvMsg);                
+
+                Thread.Sleep(1);
             }            
         }
 
@@ -68,17 +68,30 @@ namespace crash
                     Client = new TcpClient();
                     string host = msg.arguments["host"];
                     int port = Convert.ToInt32(msg.arguments["port"]);
-                    Client.Connect(host, port);
+
+                    try
+                    {
+                        Client.Connect(host, port);
+                    }
+                    catch(Exception ex)
+                    {
+                        msg.command = "connect_failed";
+                        msg.arguments.Add("message", ex.Message);
+                        recvq.Add(msg);                    
+                        return;
+                    }
+
                     if (Client.Connected)
                     {
                         ClientStream = Client.GetStream();
-                        msg.command = "connected";
-                        recvq.Add(msg);
+                        msg.command = "connect_ok";
+                        recvq.Add(msg);                        
                     }
                     else
                     {
-                        msg.command = "connection_failed";
-                        recvq.Add(msg);
+                        msg.command = "connect_failed";
+                        msg.arguments.Add("message", "Unable to connect");
+                        recvq.Add(msg);                        
                     }
                     break;
 
@@ -90,21 +103,26 @@ namespace crash
                     if(Client != null && Client.Connected)            
                         Client.Close();                            
                     Client = null;
-                    msg.command = "disconnected";
-                    recvq.Add(msg); 
+
+                    msg.command = "disconnect_ok";
+                    recvq.Add(msg);                    
                     break;
 
                 default:
                     if (ClientStream == null)
                     {
-                        Proto.Message responseMsg = new Proto.Message("error", new Dictionary<string, string>() { { "message", "Can not send message, not connected to peer" } });
+                        Proto.Message responseMsg = new Proto.Message("error", new Dictionary<string, string>() {
+                            { "message", "Can not send message, not connected to peer" }
+                        });
                         recvq.Add(responseMsg);
                         break;
                     }
 
-                    if(!Proto.IO.SendMessage(ClientStream, msg))
+                    if(!SendMessage(ClientStream, msg))
                     {
-                        Proto.Message responseMsg = new Proto.Message("error", new Dictionary<string, string>() { { "message", "SendMessage failed" } });
+                        Proto.Message responseMsg = new Proto.Message("error", new Dictionary<string, string>() {
+                            { "message", "Unable to send message" }
+                        });
                         recvq.Add(responseMsg);
                         break;
                     }
@@ -116,7 +134,7 @@ namespace crash
         {
             switch (msg.command)
             {
-                case "closing":
+                case "close_ok":
                     if (ClientStream != null)
                         ClientStream.Close();
                     ClientStream = null;
@@ -124,13 +142,14 @@ namespace crash
                     if(Client != null && Client.Connected)            
                         Client.Close();                            
                     Client = null;
-                    recvq.Add(msg);     
+
+                    recvq.Add(msg);                    
                     break;
 
                 default:
                     recvq.Add(msg);
                     break;
-            }
+            }            
         }
 
         public void RequestStop()

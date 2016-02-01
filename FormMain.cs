@@ -22,26 +22,24 @@ using System.ComponentModel;
 using System.IO;
 using System.Data;
 using System.Net;
-using System.Net.Sockets;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace crash
 {
     public partial class FormMain : Form
     {                
         static BlockingCollection<Proto.Message> sendq = new BlockingCollection<Proto.Message>();
-        static BlockingCollection<Proto.Message> recvq = new BlockingCollection<Proto.Message>();
+        static BlockingCollection<Proto.Message> recvq = new BlockingCollection<Proto.Message>();        
 
         static NetService netService = new NetService(sendq, recvq);
         static Thread netThread = new Thread(netService.DoWork);
 
-        FormConnect form = new FormConnect();        
+        FormConnect formConnect = new FormConnect();
+        System.Windows.Forms.Timer timer = null;
 
         public FormMain()
         {
@@ -55,53 +53,64 @@ namespace crash
 
             netThread.Start();
             while (!netThread.IsAlive);            
-
-            Application.Idle += Application_Idle;
+            
+            timer = new System.Windows.Forms.Timer();
+            timer.Interval = 8;
+            timer.Tick += timer_Tick;
+            timer.Start();
         }
 
-        void Application_Idle(object sender, EventArgs e)
+        void timer_Tick(object sender, EventArgs e)
         {
             while (recvq.Count > 0)
             {
                 Proto.Message msg;
-                if (recvq.TryTake(out msg))
-                    dispatchMsg(msg);                    
-            }
-        }        
+                if (recvq.TryTake(out msg))                
+                    dispatchMsg(msg);                                    
+            }            
+        }                
 
         private void log(string message)
         {
-            tbLog.Text += Environment.NewLine + DateTime.Now.ToShortDateString() + ": " + message;
-        }
+            tbLog.Text += Environment.NewLine + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + message;
+        }        
 
         private bool dispatchMsg(Proto.Message msg)
         {
             switch(msg.command)
             {
-                case "connected":
+                case "connect_ok":
                     lblConnectionStatus.ForeColor = Color.Green;
                     lblConnectionStatus.Text = "Connected to " + msg.arguments["host"] + ":" + msg.arguments["port"];
                     log("Connected to " + msg.arguments["host"] + ":" + msg.arguments["port"]);
                     break;
 
-                case "connection_failed":
+                case "connect_failed":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"];
                     log("Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"]);
                     break;
 
-                case "disconnected":
+                case "disconnect_ok":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
                     log("Disconnected from peer");
                     break;
 
-                case "closing":
+                case "close_ok":
                     netService.RequestStop();
                     netThread.Join();
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
                     log("Disconnected from peer, peer closed");
+                    break;
+
+                case "new_session_ok":                                        
+                    log("New session created: " + msg.arguments["session_name"]);
+                    break;
+
+                case "new_session_failed":
+                    log("New session failed: " + msg.arguments["message"]);
                     break;
 
                 default:
@@ -122,13 +131,12 @@ namespace crash
 
         private void menuItemConnect_Click(object sender, EventArgs e)
         {
-            FormConnect form = new FormConnect();
-            if (form.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            if (formConnect.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                 return;
 
             Proto.Message msg = new Proto.Message("connect", new Dictionary<string, string>() {
-                    {"host", form.IP}, 
-                    {"port", form.Port}
+                    {"host", formConnect.IP}, 
+                    {"port", formConnect.Port}
             });
             sendq.Add(msg);            
         }
@@ -167,6 +175,7 @@ namespace crash
         {
             if(netService.IsRunning())
                 btnStopNetService_Click(sender, e);
+            timer.Stop();
         }
     }
 }
