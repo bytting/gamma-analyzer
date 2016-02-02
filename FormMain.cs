@@ -31,9 +31,9 @@ using System.Windows.Forms;
 namespace crash
 {
     public partial class FormMain : Form
-    {                
-        static BlockingCollection<Proto.Message> sendq = new BlockingCollection<Proto.Message>();
-        static BlockingCollection<Proto.Message> recvq = new BlockingCollection<Proto.Message>();        
+    {
+        static ConcurrentQueue<Proto.Message> sendq = new ConcurrentQueue<Proto.Message>();
+        static ConcurrentQueue<Proto.Message> recvq = new ConcurrentQueue<Proto.Message>();        
 
         static NetService netService = new NetService(sendq, recvq);
         static Thread netThread = new Thread(netService.DoWork);
@@ -62,10 +62,10 @@ namespace crash
 
         void timer_Tick(object sender, EventArgs e)
         {
-            while (recvq.Count > 0)
+            while (!recvq.IsEmpty)
             {
-                Proto.Message msg;
-                if (recvq.TryTake(out msg))                
+                Proto.Message msg;                
+                if (recvq.TryDequeue(out msg))
                     dispatchMsg(msg);                                    
             }            
         }                
@@ -113,6 +113,10 @@ namespace crash
                     log("New session failed: " + msg.arguments["message"]);
                     break;
 
+                case "fix_ok":
+                    log("GPS Fix - Lat: " + msg.arguments["latitude"] + " Lon: " + msg.arguments["longitude"] + " Alt: " + msg.arguments["altitude"]);
+                    break;
+
                 default:
                     string info = msg.command + " -> ";
                     foreach (KeyValuePair<string, string> item in msg.arguments)                    
@@ -138,31 +142,37 @@ namespace crash
                     {"host", formConnect.IP}, 
                     {"port", formConnect.Port}
             });
-            sendq.Add(msg);            
+            sendq.Enqueue(msg);            
         }
 
         private void menuItemDisconnect_Click(object sender, EventArgs e)
         {
             Proto.Message msg = new Proto.Message("disconnect", null);
-            sendq.Add(msg);            
+            sendq.Enqueue(msg);            
         }
 
         private void btnSendHello_Click(object sender, EventArgs e)
         {                        
             Proto.Message msg = new Proto.Message("ping", null);
-            sendq.Add(msg);            
+            sendq.Enqueue(msg);            
         }
 
         private void btnSendClose_Click(object sender, EventArgs e)
         {
             Proto.Message msg = new Proto.Message("close", null);
-            sendq.Add(msg);                        
+            sendq.Enqueue(msg);                        
         }
 
         private void btnSendSession_Click(object sender, EventArgs e)
         {
             Proto.Message msg = new Proto.Message("new_session", null);
-            sendq.Add(msg);                                    
+            sendq.Enqueue(msg);                                    
+        }
+
+        private void btnSendFix_Click(object sender, EventArgs e)
+        {
+            Proto.Message msg = new Proto.Message("fix", null);
+            sendq.Enqueue(msg);
         }
 
         private void btnStopNetService_Click(object sender, EventArgs e)
@@ -176,6 +186,6 @@ namespace crash
             if(netService.IsRunning())
                 btnStopNetService_Click(sender, e);
             timer.Stop();
-        }
+        }        
     }
 }

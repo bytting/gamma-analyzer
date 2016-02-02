@@ -30,10 +30,10 @@ namespace crash
         private volatile bool running;
         private TcpClient Client = null;
         private NetworkStream ClientStream = null;
-        private BlockingCollection<Proto.Message> sendq = null;
-        private BlockingCollection<Proto.Message> recvq = null;
+        private ConcurrentQueue<Proto.Message> sendq = null;
+        private ConcurrentQueue<Proto.Message> recvq = null;
 
-        public NetService(BlockingCollection<Proto.Message> sendQueue, BlockingCollection<Proto.Message> recvQueue)
+        public NetService(ConcurrentQueue<Proto.Message> sendQueue, ConcurrentQueue<Proto.Message> recvQueue)
         {
             running = true;
             sendq = sendQueue;
@@ -47,13 +47,13 @@ namespace crash
                 Proto.Message sendMsg, recvMsg;
 
                 while(sendq.Count > 0)                
-                    if (sendq.TryTake(out sendMsg))
+                    if (sendq.TryDequeue(out sendMsg))
                         dispatchSendMsg(sendMsg);                
 
                 if (ClientStream != null)
-                    while (RecvData(ClientStream)) ;
+                    while (recvData(ClientStream)) ;
 
-                while (RecvMessage(out recvMsg))                
+                while (recvMessage(out recvMsg))                
                     dispatchRecvMsg(recvMsg);                
 
                 Thread.Sleep(5);
@@ -77,7 +77,7 @@ namespace crash
                     {
                         msg.command = "connect_failed";
                         msg.arguments.Add("message", ex.Message);
-                        recvq.Add(msg);                    
+                        recvq.Enqueue(msg);                    
                         return;
                     }
 
@@ -85,13 +85,13 @@ namespace crash
                     {
                         ClientStream = Client.GetStream();
                         msg.command = "connect_ok";
-                        recvq.Add(msg);                        
+                        recvq.Enqueue(msg);                        
                     }
                     else
                     {
                         msg.command = "connect_failed";
                         msg.arguments.Add("message", "Connection failed");
-                        recvq.Add(msg);                        
+                        recvq.Enqueue(msg);                        
                     }
                     break;
 
@@ -105,7 +105,7 @@ namespace crash
                     Client = null;
 
                     msg.command = "disconnect_ok";
-                    recvq.Add(msg);                    
+                    recvq.Enqueue(msg);                    
                     break;
 
                 default:
@@ -114,17 +114,17 @@ namespace crash
                         Proto.Message responseMsg = new Proto.Message("error", new Dictionary<string, string>() {
                             { "message", "Can not send message, not connected to peer" }
                         });
-                        recvq.Add(responseMsg);
-                        break;
+                        recvq.Enqueue(responseMsg);
+                        return;
                     }
 
-                    if(!SendMessage(ClientStream, msg))
+                    if(!sendMessage(ClientStream, msg))
                     {
                         Proto.Message responseMsg = new Proto.Message("error", new Dictionary<string, string>() {
                             { "message", "Unable to send message" }
                         });
-                        recvq.Add(responseMsg);
-                        break;
+                        recvq.Enqueue(responseMsg);
+                        return;
                     }
                     break;
             }            
@@ -143,11 +143,11 @@ namespace crash
                         Client.Close();                            
                     Client = null;
 
-                    recvq.Add(msg);                    
+                    recvq.Enqueue(msg);                    
                     break;
 
                 default:
-                    recvq.Add(msg);
+                    recvq.Enqueue(msg);
                     break;
             }            
         }

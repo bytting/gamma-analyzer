@@ -29,7 +29,7 @@ namespace crash
     {
         List<byte> recvBuffer = new List<byte>();
 
-        private bool SendMessage(NetworkStream stream, Proto.Message msg)
+        private bool sendMessage(NetworkStream stream, Proto.Message msg)
         {
             string json = JsonConvert.SerializeObject(msg);
 
@@ -38,7 +38,7 @@ namespace crash
                 using (BinaryWriter writer = new BinaryWriter(mstream))
                 {
                     byte[] encodedJson = Encoding.UTF8.GetBytes(json);
-                    writer.Write(HostToBig(encodedJson.Length));
+                    writer.Write(hostToBig_i32(encodedJson.Length));
                     writer.Write(encodedJson);
                 }
 
@@ -50,7 +50,7 @@ namespace crash
             return true;
         }
 
-        private bool RecvData(NetworkStream stream)
+        private bool recvData(NetworkStream stream)
         {            
             if (!stream.DataAvailable)
                 return false;            
@@ -72,7 +72,7 @@ namespace crash
             return true;
         }
 
-        private bool RecvMessage(out Proto.Message msg)
+        private bool recvMessage(out Proto.Message msg)
         {
             msg = null;
 
@@ -82,7 +82,7 @@ namespace crash
             byte[] byteSize = new byte[4];
             recvBuffer.CopyTo(0, byteSize, 0, 4);
 
-            int siz = BigToHost(byteSize);
+            int siz = bigToHost_i32(byteSize);
 
             if (recvBuffer.Count < 4 + siz)
                 return false;
@@ -92,25 +92,24 @@ namespace crash
             recvBuffer.RemoveRange(0, 4 + siz);
                 
             string json = Encoding.UTF8.GetString(bjson);
-            msg = JsonConvert.DeserializeObject<Proto.Message>(json);
-            recvq.Add(msg);
+            msg = JsonConvert.DeserializeObject<Proto.Message>(json);            
 
             return true;
         }
 
-        static byte[] HostToBig(int value)
+        byte[] hostToBig_i32(int value)
         {
-            byte[] retval = BitConverter.GetBytes(value);
-            if (BitConverter.IsLittleEndian)        
-                Array.Reverse(retval);            
-            return retval;
+            byte[] bvalue = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bvalue);
+            return bvalue;
         }
 
-        static int BigToHost(byte[] value)
+        int bigToHost_i32(byte[] bvalue)
         {            
             if (BitConverter.IsLittleEndian)
-                Array.Reverse(value);            
-            return BitConverter.ToInt32(value, 0);
+                Array.Reverse(bvalue);
+            return BitConverter.ToInt32(bvalue, 0);
         }        
     }
 }
