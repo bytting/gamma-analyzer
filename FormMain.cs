@@ -39,7 +39,7 @@ namespace crash
         static Thread netThread = new Thread(netService.DoWork);
 
         FormConnect formConnect = new FormConnect();
-        System.Windows.Forms.Timer timer = null;
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
         public FormMain()
         {
@@ -53,8 +53,7 @@ namespace crash
 
             netThread.Start();
             while (!netThread.IsAlive);            
-            
-            timer = new System.Windows.Forms.Timer();
+                    
             timer.Interval = 10;
             timer.Tick += timer_Tick;
             timer.Start();
@@ -113,6 +112,14 @@ namespace crash
                     log("New session failed: " + msg.arguments["message"]);
                     break;
 
+                case "error":
+                    log("Error: " + msg.arguments["message"]);
+                    break;
+
+                case "error_socket":
+                    log("Socket error: " + msg.arguments["error_code"] + " " + msg.arguments["message"]);
+                    break;
+
                 case "fix_ok":
                     log("GPS Fix - Lat: " + msg.arguments["latitude"] + " Lon: " + msg.arguments["longitude"] + " Alt: " + msg.arguments["altitude"]);
                     break;
@@ -138,41 +145,35 @@ namespace crash
             if (formConnect.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            Proto.Message msg = new Proto.Message("connect", new Dictionary<string, string>() {
-                    {"host", formConnect.IP}, 
-                    {"port", formConnect.Port}
-            });
+            Proto.Message msg = new Proto.Message("connect");
+            msg.AddParameter("host", formConnect.IP);
+            msg.AddParameter("port", formConnect.Port);            
             sendq.Enqueue(msg);            
         }
 
         private void menuItemDisconnect_Click(object sender, EventArgs e)
-        {
-            Proto.Message msg = new Proto.Message("disconnect", null);
-            sendq.Enqueue(msg);            
+        {            
+            sendq.Enqueue(new Proto.Message("disconnect"));
         }
 
         private void btnSendHello_Click(object sender, EventArgs e)
-        {                        
-            Proto.Message msg = new Proto.Message("ping", null);
-            sendq.Enqueue(msg);            
+        {                                    
+            sendq.Enqueue(new Proto.Message("ping"));            
         }
 
         private void btnSendClose_Click(object sender, EventArgs e)
-        {
-            Proto.Message msg = new Proto.Message("close", null);
-            sendq.Enqueue(msg);                        
+        {            
+            sendq.Enqueue(new Proto.Message("close"));                        
         }
 
         private void btnSendSession_Click(object sender, EventArgs e)
-        {
-            Proto.Message msg = new Proto.Message("new_session", null);
-            sendq.Enqueue(msg);                                    
+        {            
+            sendq.Enqueue(new Proto.Message("new_session"));                                    
         }
 
         private void btnSendFix_Click(object sender, EventArgs e)
-        {
-            Proto.Message msg = new Proto.Message("fix", null);
-            sendq.Enqueue(msg);
+        {            
+            sendq.Enqueue(new Proto.Message("fix"));
         }
 
         private void btnStopNetService_Click(object sender, EventArgs e)

@@ -1,12 +1,13 @@
 
 error - message
+error_socket - error_code, message
 
 close
 close_ok
 close_failed - message
 
 new_session
-new_session_ok
+new_session_ok - session_name
 new_session_failed - message
 
 fix

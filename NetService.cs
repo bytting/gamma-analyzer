@@ -32,6 +32,7 @@ namespace crash
         private NetworkStream ClientStream = null;
         private ConcurrentQueue<Proto.Message> sendq = null;
         private ConcurrentQueue<Proto.Message> recvq = null;
+        List<byte> recvBuffer = new List<byte>();
 
         public NetService(ConcurrentQueue<Proto.Message> sendQueue, ConcurrentQueue<Proto.Message> recvQueue)
         {
@@ -84,6 +85,7 @@ namespace crash
                     if (Client.Connected)
                     {
                         ClientStream = Client.GetStream();
+                        recvBuffer.Clear();
                         msg.command = "connect_ok";
                         recvq.Enqueue(msg);                        
                     }
@@ -111,18 +113,16 @@ namespace crash
                 default:
                     if (ClientStream == null)
                     {
-                        Proto.Message responseMsg = new Proto.Message("error", new Dictionary<string, string>() {
-                            { "message", "Can not send message, not connected to peer" }
-                        });
+                        Proto.Message responseMsg = new Proto.Message("error");
+                        responseMsg.AddParameter("message", "Can not send message, not connected to peer");                        
                         recvq.Enqueue(responseMsg);
                         return;
                     }
 
                     if(!sendMessage(ClientStream, msg))
                     {
-                        Proto.Message responseMsg = new Proto.Message("error", new Dictionary<string, string>() {
-                            { "message", "Unable to send message" }
-                        });
+                        Proto.Message responseMsg = new Proto.Message("error");
+                        responseMsg.AddParameter("message", "Unable to send message");                        
                         recvq.Enqueue(responseMsg);
                         return;
                     }

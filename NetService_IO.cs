@@ -26,9 +26,7 @@ using Newtonsoft.Json;
 namespace crash
 {
     public partial class NetService
-    {
-        List<byte> recvBuffer = new List<byte>();
-
+    {        
         private bool sendMessage(NetworkStream stream, Proto.Message msg)
         {
             string json = JsonConvert.SerializeObject(msg);
@@ -43,8 +41,19 @@ namespace crash
                 }
 
                 byte[] request = mstream.ToArray();
-                stream.Write(request, 0, request.Length);
-                stream.Flush();
+                try
+                {
+                    stream.Write(request, 0, request.Length);
+                    stream.Flush();
+                }
+                catch(SocketException ex)
+                {
+                    Proto.Message emsg = new Proto.Message("error_socket");
+                    emsg.AddParameter("error_code", ex.ErrorCode);
+                    emsg.AddParameter("message", ex.Message);                    
+                    recvq.Enqueue(emsg);
+                    return false;
+                }
             }
 
             return true;
