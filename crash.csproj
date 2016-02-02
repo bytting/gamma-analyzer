@@ -60,6 +60,9 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMain_Helpers.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="NetService.cs" />
     <Compile Include="NetService_IO.cs" />
     <Compile Include="Program.cs" />

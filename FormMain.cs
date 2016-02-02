@@ -65,74 +65,14 @@ namespace crash
             {
                 Proto.Message msg;                
                 if (recvq.TryDequeue(out msg))
-                    dispatchMsg(msg);                                    
+                    dispatchRecvMsg(msg);                                    
             }            
-        }                
+        }
 
         private void log(string message)
         {
             tbLog.Text += Environment.NewLine + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + message;
         }        
-
-        private bool dispatchMsg(Proto.Message msg)
-        {
-            switch(msg.command)
-            {
-                case "connect_ok":
-                    lblConnectionStatus.ForeColor = Color.Green;
-                    lblConnectionStatus.Text = "Connected to " + msg.arguments["host"] + ":" + msg.arguments["port"];
-                    log("Connected to " + msg.arguments["host"] + ":" + msg.arguments["port"]);
-                    break;
-
-                case "connect_failed":
-                    lblConnectionStatus.ForeColor = Color.Red;
-                    lblConnectionStatus.Text = "Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"] + " " + msg.arguments["message"];
-                    log("Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"] + " " + msg.arguments["message"]);
-                    break;                
-
-                case "disconnect_ok":
-                    lblConnectionStatus.ForeColor = Color.Red;
-                    lblConnectionStatus.Text = "Not connected";
-                    log("Disconnected from peer");
-                    break;
-
-                case "close_ok":
-                    netService.RequestStop();
-                    netThread.Join();
-                    lblConnectionStatus.ForeColor = Color.Red;
-                    lblConnectionStatus.Text = "Not connected";
-                    log("Disconnected from peer, peer closed");
-                    break;
-
-                case "new_session_ok":                                        
-                    log("New session created: " + msg.arguments["session_name"]);
-                    break;
-
-                case "new_session_failed":
-                    log("New session failed: " + msg.arguments["message"]);
-                    break;
-
-                case "error":
-                    log("Error: " + msg.arguments["message"]);
-                    break;
-
-                case "error_socket":
-                    log("Socket error: " + msg.arguments["error_code"] + " " + msg.arguments["message"]);
-                    break;
-
-                case "fix_ok":
-                    log("GPS Fix - Lat: " + msg.arguments["latitude"] + " Lon: " + msg.arguments["longitude"] + " Alt: " + msg.arguments["altitude"]);
-                    break;
-
-                default:
-                    string info = msg.command + " -> ";
-                    foreach (KeyValuePair<string, string> item in msg.arguments)                    
-                        info += item.Key + ":" + item.Value + ", ";                    
-                    log("Unhandeled command: " + info);
-                    break;                    
-            }
-            return true;
-        }
 
         private void menuItemExit_Click(object sender, EventArgs e)
         {
