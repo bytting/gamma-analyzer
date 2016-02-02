@@ -50,6 +50,8 @@
             this.btnSendHello = new System.Windows.Forms.Button();
             this.tbLog = new System.Windows.Forms.TextBox();
             this.pageSpectrometry = new System.Windows.Forms.TabPage();
+            this.btnGetPreview = new System.Windows.Forms.Button();
+            this.btnSetGain = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -175,6 +177,8 @@
             // pageSettings
             // 
             this.pageSettings.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pageSettings.Controls.Add(this.btnSetGain);
+            this.pageSettings.Controls.Add(this.btnGetPreview);
             this.pageSettings.Controls.Add(this.btnSendFix);
             this.pageSettings.Controls.Add(this.btnStopNetService);
             this.pageSettings.Controls.Add(this.btnSendSession);
@@ -258,13 +262,33 @@
             // pageSpectrometry
             // 
             this.pageSpectrometry.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.pageSpectrometry.Location = new System.Drawing.Point(4, 24);
+            this.pageSpectrometry.Location = new System.Drawing.Point(4, 25);
             this.pageSpectrometry.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.pageSpectrometry.Name = "pageSpectrometry";
             this.pageSpectrometry.Padding = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.pageSpectrometry.Size = new System.Drawing.Size(1277, 646);
+            this.pageSpectrometry.Size = new System.Drawing.Size(1121, 612);
             this.pageSpectrometry.TabIndex = 1;
             this.pageSpectrometry.Text = "Spectrometry";
+            // 
+            // btnGetPreview
+            // 
+            this.btnGetPreview.Location = new System.Drawing.Point(152, 66);
+            this.btnGetPreview.Name = "btnGetPreview";
+            this.btnGetPreview.Size = new System.Drawing.Size(101, 28);
+            this.btnGetPreview.TabIndex = 6;
+            this.btnGetPreview.Text = "Get preview";
+            this.btnGetPreview.UseVisualStyleBackColor = true;
+            this.btnGetPreview.Click += new System.EventHandler(this.btnGetPreview_Click);
+            // 
+            // btnSetGain
+            // 
+            this.btnSetGain.Location = new System.Drawing.Point(45, 66);
+            this.btnSetGain.Name = "btnSetGain";
+            this.btnSetGain.Size = new System.Drawing.Size(101, 28);
+            this.btnSetGain.TabIndex = 7;
+            this.btnSetGain.Text = "Set gain";
+            this.btnSetGain.UseVisualStyleBackColor = true;
+            this.btnSetGain.Click += new System.EventHandler(this.btnSetGain_Click);
             // 
             // FormMain
             // 
@@ -320,6 +344,8 @@
         private System.Windows.Forms.Button btnSendSession;
         private System.Windows.Forms.Button btnStopNetService;
         private System.Windows.Forms.Button btnSendFix;
+        private System.Windows.Forms.Button btnGetPreview;
+        private System.Windows.Forms.Button btnSetGain;
     }
 }
 

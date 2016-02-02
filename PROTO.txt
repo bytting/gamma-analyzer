@@ -10,6 +10,14 @@ new_session
 new_session_ok - session_name
 new_session_failed - message
 
-fix
-fix_ok - latitude, longitude, altitude
-fix_failed - message
+get_fix
+get_fix_ok - latitude, longitude, altitude
+get_fix_failed - message
+
+set_gain - voltage, coarse, fine
+set_gain_ok - voltage, coarse, fine
+set_gain_failed - message
+
+get_preview_spec - livetime
+get_preview_spec_ok - livetime, realtime, total_count
+get_preview_spec_failed - message

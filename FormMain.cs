@@ -113,7 +113,7 @@ namespace crash
 
         private void btnSendFix_Click(object sender, EventArgs e)
         {            
-            sendq.Enqueue(new Proto.Message("fix"));
+            sendq.Enqueue(new Proto.Message("get_fix"));
         }
 
         private void btnStopNetService_Click(object sender, EventArgs e)
@@ -127,6 +127,22 @@ namespace crash
             if(netService.IsRunning())
                 btnStopNetService_Click(sender, e);
             timer.Stop();
+        }
+
+        private void btnGetPreview_Click(object sender, EventArgs e)
+        {
+            Proto.Message msg = new Proto.Message("get_preview_spec");
+            msg.AddParameter("livetime", 3.0);
+            sendq.Enqueue(msg);
+        }
+
+        private void btnSetGain_Click(object sender, EventArgs e)
+        {
+            Proto.Message msg = new Proto.Message("set_gain");
+            msg.AddParameter("voltage", 600);
+            msg.AddParameter("coarse", 1.0);
+            msg.AddParameter("fine", 1.0);
+            sendq.Enqueue(msg);
         }        
     }
 }

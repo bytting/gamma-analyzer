@@ -72,8 +72,16 @@ namespace crash
                     log("Socket error: " + msg.arguments["error_code"] + " " + msg.arguments["message"]);
                     break;
 
-                case "fix_ok":
+                case "get_fix_ok":
                     log("GPS Fix - Lat: " + msg.arguments["latitude"] + " Lon: " + msg.arguments["longitude"] + " Alt: " + msg.arguments["altitude"]);
+                    break;
+
+                case "set_gain_ok":
+                    log("set gain: " + msg.arguments["voltage"] + " " + msg.arguments["coarse"] + " " + msg.arguments["fine"]);
+                    break;
+
+                case "get_preview_spec_ok":
+                    log(msg.arguments["total_count"]);
                     break;
 
                 default:
