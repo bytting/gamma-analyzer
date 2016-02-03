@@ -69,6 +69,90 @@ namespace crash
             }            
         }
 
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (netService.IsRunning())
+                btnStopNetService_Click(sender, e);
+            timer.Stop();
+        }
+
+        private bool dispatchRecvMsg(Proto.Message msg)
+        {
+            switch (msg.command)
+            {
+                case "connect_ok":
+                    lblConnectionStatus.ForeColor = Color.Green;
+                    lblConnectionStatus.Text = "Connected to " + msg.arguments["host"] + ":" + msg.arguments["port"];
+                    log("Connected to " + msg.arguments["host"] + ":" + msg.arguments["port"]);
+                    break;
+
+                case "connect_failed":
+                    lblConnectionStatus.ForeColor = Color.Red;
+                    lblConnectionStatus.Text = "Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"] + " " + msg.arguments["message"];
+                    log("Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"] + " " + msg.arguments["message"]);
+                    break;
+
+                case "disconnect_ok":
+                    lblConnectionStatus.ForeColor = Color.Red;
+                    lblConnectionStatus.Text = "Not connected";
+                    log("Disconnected from peer");
+                    break;
+
+                case "close_ok":
+                    netService.RequestStop();
+                    netThread.Join();
+                    lblConnectionStatus.ForeColor = Color.Red;
+                    lblConnectionStatus.Text = "Not connected";
+                    log("Disconnected from peer, peer closed");
+                    break;
+
+                case "new_session_ok":
+                    log("New session created: " + msg.arguments["session_name"]);
+                    break;
+
+                case "new_session_failed":
+                    log("New session failed: " + msg.arguments["message"]);
+                    break;
+
+                case "error":
+                    log("Error: " + msg.arguments["message"]);
+                    break;
+
+                case "error_socket":
+                    log("Socket error: " + msg.arguments["error_code"] + " " + msg.arguments["message"]);
+                    break;
+
+                case "get_fix_ok":
+                    log("GPS Fix - Lat: " + msg.arguments["latitude"] + " Lon: " + msg.arguments["longitude"] + " Alt: " + msg.arguments["altitude"]);
+                    break;
+
+                case "set_gain_ok":
+                    log("set gain: " + msg.arguments["voltage"] + " " + msg.arguments["coarse_gain"] + " " + msg.arguments["fine_gain"]);
+                    break;
+
+                case "get_preview_spec_ok":
+                    log(
+                        "uncorr. total count: " + msg.arguments["uncorrected_total_count"] + 
+                        " channel count: " + msg.arguments["channel_count"] + 
+                        " computational limit: " + msg.arguments["computational_limit"] +
+                        " status: " + msg.arguments["status"] +
+                        " livetime: " + msg.arguments["livetime"] +
+                        " realtime: " + msg.arguments["realtime"]);
+                    log(msg.arguments["channels"]);
+                    string[] items = msg.arguments["channels"].Split(new char[] {' '});
+                    log("Items: " + items.Length.ToString());
+                    break;
+
+                default:
+                    string info = msg.command + " -> ";
+                    foreach (KeyValuePair<string, string> item in msg.arguments)
+                        info += item.Key + ":" + item.Value + ", ";
+                    log("Unhandeled command: " + info);
+                    break;
+            }
+            return true;
+        }
+
         private void log(string message)
         {
             tbLog.Text += Environment.NewLine + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + message;
@@ -120,19 +204,12 @@ namespace crash
         {
             netService.RequestStop();
             netThread.Join();
-        }
-
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if(netService.IsRunning())
-                btnStopNetService_Click(sender, e);
-            timer.Stop();
-        }
+        }        
 
         private void btnGetPreview_Click(object sender, EventArgs e)
         {
             Proto.Message msg = new Proto.Message("get_preview_spec");
-            msg.AddParameter("livetime", 3.0);
+            msg.AddParameter("livetime", 10.0);
             sendq.Enqueue(msg);
         }
 
@@ -140,8 +217,8 @@ namespace crash
         {
             Proto.Message msg = new Proto.Message("set_gain");
             msg.AddParameter("voltage", 600);
-            msg.AddParameter("coarse", 1.0);
-            msg.AddParameter("fine", 1.0);
+            msg.AddParameter("coarse_gain", 1.0);
+            msg.AddParameter("fine_gain", 1.0);
             sendq.Enqueue(msg);
         }        
     }
