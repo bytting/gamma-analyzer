@@ -208,17 +208,57 @@ namespace crash
 
         private void btnGetPreview_Click(object sender, EventArgs e)
         {
-            Proto.Message msg = new Proto.Message("get_preview_spec");
-            msg.AddParameter("livetime", 10.0);
-            sendq.Enqueue(msg);
+            if (String.IsNullOrEmpty(tbSpecCount.Text))
+            {
+                MessageBox.Show("Mangler count");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbSpecLivetime.Text))
+            {
+                MessageBox.Show("Mangler livetime");
+                return;
+            }
+
+            int count = Convert.ToInt32(tbSpecCount.Text);
+            float livetime = Convert.ToInt32(tbSpecLivetime.Text);
+
+            for(int i=0; i<count; i++)
+            {
+                Proto.Message msg = new Proto.Message("get_preview_spec");
+                msg.AddParameter("livetime", livetime);
+                sendq.Enqueue(msg);
+            }            
         }
 
         private void btnSetGain_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(tbVoltage.Text))
+            {
+                MessageBox.Show("Mangler voltage");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbCoarseGain.Text))
+            {
+                MessageBox.Show("Mangler coarse gain");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbFineGain.Text))
+            {
+                MessageBox.Show("Mangler fine gain");
+                return;
+            }
+
+            int voltage = Convert.ToInt32(tbVoltage.Text);
+            float coarse = Convert.ToInt32(tbCoarseGain.Text);
+            float fine = Convert.ToInt32(tbFineGain.Text);
+
             Proto.Message msg = new Proto.Message("set_gain");
-            msg.AddParameter("voltage", 600);
-            msg.AddParameter("coarse_gain", 1.0);
-            msg.AddParameter("fine_gain", 1.0);
+            msg.AddParameter("voltage", voltage);
+            msg.AddParameter("coarse_gain", coarse);
+            msg.AddParameter("fine_gain", fine);
             sendq.Enqueue(msg);
         }        
     }
