@@ -1,6 +1,6 @@
 ﻿/*	
 	Crash - Controlling application for Burn
-    Copyright (C) 2016  Dag Robole
+    Copyright (C) 2016  Norwegian Radiation Protection Authority
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,11 +25,31 @@ namespace crash
 {
     namespace Proto
     {
+        /**
+        * Message - Class used for serialization/deserialization of protocol messages
+        */
         public class Message
         {
+            //! Protocol command
             public string command;
+
+            //! Protocol arguments stored as a dictionary
             public Dictionary<string, string> arguments = new Dictionary<string,string>();
 
+            /** 
+             * Default constructor for the Message class
+             * \param cmd - protocol command             
+             */
+            public Message(string cmd)
+            {
+                command = cmd;
+            }
+
+            /** 
+             * Parameterized constructor for the Message class
+             * \param cmd - protocol command
+             * \param args - protocol arguments
+             */
             [JsonConstructor]
             public Message(string cmd, Dictionary<string, string> args)
             {            
@@ -38,11 +58,11 @@ namespace crash
                     arguments = args;
             }
 
-            public Message(string cmd)
-            {
-                command = cmd;                
-            }
-
+            /** 
+             * Function used to add a parameter to the message
+             * \param key - argument key
+             * \param value - argument value
+             */
             public void AddParameter(string key, object value)
             {
                 arguments[key] = value.ToString();

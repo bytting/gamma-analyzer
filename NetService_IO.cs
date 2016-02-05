@@ -1,6 +1,6 @@
 ﻿/*	
 	Crash - Controlling application for Burn
-    Copyright (C) 2016  Dag Robole
+    Copyright (C) 2016  Norwegian Radiation Protection Authority
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,8 +25,17 @@ using Newtonsoft.Json;
 
 namespace crash
 {
+    /**
+     * NetService - Continuation of the Threaded NetService class containing IO utilities
+     */
     public partial class NetService
-    {        
+    {
+        /** 
+         * Function to send a message to the server
+         * \param stream - The stream to write to
+         * \param msg - The message to send
+         * \return - Retun true on success, false on failure
+         */
         private bool sendMessage(NetworkStream stream, Proto.Message msg)
         {
             string json = JsonConvert.SerializeObject(msg);
@@ -59,6 +68,11 @@ namespace crash
             return true;
         }
 
+        /** 
+         * Function to receive a data streams from the server and store them in the network buffer
+         * \param stream - The stream to read from
+         * \return - Retun true on success, false on failure
+         */
         private bool recvData(NetworkStream stream)
         {            
             if (!stream.DataAvailable)
@@ -81,31 +95,47 @@ namespace crash
             return true;
         }
 
+        /** 
+         * Function to read messages out of the network buffer
+         * \param msg - Storeage for any message read from the network buffer
+         * \return - Return true on success, false on failure
+         */
         private bool recvMessage(out Proto.Message msg)
         {
             msg = null;
 
+            // Make sure buffer hold at least a 32 bit int (netstrings)
             if (recvBuffer.Count < 4)
                 return false;
             
+            // Read the message size out of the buffer
             byte[] byteSize = new byte[4];
             recvBuffer.CopyTo(0, byteSize, 0, 4);
 
+            // Convert the size to the hosts endianness
             int siz = bigToHost_i32(byteSize);
 
+            // Make sure the message stored in the buffer are complete
             if (recvBuffer.Count < 4 + siz)
                 return false;
 
+            // Read out the message and update the buffer
             byte[] bjson = new byte[siz];
             recvBuffer.CopyTo(4, bjson, 0, siz);
             recvBuffer.RemoveRange(0, 4 + siz);
-                
+            
+            // Deserialize the message
             string json = Encoding.UTF8.GetString(bjson);
             msg = JsonConvert.DeserializeObject<Proto.Message>(json);            
 
             return true;
         }
 
+        /** 
+         * Function used to convert ints to big endian
+         * \param value - The int to convert
+         * \return - Converted bytes
+         */
         byte[] hostToBig_i32(int value)
         {
             byte[] bvalue = BitConverter.GetBytes(value);
@@ -114,6 +144,11 @@ namespace crash
             return bvalue;
         }
 
+        /** 
+         * Function used to convert big endian ints to hosts endianness
+         * \param value - The bytes to convert
+         * \return - Converted int
+         */
         int bigToHost_i32(byte[] bvalue)
         {            
             if (BitConverter.IsLittleEndian)

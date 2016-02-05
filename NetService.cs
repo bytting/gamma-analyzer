@@ -1,6 +1,6 @@
 ﻿/*	
 	Crash - Controlling application for Burn
-    Copyright (C) 2016  Dag Robole
+    Copyright (C) 2016  Norwegian Radiation Protection Authority
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,16 +24,33 @@ using System.Threading;
 using System.Net.Sockets;
 
 namespace crash
-{
+{        
+    /**
+     * NetService - Threaded class for network communication
+     */
     public partial class NetService
     {
+        //! Running state for this service
         private volatile bool running;
+
+        //! Network utilities
         private TcpClient Client = null;
         private NetworkStream ClientStream = null;
-        private ConcurrentQueue<Proto.Message> sendq = null;
-        private ConcurrentQueue<Proto.Message> recvq = null;
-        List<byte> recvBuffer = new List<byte>();
 
+        //! Queue used to transfer packets to server (Burn)
+        private ConcurrentQueue<Proto.Message> sendq = null;
+
+        //! Queue used to transfer packets back to GUI client (Crash)
+        private ConcurrentQueue<Proto.Message> recvq = null;
+
+        //! Buffer to hold data streams from the network
+        List<byte> recvBuffer = new List<byte>();
+        
+        /** 
+         * Constructor for the NetService
+         * \param sendQueue - Queue used to receive messages from the GUI client.
+         * \param recvQueue - Queue used to pass messages on to the server.
+         */
         public NetService(ConcurrentQueue<Proto.Message> sendQueue, ConcurrentQueue<Proto.Message> recvQueue)
         {
             running = true;
@@ -41,31 +58,42 @@ namespace crash
             recvq = recvQueue;
         }
 
+        /**
+         * Thread entry point
+         */
         public void DoWork()
         {            
             while (running)
             {
                 Proto.Message sendMsg, recvMsg;
 
+                // Read all messages from GUI client
                 while(sendq.Count > 0)                
                     if (sendq.TryDequeue(out sendMsg))
-                        dispatchSendMsg(sendMsg);                
+                        dispatchSendMsg(sendMsg); // Handle the messages
 
+                // If we have a connection, read and buffer any waiting data streams
                 if (ClientStream != null)
                     while (recvData(ClientStream)) ;
 
+                // Extract messages from the network buffer
                 while (recvMessage(out recvMsg))                
-                    dispatchRecvMsg(recvMsg);                
+                    dispatchRecvMsg(recvMsg); // Handle the messages
 
-                Thread.Sleep(5);
+                Thread.Sleep(5); // Play nice (FIXME)
             }            
         }
 
+        /**
+         * Function used to handle messages coming from the GUI client
+         * \param msg - The message to handle
+         */
         private void dispatchSendMsg(Proto.Message msg)
         {
             switch(msg.command)
             {
-                case "connect":                    
+                case "connect":
+                    // Try to connect to server
                     Client = new TcpClient();
                     string host = msg.arguments["host"];
                     int port = Convert.ToInt32(msg.arguments["port"]);
@@ -84,8 +112,11 @@ namespace crash
 
                     if (Client.Connected)
                     {
+                        // Store the stream from the TCP client
                         ClientStream = Client.GetStream();
+                        // Empty the network buffer
                         recvBuffer.Clear();
+                        // Update the message to a connection response message and send it back to GUI client
                         msg.command = "connect_ok";
                         recvq.Enqueue(msg);                        
                     }
@@ -98,6 +129,7 @@ namespace crash
                     break;
 
                 case "disconnect":
+                    // Disconnect from server and send response back to GUI client
                     if (ClientStream != null)
                         ClientStream.Close();
                     ClientStream = null;
@@ -110,7 +142,7 @@ namespace crash
                     recvq.Enqueue(msg);                    
                     break;
 
-                default:
+                default:                    
                     if (ClientStream == null)
                     {
                         Proto.Message responseMsg = new Proto.Message("error");
@@ -119,6 +151,7 @@ namespace crash
                         return;
                     }
 
+                    // Send message to server
                     if(!sendMessage(ClientStream, msg))
                     {
                         Proto.Message responseMsg = new Proto.Message("error");
@@ -130,11 +163,15 @@ namespace crash
             }            
         }
 
+        /**
+         * Function used to handle messages coming from the server
+         * \param msg - The message to handle
+         */
         private void dispatchRecvMsg(Proto.Message msg)
         {
             switch (msg.command)
             {
-                case "close_ok":
+                case "close_ok": // The server has received a close message and are closing down
                     if (ClientStream != null)
                         ClientStream.Close();
                     ClientStream = null;
@@ -143,20 +180,26 @@ namespace crash
                         Client.Close();                            
                     Client = null;
 
-                    recvq.Enqueue(msg);                    
+                    recvq.Enqueue(msg); // Pass message back to GUI client
                     break;
 
                 default:
-                    recvq.Enqueue(msg);
+                    recvq.Enqueue(msg); // Pass message back to GUI client
                     break;
             }            
         }
 
+        /**
+         * Function used to stop this service         
+         */
         public void RequestStop()
         {
             running = false;
         }
 
+        /**
+         * Function used to check the running state of this service
+         */
         public bool IsRunning()
         {
             return running;
