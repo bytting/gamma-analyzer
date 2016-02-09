@@ -69,9 +69,9 @@ namespace crash
         }
 
         /** 
-         * Function to receive a data streams from the server and store them in the network buffer
+         * Function to receive data streams from the server and store them in the network buffer
          * \param stream - The stream to read from
-         * \return - Retun true on success, false on failure
+         * \return - Return true if a packet was stored in the network buffer, false if not
          */
         private bool recvData(NetworkStream stream)
         {            
@@ -97,8 +97,8 @@ namespace crash
 
         /** 
          * Function to read messages out of the network buffer
-         * \param msg - Storeage for any message read from the network buffer
-         * \return - Return true on success, false on failure
+         * \param msg - Storage for any message read from the network buffer
+         * \return - Return true if a complete message was extracted, false if not
          */
         private bool recvMessage(out Proto.Message msg)
         {
@@ -132,9 +132,9 @@ namespace crash
         }
 
         /** 
-         * Function used to convert ints to big endian
-         * \param value - The int to convert
-         * \return - Converted bytes
+         * Function used to store an integer in a byte buffer in big endian format
+         * \param value - The integer to store
+         * \return - byte buffer with integer in big endian format
          */
         byte[] hostToBig_i32(int value)
         {
@@ -145,9 +145,9 @@ namespace crash
         }
 
         /** 
-         * Function used to convert big endian ints to hosts endianness
-         * \param value - The bytes to convert
-         * \return - Converted int
+         * Function used to store a big endian byte buffer in an integer in host endian
+         * \param value - The byte buffer to store
+         * \return - integer in host endian
          */
         int bigToHost_i32(byte[] bvalue)
         {            

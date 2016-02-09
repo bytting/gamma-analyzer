@@ -37,19 +37,19 @@ namespace crash
         private TcpClient Client = null;
         private NetworkStream ClientStream = null;
 
-        //! Queue used to transfer packets to server (Burn)
+        //! Queue with messages from GUI client
         private ConcurrentQueue<Proto.Message> sendq = null;
 
-        //! Queue used to transfer packets back to GUI client (Crash)
+        //! Queue with messages from server
         private ConcurrentQueue<Proto.Message> recvq = null;
 
         //! Buffer to hold data streams from the network
         List<byte> recvBuffer = new List<byte>();
-        
+
         /** 
          * Constructor for the NetService
-         * \param sendQueue - Queue used to receive messages from the GUI client.
-         * \param recvQueue - Queue used to pass messages on to the server.
+         * \param sendQueue - Queue with messages from GUI client
+         * \param recvQueue - Queue with messages from server
          */
         public NetService(ConcurrentQueue<Proto.Message> sendQueue, ConcurrentQueue<Proto.Message> recvQueue)
         {
@@ -164,7 +164,7 @@ namespace crash
         }
 
         /**
-         * Function used to handle messages coming from the server
+         * Function used to handle messages coming from server
          * \param msg - The message to handle
          */
         private void dispatchRecvMsg(Proto.Message msg)
