@@ -6,8 +6,8 @@ close
 close_ok
 close_failed - message
 
-new_session
-new_session_ok - session_name
+new_session - session_name, iterations, livetime
+new_session_ok - session_name, iterations, livetime
 new_session_failed - message
 
 get_fix

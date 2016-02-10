@@ -130,8 +130,9 @@ namespace crash
                     log("set gain: " + msg.arguments["voltage"] + " " + msg.arguments["coarse_gain"] + " " + msg.arguments["fine_gain"]);
                     break;
 
-                case "get_preview_spec_ok":
+                case "get_spectrum_ok":
                     log(
+                        "session name: " + msg.arguments["session_name"] + 
                         "uncorr. total count: " + msg.arguments["uncorrected_total_count"] + 
                         " channel count: " + msg.arguments["channel_count"] + 
                         " computational limit: " + msg.arguments["computational_limit"] +
@@ -191,8 +192,35 @@ namespace crash
         }
 
         private void btnSendSession_Click(object sender, EventArgs e)
-        {            
-            sendq.Enqueue(new Proto.Message("new_session"));                                    
+        {
+            if (String.IsNullOrEmpty(tbSpecCount.Text))
+            {
+                MessageBox.Show("Mangler count");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbSpecLivetime.Text))
+            {
+                MessageBox.Show("Mangler livetime");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbSpecDelay.Text))
+            {
+                MessageBox.Show("Mangler delay");
+                return;
+            }
+
+            int count = Convert.ToInt32(tbSpecCount.Text);
+            float livetime = Convert.ToSingle(tbSpecLivetime.Text);
+            float delay = Convert.ToSingle(tbSpecDelay.Text);
+
+            Proto.Message msg = new Proto.Message("new_session");
+            msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
+            msg.AddParameter("iterations", count);
+            msg.AddParameter("livetime", livetime);
+            msg.AddParameter("delay", delay);
+            sendq.Enqueue(msg);
         }
 
         private void btnSendFix_Click(object sender, EventArgs e)
@@ -207,28 +235,7 @@ namespace crash
         }        
 
         private void btnGetPreview_Click(object sender, EventArgs e)
-        {
-            if (String.IsNullOrEmpty(tbSpecCount.Text))
-            {
-                MessageBox.Show("Mangler count");
-                return;
-            }
-
-            if (String.IsNullOrEmpty(tbSpecLivetime.Text))
-            {
-                MessageBox.Show("Mangler livetime");
-                return;
-            }
-
-            int count = Convert.ToInt32(tbSpecCount.Text);
-            float livetime = Convert.ToInt32(tbSpecLivetime.Text);
-
-            for(int i=0; i<count; i++)
-            {
-                Proto.Message msg = new Proto.Message("get_preview_spec");
-                msg.AddParameter("livetime", livetime);
-                sendq.Enqueue(msg);
-            }            
+        {            
         }
 
         private void btnSetGain_Click(object sender, EventArgs e)

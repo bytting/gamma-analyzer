@@ -43,29 +43,29 @@
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.tabs = new System.Windows.Forms.TabControl();
             this.pageSettings = new System.Windows.Forms.TabPage();
+            this.tbFineGain = new System.Windows.Forms.TextBox();
+            this.tbCoarseGain = new System.Windows.Forms.TextBox();
+            this.tbVoltage = new System.Windows.Forms.TextBox();
+            this.tbSpecLivetime = new System.Windows.Forms.TextBox();
+            this.tbSpecCount = new System.Windows.Forms.TextBox();
             this.btnSetGain = new System.Windows.Forms.Button();
-            this.btnGetPreview = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnSendSession = new System.Windows.Forms.Button();
+            this.btnSendHello = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.btnSendFix = new System.Windows.Forms.Button();
             this.btnStopNetService = new System.Windows.Forms.Button();
-            this.btnSendSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
-            this.btnSendHello = new System.Windows.Forms.Button();
             this.tbLog = new System.Windows.Forms.TextBox();
             this.pageSpectrometry = new System.Windows.Forms.TabPage();
-            this.tbSpecCount = new System.Windows.Forms.TextBox();
-            this.tbSpecLivetime = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.tbVoltage = new System.Windows.Forms.TextBox();
-            this.tbCoarseGain = new System.Windows.Forms.TextBox();
-            this.tbFineGain = new System.Windows.Forms.TextBox();
+            this.tbSpecDelay = new System.Windows.Forms.TextBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
             this.tabs.SuspendLayout();
             this.pageSettings.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -186,13 +186,14 @@
             // pageSettings
             // 
             this.pageSettings.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pageSettings.Controls.Add(this.tbSpecDelay);
+            this.pageSettings.Controls.Add(this.btnSendSession);
             this.pageSettings.Controls.Add(this.tbFineGain);
             this.pageSettings.Controls.Add(this.tbCoarseGain);
             this.pageSettings.Controls.Add(this.tbVoltage);
             this.pageSettings.Controls.Add(this.tbSpecLivetime);
             this.pageSettings.Controls.Add(this.tbSpecCount);
             this.pageSettings.Controls.Add(this.btnSetGain);
-            this.pageSettings.Controls.Add(this.btnGetPreview);
             this.pageSettings.Controls.Add(this.panel2);
             this.pageSettings.Controls.Add(this.panel1);
             this.pageSettings.Controls.Add(this.tbLog);
@@ -204,6 +205,41 @@
             this.pageSettings.TabIndex = 0;
             this.pageSettings.Text = "Settings";
             // 
+            // tbFineGain
+            // 
+            this.tbFineGain.Location = new System.Drawing.Point(571, 8);
+            this.tbFineGain.Name = "tbFineGain";
+            this.tbFineGain.Size = new System.Drawing.Size(100, 23);
+            this.tbFineGain.TabIndex = 14;
+            // 
+            // tbCoarseGain
+            // 
+            this.tbCoarseGain.Location = new System.Drawing.Point(465, 8);
+            this.tbCoarseGain.Name = "tbCoarseGain";
+            this.tbCoarseGain.Size = new System.Drawing.Size(100, 23);
+            this.tbCoarseGain.TabIndex = 13;
+            // 
+            // tbVoltage
+            // 
+            this.tbVoltage.Location = new System.Drawing.Point(358, 8);
+            this.tbVoltage.Name = "tbVoltage";
+            this.tbVoltage.Size = new System.Drawing.Size(100, 23);
+            this.tbVoltage.TabIndex = 12;
+            // 
+            // tbSpecLivetime
+            // 
+            this.tbSpecLivetime.Location = new System.Drawing.Point(464, 63);
+            this.tbSpecLivetime.Name = "tbSpecLivetime";
+            this.tbSpecLivetime.Size = new System.Drawing.Size(100, 23);
+            this.tbSpecLivetime.TabIndex = 9;
+            // 
+            // tbSpecCount
+            // 
+            this.tbSpecCount.Location = new System.Drawing.Point(358, 63);
+            this.tbSpecCount.Name = "tbSpecCount";
+            this.tbSpecCount.Size = new System.Drawing.Size(100, 23);
+            this.tbSpecCount.TabIndex = 8;
+            // 
             // btnSetGain
             // 
             this.btnSetGain.Location = new System.Drawing.Point(239, 8);
@@ -214,15 +250,48 @@
             this.btnSetGain.UseVisualStyleBackColor = true;
             this.btnSetGain.Click += new System.EventHandler(this.btnSetGain_Click);
             // 
-            // btnGetPreview
+            // panel2
             // 
-            this.btnGetPreview.Location = new System.Drawing.Point(239, 60);
-            this.btnGetPreview.Name = "btnGetPreview";
-            this.btnGetPreview.Size = new System.Drawing.Size(101, 28);
-            this.btnGetPreview.TabIndex = 6;
-            this.btnGetPreview.Text = "Get preview";
-            this.btnGetPreview.UseVisualStyleBackColor = true;
-            this.btnGetPreview.Click += new System.EventHandler(this.btnGetPreview_Click);
+            this.panel2.Controls.Add(this.btnSendHello);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel2.Location = new System.Drawing.Point(5, 4);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(132, 108);
+            this.panel2.TabIndex = 11;
+            // 
+            // btnSendSession
+            // 
+            this.btnSendSession.Location = new System.Drawing.Point(239, 58);
+            this.btnSendSession.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.btnSendSession.Name = "btnSendSession";
+            this.btnSendSession.Size = new System.Drawing.Size(101, 28);
+            this.btnSendSession.TabIndex = 3;
+            this.btnSendSession.Text = "New session";
+            this.btnSendSession.UseVisualStyleBackColor = true;
+            this.btnSendSession.Click += new System.EventHandler(this.btnSendSession_Click);
+            // 
+            // btnSendHello
+            // 
+            this.btnSendHello.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSendHello.Location = new System.Drawing.Point(0, 0);
+            this.btnSendHello.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.btnSendHello.Name = "btnSendHello";
+            this.btnSendHello.Size = new System.Drawing.Size(132, 28);
+            this.btnSendHello.TabIndex = 1;
+            this.btnSendHello.Text = "Send hello";
+            this.btnSendHello.UseVisualStyleBackColor = true;
+            this.btnSendHello.Click += new System.EventHandler(this.btnSendHello_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnSendFix);
+            this.panel1.Controls.Add(this.btnStopNetService);
+            this.panel1.Controls.Add(this.btnSendClose);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Location = new System.Drawing.Point(987, 4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(129, 108);
+            this.panel1.TabIndex = 10;
             // 
             // btnSendFix
             // 
@@ -248,18 +317,6 @@
             this.btnStopNetService.UseVisualStyleBackColor = true;
             this.btnStopNetService.Click += new System.EventHandler(this.btnStopNetService_Click);
             // 
-            // btnSendSession
-            // 
-            this.btnSendSession.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSendSession.Location = new System.Drawing.Point(0, 28);
-            this.btnSendSession.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnSendSession.Name = "btnSendSession";
-            this.btnSendSession.Size = new System.Drawing.Size(132, 28);
-            this.btnSendSession.TabIndex = 3;
-            this.btnSendSession.Text = "New session";
-            this.btnSendSession.UseVisualStyleBackColor = true;
-            this.btnSendSession.Click += new System.EventHandler(this.btnSendSession_Click);
-            // 
             // btnSendClose
             // 
             this.btnSendClose.Dock = System.Windows.Forms.DockStyle.Top;
@@ -271,18 +328,6 @@
             this.btnSendClose.Text = "Send close";
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
-            // 
-            // btnSendHello
-            // 
-            this.btnSendHello.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSendHello.Location = new System.Drawing.Point(0, 0);
-            this.btnSendHello.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnSendHello.Name = "btnSendHello";
-            this.btnSendHello.Size = new System.Drawing.Size(132, 28);
-            this.btnSendHello.TabIndex = 1;
-            this.btnSendHello.Text = "Send hello";
-            this.btnSendHello.UseVisualStyleBackColor = true;
-            this.btnSendHello.Click += new System.EventHandler(this.btnSendHello_Click);
             // 
             // tbLog
             // 
@@ -306,61 +351,12 @@
             this.pageSpectrometry.TabIndex = 1;
             this.pageSpectrometry.Text = "Spectrometry";
             // 
-            // tbSpecCount
+            // tbSpecDelay
             // 
-            this.tbSpecCount.Location = new System.Drawing.Point(358, 63);
-            this.tbSpecCount.Name = "tbSpecCount";
-            this.tbSpecCount.Size = new System.Drawing.Size(100, 23);
-            this.tbSpecCount.TabIndex = 8;
-            // 
-            // tbSpecLivetime
-            // 
-            this.tbSpecLivetime.Location = new System.Drawing.Point(464, 63);
-            this.tbSpecLivetime.Name = "tbSpecLivetime";
-            this.tbSpecLivetime.Size = new System.Drawing.Size(100, 23);
-            this.tbSpecLivetime.TabIndex = 9;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btnSendFix);
-            this.panel1.Controls.Add(this.btnStopNetService);
-            this.panel1.Controls.Add(this.btnSendClose);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(987, 4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(129, 108);
-            this.panel1.TabIndex = 10;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.btnSendSession);
-            this.panel2.Controls.Add(this.btnSendHello);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(5, 4);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(132, 108);
-            this.panel2.TabIndex = 11;
-            // 
-            // tbVoltage
-            // 
-            this.tbVoltage.Location = new System.Drawing.Point(358, 8);
-            this.tbVoltage.Name = "tbVoltage";
-            this.tbVoltage.Size = new System.Drawing.Size(100, 23);
-            this.tbVoltage.TabIndex = 12;
-            // 
-            // tbCoarseGain
-            // 
-            this.tbCoarseGain.Location = new System.Drawing.Point(465, 8);
-            this.tbCoarseGain.Name = "tbCoarseGain";
-            this.tbCoarseGain.Size = new System.Drawing.Size(100, 23);
-            this.tbCoarseGain.TabIndex = 13;
-            // 
-            // tbFineGain
-            // 
-            this.tbFineGain.Location = new System.Drawing.Point(571, 8);
-            this.tbFineGain.Name = "tbFineGain";
-            this.tbFineGain.Size = new System.Drawing.Size(100, 23);
-            this.tbFineGain.TabIndex = 14;
+            this.tbSpecDelay.Location = new System.Drawing.Point(571, 63);
+            this.tbSpecDelay.Name = "tbSpecDelay";
+            this.tbSpecDelay.Size = new System.Drawing.Size(100, 23);
+            this.tbSpecDelay.TabIndex = 15;
             // 
             // FormMain
             // 
@@ -388,8 +384,8 @@
             this.tabs.ResumeLayout(false);
             this.pageSettings.ResumeLayout(false);
             this.pageSettings.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -418,7 +414,6 @@
         private System.Windows.Forms.Button btnSendSession;
         private System.Windows.Forms.Button btnStopNetService;
         private System.Windows.Forms.Button btnSendFix;
-        private System.Windows.Forms.Button btnGetPreview;
         private System.Windows.Forms.Button btnSetGain;
         private System.Windows.Forms.TextBox tbFineGain;
         private System.Windows.Forms.TextBox tbCoarseGain;
@@ -427,6 +422,7 @@
         private System.Windows.Forms.TextBox tbSpecCount;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox tbSpecDelay;
     }
 }
 
