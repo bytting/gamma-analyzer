@@ -114,6 +114,10 @@ namespace crash
                     log("New session failed: " + msg.arguments["message"]);
                     break;
 
+                case "stop_session_ok":
+                    log("Session stopped");
+                    break;
+
                 case "error":
                     log("Error: " + msg.arguments["message"]);
                     break;
@@ -232,11 +236,7 @@ namespace crash
         {
             netService.RequestStop();
             netThread.Join();
-        }        
-
-        private void btnGetPreview_Click(object sender, EventArgs e)
-        {            
-        }
+        }                
 
         private void btnSetGain_Click(object sender, EventArgs e)
         {
@@ -267,6 +267,11 @@ namespace crash
             msg.AddParameter("coarse_gain", coarse);
             msg.AddParameter("fine_gain", fine);
             sendq.Enqueue(msg);
+        }
+
+        private void btnStopSession_Click(object sender, EventArgs e)
+        {
+            sendq.Enqueue(new Proto.Message("stop_session"));
         }        
     }
 }

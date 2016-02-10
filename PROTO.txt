@@ -10,6 +10,10 @@ new_session - session_name, iterations, livetime
 new_session_ok - session_name, iterations, livetime
 new_session_failed - message
 
+stop_session
+stop_session_ok
+stop_session_failed - message
+
 get_fix
 get_fix_ok - latitude, longitude, altitude
 get_fix_failed - message

@@ -43,6 +43,8 @@
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.tabs = new System.Windows.Forms.TabControl();
             this.pageSettings = new System.Windows.Forms.TabPage();
+            this.tbSpecDelay = new System.Windows.Forms.TextBox();
+            this.btnSendSession = new System.Windows.Forms.Button();
             this.tbFineGain = new System.Windows.Forms.TextBox();
             this.tbCoarseGain = new System.Windows.Forms.TextBox();
             this.tbVoltage = new System.Windows.Forms.TextBox();
@@ -50,7 +52,6 @@
             this.tbSpecCount = new System.Windows.Forms.TextBox();
             this.btnSetGain = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnSendSession = new System.Windows.Forms.Button();
             this.btnSendHello = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSendFix = new System.Windows.Forms.Button();
@@ -58,7 +59,7 @@
             this.btnSendClose = new System.Windows.Forms.Button();
             this.tbLog = new System.Windows.Forms.TextBox();
             this.pageSpectrometry = new System.Windows.Forms.TabPage();
-            this.tbSpecDelay = new System.Windows.Forms.TextBox();
+            this.btnStopSession = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -186,6 +187,7 @@
             // pageSettings
             // 
             this.pageSettings.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pageSettings.Controls.Add(this.btnStopSession);
             this.pageSettings.Controls.Add(this.tbSpecDelay);
             this.pageSettings.Controls.Add(this.btnSendSession);
             this.pageSettings.Controls.Add(this.tbFineGain);
@@ -204,6 +206,24 @@
             this.pageSettings.Size = new System.Drawing.Size(1121, 612);
             this.pageSettings.TabIndex = 0;
             this.pageSettings.Text = "Settings";
+            // 
+            // tbSpecDelay
+            // 
+            this.tbSpecDelay.Location = new System.Drawing.Point(571, 63);
+            this.tbSpecDelay.Name = "tbSpecDelay";
+            this.tbSpecDelay.Size = new System.Drawing.Size(100, 23);
+            this.tbSpecDelay.TabIndex = 15;
+            // 
+            // btnSendSession
+            // 
+            this.btnSendSession.Location = new System.Drawing.Point(239, 58);
+            this.btnSendSession.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.btnSendSession.Name = "btnSendSession";
+            this.btnSendSession.Size = new System.Drawing.Size(101, 28);
+            this.btnSendSession.TabIndex = 3;
+            this.btnSendSession.Text = "New session";
+            this.btnSendSession.UseVisualStyleBackColor = true;
+            this.btnSendSession.Click += new System.EventHandler(this.btnSendSession_Click);
             // 
             // tbFineGain
             // 
@@ -258,17 +278,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(132, 108);
             this.panel2.TabIndex = 11;
-            // 
-            // btnSendSession
-            // 
-            this.btnSendSession.Location = new System.Drawing.Point(239, 58);
-            this.btnSendSession.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnSendSession.Name = "btnSendSession";
-            this.btnSendSession.Size = new System.Drawing.Size(101, 28);
-            this.btnSendSession.TabIndex = 3;
-            this.btnSendSession.Text = "New session";
-            this.btnSendSession.UseVisualStyleBackColor = true;
-            this.btnSendSession.Click += new System.EventHandler(this.btnSendSession_Click);
             // 
             // btnSendHello
             // 
@@ -351,12 +360,15 @@
             this.pageSpectrometry.TabIndex = 1;
             this.pageSpectrometry.Text = "Spectrometry";
             // 
-            // tbSpecDelay
+            // btnStopSession
             // 
-            this.tbSpecDelay.Location = new System.Drawing.Point(571, 63);
-            this.tbSpecDelay.Name = "tbSpecDelay";
-            this.tbSpecDelay.Size = new System.Drawing.Size(100, 23);
-            this.tbSpecDelay.TabIndex = 15;
+            this.btnStopSession.Location = new System.Drawing.Point(678, 63);
+            this.btnStopSession.Name = "btnStopSession";
+            this.btnStopSession.Size = new System.Drawing.Size(90, 25);
+            this.btnStopSession.TabIndex = 16;
+            this.btnStopSession.Text = "Stop session";
+            this.btnStopSession.UseVisualStyleBackColor = true;
+            this.btnStopSession.Click += new System.EventHandler(this.btnStopSession_Click);
             // 
             // FormMain
             // 
@@ -423,6 +435,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox tbSpecDelay;
+        private System.Windows.Forms.Button btnStopSession;
     }
 }
 
