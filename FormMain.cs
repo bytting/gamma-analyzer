@@ -32,10 +32,10 @@ namespace crash
 {
     public partial class FormMain : Form
     {
-        static ConcurrentQueue<Proto.Message> sendq = new ConcurrentQueue<Proto.Message>();
-        static ConcurrentQueue<Proto.Message> recvq = new ConcurrentQueue<Proto.Message>();        
+        static ConcurrentQueue<burn.Message> sendq = null;
+        static ConcurrentQueue<burn.Message> recvq = null;
 
-        static NetService netService = new NetService(sendq, recvq);
+        static burn.NetService netService = new burn.NetService(ref sendq, ref recvq);
         static Thread netThread = new Thread(netService.DoWork);
 
         FormConnect formConnect = new FormConnect();
@@ -63,7 +63,7 @@ namespace crash
         {
             while (!recvq.IsEmpty)
             {
-                Proto.Message msg;                
+                burn.Message msg;                
                 if (recvq.TryDequeue(out msg))
                     dispatchRecvMsg(msg);                                    
             }            
@@ -76,7 +76,7 @@ namespace crash
             timer.Stop();
         }
 
-        private bool dispatchRecvMsg(Proto.Message msg)
+        private bool dispatchRecvMsg(burn.Message msg)
         {
             switch (msg.command)
             {
@@ -174,25 +174,25 @@ namespace crash
             if (formConnect.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            Proto.Message msg = new Proto.Message("connect");
+            burn.Message msg = new burn.Message("connect");
             msg.AddParameter("host", formConnect.IP);
             msg.AddParameter("port", formConnect.Port);            
             sendq.Enqueue(msg);            
         }
 
         private void menuItemDisconnect_Click(object sender, EventArgs e)
-        {            
-            sendq.Enqueue(new Proto.Message("disconnect"));
+        {
+            sendq.Enqueue(new burn.Message("disconnect"));
         }
 
         private void btnSendHello_Click(object sender, EventArgs e)
-        {                                    
-            sendq.Enqueue(new Proto.Message("ping"));            
+        {
+            sendq.Enqueue(new burn.Message("ping"));            
         }
 
         private void btnSendClose_Click(object sender, EventArgs e)
-        {            
-            sendq.Enqueue(new Proto.Message("close"));                        
+        {
+            sendq.Enqueue(new burn.Message("close"));                        
         }
 
         private void btnSendSession_Click(object sender, EventArgs e)
@@ -219,7 +219,7 @@ namespace crash
             float livetime = Convert.ToSingle(tbSpecLivetime.Text);
             float delay = Convert.ToSingle(tbSpecDelay.Text);
 
-            Proto.Message msg = new Proto.Message("new_session");
+            burn.Message msg = new burn.Message("new_session");
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
             msg.AddParameter("iterations", count);
             msg.AddParameter("livetime", livetime);
@@ -228,8 +228,8 @@ namespace crash
         }
 
         private void btnSendFix_Click(object sender, EventArgs e)
-        {            
-            sendq.Enqueue(new Proto.Message("get_fix"));
+        {
+            sendq.Enqueue(new burn.Message("get_fix"));
         }
 
         private void btnStopNetService_Click(object sender, EventArgs e)
@@ -262,7 +262,7 @@ namespace crash
             float coarse = Convert.ToInt32(tbCoarseGain.Text);
             float fine = Convert.ToInt32(tbFineGain.Text);
 
-            Proto.Message msg = new Proto.Message("set_gain");
+            burn.Message msg = new burn.Message("set_gain");
             msg.AddParameter("voltage", voltage);
             msg.AddParameter("coarse_gain", coarse);
             msg.AddParameter("fine_gain", fine);
@@ -271,7 +271,7 @@ namespace crash
 
         private void btnStopSession_Click(object sender, EventArgs e)
         {
-            sendq.Enqueue(new Proto.Message("stop_session"));
+            sendq.Enqueue(new burn.Message("stop_session"));
         }        
     }
 }

@@ -23,7 +23,7 @@ using System.Text;
 using System.Threading;
 using System.Net.Sockets;
 
-namespace crash
+namespace burn
 {        
     /**
      * NetService - Threaded class for network communication
@@ -38,10 +38,10 @@ namespace crash
         private NetworkStream ClientStream = null;
 
         //! Queue with messages from GUI client
-        private ConcurrentQueue<Proto.Message> sendq = null;
+        ConcurrentQueue<Message> sendq = new ConcurrentQueue<Message>();
 
         //! Queue with messages from server
-        private ConcurrentQueue<Proto.Message> recvq = null;
+        ConcurrentQueue<Message> recvq = new ConcurrentQueue<Message>();                
 
         //! Buffer to hold data streams from the network
         List<byte> recvBuffer = new List<byte>();
@@ -51,11 +51,11 @@ namespace crash
          * \param sendQueue - Queue with messages from GUI client
          * \param recvQueue - Queue with messages from server
          */
-        public NetService(ConcurrentQueue<Proto.Message> sendQueue, ConcurrentQueue<Proto.Message> recvQueue)
+        public NetService(ref ConcurrentQueue<Message> sendQueue, ref ConcurrentQueue<Message> recvQueue)
         {
             running = true;
-            sendq = sendQueue;
-            recvq = recvQueue;
+            sendQueue = sendq;
+            recvQueue = recvq;
         }
 
         /**
@@ -65,7 +65,7 @@ namespace crash
         {            
             while (running)
             {
-                Proto.Message sendMsg, recvMsg;
+                Message sendMsg, recvMsg;
 
                 // Read all messages from GUI client
                 while(sendq.Count > 0)                
@@ -88,7 +88,7 @@ namespace crash
          * Function used to handle messages coming from the GUI client
          * \param msg - The message to handle
          */
-        private void dispatchSendMsg(Proto.Message msg)
+        private void dispatchSendMsg(Message msg)
         {
             switch(msg.command)
             {
@@ -145,7 +145,7 @@ namespace crash
                 default:                    
                     if (ClientStream == null)
                     {
-                        Proto.Message responseMsg = new Proto.Message("error");
+                        Message responseMsg = new Message("error");
                         responseMsg.AddParameter("message", "Can not send message, not connected to peer");                        
                         recvq.Enqueue(responseMsg);
                         return;
@@ -154,7 +154,7 @@ namespace crash
                     // Send message to server
                     if(!sendMessage(ClientStream, msg))
                     {
-                        Proto.Message responseMsg = new Proto.Message("error");
+                        Message responseMsg = new Message("error");
                         responseMsg.AddParameter("message", "Unable to send message");                        
                         recvq.Enqueue(responseMsg);
                         return;
@@ -167,7 +167,7 @@ namespace crash
          * Function used to handle messages coming from server
          * \param msg - The message to handle
          */
-        private void dispatchRecvMsg(Proto.Message msg)
+        private void dispatchRecvMsg(Message msg)
         {
             switch (msg.command)
             {

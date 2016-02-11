@@ -23,7 +23,7 @@ using System.Text;
 using System.Net.Sockets;
 using Newtonsoft.Json;
 
-namespace crash
+namespace burn
 {
     /**
      * NetService - Continuation of the Threaded NetService class containing IO utilities
@@ -36,7 +36,7 @@ namespace crash
          * \param msg - The message to send
          * \return - Retun true on success, false on failure
          */
-        private bool sendMessage(NetworkStream stream, Proto.Message msg)
+        private bool sendMessage(NetworkStream stream, Message msg)
         {
             string json = JsonConvert.SerializeObject(msg);
 
@@ -57,7 +57,7 @@ namespace crash
                 }
                 catch(SocketException ex)
                 {
-                    Proto.Message emsg = new Proto.Message("error_socket");
+                    Message emsg = new Message("error_socket");
                     emsg.AddParameter("error_code", ex.ErrorCode);
                     emsg.AddParameter("message", ex.Message);                    
                     recvq.Enqueue(emsg);
@@ -100,7 +100,7 @@ namespace crash
          * \param msg - Storage for any message read from the network buffer
          * \return - Return true if a complete message was extracted, false if not
          */
-        private bool recvMessage(out Proto.Message msg)
+        private bool recvMessage(out Message msg)
         {
             msg = null;
 
@@ -126,7 +126,7 @@ namespace crash
             
             // Deserialize the message
             string json = Encoding.UTF8.GetString(bjson);
-            msg = JsonConvert.DeserializeObject<Proto.Message>(json);            
+            msg = JsonConvert.DeserializeObject<Message>(json);            
 
             return true;
         }
