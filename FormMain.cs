@@ -124,11 +124,7 @@ namespace crash
 
                 case "error_socket":
                     log("Socket error: " + msg.arguments["error_code"] + " " + msg.arguments["message"]);
-                    break;
-
-                case "get_fix_ok":
-                    log("GPS Fix - Lat: " + msg.arguments["latitude"] + " Lon: " + msg.arguments["longitude"] + " Alt: " + msg.arguments["altitude"]);
-                    break;
+                    break;                
 
                 case "set_gain_ok":
                     log("set gain: " + msg.arguments["voltage"] + " " + msg.arguments["coarse_gain"] + " " + msg.arguments["fine_gain"]);
@@ -141,6 +137,12 @@ namespace crash
                         " channel count: " + msg.arguments["channel_count"] + 
                         " computational limit: " + msg.arguments["computational_limit"] +
                         " status: " + msg.arguments["status"] +
+                        " latitude_start: " + msg.arguments["latitude_start"] +
+                        " longitude_start: " + msg.arguments["longitude_start"] +
+                        " altitude_start: " + msg.arguments["altitude_start"] +
+                        " latitude_end: " + msg.arguments["latitude_end"] +
+                        " longitude_end: " + msg.arguments["longitude_end"] +
+                        " altitude_end: " + msg.arguments["altitude_end"] +
                         " livetime: " + msg.arguments["livetime"] +
                         " realtime: " + msg.arguments["realtime"]);
                     log(msg.arguments["channels"]);
@@ -225,12 +227,7 @@ namespace crash
             msg.AddParameter("livetime", livetime);
             msg.AddParameter("delay", delay);
             sendq.Enqueue(msg);
-        }
-
-        private void btnSendFix_Click(object sender, EventArgs e)
-        {
-            sendq.Enqueue(new burn.Message("get_fix"));
-        }
+        }        
 
         private void btnStopNetService_Click(object sender, EventArgs e)
         {

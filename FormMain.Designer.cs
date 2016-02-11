@@ -43,6 +43,7 @@
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.tabs = new System.Windows.Forms.TabControl();
             this.pageSettings = new System.Windows.Forms.TabPage();
+            this.btnStopSession = new System.Windows.Forms.Button();
             this.tbSpecDelay = new System.Windows.Forms.TextBox();
             this.btnSendSession = new System.Windows.Forms.Button();
             this.tbFineGain = new System.Windows.Forms.TextBox();
@@ -54,12 +55,10 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnSendHello = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSendFix = new System.Windows.Forms.Button();
             this.btnStopNetService = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
             this.tbLog = new System.Windows.Forms.TextBox();
             this.pageSpectrometry = new System.Windows.Forms.TabPage();
-            this.btnStopSession = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -207,6 +206,16 @@
             this.pageSettings.TabIndex = 0;
             this.pageSettings.Text = "Settings";
             // 
+            // btnStopSession
+            // 
+            this.btnStopSession.Location = new System.Drawing.Point(678, 63);
+            this.btnStopSession.Name = "btnStopSession";
+            this.btnStopSession.Size = new System.Drawing.Size(90, 25);
+            this.btnStopSession.TabIndex = 16;
+            this.btnStopSession.Text = "Stop session";
+            this.btnStopSession.UseVisualStyleBackColor = true;
+            this.btnStopSession.Click += new System.EventHandler(this.btnStopSession_Click);
+            // 
             // tbSpecDelay
             // 
             this.tbSpecDelay.Location = new System.Drawing.Point(571, 63);
@@ -293,7 +302,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnSendFix);
             this.panel1.Controls.Add(this.btnStopNetService);
             this.panel1.Controls.Add(this.btnSendClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
@@ -301,18 +309,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(129, 108);
             this.panel1.TabIndex = 10;
-            // 
-            // btnSendFix
-            // 
-            this.btnSendFix.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSendFix.Location = new System.Drawing.Point(0, 56);
-            this.btnSendFix.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.btnSendFix.Name = "btnSendFix";
-            this.btnSendFix.Size = new System.Drawing.Size(129, 28);
-            this.btnSendFix.TabIndex = 5;
-            this.btnSendFix.Text = "Get fix";
-            this.btnSendFix.UseVisualStyleBackColor = true;
-            this.btnSendFix.Click += new System.EventHandler(this.btnSendFix_Click);
             // 
             // btnStopNetService
             // 
@@ -359,16 +355,6 @@
             this.pageSpectrometry.Size = new System.Drawing.Size(1121, 612);
             this.pageSpectrometry.TabIndex = 1;
             this.pageSpectrometry.Text = "Spectrometry";
-            // 
-            // btnStopSession
-            // 
-            this.btnStopSession.Location = new System.Drawing.Point(678, 63);
-            this.btnStopSession.Name = "btnStopSession";
-            this.btnStopSession.Size = new System.Drawing.Size(90, 25);
-            this.btnStopSession.TabIndex = 16;
-            this.btnStopSession.Text = "Stop session";
-            this.btnStopSession.UseVisualStyleBackColor = true;
-            this.btnStopSession.Click += new System.EventHandler(this.btnStopSession_Click);
             // 
             // FormMain
             // 
@@ -425,7 +411,6 @@
         private System.Windows.Forms.TextBox tbLog;
         private System.Windows.Forms.Button btnSendSession;
         private System.Windows.Forms.Button btnStopNetService;
-        private System.Windows.Forms.Button btnSendFix;
         private System.Windows.Forms.Button btnSetGain;
         private System.Windows.Forms.TextBox tbFineGain;
         private System.Windows.Forms.TextBox tbCoarseGain;
