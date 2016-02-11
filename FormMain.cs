@@ -130,9 +130,10 @@ namespace crash
                     log("set gain: " + msg.arguments["voltage"] + " " + msg.arguments["coarse_gain"] + " " + msg.arguments["fine_gain"]);
                     break;
 
-                case "get_spectrum_ok":
+                case "get_spectrum_ok":                    
                     log(
-                        "session name: " + msg.arguments["session_name"] + 
+                        "session name: " + msg.arguments["session_name"] +
+                        "session index: " + msg.arguments["session_index"] + 
                         "uncorr. total count: " + msg.arguments["uncorrected_total_count"] + 
                         " channel count: " + msg.arguments["channel_count"] + 
                         " computational limit: " + msg.arguments["computational_limit"] +
@@ -145,9 +146,9 @@ namespace crash
                         " altitude_end: " + msg.arguments["altitude_end"] +
                         " livetime: " + msg.arguments["livetime"] +
                         " realtime: " + msg.arguments["realtime"]);
-                    log(msg.arguments["channels"]);
-                    string[] items = msg.arguments["channels"].Split(new char[] {' '});
-                    log("Items: " + items.Length.ToString());
+                    //log(msg.arguments["channels"]);
+                    //string[] items = msg.arguments["channels"].Split(new char[] {' '});
+                    //log("Items: " + items.Length.ToString());
                     break;
 
                 default:

@@ -1,22 +1,67 @@
 
-error - message
-error_socket - error_code, message
+error ->
+	message
+	
+error_socket ->
+	error_code
+	message
 
 close
-close_ok
-close_failed - message
 
-new_session - session_name, iterations, livetime
-new_session_ok - session_name, iterations, livetime
-new_session_failed - message
+close_ok
+
+close_failed ->
+	message
+
+new_session ->
+	session_name
+	iterations
+	livetime
+	
+new_session_ok ->
+	session_name
+	iterations
+	livetime
+	
+new_session_failed ->
+	message
 
 stop_session
+
 stop_session_ok
-stop_session_failed - message
 
-set_gain - voltage, coarse_gain, fine_gain
-set_gain_ok - voltage, coarse_gain, fine_gain
-set_gain_failed - message
+stop_session_failed ->
+	message
 
-get_spectrum_ok - latitude_start, longitude_start, altitude_start, latitude_end, longitude_end, altitude_end, livetime, realtime, channel_count, channels, uncorrected_total_count, computational_limit, status
-get_spectrum_failed - message
+set_gain ->
+	voltage
+	coarse_gain
+	fine_gain
+	
+set_gain_ok ->
+	voltage
+	coarse_gain
+	fine_gain
+	
+set_gain_failed ->
+	message
+
+get_spectrum_ok -
+	session_name
+	session_index
+	latitude_start
+	longitude_start
+	altitude_start
+	latitude_end
+	longitude_end
+	altitude_end
+	livetime
+	realtime
+	channel_count
+	channels
+	uncorrected_total_count
+	computational_limit
+	status
+	
+get_spectrum_failed ->
+	message

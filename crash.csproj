@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Burn_Format_CHN.cs" />
     <Compile Include="Burn_NetService.cs" />
     <Compile Include="Burn_NetService_IO.cs" />
     <Compile Include="Burn_NetService_Proto.cs" />
