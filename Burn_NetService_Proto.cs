@@ -64,6 +64,11 @@ namespace burn
         public void AddParameter(string key, object value)
         {
             arguments[key] = value.ToString();
-        }            
+        }   
+        
+        public string ToJson(bool indented = false)
+        {
+            return JsonConvert.SerializeObject(this, indented ? Formatting.Indented : Formatting.None);
+        }
     }           
 }

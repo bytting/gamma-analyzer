@@ -102,7 +102,7 @@ namespace burn
          */
         private bool recvMessage(out Message msg)
         {
-            msg = null;
+            msg = null;            
 
             // Make sure buffer hold at least a 32 bit int (netstrings)
             if (recvBuffer.Count < 4)
@@ -124,7 +124,7 @@ namespace burn
             recvBuffer.CopyTo(4, bjson, 0, siz);
             recvBuffer.RemoveRange(0, 4 + siz);
             
-            // Deserialize the message
+            // Deserialize the message            
             string json = Encoding.UTF8.GetString(bjson);
             msg = JsonConvert.DeserializeObject<Message>(json);            
 

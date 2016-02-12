@@ -130,25 +130,11 @@ namespace crash
                     log("set gain: " + msg.arguments["voltage"] + " " + msg.arguments["coarse_gain"] + " " + msg.arguments["fine_gain"]);
                     break;
 
-                case "get_spectrum_ok":                    
-                    log(
-                        "session name: " + msg.arguments["session_name"] +
-                        "session index: " + msg.arguments["session_index"] + 
-                        "uncorr. total count: " + msg.arguments["uncorrected_total_count"] + 
-                        " channel count: " + msg.arguments["channel_count"] + 
-                        " computational limit: " + msg.arguments["computational_limit"] +
-                        " status: " + msg.arguments["status"] +
-                        " latitude_start: " + msg.arguments["latitude_start"] +
-                        " longitude_start: " + msg.arguments["longitude_start"] +
-                        " altitude_start: " + msg.arguments["altitude_start"] +
-                        " latitude_end: " + msg.arguments["latitude_end"] +
-                        " longitude_end: " + msg.arguments["longitude_end"] +
-                        " altitude_end: " + msg.arguments["altitude_end"] +
-                        " livetime: " + msg.arguments["livetime"] +
-                        " realtime: " + msg.arguments["realtime"]);
-                    //log(msg.arguments["channels"]);
-                    //string[] items = msg.arguments["channels"].Split(new char[] {' '});
-                    //log("Items: " + items.Length.ToString());
+                case "get_spectrum_ok":                                                            
+                    string jresp = msg.ToJson(true);
+                    log(jresp);
+                    using (TextWriter writer = File.CreateText("C:\\dev\\spec.json"))
+                        writer.Write(jresp);                    
                     break;
 
                 default:

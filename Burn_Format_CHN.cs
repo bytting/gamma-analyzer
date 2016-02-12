@@ -85,20 +85,28 @@ namespace burn
 
         public void Read(string chn_file, bool headerOnly)
         {
-            mFilename = chn_file;
-            BinaryReader reader = new BinaryReader(File.Open(mFilename, FileMode.Open));
-            if (reader == null)
-                throw new Exception("Failed to open spectrum file " + mFilename);
-
-            if (!ReadHeader(reader))
-                throw new Exception("Failed to read header from " + mFilename);
-
-            if (!headerOnly)
+            BinaryReader reader = null;
+            try
             {
-                if (!ReadSpectrum(reader))
-                    throw new Exception("Failed to read spectrum from " + mFilename);
+                mFilename = chn_file;
+                reader = new BinaryReader(File.Open(mFilename, FileMode.Open));
+                if (reader == null)
+                    throw new Exception("Failed to open spectrum file " + mFilename);
+
+                if (!ReadHeader(reader))
+                    throw new Exception("Failed to read header from " + mFilename);
+
+                if (!headerOnly)
+                {
+                    if (!ReadSpectrum(reader))
+                        throw new Exception("Failed to read spectrum from " + mFilename);
+                }                
+            }            
+            finally
+            {
+                if(reader != null)
+                    reader.Close();
             }
-            reader.Close();
         }
 
         private bool ReadHeader(BinaryReader reader)
@@ -169,19 +177,36 @@ namespace burn
             return true;
         }
 
-        public bool Write(string base_dir, Message msg)
-        {
-            string filename = base_dir + msg.arguments["session_name"] + Path.DirectorySeparatorChar + msg.arguments["session_index"] + ".chn";
+        public void Write(string base_dir, Message msg)
+        {            
+            BinaryWriter writer = null;
+            try
+            {
+                if (!msg.arguments.ContainsKey("session_name"))
+                    throw new Exception("Message has no session_name key");
 
-            BinaryWriter writer = new BinaryWriter(File.Create(filename));
+                if (!msg.arguments.ContainsKey("session_index"))
+                    throw new Exception("Message has no session_index key");
 
-            if (!WriteHeader(writer, msg))
-                return false;
+                string pathname = base_dir + Path.DirectorySeparatorChar + msg.arguments["session_name"];
+                if (!Directory.Exists(pathname))
+                    Directory.CreateDirectory(pathname);
 
-            if (!WriteSpectrum(writer, msg))
-                return false;
+                mFilename = pathname + Path.DirectorySeparatorChar + msg.arguments["session_index"] + ".chn";
 
-            return true;
+                writer = new BinaryWriter(File.Create(mFilename));
+
+                if (!WriteHeader(writer, msg))
+                    throw new Exception("Failed to write header " + mFilename);
+
+                if (!WriteSpectrum(writer, msg))
+                    throw new Exception("Failed to write spectrum " + mFilename);
+            }            
+            finally
+            {
+                if(writer != null)
+                    writer.Close();
+            }                        
         }
 
         private bool WriteHeader(BinaryWriter writer, Message msg)

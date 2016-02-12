@@ -49,19 +49,33 @@ set_gain_failed ->
 get_spectrum_ok -
 	session_name
 	session_index
+	gps_time_start
+	gps_time_end
+	gps_speed_start
+	gps_speed_start_err
+	gps_speed_end
+	gps_speed_end_err
 	latitude_start
+	latitude_start_err
 	longitude_start
+	longitude_start_err
 	altitude_start
+	altitude_start_err
 	latitude_end
+	latitude_end_err
 	longitude_end
+	longitude_end_err
 	altitude_end
+	altitude_end_err
 	livetime
 	realtime
 	channel_count
 	channels
 	uncorrected_total_count
 	computational_limit
-	status
+	spectral_input
+	spectral_group
+	spectral_status
 	
 get_spectrum_failed ->
 	message
