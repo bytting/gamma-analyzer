@@ -43,6 +43,7 @@
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.tabs = new System.Windows.Forms.TabControl();
             this.pageSettings = new System.Windows.Forms.TabPage();
+            this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.tbSessionDir = new System.Windows.Forms.TextBox();
             this.btnSelectSessionDir = new System.Windows.Forms.Button();
@@ -71,7 +72,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
-            this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -221,6 +221,16 @@
             this.pageSettings.Size = new System.Drawing.Size(1121, 612);
             this.pageSettings.TabIndex = 0;
             this.pageSettings.Text = "Settings";
+            // 
+            // cbStoreChn
+            // 
+            this.cbStoreChn.AutoSize = true;
+            this.cbStoreChn.Location = new System.Drawing.Point(99, 67);
+            this.cbStoreChn.Name = "cbStoreChn";
+            this.cbStoreChn.Size = new System.Drawing.Size(123, 21);
+            this.cbStoreChn.TabIndex = 16;
+            this.cbStoreChn.Text = "Store CHN files";
+            this.cbStoreChn.UseVisualStyleBackColor = true;
             // 
             // panel7
             // 
@@ -495,16 +505,6 @@
             this.btnStopSession.Text = "Stop session";
             this.btnStopSession.UseVisualStyleBackColor = true;
             this.btnStopSession.Click += new System.EventHandler(this.btnStopSession_Click);
-            // 
-            // cbStoreChn
-            // 
-            this.cbStoreChn.AutoSize = true;
-            this.cbStoreChn.Location = new System.Drawing.Point(99, 67);
-            this.cbStoreChn.Name = "cbStoreChn";
-            this.cbStoreChn.Size = new System.Drawing.Size(123, 21);
-            this.cbStoreChn.TabIndex = 16;
-            this.cbStoreChn.Text = "Store CHN files";
-            this.cbStoreChn.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 

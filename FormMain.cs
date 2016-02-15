@@ -136,7 +136,7 @@ namespace crash
                     log("set gain: " + msg.arguments["voltage"] + " " + msg.arguments["coarse_gain"] + " " + msg.arguments["fine_gain"]);
                     break;
 
-                case "get_spectrum_ok":
+                case "spectrum":
 
                     Spectrum spec = new Spectrum(msg);
                     specList.Add(spec);

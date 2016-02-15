@@ -46,7 +46,7 @@ set_gain_ok ->
 set_gain_failed ->
 	message
 
-get_spectrum_ok -
+spectrum -
 	session_name
 	session_index
 	gps_time_start
