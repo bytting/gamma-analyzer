@@ -41,6 +41,8 @@ namespace crash
         FormConnect formConnect = new FormConnect();
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
+        BindingList<Spectrum> specList = new BindingList<Spectrum>();
+
         public FormMain()
         {
             InitializeComponent();
@@ -57,6 +59,10 @@ namespace crash
             timer.Interval = 10;
             timer.Tick += timer_Tick;
             timer.Start();
+
+            lbSpecList.DataSource = specList;
+            lbSpecList.DisplayMember = "Label";
+            lbSpecList.ValueMember = "Message";
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -130,11 +136,15 @@ namespace crash
                     log("set gain: " + msg.arguments["voltage"] + " " + msg.arguments["coarse_gain"] + " " + msg.arguments["fine_gain"]);
                     break;
 
-                case "get_spectrum_ok":                                                            
-                    string jresp = msg.ToJson(true);
-                    log(jresp);
-                    using (TextWriter writer = File.CreateText("C:\\dev\\spec.json"))
-                        writer.Write(jresp);                    
+                case "get_spectrum_ok":
+
+                    specList.Add(new Spectrum(msg));
+                    log("Spectrum " + msg.arguments["session_index"] + " received");                                        
+
+                    //string jresp = msg.ToJson();
+                    //log(jresp);
+                    //using (TextWriter writer = File.CreateText("C:\\dev\\spec.json"))
+                        //writer.Write(jresp);                    
                     break;
 
                 default:
@@ -145,7 +155,7 @@ namespace crash
                     break;
             }
             return true;
-        }
+        }        
 
         private void log(string message)
         {
@@ -172,12 +182,7 @@ namespace crash
         private void menuItemDisconnect_Click(object sender, EventArgs e)
         {
             sendq.Enqueue(new burn.Message("disconnect"));
-        }
-
-        private void btnSendHello_Click(object sender, EventArgs e)
-        {
-            sendq.Enqueue(new burn.Message("ping"));            
-        }
+        }        
 
         private void btnSendClose_Click(object sender, EventArgs e)
         {
@@ -214,6 +219,8 @@ namespace crash
             msg.AddParameter("livetime", livetime);
             msg.AddParameter("delay", delay);
             sendq.Enqueue(msg);
+
+            specList.Clear();
         }        
 
         private void btnStopNetService_Click(object sender, EventArgs e)
@@ -256,6 +263,30 @@ namespace crash
         private void btnStopSession_Click(object sender, EventArgs e)
         {
             sendq.Enqueue(new burn.Message("stop_session"));
+        }
+
+        private void lbSpecList_DoubleClick(object sender, EventArgs e)
+        {
+            if (lbSpecList.SelectedItem == null)
+                return;
+
+            Spectrum spec = (Spectrum)lbSpecList.SelectedItem;
+            MessageBox.Show(spec.Label);
         }        
+    }    
+
+    public class Spectrum
+    {
+        private string mLabel;
+        private burn.Message mMessage;
+
+        public string Label { get { return mLabel; } }
+        public burn.Message Message { get { return mMessage; } }
+
+        public Spectrum(burn.Message msg)
+        {
+            mLabel = "Spectrum " + msg.arguments["session_index"];
+            mMessage = msg;
+        }
     }
 }
