@@ -43,6 +43,10 @@
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.tabs = new System.Windows.Forms.TabControl();
             this.pageSettings = new System.Windows.Forms.TabPage();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.tbSessionDir = new System.Windows.Forms.TextBox();
+            this.btnSelectSessionDir = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.tbFineGain = new System.Windows.Forms.TextBox();
             this.tbCoarseGain = new System.Windows.Forms.TextBox();
             this.tbVoltage = new System.Windows.Forms.TextBox();
@@ -67,11 +71,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
+            this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
             this.tabs.SuspendLayout();
             this.pageSettings.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.panel1.SuspendLayout();
             this.pageSpectrometry.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -200,6 +206,8 @@
             // pageSettings
             // 
             this.pageSettings.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pageSettings.Controls.Add(this.cbStoreChn);
+            this.pageSettings.Controls.Add(this.panel7);
             this.pageSettings.Controls.Add(this.tbFineGain);
             this.pageSettings.Controls.Add(this.tbCoarseGain);
             this.pageSettings.Controls.Add(this.tbVoltage);
@@ -214,30 +222,70 @@
             this.pageSettings.TabIndex = 0;
             this.pageSettings.Text = "Settings";
             // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.tbSessionDir);
+            this.panel7.Controls.Add(this.btnSelectSessionDir);
+            this.panel7.Controls.Add(this.label4);
+            this.panel7.Location = new System.Drawing.Point(96, 18);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(684, 26);
+            this.panel7.TabIndex = 15;
+            // 
+            // tbSessionDir
+            // 
+            this.tbSessionDir.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSessionDir.Location = new System.Drawing.Point(152, 0);
+            this.tbSessionDir.Name = "tbSessionDir";
+            this.tbSessionDir.ReadOnly = true;
+            this.tbSessionDir.Size = new System.Drawing.Size(475, 23);
+            this.tbSessionDir.TabIndex = 1;
+            // 
+            // btnSelectSessionDir
+            // 
+            this.btnSelectSessionDir.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSelectSessionDir.Location = new System.Drawing.Point(627, 0);
+            this.btnSelectSessionDir.Name = "btnSelectSessionDir";
+            this.btnSelectSessionDir.Size = new System.Drawing.Size(57, 26);
+            this.btnSelectSessionDir.TabIndex = 2;
+            this.btnSelectSessionDir.Text = "...";
+            this.btnSelectSessionDir.UseVisualStyleBackColor = true;
+            this.btnSelectSessionDir.Click += new System.EventHandler(this.btnSelectSessionDir_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label4.Location = new System.Drawing.Point(0, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(152, 17);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Session base directory";
+            // 
             // tbFineGain
             // 
-            this.tbFineGain.Location = new System.Drawing.Point(504, 32);
+            this.tbFineGain.Location = new System.Drawing.Point(421, 144);
             this.tbFineGain.Name = "tbFineGain";
             this.tbFineGain.Size = new System.Drawing.Size(100, 23);
             this.tbFineGain.TabIndex = 14;
             // 
             // tbCoarseGain
             // 
-            this.tbCoarseGain.Location = new System.Drawing.Point(398, 32);
+            this.tbCoarseGain.Location = new System.Drawing.Point(315, 144);
             this.tbCoarseGain.Name = "tbCoarseGain";
             this.tbCoarseGain.Size = new System.Drawing.Size(100, 23);
             this.tbCoarseGain.TabIndex = 13;
             // 
             // tbVoltage
             // 
-            this.tbVoltage.Location = new System.Drawing.Point(291, 32);
+            this.tbVoltage.Location = new System.Drawing.Point(208, 144);
             this.tbVoltage.Name = "tbVoltage";
             this.tbVoltage.Size = new System.Drawing.Size(100, 23);
             this.tbVoltage.TabIndex = 12;
             // 
             // btnSetGain
             // 
-            this.btnSetGain.Location = new System.Drawing.Point(182, 30);
+            this.btnSetGain.Location = new System.Drawing.Point(99, 142);
             this.btnSetGain.Name = "btnSetGain";
             this.btnSetGain.Size = new System.Drawing.Size(101, 26);
             this.btnSetGain.TabIndex = 7;
@@ -252,7 +300,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(987, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(129, 84);
+            this.panel1.Size = new System.Drawing.Size(129, 254);
             this.panel1.TabIndex = 10;
             // 
             // btnStopNetService
@@ -282,12 +330,12 @@
             // tbLog
             // 
             this.tbLog.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tbLog.Location = new System.Drawing.Point(5, 88);
+            this.tbLog.Location = new System.Drawing.Point(5, 258);
             this.tbLog.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.tbLog.Multiline = true;
             this.tbLog.Name = "tbLog";
             this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbLog.Size = new System.Drawing.Size(1111, 520);
+            this.tbLog.Size = new System.Drawing.Size(1111, 350);
             this.tbLog.TabIndex = 0;
             // 
             // pageSpectrometry
@@ -448,6 +496,16 @@
             this.btnStopSession.UseVisualStyleBackColor = true;
             this.btnStopSession.Click += new System.EventHandler(this.btnStopSession_Click);
             // 
+            // cbStoreChn
+            // 
+            this.cbStoreChn.AutoSize = true;
+            this.cbStoreChn.Location = new System.Drawing.Point(99, 67);
+            this.cbStoreChn.Name = "cbStoreChn";
+            this.cbStoreChn.Size = new System.Drawing.Size(123, 21);
+            this.cbStoreChn.TabIndex = 16;
+            this.cbStoreChn.Text = "Store CHN files";
+            this.cbStoreChn.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -474,6 +532,8 @@
             this.tabs.ResumeLayout(false);
             this.pageSettings.ResumeLayout(false);
             this.pageSettings.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.pageSpectrometry.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
@@ -530,6 +590,11 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox lbSpecList;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.TextBox tbSessionDir;
+        private System.Windows.Forms.Button btnSelectSessionDir;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox cbStoreChn;
     }
 }
 

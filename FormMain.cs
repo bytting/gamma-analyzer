@@ -138,8 +138,28 @@ namespace crash
 
                 case "get_spectrum_ok":
 
-                    specList.Add(new Spectrum(msg));
-                    log("Spectrum " + msg.arguments["session_index"] + " received");                                        
+                    Spectrum spec = new Spectrum(msg);
+                    specList.Add(spec);
+                    log("Spectrum " + spec.Label + " received");
+
+                    string path = tbSessionDir.Text + Path.DirectorySeparatorChar + spec.Message.arguments["session_name"];
+                    string jsonPath = path + Path.DirectorySeparatorChar + "json";
+                    if (!Directory.Exists(jsonPath))
+                        Directory.CreateDirectory(jsonPath);
+
+                    string filename = jsonPath + Path.DirectorySeparatorChar + spec.Message.arguments["session_index"] + ".json";
+                    TextWriter writer = new StreamWriter(filename);
+                    writer.Write(msg.ToJson(true));
+                    writer.Close();
+
+                    if(cbStoreChn.Checked)
+                    {
+                        string chnPath = path + Path.DirectorySeparatorChar + "chn";
+                        if (!Directory.Exists(chnPath))
+                            Directory.CreateDirectory(chnPath);
+                        filename = chnPath + Path.DirectorySeparatorChar + spec.Message.arguments["session_index"] + ".chn";                        
+                        burn.CHN.Write(filename, msg);
+                    }
 
                     //string jresp = msg.ToJson();
                     //log(jresp);
@@ -191,6 +211,12 @@ namespace crash
 
         private void btnSendSession_Click(object sender, EventArgs e)
         {
+            if (String.IsNullOrEmpty(tbSessionDir.Text))
+            {
+                MessageBox.Show("Du må velge en session katalog");
+                return;
+            }            
+
             if (String.IsNullOrEmpty(tbSpecCount.Text))
             {
                 MessageBox.Show("Mangler count");
@@ -272,6 +298,15 @@ namespace crash
 
             Spectrum spec = (Spectrum)lbSpecList.SelectedItem;
             MessageBox.Show(spec.Label);
+        }
+
+        private void btnSelectSessionDir_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if(dialog.ShowDialog() == DialogResult.OK)
+            {
+                tbSessionDir.Text = dialog.SelectedPath;
+            }
         }        
     }    
 

@@ -177,7 +177,7 @@ namespace burn
             return true;
         }
 
-        public void Write(string base_dir, Message msg)
+        public static void Write(string filename, Message msg)
         {            
             BinaryWriter writer = null;
             try
@@ -186,21 +186,15 @@ namespace burn
                     throw new Exception("Message has no session_name key");
 
                 if (!msg.arguments.ContainsKey("session_index"))
-                    throw new Exception("Message has no session_index key");
+                    throw new Exception("Message has no session_index key");        
 
-                string pathname = base_dir + Path.DirectorySeparatorChar + msg.arguments["session_name"];
-                if (!Directory.Exists(pathname))
-                    Directory.CreateDirectory(pathname);
-
-                mFilename = pathname + Path.DirectorySeparatorChar + msg.arguments["session_index"] + ".chn";
-
-                writer = new BinaryWriter(File.Create(mFilename));
+                writer = new BinaryWriter(File.Create(filename));
 
                 if (!WriteHeader(writer, msg))
-                    throw new Exception("Failed to write header " + mFilename);
+                    throw new Exception("Failed to write header to " + filename);
 
                 if (!WriteSpectrum(writer, msg))
-                    throw new Exception("Failed to write spectrum " + mFilename);
+                    throw new Exception("Failed to write spectrum to " + filename);
             }            
             finally
             {
@@ -209,15 +203,32 @@ namespace burn
             }                        
         }
 
-        private bool WriteHeader(BinaryWriter writer, Message msg)
+        private static bool WriteHeader(BinaryWriter writer, Message msg)
         {
-            // TODO
+            writer.Write(Convert.ToInt16(-1)); // signature
+            writer.Write(Convert.ToInt16(msg.arguments["spectral_input"])); // detector id
+            writer.Write(Convert.ToInt16(0)); // segment
+            writer.Write(new char[] {'0', '1'}); // seconds start (TODO)
+            double rt = Convert.ToDouble(msg.arguments["realtime"]);
+            rt = rt / 1000; // ms
+            rt = rt / 20; // increments of 20 ms
+            writer.Write(Convert.ToInt32(rt)); // realtime
+            double lt = Convert.ToDouble(msg.arguments["livetime"]);
+            lt = lt / 1000; // ms
+            lt = lt / 20; // increments of 20 ms
+            writer.Write(Convert.ToInt32(lt)); // livetime
+            writer.Write(new char[] {'0', '1', 'J', 'A', 'N', '1', '6', '1'}); // date
+            writer.Write(new char[] {'1', '2', '0', '0'}); // time
+            writer.Write(Convert.ToInt16(0)); // channel offset
+            writer.Write(Convert.ToInt16(msg.arguments["channel_count"])); // number of channels
             return true;
         }
 
-        private bool WriteSpectrum(BinaryWriter writer, Message msg)
+        private static bool WriteSpectrum(BinaryWriter writer, Message msg)
         {
-            // TODO
+            string[] chans = msg.arguments["channels"].Split(new char[] { ' ' });
+            foreach(string ch in chans)            
+                writer.Write(Convert.ToInt32(ch));            
             return true;
         }
     }    
