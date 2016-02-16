@@ -49,7 +49,10 @@ namespace crash
         }
 
         private void FormMain_Load(object sender, EventArgs e)
-        {            
+        {
+            tabs.HideTabs = true;
+            tabs.SelectedTab = pageMenu;
+
             lblConnectionStatus.ForeColor = Color.Red;
             lblConnectionStatus.Text = "Not connected";
 
@@ -137,7 +140,6 @@ namespace crash
                     break;
 
                 case "spectrum":
-
                     Spectrum spec = new Spectrum(msg);
                     specList.Add(spec);
                     log("Spectrum " + spec.Label + " received");
@@ -159,12 +161,7 @@ namespace crash
                             Directory.CreateDirectory(chnPath);
                         filename = chnPath + Path.DirectorySeparatorChar + spec.Message.arguments["session_index"] + ".chn";                        
                         burn.CHN.Write(filename, msg);
-                    }
-
-                    //string jresp = msg.ToJson();
-                    //log(jresp);
-                    //using (TextWriter writer = File.CreateText("C:\\dev\\spec.json"))
-                        //writer.Write(jresp);                    
+                    }                    
                     break;
 
                 default:
@@ -179,7 +176,7 @@ namespace crash
 
         private void log(string message)
         {
-            tbLog.Text += Environment.NewLine + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + message;
+            tbLog.Text += Environment.NewLine + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + message;            
         }        
 
         private void menuItemExit_Click(object sender, EventArgs e)
@@ -215,29 +212,17 @@ namespace crash
             {
                 MessageBox.Show("Du må velge en session katalog");
                 return;
-            }            
-
-            if (String.IsNullOrEmpty(tbSpecCount.Text))
-            {
-                MessageBox.Show("Mangler count");
-                return;
-            }
+            }                        
 
             if (String.IsNullOrEmpty(tbSpecLivetime.Text))
             {
                 MessageBox.Show("Mangler livetime");
                 return;
-            }
+            }            
 
-            if (String.IsNullOrEmpty(tbSpecDelay.Text))
-            {
-                MessageBox.Show("Mangler delay");
-                return;
-            }
-
-            int count = Convert.ToInt32(tbSpecCount.Text);
+            int count = String.IsNullOrEmpty(tbSpecCount.Text) ? -1 : Convert.ToInt32(tbSpecCount.Text);
             float livetime = Convert.ToSingle(tbSpecLivetime.Text);
-            float delay = Convert.ToSingle(tbSpecDelay.Text);
+            float delay = String.IsNullOrEmpty(tbSpecDelay.Text) ? 0 : Convert.ToSingle(tbSpecDelay.Text);
 
             burn.Message msg = new burn.Message("new_session");
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
@@ -306,6 +291,31 @@ namespace crash
             if(dialog.ShowDialog() == DialogResult.OK)
             {
                 tbSessionDir.Text = dialog.SelectedPath;
+            }
+        }
+
+        private void btnMenuSpec_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageSpec;
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageMenu;
+        }
+
+        private void lbSpecList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (lbSpecList.SelectedItems.Count < 1)
+                return;
+
+            Spectrum spec = (Spectrum)lbSpecList.SelectedItems[0];
+            string[] counts = spec.Message.arguments["channels"].Split(new char[] {' '});
+            int index = 0;
+            foreach(string ch in counts)
+            {
+                chartSpec.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
+                index++;
             }
         }        
     }    
