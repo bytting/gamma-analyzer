@@ -57,7 +57,7 @@ namespace burn
                 }
                 catch(SocketException ex)
                 {
-                    Message emsg = new Message("error_socket");
+                    Message emsg = new Message("error_socket", null);
                     emsg.AddParameter("error_code", ex.ErrorCode);
                     emsg.AddParameter("message", ex.Message);                    
                     recvq.Enqueue(emsg);

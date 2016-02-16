@@ -29,31 +29,25 @@ namespace burn
     public class Message
     {
         //! Protocol command
-        public string command;
+        public string Command { get; set; }
+
+        public Dictionary<string, string> Arguments { get; set; }
 
         //! Protocol arguments stored as a dictionary
-        public Dictionary<string, string> arguments = new Dictionary<string,string>();
-
-        /** 
-            * Default constructor for the Message class
-            * \param cmd - protocol command             
-            */
-        public Message(string cmd)
-        {
-            command = cmd;
-        }
+        //private Dictionary<string, string> arguments = new Dictionary<string,string>();        
 
         /** 
             * Parameterized constructor for the Message class
             * \param cmd - protocol command
             * \param args - protocol arguments
             */
-        [JsonConstructor]
+        //[JsonConstructor]
         public Message(string cmd, Dictionary<string, string> args)
         {            
-            command = cmd;                
+            Command = cmd;                
             if(args != null)
-                arguments = args;
+                Arguments = args;
+            else Arguments = new Dictionary<string, string>();
         }
 
         /** 
@@ -63,7 +57,7 @@ namespace burn
             */
         public void AddParameter(string key, object value)
         {
-            arguments[key] = value.ToString();
+            Arguments[key] = value.ToString();
         }   
         
         public string ToJson(bool indented = false)

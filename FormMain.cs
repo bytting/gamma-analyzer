@@ -98,19 +98,19 @@ namespace crash
 
         private bool dispatchRecvMsg(burn.Message msg)
         {
-            switch (msg.command)
+            switch (msg.Command)
             {
                 case "connect_ok":
                     lblConnectionStatus.ForeColor = Color.Green;
-                    lblConnectionStatus.Text = "Connected to " + msg.arguments["host"] + ":" + msg.arguments["port"];
-                    log("Connected to " + msg.arguments["host"] + ":" + msg.arguments["port"]);
+                    lblConnectionStatus.Text = "Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"];
+                    log("Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
                     connected = true;
                     break;
 
                 case "connect_failed":
                     lblConnectionStatus.ForeColor = Color.Red;
-                    lblConnectionStatus.Text = "Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"] + " " + msg.arguments["message"];
-                    log("Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"] + " " + msg.arguments["message"]);
+                    lblConnectionStatus.Text = "Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"];
+                    log("Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
                     connected = false;
                     break;
 
@@ -130,11 +130,11 @@ namespace crash
                     break;
 
                 case "new_session_ok":
-                    log("New session created: " + msg.arguments["session_name"]);
+                    log("New session created: " + msg.Arguments["session_name"]);
                     break;
 
                 case "new_session_failed":
-                    log("New session failed: " + msg.arguments["message"]);
+                    log("New session failed: " + msg.Arguments["message"]);
                     break;
 
                 case "stop_session_ok":
@@ -142,15 +142,15 @@ namespace crash
                     break;
 
                 case "error":
-                    log("Error: " + msg.arguments["message"]);
+                    log("Error: " + msg.Arguments["message"]);
                     break;
 
                 case "error_socket":
-                    log("Socket error: " + msg.arguments["error_code"] + " " + msg.arguments["message"]);
+                    log("Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
                     break;                
 
                 case "set_gain_ok":
-                    log("set gain: " + msg.arguments["voltage"] + " " + msg.arguments["coarse_gain"] + " " + msg.arguments["fine_gain"]);
+                    log("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
                     break;
 
                 case "spectrum":
@@ -158,12 +158,12 @@ namespace crash
                     specList.Add(spec);
                     log("Spectrum " + spec.Label + " received");
 
-                    string path = tbSessionDir.Text + Path.DirectorySeparatorChar + spec.Message.arguments["session_name"];
+                    string path = tbSessionDir.Text + Path.DirectorySeparatorChar + spec.Message.Arguments["session_name"];
                     string jsonPath = path + Path.DirectorySeparatorChar + "json";
                     if (!Directory.Exists(jsonPath))
                         Directory.CreateDirectory(jsonPath);
 
-                    string filename = jsonPath + Path.DirectorySeparatorChar + spec.Message.arguments["session_index"] + ".json";
+                    string filename = jsonPath + Path.DirectorySeparatorChar + spec.Message.Arguments["session_index"] + ".json";
                     TextWriter writer = new StreamWriter(filename);
                     writer.Write(msg.ToJson(true));
                     writer.Close();
@@ -173,14 +173,14 @@ namespace crash
                         string chnPath = path + Path.DirectorySeparatorChar + "chn";
                         if (!Directory.Exists(chnPath))
                             Directory.CreateDirectory(chnPath);
-                        filename = chnPath + Path.DirectorySeparatorChar + spec.Message.arguments["session_index"] + ".chn";                        
+                        filename = chnPath + Path.DirectorySeparatorChar + spec.Message.Arguments["session_index"] + ".chn";                        
                         burn.CHN.Write(filename, msg);
                     }                    
                     break;
 
                 default:
-                    string info = msg.command + " -> ";
-                    foreach (KeyValuePair<string, string> item in msg.arguments)
+                    string info = msg.Command + " -> ";
+                    foreach (KeyValuePair<string, string> item in msg.Arguments)
                         info += item.Key + ":" + item.Value + ", ";
                     log("Unhandeled command: " + info);
                     break;
@@ -204,7 +204,7 @@ namespace crash
             if (formConnect.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            burn.Message msg = new burn.Message("connect");
+            burn.Message msg = new burn.Message("connect", null);
             msg.AddParameter("host", formConnect.IP);
             msg.AddParameter("port", formConnect.Port);            
             sendq.Enqueue(msg);            
@@ -216,7 +216,7 @@ namespace crash
                 if (MessageBox.Show("Are you sure you want to disconnect?", "Confirmation", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
                     return;
 
-            sendq.Enqueue(new burn.Message("disconnect"));
+            sendq.Enqueue(new burn.Message("disconnect", null));
         }        
 
         private void btnSendClose_Click(object sender, EventArgs e)
@@ -224,7 +224,7 @@ namespace crash
             if (MessageBox.Show("Are you sure you want to close the remote server?", "Confirmation", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
                 return;
 
-            sendq.Enqueue(new burn.Message("close"));                        
+            sendq.Enqueue(new burn.Message("close", null));                        
         }
 
         private void btnSendSession_Click(object sender, EventArgs e)
@@ -245,7 +245,7 @@ namespace crash
             float livetime = Convert.ToSingle(tbSpecLivetime.Text);
             float delay = String.IsNullOrEmpty(tbSpecDelay.Text) ? 0 : Convert.ToSingle(tbSpecDelay.Text);
 
-            burn.Message msg = new burn.Message("new_session");
+            burn.Message msg = new burn.Message("new_session", null);
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
             msg.AddParameter("iterations", count);
             msg.AddParameter("livetime", livetime);
@@ -285,7 +285,7 @@ namespace crash
             float coarse = Convert.ToInt32(tbCoarseGain.Text);
             float fine = Convert.ToInt32(tbFineGain.Text);
 
-            burn.Message msg = new burn.Message("set_gain");
+            burn.Message msg = new burn.Message("set_gain", null);
             msg.AddParameter("voltage", voltage);
             msg.AddParameter("coarse_gain", coarse);
             msg.AddParameter("fine_gain", fine);
@@ -294,7 +294,7 @@ namespace crash
 
         private void btnStopSession_Click(object sender, EventArgs e)
         {
-            sendq.Enqueue(new burn.Message("stop_session"));
+            sendq.Enqueue(new burn.Message("stop_session", null));
         }
 
         private void lbSpecList_DoubleClick(object sender, EventArgs e)
@@ -331,7 +331,7 @@ namespace crash
                 return;
 
             Spectrum spec = (Spectrum)lbSpecList.SelectedItems[0];
-            string[] counts = spec.Message.arguments["channels"].Split(new char[] {' '});
+            string[] counts = spec.Message.Arguments["channels"].Split(new char[] {' '});
             int index = 0;
             foreach(string ch in counts)
             {
@@ -387,7 +387,7 @@ namespace crash
 
         public Spectrum(burn.Message msg)
         {
-            mLabel = "Spectrum " + msg.arguments["session_index"];
+            mLabel = "Spectrum " + msg.Arguments["session_index"];
             mMessage = msg;
         }
     }

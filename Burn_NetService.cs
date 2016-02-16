@@ -90,13 +90,13 @@ namespace burn
          */
         private void dispatchSendMsg(Message msg)
         {
-            switch(msg.command)
+            switch(msg.Command)
             {
                 case "connect":
                     // Try to connect to server
                     Client = new TcpClient();
-                    string host = msg.arguments["host"];
-                    int port = Convert.ToInt32(msg.arguments["port"]);
+                    string host = msg.Arguments["host"];
+                    int port = Convert.ToInt32(msg.Arguments["port"]);
 
                     try
                     {
@@ -104,8 +104,8 @@ namespace burn
                     }
                     catch(Exception ex)
                     {
-                        msg.command = "connect_failed";
-                        msg.arguments.Add("message", ex.Message);
+                        msg.Command = "connect_failed";
+                        msg.Arguments.Add("message", ex.Message);
                         recvq.Enqueue(msg);                    
                         return;
                     }
@@ -117,13 +117,13 @@ namespace burn
                         // Empty the network buffer
                         recvBuffer.Clear();
                         // Update the message to a connection response message and send it back to GUI client
-                        msg.command = "connect_ok";
+                        msg.Command = "connect_ok";
                         recvq.Enqueue(msg);                        
                     }
                     else
                     {
-                        msg.command = "connect_failed";
-                        msg.arguments.Add("message", "Connection failed");
+                        msg.Command = "connect_failed";
+                        msg.Arguments.Add("message", "Connection failed");
                         recvq.Enqueue(msg);                        
                     }
                     break;
@@ -138,14 +138,14 @@ namespace burn
                         Client.Close();                            
                     Client = null;
 
-                    msg.command = "disconnect_ok";
+                    msg.Command = "disconnect_ok";
                     recvq.Enqueue(msg);                    
                     break;
 
                 default:                    
                     if (ClientStream == null)
                     {
-                        Message responseMsg = new Message("error");
+                        Message responseMsg = new Message("error", null);
                         responseMsg.AddParameter("message", "Can not send message, not connected to peer");                        
                         recvq.Enqueue(responseMsg);
                         return;
@@ -154,7 +154,7 @@ namespace burn
                     // Send message to server
                     if(!sendMessage(ClientStream, msg))
                     {
-                        Message responseMsg = new Message("error");
+                        Message responseMsg = new Message("error", null);
                         responseMsg.AddParameter("message", "Unable to send message");                        
                         recvq.Enqueue(responseMsg);
                         return;
@@ -169,7 +169,7 @@ namespace burn
          */
         private void dispatchRecvMsg(Message msg)
         {
-            switch (msg.command)
+            switch (msg.Command)
             {
                 case "close_ok": // The server has received a close message and are closing down
                     if (ClientStream != null)

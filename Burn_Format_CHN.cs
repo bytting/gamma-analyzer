@@ -182,10 +182,10 @@ namespace burn
             BinaryWriter writer = null;
             try
             {
-                if (!msg.arguments.ContainsKey("session_name"))
+                if (!msg.Arguments.ContainsKey("session_name"))
                     throw new Exception("Message has no session_name key");
 
-                if (!msg.arguments.ContainsKey("session_index"))
+                if (!msg.Arguments.ContainsKey("session_index"))
                     throw new Exception("Message has no session_index key");        
 
                 writer = new BinaryWriter(File.Create(filename));
@@ -206,27 +206,27 @@ namespace burn
         private static bool WriteHeader(BinaryWriter writer, Message msg)
         {
             writer.Write(Convert.ToInt16(-1)); // signature
-            writer.Write(Convert.ToInt16(msg.arguments["spectral_input"])); // detector id
+            writer.Write(Convert.ToInt16(msg.Arguments["spectral_input"])); // detector id
             writer.Write(Convert.ToInt16(0)); // segment
             writer.Write(new char[] {'0', '1'}); // seconds start (TODO)
-            double rt = Convert.ToDouble(msg.arguments["realtime"]);
+            double rt = Convert.ToDouble(msg.Arguments["realtime"]);
             rt = rt / 1000; // ms
             rt = rt / 20; // increments of 20 ms
             writer.Write(Convert.ToInt32(rt)); // realtime
-            double lt = Convert.ToDouble(msg.arguments["livetime"]);
+            double lt = Convert.ToDouble(msg.Arguments["livetime"]);
             lt = lt / 1000; // ms
             lt = lt / 20; // increments of 20 ms
             writer.Write(Convert.ToInt32(lt)); // livetime
             writer.Write(new char[] {'0', '1', 'J', 'A', 'N', '1', '6', '1'}); // date
             writer.Write(new char[] {'1', '2', '0', '0'}); // time
             writer.Write(Convert.ToInt16(0)); // channel offset
-            writer.Write(Convert.ToInt16(msg.arguments["channel_count"])); // number of channels
+            writer.Write(Convert.ToInt16(msg.Arguments["channel_count"])); // number of channels
             return true;
         }
 
         private static bool WriteSpectrum(BinaryWriter writer, Message msg)
         {
-            string[] chans = msg.arguments["channels"].Split(new char[] { ' ' });
+            string[] chans = msg.Arguments["channels"].Split(new char[] { ' ' });
             foreach(string ch in chans)            
                 writer.Write(Convert.ToInt32(ch));            
             return true;
