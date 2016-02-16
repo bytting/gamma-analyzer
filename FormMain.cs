@@ -42,6 +42,7 @@ namespace crash
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
         BindingList<Spectrum> specList = new BindingList<Spectrum>();
+        bool connected = false;
 
         public FormMain()
         {
@@ -93,18 +94,21 @@ namespace crash
                     lblConnectionStatus.ForeColor = Color.Green;
                     lblConnectionStatus.Text = "Connected to " + msg.arguments["host"] + ":" + msg.arguments["port"];
                     log("Connected to " + msg.arguments["host"] + ":" + msg.arguments["port"]);
+                    connected = true;
                     break;
 
                 case "connect_failed":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"] + " " + msg.arguments["message"];
                     log("Connection failed for " + msg.arguments["host"] + ":" + msg.arguments["port"] + " " + msg.arguments["message"]);
+                    connected = false;
                     break;
 
                 case "disconnect_ok":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
                     log("Disconnected from peer");
+                    connected = false;
                     break;
 
                 case "close_ok":
@@ -197,12 +201,19 @@ namespace crash
         }
 
         private void menuItemDisconnect_Click(object sender, EventArgs e)
-        {
+        {        
+            if(connected)
+                if (MessageBox.Show("Are you sure you want to disconnect?", "Confirmation", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                    return;
+
             sendq.Enqueue(new burn.Message("disconnect"));
         }        
 
         private void btnSendClose_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Are you sure you want to close the remote server?", "Confirmation", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                return;
+
             sendq.Enqueue(new burn.Message("close"));                        
         }
 
@@ -216,7 +227,7 @@ namespace crash
 
             if (String.IsNullOrEmpty(tbSpecLivetime.Text))
             {
-                MessageBox.Show("Mangler livetime");
+                MessageBox.Show("You must specify a livetime");
                 return;
             }            
 
@@ -244,19 +255,19 @@ namespace crash
         {
             if (String.IsNullOrEmpty(tbVoltage.Text))
             {
-                MessageBox.Show("Mangler voltage");
+                MessageBox.Show("You must specify voltage");
                 return;
             }
 
             if (String.IsNullOrEmpty(tbCoarseGain.Text))
             {
-                MessageBox.Show("Mangler coarse gain");
+                MessageBox.Show("You must specify coarse gain");
                 return;
             }
 
             if (String.IsNullOrEmpty(tbFineGain.Text))
             {
-                MessageBox.Show("Mangler fine gain");
+                MessageBox.Show("You must specify fine gain");
                 return;
             }
 
