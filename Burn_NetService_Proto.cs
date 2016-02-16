@@ -31,10 +31,8 @@ namespace burn
         //! Protocol command
         public string Command { get; set; }
 
-        public Dictionary<string, string> Arguments { get; set; }
-
         //! Protocol arguments stored as a dictionary
-        //private Dictionary<string, string> arguments = new Dictionary<string,string>();        
+        public Dictionary<string, string> Arguments { get; set; }               
 
         /** 
             * Parameterized constructor for the Message class
