@@ -27,6 +27,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
 
 namespace crash
 {
@@ -67,6 +71,16 @@ namespace crash
             lbSpecList.DataSource = specList;
             lbSpecList.DisplayMember = "Label";
             lbSpecList.ValueMember = "Message";
+
+            gmap.MapProvider = GoogleMapProvider.Instance;
+            GMaps.Instance.Mode = AccessMode.ServerOnly;            
+            gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
+            gmap.Zoom = 12;
+
+            GMapOverlay markersOverlay = new GMapOverlay("markers");                        
+            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(59.946534, 10.598574), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
+            markersOverlay.Markers.Add(marker);
+            gmap.Overlays.Add(markersOverlay);
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -328,6 +342,11 @@ namespace crash
                 chartSpec.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
                 index++;
             }
+        }
+
+        private void btnMenuMap_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageMap;
         }        
     }    
 

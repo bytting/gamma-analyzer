@@ -74,6 +74,11 @@
             this.pageMenu = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnMenuSpec = new System.Windows.Forms.Button();
+            this.btnMenuMap = new System.Windows.Forms.Button();
+            this.pageMap = new System.Windows.Forms.TabPage();
+            this.gmap = new GMap.NET.WindowsForms.GMapControl();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -87,6 +92,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.pageMenu.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.pageMap.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -333,6 +339,7 @@
             // 
             this.tabs.Controls.Add(this.pageSpec);
             this.tabs.Controls.Add(this.pageMenu);
+            this.tabs.Controls.Add(this.pageMap);
             this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabs.Location = new System.Drawing.Point(0, 49);
             this.tabs.Name = "tabs";
@@ -533,6 +540,7 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnMenuSpec);
+            this.flowLayoutPanel1.Controls.Add(this.btnMenuMap);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -547,12 +555,81 @@
             this.btnMenuSpec.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnMenuSpec.Location = new System.Drawing.Point(53, 53);
             this.btnMenuSpec.Name = "btnMenuSpec";
-            this.btnMenuSpec.Size = new System.Drawing.Size(180, 180);
+            this.btnMenuSpec.Size = new System.Drawing.Size(170, 170);
             this.btnMenuSpec.TabIndex = 0;
             this.btnMenuSpec.Text = "Spectrum";
             this.btnMenuSpec.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMenuSpec.UseVisualStyleBackColor = true;
             this.btnMenuSpec.Click += new System.EventHandler(this.btnMenuSpec_Click);
+            // 
+            // btnMenuMap
+            // 
+            this.btnMenuMap.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMenuMap.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuMap.Image")));
+            this.btnMenuMap.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnMenuMap.Location = new System.Drawing.Point(229, 53);
+            this.btnMenuMap.Name = "btnMenuMap";
+            this.btnMenuMap.Size = new System.Drawing.Size(170, 170);
+            this.btnMenuMap.TabIndex = 1;
+            this.btnMenuMap.Text = "Map";
+            this.btnMenuMap.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuMap.UseVisualStyleBackColor = true;
+            this.btnMenuMap.Click += new System.EventHandler(this.btnMenuMap_Click);
+            // 
+            // pageMap
+            // 
+            this.pageMap.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pageMap.Controls.Add(this.gmap);
+            this.pageMap.Controls.Add(this.panel2);
+            this.pageMap.Controls.Add(this.panel1);
+            this.pageMap.Location = new System.Drawing.Point(4, 26);
+            this.pageMap.Name = "pageMap";
+            this.pageMap.Padding = new System.Windows.Forms.Padding(3);
+            this.pageMap.Size = new System.Drawing.Size(1364, 649);
+            this.pageMap.TabIndex = 2;
+            this.pageMap.Text = "Map";
+            // 
+            // gmap
+            // 
+            this.gmap.Bearing = 0F;
+            this.gmap.CanDragMap = true;
+            this.gmap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gmap.EmptyTileColor = System.Drawing.Color.Navy;
+            this.gmap.GrayScaleMode = false;
+            this.gmap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.gmap.LevelsKeepInMemmory = 5;
+            this.gmap.Location = new System.Drawing.Point(3, 3);
+            this.gmap.MarkersEnabled = true;
+            this.gmap.MaxZoom = 18;
+            this.gmap.MinZoom = 0;
+            this.gmap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.gmap.Name = "gmap";
+            this.gmap.NegativeMode = false;
+            this.gmap.PolygonsEnabled = true;
+            this.gmap.RetryLoadTile = 0;
+            this.gmap.RoutesEnabled = true;
+            this.gmap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.gmap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.gmap.ShowTileGridLines = false;
+            this.gmap.Size = new System.Drawing.Size(1158, 611);
+            this.gmap.TabIndex = 1;
+            this.gmap.Zoom = 0D;
+            // 
+            // panel2
+            // 
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel2.Location = new System.Drawing.Point(1161, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(200, 611);
+            this.panel2.TabIndex = 2;
+            // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(3, 614);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1358, 32);
+            this.panel1.TabIndex = 0;
             // 
             // FormMain
             // 
@@ -590,6 +667,7 @@
             this.tableLayoutPanel1.PerformLayout();
             this.pageMenu.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.pageMap.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -639,6 +717,11 @@
         private System.Windows.Forms.Button btnMenuSpec;
         private System.Windows.Forms.ToolStripButton btnBack;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.TabPage pageMap;
+        private System.Windows.Forms.Panel panel1;
+        private GMap.NET.WindowsForms.GMapControl gmap;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnMenuMap;
     }
 }
 
