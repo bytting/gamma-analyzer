@@ -70,17 +70,13 @@ namespace crash
 
             lbSpecList.DataSource = specList;
             lbSpecList.DisplayMember = "Label";
-            lbSpecList.ValueMember = "Message";
+            lbSpecList.ValueMember = "Message";            
 
-            gmap.MapProvider = GoogleMapProvider.Instance;
-            GMaps.Instance.Mode = AccessMode.ServerOnly;            
             gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
-            gmap.Zoom = 12;
-
-            GMapOverlay markersOverlay = new GMapOverlay("markers");                        
+            /*GMapOverlay markersOverlay = new GMapOverlay("markers");                        
             GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(59.946534, 10.598574), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
             markersOverlay.Markers.Add(marker);
-            gmap.Overlays.Add(markersOverlay);
+            gmap.Overlays.Add(markersOverlay);*/
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -347,6 +343,37 @@ namespace crash
         private void btnMenuMap_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageMap;
+        }
+
+        private void cboxMapProvider_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(!String.IsNullOrEmpty(cboxMapProvider.Text))
+            {
+                switch(cboxMapProvider.Text)
+                {
+                    case "Google Map":
+                        gmap.MapProvider = GoogleMapProvider.Instance;                        
+                        break;
+                    case "Google Map Terrain":
+                        gmap.MapProvider = GoogleTerrainMapProvider.Instance;
+                        break;
+                    case "Open Street Map":
+                        gmap.MapProvider = OpenStreetMapProvider.Instance;
+                        break;
+                    case "Open Street Map Quest":
+                        gmap.MapProvider = OpenStreetMapQuestProvider.Instance;
+                        break;
+                    case "ArcGIS World Topo":
+                        gmap.MapProvider = ArcGIS_World_Topo_MapProvider.Instance;
+                        break;
+                    case "Bing Map":
+                        gmap.MapProvider = BingMapProvider.Instance;
+                        break;
+                }                                
+                GMaps.Instance.Mode = AccessMode.ServerOnly;
+                //gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
+                //gmap.Zoom = 12;
+            }
         }        
     }    
 

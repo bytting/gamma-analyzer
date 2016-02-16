@@ -78,6 +78,8 @@
             this.pageMap = new System.Windows.Forms.TabPage();
             this.gmap = new GMap.NET.WindowsForms.GMapControl();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cboxMapProvider = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
@@ -93,6 +95,7 @@
             this.pageMenu.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.pageMap.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -611,17 +614,47 @@
             this.gmap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gmap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gmap.ShowTileGridLines = false;
-            this.gmap.Size = new System.Drawing.Size(1158, 611);
+            this.gmap.Size = new System.Drawing.Size(1094, 611);
             this.gmap.TabIndex = 1;
-            this.gmap.Zoom = 0D;
+            this.gmap.Zoom = 12D;
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.cboxMapProvider);
+            this.panel2.Controls.Add(this.label2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(1161, 3);
+            this.panel2.Location = new System.Drawing.Point(1097, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 611);
+            this.panel2.Size = new System.Drawing.Size(264, 611);
             this.panel2.TabIndex = 2;
+            // 
+            // cboxMapProvider
+            // 
+            this.cboxMapProvider.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxMapProvider.DropDownWidth = 256;
+            this.cboxMapProvider.FormattingEnabled = true;
+            this.cboxMapProvider.Items.AddRange(new object[] {
+            "Google Map",
+            "Google Map Terrain",
+            "Open Street Map",
+            "Open Street Map Quest",
+            "ArcGIS World Topo",
+            "Bing Map"});
+            this.cboxMapProvider.Location = new System.Drawing.Point(3, 31);
+            this.cboxMapProvider.MaxDropDownItems = 12;
+            this.cboxMapProvider.Name = "cboxMapProvider";
+            this.cboxMapProvider.Size = new System.Drawing.Size(256, 24);
+            this.cboxMapProvider.TabIndex = 1;
+            this.cboxMapProvider.SelectedIndexChanged += new System.EventHandler(this.cboxMapProvider_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 11);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(91, 17);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Map provider";
             // 
             // panel1
             // 
@@ -668,6 +701,8 @@
             this.pageMenu.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.pageMap.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -722,6 +757,8 @@
         private GMap.NET.WindowsForms.GMapControl gmap;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnMenuMap;
+        private System.Windows.Forms.ComboBox cboxMapProvider;
+        private System.Windows.Forms.Label label2;
     }
 }
 
