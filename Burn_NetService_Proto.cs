@@ -29,9 +29,11 @@ namespace burn
     public class Message
     {
         //! Protocol command
+        [JsonProperty(PropertyName = "command")]
         public string Command { get; set; }
 
         //! Protocol arguments stored as a dictionary
+        [JsonProperty(PropertyName = "arguments")]
         public Dictionary<string, string> Arguments { get; set; }               
 
         /** 

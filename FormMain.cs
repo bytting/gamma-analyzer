@@ -27,6 +27,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
@@ -36,6 +38,12 @@ namespace crash
 {
     public partial class FormMain : Form
     {
+        private static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + Path.DirectorySeparatorChar + "crash";
+        private static string SettingsFile = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";
+
+        FormLog log = new FormLog();
+        Settings settings = new Settings();
+
         static ConcurrentQueue<burn.Message> sendq = null;
         static ConcurrentQueue<burn.Message> recvq = null;
 
@@ -60,6 +68,14 @@ namespace crash
 
             lblConnectionStatus.ForeColor = Color.Red;
             lblConnectionStatus.Text = "Not connected";
+
+            if (!Directory.Exists(SettingsPath))
+                Directory.CreateDirectory(SettingsPath);
+
+            if (File.Exists(SettingsFile))
+            {
+                LoadSettings();
+            }
 
             netThread.Start();
             while (!netThread.IsAlive);            
@@ -89,35 +105,53 @@ namespace crash
             }            
         }
 
+        private void SaveSettings()
+        {
+            StreamWriter sw = new StreamWriter(SettingsFile);
+            XmlSerializer x = new XmlSerializer(settings.GetType());
+            x.Serialize(sw, settings);
+            sw.Close();
+        }
+
+        private void LoadSettings()
+        {
+            StreamReader sr = new StreamReader(SettingsFile);
+            XmlSerializer x = new XmlSerializer(settings.GetType());
+            settings = x.Deserialize(sr) as Settings;
+            sr.Close();
+        }
+
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (netService.IsRunning())
                 btnStopNetService_Click(sender, e);
             timer.Stop();
+
+            SaveSettings();
         }
 
         private bool dispatchRecvMsg(burn.Message msg)
-        {
+        {            
             switch (msg.Command)
             {
                 case "connect_ok":
                     lblConnectionStatus.ForeColor = Color.Green;
                     lblConnectionStatus.Text = "Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"];
-                    log("Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
+                    log.Add("Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
                     connected = true;
                     break;
 
                 case "connect_failed":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"];
-                    log("Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
+                    log.Add("Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
                     connected = false;
                     break;
 
                 case "disconnect_ok":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    log("Disconnected from peer");
+                    log.Add("Disconnected from peer");
                     connected = false;
                     break;
 
@@ -126,39 +160,50 @@ namespace crash
                     netThread.Join();
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    log("Disconnected from peer, peer closed");
+                    log.Add("Disconnected from peer, peer closed");
                     break;
 
                 case "new_session_ok":
-                    log("New session created: " + msg.Arguments["session_name"]);
+                    bool prev = msg.Arguments["preview"] == "1";
+                    if(prev)
+                        log.Add("Preview saved");
+                    else
+                        log.Add("New session created: " + msg.Arguments["session_name"]);
                     break;
 
                 case "new_session_failed":
-                    log("New session failed: " + msg.Arguments["message"]);
+                    log.Add("New session failed: " + msg.Arguments["message"]);
                     break;
 
                 case "stop_session_ok":
-                    log("Session stopped");
+                    log.Add("Session stopped");
                     break;
 
                 case "error":
-                    log("Error: " + msg.Arguments["message"]);
+                    log.Add("Error: " + msg.Arguments["message"]);
                     break;
 
                 case "error_socket":
-                    log("Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
+                    log.Add("Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
                     break;                
 
                 case "set_gain_ok":
-                    log("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
+                    log.Add("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
                     break;
 
                 case "spectrum":
                     Spectrum spec = new Spectrum(msg);
-                    specList.Add(spec);
-                    log("Spectrum " + spec.Label + " received");
+                    specList.Add(spec);                    
+                    log.Add("Spectrum " + spec.Label + " received");
 
-                    string path = tbSessionDir.Text + Path.DirectorySeparatorChar + spec.Message.Arguments["session_name"];
+                    string path;
+                    bool preview = msg.Arguments["preview"] == "1";
+
+                    if(preview)
+                        path = SettingsPath;                    
+                    else                    
+                        path = tbSessionDir.Text + Path.DirectorySeparatorChar + spec.Message.Arguments["session_name"];                    
+
                     string jsonPath = path + Path.DirectorySeparatorChar + "json";
                     if (!Directory.Exists(jsonPath))
                         Directory.CreateDirectory(jsonPath);
@@ -175,23 +220,30 @@ namespace crash
                             Directory.CreateDirectory(chnPath);
                         filename = chnPath + Path.DirectorySeparatorChar + spec.Message.Arguments["session_index"] + ".chn";                        
                         burn.CHN.Write(filename, msg);
-                    }                    
+                    }
+                 
+                    if(preview)
+                    {
+                        chartSetupSpec.Series["Series1"].Points.Clear();
+                        string[] counts = msg.Arguments["channels"].Split(new char[] {' '});
+                        int index = 0;
+                        foreach(string ch in counts)
+                        {
+                            chartSetupSpec.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
+                            index++;
+                        }
+                    }
                     break;
 
                 default:
                     string info = msg.Command + " -> ";
                     foreach (KeyValuePair<string, string> item in msg.Arguments)
                         info += item.Key + ":" + item.Value + ", ";
-                    log("Unhandeled command: " + info);
+                    log.Add("Unhandeled command: " + info);
                     break;
             }
             return true;
-        }        
-
-        private void log(string message)
-        {
-            tbLog.Text += Environment.NewLine + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + message;            
-        }        
+        }                        
 
         private void menuItemExit_Click(object sender, EventArgs e)
         {
@@ -262,34 +314,7 @@ namespace crash
         }                
 
         private void btnSetGain_Click(object sender, EventArgs e)
-        {
-            if (String.IsNullOrEmpty(tbVoltage.Text))
-            {
-                MessageBox.Show("You must specify voltage");
-                return;
-            }
-
-            if (String.IsNullOrEmpty(tbCoarseGain.Text))
-            {
-                MessageBox.Show("You must specify coarse gain");
-                return;
-            }
-
-            if (String.IsNullOrEmpty(tbFineGain.Text))
-            {
-                MessageBox.Show("You must specify fine gain");
-                return;
-            }
-
-            int voltage = Convert.ToInt32(tbVoltage.Text);
-            float coarse = Convert.ToInt32(tbCoarseGain.Text);
-            float fine = Convert.ToInt32(tbFineGain.Text);
-
-            burn.Message msg = new burn.Message("set_gain", null);
-            msg.AddParameter("voltage", voltage);
-            msg.AddParameter("coarse_gain", coarse);
-            msg.AddParameter("fine_gain", fine);
-            sendq.Enqueue(msg);
+        {            
         }
 
         private void btnStopSession_Click(object sender, EventArgs e)
@@ -317,7 +342,7 @@ namespace crash
 
         private void btnMenuSpec_Click(object sender, EventArgs e)
         {
-            tabs.SelectedTab = pageSpec;
+            tabs.SelectedTab = pageSetup;
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -335,18 +360,18 @@ namespace crash
             int index = 0;
             foreach(string ch in counts)
             {
-                chartSpec.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
+                chartSetupSpec.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
                 index++;
             }
         }
 
         private void btnMenuMap_Click(object sender, EventArgs e)
         {
-            tabs.SelectedTab = pageMap;
+            tabs.SelectedTab = pageSession;
         }
 
         private void cboxMapProvider_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {            
             if(!String.IsNullOrEmpty(cboxMapProvider.Text))
             {
                 switch(cboxMapProvider.Text)
@@ -374,7 +399,92 @@ namespace crash
                 //gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
                 //gmap.Zoom = 12;
             }
-        }        
+        }
+
+        private void btnMenuSession_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageSession;
+        }
+
+        private void btnMapMinimize_Click(object sender, EventArgs e)
+        {
+            splitRight.SplitterDistance = splitMain.Height - 25;            
+        }
+
+        private void btnMapMaximize_Click(object sender, EventArgs e)
+        {
+            splitRight.SplitterDistance = splitMain.Height / 2;
+        }
+
+        private void btnShowLog_Click(object sender, EventArgs e)
+        {            
+            log.Show();
+            log.BringToFront();
+        }
+
+        private void btnSetupSetParams_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(tbSetupVoltage.Text))
+            {
+                MessageBox.Show("You must specify voltage");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbSetupCoarseGain.Text))
+            {
+                MessageBox.Show("You must specify coarse gain");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbSetupFineGain.Text))
+            {
+                MessageBox.Show("You must specify fine gain");
+                return;
+            }
+
+            int voltage = Convert.ToInt32(tbSetupVoltage.Text);
+            float coarse = Convert.ToInt32(tbSetupCoarseGain.Text);
+            float fine = Convert.ToInt32(tbSetupFineGain.Text);
+
+            burn.Message msg = new burn.Message("set_gain", null);
+            msg.AddParameter("voltage", voltage);
+            msg.AddParameter("coarse_gain", coarse);
+            msg.AddParameter("fine_gain", fine);
+            sendq.Enqueue(msg);
+        }
+
+        private void btnSetupStart_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(tbSetupLivetime.Text))
+            {
+                MessageBox.Show("You must specify a livetime");
+                return;
+            }
+
+            burn.Message msg = new burn.Message("new_session", null);
+            msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
+            msg.AddParameter("preview", 1);
+            msg.AddParameter("iterations", 1);
+            msg.AddParameter("livetime", Convert.ToSingle(tbSetupLivetime.Text));
+            msg.AddParameter("delay", 0);
+            sendq.Enqueue(msg);
+        }
+
+        private void btnSetupStop_Click(object sender, EventArgs e)
+        {
+            sendq.Enqueue(new burn.Message("stop_session", null));
+        }
+
+        private void btnSetupStoreParams_Click(object sender, EventArgs e)
+        {
+            // Update settings FIXME
+            SaveSettings();
+        }
+
+        private void btnSendSession_Click_1(object sender, EventArgs e)
+        {
+
+        }                
     }    
 
     public class Spectrum

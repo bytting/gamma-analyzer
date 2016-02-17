@@ -15,6 +15,7 @@ close_failed ->
 
 new_session ->
 	session_name
+	preview
 	iterations
 	livetime
 	
