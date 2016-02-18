@@ -29,6 +29,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Globalization;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
@@ -52,6 +53,8 @@ namespace crash
 
         FormConnect formConnect = new FormConnect();
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+
+        Dictionary<string, GMapOverlay> overlays = new Dictionary<string, GMapOverlay>();
 
         BindingList<Spectrum> specList = new BindingList<Spectrum>();
         bool connected = false;
@@ -89,7 +92,7 @@ namespace crash
             lbSpecList.ValueMember = "Message";            
 
             gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
-            /*GMapOverlay markersOverlay = new GMapOverlay("markers");                        
+            /*GMapOverlay markersOverlay = new GMapOverlay("markers");
             GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(59.946534, 10.598574), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
             markersOverlay.Markers.Add(marker);
             gmap.Overlays.Add(markersOverlay);*/
@@ -168,7 +171,13 @@ namespace crash
                     if(prev)
                         log.Add("Preview saved");
                     else
-                        log.Add("New session created: " + msg.Arguments["session_name"]);
+                    {
+                        string session_name = msg.Arguments["session_name"];
+                        log.Add("New session created: " + session_name);
+
+                        overlays.Add(session_name, new GMapOverlay(session_name));                        
+                        gmap.Overlays.Add(overlays[session_name]);
+                    }                        
                     break;
 
                 case "new_session_failed":
@@ -192,8 +201,7 @@ namespace crash
                     break;
 
                 case "spectrum":
-                    Spectrum spec = new Spectrum(msg);
-                    specList.Add(spec);                    
+                    Spectrum spec = new Spectrum(msg);                    
                     log.Add("Spectrum " + spec.Label + " received");
 
                     string path;
@@ -201,8 +209,11 @@ namespace crash
 
                     if(preview)
                         path = SettingsPath;                    
-                    else                    
-                        path = tbSessionDir.Text + Path.DirectorySeparatorChar + spec.Message.Arguments["session_name"];                    
+                    else
+                    {
+                        specList.Add(spec);
+                        path = tbSessionDir.Text + Path.DirectorySeparatorChar + spec.Message.Arguments["session_name"];
+                    }                        
 
                     string jsonPath = path + Path.DirectorySeparatorChar + "json";
                     if (!Directory.Exists(jsonPath))
@@ -221,18 +232,27 @@ namespace crash
                         filename = chnPath + Path.DirectorySeparatorChar + spec.Message.Arguments["session_index"] + ".chn";                        
                         burn.CHN.Write(filename, msg);
                     }
-                 
-                    if(preview)
+
+                    if (preview)
                     {
-                        chartSetupSpec.Series["Series1"].Points.Clear();
-                        string[] counts = msg.Arguments["channels"].Split(new char[] {' '});
+                        chartSetup.Series["Series1"].Points.Clear();
+                        string[] counts = msg.Arguments["channels"].Split(new char[] { ' ' });
                         int index = 0;
-                        foreach(string ch in counts)
+                        foreach (string ch in counts)
                         {
-                            chartSetupSpec.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
+                            chartSetup.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
                             index++;
                         }
                     }
+                    else
+                    {
+                        string session_name = spec.Message.Arguments["session_name"];
+                        double lat = Convert.ToDouble(spec.Message.Arguments["latitude_start"], new CultureInfo("en-US"));
+                        double lon = Convert.ToDouble(spec.Message.Arguments["longitude_start"], new CultureInfo("en-US"));
+                        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(lat, lon), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
+                        overlays[session_name].Markers.Add(marker);                        
+                    }
+
                     break;
 
                 default:
@@ -243,7 +263,7 @@ namespace crash
                     break;
             }
             return true;
-        }                        
+        }        
 
         private void menuItemExit_Click(object sender, EventArgs e)
         {
@@ -299,6 +319,7 @@ namespace crash
 
             burn.Message msg = new burn.Message("new_session", null);
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
+            msg.AddParameter("preview", 0);
             msg.AddParameter("iterations", count);
             msg.AddParameter("livetime", livetime);
             msg.AddParameter("delay", delay);
@@ -351,18 +372,7 @@ namespace crash
         }
 
         private void lbSpecList_SelectedValueChanged(object sender, EventArgs e)
-        {
-            if (lbSpecList.SelectedItems.Count < 1)
-                return;
-
-            Spectrum spec = (Spectrum)lbSpecList.SelectedItems[0];
-            string[] counts = spec.Message.Arguments["channels"].Split(new char[] {' '});
-            int index = 0;
-            foreach(string ch in counts)
-            {
-                chartSetupSpec.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
-                index++;
-            }
+        {            
         }
 
         private void btnMenuMap_Click(object sender, EventArgs e)
@@ -479,11 +489,21 @@ namespace crash
         {
             // Update settings FIXME
             SaveSettings();
-        }
+        }        
 
-        private void btnSendSession_Click_1(object sender, EventArgs e)
+        private void lbSpecList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (lbSpecList.SelectedItems.Count < 1)
+                return;
 
+            Spectrum spec = (Spectrum)lbSpecList.SelectedItems[0];
+            string[] counts = spec.Message.Arguments["channels"].Split(new char[] { ' ' });
+            int index = 0;
+            foreach (string ch in counts)
+            {
+                chartSession.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
+                index++;
+            }
         }                
     }    
 
