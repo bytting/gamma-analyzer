@@ -77,22 +77,23 @@ namespace burn
         {            
             if (!stream.DataAvailable)
                 return false;            
-                                        
+
+            bool returnValue = false;
             byte[] buffer = new byte[1024];                
-            while (true)
+
+            while (stream.DataAvailable)
             {
-                if (!stream.DataAvailable)
-                    break;
-                    
                 int len = stream.Read(buffer, 0, buffer.Length);
                 if (len <= 0)
                     break;
+
+                returnValue = true;
 
                 for (int i = 0; i<len; i++)
                     recvBuffer.Add(buffer[i]);                                        
             }                                            
 
-            return true;
+            return returnValue;
         }
 
         /** 
