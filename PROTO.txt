@@ -21,6 +21,7 @@ new_session ->
 	
 new_session_ok ->
 	session_name
+	preview
 	iterations
 	livetime
 	
@@ -78,5 +79,5 @@ spectrum -
 	spectral_group
 	spectral_status
 	
-get_spectrum_failed ->
+spectrum_failed ->
 	message
