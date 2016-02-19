@@ -212,7 +212,7 @@ namespace crash
                     else
                     {
                         specList.Add(spec);
-                        path = tbSessionDir.Text + Path.DirectorySeparatorChar + spec.Message.Arguments["session_name"];
+                        path = settings.SessionDirectory + Path.DirectorySeparatorChar + spec.Message.Arguments["session_name"];
                     }                        
 
                     string jsonPath = path + Path.DirectorySeparatorChar + "json";
@@ -301,9 +301,9 @@ namespace crash
 
         private void btnSendSession_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(tbSessionDir.Text))
+            if (String.IsNullOrEmpty(settings.SessionDirectory))
             {
-                MessageBox.Show("Du må velge en session katalog");
+                MessageBox.Show("You must provide a session directory under preferences");
                 return;
             }                        
 
@@ -351,16 +351,7 @@ namespace crash
             Spectrum spec = (Spectrum)lbSpecList.SelectedItem;
             MessageBox.Show(spec.Label);
         }
-
-        private void btnSelectSessionDir_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            if(dialog.ShowDialog() == DialogResult.OK)
-            {
-                tbSessionDir.Text = dialog.SelectedPath;
-            }
-        }
-
+        
         private void btnMenuSpec_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageSetup;
@@ -496,6 +487,8 @@ namespace crash
             if (lbSpecList.SelectedItems.Count < 1)
                 return;
 
+            chartSession.Series["Series1"].Points.Clear();
+
             Spectrum spec = (Spectrum)lbSpecList.SelectedItems[0];
             string[] counts = spec.Message.Arguments["channels"].Split(new char[] { ' ' });
             int index = 0;
@@ -504,6 +497,12 @@ namespace crash
                 chartSession.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
                 index++;
             }
+        }
+
+        private void menuItemPreferences_Click(object sender, EventArgs e)
+        {
+            FormPreferences form = new FormPreferences(settings);
+            form.ShowDialog();
         }                
     }    
 

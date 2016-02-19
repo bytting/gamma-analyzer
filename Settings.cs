@@ -23,5 +23,6 @@ namespace crash
         public string DefaultDetector;
         public string DefaultDetectorType;
         public int DefaultNrChannels;
+        public string SessionDirectory;
     }    
 }
