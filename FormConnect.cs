@@ -46,5 +46,11 @@ namespace crash
             DialogResult = DialogResult.OK;
             Close();                        
         }
+
+        private void FormConnect_Shown(object sender, EventArgs e)
+        {
+            tbIP.Text = IP;
+            tbPort.Text = Port;
+        }
     }
 }

@@ -24,5 +24,7 @@ namespace crash
         public string DefaultDetectorType;
         public int DefaultNrChannels;
         public string SessionDirectory;
+        public string LastIP;
+        public string LastPort;
     }    
 }

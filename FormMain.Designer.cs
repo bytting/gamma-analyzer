@@ -29,10 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,8 +48,8 @@
             this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnShowLog = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.btnPreferences = new System.Windows.Forms.ToolStripButton();
+            this.btnShowWaterfall = new System.Windows.Forms.ToolStripButton();
             this.tabs = new TabControlWizard.TabControlWizard();
             this.pageSetup = new System.Windows.Forms.TabPage();
             this.chartSetup = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -79,10 +77,7 @@
             this.btnMenuPreferences = new System.Windows.Forms.Button();
             this.pageSession = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.lbSpecList = new System.Windows.Forms.ListBox();
-            this.splitMain = new System.Windows.Forms.SplitContainer();
-            this.splitLeft = new System.Windows.Forms.SplitContainer();
-            this.chartSession = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tvSessions = new System.Windows.Forms.TreeView();
             this.splitRight = new System.Windows.Forms.SplitContainer();
             this.gmap = new GMap.NET.WindowsForms.GMapControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -90,6 +85,8 @@
             this.btnMapMinimize = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.cboxMapProvider = new System.Windows.Forms.ToolStripComboBox();
+            this.lbLog = new System.Windows.Forms.ListBox();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.tblSession = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.tbSpecCount = new System.Windows.Forms.TextBox();
@@ -114,15 +111,8 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
-            this.splitMain.Panel1.SuspendLayout();
-            this.splitMain.Panel2.SuspendLayout();
-            this.splitMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitLeft)).BeginInit();
-            this.splitLeft.Panel1.SuspendLayout();
-            this.splitLeft.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartSession)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitRight)).BeginInit();
+            this.splitRight.Panel1.SuspendLayout();
             this.splitRight.Panel2.SuspendLayout();
             this.splitRight.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -219,8 +209,8 @@
             this.btnDisconnect,
             this.lblConnectionStatus,
             this.toolStripSeparator3,
-            this.btnShowLog,
-            this.toolStripButton1});
+            this.btnPreferences,
+            this.btnShowWaterfall});
             this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
             this.tools.Size = new System.Drawing.Size(1157, 25);
@@ -275,27 +265,26 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnShowLog
+            // btnPreferences
             // 
-            this.btnShowLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowLog.Image = ((System.Drawing.Image)(resources.GetObject("btnShowLog.Image")));
-            this.btnShowLog.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowLog.Name = "btnShowLog";
-            this.btnShowLog.Size = new System.Drawing.Size(23, 22);
-            this.btnShowLog.Text = "toolStripButton1";
-            this.btnShowLog.ToolTipText = "Show log";
-            this.btnShowLog.Click += new System.EventHandler(this.btnShowLog_Click);
+            this.btnPreferences.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPreferences.Image = ((System.Drawing.Image)(resources.GetObject("btnPreferences.Image")));
+            this.btnPreferences.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPreferences.Name = "btnPreferences";
+            this.btnPreferences.Size = new System.Drawing.Size(23, 22);
+            this.btnPreferences.Text = "toolStripButton1";
+            this.btnPreferences.ToolTipText = "Open preferences";
+            this.btnPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
             // 
-            // toolStripButton1
+            // btnShowWaterfall
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.ToolTipText = "Open preferences";
-            this.toolStripButton1.Click += new System.EventHandler(this.menuItemPreferences_Click);
+            this.btnShowWaterfall.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowWaterfall.Image = ((System.Drawing.Image)(resources.GetObject("btnShowWaterfall.Image")));
+            this.btnShowWaterfall.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowWaterfall.Name = "btnShowWaterfall";
+            this.btnShowWaterfall.Size = new System.Drawing.Size(23, 22);
+            this.btnShowWaterfall.Text = "toolStripButton2";
+            this.btnShowWaterfall.Click += new System.EventHandler(this.btnShowWaterfall_Click);
             // 
             // tabs
             // 
@@ -324,14 +313,14 @@
             // chartSetup
             // 
             this.chartSetup.BackColor = System.Drawing.SystemColors.ButtonFace;
-            chartArea6.Name = "ChartArea1";
-            this.chartSetup.ChartAreas.Add(chartArea6);
+            chartArea1.Name = "ChartArea1";
+            this.chartSetup.ChartAreas.Add(chartArea1);
             this.chartSetup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartSetup.Location = new System.Drawing.Point(3, 182);
             this.chartSetup.Name = "chartSetup";
-            series6.ChartArea = "ChartArea1";
-            series6.Name = "Series1";
-            this.chartSetup.Series.Add(series6);
+            series1.ChartArea = "ChartArea1";
+            series1.Name = "Series1";
+            this.chartSetup.Series.Add(series1);
             this.chartSetup.Size = new System.Drawing.Size(1143, 495);
             this.chartSetup.TabIndex = 19;
             this.chartSetup.Text = "chart1";
@@ -609,94 +598,45 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.lbSpecList);
+            this.splitContainer2.Panel1.Controls.Add(this.tvSessions);
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.splitMain);
+            this.splitContainer2.Panel2.Controls.Add(this.splitRight);
             this.splitContainer2.Panel2.Controls.Add(this.tblSession);
             this.splitContainer2.Size = new System.Drawing.Size(1143, 674);
-            this.splitContainer2.SplitterDistance = 148;
+            this.splitContainer2.SplitterDistance = 244;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 6;
             // 
-            // lbSpecList
+            // tvSessions
             // 
-            this.lbSpecList.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbSpecList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lbSpecList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbSpecList.FormattingEnabled = true;
-            this.lbSpecList.ItemHeight = 15;
-            this.lbSpecList.Location = new System.Drawing.Point(0, 0);
-            this.lbSpecList.Name = "lbSpecList";
-            this.lbSpecList.Size = new System.Drawing.Size(148, 674);
-            this.lbSpecList.TabIndex = 5;
-            this.lbSpecList.SelectedIndexChanged += new System.EventHandler(this.lbSpecList_SelectedIndexChanged);
-            // 
-            // splitMain
-            // 
-            this.splitMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitMain.Location = new System.Drawing.Point(0, 73);
-            this.splitMain.Name = "splitMain";
-            // 
-            // splitMain.Panel1
-            // 
-            this.splitMain.Panel1.Controls.Add(this.splitLeft);
-            // 
-            // splitMain.Panel2
-            // 
-            this.splitMain.Panel2.Controls.Add(this.splitRight);
-            this.splitMain.Size = new System.Drawing.Size(990, 601);
-            this.splitMain.SplitterDistance = 498;
-            this.splitMain.SplitterWidth = 5;
-            this.splitMain.TabIndex = 3;
-            // 
-            // splitLeft
-            // 
-            this.splitLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitLeft.Location = new System.Drawing.Point(0, 0);
-            this.splitLeft.Name = "splitLeft";
-            this.splitLeft.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitLeft.Panel1
-            // 
-            this.splitLeft.Panel1.Controls.Add(this.chartSession);
-            this.splitLeft.Size = new System.Drawing.Size(498, 601);
-            this.splitLeft.SplitterDistance = 270;
-            this.splitLeft.SplitterWidth = 5;
-            this.splitLeft.TabIndex = 0;
-            // 
-            // chartSession
-            // 
-            this.chartSession.BackColor = System.Drawing.SystemColors.Window;
-            chartArea5.Name = "ChartArea1";
-            this.chartSession.ChartAreas.Add(chartArea5);
-            this.chartSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartSession.Location = new System.Drawing.Point(0, 0);
-            this.chartSession.Name = "chartSession";
-            series5.ChartArea = "ChartArea1";
-            series5.Name = "Series1";
-            this.chartSession.Series.Add(series5);
-            this.chartSession.Size = new System.Drawing.Size(496, 268);
-            this.chartSession.TabIndex = 0;
-            this.chartSession.Text = "chart1";
+            this.tvSessions.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tvSessions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvSessions.Location = new System.Drawing.Point(0, 0);
+            this.tvSessions.Name = "tvSessions";
+            this.tvSessions.Size = new System.Drawing.Size(244, 674);
+            this.tvSessions.TabIndex = 6;
+            this.tvSessions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSessions_AfterSelect);
             // 
             // splitRight
             // 
             this.splitRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitRight.Location = new System.Drawing.Point(0, 0);
+            this.splitRight.Location = new System.Drawing.Point(0, 73);
             this.splitRight.Name = "splitRight";
-            this.splitRight.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitRight.Panel1
+            // 
+            this.splitRight.Panel1.Controls.Add(this.gmap);
+            this.splitRight.Panel1.Controls.Add(this.toolStrip1);
             // 
             // splitRight.Panel2
             // 
-            this.splitRight.Panel2.Controls.Add(this.gmap);
-            this.splitRight.Panel2.Controls.Add(this.toolStrip1);
-            this.splitRight.Size = new System.Drawing.Size(487, 601);
-            this.splitRight.SplitterDistance = 270;
+            this.splitRight.Panel2.Controls.Add(this.lbLog);
+            this.splitRight.Panel2.Controls.Add(this.toolStrip2);
+            this.splitRight.Size = new System.Drawing.Size(894, 601);
+            this.splitRight.SplitterDistance = 442;
             this.splitRight.SplitterWidth = 5;
             this.splitRight.TabIndex = 0;
             // 
@@ -722,7 +662,7 @@
             this.gmap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gmap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gmap.ShowTileGridLines = false;
-            this.gmap.Size = new System.Drawing.Size(485, 299);
+            this.gmap.Size = new System.Drawing.Size(440, 574);
             this.gmap.TabIndex = 1;
             this.gmap.Zoom = 12D;
             // 
@@ -737,8 +677,8 @@
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(485, 25);
-            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.Size = new System.Drawing.Size(440, 25);
+            this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // btnMapMaximize
@@ -786,6 +726,28 @@
             this.cboxMapProvider.Size = new System.Drawing.Size(132, 25);
             this.cboxMapProvider.SelectedIndexChanged += new System.EventHandler(this.cboxMapProvider_SelectedIndexChanged);
             // 
+            // lbLog
+            // 
+            this.lbLog.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.lbLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbLog.FormattingEnabled = true;
+            this.lbLog.ItemHeight = 15;
+            this.lbLog.Location = new System.Drawing.Point(0, 25);
+            this.lbLog.Name = "lbLog";
+            this.lbLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.lbLog.Size = new System.Drawing.Size(445, 574);
+            this.lbLog.TabIndex = 0;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(445, 25);
+            this.toolStrip2.TabIndex = 1;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
             // tblSession
             // 
             this.tblSession.ColumnCount = 8;
@@ -813,7 +775,7 @@
             this.tblSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tblSession.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tblSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tblSession.Size = new System.Drawing.Size(990, 73);
+            this.tblSession.Size = new System.Drawing.Size(894, 73);
             this.tblSession.TabIndex = 4;
             // 
             // label1
@@ -822,40 +784,40 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(197, 30);
+            this.label1.Size = new System.Drawing.Size(169, 30);
             this.label1.TabIndex = 0;
             this.label1.Text = "Spectrum count, livetime and delay";
             // 
             // tbSpecCount
             // 
             this.tbSpecCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSpecCount.Location = new System.Drawing.Point(223, 3);
+            this.tbSpecCount.Location = new System.Drawing.Point(201, 3);
             this.tbSpecCount.Name = "tbSpecCount";
-            this.tbSpecCount.Size = new System.Drawing.Size(104, 21);
+            this.tbSpecCount.Size = new System.Drawing.Size(93, 21);
             this.tbSpecCount.TabIndex = 18;
             // 
             // tbSpecLivetime
             // 
             this.tbSpecLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSpecLivetime.Location = new System.Drawing.Point(333, 3);
+            this.tbSpecLivetime.Location = new System.Drawing.Point(300, 3);
             this.tbSpecLivetime.Name = "tbSpecLivetime";
-            this.tbSpecLivetime.Size = new System.Drawing.Size(104, 21);
+            this.tbSpecLivetime.Size = new System.Drawing.Size(93, 21);
             this.tbSpecLivetime.TabIndex = 19;
             // 
             // tbSpecDelay
             // 
             this.tbSpecDelay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSpecDelay.Location = new System.Drawing.Point(443, 3);
+            this.tbSpecDelay.Location = new System.Drawing.Point(399, 3);
             this.tbSpecDelay.Name = "tbSpecDelay";
-            this.tbSpecDelay.Size = new System.Drawing.Size(104, 21);
+            this.tbSpecDelay.Size = new System.Drawing.Size(93, 21);
             this.tbSpecDelay.TabIndex = 20;
             // 
             // btnSendSession
             // 
             this.btnSendSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSendSession.Location = new System.Drawing.Point(553, 3);
+            this.btnSendSession.Location = new System.Drawing.Point(498, 3);
             this.btnSendSession.Name = "btnSendSession";
-            this.btnSendSession.Size = new System.Drawing.Size(104, 24);
+            this.btnSendSession.Size = new System.Drawing.Size(93, 24);
             this.btnSendSession.TabIndex = 17;
             this.btnSendSession.Text = "Start session";
             this.btnSendSession.UseVisualStyleBackColor = true;
@@ -864,9 +826,9 @@
             // btnStopSession
             // 
             this.btnStopSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStopSession.Location = new System.Drawing.Point(663, 3);
+            this.btnStopSession.Location = new System.Drawing.Point(597, 3);
             this.btnStopSession.Name = "btnStopSession";
-            this.btnStopSession.Size = new System.Drawing.Size(104, 24);
+            this.btnStopSession.Size = new System.Drawing.Size(93, 24);
             this.btnStopSession.TabIndex = 21;
             this.btnStopSession.Text = "Stop session";
             this.btnStopSession.UseVisualStyleBackColor = true;
@@ -875,9 +837,9 @@
             // btnSendClose
             // 
             this.btnSendClose.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSendClose.Location = new System.Drawing.Point(883, 3);
+            this.btnSendClose.Location = new System.Drawing.Point(795, 3);
             this.btnSendClose.Name = "btnSendClose";
-            this.btnSendClose.Size = new System.Drawing.Size(104, 24);
+            this.btnSendClose.Size = new System.Drawing.Size(96, 24);
             this.btnSendClose.TabIndex = 2;
             this.btnSendClose.Text = "Send close";
             this.btnSendClose.UseVisualStyleBackColor = true;
@@ -887,7 +849,7 @@
             // 
             this.cbStoreChn.AutoSize = true;
             this.tblSession.SetColumnSpan(this.cbStoreChn, 2);
-            this.cbStoreChn.Location = new System.Drawing.Point(223, 33);
+            this.cbStoreChn.Location = new System.Drawing.Point(201, 33);
             this.cbStoreChn.Name = "cbStoreChn";
             this.cbStoreChn.Size = new System.Drawing.Size(109, 19);
             this.cbStoreChn.TabIndex = 16;
@@ -930,14 +892,8 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.splitMain.Panel1.ResumeLayout(false);
-            this.splitMain.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitMain)).EndInit();
-            this.splitMain.ResumeLayout(false);
-            this.splitLeft.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitLeft)).EndInit();
-            this.splitLeft.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartSession)).EndInit();
+            this.splitRight.Panel1.ResumeLayout(false);
+            this.splitRight.Panel1.PerformLayout();
             this.splitRight.Panel2.ResumeLayout(false);
             this.splitRight.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitRight)).EndInit();
@@ -976,8 +932,6 @@
         private System.Windows.Forms.TabPage pageSession;
         private GMap.NET.WindowsForms.GMapControl gmap;
         private System.Windows.Forms.Button btnMenuSession;
-        private System.Windows.Forms.SplitContainer splitMain;
-        private System.Windows.Forms.SplitContainer splitLeft;
         private System.Windows.Forms.SplitContainer splitRight;
         private System.Windows.Forms.TableLayoutPanel tblSession;
         private System.Windows.Forms.Label label1;
@@ -988,15 +942,8 @@
         private System.Windows.Forms.Button btnStopSession;
         private System.Windows.Forms.CheckBox cbStoreChn;
         private System.Windows.Forms.Button btnSendClose;
-        private System.Windows.Forms.ListBox lbSpecList;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton btnMapMaximize;
-        private System.Windows.Forms.ToolStripButton btnMapMinimize;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-        private System.Windows.Forms.ToolStripComboBox cboxMapProvider;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton btnShowLog;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TextBox tbSetupVoltage;
         private System.Windows.Forms.Label label5;
@@ -1014,11 +961,19 @@
         private System.Windows.Forms.Button btnSetupStart;
         private System.Windows.Forms.Button btnSetupStoreParams;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartSession;
         private System.Windows.Forms.ToolStripMenuItem menuItemEdit;
         private System.Windows.Forms.ToolStripMenuItem menuItemPreferences;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton btnPreferences;
         private System.Windows.Forms.Button btnMenuPreferences;
+        private System.Windows.Forms.ToolStripButton btnShowWaterfall;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton btnMapMaximize;
+        private System.Windows.Forms.ToolStripButton btnMapMinimize;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripComboBox cboxMapProvider;
+        private System.Windows.Forms.ListBox lbLog;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.TreeView tvSessions;
     }
 }
 

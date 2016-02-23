@@ -41,8 +41,7 @@ namespace crash
     {
         private static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + Path.DirectorySeparatorChar + "crash";
         private static string SettingsFile = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";
-
-        FormLog log = new FormLog();
+        
         Settings settings = new Settings();
 
         static ConcurrentQueue<burn.Message> sendq = null;
@@ -50,14 +49,16 @@ namespace crash
 
         static burn.NetService netService = new burn.NetService(ref sendq, ref recvq);
         static Thread netThread = new Thread(netService.DoWork);
-
-        FormConnect formConnect = new FormConnect();
+        
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
         Dictionary<string, GMapOverlay> overlays = new Dictionary<string, GMapOverlay>();
-
-        BindingList<Spectrum> specList = new BindingList<Spectrum>();
+        
         bool connected = false;
+        
+        FormConnect formConnect = new FormConnect();
+        FormSpectrum formSpectrum = new FormSpectrum();
+        FormWaterfall formWaterfall = new FormWaterfall();
 
         public FormMain()
         {
@@ -85,17 +86,13 @@ namespace crash
                     
             timer.Interval = 10;
             timer.Tick += timer_Tick;
-            timer.Start();
-
-            lbSpecList.DataSource = specList;
-            lbSpecList.DisplayMember = "Label";
-            lbSpecList.ValueMember = "Message";            
+            timer.Start();            
 
             gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
             /*GMapOverlay markersOverlay = new GMapOverlay("markers");
             GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(59.946534, 10.598574), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
             markersOverlay.Markers.Add(marker);
-            gmap.Overlays.Add(markersOverlay);*/
+            gmap.Overlays.Add(markersOverlay);*/            
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -106,6 +103,15 @@ namespace crash
                 if (recvq.TryDequeue(out msg))
                     dispatchRecvMsg(msg);                                    
             }            
+        }        
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (netService.IsRunning())
+                btnStopNetService_Click(sender, e);
+            timer.Stop();
+
+            SaveSettings();
         }
 
         private void SaveSettings()
@@ -124,13 +130,10 @@ namespace crash
             sr.Close();
         }
 
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        public void Log(string s)
         {
-            if (netService.IsRunning())
-                btnStopNetService_Click(sender, e);
-            timer.Stop();
-
-            SaveSettings();
+            string msg = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            lbLog.Items.Insert(0, msg + " -> " + s);
         }
 
         private bool dispatchRecvMsg(burn.Message msg)
@@ -140,21 +143,21 @@ namespace crash
                 case "connect_ok":
                     lblConnectionStatus.ForeColor = Color.Green;
                     lblConnectionStatus.Text = "Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"];
-                    log.Add("Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
+                    Log("Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
                     connected = true;
                     break;
 
                 case "connect_failed":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"];
-                    log.Add("Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
+                    Log("Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
                     connected = false;
                     break;
 
                 case "disconnect_ok":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    log.Add("Disconnected from peer");
+                    Log("Disconnected from peer");
                     connected = false;
                     break;
 
@@ -163,17 +166,17 @@ namespace crash
                     netThread.Join();
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    log.Add("Disconnected from peer, peer closed");
+                    Log("Disconnected from peer, peer closed");
                     break;
 
                 case "new_session_ok":
                     bool prev = msg.Arguments["preview"] == "1";
                     if(prev)
-                        log.Add("Preview saved");
+                        Log("Preview saved");
                     else
                     {
                         string session_name = msg.Arguments["session_name"];
-                        log.Add("New session created: " + session_name);
+                        Log("New session created: " + session_name);
 
                         overlays.Add(session_name, new GMapOverlay(session_name));                        
                         gmap.Overlays.Add(overlays[session_name]);
@@ -181,28 +184,28 @@ namespace crash
                     break;
 
                 case "new_session_failed":
-                    log.Add("New session failed: " + msg.Arguments["message"]);
+                    Log("New session failed: " + msg.Arguments["message"]);
                     break;
 
                 case "stop_session_ok":
-                    log.Add("Session stopped");
+                    Log("Session stopped");
                     break;
 
                 case "error":
-                    log.Add("Error: " + msg.Arguments["message"]);
+                    Log("Error: " + msg.Arguments["message"]);
                     break;
 
                 case "error_socket":
-                    log.Add("Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
+                    Log("Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
                     break;                
 
                 case "set_gain_ok":
-                    log.Add("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
+                    Log("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
                     break;
 
                 case "spectrum":
-                    Spectrum spec = new Spectrum(msg);                    
-                    log.Add("Spectrum " + spec.Label + " received");
+                    Spectrum spec = new Spectrum(msg);
+                    Log("Spectrum " + spec.Label + " received");
 
                     string path;
                     bool preview = msg.Arguments["preview"] == "1";
@@ -210,9 +213,29 @@ namespace crash
                     if(preview)
                         path = SettingsPath;                    
                     else
-                    {
-                        specList.Add(spec);
+                    {                        
                         path = settings.SessionDirectory + Path.DirectorySeparatorChar + spec.Message.Arguments["session_name"];
+
+                        string sessName = spec.Message.Arguments["session_name"];
+                        TreeNode[] nodesFound = tvSessions.Nodes.Find(sessName, false);
+                        if(nodesFound.Length > 0)
+                        {
+                            TreeNode parent = nodesFound[0];
+                            TreeNode newNode = new TreeNode(spec.Label);                            
+                            newNode.Tag = spec;
+                            parent.Nodes.Add(newNode);
+                        }
+                        else
+                        {                                                        
+                            tvSessions.Nodes.Add(sessName, sessName);
+                            TreeNode[] rootNodesFound = tvSessions.Nodes.Find(sessName, false);
+                            if (rootNodesFound.Length > 0)
+                            {
+                                TreeNode newNode = new TreeNode(spec.Label);
+                                newNode.Tag = spec;
+                                rootNodesFound[0].Nodes.Add(newNode);
+                            }
+                        }
                     }                        
 
                     string jsonPath = path + Path.DirectorySeparatorChar + "json";
@@ -250,7 +273,9 @@ namespace crash
                         double lat = Convert.ToDouble(spec.Message.Arguments["latitude_start"], new CultureInfo("en-US"));
                         double lon = Convert.ToDouble(spec.Message.Arguments["longitude_start"], new CultureInfo("en-US"));
                         GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(lat, lon), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
-                        overlays[session_name].Markers.Add(marker);                        
+                        overlays[session_name].Markers.Add(marker);
+
+                        formWaterfall.AddSpectrum(spec);
                     }
 
                     break;
@@ -259,7 +284,7 @@ namespace crash
                     string info = msg.Command + " -> ";
                     foreach (KeyValuePair<string, string> item in msg.Arguments)
                         info += item.Key + ":" + item.Value + ", ";
-                    log.Add("Unhandeled command: " + info);
+                    Log("Unhandeled command: " + info);
                     break;
             }
             return true;
@@ -273,13 +298,18 @@ namespace crash
 
         private void menuItemConnect_Click(object sender, EventArgs e)
         {
+            formConnect.IP = settings.LastIP;
+            formConnect.Port = settings.LastPort;
             if (formConnect.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                 return;
+
+            settings.LastIP = formConnect.IP;
+            settings.LastPort = formConnect.Port;
 
             burn.Message msg = new burn.Message("connect", null);
             msg.AddParameter("host", formConnect.IP);
             msg.AddParameter("port", formConnect.Port);            
-            sendq.Enqueue(msg);            
+            sendq.Enqueue(msg);           
         }
 
         private void menuItemDisconnect_Click(object sender, EventArgs e)
@@ -323,9 +353,7 @@ namespace crash
             msg.AddParameter("iterations", count);
             msg.AddParameter("livetime", livetime);
             msg.AddParameter("delay", delay);
-            sendq.Enqueue(msg);
-
-            specList.Clear();
+            sendq.Enqueue(msg);            
         }        
 
         private void btnStopNetService_Click(object sender, EventArgs e)
@@ -333,23 +361,10 @@ namespace crash
             netService.RequestStop();
             netThread.Join();
         }                
-
-        private void btnSetGain_Click(object sender, EventArgs e)
-        {            
-        }
-
+        
         private void btnStopSession_Click(object sender, EventArgs e)
         {
             sendq.Enqueue(new burn.Message("stop_session", null));
-        }
-
-        private void lbSpecList_DoubleClick(object sender, EventArgs e)
-        {
-            if (lbSpecList.SelectedItem == null)
-                return;
-
-            Spectrum spec = (Spectrum)lbSpecList.SelectedItem;
-            MessageBox.Show(spec.Label);
         }
         
         private void btnMenuSpec_Click(object sender, EventArgs e)
@@ -360,11 +375,7 @@ namespace crash
         private void btnBack_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageMenu;
-        }
-
-        private void lbSpecList_SelectedValueChanged(object sender, EventArgs e)
-        {            
-        }
+        }        
 
         private void btnMenuMap_Click(object sender, EventArgs e)
         {
@@ -409,19 +420,13 @@ namespace crash
 
         private void btnMapMinimize_Click(object sender, EventArgs e)
         {
-            splitRight.SplitterDistance = splitMain.Height - 25;            
+            splitRight.SplitterDistance = splitRight.Height - 25;            
         }
 
         private void btnMapMaximize_Click(object sender, EventArgs e)
         {
-            splitRight.SplitterDistance = splitMain.Height / 2;
-        }
-
-        private void btnShowLog_Click(object sender, EventArgs e)
-        {            
-            log.Show();
-            log.BringToFront();
-        }
+            splitRight.SplitterDistance = splitRight.Height / 2;
+        }        
 
         private void btnSetupSetParams_Click(object sender, EventArgs e)
         {
@@ -480,29 +485,27 @@ namespace crash
         {
             // Update settings FIXME
             SaveSettings();
-        }        
-
-        private void lbSpecList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (lbSpecList.SelectedItems.Count < 1)
-                return;
-
-            chartSession.Series["Series1"].Points.Clear();
-
-            Spectrum spec = (Spectrum)lbSpecList.SelectedItems[0];
-            string[] counts = spec.Message.Arguments["channels"].Split(new char[] { ' ' });
-            int index = 0;
-            foreach (string ch in counts)
-            {
-                chartSession.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
-                index++;
-            }
-        }
+        }                
 
         private void menuItemPreferences_Click(object sender, EventArgs e)
         {
             FormPreferences form = new FormPreferences(settings);
             form.ShowDialog();
+        }
+
+        private void btnShowWaterfall_Click(object sender, EventArgs e)
+        {
+            formWaterfall.Show();
+            formWaterfall.BringToFront();
+        }
+        
+        private void tvSessions_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if(e.Node.Level > 0)
+            {                                
+                formSpectrum.ShowSpectrum((Spectrum)e.Node.Tag);
+                formSpectrum.ShowDialog();
+            }
         }                
     }    
 
