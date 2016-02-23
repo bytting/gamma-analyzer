@@ -419,13 +419,11 @@ namespace crash
         }
 
         private void btnMapMinimize_Click(object sender, EventArgs e)
-        {
-            splitRight.SplitterDistance = splitRight.Height - 25;            
+        {            
         }
 
         private void btnMapMaximize_Click(object sender, EventArgs e)
-        {
-            splitRight.SplitterDistance = splitRight.Height / 2;
+        {            
         }        
 
         private void btnSetupSetParams_Click(object sender, EventArgs e)

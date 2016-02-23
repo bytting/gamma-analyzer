@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,8 +81,6 @@
             this.splitRight = new System.Windows.Forms.SplitContainer();
             this.gmap = new GMap.NET.WindowsForms.GMapControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.btnMapMaximize = new System.Windows.Forms.ToolStripButton();
-            this.btnMapMinimize = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.cboxMapProvider = new System.Windows.Forms.ToolStripComboBox();
             this.lbLog = new System.Windows.Forms.ListBox();
@@ -205,11 +203,11 @@
             this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnBack,
             this.toolStripSeparator2,
+            this.btnPreferences,
             this.btnConnect,
             this.btnDisconnect,
             this.lblConnectionStatus,
             this.toolStripSeparator3,
-            this.btnPreferences,
             this.btnShowWaterfall});
             this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
@@ -284,6 +282,7 @@
             this.btnShowWaterfall.Name = "btnShowWaterfall";
             this.btnShowWaterfall.Size = new System.Drawing.Size(23, 22);
             this.btnShowWaterfall.Text = "toolStripButton2";
+            this.btnShowWaterfall.ToolTipText = "Show waterfall";
             this.btnShowWaterfall.Click += new System.EventHandler(this.btnShowWaterfall_Click);
             // 
             // tabs
@@ -313,14 +312,14 @@
             // chartSetup
             // 
             this.chartSetup.BackColor = System.Drawing.SystemColors.ButtonFace;
-            chartArea1.Name = "ChartArea1";
-            this.chartSetup.ChartAreas.Add(chartArea1);
+            chartArea8.Name = "ChartArea1";
+            this.chartSetup.ChartAreas.Add(chartArea8);
             this.chartSetup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartSetup.Location = new System.Drawing.Point(3, 182);
             this.chartSetup.Name = "chartSetup";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "Series1";
-            this.chartSetup.Series.Add(series1);
+            series8.ChartArea = "ChartArea1";
+            series8.Name = "Series1";
+            this.chartSetup.Series.Add(series8);
             this.chartSetup.Size = new System.Drawing.Size(1143, 495);
             this.chartSetup.TabIndex = 19;
             this.chartSetup.Text = "chart1";
@@ -605,7 +604,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.splitRight);
             this.splitContainer2.Panel2.Controls.Add(this.tblSession);
             this.splitContainer2.Size = new System.Drawing.Size(1143, 674);
-            this.splitContainer2.SplitterDistance = 244;
+            this.splitContainer2.SplitterDistance = 168;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 6;
             // 
@@ -615,7 +614,7 @@
             this.tvSessions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvSessions.Location = new System.Drawing.Point(0, 0);
             this.tvSessions.Name = "tvSessions";
-            this.tvSessions.Size = new System.Drawing.Size(244, 674);
+            this.tvSessions.Size = new System.Drawing.Size(168, 674);
             this.tvSessions.TabIndex = 6;
             this.tvSessions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSessions_AfterSelect);
             // 
@@ -635,8 +634,8 @@
             // 
             this.splitRight.Panel2.Controls.Add(this.lbLog);
             this.splitRight.Panel2.Controls.Add(this.toolStrip2);
-            this.splitRight.Size = new System.Drawing.Size(894, 601);
-            this.splitRight.SplitterDistance = 442;
+            this.splitRight.Size = new System.Drawing.Size(970, 601);
+            this.splitRight.SplitterDistance = 479;
             this.splitRight.SplitterWidth = 5;
             this.splitRight.TabIndex = 0;
             // 
@@ -662,7 +661,7 @@
             this.gmap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gmap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gmap.ShowTileGridLines = false;
-            this.gmap.Size = new System.Drawing.Size(440, 574);
+            this.gmap.Size = new System.Drawing.Size(477, 574);
             this.gmap.TabIndex = 1;
             this.gmap.Zoom = 12D;
             // 
@@ -670,46 +669,20 @@
             // 
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnMapMaximize,
-            this.btnMapMinimize,
             this.toolStripLabel2,
             this.cboxMapProvider});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(440, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(477, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // btnMapMaximize
-            // 
-            this.btnMapMaximize.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnMapMaximize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMapMaximize.Image = ((System.Drawing.Image)(resources.GetObject("btnMapMaximize.Image")));
-            this.btnMapMaximize.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMapMaximize.Name = "btnMapMaximize";
-            this.btnMapMaximize.Size = new System.Drawing.Size(23, 22);
-            this.btnMapMaximize.Text = "toolStripButton1";
-            this.btnMapMaximize.ToolTipText = "Maximize map";
-            this.btnMapMaximize.Click += new System.EventHandler(this.btnMapMaximize_Click);
-            // 
-            // btnMapMinimize
-            // 
-            this.btnMapMinimize.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnMapMinimize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMapMinimize.Image = ((System.Drawing.Image)(resources.GetObject("btnMapMinimize.Image")));
-            this.btnMapMinimize.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMapMinimize.Name = "btnMapMinimize";
-            this.btnMapMinimize.Size = new System.Drawing.Size(23, 22);
-            this.btnMapMinimize.Text = "toolStripButton2";
-            this.btnMapMinimize.ToolTipText = "Minimize map";
-            this.btnMapMinimize.Click += new System.EventHandler(this.btnMapMinimize_Click);
             // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(78, 22);
-            this.toolStripLabel2.Text = "Map provider";
+            this.toolStripLabel2.Size = new System.Drawing.Size(81, 22);
+            this.toolStripLabel2.Text = "Map provider:";
             // 
             // cboxMapProvider
             // 
@@ -736,7 +709,7 @@
             this.lbLog.Location = new System.Drawing.Point(0, 25);
             this.lbLog.Name = "lbLog";
             this.lbLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbLog.Size = new System.Drawing.Size(445, 574);
+            this.lbLog.Size = new System.Drawing.Size(484, 574);
             this.lbLog.TabIndex = 0;
             // 
             // toolStrip2
@@ -744,7 +717,7 @@
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(445, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(484, 25);
             this.toolStrip2.TabIndex = 1;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -775,7 +748,7 @@
             this.tblSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tblSession.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tblSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tblSession.Size = new System.Drawing.Size(894, 73);
+            this.tblSession.Size = new System.Drawing.Size(970, 73);
             this.tblSession.TabIndex = 4;
             // 
             // label1
@@ -784,40 +757,40 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(169, 30);
+            this.label1.Size = new System.Drawing.Size(197, 30);
             this.label1.TabIndex = 0;
             this.label1.Text = "Spectrum count, livetime and delay";
             // 
             // tbSpecCount
             // 
             this.tbSpecCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSpecCount.Location = new System.Drawing.Point(201, 3);
+            this.tbSpecCount.Location = new System.Drawing.Point(218, 3);
             this.tbSpecCount.Name = "tbSpecCount";
-            this.tbSpecCount.Size = new System.Drawing.Size(93, 21);
+            this.tbSpecCount.Size = new System.Drawing.Size(101, 21);
             this.tbSpecCount.TabIndex = 18;
             // 
             // tbSpecLivetime
             // 
             this.tbSpecLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSpecLivetime.Location = new System.Drawing.Point(300, 3);
+            this.tbSpecLivetime.Location = new System.Drawing.Point(325, 3);
             this.tbSpecLivetime.Name = "tbSpecLivetime";
-            this.tbSpecLivetime.Size = new System.Drawing.Size(93, 21);
+            this.tbSpecLivetime.Size = new System.Drawing.Size(101, 21);
             this.tbSpecLivetime.TabIndex = 19;
             // 
             // tbSpecDelay
             // 
             this.tbSpecDelay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSpecDelay.Location = new System.Drawing.Point(399, 3);
+            this.tbSpecDelay.Location = new System.Drawing.Point(432, 3);
             this.tbSpecDelay.Name = "tbSpecDelay";
-            this.tbSpecDelay.Size = new System.Drawing.Size(93, 21);
+            this.tbSpecDelay.Size = new System.Drawing.Size(101, 21);
             this.tbSpecDelay.TabIndex = 20;
             // 
             // btnSendSession
             // 
             this.btnSendSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSendSession.Location = new System.Drawing.Point(498, 3);
+            this.btnSendSession.Location = new System.Drawing.Point(539, 3);
             this.btnSendSession.Name = "btnSendSession";
-            this.btnSendSession.Size = new System.Drawing.Size(93, 24);
+            this.btnSendSession.Size = new System.Drawing.Size(101, 24);
             this.btnSendSession.TabIndex = 17;
             this.btnSendSession.Text = "Start session";
             this.btnSendSession.UseVisualStyleBackColor = true;
@@ -826,9 +799,9 @@
             // btnStopSession
             // 
             this.btnStopSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStopSession.Location = new System.Drawing.Point(597, 3);
+            this.btnStopSession.Location = new System.Drawing.Point(646, 3);
             this.btnStopSession.Name = "btnStopSession";
-            this.btnStopSession.Size = new System.Drawing.Size(93, 24);
+            this.btnStopSession.Size = new System.Drawing.Size(101, 24);
             this.btnStopSession.TabIndex = 21;
             this.btnStopSession.Text = "Stop session";
             this.btnStopSession.UseVisualStyleBackColor = true;
@@ -837,9 +810,9 @@
             // btnSendClose
             // 
             this.btnSendClose.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSendClose.Location = new System.Drawing.Point(795, 3);
+            this.btnSendClose.Location = new System.Drawing.Point(860, 3);
             this.btnSendClose.Name = "btnSendClose";
-            this.btnSendClose.Size = new System.Drawing.Size(96, 24);
+            this.btnSendClose.Size = new System.Drawing.Size(107, 24);
             this.btnSendClose.TabIndex = 2;
             this.btnSendClose.Text = "Send close";
             this.btnSendClose.UseVisualStyleBackColor = true;
@@ -849,7 +822,7 @@
             // 
             this.cbStoreChn.AutoSize = true;
             this.tblSession.SetColumnSpan(this.cbStoreChn, 2);
-            this.cbStoreChn.Location = new System.Drawing.Point(201, 33);
+            this.cbStoreChn.Location = new System.Drawing.Point(218, 33);
             this.cbStoreChn.Name = "cbStoreChn";
             this.cbStoreChn.Size = new System.Drawing.Size(109, 19);
             this.cbStoreChn.TabIndex = 16;
@@ -967,8 +940,6 @@
         private System.Windows.Forms.Button btnMenuPreferences;
         private System.Windows.Forms.ToolStripButton btnShowWaterfall;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton btnMapMaximize;
-        private System.Windows.Forms.ToolStripButton btnMapMinimize;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripComboBox cboxMapProvider;
         private System.Windows.Forms.ListBox lbLog;
