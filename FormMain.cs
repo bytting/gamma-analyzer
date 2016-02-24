@@ -510,11 +510,7 @@ namespace crash
             {                                
                 formSpectrum.ShowSpectrum((Spectrum)e.Node.Tag);
                 formSpectrum.ShowDialog();
-            }
-            else
-            {                
-                formWaterfall.SetSpectrumList(sessions[e.Node.Text]);
-            }
+            }            
         }
 
         private void btnMenuBackgrounds_Click(object sender, EventArgs e)

@@ -13,7 +13,8 @@ namespace crash
     public partial class FormWaterfall : Form
     {
         List<Spectrum> specs = null;        
-        Bitmap bmp = null;        
+        Bitmap bmp = null;
+        float max = 0f;
 
         public FormWaterfall()
         {
@@ -26,8 +27,8 @@ namespace crash
         }
 
         public void SetSpectrumList(List<Spectrum> spectrumList)
-        {
-            specs = spectrumList;
+        {            
+            specs = spectrumList;            
         }
 
         public void Repaint()
@@ -47,8 +48,7 @@ namespace crash
                 return;
                                     
             Graphics g = e.Graphics;
-
-            float max = 0f;
+            
             foreach (Spectrum s in specs)
             {
                 string[] items = s.Message.Arguments["channels"].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);                
@@ -59,26 +59,25 @@ namespace crash
                         max = ch;
                 }                
             }
-            float scale = 255 / max;
+            float scale = 255f / max;
+            int y = 0;
 
             foreach(Spectrum s in specs)
             {                
                 int channelCount = Convert.ToInt32(s.Message.Arguments["channel_count"]);
                 int w = channelCount > pane.Width ? pane.Width : channelCount; // FIXME
-                int h = pane.Height > specs.Count ? specs.Count : pane.Height;
-
+                int h = pane.Height > specs.Count ? specs.Count : pane.Height;                
+                
                 string[] items = s.Message.Arguments["channels"].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);                
 
-                for (int y = 0; y < h; y++)
-                {
-                    for (int x = 0; x < w; x++)
-                    {                        
-                        float cps = Convert.ToSingle(items[x]);
-                        cps *= scale;                        
-                        Color c = Color.FromArgb(255, (int)cps, 0, 0);
-                        bmp.SetPixel(x, y, c);
-                    }
+                for (int x = 0; x < w; x++)
+                {                        
+                    float cps = Convert.ToSingle(items[x]);
+                    cps *= scale;                        
+                    Color c = Color.FromArgb(255, (int)cps, 0, 0);
+                    bmp.SetPixel(x, y, c);
                 }
+                y++;
             }
 
             g.DrawImage(bmp, 0, 0);
