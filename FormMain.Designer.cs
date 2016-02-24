@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,11 +44,11 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnPreferences = new System.Windows.Forms.ToolStripButton();
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
             this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnPreferences = new System.Windows.Forms.ToolStripButton();
             this.btnShowWaterfall = new System.Windows.Forms.ToolStripButton();
             this.tabs = new TabControlWizard.TabControlWizard();
             this.pageSetup = new System.Windows.Forms.TabPage();
@@ -74,7 +74,6 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnMenuSetup = new System.Windows.Forms.Button();
             this.btnMenuSession = new System.Windows.Forms.Button();
-            this.btnMenuPreferences = new System.Windows.Forms.Button();
             this.pageSession = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tvSessions = new System.Windows.Forms.TreeView();
@@ -199,6 +198,7 @@
             // 
             // tools
             // 
+            this.tools.AutoSize = false;
             this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnBack,
@@ -211,17 +211,19 @@
             this.btnShowWaterfall});
             this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(1157, 25);
+            this.tools.Size = new System.Drawing.Size(1157, 40);
             this.tools.TabIndex = 2;
             this.tools.Text = "toolStrip1";
             // 
             // btnBack
             // 
+            this.btnBack.AutoSize = false;
             this.btnBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnBack.Image = ((System.Drawing.Image)(resources.GetObject("btnBack.Image")));
+            this.btnBack.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnBack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(23, 22);
+            this.btnBack.Size = new System.Drawing.Size(38, 38);
             this.btnBack.Text = "toolStripButton1";
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
@@ -229,25 +231,42 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 40);
+            // 
+            // btnPreferences
+            // 
+            this.btnPreferences.AutoSize = false;
+            this.btnPreferences.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPreferences.Image = ((System.Drawing.Image)(resources.GetObject("btnPreferences.Image")));
+            this.btnPreferences.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnPreferences.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPreferences.Name = "btnPreferences";
+            this.btnPreferences.Size = new System.Drawing.Size(38, 38);
+            this.btnPreferences.Text = "toolStripButton1";
+            this.btnPreferences.ToolTipText = "Open preferences";
+            this.btnPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
             // 
             // btnConnect
             // 
+            this.btnConnect.AutoSize = false;
             this.btnConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnConnect.Image = ((System.Drawing.Image)(resources.GetObject("btnConnect.Image")));
+            this.btnConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(23, 22);
+            this.btnConnect.Size = new System.Drawing.Size(38, 38);
             this.btnConnect.Text = "Connect";
             this.btnConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
             // 
             // btnDisconnect
             // 
+            this.btnDisconnect.AutoSize = false;
             this.btnDisconnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnDisconnect.Image = ((System.Drawing.Image)(resources.GetObject("btnDisconnect.Image")));
+            this.btnDisconnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnDisconnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(23, 22);
+            this.btnDisconnect.Size = new System.Drawing.Size(38, 38);
             this.btnDisconnect.Text = "Disconnect";
             this.btnDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
             // 
@@ -255,32 +274,23 @@
             // 
             this.lblConnectionStatus.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.lblConnectionStatus.Name = "lblConnectionStatus";
-            this.lblConnectionStatus.Size = new System.Drawing.Size(130, 22);
+            this.lblConnectionStatus.Size = new System.Drawing.Size(130, 37);
             this.lblConnectionStatus.Text = "<lblConnectionStatus>";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnPreferences
-            // 
-            this.btnPreferences.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnPreferences.Image = ((System.Drawing.Image)(resources.GetObject("btnPreferences.Image")));
-            this.btnPreferences.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPreferences.Name = "btnPreferences";
-            this.btnPreferences.Size = new System.Drawing.Size(23, 22);
-            this.btnPreferences.Text = "toolStripButton1";
-            this.btnPreferences.ToolTipText = "Open preferences";
-            this.btnPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 40);
             // 
             // btnShowWaterfall
             // 
+            this.btnShowWaterfall.AutoSize = false;
             this.btnShowWaterfall.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnShowWaterfall.Image = ((System.Drawing.Image)(resources.GetObject("btnShowWaterfall.Image")));
+            this.btnShowWaterfall.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShowWaterfall.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnShowWaterfall.Name = "btnShowWaterfall";
-            this.btnShowWaterfall.Size = new System.Drawing.Size(23, 22);
+            this.btnShowWaterfall.Size = new System.Drawing.Size(38, 38);
             this.btnShowWaterfall.Text = "toolStripButton2";
             this.btnShowWaterfall.ToolTipText = "Show waterfall";
             this.btnShowWaterfall.Click += new System.EventHandler(this.btnShowWaterfall_Click);
@@ -291,10 +301,10 @@
             this.tabs.Controls.Add(this.pageMenu);
             this.tabs.Controls.Add(this.pageSession);
             this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabs.Location = new System.Drawing.Point(0, 49);
+            this.tabs.Location = new System.Drawing.Point(0, 64);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(1157, 709);
+            this.tabs.Size = new System.Drawing.Size(1157, 694);
             this.tabs.TabIndex = 4;
             // 
             // pageSetup
@@ -305,22 +315,22 @@
             this.pageSetup.Location = new System.Drawing.Point(4, 25);
             this.pageSetup.Name = "pageSetup";
             this.pageSetup.Padding = new System.Windows.Forms.Padding(3);
-            this.pageSetup.Size = new System.Drawing.Size(1149, 680);
+            this.pageSetup.Size = new System.Drawing.Size(1149, 665);
             this.pageSetup.TabIndex = 0;
             this.pageSetup.Text = "Setup";
             // 
             // chartSetup
             // 
             this.chartSetup.BackColor = System.Drawing.SystemColors.ButtonFace;
-            chartArea8.Name = "ChartArea1";
-            this.chartSetup.ChartAreas.Add(chartArea8);
+            chartArea4.Name = "ChartArea1";
+            this.chartSetup.ChartAreas.Add(chartArea4);
             this.chartSetup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartSetup.Location = new System.Drawing.Point(3, 182);
             this.chartSetup.Name = "chartSetup";
-            series8.ChartArea = "ChartArea1";
-            series8.Name = "Series1";
-            this.chartSetup.Series.Add(series8);
-            this.chartSetup.Size = new System.Drawing.Size(1143, 495);
+            series4.ChartArea = "ChartArea1";
+            series4.Name = "Series1";
+            this.chartSetup.Series.Add(series4);
+            this.chartSetup.Size = new System.Drawing.Size(1143, 480);
             this.chartSetup.TabIndex = 19;
             this.chartSetup.Text = "chart1";
             // 
@@ -520,7 +530,7 @@
             this.pageMenu.Location = new System.Drawing.Point(4, 25);
             this.pageMenu.Name = "pageMenu";
             this.pageMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.pageMenu.Size = new System.Drawing.Size(1149, 680);
+            this.pageMenu.Size = new System.Drawing.Size(1149, 665);
             this.pageMenu.TabIndex = 1;
             this.pageMenu.Text = "Menu";
             // 
@@ -528,16 +538,19 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnMenuSetup);
             this.flowLayoutPanel1.Controls.Add(this.btnMenuSession);
-            this.flowLayoutPanel1.Controls.Add(this.btnMenuPreferences);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(44, 47, 44, 47);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1143, 674);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1143, 659);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // btnMenuSetup
             // 
+            this.btnMenuSetup.FlatAppearance.BorderSize = 0;
+            this.btnMenuSetup.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuSetup.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuSetup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMenuSetup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMenuSetup.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuSetup.Image")));
             this.btnMenuSetup.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -545,13 +558,17 @@
             this.btnMenuSetup.Name = "btnMenuSetup";
             this.btnMenuSetup.Size = new System.Drawing.Size(160, 170);
             this.btnMenuSetup.TabIndex = 0;
-            this.btnMenuSetup.Text = "Setup";
+            this.btnMenuSetup.Text = "Calibrate";
             this.btnMenuSetup.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMenuSetup.UseVisualStyleBackColor = true;
             this.btnMenuSetup.Click += new System.EventHandler(this.btnMenuSpec_Click);
             // 
             // btnMenuSession
             // 
+            this.btnMenuSession.FlatAppearance.BorderSize = 0;
+            this.btnMenuSession.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuSession.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuSession.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMenuSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMenuSession.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuSession.Image")));
             this.btnMenuSession.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -559,24 +576,10 @@
             this.btnMenuSession.Name = "btnMenuSession";
             this.btnMenuSession.Size = new System.Drawing.Size(160, 170);
             this.btnMenuSession.TabIndex = 2;
-            this.btnMenuSession.Text = "Session";
+            this.btnMenuSession.Text = "Sessions";
             this.btnMenuSession.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMenuSession.UseVisualStyleBackColor = true;
             this.btnMenuSession.Click += new System.EventHandler(this.btnMenuSession_Click);
-            // 
-            // btnMenuPreferences
-            // 
-            this.btnMenuPreferences.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuPreferences.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuPreferences.Image")));
-            this.btnMenuPreferences.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuPreferences.Location = new System.Drawing.Point(379, 50);
-            this.btnMenuPreferences.Name = "btnMenuPreferences";
-            this.btnMenuPreferences.Size = new System.Drawing.Size(160, 170);
-            this.btnMenuPreferences.TabIndex = 3;
-            this.btnMenuPreferences.Text = "Preferences";
-            this.btnMenuPreferences.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuPreferences.UseVisualStyleBackColor = true;
-            this.btnMenuPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
             // 
             // pageSession
             // 
@@ -585,7 +588,7 @@
             this.pageSession.Location = new System.Drawing.Point(4, 25);
             this.pageSession.Name = "pageSession";
             this.pageSession.Padding = new System.Windows.Forms.Padding(3);
-            this.pageSession.Size = new System.Drawing.Size(1149, 680);
+            this.pageSession.Size = new System.Drawing.Size(1149, 651);
             this.pageSession.TabIndex = 2;
             this.pageSession.Text = "Session";
             // 
@@ -603,7 +606,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitRight);
             this.splitContainer2.Panel2.Controls.Add(this.tblSession);
-            this.splitContainer2.Size = new System.Drawing.Size(1143, 674);
+            this.splitContainer2.Size = new System.Drawing.Size(1143, 645);
             this.splitContainer2.SplitterDistance = 168;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 6;
@@ -614,7 +617,7 @@
             this.tvSessions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvSessions.Location = new System.Drawing.Point(0, 0);
             this.tvSessions.Name = "tvSessions";
-            this.tvSessions.Size = new System.Drawing.Size(168, 674);
+            this.tvSessions.Size = new System.Drawing.Size(168, 645);
             this.tvSessions.TabIndex = 6;
             this.tvSessions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSessions_AfterSelect);
             // 
@@ -634,7 +637,7 @@
             // 
             this.splitRight.Panel2.Controls.Add(this.lbLog);
             this.splitRight.Panel2.Controls.Add(this.toolStrip2);
-            this.splitRight.Size = new System.Drawing.Size(970, 601);
+            this.splitRight.Size = new System.Drawing.Size(970, 572);
             this.splitRight.SplitterDistance = 479;
             this.splitRight.SplitterWidth = 5;
             this.splitRight.TabIndex = 0;
@@ -661,7 +664,7 @@
             this.gmap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gmap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gmap.ShowTileGridLines = false;
-            this.gmap.Size = new System.Drawing.Size(477, 574);
+            this.gmap.Size = new System.Drawing.Size(477, 545);
             this.gmap.TabIndex = 1;
             this.gmap.Zoom = 12D;
             // 
@@ -709,7 +712,7 @@
             this.lbLog.Location = new System.Drawing.Point(0, 25);
             this.lbLog.Name = "lbLog";
             this.lbLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbLog.Size = new System.Drawing.Size(484, 574);
+            this.lbLog.Size = new System.Drawing.Size(484, 545);
             this.lbLog.TabIndex = 0;
             // 
             // toolStrip2
@@ -937,7 +940,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemEdit;
         private System.Windows.Forms.ToolStripMenuItem menuItemPreferences;
         private System.Windows.Forms.ToolStripButton btnPreferences;
-        private System.Windows.Forms.Button btnMenuPreferences;
         private System.Windows.Forms.ToolStripButton btnShowWaterfall;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
