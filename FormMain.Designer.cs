@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,9 +47,11 @@
             this.btnPreferences = new System.Windows.Forms.ToolStripButton();
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
             this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
-            this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnShowWaterfall = new System.Windows.Forms.ToolStripButton();
+            this.lblInterface = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.tabs = new TabControlWizard.TabControlWizard();
             this.pageSetup = new System.Windows.Forms.TabPage();
             this.chartSetup = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -73,6 +75,7 @@
             this.pageMenu = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnMenuSetup = new System.Windows.Forms.Button();
+            this.btnMenuBackgrounds = new System.Windows.Forms.Button();
             this.btnMenuSession = new System.Windows.Forms.Button();
             this.pageSession = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -93,6 +96,7 @@
             this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
             this.cbStoreChn = new System.Windows.Forms.CheckBox();
+            this.pageBackground = new System.Windows.Forms.TabPage();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -206,9 +210,11 @@
             this.btnPreferences,
             this.btnConnect,
             this.btnDisconnect,
-            this.lblConnectionStatus,
             this.toolStripSeparator3,
-            this.btnShowWaterfall});
+            this.btnShowWaterfall,
+            this.lblInterface,
+            this.toolStripSeparator4,
+            this.lblConnectionStatus});
             this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
             this.tools.Size = new System.Drawing.Size(1157, 40);
@@ -270,13 +276,6 @@
             this.btnDisconnect.Text = "Disconnect";
             this.btnDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
             // 
-            // lblConnectionStatus
-            // 
-            this.lblConnectionStatus.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.lblConnectionStatus.Name = "lblConnectionStatus";
-            this.lblConnectionStatus.Size = new System.Drawing.Size(130, 37);
-            this.lblConnectionStatus.Text = "<lblConnectionStatus>";
-            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -295,17 +294,40 @@
             this.btnShowWaterfall.ToolTipText = "Show waterfall";
             this.btnShowWaterfall.Click += new System.EventHandler(this.btnShowWaterfall_Click);
             // 
+            // lblInterface
+            // 
+            this.lblInterface.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lblInterface.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblInterface.Name = "lblInterface";
+            this.lblInterface.Size = new System.Drawing.Size(88, 37);
+            this.lblInterface.Text = "<lblInterface>";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 40);
+            // 
+            // lblConnectionStatus
+            // 
+            this.lblConnectionStatus.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lblConnectionStatus.Name = "lblConnectionStatus";
+            this.lblConnectionStatus.Size = new System.Drawing.Size(130, 37);
+            this.lblConnectionStatus.Text = "<lblConnectionStatus>";
+            // 
             // tabs
             // 
             this.tabs.Controls.Add(this.pageSetup);
             this.tabs.Controls.Add(this.pageMenu);
             this.tabs.Controls.Add(this.pageSession);
+            this.tabs.Controls.Add(this.pageBackground);
             this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabs.Location = new System.Drawing.Point(0, 64);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
             this.tabs.Size = new System.Drawing.Size(1157, 694);
             this.tabs.TabIndex = 4;
+            this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_SelectedIndexChanged);
             // 
             // pageSetup
             // 
@@ -322,14 +344,14 @@
             // chartSetup
             // 
             this.chartSetup.BackColor = System.Drawing.SystemColors.ButtonFace;
-            chartArea4.Name = "ChartArea1";
-            this.chartSetup.ChartAreas.Add(chartArea4);
+            chartArea1.Name = "ChartArea1";
+            this.chartSetup.ChartAreas.Add(chartArea1);
             this.chartSetup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartSetup.Location = new System.Drawing.Point(3, 182);
             this.chartSetup.Name = "chartSetup";
-            series4.ChartArea = "ChartArea1";
-            series4.Name = "Series1";
-            this.chartSetup.Series.Add(series4);
+            series1.ChartArea = "ChartArea1";
+            series1.Name = "Series1";
+            this.chartSetup.Series.Add(series1);
             this.chartSetup.Size = new System.Drawing.Size(1143, 480);
             this.chartSetup.TabIndex = 19;
             this.chartSetup.Text = "chart1";
@@ -537,6 +559,7 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnMenuSetup);
+            this.flowLayoutPanel1.Controls.Add(this.btnMenuBackgrounds);
             this.flowLayoutPanel1.Controls.Add(this.btnMenuSession);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
@@ -563,6 +586,23 @@
             this.btnMenuSetup.UseVisualStyleBackColor = true;
             this.btnMenuSetup.Click += new System.EventHandler(this.btnMenuSpec_Click);
             // 
+            // btnMenuBackgrounds
+            // 
+            this.btnMenuBackgrounds.FlatAppearance.BorderSize = 0;
+            this.btnMenuBackgrounds.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuBackgrounds.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuBackgrounds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuBackgrounds.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMenuBackgrounds.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuBackgrounds.Image")));
+            this.btnMenuBackgrounds.Location = new System.Drawing.Point(213, 50);
+            this.btnMenuBackgrounds.Name = "btnMenuBackgrounds";
+            this.btnMenuBackgrounds.Size = new System.Drawing.Size(160, 170);
+            this.btnMenuBackgrounds.TabIndex = 3;
+            this.btnMenuBackgrounds.Text = "Backgrounds";
+            this.btnMenuBackgrounds.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuBackgrounds.UseVisualStyleBackColor = true;
+            this.btnMenuBackgrounds.Click += new System.EventHandler(this.btnMenuBackgrounds_Click);
+            // 
             // btnMenuSession
             // 
             this.btnMenuSession.FlatAppearance.BorderSize = 0;
@@ -572,7 +612,7 @@
             this.btnMenuSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMenuSession.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuSession.Image")));
             this.btnMenuSession.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuSession.Location = new System.Drawing.Point(213, 50);
+            this.btnMenuSession.Location = new System.Drawing.Point(379, 50);
             this.btnMenuSession.Name = "btnMenuSession";
             this.btnMenuSession.Size = new System.Drawing.Size(160, 170);
             this.btnMenuSession.TabIndex = 2;
@@ -588,7 +628,7 @@
             this.pageSession.Location = new System.Drawing.Point(4, 25);
             this.pageSession.Name = "pageSession";
             this.pageSession.Padding = new System.Windows.Forms.Padding(3);
-            this.pageSession.Size = new System.Drawing.Size(1149, 651);
+            this.pageSession.Size = new System.Drawing.Size(1149, 665);
             this.pageSession.TabIndex = 2;
             this.pageSession.Text = "Session";
             // 
@@ -606,7 +646,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitRight);
             this.splitContainer2.Panel2.Controls.Add(this.tblSession);
-            this.splitContainer2.Size = new System.Drawing.Size(1143, 645);
+            this.splitContainer2.Size = new System.Drawing.Size(1143, 659);
             this.splitContainer2.SplitterDistance = 168;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 6;
@@ -617,7 +657,7 @@
             this.tvSessions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvSessions.Location = new System.Drawing.Point(0, 0);
             this.tvSessions.Name = "tvSessions";
-            this.tvSessions.Size = new System.Drawing.Size(168, 645);
+            this.tvSessions.Size = new System.Drawing.Size(168, 659);
             this.tvSessions.TabIndex = 6;
             this.tvSessions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSessions_AfterSelect);
             // 
@@ -637,7 +677,7 @@
             // 
             this.splitRight.Panel2.Controls.Add(this.lbLog);
             this.splitRight.Panel2.Controls.Add(this.toolStrip2);
-            this.splitRight.Size = new System.Drawing.Size(970, 572);
+            this.splitRight.Size = new System.Drawing.Size(970, 586);
             this.splitRight.SplitterDistance = 479;
             this.splitRight.SplitterWidth = 5;
             this.splitRight.TabIndex = 0;
@@ -664,7 +704,7 @@
             this.gmap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gmap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gmap.ShowTileGridLines = false;
-            this.gmap.Size = new System.Drawing.Size(477, 545);
+            this.gmap.Size = new System.Drawing.Size(477, 559);
             this.gmap.TabIndex = 1;
             this.gmap.Zoom = 12D;
             // 
@@ -712,7 +752,7 @@
             this.lbLog.Location = new System.Drawing.Point(0, 25);
             this.lbLog.Name = "lbLog";
             this.lbLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbLog.Size = new System.Drawing.Size(484, 545);
+            this.lbLog.Size = new System.Drawing.Size(484, 559);
             this.lbLog.TabIndex = 0;
             // 
             // toolStrip2
@@ -832,6 +872,16 @@
             this.cbStoreChn.Text = "Store CHN files";
             this.cbStoreChn.UseVisualStyleBackColor = true;
             // 
+            // pageBackground
+            // 
+            this.pageBackground.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pageBackground.Location = new System.Drawing.Point(4, 25);
+            this.pageBackground.Name = "pageBackground";
+            this.pageBackground.Padding = new System.Windows.Forms.Padding(3);
+            this.pageBackground.Size = new System.Drawing.Size(1149, 665);
+            this.pageBackground.TabIndex = 3;
+            this.pageBackground.Text = "Background";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -947,6 +997,10 @@
         private System.Windows.Forms.ListBox lbLog;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.TreeView tvSessions;
+        private System.Windows.Forms.Button btnMenuBackgrounds;
+        private System.Windows.Forms.TabPage pageBackground;
+        private System.Windows.Forms.ToolStripLabel lblInterface;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

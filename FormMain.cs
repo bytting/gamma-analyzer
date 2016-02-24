@@ -52,9 +52,9 @@ namespace crash
         
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
-        Dictionary<string, GMapOverlay> overlays = new Dictionary<string, GMapOverlay>();
-        
         bool connected = false;
+        Dictionary<string, List<Spectrum>> sessions = new Dictionary<string, List<Spectrum>>();        
+        Dictionary<string, GMapOverlay> overlays = new Dictionary<string, GMapOverlay>();                
         
         FormConnect formConnect = new FormConnect();
         FormSpectrum formSpectrum = new FormSpectrum();
@@ -86,7 +86,7 @@ namespace crash
                     
             timer.Interval = 10;
             timer.Tick += timer_Tick;
-            timer.Start();            
+            timer.Start();                        
 
             gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
             /*GMapOverlay markersOverlay = new GMapOverlay("markers");
@@ -215,8 +215,15 @@ namespace crash
                     else
                     {                        
                         path = settings.SessionDirectory + Path.DirectorySeparatorChar + spec.Message.Arguments["session_name"];
-
                         string sessName = spec.Message.Arguments["session_name"];
+
+                        if (!sessions.ContainsKey(sessName))
+                        {
+                            sessions[sessName] = new List<Spectrum>();
+                            formWaterfall.SetSpectrumList(sessions[sessName]);
+                        }
+                        sessions[sessName].Add(spec);
+
                         TreeNode[] nodesFound = tvSessions.Nodes.Find(sessName, false);
                         if(nodesFound.Length > 0)
                         {
@@ -274,8 +281,8 @@ namespace crash
                         double lon = Convert.ToDouble(spec.Message.Arguments["longitude_start"], new CultureInfo("en-US"));
                         GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(lat, lon), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
                         overlays[session_name].Markers.Add(marker);
-
-                        formWaterfall.AddSpectrum(spec);
+                        
+                        formWaterfall.Repaint();
                     }
 
                     break;
@@ -504,6 +511,28 @@ namespace crash
                 formSpectrum.ShowSpectrum((Spectrum)e.Node.Tag);
                 formSpectrum.ShowDialog();
             }
+            else
+            {                
+                formWaterfall.SetSpectrumList(sessions[e.Node.Text]);
+            }
+        }
+
+        private void btnMenuBackgrounds_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageBackground;
+        }
+
+        private void tabs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblInterface.Text = tabs.SelectedTab.Text;
+
+            if (tabs.SelectedTab == pageMenu)
+                btnBack.Enabled = false;
+            else btnBack.Enabled = true;
+
+            if (tabs.SelectedTab == pageSession)
+                btnShowWaterfall.Visible = true;
+            else btnShowWaterfall.Visible = false;
         }                
     }    
 

@@ -12,41 +12,81 @@ namespace crash
 {
     public partial class FormWaterfall : Form
     {
-        Graphics g = null;
-        Bitmap bm = null;
-        int y;
+        List<Spectrum> specs = null;        
+        Bitmap bmp = null;        
 
         public FormWaterfall()
         {
-            InitializeComponent();
-
-            g = pane.CreateGraphics();
-            bm = new Bitmap(1024, 800);
-            y = 0;
-        }
+            InitializeComponent();            
+        }        
 
         private void FormWaterfall_Load(object sender, EventArgs e)
-        {                                    
+        {
+            pane_Resize(sender, e);
         }
 
-        public void AddSpectrum(Spectrum spec)
-        {   
-            if(y > 800)
-                return;
-            
-            for(int x=0; x<1024; x++)
-            {
-                bm.SetPixel(x, y, Color.Red);
-            }
+        public void SetSpectrumList(List<Spectrum> spectrumList)
+        {
+            specs = spectrumList;
+        }
 
-            g.DrawImage(bm, 0, 0);
-            y++;
+        public void Repaint()
+        {
+            pane.Refresh();
         }
 
         private void FormWaterfall_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
             Hide();
+        }
+
+        private void pane_Paint(object sender, PaintEventArgs e)
+        {
+            if (specs == null || bmp == null)
+                return;
+                                    
+            Graphics g = e.Graphics;
+
+            float max = 0f;
+            foreach (Spectrum s in specs)
+            {
+                string[] items = s.Message.Arguments["channels"].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);                
+                foreach (string item in items)
+                {
+                    float ch = Convert.ToSingle(item);
+                    if (ch > max)
+                        max = ch;
+                }                
+            }
+            float scale = 255 / max;
+
+            foreach(Spectrum s in specs)
+            {                
+                int channelCount = Convert.ToInt32(s.Message.Arguments["channel_count"]);
+                int w = channelCount > pane.Width ? pane.Width : channelCount; // FIXME
+                int h = pane.Height > specs.Count ? specs.Count : pane.Height;
+
+                string[] items = s.Message.Arguments["channels"].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);                
+
+                for (int y = 0; y < h; y++)
+                {
+                    for (int x = 0; x < w; x++)
+                    {                        
+                        float cps = Convert.ToSingle(items[x]);
+                        cps *= scale;                        
+                        Color c = Color.FromArgb(255, (int)cps, 0, 0);
+                        bmp.SetPixel(x, y, c);
+                    }
+                }
+            }
+
+            g.DrawImage(bmp, 0, 0);
+        }
+
+        private void pane_Resize(object sender, EventArgs e)
+        {
+            bmp = new Bitmap(pane.Width, pane.Height);
         }
     }
 }
