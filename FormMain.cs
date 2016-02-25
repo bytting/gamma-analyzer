@@ -174,14 +174,16 @@ namespace crash
                 case "new_session_ok":
                     bool prev = msg.Arguments["preview"] == "1";
                     if(prev)
-                        Log("Preview saved");
+                        Log("Preview received");
                     else
                     {
                         string session_name = msg.Arguments["session_name"];
                         Log("New session created: " + session_name);
+                        
+                        sessions[session_name] = new Session(session_name);
+                        formWaterfall.SetSession(sessions[session_name]);
 
-                        overlays.Add(session_name, new GMapOverlay(session_name));                        
-                        gmap.Overlays.Add(overlays[session_name]);
+                        gmap.Overlays.Add(sessions[session_name].MapOverlay);
                     }                        
                     break;
 
@@ -220,13 +222,7 @@ namespace crash
                     }
                     else
                     {                        
-                        path = settings.SessionDirectory + Path.DirectorySeparatorChar + spec.SessionName;
-
-                        if (!sessions.ContainsKey(spec.SessionName))
-                        {
-                            sessions[spec.SessionName] = new Session(spec.SessionName);
-                            formWaterfall.SetSpectrumList(sessions[spec.SessionName]);
-                        }
+                        path = settings.SessionDirectory + Path.DirectorySeparatorChar + spec.SessionName;                        
                         sessions[spec.SessionName].Add(spec);
 
                         // Add tree node
@@ -250,10 +246,9 @@ namespace crash
                             }
                         }
 
-                        // Add map marker                                                                        
-                        Log("Adding marker at " + spec.LatitudeStart + ", " + spec.LongitudeStart);
-                        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(spec.LatitudeStart, spec.LongitudeStart), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
-                        overlays[spec.SessionName].Markers.Add(marker);
+                        // Add map marker                                                                                                
+                        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(spec.LatitudeStart, spec.LongitudeStart), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));                        
+                        sessions[spec.SessionName].MapOverlay.Markers.Add(marker);
 
                         formWaterfall.Repaint();
                     }                        
@@ -562,11 +557,13 @@ namespace crash
         public float MaxChannelCount { get; private set; }
         public float MinChannelCount { get; private set; }
         public List<Spectrum> Spectrums { get; private set; }
+        public GMapOverlay MapOverlay { get; set; }
 
         public Session(string name)
         {
             Name = name;
             Spectrums = new List<Spectrum>();
+            MapOverlay = new GMapOverlay(Name);
         }   
      
         public void Add(Spectrum spec)

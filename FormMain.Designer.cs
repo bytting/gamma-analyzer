@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
@@ -344,14 +344,14 @@
             // chartSetup
             // 
             this.chartSetup.BackColor = System.Drawing.SystemColors.ButtonFace;
-            chartArea1.Name = "ChartArea1";
-            this.chartSetup.ChartAreas.Add(chartArea1);
+            chartArea5.Name = "ChartArea1";
+            this.chartSetup.ChartAreas.Add(chartArea5);
             this.chartSetup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartSetup.Location = new System.Drawing.Point(3, 182);
             this.chartSetup.Name = "chartSetup";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "Series1";
-            this.chartSetup.Series.Add(series1);
+            series5.ChartArea = "ChartArea1";
+            series5.Name = "Series1";
+            this.chartSetup.Series.Add(series5);
             this.chartSetup.Size = new System.Drawing.Size(1143, 480);
             this.chartSetup.TabIndex = 19;
             this.chartSetup.Text = "chart1";
@@ -634,6 +634,7 @@
             // 
             // splitContainer2
             // 
+            this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(3, 3);
             this.splitContainer2.Name = "splitContainer2";
@@ -654,10 +655,11 @@
             // tvSessions
             // 
             this.tvSessions.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tvSessions.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tvSessions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvSessions.Location = new System.Drawing.Point(0, 0);
             this.tvSessions.Name = "tvSessions";
-            this.tvSessions.Size = new System.Drawing.Size(168, 659);
+            this.tvSessions.Size = new System.Drawing.Size(166, 657);
             this.tvSessions.TabIndex = 6;
             this.tvSessions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSessions_AfterSelect);
             // 
@@ -894,6 +896,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
+            this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Crash";

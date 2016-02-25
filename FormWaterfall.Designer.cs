@@ -32,6 +32,8 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pane = new System.Windows.Forms.Panel();
+            this.tbColorCeil = new System.Windows.Forms.TrackBar();
+            ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -52,14 +54,23 @@
             // 
             // pane
             // 
-            this.pane.BackColor = System.Drawing.Color.Black;
+            this.pane.BackColor = System.Drawing.Color.Blue;
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(1081, 545);
+            this.pane.Size = new System.Drawing.Size(1036, 545);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.Resize += new System.EventHandler(this.pane_Resize);
+            // 
+            // tbColorCeil
+            // 
+            this.tbColorCeil.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tbColorCeil.Location = new System.Drawing.Point(1036, 25);
+            this.tbColorCeil.Name = "tbColorCeil";
+            this.tbColorCeil.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.tbColorCeil.Size = new System.Drawing.Size(45, 545);
+            this.tbColorCeil.TabIndex = 3;
             // 
             // FormWaterfall
             // 
@@ -67,13 +78,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 592);
             this.Controls.Add(this.pane);
+            this.Controls.Add(this.tbColorCeil);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "FormWaterfall";
             this.Text = "Crash - Waterfall";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormWaterfall_FormClosing);
             this.Load += new System.EventHandler(this.FormWaterfall_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -84,5 +98,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Panel pane;
+        private System.Windows.Forms.TrackBar tbColorCeil;
     }
 }
