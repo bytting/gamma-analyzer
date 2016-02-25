@@ -13,8 +13,7 @@ namespace crash
     public partial class FormWaterfall : Form
     {
         Session session = null;        
-        Bitmap bmp = null;
-        float max = 0f;
+        Bitmap bmp = null;        
 
         public FormWaterfall()
         {
@@ -56,8 +55,10 @@ namespace crash
 
             int h = pane.Height > session.Spectrums.Count ? session.Spectrums.Count : pane.Height - 1;
 
-            foreach(Spectrum s in session.Spectrums)
-            {                                   
+            for (int i = h - 1; i >= 0; i--)
+            {
+                Spectrum s = session.Spectrums[i];
+                                               
                 int w = s.Channels.Count > pane.Width ? pane.Width : s.Channels.Count; // FIXME                                
 
                 for (int x = 0; x < w; x++)
@@ -104,7 +105,7 @@ namespace crash
         {
             if (WindowState == FormWindowState.Minimized)
                 return;
-            if (pane.Width < 5 || pane.Height < 5)
+            if (pane.Width < 1 || pane.Height < 1)
                 return;
 
             bmp = new Bitmap(pane.Width, pane.Height);
