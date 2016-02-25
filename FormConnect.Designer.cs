@@ -49,10 +49,10 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 109);
+            this.panel1.Location = new System.Drawing.Point(0, 98);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(362, 28);
+            this.panel1.Size = new System.Drawing.Size(362, 26);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
@@ -61,7 +61,7 @@
             this.btnCancel.Location = new System.Drawing.Point(162, 0);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.Size = new System.Drawing.Size(100, 26);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -73,7 +73,7 @@
             this.btnOk.Location = new System.Drawing.Point(262, 0);
             this.btnOk.Margin = new System.Windows.Forms.Padding(4);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 28);
+            this.btnOk.Size = new System.Drawing.Size(100, 26);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 21);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(133, 88);
+            this.panel3.Size = new System.Drawing.Size(133, 77);
             this.panel3.TabIndex = 2;
             // 
             // label2
@@ -131,7 +131,7 @@
             this.panel4.Location = new System.Drawing.Point(133, 21);
             this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(229, 88);
+            this.panel4.Size = new System.Drawing.Size(229, 77);
             this.panel4.TabIndex = 3;
             // 
             // tbPort
@@ -156,7 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(362, 137);
+            this.ClientSize = new System.Drawing.Size(362, 124);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
