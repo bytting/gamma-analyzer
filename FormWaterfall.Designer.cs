@@ -52,6 +52,7 @@
             // 
             // pane
             // 
+            this.pane.BackColor = System.Drawing.Color.Black;
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";

@@ -12,23 +12,24 @@ namespace crash
 {
     public partial class FormWaterfall : Form
     {
-        List<Spectrum> specs = null;        
+        Session session = null;        
         Bitmap bmp = null;
         float max = 0f;
 
         public FormWaterfall()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            DoubleBuffered = true;
         }        
 
         private void FormWaterfall_Load(object sender, EventArgs e)
-        {
+        {            
             pane_Resize(sender, e);
         }
 
-        public void SetSpectrumList(List<Spectrum> spectrumList)
-        {            
-            specs = spectrumList;            
+        public void SetSpectrumList(Session sess)
+        {
+            session = sess;
         }
 
         public void Repaint()
@@ -44,37 +45,24 @@ namespace crash
 
         private void pane_Paint(object sender, PaintEventArgs e)
         {
-            if (specs == null || bmp == null)
+            if (session == null || bmp == null)
                 return;
                                     
             Graphics g = e.Graphics;
-            
-            foreach (Spectrum s in specs)
-            {
-                string[] items = s.Message.Arguments["channels"].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);                
-                foreach (string item in items)
-                {
-                    float ch = Convert.ToSingle(item);
-                    if (ch > max)
-                        max = ch;
-                }                
-            }
-            float scale = 255f / max;
+                        
+            float scale = 255f / session.MaxChannelCount;
             int y = 0;
 
-            foreach(Spectrum s in specs)
-            {                
-                int channelCount = Convert.ToInt32(s.Message.Arguments["channel_count"]);
-                int w = channelCount > pane.Width ? pane.Width : channelCount; // FIXME
-                int h = pane.Height > specs.Count ? specs.Count : pane.Height;                
-                
-                string[] items = s.Message.Arguments["channels"].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);                
+            int h = pane.Height > session.Spectrums.Count ? session.Spectrums.Count : pane.Height - 1;
+
+            foreach(Spectrum s in session.Spectrums)
+            {                                   
+                int w = s.Channels.Count > pane.Width ? pane.Width : s.Channels.Count; // FIXME                                
 
                 for (int x = 0; x < w; x++)
-                {                        
-                    float cps = Convert.ToSingle(items[x]);
-                    cps *= scale;                        
-                    Color c = Color.FromArgb(255, (int)cps, 0, 0);
+                {                    
+                    int r = (int)(s.Channels[x] * scale);                    
+                    Color c = Color.FromArgb(255, r, 0, 0);                    
                     bmp.SetPixel(x, y, c);
                 }
                 y++;

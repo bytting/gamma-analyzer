@@ -53,12 +53,14 @@ namespace crash
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
         bool connected = false;
-        Dictionary<string, List<Spectrum>> sessions = new Dictionary<string, List<Spectrum>>();        
+        Dictionary<string, Session> sessions = new Dictionary<string, Session>();
         Dictionary<string, GMapOverlay> overlays = new Dictionary<string, GMapOverlay>();                
         
         FormConnect formConnect = new FormConnect();
         FormSpectrum formSpectrum = new FormSpectrum();
         FormWaterfall formWaterfall = new FormWaterfall();
+
+        CultureInfo ciUS = new CultureInfo("en-US");
 
         public FormMain()
         {
@@ -205,37 +207,41 @@ namespace crash
 
                 case "spectrum":
                     Spectrum spec = new Spectrum(msg);
-                    Log("Spectrum " + spec.Label + " received");
+                    Log(spec.Label + " received");
 
                     string path;
-                    bool preview = msg.Arguments["preview"] == "1";
 
-                    if(preview)
-                        path = SettingsPath;                    
+                    if (spec.IsPreview)
+                    {
+                        path = SettingsPath;
+                        chartSetup.Series["Series1"].Points.Clear();                        
+                        for (int i = 0; i < spec.Channels.Count; i++)
+                            chartSetup.Series["Series1"].Points.AddXY((double)i, (double)spec.Channels[i]);
+                    }
                     else
                     {                        
-                        path = settings.SessionDirectory + Path.DirectorySeparatorChar + spec.Message.Arguments["session_name"];
-                        string sessName = spec.Message.Arguments["session_name"];
+                        path = settings.SessionDirectory + Path.DirectorySeparatorChar + spec.SessionName;
 
-                        if (!sessions.ContainsKey(sessName))
+                        if (!sessions.ContainsKey(spec.SessionName))
                         {
-                            sessions[sessName] = new List<Spectrum>();
-                            formWaterfall.SetSpectrumList(sessions[sessName]);
+                            sessions[spec.SessionName] = new Session(spec.SessionName);
+                            formWaterfall.SetSpectrumList(sessions[spec.SessionName]);
                         }
-                        sessions[sessName].Add(spec);
+                        sessions[spec.SessionName].Add(spec);
 
-                        TreeNode[] nodesFound = tvSessions.Nodes.Find(sessName, false);
-                        if(nodesFound.Length > 0)
+                        // Add tree node
+                        TreeNode[] nodesFound = tvSessions.Nodes.Find(spec.SessionName, false);
+                        if (nodesFound.Length > 0)
                         {
                             TreeNode parent = nodesFound[0];
-                            TreeNode newNode = new TreeNode(spec.Label);                            
+                            TreeNode newNode = new TreeNode(spec.Label);
                             newNode.Tag = spec;
                             parent.Nodes.Add(newNode);
                         }
                         else
-                        {                                                        
-                            tvSessions.Nodes.Add(sessName, sessName);
-                            TreeNode[] rootNodesFound = tvSessions.Nodes.Find(sessName, false);
+                        {
+                            tvSessions.Nodes.Add(spec.SessionName, spec.SessionName);
+                            TreeNode[] rootNodesFound = tvSessions.Nodes.Find(spec.SessionName, false);
                             if (rootNodesFound.Length > 0)
                             {
                                 TreeNode newNode = new TreeNode(spec.Label);
@@ -243,13 +249,20 @@ namespace crash
                                 rootNodesFound[0].Nodes.Add(newNode);
                             }
                         }
+
+                        // Add map marker                                                                        
+                        Log("Adding marker at " + spec.LatitudeStart + ", " + spec.LongitudeStart);
+                        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(spec.LatitudeStart, spec.LongitudeStart), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
+                        overlays[spec.SessionName].Markers.Add(marker);
+
+                        formWaterfall.Repaint();
                     }                        
 
                     string jsonPath = path + Path.DirectorySeparatorChar + "json";
                     if (!Directory.Exists(jsonPath))
                         Directory.CreateDirectory(jsonPath);
 
-                    string filename = jsonPath + Path.DirectorySeparatorChar + spec.Message.Arguments["session_index"] + ".json";
+                    string filename = jsonPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".json";
                     TextWriter writer = new StreamWriter(filename);
                     writer.Write(msg.ToJson(true));
                     writer.Close();
@@ -259,32 +272,9 @@ namespace crash
                         string chnPath = path + Path.DirectorySeparatorChar + "chn";
                         if (!Directory.Exists(chnPath))
                             Directory.CreateDirectory(chnPath);
-                        filename = chnPath + Path.DirectorySeparatorChar + spec.Message.Arguments["session_index"] + ".chn";                        
+                        filename = chnPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".chn";                        
                         burn.CHN.Write(filename, msg);
                     }
-
-                    if (preview)
-                    {
-                        chartSetup.Series["Series1"].Points.Clear();
-                        string[] counts = msg.Arguments["channels"].Split(new char[] { ' ' });
-                        int index = 0;
-                        foreach (string ch in counts)
-                        {
-                            chartSetup.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
-                            index++;
-                        }
-                    }
-                    else
-                    {
-                        string session_name = spec.Message.Arguments["session_name"];
-                        double lat = Convert.ToDouble(spec.Message.Arguments["latitude_start"], new CultureInfo("en-US"));
-                        double lon = Convert.ToDouble(spec.Message.Arguments["longitude_start"], new CultureInfo("en-US"));
-                        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(lat, lon), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
-                        overlays[session_name].Markers.Add(marker);
-                        
-                        formWaterfall.Repaint();
-                    }
-
                     break;
 
                 default:
@@ -424,15 +414,7 @@ namespace crash
         {
             tabs.SelectedTab = pageSession;
         }
-
-        private void btnMapMinimize_Click(object sender, EventArgs e)
-        {            
-        }
-
-        private void btnMapMaximize_Click(object sender, EventArgs e)
-        {            
-        }        
-
+        
         private void btnSetupSetParams_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(tbSetupVoltage.Text))
@@ -533,17 +515,73 @@ namespace crash
     }    
 
     public class Spectrum
-    {
-        private string mLabel;
-        private burn.Message mMessage;
+    {                
+        private List<float> mChannels;
 
-        public string Label { get { return mLabel; } }
-        public burn.Message Message { get { return mMessage; } }
+        public string SessionName { get; private set; }
+        public int SessionIndex { get; private set; }
+        public string Label { get; private set; }
+        //public burn.Message Message { get; private set; }
+        public float ReportedChannelCount { get; private set; }
+        public List<float> Channels { get { return mChannels; } }
+        public float MaxCount { get; private set; }
+        public float MinCount { get; private set; }        
+        public bool IsPreview { get; private set; }
+        public double LatitudeStart { get; private set; }
+        public double LongitudeStart { get; private set; }
 
         public Spectrum(burn.Message msg)
         {
-            mLabel = "Spectrum " + msg.Arguments["session_index"];
-            mMessage = msg;
+            //Message = msg;        
+            SessionName =  msg.Arguments["session_name"];
+            SessionIndex = Convert.ToInt32(msg.Arguments["session_index"]);
+            Label = "Spectrum " + SessionIndex.ToString();
+            ReportedChannelCount = Convert.ToInt32(msg.Arguments["channel_count"]);
+            IsPreview = msg.Arguments["preview"] == "1";
+            LatitudeStart = Convert.ToDouble(msg.Arguments["latitude_start"], CultureInfo.InvariantCulture);
+            LongitudeStart = Convert.ToDouble(msg.Arguments["longitude_start"], CultureInfo.InvariantCulture);
+            mChannels = new List<float>();
+
+            string[] items = msg.Arguments["channels"].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);                
+            foreach (string item in items)
+            {
+                float ch = Convert.ToSingle(item);
+                mChannels.Add(ch);
+                
+                if (ch > MaxCount)
+                    MaxCount = ch;
+                if (ch < MinCount)
+                    MinCount = ch;
+            }            
+        }        
+    }
+
+    public class Session
+    {
+        public string Name { get; private set; }
+        public float MaxChannelCount { get; private set; }
+        public float MinChannelCount { get; private set; }
+        public List<Spectrum> Spectrums { get; private set; }
+
+        public Session(string name)
+        {
+            Name = name;
+            Spectrums = new List<Spectrum>();
+        }   
+     
+        public void Add(Spectrum spec)
+        {
+            Spectrums.Add(spec);
+
+            if (spec.MaxCount > MaxChannelCount)
+                MaxChannelCount = spec.MaxCount;
+            if (spec.MinCount < MinChannelCount)
+                MinChannelCount = spec.MinCount;
         }
+
+        public void Clear()
+        {
+            Spectrums.Clear();
+        }        
     }
 }

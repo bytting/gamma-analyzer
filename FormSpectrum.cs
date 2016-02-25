@@ -24,14 +24,9 @@ namespace crash
         public void ShowSpectrum(Spectrum s)
         {
             chartSession.Series["Series1"].Points.Clear();
-            
-            string[] counts = s.Message.Arguments["channels"].Split(new char[] { ' ' });
-            int index = 0;
-            foreach (string ch in counts)
-            {
-                chartSession.Series["Series1"].Points.AddXY(index, Convert.ToInt32(ch));
-                index++;
-            }
+
+            for (int i = 0; i < s.Channels.Count; i++)            
+                chartSession.Series["Series1"].Points.AddXY((double)i, (double)s.Channels[i]);            
         }
 
         private void FormSpectrum_FormClosing(object sender, FormClosingEventArgs e)
