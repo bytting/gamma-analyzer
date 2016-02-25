@@ -398,8 +398,7 @@ namespace crash
                     case "Bing Map":
                         gmap.MapProvider = BingMapProvider.Instance;
                         break;
-                }                                
-                GMaps.Instance.Mode = AccessMode.ServerOnly;
+                }                                                
                 //gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
                 //gmap.Zoom = 12;
             }
@@ -506,6 +505,30 @@ namespace crash
             if (tabs.SelectedTab == pageSession)
                 btnShowWaterfall.Visible = true;
             else btnShowWaterfall.Visible = false;
+        }
+
+        private void cboxMapMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(cboxMapMode.Text))
+            {
+                switch(cboxMapMode.Text)
+                {
+                    case "Server":
+                        GMaps.Instance.Mode = AccessMode.ServerOnly;
+                        break;
+                    case "Cache":
+                        GMaps.Instance.Mode = AccessMode.CacheOnly;
+                        break;
+                    default:
+                        GMaps.Instance.Mode = AccessMode.ServerAndCache;
+                        break;
+                }
+            }            
+        }
+
+        private void btnLogClear_Click(object sender, EventArgs e)
+        {
+            lbLog.Items.Clear();
         }                
     }    
 

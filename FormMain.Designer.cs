@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,6 +97,9 @@
             this.btnSendClose = new System.Windows.Forms.Button();
             this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.pageBackground = new System.Windows.Forms.TabPage();
+            this.cboxMapMode = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.btnLogClear = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -117,6 +120,7 @@
             this.splitRight.Panel2.SuspendLayout();
             this.splitRight.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.tblSession.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -344,14 +348,14 @@
             // chartSetup
             // 
             this.chartSetup.BackColor = System.Drawing.SystemColors.ButtonFace;
-            chartArea5.Name = "ChartArea1";
-            this.chartSetup.ChartAreas.Add(chartArea5);
+            chartArea6.Name = "ChartArea1";
+            this.chartSetup.ChartAreas.Add(chartArea6);
             this.chartSetup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartSetup.Location = new System.Drawing.Point(3, 182);
             this.chartSetup.Name = "chartSetup";
-            series5.ChartArea = "ChartArea1";
-            series5.Name = "Series1";
-            this.chartSetup.Series.Add(series5);
+            series6.ChartArea = "ChartArea1";
+            series6.Name = "Series1";
+            this.chartSetup.Series.Add(series6);
             this.chartSetup.Size = new System.Drawing.Size(1143, 480);
             this.chartSetup.TabIndex = 19;
             this.chartSetup.Text = "chart1";
@@ -594,6 +598,7 @@
             this.btnMenuBackgrounds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMenuBackgrounds.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMenuBackgrounds.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuBackgrounds.Image")));
+            this.btnMenuBackgrounds.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnMenuBackgrounds.Location = new System.Drawing.Point(213, 50);
             this.btnMenuBackgrounds.Name = "btnMenuBackgrounds";
             this.btnMenuBackgrounds.Size = new System.Drawing.Size(160, 170);
@@ -680,7 +685,7 @@
             this.splitRight.Panel2.Controls.Add(this.lbLog);
             this.splitRight.Panel2.Controls.Add(this.toolStrip2);
             this.splitRight.Size = new System.Drawing.Size(970, 586);
-            this.splitRight.SplitterDistance = 479;
+            this.splitRight.SplitterDistance = 564;
             this.splitRight.SplitterWidth = 5;
             this.splitRight.TabIndex = 0;
             // 
@@ -706,7 +711,7 @@
             this.gmap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gmap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gmap.ShowTileGridLines = false;
-            this.gmap.Size = new System.Drawing.Size(477, 559);
+            this.gmap.Size = new System.Drawing.Size(562, 559);
             this.gmap.TabIndex = 1;
             this.gmap.Zoom = 12D;
             // 
@@ -715,11 +720,13 @@
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel2,
-            this.cboxMapProvider});
+            this.cboxMapProvider,
+            this.toolStripLabel1,
+            this.cboxMapMode});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(477, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(562, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -754,15 +761,17 @@
             this.lbLog.Location = new System.Drawing.Point(0, 25);
             this.lbLog.Name = "lbLog";
             this.lbLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbLog.Size = new System.Drawing.Size(484, 559);
+            this.lbLog.Size = new System.Drawing.Size(399, 559);
             this.lbLog.TabIndex = 0;
             // 
             // toolStrip2
             // 
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnLogClear});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(484, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(399, 25);
             this.toolStrip2.TabIndex = 1;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -884,6 +893,35 @@
             this.pageBackground.TabIndex = 3;
             this.pageBackground.Text = "Background";
             // 
+            // cboxMapMode
+            // 
+            this.cboxMapMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxMapMode.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.cboxMapMode.Items.AddRange(new object[] {
+            "Server",
+            "Cache",
+            "Server and Cache"});
+            this.cboxMapMode.Name = "cboxMapMode";
+            this.cboxMapMode.Size = new System.Drawing.Size(121, 25);
+            this.cboxMapMode.SelectedIndexChanged += new System.EventHandler(this.cboxMapMode_SelectedIndexChanged);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(68, 22);
+            this.toolStripLabel1.Text = "Map mode:";
+            // 
+            // btnLogClear
+            // 
+            this.btnLogClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLogClear.Image = ((System.Drawing.Image)(resources.GetObject("btnLogClear.Image")));
+            this.btnLogClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLogClear.Name = "btnLogClear";
+            this.btnLogClear.Size = new System.Drawing.Size(23, 22);
+            this.btnLogClear.Text = "toolStripButton1";
+            this.btnLogClear.ToolTipText = "Clear log";
+            this.btnLogClear.Click += new System.EventHandler(this.btnLogClear_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -929,6 +967,8 @@
             this.splitRight.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.tblSession.ResumeLayout(false);
             this.tblSession.PerformLayout();
             this.ResumeLayout(false);
@@ -1004,6 +1044,9 @@
         private System.Windows.Forms.TabPage pageBackground;
         private System.Windows.Forms.ToolStripLabel lblInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripComboBox cboxMapMode;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripButton btnLogClear;
     }
 }
 
