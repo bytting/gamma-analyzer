@@ -31,9 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWaterfallLive));
             this.tools = new System.Windows.Forms.ToolStrip();
             this.status = new System.Windows.Forms.StatusStrip();
+            this.lblColorCeil = new System.Windows.Forms.ToolStripStatusLabel();
             this.pane = new System.Windows.Forms.Panel();
             this.tbColorCeil = new System.Windows.Forms.TrackBar();
-            this.lblColorCeil = new System.Windows.Forms.ToolStripStatusLabel();
             this.status.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).BeginInit();
             this.SuspendLayout();
@@ -56,6 +56,12 @@
             this.status.TabIndex = 1;
             this.status.Text = "statusStrip1";
             // 
+            // lblColorCeil
+            // 
+            this.lblColorCeil.Name = "lblColorCeil";
+            this.lblColorCeil.Size = new System.Drawing.Size(85, 17);
+            this.lblColorCeil.Text = "<lblColorCeil>";
+            // 
             // pane
             // 
             this.pane.BackColor = System.Drawing.Color.Blue;
@@ -75,13 +81,8 @@
             this.tbColorCeil.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.tbColorCeil.Size = new System.Drawing.Size(45, 424);
             this.tbColorCeil.TabIndex = 3;
+            this.tbColorCeil.Scroll += new System.EventHandler(this.tbColorCeil_Scroll);
             this.tbColorCeil.ValueChanged += new System.EventHandler(this.tbColorCeil_ValueChanged);
-            // 
-            // lblColorCeil
-            // 
-            this.lblColorCeil.Name = "lblColorCeil";
-            this.lblColorCeil.Size = new System.Drawing.Size(85, 17);
-            this.lblColorCeil.Text = "<lblColorCeil>";
             // 
             // FormWaterfallLive
             // 

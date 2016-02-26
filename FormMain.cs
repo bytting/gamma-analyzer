@@ -251,7 +251,7 @@ namespace crash
                         GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(spec.LatitudeStart, spec.LongitudeStart), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));                        
                         sessions[spec.SessionName].MapOverlay.Markers.Add(marker);
 
-                        formWaterfallLive.Repaint();
+                        formWaterfallLive.UpdatePane();
                     }                        
 
                     string jsonPath = path + Path.DirectorySeparatorChar + "json";
@@ -479,6 +479,7 @@ namespace crash
         {
             formWaterfallLive.Show();
             formWaterfallLive.BringToFront();
+            formWaterfallLive.UpdatePane();
         }
         
         private void tvSessions_AfterSelect(object sender, TreeViewEventArgs e)

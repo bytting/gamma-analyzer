@@ -12,8 +12,9 @@ namespace crash
 {
     public partial class FormWaterfallLive : Form
     {
-        Session session = null;        
-        Bitmap bmp = null;        
+        Session session = null;
+        Bitmap bmpPane = null;
+        bool colorCeilInitialized = false;
 
         public FormWaterfallLive()
         {
@@ -23,7 +24,7 @@ namespace crash
 
         private void FormWaterfall_Load(object sender, EventArgs e)
         {                        
-            pane_Resize(sender, e);
+            pane_Resize(sender, e);        
             UpdateStats();
         }
 
@@ -37,18 +38,18 @@ namespace crash
             session = sess;
         }
 
-        public void Repaint()
-        {
-            if (WindowState == FormWindowState.Minimized)
+        public void UpdatePane()
+        {            
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
             tbColorCeil.Maximum = (int)session.MaxChannelCount;
             tbColorCeil.Minimum = (int)session.MinChannelCount;
 
-            UpdateStats();
+            if (!colorCeilInitialized)            
+                tbColorCeil.Value = tbColorCeil.Maximum;            
 
-            if (session == null || bmp == null)
-                return;
+            UpdateStats();            
 
             if (tbColorCeil.Value < 1)
                 return;
@@ -102,13 +103,13 @@ namespace crash
                     }
                     
                     if (x >= 0 && x < pane.Width && y >= 0 && y < pane.Height)
-                        bmp.SetPixel(x, y, Color.FromArgb(r, g, b));
+                        bmpPane.SetPixel(x, y, Color.FromArgb(r, g, b));
                 }
                 y++;
             }            
 
             pane.Refresh();
-        }
+        }        
 
         private void FormWaterfall_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -118,10 +119,10 @@ namespace crash
 
         private void pane_Paint(object sender, PaintEventArgs e)        
         {
-            if (bmp == null || WindowState == FormWindowState.Minimized)
+            if (bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            e.Graphics.DrawImage(bmp, 0, 0);
+            e.Graphics.DrawImage(bmpPane, 0, 0);
         }
 
         private void pane_Resize(object sender, EventArgs e)
@@ -131,7 +132,7 @@ namespace crash
             if (pane.Width < 1 || pane.Height < 1)
                 return;
 
-            bmp = new Bitmap(pane.Width, pane.Height);
+            bmpPane = new Bitmap(pane.Width, pane.Height);
         }
 
         private int CalcSectorSkip(float cps, float sectorSize)
@@ -149,5 +150,11 @@ namespace crash
         {
             UpdateStats();
         }
+
+        private void tbColorCeil_Scroll(object sender, EventArgs e)
+        {
+            colorCeilInitialized = true;
+            UpdatePane();
+        }        
     }
 }
