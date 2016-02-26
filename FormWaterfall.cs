@@ -33,23 +33,15 @@ namespace crash
 
         public void Repaint()
         {
-            tbColorCeil.Maximum = (int)session.MaxChannelCount;
-            tbColorCeil.Minimum = (int)session.MinChannelCount;
-            pane.Refresh();
-        }
+            if (session == null || bmp == null || WindowState == FormWindowState.Minimized)
+                return;
 
-        private void FormWaterfall_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            Hide();
-        }
+            if (tbColorCeil.Value < 1)
+                return;
 
-        private void pane_Paint(object sender, PaintEventArgs e)        
-        {
-            if (session == null || bmp == null || WindowState == FormWindowState.Minimized || pane.Height < 5)
-                return;            
-
-            float sectorSize = session.MaxChannelCount / 4f;
+            float max = tbColorCeil.Value;
+            float sectorSize = max / 4f;
+            //float sectorSize = session.MaxChannelCount / 4f;
             float scale = 255f / sectorSize;
             int y = 0;
 
@@ -58,16 +50,20 @@ namespace crash
             for (int i = h - 1; i >= 0; i--)
             {
                 Spectrum s = session.Spectrums[i];
-                                               
+
                 int w = s.Channels.Count > pane.Width ? pane.Width : s.Channels.Count; // FIXME                                
 
                 for (int x = 0; x < w; x++)
                 {
-                    int r=0, g=0, b=255;
+                    int r = 0, g = 0, b = 255;
                     float cps = s.Channels[x];
                     int sectorSkip = CalcSectorSkip(cps, sectorSize);
 
                     float adj = (cps - (float)sectorSkip * sectorSize) * scale;
+                    if (adj < 0)
+                        adj = 0;
+                    if (adj > 255)
+                        adj = 255;
 
                     if (sectorSkip == 0)
                     {
@@ -77,7 +73,7 @@ namespace crash
                     {
                         g = 255;
                         b -= (int)adj;
-                    }                        
+                    }
                     else if (sectorSkip == 2)
                     {
                         g = 255;
@@ -89,14 +85,31 @@ namespace crash
                         g = 255;
                         b = 0;
                         r = 255;
-                        g -= (int)adj;                        
-                    }                                        
-
-                    if(x >= 0 && x < pane.Width && y >= 0 && y < pane.Height)
+                        g -= (int)adj;
+                    }
+                    
+                    if (x >= 0 && x < pane.Width && y >= 0 && y < pane.Height)
                         bmp.SetPixel(x, y, Color.FromArgb(r, g, b));
                 }
                 y++;
             }
+
+            tbColorCeil.Maximum = (int)session.MaxChannelCount;
+            tbColorCeil.Minimum = (int)session.MinChannelCount;
+
+            pane.Refresh();
+        }
+
+        private void FormWaterfall_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+        }
+
+        private void pane_Paint(object sender, PaintEventArgs e)        
+        {
+            if (bmp == null || WindowState == FormWindowState.Minimized)
+                return;
 
             e.Graphics.DrawImage(bmp, 0, 0);
         }
