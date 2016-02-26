@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,10 +48,11 @@
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
             this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnShowWaterfall = new System.Windows.Forms.ToolStripButton();
+            this.btnShowWaterfallLive = new System.Windows.Forms.ToolStripButton();
             this.lblInterface = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
+            this.btnShowWaterfallHist = new System.Windows.Forms.ToolStripButton();
             this.tabs = new TabControlWizard.TabControlWizard();
             this.pageSetup = new System.Windows.Forms.TabPage();
             this.chartSetup = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -215,10 +216,11 @@
             this.btnConnect,
             this.btnDisconnect,
             this.toolStripSeparator3,
-            this.btnShowWaterfall,
+            this.btnShowWaterfallLive,
             this.lblInterface,
             this.toolStripSeparator4,
-            this.lblConnectionStatus});
+            this.lblConnectionStatus,
+            this.btnShowWaterfallHist});
             this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
             this.tools.Size = new System.Drawing.Size(1157, 40);
@@ -285,18 +287,18 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 40);
             // 
-            // btnShowWaterfall
+            // btnShowWaterfallLive
             // 
-            this.btnShowWaterfall.AutoSize = false;
-            this.btnShowWaterfall.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowWaterfall.Image = ((System.Drawing.Image)(resources.GetObject("btnShowWaterfall.Image")));
-            this.btnShowWaterfall.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowWaterfall.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowWaterfall.Name = "btnShowWaterfall";
-            this.btnShowWaterfall.Size = new System.Drawing.Size(38, 38);
-            this.btnShowWaterfall.Text = "toolStripButton2";
-            this.btnShowWaterfall.ToolTipText = "Show waterfall";
-            this.btnShowWaterfall.Click += new System.EventHandler(this.btnShowWaterfall_Click);
+            this.btnShowWaterfallLive.AutoSize = false;
+            this.btnShowWaterfallLive.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowWaterfallLive.Image = ((System.Drawing.Image)(resources.GetObject("btnShowWaterfallLive.Image")));
+            this.btnShowWaterfallLive.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowWaterfallLive.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowWaterfallLive.Name = "btnShowWaterfallLive";
+            this.btnShowWaterfallLive.Size = new System.Drawing.Size(38, 38);
+            this.btnShowWaterfallLive.Text = "toolStripButton2";
+            this.btnShowWaterfallLive.ToolTipText = "Show waterfall live";
+            this.btnShowWaterfallLive.Click += new System.EventHandler(this.btnShowWaterfall_Click);
             // 
             // lblInterface
             // 
@@ -318,6 +320,19 @@
             this.lblConnectionStatus.Name = "lblConnectionStatus";
             this.lblConnectionStatus.Size = new System.Drawing.Size(130, 37);
             this.lblConnectionStatus.Text = "<lblConnectionStatus>";
+            // 
+            // btnShowWaterfallHist
+            // 
+            this.btnShowWaterfallHist.AutoSize = false;
+            this.btnShowWaterfallHist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowWaterfallHist.Image = ((System.Drawing.Image)(resources.GetObject("btnShowWaterfallHist.Image")));
+            this.btnShowWaterfallHist.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowWaterfallHist.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowWaterfallHist.Name = "btnShowWaterfallHist";
+            this.btnShowWaterfallHist.Size = new System.Drawing.Size(38, 38);
+            this.btnShowWaterfallHist.Text = "toolStripButton1";
+            this.btnShowWaterfallHist.ToolTipText = "Show waterfall history";
+            this.btnShowWaterfallHist.Click += new System.EventHandler(this.btnShowWaterfallHist_Click);
             // 
             // tabs
             // 
@@ -348,14 +363,14 @@
             // chartSetup
             // 
             this.chartSetup.BackColor = System.Drawing.SystemColors.ButtonFace;
-            chartArea1.Name = "ChartArea1";
-            this.chartSetup.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.chartSetup.ChartAreas.Add(chartArea2);
             this.chartSetup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartSetup.Location = new System.Drawing.Point(3, 182);
             this.chartSetup.Name = "chartSetup";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "Series1";
-            this.chartSetup.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Name = "Series1";
+            this.chartSetup.Series.Add(series2);
             this.chartSetup.Size = new System.Drawing.Size(1143, 480);
             this.chartSetup.TabIndex = 19;
             this.chartSetup.Text = "chart1";
@@ -1033,7 +1048,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemEdit;
         private System.Windows.Forms.ToolStripMenuItem menuItemPreferences;
         private System.Windows.Forms.ToolStripButton btnPreferences;
-        private System.Windows.Forms.ToolStripButton btnShowWaterfall;
+        private System.Windows.Forms.ToolStripButton btnShowWaterfallLive;
         private System.Windows.Forms.ToolStrip toolsMap;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripComboBox cboxMapProvider;
@@ -1047,6 +1062,7 @@
         private System.Windows.Forms.ToolStripComboBox cboxMapMode;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripButton btnLogClear;
+        private System.Windows.Forms.ToolStripButton btnShowWaterfallHist;
     }
 }
 

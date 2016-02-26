@@ -10,20 +10,26 @@ using System.Windows.Forms;
 
 namespace crash
 {
-    public partial class FormWaterfall : Form
+    public partial class FormWaterfallLive : Form
     {
         Session session = null;        
         Bitmap bmp = null;        
 
-        public FormWaterfall()
+        public FormWaterfallLive()
         {
             InitializeComponent();
             DoubleBuffered = true;
         }        
 
         private void FormWaterfall_Load(object sender, EventArgs e)
-        {            
+        {                        
             pane_Resize(sender, e);
+            UpdateStats();
+        }
+
+        private void UpdateStats()
+        {
+            lblColorCeil.Text = "Color ceiling (min, curr, max): " + tbColorCeil.Minimum + ", " + tbColorCeil.Value + ", " + tbColorCeil.Maximum;
         }
 
         public void SetSession(Session sess)
@@ -33,15 +39,22 @@ namespace crash
 
         public void Repaint()
         {
-            if (session == null || bmp == null || WindowState == FormWindowState.Minimized)
+            if (WindowState == FormWindowState.Minimized)
+                return;
+
+            tbColorCeil.Maximum = (int)session.MaxChannelCount;
+            tbColorCeil.Minimum = (int)session.MinChannelCount;
+
+            UpdateStats();
+
+            if (session == null || bmp == null)
                 return;
 
             if (tbColorCeil.Value < 1)
                 return;
 
             float max = tbColorCeil.Value;
-            float sectorSize = max / 4f;
-            //float sectorSize = session.MaxChannelCount / 4f;
+            float sectorSize = max / 4f;            
             float scale = 255f / sectorSize;
             int y = 0;
 
@@ -92,10 +105,7 @@ namespace crash
                         bmp.SetPixel(x, y, Color.FromArgb(r, g, b));
                 }
                 y++;
-            }
-
-            tbColorCeil.Maximum = (int)session.MaxChannelCount;
-            tbColorCeil.Minimum = (int)session.MinChannelCount;
+            }            
 
             pane.Refresh();
         }
@@ -133,6 +143,11 @@ namespace crash
             else if (cps < sectorSize * 3f)
                 return 2;
             else return 3;
+        }
+
+        private void tbColorCeil_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateStats();
         }
     }
 }

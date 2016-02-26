@@ -58,7 +58,8 @@ namespace crash
         
         FormConnect formConnect = new FormConnect();
         FormSpectrum formSpectrum = new FormSpectrum();
-        FormWaterfall formWaterfall = new FormWaterfall();
+        FormWaterfallLive formWaterfallLive = new FormWaterfallLive();
+        FormWaterfallHistory formWaterfallHist = new FormWaterfallHistory();
 
         CultureInfo ciUS = new CultureInfo("en-US");
 
@@ -181,7 +182,7 @@ namespace crash
                         Log("New session created: " + session_name);
                         
                         sessions[session_name] = new Session(session_name);
-                        formWaterfall.SetSession(sessions[session_name]);
+                        formWaterfallLive.SetSession(sessions[session_name]);
 
                         gmap.Overlays.Add(sessions[session_name].MapOverlay);
                     }                        
@@ -250,7 +251,7 @@ namespace crash
                         GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(spec.LatitudeStart, spec.LongitudeStart), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));                        
                         sessions[spec.SessionName].MapOverlay.Markers.Add(marker);
 
-                        formWaterfall.Repaint();
+                        formWaterfallLive.Repaint();
                     }                        
 
                     string jsonPath = path + Path.DirectorySeparatorChar + "json";
@@ -476,8 +477,8 @@ namespace crash
 
         private void btnShowWaterfall_Click(object sender, EventArgs e)
         {
-            formWaterfall.Show();
-            formWaterfall.BringToFront();
+            formWaterfallLive.Show();
+            formWaterfallLive.BringToFront();
         }
         
         private void tvSessions_AfterSelect(object sender, TreeViewEventArgs e)
@@ -503,8 +504,15 @@ namespace crash
             else btnBack.Enabled = true;
 
             if (tabs.SelectedTab == pageSession)
-                btnShowWaterfall.Visible = true;
-            else btnShowWaterfall.Visible = false;
+            {
+                btnShowWaterfallLive.Visible = true;
+                btnShowWaterfallHist.Visible = true;
+            }
+            else
+            {
+                btnShowWaterfallLive.Visible = false;
+                btnShowWaterfallHist.Visible = false;
+            }
         }
 
         private void cboxMapMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -529,6 +537,12 @@ namespace crash
         private void btnLogClear_Click(object sender, EventArgs e)
         {
             lbLog.Items.Clear();
+        }
+
+        private void btnShowWaterfallHist_Click(object sender, EventArgs e)
+        {
+            formWaterfallHist.Show();
+            formWaterfallHist.BringToFront();
         }                
     }    
 
@@ -538,8 +552,7 @@ namespace crash
 
         public string SessionName { get; private set; }
         public int SessionIndex { get; private set; }
-        public string Label { get; private set; }
-        //public burn.Message Message { get; private set; }
+        public string Label { get; private set; }        
         public float ReportedChannelCount { get; private set; }
         public List<float> Channels { get { return mChannels; } }
         public float MaxCount { get; private set; }
@@ -549,8 +562,7 @@ namespace crash
         public double LongitudeStart { get; private set; }
 
         public Spectrum(burn.Message msg)
-        {
-            //Message = msg;        
+        {            
             SessionName =  msg.Arguments["session_name"];
             SessionIndex = Convert.ToInt32(msg.Arguments["session_index"]);
             Label = "Spectrum " + SessionIndex.ToString();
