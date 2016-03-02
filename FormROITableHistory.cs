@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace crash
+{
+    public partial class FormROITableHistory : Form
+    {
+        public FormROITableHistory()
+        {
+            InitializeComponent();
+        }
+
+        private void FormROITableHistory_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+        }
+    }
+}

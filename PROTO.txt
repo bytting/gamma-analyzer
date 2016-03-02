@@ -6,9 +6,9 @@ error_socket ->
 	error_code
 	message
 
-close
+close ->
 
-close_ok
+close_ok ->
 
 close_failed ->
 	message
@@ -28,13 +28,16 @@ new_session_ok ->
 new_session_failed ->
 	message
 
-stop_session
+stop_session ->
 
-stop_session_ok
+stop_session_ok ->
 
 stop_session_failed ->
 	message
 
+session_close ->
+	session_name
+	
 set_gain ->
 	voltage
 	coarse_gain
@@ -48,7 +51,7 @@ set_gain_ok ->
 set_gain_failed ->
 	message
 
-spectrum -
+spectrum ->
 	session_name
 	session_index
 	gps_time_start

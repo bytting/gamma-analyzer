@@ -69,15 +69,15 @@ namespace crash
 
                 for (int x = 0; x < w; x++)
                 {
-                    int r = 0, g = 0, b = 255;
+                    int a = 255, r = 0, g = 0, b = 255;
                     float cps = s.Channels[x];
                     int sectorSkip = CalcSectorSkip(cps, sectorSize);
 
                     float adj = (cps - (float)sectorSkip * sectorSize) * scale;
                     if (adj < 0)
                         adj = 0;
-                    if (adj > 255)
-                        adj = 255;
+                    if (adj > 255)                    
+                        adj = 255;                                            
 
                     if (sectorSkip == 0)
                     {
@@ -103,7 +103,7 @@ namespace crash
                     }
                     
                     if (x >= 0 && x < pane.Width && y >= 0 && y < pane.Height)
-                        bmpPane.SetPixel(x, y, Color.FromArgb(r, g, b));
+                        bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
                 }
                 y++;
             }            

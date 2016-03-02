@@ -80,6 +80,12 @@
     <Compile Include="FormPreferences.Designer.cs">
       <DependentUpon>FormPreferences.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormROITableHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormROITableHistory.Designer.cs">
+      <DependentUpon>FormROITableHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSpectrum.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPreferences.resx">
       <DependentUpon>FormPreferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormROITableHistory.resx">
+      <DependentUpon>FormROITableHistory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSpectrum.resx">
       <DependentUpon>FormSpectrum.cs</DependentUpon>

@@ -60,6 +60,7 @@ namespace crash
         FormSpectrum formSpectrum = new FormSpectrum();
         FormWaterfallLive formWaterfallLive = new FormWaterfallLive();
         FormWaterfallHistory formWaterfallHist = new FormWaterfallHistory();
+        FormROITableHistory formROIHistory = new FormROITableHistory();
 
         CultureInfo ciUS = new CultureInfo("en-US");
 
@@ -544,6 +545,12 @@ namespace crash
         {
             formWaterfallHist.Show();
             formWaterfallHist.BringToFront();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            formROIHistory.Show();
+            formROIHistory.BringToFront();
         }                
     }    
 
