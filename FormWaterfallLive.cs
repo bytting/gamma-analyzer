@@ -148,6 +148,9 @@ namespace crash
 
         private void tbColorCeil_ValueChanged(object sender, EventArgs e)
         {
+            if (tbColorCeil.Value <= tbColorCeil.Minimum)
+                tbColorCeil.Value = tbColorCeil.Minimum + 1;
+
             UpdateStats();
         }
 

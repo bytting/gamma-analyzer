@@ -184,6 +184,7 @@ namespace crash
                         
                         sessions[session_name] = new Session(session_name);
                         formWaterfallLive.SetSession(sessions[session_name]);
+                        formROIHistory.SetSession(sessions[session_name]);
 
                         gmap.Overlays.Add(sessions[session_name].MapOverlay);
                     }                        
@@ -253,6 +254,7 @@ namespace crash
                         sessions[spec.SessionName].MapOverlay.Markers.Add(marker);
 
                         formWaterfallLive.UpdatePane();
+                        formROIHistory.UpdatePane();
                     }                        
 
                     string jsonPath = path + Path.DirectorySeparatorChar + "json";
@@ -564,7 +566,8 @@ namespace crash
         public float ReportedChannelCount { get; private set; }
         public List<float> Channels { get { return mChannels; } }
         public float MaxCount { get; private set; }
-        public float MinCount { get; private set; }        
+        public float MinCount { get; private set; }
+        public float TotalCount { get; private set; }
         public bool IsPreview { get; private set; }
         public double LatitudeStart { get; private set; }
         public double LongitudeStart { get; private set; }
@@ -579,7 +582,7 @@ namespace crash
             LatitudeStart = Convert.ToDouble(msg.Arguments["latitude_start"], CultureInfo.InvariantCulture);
             LongitudeStart = Convert.ToDouble(msg.Arguments["longitude_start"], CultureInfo.InvariantCulture);
             mChannels = new List<float>();
-
+            TotalCount = 0f;
             string[] items = msg.Arguments["channels"].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);                
             foreach (string item in items)
             {
@@ -590,8 +593,20 @@ namespace crash
                     MaxCount = ch;
                 if (ch < MinCount)
                     MinCount = ch;
-            }            
+
+                TotalCount += ch;
+            }
         }        
+
+        public float GetCountInROI(int start, int end)
+        {
+            float max = 0f;
+            for(int i=start; i<end; i++)
+            {
+                max += mChannels[i];
+            }
+            return max;
+        }
     }
 
     public class Session
@@ -623,5 +638,18 @@ namespace crash
         {
             Spectrums.Clear();
         }        
+
+        public float GetMaxCountInROI(int start, int end)
+        {
+            float max = 0f;
+
+            foreach(Spectrum s in Spectrums)
+            {
+                float curr = s.GetCountInROI(start, end);
+                if (curr > max)
+                    max = curr;
+            }
+            return max;
+        }
     }
 }

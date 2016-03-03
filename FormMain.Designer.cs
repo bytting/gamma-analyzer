@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
@@ -377,14 +377,14 @@
             // chartSetup
             // 
             this.chartSetup.BackColor = System.Drawing.SystemColors.ButtonFace;
-            chartArea1.Name = "ChartArea1";
-            this.chartSetup.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.chartSetup.ChartAreas.Add(chartArea2);
             this.chartSetup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartSetup.Location = new System.Drawing.Point(3, 182);
             this.chartSetup.Name = "chartSetup";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "Series1";
-            this.chartSetup.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Name = "Series1";
+            this.chartSetup.Series.Add(series2);
             this.chartSetup.Size = new System.Drawing.Size(1143, 480);
             this.chartSetup.TabIndex = 19;
             this.chartSetup.Text = "chart1";
