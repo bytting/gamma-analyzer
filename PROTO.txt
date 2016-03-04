@@ -71,16 +71,15 @@ spectrum ->
 	longitude_end
 	longitude_end_err
 	altitude_end
-	altitude_end_err
-	livetime
-	realtime
-	channel_count
+	altitude_end_err	
 	channels
-	uncorrected_total_count
+	num_channels
+	livetime
+	realtime	
+	total_count
 	computational_limit
 	spectral_input
-	spectral_group
-	spectral_status
+	spectral_group	
 	
 spectrum_failed ->
 	message

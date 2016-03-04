@@ -563,8 +563,8 @@ namespace crash
         public string SessionName { get; private set; }
         public int SessionIndex { get; private set; }
         public string Label { get; private set; }        
-        public float ReportedChannelCount { get; private set; }
         public List<float> Channels { get { return mChannels; } }
+        public float NumChannels { get; private set; }
         public float MaxCount { get; private set; }
         public float MinCount { get; private set; }
         public float TotalCount { get; private set; }
@@ -577,7 +577,7 @@ namespace crash
             SessionName =  msg.Arguments["session_name"];
             SessionIndex = Convert.ToInt32(msg.Arguments["session_index"]);
             Label = "Spectrum " + SessionIndex.ToString();
-            ReportedChannelCount = Convert.ToInt32(msg.Arguments["channel_count"]);
+            NumChannels = Convert.ToInt32(msg.Arguments["num_channels"]);
             IsPreview = msg.Arguments["preview"] == "1";
             LatitudeStart = Convert.ToDouble(msg.Arguments["latitude_start"], CultureInfo.InvariantCulture);
             LongitudeStart = Convert.ToDouble(msg.Arguments["longitude_start"], CultureInfo.InvariantCulture);
@@ -602,9 +602,7 @@ namespace crash
         {
             float max = 0f;
             for(int i=start; i<end; i++)
-            {
-                max += mChannels[i];
-            }
+                max += mChannels[i];            
             return max;
         }
     }
