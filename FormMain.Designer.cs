@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,7 +81,6 @@
             this.btnMenuSession = new System.Windows.Forms.Button();
             this.pageSession = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.tvSessions = new System.Windows.Forms.TreeView();
             this.splitRight = new System.Windows.Forms.SplitContainer();
             this.gmap = new GMap.NET.WindowsForms.GMapControl();
             this.toolsMap = new System.Windows.Forms.ToolStrip();
@@ -102,6 +101,7 @@
             this.btnSendClose = new System.Windows.Forms.Button();
             this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.pageBackground = new System.Windows.Forms.TabPage();
+            this.lbSession = new System.Windows.Forms.ListBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -134,7 +134,7 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menu.Size = new System.Drawing.Size(1157, 24);
+            this.menu.Size = new System.Drawing.Size(1221, 24);
             this.menu.TabIndex = 0;
             this.menu.Text = "menuStrip1";
             // 
@@ -152,26 +152,26 @@
             // menuItemConnect
             // 
             this.menuItemConnect.Name = "menuItemConnect";
-            this.menuItemConnect.Size = new System.Drawing.Size(133, 22);
+            this.menuItemConnect.Size = new System.Drawing.Size(152, 22);
             this.menuItemConnect.Text = "&Connect";
             this.menuItemConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
             // 
             // menuItemDisconnect
             // 
             this.menuItemDisconnect.Name = "menuItemDisconnect";
-            this.menuItemDisconnect.Size = new System.Drawing.Size(133, 22);
+            this.menuItemDisconnect.Size = new System.Drawing.Size(152, 22);
             this.menuItemDisconnect.Text = "&Disconnect";
             this.menuItemDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // menuItemExit
             // 
             this.menuItemExit.Name = "menuItemExit";
-            this.menuItemExit.Size = new System.Drawing.Size(133, 22);
+            this.menuItemExit.Size = new System.Drawing.Size(152, 22);
             this.menuItemExit.Text = "E&xit";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
@@ -194,10 +194,10 @@
             // 
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-            this.status.Location = new System.Drawing.Point(0, 758);
+            this.status.Location = new System.Drawing.Point(0, 748);
             this.status.Name = "status";
             this.status.Padding = new System.Windows.Forms.Padding(1, 0, 17, 0);
-            this.status.Size = new System.Drawing.Size(1157, 22);
+            this.status.Size = new System.Drawing.Size(1221, 22);
             this.status.TabIndex = 1;
             this.status.Text = "statusStrip1";
             // 
@@ -225,7 +225,7 @@
             this.toolStripButton1});
             this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(1157, 40);
+            this.tools.Size = new System.Drawing.Size(1221, 40);
             this.tools.TabIndex = 2;
             this.tools.Text = "toolStrip1";
             // 
@@ -358,7 +358,7 @@
             this.tabs.Location = new System.Drawing.Point(0, 64);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(1157, 694);
+            this.tabs.Size = new System.Drawing.Size(1221, 684);
             this.tabs.TabIndex = 4;
             this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_SelectedIndexChanged);
             // 
@@ -370,22 +370,22 @@
             this.pageSetup.Location = new System.Drawing.Point(4, 25);
             this.pageSetup.Name = "pageSetup";
             this.pageSetup.Padding = new System.Windows.Forms.Padding(3);
-            this.pageSetup.Size = new System.Drawing.Size(1149, 665);
+            this.pageSetup.Size = new System.Drawing.Size(1322, 663);
             this.pageSetup.TabIndex = 0;
             this.pageSetup.Text = "Setup";
             // 
             // chartSetup
             // 
             this.chartSetup.BackColor = System.Drawing.SystemColors.ButtonFace;
-            chartArea2.Name = "ChartArea1";
-            this.chartSetup.ChartAreas.Add(chartArea2);
+            chartArea5.Name = "ChartArea1";
+            this.chartSetup.ChartAreas.Add(chartArea5);
             this.chartSetup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartSetup.Location = new System.Drawing.Point(3, 182);
             this.chartSetup.Name = "chartSetup";
-            series2.ChartArea = "ChartArea1";
-            series2.Name = "Series1";
-            this.chartSetup.Series.Add(series2);
-            this.chartSetup.Size = new System.Drawing.Size(1143, 480);
+            series5.ChartArea = "ChartArea1";
+            series5.Name = "Series1";
+            this.chartSetup.Series.Add(series5);
+            this.chartSetup.Size = new System.Drawing.Size(1316, 478);
             this.chartSetup.TabIndex = 19;
             this.chartSetup.Text = "chart1";
             // 
@@ -422,7 +422,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1143, 179);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1316, 179);
             this.tableLayoutPanel1.TabIndex = 20;
             // 
             // label5
@@ -438,25 +438,25 @@
             // tbSetupVoltage
             // 
             this.tbSetupVoltage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupVoltage.Location = new System.Drawing.Point(288, 31);
+            this.tbSetupVoltage.Location = new System.Drawing.Point(332, 31);
             this.tbSetupVoltage.Name = "tbSetupVoltage";
-            this.tbSetupVoltage.Size = new System.Drawing.Size(279, 21);
+            this.tbSetupVoltage.Size = new System.Drawing.Size(323, 21);
             this.tbSetupVoltage.TabIndex = 13;
             // 
             // tbSetupCoarseGain
             // 
             this.tbSetupCoarseGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupCoarseGain.Location = new System.Drawing.Point(573, 31);
+            this.tbSetupCoarseGain.Location = new System.Drawing.Point(661, 31);
             this.tbSetupCoarseGain.Name = "tbSetupCoarseGain";
-            this.tbSetupCoarseGain.Size = new System.Drawing.Size(279, 21);
+            this.tbSetupCoarseGain.Size = new System.Drawing.Size(323, 21);
             this.tbSetupCoarseGain.TabIndex = 14;
             // 
             // tbSetupFineGain
             // 
             this.tbSetupFineGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupFineGain.Location = new System.Drawing.Point(858, 31);
+            this.tbSetupFineGain.Location = new System.Drawing.Point(990, 31);
             this.tbSetupFineGain.Name = "tbSetupFineGain";
-            this.tbSetupFineGain.Size = new System.Drawing.Size(282, 21);
+            this.tbSetupFineGain.Size = new System.Drawing.Size(323, 21);
             this.tbSetupFineGain.TabIndex = 15;
             // 
             // cboxSetupDetector
@@ -464,9 +464,9 @@
             this.cboxSetupDetector.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSetupDetector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSetupDetector.FormattingEnabled = true;
-            this.cboxSetupDetector.Location = new System.Drawing.Point(288, 3);
+            this.cboxSetupDetector.Location = new System.Drawing.Point(332, 3);
             this.cboxSetupDetector.Name = "cboxSetupDetector";
-            this.cboxSetupDetector.Size = new System.Drawing.Size(279, 23);
+            this.cboxSetupDetector.Size = new System.Drawing.Size(323, 23);
             this.cboxSetupDetector.TabIndex = 17;
             // 
             // label2
@@ -484,9 +484,9 @@
             this.cboxSetupChannels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSetupChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSetupChannels.FormattingEnabled = true;
-            this.cboxSetupChannels.Location = new System.Drawing.Point(573, 3);
+            this.cboxSetupChannels.Location = new System.Drawing.Point(661, 3);
             this.cboxSetupChannels.Name = "cboxSetupChannels";
-            this.cboxSetupChannels.Size = new System.Drawing.Size(279, 23);
+            this.cboxSetupChannels.Size = new System.Drawing.Size(323, 23);
             this.cboxSetupChannels.TabIndex = 20;
             // 
             // label3
@@ -502,33 +502,33 @@
             // tbSetupLLD
             // 
             this.tbSetupLLD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupLLD.Location = new System.Drawing.Point(288, 59);
+            this.tbSetupLLD.Location = new System.Drawing.Point(332, 59);
             this.tbSetupLLD.Name = "tbSetupLLD";
-            this.tbSetupLLD.Size = new System.Drawing.Size(279, 21);
+            this.tbSetupLLD.Size = new System.Drawing.Size(323, 21);
             this.tbSetupLLD.TabIndex = 22;
             // 
             // tbSetupULD
             // 
             this.tbSetupULD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupULD.Location = new System.Drawing.Point(573, 59);
+            this.tbSetupULD.Location = new System.Drawing.Point(661, 59);
             this.tbSetupULD.Name = "tbSetupULD";
-            this.tbSetupULD.Size = new System.Drawing.Size(279, 21);
+            this.tbSetupULD.Size = new System.Drawing.Size(323, 21);
             this.tbSetupULD.TabIndex = 23;
             // 
             // tbSetupLivetime
             // 
             this.tbSetupLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupLivetime.Location = new System.Drawing.Point(858, 59);
+            this.tbSetupLivetime.Location = new System.Drawing.Point(990, 59);
             this.tbSetupLivetime.Name = "tbSetupLivetime";
-            this.tbSetupLivetime.Size = new System.Drawing.Size(282, 21);
+            this.tbSetupLivetime.Size = new System.Drawing.Size(323, 21);
             this.tbSetupLivetime.TabIndex = 24;
             // 
             // btnSetupStoreParams
             // 
             this.btnSetupStoreParams.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetupStoreParams.Location = new System.Drawing.Point(858, 87);
+            this.btnSetupStoreParams.Location = new System.Drawing.Point(990, 87);
             this.btnSetupStoreParams.Name = "btnSetupStoreParams";
-            this.btnSetupStoreParams.Size = new System.Drawing.Size(282, 22);
+            this.btnSetupStoreParams.Size = new System.Drawing.Size(323, 22);
             this.btnSetupStoreParams.TabIndex = 27;
             this.btnSetupStoreParams.Text = "Store parameters in settings";
             this.btnSetupStoreParams.UseVisualStyleBackColor = true;
@@ -538,9 +538,9 @@
             // 
             this.btnSetupSetParams.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSetupSetParams.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupSetParams.Location = new System.Drawing.Point(573, 87);
+            this.btnSetupSetParams.Location = new System.Drawing.Point(661, 87);
             this.btnSetupSetParams.Name = "btnSetupSetParams";
-            this.btnSetupSetParams.Size = new System.Drawing.Size(279, 22);
+            this.btnSetupSetParams.Size = new System.Drawing.Size(323, 22);
             this.btnSetupSetParams.TabIndex = 16;
             this.btnSetupSetParams.Text = "Send detector parameters";
             this.btnSetupSetParams.UseVisualStyleBackColor = true;
@@ -551,9 +551,9 @@
             this.panel1.Controls.Add(this.btnSetupStop);
             this.panel1.Controls.Add(this.btnSetupStart);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(858, 143);
+            this.panel1.Location = new System.Drawing.Point(990, 143);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(282, 22);
+            this.panel1.Size = new System.Drawing.Size(323, 22);
             this.panel1.TabIndex = 28;
             // 
             // btnSetupStop
@@ -561,7 +561,7 @@
             this.btnSetupStop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSetupStop.Location = new System.Drawing.Point(141, 0);
             this.btnSetupStop.Name = "btnSetupStop";
-            this.btnSetupStop.Size = new System.Drawing.Size(141, 22);
+            this.btnSetupStop.Size = new System.Drawing.Size(182, 22);
             this.btnSetupStop.TabIndex = 25;
             this.btnSetupStop.Text = "Stop";
             this.btnSetupStop.UseVisualStyleBackColor = true;
@@ -585,7 +585,7 @@
             this.pageMenu.Location = new System.Drawing.Point(4, 25);
             this.pageMenu.Name = "pageMenu";
             this.pageMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.pageMenu.Size = new System.Drawing.Size(1149, 665);
+            this.pageMenu.Size = new System.Drawing.Size(1322, 663);
             this.pageMenu.TabIndex = 1;
             this.pageMenu.Text = "Menu";
             // 
@@ -598,7 +598,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(44, 47, 44, 47);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1143, 659);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1316, 657);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // btnMenuSetup
@@ -662,7 +662,7 @@
             this.pageSession.Location = new System.Drawing.Point(4, 25);
             this.pageSession.Name = "pageSession";
             this.pageSession.Padding = new System.Windows.Forms.Padding(3);
-            this.pageSession.Size = new System.Drawing.Size(1149, 665);
+            this.pageSession.Size = new System.Drawing.Size(1213, 655);
             this.pageSession.TabIndex = 2;
             this.pageSession.Text = "Session";
             // 
@@ -675,27 +675,16 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.tvSessions);
+            this.splitContainer2.Panel1.Controls.Add(this.lbSession);
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitRight);
             this.splitContainer2.Panel2.Controls.Add(this.tblSession);
-            this.splitContainer2.Size = new System.Drawing.Size(1143, 659);
-            this.splitContainer2.SplitterDistance = 168;
+            this.splitContainer2.Size = new System.Drawing.Size(1207, 649);
+            this.splitContainer2.SplitterDistance = 165;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 6;
-            // 
-            // tvSessions
-            // 
-            this.tvSessions.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tvSessions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tvSessions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvSessions.Location = new System.Drawing.Point(0, 0);
-            this.tvSessions.Name = "tvSessions";
-            this.tvSessions.Size = new System.Drawing.Size(166, 657);
-            this.tvSessions.TabIndex = 6;
-            this.tvSessions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvSessions_AfterSelect);
             // 
             // splitRight
             // 
@@ -713,8 +702,8 @@
             // 
             this.splitRight.Panel2.Controls.Add(this.lbLog);
             this.splitRight.Panel2.Controls.Add(this.toolsLog);
-            this.splitRight.Size = new System.Drawing.Size(970, 586);
-            this.splitRight.SplitterDistance = 564;
+            this.splitRight.Size = new System.Drawing.Size(1037, 576);
+            this.splitRight.SplitterDistance = 641;
             this.splitRight.SplitterWidth = 5;
             this.splitRight.TabIndex = 0;
             // 
@@ -740,7 +729,7 @@
             this.gmap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gmap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gmap.ShowTileGridLines = false;
-            this.gmap.Size = new System.Drawing.Size(562, 559);
+            this.gmap.Size = new System.Drawing.Size(639, 549);
             this.gmap.TabIndex = 1;
             this.gmap.Zoom = 12D;
             // 
@@ -755,7 +744,7 @@
             this.toolsMap.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolsMap.Location = new System.Drawing.Point(0, 0);
             this.toolsMap.Name = "toolsMap";
-            this.toolsMap.Size = new System.Drawing.Size(562, 25);
+            this.toolsMap.Size = new System.Drawing.Size(639, 25);
             this.toolsMap.TabIndex = 3;
             this.toolsMap.Text = "toolStrip1";
             // 
@@ -808,7 +797,7 @@
             this.lbLog.Location = new System.Drawing.Point(0, 25);
             this.lbLog.Name = "lbLog";
             this.lbLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbLog.Size = new System.Drawing.Size(399, 559);
+            this.lbLog.Size = new System.Drawing.Size(389, 549);
             this.lbLog.TabIndex = 0;
             // 
             // toolsLog
@@ -818,7 +807,7 @@
             this.btnLogClear});
             this.toolsLog.Location = new System.Drawing.Point(0, 0);
             this.toolsLog.Name = "toolsLog";
-            this.toolsLog.Size = new System.Drawing.Size(399, 25);
+            this.toolsLog.Size = new System.Drawing.Size(389, 25);
             this.toolsLog.TabIndex = 1;
             this.toolsLog.Text = "toolStrip2";
             // 
@@ -860,7 +849,7 @@
             this.tblSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tblSession.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tblSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tblSession.Size = new System.Drawing.Size(970, 73);
+            this.tblSession.Size = new System.Drawing.Size(1037, 73);
             this.tblSession.TabIndex = 4;
             // 
             // label1
@@ -876,33 +865,33 @@
             // tbSpecCount
             // 
             this.tbSpecCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSpecCount.Location = new System.Drawing.Point(218, 3);
+            this.tbSpecCount.Location = new System.Drawing.Point(233, 3);
             this.tbSpecCount.Name = "tbSpecCount";
-            this.tbSpecCount.Size = new System.Drawing.Size(101, 21);
+            this.tbSpecCount.Size = new System.Drawing.Size(109, 21);
             this.tbSpecCount.TabIndex = 18;
             // 
             // tbSpecLivetime
             // 
             this.tbSpecLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSpecLivetime.Location = new System.Drawing.Point(325, 3);
+            this.tbSpecLivetime.Location = new System.Drawing.Point(348, 3);
             this.tbSpecLivetime.Name = "tbSpecLivetime";
-            this.tbSpecLivetime.Size = new System.Drawing.Size(101, 21);
+            this.tbSpecLivetime.Size = new System.Drawing.Size(109, 21);
             this.tbSpecLivetime.TabIndex = 19;
             // 
             // tbSpecDelay
             // 
             this.tbSpecDelay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSpecDelay.Location = new System.Drawing.Point(432, 3);
+            this.tbSpecDelay.Location = new System.Drawing.Point(463, 3);
             this.tbSpecDelay.Name = "tbSpecDelay";
-            this.tbSpecDelay.Size = new System.Drawing.Size(101, 21);
+            this.tbSpecDelay.Size = new System.Drawing.Size(109, 21);
             this.tbSpecDelay.TabIndex = 20;
             // 
             // btnSendSession
             // 
             this.btnSendSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSendSession.Location = new System.Drawing.Point(539, 3);
+            this.btnSendSession.Location = new System.Drawing.Point(578, 3);
             this.btnSendSession.Name = "btnSendSession";
-            this.btnSendSession.Size = new System.Drawing.Size(101, 24);
+            this.btnSendSession.Size = new System.Drawing.Size(109, 24);
             this.btnSendSession.TabIndex = 17;
             this.btnSendSession.Text = "Start session";
             this.btnSendSession.UseVisualStyleBackColor = true;
@@ -911,9 +900,9 @@
             // btnStopSession
             // 
             this.btnStopSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStopSession.Location = new System.Drawing.Point(646, 3);
+            this.btnStopSession.Location = new System.Drawing.Point(693, 3);
             this.btnStopSession.Name = "btnStopSession";
-            this.btnStopSession.Size = new System.Drawing.Size(101, 24);
+            this.btnStopSession.Size = new System.Drawing.Size(109, 24);
             this.btnStopSession.TabIndex = 21;
             this.btnStopSession.Text = "Stop session";
             this.btnStopSession.UseVisualStyleBackColor = true;
@@ -922,9 +911,9 @@
             // btnSendClose
             // 
             this.btnSendClose.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSendClose.Location = new System.Drawing.Point(860, 3);
+            this.btnSendClose.Location = new System.Drawing.Point(923, 3);
             this.btnSendClose.Name = "btnSendClose";
-            this.btnSendClose.Size = new System.Drawing.Size(107, 24);
+            this.btnSendClose.Size = new System.Drawing.Size(111, 24);
             this.btnSendClose.TabIndex = 2;
             this.btnSendClose.Text = "Send close";
             this.btnSendClose.UseVisualStyleBackColor = true;
@@ -934,7 +923,7 @@
             // 
             this.cbStoreChn.AutoSize = true;
             this.tblSession.SetColumnSpan(this.cbStoreChn, 2);
-            this.cbStoreChn.Location = new System.Drawing.Point(218, 33);
+            this.cbStoreChn.Location = new System.Drawing.Point(233, 33);
             this.cbStoreChn.Name = "cbStoreChn";
             this.cbStoreChn.Size = new System.Drawing.Size(109, 19);
             this.cbStoreChn.TabIndex = 16;
@@ -951,11 +940,24 @@
             this.pageBackground.TabIndex = 3;
             this.pageBackground.Text = "Background";
             // 
+            // lbSession
+            // 
+            this.lbSession.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.lbSession.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbSession.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbSession.FormattingEnabled = true;
+            this.lbSession.ItemHeight = 15;
+            this.lbSession.Location = new System.Drawing.Point(0, 0);
+            this.lbSession.Name = "lbSession";
+            this.lbSession.Size = new System.Drawing.Size(163, 647);
+            this.lbSession.TabIndex = 7;
+            this.lbSession.DoubleClick += new System.EventHandler(this.lbSession_DoubleClick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1157, 780);
+            this.ClientSize = new System.Drawing.Size(1221, 770);
             this.Controls.Add(this.tabs);
             this.Controls.Add(this.tools);
             this.Controls.Add(this.status);
@@ -1068,7 +1070,6 @@
         private System.Windows.Forms.ToolStripComboBox cboxMapProvider;
         private System.Windows.Forms.ListBox lbLog;
         private System.Windows.Forms.ToolStrip toolsLog;
-        private System.Windows.Forms.TreeView tvSessions;
         private System.Windows.Forms.Button btnMenuBackgrounds;
         private System.Windows.Forms.TabPage pageBackground;
         private System.Windows.Forms.ToolStripLabel lblInterface;
@@ -1078,6 +1079,7 @@
         private System.Windows.Forms.ToolStripButton btnLogClear;
         private System.Windows.Forms.ToolStripButton btnShowWaterfallHist;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ListBox lbSession;
     }
 }
 

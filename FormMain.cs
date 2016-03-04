@@ -53,7 +53,7 @@ namespace crash
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
         bool connected = false;
-        Dictionary<string, Session> sessions = new Dictionary<string, Session>();
+        Session session = null;
         Dictionary<string, GMapOverlay> overlays = new Dictionary<string, GMapOverlay>();                
         
         FormConnect formConnect = new FormConnect();
@@ -92,11 +92,7 @@ namespace crash
             timer.Tick += timer_Tick;
             timer.Start();                        
 
-            gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
-            /*GMapOverlay markersOverlay = new GMapOverlay("markers");
-            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(59.946534, 10.598574), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
-            markersOverlay.Markers.Add(marker);
-            gmap.Overlays.Add(markersOverlay);*/            
+            gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);            
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -182,11 +178,10 @@ namespace crash
                         string session_name = msg.Arguments["session_name"];
                         Log("New session created: " + session_name);
                         
-                        sessions[session_name] = new Session(session_name);
-                        formWaterfallLive.SetSession(sessions[session_name]);
-                        formROIHistory.SetSession(sessions[session_name]);
-
-                        gmap.Overlays.Add(sessions[session_name].MapOverlay);
+                        session = new Session(session_name);
+                        formWaterfallLive.SetSession(session);
+                        formROIHistory.SetSession(session);
+                        gmap.Overlays.Add(session.MapOverlay);
                     }                        
                     break;
 
@@ -196,6 +191,10 @@ namespace crash
 
                 case "stop_session_ok":
                     Log("Session stopped");
+                    break;
+
+                case "session_finished":
+                    Log("Session " + msg.Arguments["session_name"] + " finished");
                     break;
 
                 case "error":
@@ -226,32 +225,14 @@ namespace crash
                     else
                     {                        
                         path = settings.SessionDirectory + Path.DirectorySeparatorChar + spec.SessionName;                        
-                        sessions[spec.SessionName].Add(spec);
+                        session.Add(spec);
 
-                        // Add tree node
-                        TreeNode[] nodesFound = tvSessions.Nodes.Find(spec.SessionName, false);
-                        if (nodesFound.Length > 0)
-                        {
-                            TreeNode parent = nodesFound[0];
-                            TreeNode newNode = new TreeNode(spec.Label);
-                            newNode.Tag = spec;
-                            parent.Nodes.Add(newNode);
-                        }
-                        else
-                        {
-                            tvSessions.Nodes.Add(spec.SessionName, spec.SessionName);
-                            TreeNode[] rootNodesFound = tvSessions.Nodes.Find(spec.SessionName, false);
-                            if (rootNodesFound.Length > 0)
-                            {
-                                TreeNode newNode = new TreeNode(spec.Label);
-                                newNode.Tag = spec;
-                                rootNodesFound[0].Nodes.Add(newNode);
-                            }
-                        }
+                        // Add list node
+                        lbSession.Items.Insert(0, spec);
 
                         // Add map marker                                                                                                
-                        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(spec.LatitudeStart, spec.LongitudeStart), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));                        
-                        sessions[spec.SessionName].MapOverlay.Markers.Add(marker);
+                        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(spec.LatitudeStart, spec.LongitudeStart), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
+                        session.MapOverlay.Markers.Add(marker);
 
                         formWaterfallLive.UpdatePane();
                         formROIHistory.UpdatePane();
@@ -484,16 +465,7 @@ namespace crash
             formWaterfallLive.BringToFront();
             formWaterfallLive.UpdatePane();
         }
-        
-        private void tvSessions_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if(e.Node.Level > 0)
-            {                                
-                formSpectrum.ShowSpectrum((Spectrum)e.Node.Tag);
-                formSpectrum.ShowDialog();
-            }            
-        }
-
+                
         private void btnMenuBackgrounds_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageBackground;
@@ -553,6 +525,16 @@ namespace crash
         {
             formROIHistory.Show();
             formROIHistory.BringToFront();
+        }
+
+        private void lbSession_DoubleClick(object sender, EventArgs e)
+        {
+            if (lbSession.SelectedItems.Count < 1)
+                return;
+
+            Spectrum s = lbSession.SelectedItem as Spectrum;
+            formSpectrum.ShowSpectrum(s);
+            formSpectrum.ShowDialog();
         }                
     }    
 
@@ -604,6 +586,11 @@ namespace crash
             for(int i=start; i<end; i++)
                 max += mChannels[i];            
             return max;
+        }
+
+        public override string ToString()
+        {
+            return SessionName + " - " + SessionIndex.ToString();
         }
     }
 

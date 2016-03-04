@@ -35,7 +35,7 @@ stop_session_ok ->
 stop_session_failed ->
 	message
 
-session_close ->
+session_finished ->
 	session_name
 	
 set_gain ->

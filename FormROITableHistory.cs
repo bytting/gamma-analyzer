@@ -30,6 +30,8 @@ namespace crash
 
         private void FormROITableHistory_Load(object sender, EventArgs e)
         {
+            lblScaling.Text = "";
+
             pane_Resize(sender, e);
         }
 
@@ -153,6 +155,8 @@ namespace crash
                 colorIndex++;
                 row.Cells[4].Value = rd.Color.ToString();
             }
+
+            UpdatePane();
         }
     }
 

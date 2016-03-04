@@ -30,19 +30,19 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormROITableHistory));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.lblScaling = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.pane = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gridROI = new System.Windows.Forms.DataGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btnApply = new System.Windows.Forms.Button();
             this.Label = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ChannelFrom = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ChannelTo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Active = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.LineColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblScaling = new System.Windows.Forms.ToolStripStatusLabel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnApply = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridROI)).BeginInit();
@@ -58,6 +58,12 @@
             this.statusStrip1.Size = new System.Drawing.Size(1095, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // lblScaling
+            // 
+            this.lblScaling.Name = "lblScaling";
+            this.lblScaling.Size = new System.Drawing.Size(74, 17);
+            this.lblScaling.Text = "<lblScaling>";
             // 
             // toolStrip1
             // 
@@ -106,35 +112,6 @@
             this.gridROI.Size = new System.Drawing.Size(398, 555);
             this.gridROI.TabIndex = 1;
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.btnApply);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(398, 55);
-            this.panel2.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "ROI settings";
-            // 
-            // btnApply
-            // 
-            this.btnApply.Location = new System.Drawing.Point(283, 18);
-            this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(103, 23);
-            this.btnApply.TabIndex = 1;
-            this.btnApply.Text = "Apply";
-            this.btnApply.UseVisualStyleBackColor = true;
-            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
-            // 
             // Label
             // 
             this.Label.HeaderText = "Name";
@@ -161,11 +138,34 @@
             this.LineColor.Name = "LineColor";
             this.LineColor.ReadOnly = true;
             // 
-            // lblScaling
+            // panel2
             // 
-            this.lblScaling.Name = "lblScaling";
-            this.lblScaling.Size = new System.Drawing.Size(118, 17);
-            this.lblScaling.Text = "toolStripStatusLabel1";
+            this.panel2.Controls.Add(this.btnApply);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(398, 55);
+            this.panel2.TabIndex = 0;
+            // 
+            // btnApply
+            // 
+            this.btnApply.Location = new System.Drawing.Point(283, 18);
+            this.btnApply.Name = "btnApply";
+            this.btnApply.Size = new System.Drawing.Size(103, 23);
+            this.btnApply.TabIndex = 1;
+            this.btnApply.Text = "Apply";
+            this.btnApply.UseVisualStyleBackColor = true;
+            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(40, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "ROI settings";
             // 
             // FormROITableHistory
             // 
