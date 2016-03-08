@@ -30,10 +30,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Globalization;
-using GMap.NET;
-using GMap.NET.MapProviders;
-using GMap.NET.WindowsForms;
-using GMap.NET.WindowsForms.Markers;
+using ZedGraph;
 
 namespace crash
 {
@@ -53,16 +50,17 @@ namespace crash
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
         bool connected = false;
-        Session session = null;
-        Dictionary<string, GMapOverlay> overlays = new Dictionary<string, GMapOverlay>();                
+        Session session = null;        
         
-        FormConnect formConnect = new FormConnect();
-        FormSpectrum formSpectrum = new FormSpectrum();
+        FormConnect formConnect = new FormConnect();        
         FormWaterfallLive formWaterfallLive = new FormWaterfallLive();
         FormWaterfallHistory formWaterfallHist = new FormWaterfallHistory();
         FormROITableHistory formROIHistory = new FormROITableHistory();
+        FormMap formMap = new FormMap();
+        FormLog log = new FormLog();
 
-        CultureInfo ciUS = new CultureInfo("en-US");
+        PointPairList setupGraphList = new PointPairList();
+        PointPairList sessionGraphList = new PointPairList();        
 
         public FormMain()
         {
@@ -90,9 +88,7 @@ namespace crash
                     
             timer.Interval = 10;
             timer.Tick += timer_Tick;
-            timer.Start();                        
-
-            gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);            
+            timer.Start();                                    
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -128,13 +124,7 @@ namespace crash
             XmlSerializer x = new XmlSerializer(settings.GetType());
             settings = x.Deserialize(sr) as Settings;
             sr.Close();
-        }
-
-        public void Log(string s)
-        {
-            string msg = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            lbLog.Items.Insert(0, msg + " -> " + s);
-        }
+        }        
 
         private bool dispatchRecvMsg(burn.Message msg)
         {            
@@ -143,21 +133,21 @@ namespace crash
                 case "connect_ok":
                     lblConnectionStatus.ForeColor = Color.Green;
                     lblConnectionStatus.Text = "Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"];
-                    Log("Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
+                    log.Add("Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
                     connected = true;
                     break;
 
                 case "connect_failed":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"];
-                    Log("Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
+                    log.Add("Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
                     connected = false;
                     break;
 
                 case "disconnect_ok":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    Log("Disconnected from peer");
+                    log.Add("Disconnected from peer");
                     connected = false;
                     break;
 
@@ -166,61 +156,88 @@ namespace crash
                     netThread.Join();
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    Log("Disconnected from peer, peer closed");
+                    log.Add("Disconnected from peer, peer closed");
                     break;
 
                 case "new_session_ok":
                     bool prev = msg.Arguments["preview"] == "1";
                     if(prev)
-                        Log("Preview received");
+                        log.Add("Preview received");
                     else
                     {
                         string session_name = msg.Arguments["session_name"];
-                        Log("New session created: " + session_name);
+                        log.Add("New session created: " + session_name);
                         
                         session = new Session(session_name);
                         formWaterfallLive.SetSession(session);
                         formROIHistory.SetSession(session);
-                        gmap.Overlays.Add(session.MapOverlay);
+                        formMap.SetSession(session);                        
                     }                        
                     break;
 
                 case "new_session_failed":
-                    Log("New session failed: " + msg.Arguments["message"]);
+                    log.Add("New session failed: " + msg.Arguments["message"]);
                     break;
 
                 case "stop_session_ok":
-                    Log("Session stopped");
+                    log.Add("Session stopped");
                     break;
 
                 case "session_finished":
-                    Log("Session " + msg.Arguments["session_name"] + " finished");
+                    log.Add("Session " + msg.Arguments["session_name"] + " finished");
                     break;
 
                 case "error":
-                    Log("Error: " + msg.Arguments["message"]);
+                    log.Add("Error: " + msg.Arguments["message"]);
                     break;
 
                 case "error_socket":
-                    Log("Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
+                    log.Add("Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
                     break;                
 
                 case "set_gain_ok":
-                    Log("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
+                    log.Add("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
                     break;
 
                 case "spectrum":
                     Spectrum spec = new Spectrum(msg);
-                    Log(spec.Label + " received");
+                    log.Add(spec.Label + " received");
 
                     string path;
 
                     if (spec.IsPreview)
                     {
-                        path = SettingsPath;
-                        chartSetup.Series["Series1"].Points.Clear();                        
+                        path = SettingsPath;                        
+
+                        GraphPane pane = graphSetup.GraphPane;
+                        pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
+                        pane.Fill = new Fill(SystemColors.ButtonFace);                        
+
+                        pane.Title.Text = "Setup";
+                        pane.XAxis.Title.Text = "Channel";
+                        pane.YAxis.Title.Text = "Counts";
+
+                        setupGraphList.Clear();
                         for (int i = 0; i < spec.Channels.Count; i++)
-                            chartSetup.Series["Series1"].Points.AddXY((double)i, (double)spec.Channels[i]);
+                            setupGraphList.Add((double)i, (double)spec.Channels[i]);
+
+                        pane.XAxis.Scale.Min = 0;
+                        pane.XAxis.Scale.Max = spec.MaxCount;
+
+                        pane.YAxis.Scale.Min = 0;
+                        pane.YAxis.Scale.Max = spec.MaxCount + (spec.MaxCount / 10.0);
+
+                        pane.CurveList.Clear();
+
+                        LineItem curve = pane.AddCurve("Spectrum", setupGraphList, Color.Red, SymbolType.None);
+                        curve.Line.Fill = new Fill(SystemColors.ButtonFace, Color.Red, 45F);                        
+                        pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+                        pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);                        
+                        pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);                        
+
+                        graphSetup.RestoreScale(pane);
+                        graphSetup.AxisChange();
+                        graphSetup.Refresh();                        
                     }
                     else
                     {                        
@@ -230,10 +247,7 @@ namespace crash
                         // Add list node
                         lbSession.Items.Insert(0, spec);
 
-                        // Add map marker                                                                                                
-                        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(spec.LatitudeStart, spec.LongitudeStart), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
-                        session.MapOverlay.Markers.Add(marker);
-
+                        formMap.AddMarker(spec);
                         formWaterfallLive.UpdatePane();
                         formROIHistory.UpdatePane();
                     }                        
@@ -261,7 +275,7 @@ namespace crash
                     string info = msg.Command + " -> ";
                     foreach (KeyValuePair<string, string> item in msg.Arguments)
                         info += item.Key + ":" + item.Value + ", ";
-                    Log("Unhandeled command: " + info);
+                    log.Add("Unhandeled command: " + info);
                     break;
             }
             return true;
@@ -292,7 +306,7 @@ namespace crash
         private void menuItemDisconnect_Click(object sender, EventArgs e)
         {        
             if(connected)
-                if (MessageBox.Show("Are you sure you want to disconnect?", "Confirmation", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                if (MessageBox.Show("Are you sure you want to disconnect?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
                     return;
 
             sendq.Enqueue(new burn.Message("disconnect", null));
@@ -300,7 +314,7 @@ namespace crash
 
         private void btnSendClose_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to close the remote server?", "Confirmation", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+            if (MessageBox.Show("Are you sure you want to close the remote server?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
                 return;
 
             sendq.Enqueue(new burn.Message("close", null));                        
@@ -323,6 +337,8 @@ namespace crash
             int count = String.IsNullOrEmpty(tbSpecCount.Text) ? -1 : Convert.ToInt32(tbSpecCount.Text);
             float livetime = Convert.ToSingle(tbSpecLivetime.Text);
             float delay = String.IsNullOrEmpty(tbSpecDelay.Text) ? 0 : Convert.ToSingle(tbSpecDelay.Text);
+
+            lbSession.Items.Clear();
 
             burn.Message msg = new burn.Message("new_session", null);
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
@@ -357,37 +373,7 @@ namespace crash
         private void btnMenuMap_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageSession;
-        }
-
-        private void cboxMapProvider_SelectedIndexChanged(object sender, EventArgs e)
-        {            
-            if(!String.IsNullOrEmpty(cboxMapProvider.Text))
-            {
-                switch(cboxMapProvider.Text)
-                {
-                    case "Google Map":
-                        gmap.MapProvider = GoogleMapProvider.Instance;                        
-                        break;
-                    case "Google Map Terrain":
-                        gmap.MapProvider = GoogleTerrainMapProvider.Instance;
-                        break;
-                    case "Open Street Map":
-                        gmap.MapProvider = OpenStreetMapProvider.Instance;
-                        break;
-                    case "Open Street Map Quest":
-                        gmap.MapProvider = OpenStreetMapQuestProvider.Instance;
-                        break;
-                    case "ArcGIS World Topo":
-                        gmap.MapProvider = ArcGIS_World_Topo_MapProvider.Instance;
-                        break;
-                    case "Bing Map":
-                        gmap.MapProvider = BingMapProvider.Instance;
-                        break;
-                }                                                
-                //gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
-                //gmap.Zoom = 12;
-            }
-        }
+        }        
 
         private void btnMenuSession_Click(object sender, EventArgs e)
         {
@@ -489,53 +475,73 @@ namespace crash
                 btnShowWaterfallLive.Visible = false;
                 btnShowWaterfallHist.Visible = false;
             }
-        }
-
-        private void cboxMapMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!String.IsNullOrEmpty(cboxMapMode.Text))
-            {
-                switch(cboxMapMode.Text)
-                {
-                    case "Server":
-                        GMaps.Instance.Mode = AccessMode.ServerOnly;
-                        break;
-                    case "Cache":
-                        GMaps.Instance.Mode = AccessMode.CacheOnly;
-                        break;
-                    default:
-                        GMaps.Instance.Mode = AccessMode.ServerAndCache;
-                        break;
-                }
-            }            
-        }
-
-        private void btnLogClear_Click(object sender, EventArgs e)
-        {
-            lbLog.Items.Clear();
-        }
+        }        
 
         private void btnShowWaterfallHist_Click(object sender, EventArgs e)
         {
             formWaterfallHist.Show();
             formWaterfallHist.BringToFront();
-        }
+        }                
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void btnShowROIChart_Click(object sender, EventArgs e)
         {
             formROIHistory.Show();
             formROIHistory.BringToFront();
         }
 
-        private void lbSession_DoubleClick(object sender, EventArgs e)
+        private void btnShowMap_Click(object sender, EventArgs e)
+        {
+            formMap.Show();
+            formMap.BringToFront();
+        }
+
+        private void btnShowLog_Click(object sender, EventArgs e)
+        {
+            log.Show();
+            log.BringToFront();
+        }
+
+        public void ShowSpectrum(Spectrum s)
+        {
+            GraphPane pane = graphSession.GraphPane;
+            pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
+            pane.Fill = new Fill(SystemColors.ButtonFace);
+
+            pane.Title.Text = "Setup";
+            pane.XAxis.Title.Text = "Channel";
+            pane.YAxis.Title.Text = "Counts";
+
+            sessionGraphList.Clear();
+            for (int i = 0; i < s.Channels.Count; i++)
+                sessionGraphList.Add((double)i, (double)s.Channels[i]);
+
+            pane.XAxis.Scale.Min = 0;
+            pane.XAxis.Scale.Max = s.MaxCount;
+
+            pane.YAxis.Scale.Min = 0;
+            pane.YAxis.Scale.Max = s.MaxCount + (s.MaxCount / 10.0);
+
+            pane.CurveList.Clear();
+
+            LineItem curve = pane.AddCurve("Spectrum", sessionGraphList, Color.Red, SymbolType.None);
+            curve.Line.Fill = new Fill(SystemColors.ButtonFace, Color.Red, 45F);
+            pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+            pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+            pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+
+            graphSession.RestoreScale(pane);
+            graphSession.AxisChange();
+            graphSession.Refresh();
+        }
+
+        private void lbSession_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbSession.SelectedItems.Count < 1)
                 return;
 
             Spectrum s = lbSession.SelectedItem as Spectrum;
-            formSpectrum.ShowSpectrum(s);
-            formSpectrum.ShowDialog();
-        }                
+            ShowSpectrum(s);            
+        }
     }    
 
     public class Spectrum
@@ -599,14 +605,12 @@ namespace crash
         public string Name { get; private set; }
         public float MaxChannelCount { get; private set; }
         public float MinChannelCount { get; private set; }
-        public List<Spectrum> Spectrums { get; private set; }
-        public GMapOverlay MapOverlay { get; set; }
+        public List<Spectrum> Spectrums { get; private set; }        
 
         public Session(string name)
         {
             Name = name;
-            Spectrums = new List<Spectrum>();
-            MapOverlay = new GMapOverlay(Name);
+            Spectrums = new List<Spectrum>();            
         }   
      
         public void Add(Spectrum spec)

@@ -56,6 +56,9 @@
     <Reference Include="TabControlWizard">
       <HintPath>..\Hapapap\TabControlWizard.dll</HintPath>
     </Reference>
+    <Reference Include="ZedGraph">
+      <HintPath>packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Burn_Format_CHN.cs" />
@@ -68,11 +71,23 @@
     <Compile Include="FormConnect.Designer.cs">
       <DependentUpon>FormConnect.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLog.Designer.cs">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMap.Designer.cs">
+      <DependentUpon>FormMap.cs</DependentUpon>
     </Compile>
     <Compile Include="FormPreferences.cs">
       <SubType>Form</SubType>
@@ -85,12 +100,6 @@
     </Compile>
     <Compile Include="FormROITableHistory.Designer.cs">
       <DependentUpon>FormROITableHistory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormSpectrum.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormSpectrum.Designer.cs">
-      <DependentUpon>FormSpectrum.cs</DependentUpon>
     </Compile>
     <Compile Include="FormWaterfallLive.cs">
       <SubType>Form</SubType>
@@ -110,17 +119,20 @@
     <EmbeddedResource Include="FormConnect.resx">
       <DependentUpon>FormConnect.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormLog.resx">
+      <DependentUpon>FormLog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMap.resx">
+      <DependentUpon>FormMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPreferences.resx">
       <DependentUpon>FormPreferences.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormROITableHistory.resx">
       <DependentUpon>FormROITableHistory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormSpectrum.resx">
-      <DependentUpon>FormSpectrum.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormWaterfallLive.resx">
       <DependentUpon>FormWaterfallLive.cs</DependentUpon>
@@ -154,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="images\spectrum-128.png" />
+    <Content Include="License-LGPL.txt" />
     <Content Include="PROTO.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
