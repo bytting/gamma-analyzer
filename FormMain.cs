@@ -78,10 +78,10 @@ namespace crash
             if (!Directory.Exists(SettingsPath))
                 Directory.CreateDirectory(SettingsPath);
 
-            if (File.Exists(SettingsFile))
-            {
+            if (File.Exists(SettingsFile))            
                 LoadSettings();
-            }
+
+            LoadBackgroundSessions();
 
             netThread.Start();
             while (!netThread.IsAlive);            
@@ -108,6 +108,17 @@ namespace crash
             timer.Stop();
 
             SaveSettings();
+        }
+
+        public void LoadBackgroundSessions()
+        {
+            cboxBackground.Items.Clear();
+            cboxBackground.Items.Add("");
+            string[] sessionDirectories = Directory.GetDirectories(settings.SessionDirectory);
+            foreach(string sessDir in sessionDirectories)
+            {
+                cboxBackground.Items.Add(new DirectoryInfo(sessDir).Name);
+            }            
         }
 
         private void SaveSettings()
@@ -185,6 +196,7 @@ namespace crash
 
                 case "session_finished":
                     log.Add("Session " + msg.Arguments["session_name"] + " finished");
+                    LoadBackgroundSessions();
                     break;
 
                 case "error":
@@ -507,7 +519,7 @@ namespace crash
             pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
             pane.Fill = new Fill(SystemColors.ButtonFace);
 
-            pane.Title.Text = "Setup";
+            pane.Title.Text = s.SessionName + "-" + s.SessionIndex.ToString();
             pane.XAxis.Title.Text = "Channel";
             pane.YAxis.Title.Text = "Counts";
 
@@ -540,14 +552,28 @@ namespace crash
                 return;
 
             Spectrum s = lbSession.SelectedItem as Spectrum;
-            ShowSpectrum(s);            
+            ShowSpectrum(s);
+            lblRealtime.Text = "Realtime:" + s.Realtime.ToString();
+            lblLivetime.Text = "Livetime:" + s.Livetime.ToString();
+            lblSession.Text = "Session name: " + s.SessionName;
+            lblIndex.Text = "Session index: " + s.SessionIndex.ToString();
+            lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart.ToString();
+            lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart.ToString();
+            lblAltitudeStart.Text = "Alt. start: " + s.AltitudeStart.ToString();
+            lblLatitudeEnd.Text = "Lat. end: " + s.LatitudeEnd.ToString();
+            lblLongitudeEnd.Text = "Lon. end: " + s.LongitudeEnd.ToString();
+            lblAltitudeEnd.Text = "Alt. end: " + s.AltitudeEnd.ToString();
+            lblGpsTimeStart.Text = "Gps time start: " + s.GpsTimeStart.ToString();
+            lblGpsTimeEnd.Text = "Gps time end: " + s.GpsTimeEnd.ToString();
+            lblMaxCount.Text = "Max count: " + s.MaxCount.ToString();
+            lblMinCount.Text = "Min count: " + s.MinCount.ToString();
+            lblTotalCount.Text = "Total count: " + s.TotalCount.ToString();
         }
     }    
 
     public class Spectrum
-    {                
+    {
         private List<float> mChannels;
-
         public string SessionName { get; private set; }
         public int SessionIndex { get; private set; }
         public string Label { get; private set; }        
@@ -559,6 +585,16 @@ namespace crash
         public bool IsPreview { get; private set; }
         public double LatitudeStart { get; private set; }
         public double LongitudeStart { get; private set; }
+        public double AltitudeStart { get; private set; }
+        public double LatitudeEnd { get; private set; }
+        public double LongitudeEnd { get; private set; }
+        public double AltitudeEnd { get; private set; }
+        public DateTime GpsTimeStart { get; private set; }
+        public DateTime GpsTimeEnd { get; private set; }
+        public float GpsSpeedStart { get; private set; }
+        public float GpsSpeedEnd { get; private set; }
+        public int Realtime { get; private set; }
+        public int Livetime { get; private set; }
 
         public Spectrum(burn.Message msg)
         {            
@@ -569,6 +605,16 @@ namespace crash
             IsPreview = msg.Arguments["preview"] == "1";
             LatitudeStart = Convert.ToDouble(msg.Arguments["latitude_start"], CultureInfo.InvariantCulture);
             LongitudeStart = Convert.ToDouble(msg.Arguments["longitude_start"], CultureInfo.InvariantCulture);
+            AltitudeStart = Convert.ToDouble(msg.Arguments["altitude_start"], CultureInfo.InvariantCulture);
+            LatitudeEnd = Convert.ToDouble(msg.Arguments["latitude_end"], CultureInfo.InvariantCulture);
+            LongitudeEnd = Convert.ToDouble(msg.Arguments["longitude_end"], CultureInfo.InvariantCulture);
+            AltitudeEnd = Convert.ToDouble(msg.Arguments["altitude_end"], CultureInfo.InvariantCulture);
+            GpsTimeStart = Convert.ToDateTime(msg.Arguments["gps_time_start"], CultureInfo.InvariantCulture);
+            GpsTimeEnd = Convert.ToDateTime(msg.Arguments["gps_time_end"], CultureInfo.InvariantCulture);
+            GpsSpeedStart = Convert.ToSingle(msg.Arguments["gps_speed_start"], CultureInfo.InvariantCulture);
+            GpsSpeedEnd = Convert.ToSingle(msg.Arguments["gps_speed_end"], CultureInfo.InvariantCulture);
+            Realtime = Convert.ToInt32(msg.Arguments["realtime"]);
+            Livetime = Convert.ToInt32(msg.Arguments["livetime"]);
             mChannels = new List<float>();
             TotalCount = 0f;
             string[] items = msg.Arguments["channels"].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);                
