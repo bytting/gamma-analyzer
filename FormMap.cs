@@ -40,6 +40,9 @@ namespace crash
         public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
         public event SetSessionIndexEventHandler SetSessionIndexEvent;
 
+        private static Bitmap bmpDefault = new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"); // FIXME
+        private static Bitmap bmpSelected = new Bitmap(@"C:\dev\crash\images\marker-red-32.png");
+
         public FormMap()
         {
             InitializeComponent();
@@ -48,7 +51,7 @@ namespace crash
         private void FormMap_Load(object sender, EventArgs e)
         {            
             gmap.Overlays.Add(overlay);
-            gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
+            gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);            
         }
 
         private void cboxMapMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -111,15 +114,16 @@ namespace crash
             if (session == null)
                 return;
 
-            // Add map marker                                                                                                            
-            CustomMarker marker = new CustomMarker(new PointLatLng(s.LatitudeStart, s.LongitudeStart));
+            // Add map marker
+            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.LatitudeStart, s.LongitudeStart), bmpDefault);
             marker.Tag = s;
             marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
             marker.ToolTipText = s.ToString() 
                 + Environment.NewLine + "Lat start: " + s.LatitudeStart 
                 + Environment.NewLine + "Lon start: " + s.LongitudeStart 
                 + Environment.NewLine + "Alt start: " + s.AltitudeStart;
-            overlay.Markers.Add(marker);            
+            marker.ToolTip.Fill = System.Drawing.SystemBrushes.Control;
+            overlay.Markers.Add(marker);                            
         }
 
         private void FormMap_FormClosing(object sender, FormClosingEventArgs e)
@@ -165,40 +169,22 @@ namespace crash
         }
 
         public void SetSelectedSessionIndex(int index)
-        {            
-            foreach(CustomMarker m in overlay.Markers)
-            {
+        {
+            foreach (GMarkerGoogle m in overlay.Markers)
+            {                   
                 Spectrum s = (Spectrum)m.Tag;
-                if(s.SessionIndex == index)                
-                    m.SetSelected(true);                                
-                else                
-                    m.SetSelected(false);                
+                if (s.SessionIndex == index)
+                {
+                    m.ToolTipMode = MarkerTooltipMode.Always;
+                    m.ToolTip.Fill = System.Drawing.SystemBrushes.Info;
+                }
+                else
+                {
+                    m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+                    m.ToolTip.Fill = System.Drawing.SystemBrushes.Control;
+                }                
             }
             gmap.Refresh();
-        }
-    }
-
-    public class CustomMarker : GMapMarker
-    {
-        private bool mSelected = false;
- 
-        private static Bitmap bmpDefault = new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"); // FIXME
-        private static Bitmap bmpSelected = new Bitmap(@"C:\dev\crash\images\marker-red-32.png");
-
-        public CustomMarker(PointLatLng pll) : base(pll)
-        {            
-        }
-        
-        public override void OnRender(Graphics g)
-        {
-            if(mSelected == false)
-                g.DrawImage(bmpDefault, new Point(LocalPosition.X - bmpDefault.Width / 2, LocalPosition.Y - bmpDefault.Height / 2));
-            else g.DrawImage(bmpSelected, new Point(LocalPosition.X - bmpSelected.Width / 2, LocalPosition.Y - bmpSelected.Height / 2));
-        }                    
-
-        public void SetSelected(bool state)
-        {
-            mSelected = state;            
-        }
-    }
+        }                
+    }    
 }

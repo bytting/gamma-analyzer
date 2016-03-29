@@ -617,7 +617,7 @@ namespace crash
         public float GpsSpeedStart { get; private set; }
         public float GpsSpeedEnd { get; private set; }
         public int Realtime { get; private set; }
-        public int Livetime { get; private set; }
+        public int Livetime { get; private set; }        
 
         public Spectrum(burn.Message msg)
         {            
@@ -652,7 +652,7 @@ namespace crash
                     MinCount = ch;
 
                 TotalCount += ch;
-            }
+            }        
         }        
 
         public float GetCountInROI(int start, int end)
