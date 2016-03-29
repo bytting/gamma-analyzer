@@ -65,10 +65,14 @@ namespace crash
         public FormMain()
         {
             InitializeComponent();
+            formWaterfallLive.SetMainForm(this);
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
+            formMap.SetSessionIndexEvent += SetSessionIndexEvent;
+
             tabs.HideTabs = true;
             tabs.SelectedTab = pageMenu;
 
@@ -91,6 +95,18 @@ namespace crash
             timer.Start();                                    
         }
 
+        void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
+        {
+            if (e.Index >= lbSession.Items.Count)
+                return;
+            
+            int idx = lbSession.FindStringExact(session.Name + " - " + e.Index.ToString());
+            if(idx != ListBox.NoMatches)            
+            {
+                lbSession.SetSelected(idx, true);                
+            }                
+        }
+
         void timer_Tick(object sender, EventArgs e)
         {
             while (!recvq.IsEmpty)
@@ -108,7 +124,7 @@ namespace crash
             timer.Stop();
 
             SaveSettings();
-        }
+        }        
 
         public void LoadBackgroundSessions()
         {
@@ -491,8 +507,8 @@ namespace crash
 
         private void btnShowWaterfallHist_Click(object sender, EventArgs e)
         {
-            formWaterfallHist.Show();
-            formWaterfallHist.BringToFront();
+            //formWaterfallHist.Show();
+            //formWaterfallHist.BringToFront();
         }                
 
         private void btnShowROIChart_Click(object sender, EventArgs e)
@@ -568,6 +584,13 @@ namespace crash
             lblMaxCount.Text = "Max count: " + s.MaxCount.ToString();
             lblMinCount.Text = "Min count: " + s.MinCount.ToString();
             lblTotalCount.Text = "Total count: " + s.TotalCount.ToString();
+            
+            formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
+            formMap.SetSelectedSessionIndex(s.SessionIndex);
+        }
+
+        private void btnShow3D_Click(object sender, EventArgs e)
+        {            
         }
     }    
 

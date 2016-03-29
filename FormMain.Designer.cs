@@ -44,16 +44,19 @@
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnPreferences = new System.Windows.Forms.ToolStripButton();
+            this.btnShowLog = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
             this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnShowMap = new System.Windows.Forms.ToolStripButton();
             this.btnShowWaterfallLive = new System.Windows.Forms.ToolStripButton();
             this.lblInterface = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
             this.btnShowWaterfallHist = new System.Windows.Forms.ToolStripButton();
             this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
-            this.btnShowMap = new System.Windows.Forms.ToolStripButton();
+            this.btnShow3D = new System.Windows.Forms.ToolStripButton();
             this.tabs = new TabControlWizard.TabControlWizard();
             this.pageSetup = new System.Windows.Forms.TabPage();
             this.graphSetup = new ZedGraph.ZedGraphControl();
@@ -82,6 +85,23 @@
             this.pageSession = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.lbSession = new System.Windows.Forms.ListBox();
+            this.graphSession = new ZedGraph.ZedGraphControl();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblLatitudeStart = new System.Windows.Forms.Label();
+            this.lblLongitudeStart = new System.Windows.Forms.Label();
+            this.lblRealtime = new System.Windows.Forms.Label();
+            this.lblLivetime = new System.Windows.Forms.Label();
+            this.lblSession = new System.Windows.Forms.Label();
+            this.lblIndex = new System.Windows.Forms.Label();
+            this.lblAltitudeStart = new System.Windows.Forms.Label();
+            this.lblMaxCount = new System.Windows.Forms.Label();
+            this.lblMinCount = new System.Windows.Forms.Label();
+            this.lblTotalCount = new System.Windows.Forms.Label();
+            this.lblGpsTimeStart = new System.Windows.Forms.Label();
+            this.lblLatitudeEnd = new System.Windows.Forms.Label();
+            this.lblLongitudeEnd = new System.Windows.Forms.Label();
+            this.lblAltitudeEnd = new System.Windows.Forms.Label();
+            this.lblGpsTimeEnd = new System.Windows.Forms.Label();
             this.tblSession = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.tbSpecCount = new System.Windows.Forms.TextBox();
@@ -89,30 +109,11 @@
             this.tbSpecDelay = new System.Windows.Forms.TextBox();
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
-            this.btnSendClose = new System.Windows.Forms.Button();
-            this.cbStoreChn = new System.Windows.Forms.CheckBox();
-            this.pageBackground = new System.Windows.Forms.TabPage();
-            this.btnShowLog = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.graphSession = new ZedGraph.ZedGraphControl();
             this.label4 = new System.Windows.Forms.Label();
             this.cboxBackground = new System.Windows.Forms.ComboBox();
-            this.lblLatitudeStart = new System.Windows.Forms.Label();
-            this.lblLongitudeStart = new System.Windows.Forms.Label();
-            this.lblRealtime = new System.Windows.Forms.Label();
-            this.lblLivetime = new System.Windows.Forms.Label();
-            this.lblSession = new System.Windows.Forms.Label();
-            this.lblIndex = new System.Windows.Forms.Label();
-            this.lblMaxCount = new System.Windows.Forms.Label();
-            this.lblMinCount = new System.Windows.Forms.Label();
-            this.lblTotalCount = new System.Windows.Forms.Label();
-            this.lblAltitudeStart = new System.Windows.Forms.Label();
-            this.lblGpsTimeStart = new System.Windows.Forms.Label();
-            this.lblLatitudeEnd = new System.Windows.Forms.Label();
-            this.lblLongitudeEnd = new System.Windows.Forms.Label();
-            this.lblAltitudeEnd = new System.Windows.Forms.Label();
-            this.lblGpsTimeEnd = new System.Windows.Forms.Label();
+            this.cbStoreChn = new System.Windows.Forms.CheckBox();
+            this.btnSendClose = new System.Windows.Forms.Button();
+            this.pageBackground = new System.Windows.Forms.TabPage();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -127,8 +128,8 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.tblSession.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tblSession.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -230,7 +231,8 @@
             this.toolStripSeparator4,
             this.lblConnectionStatus,
             this.btnShowWaterfallHist,
-            this.btnShowROIChart});
+            this.btnShowROIChart,
+            this.btnShow3D});
             this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
             this.tools.Size = new System.Drawing.Size(1208, 40);
@@ -268,6 +270,23 @@
             this.btnPreferences.ToolTipText = "Open preferences";
             this.btnPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
             // 
+            // btnShowLog
+            // 
+            this.btnShowLog.AutoSize = false;
+            this.btnShowLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowLog.Image = ((System.Drawing.Image)(resources.GetObject("btnShowLog.Image")));
+            this.btnShowLog.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowLog.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowLog.Name = "btnShowLog";
+            this.btnShowLog.Size = new System.Drawing.Size(38, 38);
+            this.btnShowLog.Text = "toolStripButton1";
+            this.btnShowLog.Click += new System.EventHandler(this.btnShowLog_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 40);
+            // 
             // btnConnect
             // 
             this.btnConnect.AutoSize = false;
@@ -296,6 +315,18 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 40);
+            // 
+            // btnShowMap
+            // 
+            this.btnShowMap.AutoSize = false;
+            this.btnShowMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowMap.Image = ((System.Drawing.Image)(resources.GetObject("btnShowMap.Image")));
+            this.btnShowMap.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowMap.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowMap.Name = "btnShowMap";
+            this.btnShowMap.Size = new System.Drawing.Size(38, 38);
+            this.btnShowMap.Text = "toolStripButton2";
+            this.btnShowMap.Click += new System.EventHandler(this.btnShowMap_Click);
             // 
             // btnShowWaterfallLive
             // 
@@ -356,17 +387,17 @@
             this.btnShowROIChart.Text = "toolStripButton1";
             this.btnShowROIChart.Click += new System.EventHandler(this.btnShowROIChart_Click);
             // 
-            // btnShowMap
+            // btnShow3D
             // 
-            this.btnShowMap.AutoSize = false;
-            this.btnShowMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowMap.Image = ((System.Drawing.Image)(resources.GetObject("btnShowMap.Image")));
-            this.btnShowMap.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowMap.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowMap.Name = "btnShowMap";
-            this.btnShowMap.Size = new System.Drawing.Size(38, 38);
-            this.btnShowMap.Text = "toolStripButton2";
-            this.btnShowMap.Click += new System.EventHandler(this.btnShowMap_Click);
+            this.btnShow3D.AutoSize = false;
+            this.btnShow3D.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShow3D.Image = ((System.Drawing.Image)(resources.GetObject("btnShow3D.Image")));
+            this.btnShow3D.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShow3D.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShow3D.Name = "btnShow3D";
+            this.btnShow3D.Size = new System.Drawing.Size(38, 38);
+            this.btnShow3D.Text = "toolStripButton1";
+            this.btnShow3D.Click += new System.EventHandler(this.btnShow3D_Click);
             // 
             // tabs
             // 
@@ -722,6 +753,192 @@
             this.lbSession.TabIndex = 7;
             this.lbSession.SelectedIndexChanged += new System.EventHandler(this.lbSession_SelectedIndexChanged);
             // 
+            // graphSession
+            // 
+            this.graphSession.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.graphSession.IsShowPointValues = true;
+            this.graphSession.Location = new System.Drawing.Point(0, 91);
+            this.graphSession.Name = "graphSession";
+            this.graphSession.ScrollGrace = 0D;
+            this.graphSession.ScrollMaxX = 0D;
+            this.graphSession.ScrollMaxY = 0D;
+            this.graphSession.ScrollMaxY2 = 0D;
+            this.graphSession.ScrollMinX = 0D;
+            this.graphSession.ScrollMinY = 0D;
+            this.graphSession.ScrollMinY2 = 0D;
+            this.graphSession.Size = new System.Drawing.Size(985, 462);
+            this.graphSession.TabIndex = 5;
+            this.graphSession.UseExtendedPrintDialog = true;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 4;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.Controls.Add(this.lblLatitudeStart, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.lblLongitudeStart, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.lblRealtime, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblLivetime, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblSession, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblIndex, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblAltitudeStart, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.lblMaxCount, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.lblMinCount, 1, 3);
+            this.tableLayoutPanel2.Controls.Add(this.lblTotalCount, 2, 3);
+            this.tableLayoutPanel2.Controls.Add(this.lblGpsTimeStart, 3, 1);
+            this.tableLayoutPanel2.Controls.Add(this.lblLatitudeEnd, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.lblLongitudeEnd, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.lblAltitudeEnd, 2, 2);
+            this.tableLayoutPanel2.Controls.Add(this.lblGpsTimeEnd, 3, 2);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 5;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(985, 91);
+            this.tableLayoutPanel2.TabIndex = 0;
+            // 
+            // lblLatitudeStart
+            // 
+            this.lblLatitudeStart.AutoSize = true;
+            this.lblLatitudeStart.Location = new System.Drawing.Point(3, 20);
+            this.lblLatitudeStart.Name = "lblLatitudeStart";
+            this.lblLatitudeStart.Size = new System.Drawing.Size(90, 15);
+            this.lblLatitudeStart.TabIndex = 0;
+            this.lblLatitudeStart.Text = "<LatitudeStart>";
+            // 
+            // lblLongitudeStart
+            // 
+            this.lblLongitudeStart.AutoSize = true;
+            this.lblLongitudeStart.Location = new System.Drawing.Point(249, 20);
+            this.lblLongitudeStart.Name = "lblLongitudeStart";
+            this.lblLongitudeStart.Size = new System.Drawing.Size(101, 15);
+            this.lblLongitudeStart.TabIndex = 1;
+            this.lblLongitudeStart.Text = "<LongitudeStart>";
+            // 
+            // lblRealtime
+            // 
+            this.lblRealtime.AutoSize = true;
+            this.lblRealtime.Location = new System.Drawing.Point(3, 0);
+            this.lblRealtime.Name = "lblRealtime";
+            this.lblRealtime.Size = new System.Drawing.Size(71, 15);
+            this.lblRealtime.TabIndex = 2;
+            this.lblRealtime.Text = "<Realtime>";
+            // 
+            // lblLivetime
+            // 
+            this.lblLivetime.AutoSize = true;
+            this.lblLivetime.Location = new System.Drawing.Point(249, 0);
+            this.lblLivetime.Name = "lblLivetime";
+            this.lblLivetime.Size = new System.Drawing.Size(67, 15);
+            this.lblLivetime.TabIndex = 3;
+            this.lblLivetime.Text = "<Livetime>";
+            // 
+            // lblSession
+            // 
+            this.lblSession.AutoSize = true;
+            this.lblSession.Location = new System.Drawing.Point(495, 0);
+            this.lblSession.Name = "lblSession";
+            this.lblSession.Size = new System.Drawing.Size(65, 15);
+            this.lblSession.TabIndex = 4;
+            this.lblSession.Text = "<Session>";
+            // 
+            // lblIndex
+            // 
+            this.lblIndex.AutoSize = true;
+            this.lblIndex.Location = new System.Drawing.Point(741, 0);
+            this.lblIndex.Name = "lblIndex";
+            this.lblIndex.Size = new System.Drawing.Size(51, 15);
+            this.lblIndex.TabIndex = 5;
+            this.lblIndex.Text = "<Index>";
+            // 
+            // lblAltitudeStart
+            // 
+            this.lblAltitudeStart.AutoSize = true;
+            this.lblAltitudeStart.Location = new System.Drawing.Point(495, 20);
+            this.lblAltitudeStart.Name = "lblAltitudeStart";
+            this.lblAltitudeStart.Size = new System.Drawing.Size(86, 15);
+            this.lblAltitudeStart.TabIndex = 9;
+            this.lblAltitudeStart.Text = "<AltitudeStart>";
+            // 
+            // lblMaxCount
+            // 
+            this.lblMaxCount.AutoSize = true;
+            this.lblMaxCount.Location = new System.Drawing.Point(3, 60);
+            this.lblMaxCount.Name = "lblMaxCount";
+            this.lblMaxCount.Size = new System.Drawing.Size(77, 15);
+            this.lblMaxCount.TabIndex = 6;
+            this.lblMaxCount.Text = "<MaxCount>";
+            // 
+            // lblMinCount
+            // 
+            this.lblMinCount.AutoSize = true;
+            this.lblMinCount.Location = new System.Drawing.Point(249, 60);
+            this.lblMinCount.Name = "lblMinCount";
+            this.lblMinCount.Size = new System.Drawing.Size(74, 15);
+            this.lblMinCount.TabIndex = 7;
+            this.lblMinCount.Text = "<MinCount>";
+            // 
+            // lblTotalCount
+            // 
+            this.lblTotalCount.AutoSize = true;
+            this.lblTotalCount.Location = new System.Drawing.Point(495, 60);
+            this.lblTotalCount.Name = "lblTotalCount";
+            this.lblTotalCount.Size = new System.Drawing.Size(80, 15);
+            this.lblTotalCount.TabIndex = 8;
+            this.lblTotalCount.Text = "<TotalCount>";
+            // 
+            // lblGpsTimeStart
+            // 
+            this.lblGpsTimeStart.AutoSize = true;
+            this.lblGpsTimeStart.Location = new System.Drawing.Point(741, 20);
+            this.lblGpsTimeStart.Name = "lblGpsTimeStart";
+            this.lblGpsTimeStart.Size = new System.Drawing.Size(96, 15);
+            this.lblGpsTimeStart.TabIndex = 10;
+            this.lblGpsTimeStart.Text = "<GpsTimeStart>";
+            // 
+            // lblLatitudeEnd
+            // 
+            this.lblLatitudeEnd.AutoSize = true;
+            this.lblLatitudeEnd.Location = new System.Drawing.Point(3, 40);
+            this.lblLatitudeEnd.Name = "lblLatitudeEnd";
+            this.lblLatitudeEnd.Size = new System.Drawing.Size(87, 15);
+            this.lblLatitudeEnd.TabIndex = 11;
+            this.lblLatitudeEnd.Text = "<LatitudeEnd>";
+            // 
+            // lblLongitudeEnd
+            // 
+            this.lblLongitudeEnd.AutoSize = true;
+            this.lblLongitudeEnd.Location = new System.Drawing.Point(249, 40);
+            this.lblLongitudeEnd.Name = "lblLongitudeEnd";
+            this.lblLongitudeEnd.Size = new System.Drawing.Size(98, 15);
+            this.lblLongitudeEnd.TabIndex = 12;
+            this.lblLongitudeEnd.Text = "<LongitudeEnd>";
+            // 
+            // lblAltitudeEnd
+            // 
+            this.lblAltitudeEnd.AutoSize = true;
+            this.lblAltitudeEnd.Location = new System.Drawing.Point(495, 40);
+            this.lblAltitudeEnd.Name = "lblAltitudeEnd";
+            this.lblAltitudeEnd.Size = new System.Drawing.Size(83, 15);
+            this.lblAltitudeEnd.TabIndex = 13;
+            this.lblAltitudeEnd.Text = "<AltitudeEnd>";
+            // 
+            // lblGpsTimeEnd
+            // 
+            this.lblGpsTimeEnd.AutoSize = true;
+            this.lblGpsTimeEnd.Location = new System.Drawing.Point(741, 40);
+            this.lblGpsTimeEnd.Name = "lblGpsTimeEnd";
+            this.lblGpsTimeEnd.Size = new System.Drawing.Size(93, 15);
+            this.lblGpsTimeEnd.TabIndex = 14;
+            this.lblGpsTimeEnd.Text = "<GpsTimeEnd>";
+            // 
             // tblSession
             // 
             this.tblSession.ColumnCount = 8;
@@ -810,105 +1027,6 @@
             this.btnStopSession.UseVisualStyleBackColor = true;
             this.btnStopSession.Click += new System.EventHandler(this.btnStopSession_Click);
             // 
-            // btnSendClose
-            // 
-            this.btnSendClose.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSendClose.Location = new System.Drawing.Point(1060, 33);
-            this.btnSendClose.Name = "btnSendClose";
-            this.btnSendClose.Size = new System.Drawing.Size(131, 24);
-            this.btnSendClose.TabIndex = 2;
-            this.btnSendClose.Text = "Send close";
-            this.btnSendClose.UseVisualStyleBackColor = true;
-            this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
-            // 
-            // cbStoreChn
-            // 
-            this.cbStoreChn.AutoSize = true;
-            this.cbStoreChn.Location = new System.Drawing.Point(664, 33);
-            this.cbStoreChn.Name = "cbStoreChn";
-            this.cbStoreChn.Size = new System.Drawing.Size(109, 19);
-            this.cbStoreChn.TabIndex = 16;
-            this.cbStoreChn.Text = "Store CHN files";
-            this.cbStoreChn.UseVisualStyleBackColor = true;
-            // 
-            // pageBackground
-            // 
-            this.pageBackground.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.pageBackground.Location = new System.Drawing.Point(4, 25);
-            this.pageBackground.Name = "pageBackground";
-            this.pageBackground.Padding = new System.Windows.Forms.Padding(3);
-            this.pageBackground.Size = new System.Drawing.Size(1200, 634);
-            this.pageBackground.TabIndex = 3;
-            this.pageBackground.Text = "Background";
-            // 
-            // btnShowLog
-            // 
-            this.btnShowLog.AutoSize = false;
-            this.btnShowLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowLog.Image = ((System.Drawing.Image)(resources.GetObject("btnShowLog.Image")));
-            this.btnShowLog.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowLog.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowLog.Name = "btnShowLog";
-            this.btnShowLog.Size = new System.Drawing.Size(38, 38);
-            this.btnShowLog.Text = "toolStripButton1";
-            this.btnShowLog.Click += new System.EventHandler(this.btnShowLog_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 40);
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.Controls.Add(this.lblLatitudeStart, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.lblLongitudeStart, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.lblRealtime, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.lblLivetime, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.lblSession, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.lblIndex, 3, 0);
-            this.tableLayoutPanel2.Controls.Add(this.lblAltitudeStart, 2, 1);
-            this.tableLayoutPanel2.Controls.Add(this.lblMaxCount, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.lblMinCount, 1, 3);
-            this.tableLayoutPanel2.Controls.Add(this.lblTotalCount, 2, 3);
-            this.tableLayoutPanel2.Controls.Add(this.lblGpsTimeStart, 3, 1);
-            this.tableLayoutPanel2.Controls.Add(this.lblLatitudeEnd, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.lblLongitudeEnd, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.lblAltitudeEnd, 2, 2);
-            this.tableLayoutPanel2.Controls.Add(this.lblGpsTimeEnd, 3, 2);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 5;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(985, 91);
-            this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // graphSession
-            // 
-            this.graphSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.graphSession.IsShowPointValues = true;
-            this.graphSession.Location = new System.Drawing.Point(0, 91);
-            this.graphSession.Name = "graphSession";
-            this.graphSession.ScrollGrace = 0D;
-            this.graphSession.ScrollMaxX = 0D;
-            this.graphSession.ScrollMaxY = 0D;
-            this.graphSession.ScrollMaxY2 = 0D;
-            this.graphSession.ScrollMinX = 0D;
-            this.graphSession.ScrollMinY = 0D;
-            this.graphSession.ScrollMinY2 = 0D;
-            this.graphSession.Size = new System.Drawing.Size(985, 462);
-            this.graphSession.TabIndex = 5;
-            this.graphSession.UseExtendedPrintDialog = true;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -930,140 +1048,36 @@
             this.cboxBackground.Size = new System.Drawing.Size(258, 23);
             this.cboxBackground.TabIndex = 23;
             // 
-            // lblLatitudeStart
+            // cbStoreChn
             // 
-            this.lblLatitudeStart.AutoSize = true;
-            this.lblLatitudeStart.Location = new System.Drawing.Point(3, 20);
-            this.lblLatitudeStart.Name = "lblLatitudeStart";
-            this.lblLatitudeStart.Size = new System.Drawing.Size(90, 15);
-            this.lblLatitudeStart.TabIndex = 0;
-            this.lblLatitudeStart.Text = "<LatitudeStart>";
+            this.cbStoreChn.AutoSize = true;
+            this.cbStoreChn.Location = new System.Drawing.Point(664, 33);
+            this.cbStoreChn.Name = "cbStoreChn";
+            this.cbStoreChn.Size = new System.Drawing.Size(109, 19);
+            this.cbStoreChn.TabIndex = 16;
+            this.cbStoreChn.Text = "Store CHN files";
+            this.cbStoreChn.UseVisualStyleBackColor = true;
             // 
-            // lblLongitudeStart
+            // btnSendClose
             // 
-            this.lblLongitudeStart.AutoSize = true;
-            this.lblLongitudeStart.Location = new System.Drawing.Point(249, 20);
-            this.lblLongitudeStart.Name = "lblLongitudeStart";
-            this.lblLongitudeStart.Size = new System.Drawing.Size(101, 15);
-            this.lblLongitudeStart.TabIndex = 1;
-            this.lblLongitudeStart.Text = "<LongitudeStart>";
+            this.btnSendClose.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSendClose.Location = new System.Drawing.Point(1060, 33);
+            this.btnSendClose.Name = "btnSendClose";
+            this.btnSendClose.Size = new System.Drawing.Size(131, 24);
+            this.btnSendClose.TabIndex = 2;
+            this.btnSendClose.Text = "Send close";
+            this.btnSendClose.UseVisualStyleBackColor = true;
+            this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
             // 
-            // lblRealtime
+            // pageBackground
             // 
-            this.lblRealtime.AutoSize = true;
-            this.lblRealtime.Location = new System.Drawing.Point(3, 0);
-            this.lblRealtime.Name = "lblRealtime";
-            this.lblRealtime.Size = new System.Drawing.Size(71, 15);
-            this.lblRealtime.TabIndex = 2;
-            this.lblRealtime.Text = "<Realtime>";
-            // 
-            // lblLivetime
-            // 
-            this.lblLivetime.AutoSize = true;
-            this.lblLivetime.Location = new System.Drawing.Point(249, 0);
-            this.lblLivetime.Name = "lblLivetime";
-            this.lblLivetime.Size = new System.Drawing.Size(67, 15);
-            this.lblLivetime.TabIndex = 3;
-            this.lblLivetime.Text = "<Livetime>";
-            // 
-            // lblSession
-            // 
-            this.lblSession.AutoSize = true;
-            this.lblSession.Location = new System.Drawing.Point(495, 0);
-            this.lblSession.Name = "lblSession";
-            this.lblSession.Size = new System.Drawing.Size(65, 15);
-            this.lblSession.TabIndex = 4;
-            this.lblSession.Text = "<Session>";
-            // 
-            // lblIndex
-            // 
-            this.lblIndex.AutoSize = true;
-            this.lblIndex.Location = new System.Drawing.Point(741, 0);
-            this.lblIndex.Name = "lblIndex";
-            this.lblIndex.Size = new System.Drawing.Size(51, 15);
-            this.lblIndex.TabIndex = 5;
-            this.lblIndex.Text = "<Index>";
-            // 
-            // lblMaxCount
-            // 
-            this.lblMaxCount.AutoSize = true;
-            this.lblMaxCount.Location = new System.Drawing.Point(3, 60);
-            this.lblMaxCount.Name = "lblMaxCount";
-            this.lblMaxCount.Size = new System.Drawing.Size(77, 15);
-            this.lblMaxCount.TabIndex = 6;
-            this.lblMaxCount.Text = "<MaxCount>";
-            // 
-            // lblMinCount
-            // 
-            this.lblMinCount.AutoSize = true;
-            this.lblMinCount.Location = new System.Drawing.Point(249, 60);
-            this.lblMinCount.Name = "lblMinCount";
-            this.lblMinCount.Size = new System.Drawing.Size(74, 15);
-            this.lblMinCount.TabIndex = 7;
-            this.lblMinCount.Text = "<MinCount>";
-            // 
-            // lblTotalCount
-            // 
-            this.lblTotalCount.AutoSize = true;
-            this.lblTotalCount.Location = new System.Drawing.Point(495, 60);
-            this.lblTotalCount.Name = "lblTotalCount";
-            this.lblTotalCount.Size = new System.Drawing.Size(80, 15);
-            this.lblTotalCount.TabIndex = 8;
-            this.lblTotalCount.Text = "<TotalCount>";
-            // 
-            // lblAltitudeStart
-            // 
-            this.lblAltitudeStart.AutoSize = true;
-            this.lblAltitudeStart.Location = new System.Drawing.Point(495, 20);
-            this.lblAltitudeStart.Name = "lblAltitudeStart";
-            this.lblAltitudeStart.Size = new System.Drawing.Size(86, 15);
-            this.lblAltitudeStart.TabIndex = 9;
-            this.lblAltitudeStart.Text = "<AltitudeStart>";
-            // 
-            // lblGpsTimeStart
-            // 
-            this.lblGpsTimeStart.AutoSize = true;
-            this.lblGpsTimeStart.Location = new System.Drawing.Point(741, 20);
-            this.lblGpsTimeStart.Name = "lblGpsTimeStart";
-            this.lblGpsTimeStart.Size = new System.Drawing.Size(96, 15);
-            this.lblGpsTimeStart.TabIndex = 10;
-            this.lblGpsTimeStart.Text = "<GpsTimeStart>";
-            // 
-            // lblLatitudeEnd
-            // 
-            this.lblLatitudeEnd.AutoSize = true;
-            this.lblLatitudeEnd.Location = new System.Drawing.Point(3, 40);
-            this.lblLatitudeEnd.Name = "lblLatitudeEnd";
-            this.lblLatitudeEnd.Size = new System.Drawing.Size(87, 15);
-            this.lblLatitudeEnd.TabIndex = 11;
-            this.lblLatitudeEnd.Text = "<LatitudeEnd>";
-            // 
-            // lblLongitudeEnd
-            // 
-            this.lblLongitudeEnd.AutoSize = true;
-            this.lblLongitudeEnd.Location = new System.Drawing.Point(249, 40);
-            this.lblLongitudeEnd.Name = "lblLongitudeEnd";
-            this.lblLongitudeEnd.Size = new System.Drawing.Size(98, 15);
-            this.lblLongitudeEnd.TabIndex = 12;
-            this.lblLongitudeEnd.Text = "<LongitudeEnd>";
-            // 
-            // lblAltitudeEnd
-            // 
-            this.lblAltitudeEnd.AutoSize = true;
-            this.lblAltitudeEnd.Location = new System.Drawing.Point(495, 40);
-            this.lblAltitudeEnd.Name = "lblAltitudeEnd";
-            this.lblAltitudeEnd.Size = new System.Drawing.Size(83, 15);
-            this.lblAltitudeEnd.TabIndex = 13;
-            this.lblAltitudeEnd.Text = "<AltitudeEnd>";
-            // 
-            // lblGpsTimeEnd
-            // 
-            this.lblGpsTimeEnd.AutoSize = true;
-            this.lblGpsTimeEnd.Location = new System.Drawing.Point(741, 40);
-            this.lblGpsTimeEnd.Name = "lblGpsTimeEnd";
-            this.lblGpsTimeEnd.Size = new System.Drawing.Size(93, 15);
-            this.lblGpsTimeEnd.TabIndex = 14;
-            this.lblGpsTimeEnd.Text = "<GpsTimeEnd>";
+            this.pageBackground.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pageBackground.Location = new System.Drawing.Point(4, 25);
+            this.pageBackground.Name = "pageBackground";
+            this.pageBackground.Padding = new System.Windows.Forms.Padding(3);
+            this.pageBackground.Size = new System.Drawing.Size(1200, 634);
+            this.pageBackground.TabIndex = 3;
+            this.pageBackground.Text = "Background";
             // 
             // FormMain
             // 
@@ -1101,10 +1115,10 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.tblSession.ResumeLayout(false);
-            this.tblSession.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.tblSession.ResumeLayout(false);
+            this.tblSession.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1195,6 +1209,7 @@
         private System.Windows.Forms.Label lblLongitudeEnd;
         private System.Windows.Forms.Label lblAltitudeEnd;
         private System.Windows.Forms.Label lblGpsTimeEnd;
+        private System.Windows.Forms.ToolStripButton btnShow3D;
     }
 }
 

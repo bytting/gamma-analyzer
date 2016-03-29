@@ -29,20 +29,33 @@ namespace crash
 {
     public partial class FormWaterfallLive : Form
     {
+        Form mMainForm = null;
         Session session = null;
         Bitmap bmpPane = null;
         bool colorCeilInitialized = false;
+        private int SelectedSessionIndex = -1;
+
+        public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
+        public event SetSessionIndexEventHandler SetSessionIndexEvent;
 
         public FormWaterfallLive()
         {
             InitializeComponent();
-            DoubleBuffered = true;
+            DoubleBuffered = true;            
         }        
 
         private void FormWaterfall_Load(object sender, EventArgs e)
-        {                        
+        {
+            lblColorCeil.Text = "";
+            lblSelectedSessionIndex.Text = "";
+
             pane_Resize(sender, e);        
             UpdateStats();
+        }
+
+        public void SetMainForm(Form main)
+        {
+            mMainForm = main;
         }
 
         private void UpdateStats()
@@ -84,7 +97,9 @@ namespace crash
 
                 int w = s.Channels.Count > pane.Width ? pane.Width : s.Channels.Count; // FIXME                                
 
-                for (int x = 0; x < w; x++)
+                bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
+
+                for (int x = 1; x < w; x++)
                 {
                     int a = 255, r = 0, g = 0, b = 255;
                     float cps = s.Channels[x];
@@ -119,7 +134,7 @@ namespace crash
                         g -= (int)adj;
                     }
                     
-                    if (x >= 0 && x < pane.Width && y >= 0 && y < pane.Height)
+                    if (x > 0 && x < pane.Width && y >= 0 && y < pane.Height)
                         bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
                 }
                 y++;
@@ -175,6 +190,22 @@ namespace crash
         {
             colorCeilInitialized = true;
             UpdatePane();
-        }        
+        }
+
+        private void pane_MouseDown(object sender, MouseEventArgs e)
+        {                        
+            if (SetSessionIndexEvent != null)
+            {                
+                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
+                args.Index = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));            
+                SetSessionIndexEvent(this, args);
+            }                
+        }
+
+        public void SetSelectedSessionIndex(int index)
+        {
+            SelectedSessionIndex = index;
+            lblSelectedSessionIndex.Text = SelectedSessionIndex.ToString();
+        }
     }
 }

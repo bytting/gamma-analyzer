@@ -37,6 +37,9 @@ namespace crash
         Session session = null;
         GMapOverlay overlay = new GMapOverlay();
 
+        public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
+        public event SetSessionIndexEventHandler SetSessionIndexEvent;
+
         public FormMap()
         {
             InitializeComponent();
@@ -109,7 +112,8 @@ namespace crash
                 return;
 
             // Add map marker                                                                                                
-            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.LatitudeStart, s.LongitudeStart), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"));
+            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.LatitudeStart, s.LongitudeStart), new Bitmap(@"C:\dev\crash\images\marker-blue-32.png")); // FIXME
+            marker.Tag = s;
             overlay.Markers.Add(marker);
         }
 
@@ -141,6 +145,33 @@ namespace crash
             {
                 e.Handled = true;
                 return;
+            }
+        }
+
+        private void gmap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
+        {            
+            if (SetSessionIndexEvent != null)
+            {
+                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
+                Spectrum s = (Spectrum)item.Tag;
+                args.Index = s.SessionIndex;
+                SetSessionIndexEvent(this, args);
+            }
+        }
+
+        public void SetSelectedSessionIndex(int index)
+        {            
+            foreach(GMarkerGoogle m in overlay.Markers)
+            {
+                Spectrum s = (Spectrum)m.Tag;
+                if(s.SessionIndex == index)
+                {
+                    overlay.Markers.Remove(m);
+                    GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.LatitudeStart, s.LongitudeStart), new Bitmap(@"C:\dev\crash\images\marker-red-32.png")); // FIXME
+                    marker.Tag = s;
+                    overlay.Markers.Add(marker);
+                    break;
+                }
             }
         }
     }

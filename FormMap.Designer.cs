@@ -153,6 +153,7 @@
             this.gmap.Size = new System.Drawing.Size(851, 561);
             this.gmap.TabIndex = 5;
             this.gmap.Zoom = 12D;
+            this.gmap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.gmap_OnMarkerClick);
             // 
             // status
             // 

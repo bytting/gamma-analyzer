@@ -34,6 +34,7 @@
             this.lblColorCeil = new System.Windows.Forms.ToolStripStatusLabel();
             this.pane = new System.Windows.Forms.Panel();
             this.tbColorCeil = new System.Windows.Forms.TrackBar();
+            this.lblSelectedSessionIndex = new System.Windows.Forms.ToolStripStatusLabel();
             this.status.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).BeginInit();
             this.SuspendLayout();
@@ -49,7 +50,8 @@
             // status
             // 
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblColorCeil});
+            this.lblColorCeil,
+            this.lblSelectedSessionIndex});
             this.status.Location = new System.Drawing.Point(0, 449);
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(1000, 22);
@@ -65,12 +67,14 @@
             // pane
             // 
             this.pane.BackColor = System.Drawing.Color.Blue;
+            this.pane.Cursor = System.Windows.Forms.Cursors.Cross;
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
             this.pane.Size = new System.Drawing.Size(955, 424);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
+            this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
             this.pane.Resize += new System.EventHandler(this.pane_Resize);
             // 
             // tbColorCeil
@@ -83,6 +87,12 @@
             this.tbColorCeil.TabIndex = 3;
             this.tbColorCeil.Scroll += new System.EventHandler(this.tbColorCeil_Scroll);
             this.tbColorCeil.ValueChanged += new System.EventHandler(this.tbColorCeil_ValueChanged);
+            // 
+            // lblSelectedSessionIndex
+            // 
+            this.lblSelectedSessionIndex.Name = "lblSelectedSessionIndex";
+            this.lblSelectedSessionIndex.Size = new System.Drawing.Size(147, 17);
+            this.lblSelectedSessionIndex.Text = "<lblSelectedSessionIndex>";
             // 
             // FormWaterfallLive
             // 
@@ -114,5 +124,6 @@
         private System.Windows.Forms.Panel pane;
         private System.Windows.Forms.TrackBar tbColorCeil;
         private System.Windows.Forms.ToolStripStatusLabel lblColorCeil;
+        private System.Windows.Forms.ToolStripStatusLabel lblSelectedSessionIndex;
     }
 }
