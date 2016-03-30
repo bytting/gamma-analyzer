@@ -46,8 +46,7 @@ namespace crash
 
         private void FormWaterfall_Load(object sender, EventArgs e)
         {
-            lblColorCeil.Text = "";
-            lblSelectedSessionIndex.Text = "";
+            lblColorCeil.Text = "";            
 
             pane_Resize(sender, e);        
             UpdateStats();
@@ -89,14 +88,14 @@ namespace crash
             float scale = 255f / sectorSize;
             int y = 0;
 
-            int h = pane.Height > session.Spectrums.Count ? session.Spectrums.Count : pane.Height - 1;
+            int h = pane.Height > session.Spectrums.Count ? session.Spectrums.Count : pane.Height - 1;            
 
             for (int i = h - 1; i >= 0; i--)
             {
-                Spectrum s = session.Spectrums[i];
+                Spectrum s = session.Spectrums[i];                
 
-                int w = s.Channels.Count > pane.Width ? pane.Width : s.Channels.Count; // FIXME                                
-
+                int w = s.Channels.Count > pane.Width ? pane.Width : s.Channels.Count; // FIXME
+                
                 bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
 
                 for (int x = 1; x < w; x++)
@@ -137,8 +136,18 @@ namespace crash
                     if (x > 0 && x < pane.Width && y >= 0 && y < pane.Height)
                         bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
                 }
+
+                if(s.SessionIndex == SelectedSessionIndex)
+                {
+                    Graphics g = Graphics.FromImage(bmpPane);
+                    Pen pen = new Pen(Color.White);
+                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
+                    g.DrawLine(pen, new Point(1, y), new Point(pane.Width, y));                    
+                }
+
                 y++;
-            }            
+            }             
 
             pane.Refresh();
         }        
@@ -205,7 +214,7 @@ namespace crash
         public void SetSelectedSessionIndex(int index)
         {
             SelectedSessionIndex = index;
-            lblSelectedSessionIndex.Text = SelectedSessionIndex.ToString();
+            UpdatePane();            
         }
     }
 }

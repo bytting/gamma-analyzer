@@ -76,12 +76,14 @@
             // pane
             // 
             this.pane.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pane.Cursor = System.Windows.Forms.Cursors.Cross;
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
             this.pane.Size = new System.Drawing.Size(697, 610);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
+            this.pane.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pane_MouseClick);
             this.pane.Resize += new System.EventHandler(this.pane_Resize);
             // 
             // panel1

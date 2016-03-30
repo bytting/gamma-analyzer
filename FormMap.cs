@@ -35,13 +35,17 @@ namespace crash
     public partial class FormMap : Form
     {
         Session session = null;
-        GMapOverlay overlay = new GMapOverlay();        
+        GMapOverlay overlay = new GMapOverlay();
 
         public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
         public event SetSessionIndexEventHandler SetSessionIndexEvent;
 
-        private static Bitmap bmpDefault = new Bitmap(@"C:\dev\crash\images\marker-blue-32.png"); // FIXME
-        private static Bitmap bmpSelected = new Bitmap(@"C:\dev\crash\images\marker-red-32.png");
+        private static Bitmap bmpBlue = new Bitmap(crash.Properties.Resources.marker_blue_10);
+        private static Bitmap bmpCyan = new Bitmap(crash.Properties.Resources.marker_cyan_10);
+        private static Bitmap bmpGreen = new Bitmap(crash.Properties.Resources.marker_green_10);
+        private static Bitmap bmpYellow = new Bitmap(crash.Properties.Resources.marker_yellow_10);
+        private static Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);
+        private static Bitmap bmpRed = new Bitmap(crash.Properties.Resources.marker_red_10);
 
         public FormMap()
         {
@@ -49,7 +53,9 @@ namespace crash
         }
 
         private void FormMap_Load(object sender, EventArgs e)
-        {            
+        {
+            panelTrackBar_Resize(sender, e);
+
             gmap.Overlays.Add(overlay);
             gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);            
         }
@@ -103,10 +109,26 @@ namespace crash
             }
         }  
       
+        private void RemoveAllMarkers()
+        {
+            if (overlay == null)
+                return;
+
+            for(int i = 0; i < overlay.Markers.Count; i++)            
+                overlay.Markers.RemoveAt(i);
+            overlay.Markers.Clear();
+            overlay.Clear();
+            gmap.Overlays.Remove(overlay);
+
+            overlay = new GMapOverlay();
+            gmap.Overlays.Add(overlay);
+            gmap.Refresh();
+        }
+
         public void SetSession(Session sess)
         {
             session = sess;
-            overlay.Clear();            
+            RemoveAllMarkers();
         }
 
         public void AddMarker(Spectrum s)
@@ -114,8 +136,23 @@ namespace crash
             if (session == null)
                 return;
 
-            // Add map marker
-            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.LatitudeStart, s.LongitudeStart), bmpDefault);
+            Bitmap bmp = null;            
+            float section = (session.MaxChannelCount - session.MinChannelCount) / 6;
+
+            if (s.MaxCount < section)
+                bmp = bmpBlue;
+            else if (s.MaxCount < section * 2)
+                bmp = bmpCyan;
+            else if (s.MaxCount < section * 3)
+                bmp = bmpGreen;
+            else if (s.MaxCount < section * 4)
+                bmp = bmpYellow;
+            else if (s.MaxCount < section * 5)
+                bmp = bmpOrange;
+            else bmp = bmpRed;
+
+            // Add map marker            
+            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.LatitudeStart, s.LongitudeStart), bmp);
             marker.Tag = s;
             marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
             marker.ToolTipText = s.ToString() 
@@ -123,7 +160,12 @@ namespace crash
                 + Environment.NewLine + "Lon start: " + s.LongitudeStart 
                 + Environment.NewLine + "Alt start: " + s.AltitudeStart;
             marker.ToolTip.Fill = System.Drawing.SystemBrushes.Control;
-            overlay.Markers.Add(marker);                            
+            overlay.Markers.Add(marker);            
+
+            trackLowColor.Minimum = (int)session.MinChannelCount;
+            trackLowColor.Maximum = (int)session.MaxChannelCount;
+            trackHighColor.Minimum = (int)session.MinChannelCount;
+            trackHighColor.Maximum = (int)session.MaxChannelCount;
         }
 
         private void FormMap_FormClosing(object sender, FormClosingEventArgs e)
@@ -184,6 +226,44 @@ namespace crash
                     m.ToolTip.Fill = System.Drawing.SystemBrushes.Control;
                 }                
             }
+            gmap.Refresh();
+        }
+
+        private void panelTrackBar_Resize(object sender, EventArgs e)
+        {
+            trackHighColor.Height = panelTrackBar.Height / 2;
+            trackLowColor.Height = panelTrackBar.Height / 2;
+        }
+
+        private void trackHighColor_ValueChanged(object sender, EventArgs e)
+        {
+            if (trackLowColor.Value > trackHighColor.Value)
+                trackLowColor.Value = trackHighColor.Value;
+
+            RemoveAllMarkers();
+
+            if (session == null)
+                return;
+
+            foreach(Spectrum s in session.Spectrums)            
+                AddMarker(s);
+
+            gmap.Refresh();
+        }
+
+        private void trackLowColor_ValueChanged(object sender, EventArgs e)
+        {
+            if (trackHighColor.Value < trackLowColor.Value)
+                trackHighColor.Value = trackLowColor.Value;
+
+            RemoveAllMarkers();
+
+            if (session == null)
+                return;
+
+            foreach (Spectrum s in session.Spectrums)
+                AddMarker(s);
+
             gmap.Refresh();
         }                
     }    

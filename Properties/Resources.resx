@@ -117,4 +117,68 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="background-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\background-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="background-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\background-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="connect-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\connect-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="disconnect-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\disconnect-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="home-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\home-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="log-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\log-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\map-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\map-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marker-blue-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\marker-blue-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marker-cyan-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\marker-cyan-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marker-green-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\marker-green-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marker-orange-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\marker-orange-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marker-red-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\marker-red-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marker-yellow-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\marker-yellow-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roitable-history-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\roitable-history-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="settings-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\settings-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="setup-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\setup-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="setup-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\setup-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="trash-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\trash-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="waterfall-history-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\waterfall-history-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="waterfall-live-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\waterfall-live-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

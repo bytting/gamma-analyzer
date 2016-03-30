@@ -32,6 +32,10 @@ namespace crash
         Session session = null;
         Bitmap bmpPane = null;
         List<ROIData> roiList = new List<ROIData>();
+        int SelectedSessionIndex = -1;
+
+        public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
+        public event SetSessionIndexEventHandler SetSessionIndexEvent;
 
         public FormROITableHistory()
         {
@@ -115,14 +119,28 @@ namespace crash
                     last_y = y;
                     x++;
 
-                    if ((x % 50) == 0)
+                    if ((x % 400) == 0)
                     {
                         FontFamily fontFamily = new FontFamily("Arial");
                         Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
                         g.DrawString(weightedCount.ToString(), font, new SolidBrush(rd.Color), x, pane.Height - 20);
                     }
+                    
+                    bmpPane.SetPixel(x, bmpPane.Height - 1, Utils.ToColor(s.SessionIndex));
                 }
             }
+
+            for(int j=0; j<bmpPane.Width; j++)
+            {
+                int idx = Utils.ToArgb(bmpPane.GetPixel(j, bmpPane.Height - 1));
+                if(idx == SelectedSessionIndex)
+                {
+                    Pen penSel = new Pen(Color.Black);
+                    penSel.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                    g.DrawLine(penSel, new Point(j, 0), new Point(j, bmpPane.Height - 2));
+                    break;
+                }
+            }            
 
             pane.Refresh();
         }
@@ -173,6 +191,22 @@ namespace crash
                 row.Cells[4].Value = rd.Color.ToString();
             }
 
+            UpdatePane();
+        }
+
+        private void pane_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (SetSessionIndexEvent != null)
+            {
+                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
+                args.Index = Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1));
+                SetSessionIndexEvent(this, args);
+            }
+        }
+
+        public void SetSelectedSessionIndex(int index)
+        {
+            SelectedSessionIndex = index;
             UpdatePane();
         }
     }

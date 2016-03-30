@@ -56,8 +56,7 @@ namespace crash
         FormWaterfallLive formWaterfallLive = new FormWaterfallLive();
         FormWaterfallHistory formWaterfallHist = new FormWaterfallHistory();
         FormROITableHistory formROIHistory = new FormROITableHistory();
-        FormMap formMap = new FormMap();
-        FormLog log = new FormLog();
+        FormMap formMap = new FormMap();        
 
         PointPairList setupGraphList = new PointPairList();
         PointPairList sessionGraphList = new PointPairList();        
@@ -72,6 +71,7 @@ namespace crash
         {
             formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
             formMap.SetSessionIndexEvent += SetSessionIndexEvent;
+            formROIHistory.SetSessionIndexEvent += SetSessionIndexEvent;
 
             tabs.HideTabs = true;
             tabs.SelectedTab = pageMenu;
@@ -160,21 +160,21 @@ namespace crash
                 case "connect_ok":
                     lblConnectionStatus.ForeColor = Color.Green;
                     lblConnectionStatus.Text = "Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"];
-                    log.Add("Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
+                    Utils.Log.Add("Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
                     connected = true;
                     break;
 
                 case "connect_failed":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"];
-                    log.Add("Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
+                    Utils.Log.Add("Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
                     connected = false;
                     break;
 
                 case "disconnect_ok":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    log.Add("Disconnected from peer");
+                    Utils.Log.Add("Disconnected from peer");
                     connected = false;
                     break;
 
@@ -183,17 +183,17 @@ namespace crash
                     netThread.Join();
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    log.Add("Disconnected from peer, peer closed");
+                    Utils.Log.Add("Disconnected from peer, peer closed");
                     break;
 
                 case "new_session_ok":
                     bool prev = msg.Arguments["preview"] == "1";
                     if(prev)
-                        log.Add("Preview received");
+                        Utils.Log.Add("Preview received");
                     else
                     {
                         string session_name = msg.Arguments["session_name"];
-                        log.Add("New session created: " + session_name);
+                        Utils.Log.Add("New session created: " + session_name);
                         
                         session = new Session(session_name);
                         formWaterfallLive.SetSession(session);
@@ -203,33 +203,33 @@ namespace crash
                     break;
 
                 case "new_session_failed":
-                    log.Add("New session failed: " + msg.Arguments["message"]);
+                    Utils.Log.Add("New session failed: " + msg.Arguments["message"]);
                     break;
 
                 case "stop_session_ok":
-                    log.Add("Session stopped");
+                    Utils.Log.Add("Session stopped");
                     break;
 
                 case "session_finished":
-                    log.Add("Session " + msg.Arguments["session_name"] + " finished");
+                    Utils.Log.Add("Session " + msg.Arguments["session_name"] + " finished");
                     LoadBackgroundSessions();
                     break;
 
                 case "error":
-                    log.Add("Error: " + msg.Arguments["message"]);
+                    Utils.Log.Add("Error: " + msg.Arguments["message"]);
                     break;
 
                 case "error_socket":
-                    log.Add("Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
+                    Utils.Log.Add("Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
                     break;                
 
                 case "set_gain_ok":
-                    log.Add("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
+                    Utils.Log.Add("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
                     break;
 
                 case "spectrum":
                     Spectrum spec = new Spectrum(msg);
-                    log.Add(spec.Label + " received");
+                    Utils.Log.Add(spec.Label + " received");
 
                     string path;
 
@@ -303,7 +303,7 @@ namespace crash
                     string info = msg.Command + " -> ";
                     foreach (KeyValuePair<string, string> item in msg.Arguments)
                         info += item.Key + ":" + item.Value + ", ";
-                    log.Add("Unhandeled command: " + info);
+                    Utils.Log.Add("Unhandeled command: " + info);
                     break;
             }
             return true;
@@ -525,8 +525,8 @@ namespace crash
 
         private void btnShowLog_Click(object sender, EventArgs e)
         {
-            log.Show();
-            log.BringToFront();
+            Utils.Log.Show();
+            Utils.Log.BringToFront();
         }
 
         public void ShowSpectrum(Spectrum s)
@@ -587,6 +587,7 @@ namespace crash
             
             formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
             formMap.SetSelectedSessionIndex(s.SessionIndex);
+            formROIHistory.SetSelectedSessionIndex(s.SessionIndex);
         }
 
         private void btnShow3D_Click(object sender, EventArgs e)

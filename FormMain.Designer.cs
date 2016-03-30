@@ -243,7 +243,7 @@
             // 
             this.btnBack.AutoSize = false;
             this.btnBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnBack.Image = ((System.Drawing.Image)(resources.GetObject("btnBack.Image")));
+            this.btnBack.Image = global::crash.Properties.Resources.home_32;
             this.btnBack.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnBack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBack.Name = "btnBack";
@@ -261,7 +261,7 @@
             // 
             this.btnPreferences.AutoSize = false;
             this.btnPreferences.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnPreferences.Image = ((System.Drawing.Image)(resources.GetObject("btnPreferences.Image")));
+            this.btnPreferences.Image = global::crash.Properties.Resources.settings_32;
             this.btnPreferences.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnPreferences.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnPreferences.Name = "btnPreferences";
@@ -274,7 +274,7 @@
             // 
             this.btnShowLog.AutoSize = false;
             this.btnShowLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowLog.Image = ((System.Drawing.Image)(resources.GetObject("btnShowLog.Image")));
+            this.btnShowLog.Image = global::crash.Properties.Resources.log_32;
             this.btnShowLog.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShowLog.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnShowLog.Name = "btnShowLog";
@@ -291,7 +291,7 @@
             // 
             this.btnConnect.AutoSize = false;
             this.btnConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnConnect.Image = ((System.Drawing.Image)(resources.GetObject("btnConnect.Image")));
+            this.btnConnect.Image = global::crash.Properties.Resources.connect_32;
             this.btnConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnConnect.Name = "btnConnect";
@@ -303,7 +303,7 @@
             // 
             this.btnDisconnect.AutoSize = false;
             this.btnDisconnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDisconnect.Image = ((System.Drawing.Image)(resources.GetObject("btnDisconnect.Image")));
+            this.btnDisconnect.Image = global::crash.Properties.Resources.disconnect_32;
             this.btnDisconnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnDisconnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnDisconnect.Name = "btnDisconnect";
@@ -320,7 +320,7 @@
             // 
             this.btnShowMap.AutoSize = false;
             this.btnShowMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowMap.Image = ((System.Drawing.Image)(resources.GetObject("btnShowMap.Image")));
+            this.btnShowMap.Image = global::crash.Properties.Resources.map_32;
             this.btnShowMap.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShowMap.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnShowMap.Name = "btnShowMap";
@@ -332,7 +332,7 @@
             // 
             this.btnShowWaterfallLive.AutoSize = false;
             this.btnShowWaterfallLive.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowWaterfallLive.Image = ((System.Drawing.Image)(resources.GetObject("btnShowWaterfallLive.Image")));
+            this.btnShowWaterfallLive.Image = global::crash.Properties.Resources.waterfall_live_32;
             this.btnShowWaterfallLive.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShowWaterfallLive.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnShowWaterfallLive.Name = "btnShowWaterfallLive";
@@ -366,7 +366,7 @@
             // 
             this.btnShowWaterfallHist.AutoSize = false;
             this.btnShowWaterfallHist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowWaterfallHist.Image = ((System.Drawing.Image)(resources.GetObject("btnShowWaterfallHist.Image")));
+            this.btnShowWaterfallHist.Image = global::crash.Properties.Resources.waterfall_history_32;
             this.btnShowWaterfallHist.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShowWaterfallHist.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnShowWaterfallHist.Name = "btnShowWaterfallHist";
@@ -379,7 +379,7 @@
             // 
             this.btnShowROIChart.AutoSize = false;
             this.btnShowROIChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowROIChart.Image = ((System.Drawing.Image)(resources.GetObject("btnShowROIChart.Image")));
+            this.btnShowROIChart.Image = global::crash.Properties.Resources.roitable_history_32;
             this.btnShowROIChart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShowROIChart.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnShowROIChart.Name = "btnShowROIChart";
@@ -661,7 +661,7 @@
             this.btnMenuSetup.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnMenuSetup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMenuSetup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuSetup.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuSetup.Image")));
+            this.btnMenuSetup.Image = global::crash.Properties.Resources.setup_128;
             this.btnMenuSetup.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnMenuSetup.Location = new System.Drawing.Point(47, 50);
             this.btnMenuSetup.Name = "btnMenuSetup";
@@ -679,7 +679,7 @@
             this.btnMenuBackgrounds.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnMenuBackgrounds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMenuBackgrounds.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuBackgrounds.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuBackgrounds.Image")));
+            this.btnMenuBackgrounds.Image = global::crash.Properties.Resources.background_128;
             this.btnMenuBackgrounds.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnMenuBackgrounds.Location = new System.Drawing.Point(213, 50);
             this.btnMenuBackgrounds.Name = "btnMenuBackgrounds";
@@ -697,7 +697,7 @@
             this.btnMenuSession.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnMenuSession.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMenuSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuSession.Image = ((System.Drawing.Image)(resources.GetObject("btnMenuSession.Image")));
+            this.btnMenuSession.Image = global::crash.Properties.Resources.map_128;
             this.btnMenuSession.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnMenuSession.Location = new System.Drawing.Point(379, 50);
             this.btnMenuSession.Name = "btnMenuSession";
