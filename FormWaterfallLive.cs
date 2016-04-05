@@ -28,8 +28,7 @@ using System.Windows.Forms;
 namespace crash
 {
     public partial class FormWaterfallLive : Form
-    {
-        Form mMainForm = null;
+    {        
         Session session = null;
         Bitmap bmpPane = null;
         bool colorCeilInitialized = false;
@@ -50,12 +49,7 @@ namespace crash
 
             pane_Resize(sender, e);        
             UpdateStats();
-        }
-
-        public void SetMainForm(Form main)
-        {
-            mMainForm = main;
-        }
+        }    
 
         private void UpdateStats()
         {

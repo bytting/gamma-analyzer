@@ -280,6 +280,7 @@
             this.btnShowLog.Name = "btnShowLog";
             this.btnShowLog.Size = new System.Drawing.Size(38, 38);
             this.btnShowLog.Text = "toolStripButton1";
+            this.btnShowLog.ToolTipText = "Show log";
             this.btnShowLog.Click += new System.EventHandler(this.btnShowLog_Click);
             // 
             // toolStripSeparator5
@@ -326,6 +327,7 @@
             this.btnShowMap.Name = "btnShowMap";
             this.btnShowMap.Size = new System.Drawing.Size(38, 38);
             this.btnShowMap.Text = "toolStripButton2";
+            this.btnShowMap.ToolTipText = "Show map";
             this.btnShowMap.Click += new System.EventHandler(this.btnShowMap_Click);
             // 
             // btnShowWaterfallLive
@@ -385,18 +387,20 @@
             this.btnShowROIChart.Name = "btnShowROIChart";
             this.btnShowROIChart.Size = new System.Drawing.Size(38, 38);
             this.btnShowROIChart.Text = "toolStripButton1";
+            this.btnShowROIChart.ToolTipText = "Show ROI history";
             this.btnShowROIChart.Click += new System.EventHandler(this.btnShowROIChart_Click);
             // 
             // btnShow3D
             // 
             this.btnShow3D.AutoSize = false;
             this.btnShow3D.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShow3D.Image = ((System.Drawing.Image)(resources.GetObject("btnShow3D.Image")));
+            this.btnShow3D.Image = global::crash.Properties.Resources._3D_32;
             this.btnShow3D.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShow3D.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnShow3D.Name = "btnShow3D";
             this.btnShow3D.Size = new System.Drawing.Size(38, 38);
             this.btnShow3D.Text = "toolStripButton1";
+            this.btnShow3D.ToolTipText = "Show 3D session";
             this.btnShow3D.Click += new System.EventHandler(this.btnShow3D_Click);
             // 
             // tabs
