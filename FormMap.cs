@@ -41,10 +41,10 @@ namespace crash
         public event SetSessionIndexEventHandler SetSessionIndexEvent;
 
         private static Bitmap bmpBlue = new Bitmap(crash.Properties.Resources.marker_blue_10);
-        private static Bitmap bmpCyan = new Bitmap(crash.Properties.Resources.marker_cyan_10);
-        private static Bitmap bmpGreen = new Bitmap(crash.Properties.Resources.marker_green_10);
-        private static Bitmap bmpYellow = new Bitmap(crash.Properties.Resources.marker_yellow_10);
-        private static Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);
+        //private static Bitmap bmpCyan = new Bitmap(crash.Properties.Resources.marker_cyan_10);
+        //private static Bitmap bmpGreen = new Bitmap(crash.Properties.Resources.marker_green_10);
+        //private static Bitmap bmpYellow = new Bitmap(crash.Properties.Resources.marker_yellow_10);
+        //private static Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);
         private static Bitmap bmpRed = new Bitmap(crash.Properties.Resources.marker_red_10);
 
         public FormMap()
@@ -54,8 +54,6 @@ namespace crash
 
         private void FormMap_Load(object sender, EventArgs e)
         {
-            panelTrackBar_Resize(sender, e);
-
             gmap.Overlays.Add(overlay);
             gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);            
         }
@@ -134,25 +132,10 @@ namespace crash
         public void AddMarker(Spectrum s)
         {
             if (session == null)
-                return;
-
-            Bitmap bmp = null;            
-            float section = (session.MaxChannelCount - session.MinChannelCount) / 6;
-
-            if (s.MaxCount < section)
-                bmp = bmpBlue;
-            else if (s.MaxCount < section * 2)
-                bmp = bmpCyan;
-            else if (s.MaxCount < section * 3)
-                bmp = bmpGreen;
-            else if (s.MaxCount < section * 4)
-                bmp = bmpYellow;
-            else if (s.MaxCount < section * 5)
-                bmp = bmpOrange;
-            else bmp = bmpRed;
+                return;            
 
             // Add map marker            
-            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.LatitudeStart, s.LongitudeStart), bmp);
+            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.LatitudeStart, s.LongitudeStart), bmpBlue);
             marker.Tag = s;
             marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
             marker.ToolTipText = s.ToString() 
@@ -160,12 +143,7 @@ namespace crash
                 + Environment.NewLine + "Lon start: " + s.LongitudeStart 
                 + Environment.NewLine + "Alt start: " + s.AltitudeStart;
             marker.ToolTip.Fill = System.Drawing.SystemBrushes.Control;
-            overlay.Markers.Add(marker);            
-
-            trackLowColor.Minimum = (int)session.MinChannelCount;
-            trackLowColor.Maximum = (int)session.MaxChannelCount;
-            trackHighColor.Minimum = (int)session.MinChannelCount;
-            trackHighColor.Maximum = (int)session.MaxChannelCount;
+            overlay.Markers.Add(marker);                        
         }
 
         private void FormMap_FormClosing(object sender, FormClosingEventArgs e)
@@ -227,44 +205,6 @@ namespace crash
                 }                
             }
             gmap.Refresh();
-        }
-
-        private void panelTrackBar_Resize(object sender, EventArgs e)
-        {
-            trackHighColor.Height = panelTrackBar.Height / 2;
-            trackLowColor.Height = panelTrackBar.Height / 2;
-        }
-
-        private void trackHighColor_ValueChanged(object sender, EventArgs e)
-        {
-            if (trackLowColor.Value > trackHighColor.Value)
-                trackLowColor.Value = trackHighColor.Value;
-
-            RemoveAllMarkers();
-
-            if (session == null)
-                return;
-
-            foreach(Spectrum s in session.Spectrums)            
-                AddMarker(s);
-
-            gmap.Refresh();
-        }
-
-        private void trackLowColor_ValueChanged(object sender, EventArgs e)
-        {
-            if (trackHighColor.Value < trackLowColor.Value)
-                trackHighColor.Value = trackLowColor.Value;
-
-            RemoveAllMarkers();
-
-            if (session == null)
-                return;
-
-            foreach (Spectrum s in session.Spectrums)
-                AddMarker(s);
-
-            gmap.Refresh();
-        }                
+        }                        
     }    
 }

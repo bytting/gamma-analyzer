@@ -40,13 +40,7 @@
             this.btnGoToLatLon = new System.Windows.Forms.ToolStripButton();
             this.gmap = new GMap.NET.WindowsForms.GMapControl();
             this.status = new System.Windows.Forms.StatusStrip();
-            this.panelTrackBar = new System.Windows.Forms.Panel();
-            this.trackLowColor = new System.Windows.Forms.TrackBar();
-            this.trackHighColor = new System.Windows.Forms.TrackBar();
             this.toolsMap.SuspendLayout();
-            this.panelTrackBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackLowColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackHighColor)).BeginInit();
             this.SuspendLayout();
             // 
             // toolsMap
@@ -156,7 +150,7 @@
             this.gmap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gmap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gmap.ShowTileGridLines = false;
-            this.gmap.Size = new System.Drawing.Size(817, 561);
+            this.gmap.Size = new System.Drawing.Size(851, 561);
             this.gmap.TabIndex = 5;
             this.gmap.Zoom = 12D;
             this.gmap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.gmap_OnMarkerClick);
@@ -169,46 +163,12 @@
             this.status.TabIndex = 6;
             this.status.Text = "statusStrip1";
             // 
-            // panelTrackBar
-            // 
-            this.panelTrackBar.Controls.Add(this.trackHighColor);
-            this.panelTrackBar.Controls.Add(this.trackLowColor);
-            this.panelTrackBar.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelTrackBar.Location = new System.Drawing.Point(817, 25);
-            this.panelTrackBar.Name = "panelTrackBar";
-            this.panelTrackBar.Size = new System.Drawing.Size(34, 561);
-            this.panelTrackBar.TabIndex = 7;
-            this.panelTrackBar.Resize += new System.EventHandler(this.panelTrackBar_Resize);
-            // 
-            // trackLowColor
-            // 
-            this.trackLowColor.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.trackLowColor.Location = new System.Drawing.Point(0, 367);
-            this.trackLowColor.Name = "trackLowColor";
-            this.trackLowColor.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackLowColor.Size = new System.Drawing.Size(34, 194);
-            this.trackLowColor.TabIndex = 0;
-            this.trackLowColor.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.trackLowColor.ValueChanged += new System.EventHandler(this.trackLowColor_ValueChanged);
-            // 
-            // trackHighColor
-            // 
-            this.trackHighColor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.trackHighColor.Location = new System.Drawing.Point(0, 0);
-            this.trackHighColor.Name = "trackHighColor";
-            this.trackHighColor.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackHighColor.Size = new System.Drawing.Size(34, 202);
-            this.trackHighColor.TabIndex = 1;
-            this.trackHighColor.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
-            this.trackHighColor.ValueChanged += new System.EventHandler(this.trackHighColor_ValueChanged);
-            // 
             // FormMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(851, 608);
             this.Controls.Add(this.gmap);
-            this.Controls.Add(this.panelTrackBar);
             this.Controls.Add(this.status);
             this.Controls.Add(this.toolsMap);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -218,10 +178,6 @@
             this.Load += new System.EventHandler(this.FormMap_Load);
             this.toolsMap.ResumeLayout(false);
             this.toolsMap.PerformLayout();
-            this.panelTrackBar.ResumeLayout(false);
-            this.panelTrackBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackLowColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackHighColor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -240,8 +196,5 @@
         private System.Windows.Forms.ToolStripTextBox tbLat;
         private System.Windows.Forms.ToolStripTextBox tbLon;
         private System.Windows.Forms.ToolStripButton btnGoToLatLon;
-        private System.Windows.Forms.Panel panelTrackBar;
-        private System.Windows.Forms.TrackBar trackHighColor;
-        private System.Windows.Forms.TrackBar trackLowColor;
     }
 }
