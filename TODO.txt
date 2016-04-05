@@ -1,0 +1,11 @@
+Add multi selection of spectrums
+
+Implement doserate formulas
+
+Make waterfall and ROI history "scrollable"
+
+Fix preview UI
+
+Implement background subtraction from spectrums
+
+Implement loading of old sessions
