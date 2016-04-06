@@ -49,6 +49,11 @@ namespace crash
         public int Realtime { get; private set; }
         public int Livetime { get; private set; }
 
+        public Spectrum()
+        {
+            mChannels = new List<float>();
+        }
+
         public Spectrum(burn.Message msg)
         {
             SessionName = msg.Arguments["session_name"];
@@ -96,6 +101,6 @@ namespace crash
         public override string ToString()
         {
             return SessionName + " - " + SessionIndex.ToString();
-        }
+        }        
     }
 }

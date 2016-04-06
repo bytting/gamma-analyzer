@@ -183,7 +183,7 @@ namespace crash
             {
                 SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
                 Spectrum s = (Spectrum)item.Tag;
-                args.Index = s.SessionIndex;
+                args.StartIndex = args.EndIndex =  s.SessionIndex;
                 SetSessionIndexEvent(this, args);
             }
         }
@@ -205,6 +205,26 @@ namespace crash
                 }                
             }
             gmap.Refresh();
-        }                        
+        }
+
+        public void SetSelectedSessionIndices(int index1, int index2)
+        {
+            // FIXME
+            foreach (GMarkerGoogle m in overlay.Markers)
+            {
+                Spectrum s = (Spectrum)m.Tag;
+                if (s.SessionIndex >= index1 && s.SessionIndex <= index2)
+                {
+                    m.ToolTipMode = MarkerTooltipMode.Always;
+                    m.ToolTip.Fill = System.Drawing.SystemBrushes.Info;
+                }
+                else
+                {
+                    m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+                    m.ToolTip.Fill = System.Drawing.SystemBrushes.Control;
+                }
+            }
+            gmap.Refresh();
+        }        
     }    
 }

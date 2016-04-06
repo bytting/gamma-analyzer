@@ -32,7 +32,8 @@ namespace crash
         Session session = null;
         Bitmap bmpPane = null;
         List<ROIData> roiList = new List<ROIData>();
-        int SelectedSessionIndex = -1;
+        int SelectedSessionIndex1 = -1;
+        int SelectedSessionIndex2 = -1;
 
         public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
         public event SetSessionIndexEventHandler SetSessionIndexEvent;
@@ -133,12 +134,19 @@ namespace crash
             for(int j=0; j<bmpPane.Width; j++)
             {
                 int idx = Utils.ToArgb(bmpPane.GetPixel(j, bmpPane.Height - 1));
-                if(idx == SelectedSessionIndex)
+
+                if(idx == SelectedSessionIndex1)
+                {
+                    Pen penSel = new Pen(Color.Black);
+                    penSel.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                    g.DrawLine(penSel, new Point(j, 0), new Point(j, bmpPane.Height - 2));                    
+                }
+
+                if (idx == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)
                 {
                     Pen penSel = new Pen(Color.Black);
                     penSel.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
                     g.DrawLine(penSel, new Point(j, 0), new Point(j, bmpPane.Height - 2));
-                    break;
                 }
             }            
 
@@ -199,14 +207,21 @@ namespace crash
             if (SetSessionIndexEvent != null)
             {
                 SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
-                args.Index = Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1));
+                args.StartIndex = args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1));
                 SetSessionIndexEvent(this, args);
             }
         }
 
         public void SetSelectedSessionIndex(int index)
         {
-            SelectedSessionIndex = index;
+            SelectedSessionIndex1 = SelectedSessionIndex2 = index;
+            UpdatePane();
+        }
+
+        public void SetSelectedSessionIndices(int index1, int index2)
+        {
+            SelectedSessionIndex1 = index1;
+            SelectedSessionIndex2 = index2;
             UpdatePane();
         }
     }

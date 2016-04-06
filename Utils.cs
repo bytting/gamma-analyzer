@@ -39,7 +39,7 @@ namespace crash
         {            
             byte[] b = BitConverter.GetBytes(argb);
             return Color.FromArgb(b[3], b[2], b[1], b[0]);
-        }
+        }        
 
         public static FormLog Log = new FormLog();
     }

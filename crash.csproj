@@ -258,7 +258,6 @@
     <Resource Include="images\3D-32.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Content Include="License-LGPL.txt" />
     <Content Include="PROTO.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -25,6 +25,7 @@ namespace crash
 {    
     public class SetSessionIndexEventArgs : EventArgs
     {
-        public int Index { get; set; }
+        public int StartIndex { get; set; }
+        public int EndIndex { get; set; }
     }
 }
