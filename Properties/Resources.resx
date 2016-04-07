@@ -172,6 +172,9 @@
   <data name="home-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\home-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="3D-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\3D-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="waterfall-live-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\waterfall-live-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -181,7 +184,7 @@
   <data name="marker-yellow-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\marker-yellow-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="3D-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\3D-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="map-1281" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\map-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

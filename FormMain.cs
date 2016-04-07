@@ -720,5 +720,11 @@ namespace crash
 
             bkgSpec = spec;            
         }
+
+        private void menuItemAbout_Click(object sender, EventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+        }
     }    
 }

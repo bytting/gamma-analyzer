@@ -81,6 +81,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="Burn_Format_CHN.cs" />
     <Compile Include="Burn_NetService.cs" />
     <Compile Include="Burn_NetService_IO.cs" />
@@ -140,6 +146,9 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Spectrum.cs" />
     <Compile Include="Utils.cs" />
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormConnect.resx">
       <DependentUpon>FormConnect.cs</DependentUpon>
     </EmbeddedResource>
