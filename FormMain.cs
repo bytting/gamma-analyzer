@@ -587,48 +587,36 @@ namespace crash
             {
                 Spectrum s = lbSession.SelectedItem as Spectrum;
                 ShowSpectrum(s.SessionName + " - " + s.SessionIndex.ToString(), s.Channels.ToArray(), s.MaxCount);
-                lblRealtime.Text = "Realtime:" + s.Realtime.ToString();
-                lblLivetime.Text = "Livetime:" + s.Livetime.ToString();
+                lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
+                lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
                 lblSession.Text = "Session name: " + s.SessionName;
-                lblIndex.Text = "Session index: " + s.SessionIndex.ToString();
-                lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart.ToString();
-                lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart.ToString();
-                lblAltitudeStart.Text = "Alt. start: " + s.AltitudeStart.ToString();
-                lblLatitudeEnd.Text = "Lat. end: " + s.LatitudeEnd.ToString();
-                lblLongitudeEnd.Text = "Lon. end: " + s.LongitudeEnd.ToString();
-                lblAltitudeEnd.Text = "Alt. end: " + s.AltitudeEnd.ToString();
-                lblGpsTimeStart.Text = "Gps time start: " + s.GpsTimeStart.ToString();
-                lblGpsTimeEnd.Text = "Gps time end: " + s.GpsTimeEnd.ToString();
-                lblMaxCount.Text = "Max count: " + s.MaxCount.ToString();
-                lblMinCount.Text = "Min count: " + s.MinCount.ToString();
-                lblTotalCount.Text = "Total count: " + s.TotalCount.ToString();
+                lblIndex.Text = "Session index: " + s.SessionIndex;
+                lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart;
+                lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart;
+                lblAltitudeStart.Text = "Alt. start: " + s.AltitudeStart;
+                lblLatitudeEnd.Text = "Lat. end: " + s.LatitudeEnd;
+                lblLongitudeEnd.Text = "Lon. end: " + s.LongitudeEnd;
+                lblAltitudeEnd.Text = "Alt. end: " + s.AltitudeEnd;
+                lblGpsTimeStart.Text = "Gps time start: " + s.GpsTimeStart;
+                lblGpsTimeEnd.Text = "Gps time end: " + s.GpsTimeEnd;
+                lblMaxCount.Text = "Max count: " + s.MaxCount;
+                lblMinCount.Text = "Min count: " + s.MinCount;
+                lblTotalCount.Text = "Total count: " + s.TotalCount;
 
                 formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
                 formMap.SetSelectedSessionIndex(s.SessionIndex);
                 formROIHistory.SetSelectedSessionIndex(s.SessionIndex);
             }
             else
-            {
-                int selMin = lbSession.SelectedIndices[0], selMax = lbSession.SelectedIndices[0];
+            {                
+                Spectrum s1 = (Spectrum)lbSession.Items[lbSession.SelectedIndices[lbSession.SelectedIndices.Count - 1]];
+                Spectrum s2 = (Spectrum)lbSession.Items[lbSession.SelectedIndices[0]];
 
-                for (int i = 0; i < lbSession.SelectedIndices.Count; i++)
-                {
-                    if (selMin > lbSession.SelectedIndices[i])
-                        selMin = lbSession.SelectedIndices[i];
-                    if (selMax < lbSession.SelectedIndices[i])
-                        selMax = lbSession.SelectedIndices[i];
-                }
+                double realTime = 0;
+                double liveTime = 0;
 
-                if (selMin == selMax)
-                    return;
-
-                Spectrum s1 = (Spectrum)lbSession.Items[selMax];
-                Spectrum s2 = (Spectrum)lbSession.Items[selMin];
-
-                int chanCount = (int)s1.NumChannels;
-
-                string title = "Merged: " + s1.SessionIndex.ToString() + " - " + s2.SessionIndex.ToString();
-                float[] chans = new float[chanCount];
+                string title = "Merged: " + s1.SessionIndex + " - " + s2.SessionIndex;
+                float[] chans = new float[(int)s1.NumChannels];
                 float maxChan = 0f;
                 for(int i=0; i<lbSession.SelectedItems.Count; i++)
                 {
@@ -637,11 +625,30 @@ namespace crash
                     {
                         chans[j] += s.Channels[j];
                         if(chans[j] > maxChan)
-                            maxChan = chans[j];
+                            maxChan = chans[j];                        
                     }
+                    realTime += ((double)s.Realtime) / 1000000.0;
+                    liveTime += ((double)s.Livetime) / 1000000.0;
                 }
 
-                ShowSpectrum(title, chans, maxChan);                
+                ShowSpectrum(title, chans, maxChan);
+
+                lblRealtime.Text = "Realtime:" + realTime;
+                lblLivetime.Text = "Livetime:" + liveTime;
+                lblSession.Text = "Session name: " + s1.SessionName;
+                lblIndex.Text = "Session index: " + s1.SessionIndex + " - " + s2.SessionIndex;
+                lblLatitudeStart.Text = "Lat. start: " + s1.LatitudeStart;
+                lblLongitudeStart.Text = "Lon. start: " + s1.LongitudeStart;
+                lblAltitudeStart.Text = "Alt. start: " + s1.AltitudeStart;
+                lblLatitudeEnd.Text = "Lat. end: " + s2.LatitudeEnd;
+                lblLongitudeEnd.Text = "Lon. end: " + s2.LongitudeEnd;
+                lblAltitudeEnd.Text = "Alt. end: " + s2.AltitudeEnd;
+                lblGpsTimeStart.Text = "Gps time start: " + s1.GpsTimeStart;
+                lblGpsTimeEnd.Text = "Gps time end: " + s2.GpsTimeEnd;
+
+                lblMaxCount.Text = "";
+                lblMinCount.Text = "";
+                lblTotalCount.Text = "";
 
                 formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
