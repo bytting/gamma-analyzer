@@ -1,5 +1,3 @@
-Add multi selection of spectrums
-
 Implement doserate formulas
 
 Make waterfall and ROI history "scrollable"
@@ -7,5 +5,9 @@ Make waterfall and ROI history "scrollable"
 Fix preview UI
 
 Implement background subtraction from spectrums
+Implement livetime adjustment for background spectrum (also for multiple spectrums)
+Check that session and background has compatible num_channels
 
 Implement loading of old sessions
+
+Make sure session is allocated if spectrums ticks in after connect (after a disconnect during a session)

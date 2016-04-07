@@ -15,6 +15,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+// Authors: Dag robole,
+
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
@@ -30,6 +32,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using ZedGraph;
+using Newtonsoft.Json;
 
 namespace crash
 {
@@ -58,7 +61,10 @@ namespace crash
         FormMap formMap = new FormMap();        
 
         PointPairList setupGraphList = new PointPairList();
-        PointPairList sessionGraphList = new PointPairList();        
+        PointPairList sessionGraphList = new PointPairList();
+        PointPairList bkgGraphList = new PointPairList();
+
+        float[] bkgSpec = null;
 
         public FormMain()
         {
@@ -285,7 +291,9 @@ namespace crash
                         graphSetup.Refresh();                        
                     }
                     else
-                    {                        
+                    {         
+                        // Make sure session is allocated in case spectrums are ticking in
+
                         path = settings.SessionDirectory + Path.DirectorySeparatorChar + spec.SessionName;                        
                         session.Add(spec);
 
@@ -546,7 +554,7 @@ namespace crash
             Utils.Log.BringToFront();
         }
 
-        public void ShowSpectrum(string title, float[] channels, float maxCount)
+        public void ShowSpectrum(string title, float[] channels, float maxCount, float minCount)
         {
             GraphPane pane = graphSession.GraphPane;
             pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
@@ -554,25 +562,34 @@ namespace crash
 
             pane.Title.Text = title;
             pane.XAxis.Title.Text = "Channel";
-            pane.YAxis.Title.Text = "Counts";
+            pane.YAxis.Title.Text = "Counts";                        
+
+            pane.XAxis.Scale.Min = 0;
+            pane.XAxis.Scale.Max = maxCount;
+
+            pane.YAxis.Scale.Min = minCount;
+            pane.YAxis.Scale.Max = maxCount + (maxCount / 10.0);
+
+            pane.CurveList.Clear();
+
+            if (bkgSpec != null)
+            {
+                bkgGraphList.Clear();
+                for (int i = 0; i < bkgSpec.Length; i++)
+                    bkgGraphList.Add((double)i, (double)bkgSpec[i]);
+
+                LineItem bkgCurve = pane.AddCurve("Background", bkgGraphList, Color.Blue, SymbolType.None);
+            }
 
             sessionGraphList.Clear();
             for (int i = 0; i < channels.Length; i++)
                 sessionGraphList.Add((double)i, (double)channels[i]);
 
-            pane.XAxis.Scale.Min = 0;
-            pane.XAxis.Scale.Max = maxCount;
-
-            pane.YAxis.Scale.Min = 0;
-            pane.YAxis.Scale.Max = maxCount + (maxCount / 10.0);
-
-            pane.CurveList.Clear();
-
             LineItem curve = pane.AddCurve("Spectrum", sessionGraphList, Color.Red, SymbolType.None);
             curve.Line.Fill = new Fill(SystemColors.ButtonFace, Color.Red, 45F);
             pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
             pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
-            pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+            pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);            
 
             graphSession.RestoreScale(pane);
             graphSession.AxisChange();
@@ -586,7 +603,7 @@ namespace crash
             else if (lbSession.SelectedItems.Count == 1)
             {
                 Spectrum s = lbSession.SelectedItem as Spectrum;
-                ShowSpectrum(s.SessionName + " - " + s.SessionIndex.ToString(), s.Channels.ToArray(), s.MaxCount);
+                ShowSpectrum(s.SessionName + " - " + s.SessionIndex.ToString(), s.Channels.ToArray(), s.MaxCount, s.MinCount);
                 lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
                 lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
                 lblSession.Text = "Session name: " + s.SessionName;
@@ -617,21 +634,26 @@ namespace crash
 
                 string title = "Merged: " + s1.SessionIndex + " - " + s2.SessionIndex;
                 float[] chans = new float[(int)s1.NumChannels];
-                float maxChan = 0f;
+                float maxCnt = s1.MaxCount, minCnt = s1.MinCount;
+                float totCnt = 0;
                 for(int i=0; i<lbSession.SelectedItems.Count; i++)
                 {
                     Spectrum s = (Spectrum)lbSession.SelectedItems[i];
-                    for(int j=0; j<s.NumChannels; j++)
-                    {
-                        chans[j] += s.Channels[j];
-                        if(chans[j] > maxChan)
-                            maxChan = chans[j];                        
-                    }
+                    for(int j=0; j<s.NumChannels; j++)                    
+                        chans[j] += s.Channels[j];                                            
+
+                    if (s.MaxCount > maxCnt)
+                        maxCnt = s.MaxCount;
+                    if (s.MinCount < minCnt)
+                        minCnt = s.MinCount;
+
+                    totCnt += s.TotalCount;
+
                     realTime += ((double)s.Realtime) / 1000000.0;
-                    liveTime += ((double)s.Livetime) / 1000000.0;
+                    liveTime += ((double)s.Livetime) / 1000000.0;                    
                 }
 
-                ShowSpectrum(title, chans, maxChan);
+                ShowSpectrum(title, chans, maxCnt, minCnt);
 
                 lblRealtime.Text = "Realtime:" + realTime;
                 lblLivetime.Text = "Livetime:" + liveTime;
@@ -645,10 +667,9 @@ namespace crash
                 lblAltitudeEnd.Text = "Alt. end: " + s2.AltitudeEnd;
                 lblGpsTimeStart.Text = "Gps time start: " + s1.GpsTimeStart;
                 lblGpsTimeEnd.Text = "Gps time end: " + s2.GpsTimeEnd;
-
-                lblMaxCount.Text = "";
-                lblMinCount.Text = "";
-                lblTotalCount.Text = "";
+                lblMaxCount.Text = "Max count: " + maxCnt;
+                lblMinCount.Text = "Min count: " + minCnt;
+                lblTotalCount.Text = "Total count: " + totCnt;
 
                 formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
@@ -658,6 +679,46 @@ namespace crash
 
         private void btnShow3D_Click(object sender, EventArgs e)
         {            
+        }
+
+        private void cboxBackground_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if(String.IsNullOrEmpty(cboxBackground.Text))
+            {
+                bkgSpec = null;
+                return;
+            }
+
+            bool first = true;
+            float filesLoaded = 0;
+            float[] spec = null;            
+            string sessionName = cboxBackground.Text;
+            int channelCount = 0;            
+
+            string dir = settings.SessionDirectory + Path.DirectorySeparatorChar + sessionName + Path.DirectorySeparatorChar + "json";
+            string[] files = Directory.GetFiles(dir, "*.json", SearchOption.TopDirectoryOnly);
+            foreach(string filename in files)
+            {
+                string json = File.ReadAllText(filename);
+                burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
+                if(first)
+                {
+                    channelCount = Convert.ToInt32(msg.Arguments["num_channels"]);                    
+                    spec = new float[channelCount];
+                    first = false;
+                }   
+             
+                Spectrum s = new Spectrum(msg);                
+                for(int i=0; i<s.Channels.Count; i++)               
+                    spec[i] += s.Channels[i];        
+
+                filesLoaded += 1;
+            }
+
+            for (int i = 0; i < spec.Length; i++)            
+                spec[i] /= filesLoaded;            
+
+            bkgSpec = spec;            
         }
     }    
 }

@@ -1063,6 +1063,7 @@
             this.cboxBackground.Name = "cboxBackground";
             this.cboxBackground.Size = new System.Drawing.Size(258, 23);
             this.cboxBackground.TabIndex = 23;
+            this.cboxBackground.SelectedValueChanged += new System.EventHandler(this.cboxBackground_SelectedValueChanged);
             // 
             // cbStoreChn
             // 
