@@ -5,7 +5,6 @@ Make waterfall and ROI history "scrollable"
 Fix preview UI
 
 Implement background subtraction from spectrums
-Implement livetime adjustment for background spectrum (also for multiple spectrums)
 Check that session and background has compatible num_channels
 
 Implement loading of old sessions
