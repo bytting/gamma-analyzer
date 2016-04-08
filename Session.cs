@@ -18,19 +18,28 @@
 // Authors: Dag robole,
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace crash
 {
     public class Session
     {
         public string Name { get; private set; }
+        public float NumChannels { get; private set; }
         public float MaxChannelCount { get; private set; }
-        public float MinChannelCount { get; private set; }
+        public float MinChannelCount { get; private set; }        
         public List<Spectrum> Spectrums { get; private set; }
+
+        public Session()
+        {
+            Name = String.Empty;
+            Spectrums = new List<Spectrum>();
+        }
 
         public Session(string name)
         {
@@ -41,6 +50,7 @@ namespace crash
         public void Add(Spectrum spec)
         {
             Spectrums.Add(spec);
+            NumChannels = spec.NumChannels;
 
             if (spec.MaxCount > MaxChannelCount)
                 MaxChannelCount = spec.MaxCount;
@@ -50,7 +60,49 @@ namespace crash
 
         public void Clear()
         {
+            Name = String.Empty;
             Spectrums.Clear();
+        }
+
+        public bool Load(string sessionDirectory, string sessionName)
+        {            
+            string dir = sessionDirectory + Path.DirectorySeparatorChar + sessionName + Path.DirectorySeparatorChar + "json";
+            if (!Directory.Exists(dir))
+                return false;
+
+            Clear();
+            Name = sessionName;
+            string[] files = Directory.GetFiles(dir, "*.json", SearchOption.TopDirectoryOnly);
+
+            foreach (string filename in files)
+            {
+                string json = File.ReadAllText(filename);
+                burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
+                Add(new Spectrum(msg));                                                
+            }
+            return true;
+        }
+
+        public float[] GetBackground(float livetime)
+        {
+            if (Spectrums.Count < 1)
+                return null;
+
+            float[] spec = new float[(int)NumChannels];
+
+            foreach(Spectrum s in Spectrums)            
+                for (int i = 0; i < s.Channels.Count; i++)                
+                    spec[i] += s.Channels[i];                                     
+            
+            float scale = livetime / Spectrums[0].Livetime;
+
+            for (int i = 0; i < spec.Length; i++)
+            {
+                spec[i] /= (float)Spectrums.Count;
+                spec[i] *= scale;                
+            }
+
+            return spec;
         }
 
         public float GetMaxCountInROI(int start, int end)

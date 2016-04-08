@@ -38,6 +38,8 @@
             this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemPreferences = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.status = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tools = new System.Windows.Forms.ToolStrip();
@@ -115,8 +117,6 @@
             this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.btnSendClose = new System.Windows.Forms.Button();
             this.pageBackground = new System.Windows.Forms.TabPage();
-            this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -196,9 +196,24 @@
             // menuItemPreferences
             // 
             this.menuItemPreferences.Name = "menuItemPreferences";
-            this.menuItemPreferences.Size = new System.Drawing.Size(152, 22);
+            this.menuItemPreferences.Size = new System.Drawing.Size(135, 22);
             this.menuItemPreferences.Text = "&Preferences";
             this.menuItemPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
+            // 
+            // menuItemHelp
+            // 
+            this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemAbout});
+            this.menuItemHelp.Name = "menuItemHelp";
+            this.menuItemHelp.Size = new System.Drawing.Size(44, 20);
+            this.menuItemHelp.Text = "&Help";
+            // 
+            // menuItemAbout
+            // 
+            this.menuItemAbout.Name = "menuItemAbout";
+            this.menuItemAbout.Size = new System.Drawing.Size(107, 22);
+            this.menuItemAbout.Text = "&About";
+            this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
             // 
             // status
             // 
@@ -1098,21 +1113,6 @@
             this.pageBackground.Size = new System.Drawing.Size(1200, 634);
             this.pageBackground.TabIndex = 3;
             this.pageBackground.Text = "Background";
-            // 
-            // menuItemHelp
-            // 
-            this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemAbout});
-            this.menuItemHelp.Name = "menuItemHelp";
-            this.menuItemHelp.Size = new System.Drawing.Size(44, 20);
-            this.menuItemHelp.Text = "&Help";
-            // 
-            // menuItemAbout
-            // 
-            this.menuItemAbout.Name = "menuItemAbout";
-            this.menuItemAbout.Size = new System.Drawing.Size(152, 22);
-            this.menuItemAbout.Text = "&About";
-            this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
             // 
             // FormMain
             // 

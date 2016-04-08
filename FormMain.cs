@@ -32,7 +32,6 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using ZedGraph;
-using Newtonsoft.Json;
 
 namespace crash
 {
@@ -65,6 +64,7 @@ namespace crash
         PointPairList bkgGraphList = new PointPairList();
 
         float[] bkgSpec = null;
+        float bkgScale = 1f;
 
         public FormMain()
         {
@@ -89,7 +89,7 @@ namespace crash
             if (File.Exists(SettingsFile))            
                 LoadSettings();
 
-            LoadBackgroundSessions();
+            PopulateBackgroundSessions();
 
             netThread.Start();
             while (!netThread.IsAlive);            
@@ -149,15 +149,15 @@ namespace crash
             SaveSettings();
         }        
 
-        public void LoadBackgroundSessions()
+        public void PopulateBackgroundSessions()
         {
             cboxBackground.Items.Clear();
             cboxBackground.Items.Add("");
             string[] sessionDirectories = Directory.GetDirectories(settings.SessionDirectory);
             foreach(string sessDir in sessionDirectories)
-            {
-                cboxBackground.Items.Add(new DirectoryInfo(sessDir).Name);
-            }            
+                cboxBackground.Items.Add(new DirectoryInfo(sessDir).Name);            
+            bkgSpec = null;
+            bkgScale = 1.0f;
         }
 
         private void SaveSettings()
@@ -235,7 +235,7 @@ namespace crash
 
                 case "session_finished":
                     Utils.Log.Add("Session " + msg.Arguments["session_name"] + " finished");
-                    LoadBackgroundSessions();
+                    PopulateBackgroundSessions();
                     break;
 
                 case "error":
@@ -570,26 +570,26 @@ namespace crash
             pane.YAxis.Scale.Min = minCount;
             pane.YAxis.Scale.Max = maxCount + (maxCount / 10.0);
 
-            pane.CurveList.Clear();
+            pane.CurveList.Clear();            
 
             if (bkgSpec != null)
             {
                 bkgGraphList.Clear();
                 for (int i = 0; i < bkgSpec.Length; i++)
-                    bkgGraphList.Add((double)i, (double)bkgSpec[i]);
+                    bkgGraphList.Add((double)i, (double)bkgSpec[i] * bkgScale);
 
-                LineItem bkgCurve = pane.AddCurve("Background", bkgGraphList, Color.Blue, SymbolType.None);
+                LineItem bkgCurve = pane.AddCurve("Background", bkgGraphList, Color.Blue, SymbolType.None);                
             }
 
-            sessionGraphList.Clear();
+            sessionGraphList.Clear();            
             for (int i = 0; i < channels.Length; i++)
                 sessionGraphList.Add((double)i, (double)channels[i]);
 
-            LineItem curve = pane.AddCurve("Spectrum", sessionGraphList, Color.Red, SymbolType.None);
-            curve.Line.Fill = new Fill(SystemColors.ButtonFace, Color.Red, 45F);
+            LineItem curve = pane.AddCurve("Spectrum", sessionGraphList, Color.Red, SymbolType.None);                                                
+            
             pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
             pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
-            pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);            
+            pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);                        
 
             graphSession.RestoreScale(pane);
             graphSession.AxisChange();
@@ -602,6 +602,7 @@ namespace crash
                 return;
             else if (lbSession.SelectedItems.Count == 1)
             {
+                bkgScale = 1;
                 Spectrum s = lbSession.SelectedItem as Spectrum;
                 ShowSpectrum(s.SessionName + " - " + s.SessionIndex.ToString(), s.Channels.ToArray(), s.MaxCount, s.MinCount);
                 lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
@@ -625,7 +626,9 @@ namespace crash
                 formROIHistory.SetSelectedSessionIndex(s.SessionIndex);
             }
             else
-            {                
+            {
+                bkgScale = (float)lbSession.SelectedIndices.Count;
+
                 Spectrum s1 = (Spectrum)lbSession.Items[lbSession.SelectedIndices[lbSession.SelectedIndices.Count - 1]];
                 Spectrum s2 = (Spectrum)lbSession.Items[lbSession.SelectedIndices[0]];
 
@@ -682,43 +685,22 @@ namespace crash
         }
 
         private void cboxBackground_SelectedValueChanged(object sender, EventArgs e)
-        {
+        {            
             if(String.IsNullOrEmpty(cboxBackground.Text))
             {
                 bkgSpec = null;
                 return;
             }
 
-            bool first = true;
-            float filesLoaded = 0;
-            float[] spec = null;            
-            string sessionName = cboxBackground.Text;
-            int channelCount = 0;            
-
-            string dir = settings.SessionDirectory + Path.DirectorySeparatorChar + sessionName + Path.DirectorySeparatorChar + "json";
-            string[] files = Directory.GetFiles(dir, "*.json", SearchOption.TopDirectoryOnly);
-            foreach(string filename in files)
+            if (session == null || session.Spectrums.Count < 1)
             {
-                string json = File.ReadAllText(filename);
-                burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
-                if(first)
-                {
-                    channelCount = Convert.ToInt32(msg.Arguments["num_channels"]);                    
-                    spec = new float[channelCount];
-                    first = false;
-                }   
-             
-                Spectrum s = new Spectrum(msg);                
-                for(int i=0; i<s.Channels.Count; i++)               
-                    spec[i] += s.Channels[i];        
-
-                filesLoaded += 1;
+                MessageBox.Show("You must have a loaded session");
+                return;
             }
-
-            for (int i = 0; i < spec.Length; i++)            
-                spec[i] /= filesLoaded;            
-
-            bkgSpec = spec;            
+            
+            Session bkgSession = new Session();
+            bkgSession.Load(settings.SessionDirectory, cboxBackground.Text);
+            bkgSpec = bkgSession.GetBackground(session.Spectrums[0].Livetime);
         }
 
         private void menuItemAbout_Click(object sender, EventArgs e)
