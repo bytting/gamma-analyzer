@@ -92,6 +92,7 @@
     <Compile Include="Burn_NetService_IO.cs" />
     <Compile Include="Burn_NetService_Proto.cs" />
     <Compile Include="CustomEvents.cs" />
+    <Compile Include="Detector.cs" />
     <Compile Include="FormConnect.cs">
       <SubType>Form</SubType>
     </Compile>

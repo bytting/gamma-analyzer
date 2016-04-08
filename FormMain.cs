@@ -51,7 +51,8 @@ namespace crash
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
         bool connected = false;
-        Session session = null;        
+        Session session = new Session();
+        Session background = new Session();
         
         FormConnect formConnect = new FormConnect();        
         FormWaterfallLive formWaterfallLive = new FormWaterfallLive();
@@ -62,8 +63,7 @@ namespace crash
         PointPairList setupGraphList = new PointPairList();
         PointPairList sessionGraphList = new PointPairList();
         PointPairList bkgGraphList = new PointPairList();
-
-        float[] bkgSpec = null;
+        
         float bkgScale = 1f;
 
         public FormMain()
@@ -96,7 +96,7 @@ namespace crash
                     
             timer.Interval = 10;
             timer.Tick += timer_Tick;
-            timer.Start();                                    
+            timer.Start();            
         }
 
         void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
@@ -151,12 +151,14 @@ namespace crash
 
         public void PopulateBackgroundSessions()
         {
-            cboxBackground.Items.Clear();
-            cboxBackground.Items.Add("");
-            string[] sessionDirectories = Directory.GetDirectories(settings.SessionDirectory);
-            foreach(string sessDir in sessionDirectories)
-                cboxBackground.Items.Add(new DirectoryInfo(sessDir).Name);            
-            bkgSpec = null;
+            if (Directory.Exists(settings.SessionDirectory))
+            {
+                cboxBackground.Items.Clear();
+                cboxBackground.Items.Add("");
+                string[] sessionDirectories = Directory.GetDirectories(settings.SessionDirectory);
+                foreach (string sessDir in sessionDirectories)
+                    cboxBackground.Items.Add(new DirectoryInfo(sessDir).Name);
+            }
             bkgScale = 1.0f;
         }
 
@@ -170,10 +172,13 @@ namespace crash
 
         private void LoadSettings()
         {
-            StreamReader sr = new StreamReader(SettingsFile);
-            XmlSerializer x = new XmlSerializer(settings.GetType());
-            settings = x.Deserialize(sr) as Settings;
-            sr.Close();
+            if (File.Exists(SettingsFile))
+            {
+                StreamReader sr = new StreamReader(SettingsFile);
+                XmlSerializer x = new XmlSerializer(settings.GetType());
+                settings = x.Deserialize(sr) as Settings;
+                sr.Close();
+            }
         }        
 
         private bool dispatchRecvMsg(burn.Message msg)
@@ -572,11 +577,12 @@ namespace crash
 
             pane.CurveList.Clear();            
 
-            if (bkgSpec != null)
+            if(!background.IsEmpty)            
             {
+                float[] spec = background.GetAdjustedCounts(session.Spectrums[0].Livetime);
                 bkgGraphList.Clear();
-                for (int i = 0; i < bkgSpec.Length; i++)
-                    bkgGraphList.Add((double)i, (double)bkgSpec[i] * bkgScale);
+                for (int i = 0; i < spec.Length; i++)
+                    bkgGraphList.Add((double)i, (double)spec[i] * bkgScale);
 
                 LineItem bkgCurve = pane.AddCurve("Background", bkgGraphList, Color.Blue, SymbolType.None);                
             }
@@ -688,25 +694,23 @@ namespace crash
         {            
             if(String.IsNullOrEmpty(cboxBackground.Text))
             {
-                bkgSpec = null;
+                background.Clear();
                 return;
             }
 
-            if (session == null || session.Spectrums.Count < 1)
+            if (session.IsEmpty)
             {
                 MessageBox.Show("You must have a loaded session");
                 return;
             }
-            
-            Session bkgSession = new Session();
-            bkgSession.Load(settings.SessionDirectory, cboxBackground.Text);
-            bkgSpec = bkgSession.GetBackground(session.Spectrums[0].Livetime);
+                        
+            background.Load(settings.SessionDirectory, cboxBackground.Text);            
         }
 
         private void menuItemAbout_Click(object sender, EventArgs e)
         {
             About about = new About();
-            about.ShowDialog();
+            about.ShowDialog();            
         }
     }    
 }

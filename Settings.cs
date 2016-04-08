@@ -25,19 +25,10 @@ using System.Xml;
 using System.Xml.Serialization;
 
 namespace crash
-{
-    [Serializable()]
-    public class Detector
-    {
-        public string Name;
-        public string SerialNumber;
-        public string Type;
-        public int MaxChannels;
-    }
-
+{    
     [Serializable()]
     public class Settings
-    {        
+    {
         public List<Detector> Detectors = new List<Detector>();
         public string DefaultDetector;
         public string DefaultDetectorType;
@@ -45,5 +36,9 @@ namespace crash
         public string SessionDirectory;
         public string LastIP;
         public string LastPort;
+
+        public Settings()
+        {        
+        }
     }    
 }

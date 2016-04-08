@@ -58,9 +58,21 @@ namespace crash
                 MinChannelCount = spec.MinCount;
         }
 
+        public bool IsEmpty
+        {
+            get
+            {
+                return Spectrums.Count > 0;
+            }
+            private set {}            
+        }
+
         public void Clear()
         {
             Name = String.Empty;
+            NumChannels = 0;
+            MaxChannelCount = 0;
+            MinChannelCount = 0;
             Spectrums.Clear();
         }
 
@@ -83,7 +95,7 @@ namespace crash
             return true;
         }
 
-        public float[] GetBackground(float livetime)
+        public float[] GetAdjustedCounts(float livetime)
         {
             if (Spectrums.Count < 1)
                 return null;
