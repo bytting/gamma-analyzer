@@ -16,26 +16,34 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 // Authors: Dag robole,
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
 namespace crash
-{    
+{
     [Serializable()]
-    public class Settings
+    public class DetectorType
     {
-        public List<DetectorType> DetectorTypes = new List<DetectorType>();
-        public List<Detector> Detectors = new List<Detector>();
-        public string DefaultDetector;
-        public string DefaultDetectorType;
-        public int DefaultNrChannels;
-        public string SessionDirectory;
-        public string LastIP;
-        public string LastPort;        
-    }    
+        public string Name { get; set; }        
+        public int MaxNumChannels { get; set; }        
+        public int MinHV { get; set; }
+        public int MaxHV { get; set; }      
+  
+        public DetectorType()
+        {
+        }
+
+        public DetectorType(string name, int maxChannels, int minHV, int maxHV)
+        {
+            Name = name;
+            MaxNumChannels = maxChannels;
+            MinHV = minHV;
+            MaxHV = maxHV;
+        }
+    }
 }

@@ -508,12 +508,7 @@ namespace crash
             formWaterfallLive.Show();
             formWaterfallLive.BringToFront();
             formWaterfallLive.UpdatePane();
-        }
-                
-        private void btnMenuBackgrounds_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = pageBackground;
-        }
+        }        
 
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -711,6 +706,55 @@ namespace crash
         {
             About about = new About();
             about.ShowDialog();            
+        }
+
+        private void btnMenuBackgrounds_Click(object sender, EventArgs e)
+        {
+            PopulateDetectors();
+            tabs.SelectedTab = pageDetectors;
+        }
+
+        private void btnDetectorsAdd_Click(object sender, EventArgs e)
+        {
+            FormAddDetector form = new FormAddDetector(settings.DetectorTypes);
+            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Detector det = new Detector();
+                det.TypeName = form.DetectorType;
+                det.Serialnumber = form.Serialnumber;
+                det.CurrentNumChannels = form.NumChannels;
+                det.CurrentHV = form.HV;
+                det.CurrentCoarseGain = form.CoarseGain;
+                det.CurrentFineGain = form.FineGain;
+                det.CurrentEnergySlope = form.EnergySlope;
+                det.CurrentLivetime = form.Livetime;
+                det.CurrentLLD = form.LLD;
+                det.CurrentULD = form.ULD;
+                settings.Detectors.Add(det);
+
+                PopulateDetectors();
+            }
+        }
+
+        private void PopulateDetectors()
+        {
+            lvDetectors.Items.Clear();
+            foreach(Detector d in settings.Detectors)
+            {
+                ListViewItem item = new ListViewItem(new string[] { 
+                    d.TypeName, 
+                    d.Serialnumber, 
+                    d.CurrentNumChannels.ToString(), 
+                    d.CurrentHV.ToString(), 
+                    d.CurrentCoarseGain.ToString(), 
+                    d.CurrentFineGain.ToString(),
+                    d.CurrentEnergySlope.ToString(),
+                    d.CurrentLivetime.ToString(),
+                    d.CurrentLLD.ToString(),
+                    d.CurrentULD.ToString()
+                });
+                lvDetectors.Items.Add(item);
+            }
         }
     }    
 }

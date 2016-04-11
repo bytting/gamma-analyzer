@@ -43,22 +43,12 @@
             this.status = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tools = new System.Windows.Forms.ToolStrip();
-            this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnPreferences = new System.Windows.Forms.ToolStripButton();
-            this.btnShowLog = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnConnect = new System.Windows.Forms.ToolStripButton();
-            this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnShowMap = new System.Windows.Forms.ToolStripButton();
-            this.btnShowWaterfallLive = new System.Windows.Forms.ToolStripButton();
             this.lblInterface = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
-            this.btnShowWaterfallHist = new System.Windows.Forms.ToolStripButton();
-            this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
-            this.btnShow3D = new System.Windows.Forms.ToolStripButton();
             this.tabs = new TabControlWizard.TabControlWizard();
             this.pageSetup = new System.Windows.Forms.TabPage();
             this.graphSetup = new ZedGraph.ZedGraphControl();
@@ -81,9 +71,6 @@
             this.btnSetupStart = new System.Windows.Forms.Button();
             this.pageMenu = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnMenuSetup = new System.Windows.Forms.Button();
-            this.btnMenuBackgrounds = new System.Windows.Forms.Button();
-            this.btnMenuSession = new System.Windows.Forms.Button();
             this.pageSession = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.lbSession = new System.Windows.Forms.ListBox();
@@ -116,7 +103,37 @@
             this.cboxBackground = new System.Windows.Forms.ComboBox();
             this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.btnSendClose = new System.Windows.Forms.Button();
-            this.pageBackground = new System.Windows.Forms.TabPage();
+            this.pageDetectors = new System.Windows.Forms.TabPage();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lvDetectors = new System.Windows.Forms.ListView();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnDetectorsOk = new System.Windows.Forms.Button();
+            this.btnDetectorsCancel = new System.Windows.Forms.Button();
+            this.btnMenuSetup = new System.Windows.Forms.Button();
+            this.btnMenuBackgrounds = new System.Windows.Forms.Button();
+            this.btnMenuSession = new System.Windows.Forms.Button();
+            this.btnDetectorsAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.btnPreferences = new System.Windows.Forms.ToolStripButton();
+            this.btnShowLog = new System.Windows.Forms.ToolStripButton();
+            this.btnConnect = new System.Windows.Forms.ToolStripButton();
+            this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
+            this.btnShowMap = new System.Windows.Forms.ToolStripButton();
+            this.btnShowWaterfallLive = new System.Windows.Forms.ToolStripButton();
+            this.btnShowWaterfallHist = new System.Windows.Forms.ToolStripButton();
+            this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
+            this.btnShow3D = new System.Windows.Forms.ToolStripButton();
+            this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderSerialnumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderNumChannels = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderCoarseGain = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderFineGain = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderSlope = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderLivetime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderLLD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderULD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -133,6 +150,12 @@
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tblSession.SuspendLayout();
+            this.pageDetectors.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -258,109 +281,20 @@
             this.tools.TabIndex = 2;
             this.tools.Text = "toolStrip1";
             // 
-            // btnBack
-            // 
-            this.btnBack.AutoSize = false;
-            this.btnBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnBack.Image = global::crash.Properties.Resources.home_32;
-            this.btnBack.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnBack.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(38, 38);
-            this.btnBack.Text = "toolStripButton1";
-            this.btnBack.ToolTipText = "Back";
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 40);
-            // 
-            // btnPreferences
-            // 
-            this.btnPreferences.AutoSize = false;
-            this.btnPreferences.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnPreferences.Image = global::crash.Properties.Resources.settings_32;
-            this.btnPreferences.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnPreferences.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPreferences.Name = "btnPreferences";
-            this.btnPreferences.Size = new System.Drawing.Size(38, 38);
-            this.btnPreferences.Text = "toolStripButton1";
-            this.btnPreferences.ToolTipText = "Open preferences";
-            this.btnPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
-            // 
-            // btnShowLog
-            // 
-            this.btnShowLog.AutoSize = false;
-            this.btnShowLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowLog.Image = global::crash.Properties.Resources.log_32;
-            this.btnShowLog.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowLog.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowLog.Name = "btnShowLog";
-            this.btnShowLog.Size = new System.Drawing.Size(38, 38);
-            this.btnShowLog.Text = "toolStripButton1";
-            this.btnShowLog.ToolTipText = "Show log";
-            this.btnShowLog.Click += new System.EventHandler(this.btnShowLog_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 40);
             // 
-            // btnConnect
-            // 
-            this.btnConnect.AutoSize = false;
-            this.btnConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnConnect.Image = global::crash.Properties.Resources.connect_32;
-            this.btnConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(38, 38);
-            this.btnConnect.Text = "Connect";
-            this.btnConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
-            // 
-            // btnDisconnect
-            // 
-            this.btnDisconnect.AutoSize = false;
-            this.btnDisconnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDisconnect.Image = global::crash.Properties.Resources.disconnect_32;
-            this.btnDisconnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnDisconnect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(38, 38);
-            this.btnDisconnect.Text = "Disconnect";
-            this.btnDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
-            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 40);
-            // 
-            // btnShowMap
-            // 
-            this.btnShowMap.AutoSize = false;
-            this.btnShowMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowMap.Image = global::crash.Properties.Resources.map_32;
-            this.btnShowMap.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowMap.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowMap.Name = "btnShowMap";
-            this.btnShowMap.Size = new System.Drawing.Size(38, 38);
-            this.btnShowMap.Text = "toolStripButton2";
-            this.btnShowMap.ToolTipText = "Show map";
-            this.btnShowMap.Click += new System.EventHandler(this.btnShowMap_Click);
-            // 
-            // btnShowWaterfallLive
-            // 
-            this.btnShowWaterfallLive.AutoSize = false;
-            this.btnShowWaterfallLive.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowWaterfallLive.Image = global::crash.Properties.Resources.waterfall_live_32;
-            this.btnShowWaterfallLive.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowWaterfallLive.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowWaterfallLive.Name = "btnShowWaterfallLive";
-            this.btnShowWaterfallLive.Size = new System.Drawing.Size(38, 38);
-            this.btnShowWaterfallLive.Text = "toolStripButton2";
-            this.btnShowWaterfallLive.ToolTipText = "Show waterfall live";
-            this.btnShowWaterfallLive.Click += new System.EventHandler(this.btnShowWaterfall_Click);
             // 
             // lblInterface
             // 
@@ -383,51 +317,12 @@
             this.lblConnectionStatus.Size = new System.Drawing.Size(130, 37);
             this.lblConnectionStatus.Text = "<lblConnectionStatus>";
             // 
-            // btnShowWaterfallHist
-            // 
-            this.btnShowWaterfallHist.AutoSize = false;
-            this.btnShowWaterfallHist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowWaterfallHist.Image = global::crash.Properties.Resources.waterfall_history_32;
-            this.btnShowWaterfallHist.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowWaterfallHist.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowWaterfallHist.Name = "btnShowWaterfallHist";
-            this.btnShowWaterfallHist.Size = new System.Drawing.Size(38, 38);
-            this.btnShowWaterfallHist.Text = "toolStripButton1";
-            this.btnShowWaterfallHist.ToolTipText = "Show waterfall history";
-            this.btnShowWaterfallHist.Click += new System.EventHandler(this.btnShowWaterfallHist_Click);
-            // 
-            // btnShowROIChart
-            // 
-            this.btnShowROIChart.AutoSize = false;
-            this.btnShowROIChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowROIChart.Image = global::crash.Properties.Resources.roitable_history_32;
-            this.btnShowROIChart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowROIChart.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowROIChart.Name = "btnShowROIChart";
-            this.btnShowROIChart.Size = new System.Drawing.Size(38, 38);
-            this.btnShowROIChart.Text = "toolStripButton1";
-            this.btnShowROIChart.ToolTipText = "Show ROI history";
-            this.btnShowROIChart.Click += new System.EventHandler(this.btnShowROIChart_Click);
-            // 
-            // btnShow3D
-            // 
-            this.btnShow3D.AutoSize = false;
-            this.btnShow3D.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShow3D.Image = global::crash.Properties.Resources._3D_32;
-            this.btnShow3D.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShow3D.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShow3D.Name = "btnShow3D";
-            this.btnShow3D.Size = new System.Drawing.Size(38, 38);
-            this.btnShow3D.Text = "toolStripButton1";
-            this.btnShow3D.ToolTipText = "Show 3D session";
-            this.btnShow3D.Click += new System.EventHandler(this.btnShow3D_Click);
-            // 
             // tabs
             // 
             this.tabs.Controls.Add(this.pageSetup);
             this.tabs.Controls.Add(this.pageMenu);
             this.tabs.Controls.Add(this.pageSession);
-            this.tabs.Controls.Add(this.pageBackground);
+            this.tabs.Controls.Add(this.pageDetectors);
             this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabs.Location = new System.Drawing.Point(0, 64);
             this.tabs.Name = "tabs";
@@ -667,8 +562,8 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.btnMenuSetup);
             this.flowLayoutPanel1.Controls.Add(this.btnMenuBackgrounds);
+            this.flowLayoutPanel1.Controls.Add(this.btnMenuSetup);
             this.flowLayoutPanel1.Controls.Add(this.btnMenuSession);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
@@ -676,60 +571,6 @@
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(44, 47, 44, 47);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1194, 628);
             this.flowLayoutPanel1.TabIndex = 1;
-            // 
-            // btnMenuSetup
-            // 
-            this.btnMenuSetup.FlatAppearance.BorderSize = 0;
-            this.btnMenuSetup.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuSetup.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuSetup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMenuSetup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuSetup.Image = global::crash.Properties.Resources.setup_128;
-            this.btnMenuSetup.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuSetup.Location = new System.Drawing.Point(47, 50);
-            this.btnMenuSetup.Name = "btnMenuSetup";
-            this.btnMenuSetup.Size = new System.Drawing.Size(160, 170);
-            this.btnMenuSetup.TabIndex = 0;
-            this.btnMenuSetup.Text = "Calibrate";
-            this.btnMenuSetup.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuSetup.UseVisualStyleBackColor = true;
-            this.btnMenuSetup.Click += new System.EventHandler(this.btnMenuSpec_Click);
-            // 
-            // btnMenuBackgrounds
-            // 
-            this.btnMenuBackgrounds.FlatAppearance.BorderSize = 0;
-            this.btnMenuBackgrounds.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuBackgrounds.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuBackgrounds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMenuBackgrounds.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuBackgrounds.Image = global::crash.Properties.Resources.background_128;
-            this.btnMenuBackgrounds.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuBackgrounds.Location = new System.Drawing.Point(213, 50);
-            this.btnMenuBackgrounds.Name = "btnMenuBackgrounds";
-            this.btnMenuBackgrounds.Size = new System.Drawing.Size(160, 170);
-            this.btnMenuBackgrounds.TabIndex = 3;
-            this.btnMenuBackgrounds.Text = "Backgrounds";
-            this.btnMenuBackgrounds.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuBackgrounds.UseVisualStyleBackColor = true;
-            this.btnMenuBackgrounds.Click += new System.EventHandler(this.btnMenuBackgrounds_Click);
-            // 
-            // btnMenuSession
-            // 
-            this.btnMenuSession.FlatAppearance.BorderSize = 0;
-            this.btnMenuSession.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuSession.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuSession.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMenuSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuSession.Image = global::crash.Properties.Resources.map_128;
-            this.btnMenuSession.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuSession.Location = new System.Drawing.Point(379, 50);
-            this.btnMenuSession.Name = "btnMenuSession";
-            this.btnMenuSession.Size = new System.Drawing.Size(160, 170);
-            this.btnMenuSession.TabIndex = 2;
-            this.btnMenuSession.Text = "Sessions";
-            this.btnMenuSession.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuSession.UseVisualStyleBackColor = true;
-            this.btnMenuSession.Click += new System.EventHandler(this.btnMenuSession_Click);
             // 
             // pageSession
             // 
@@ -758,7 +599,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.graphSession);
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel2);
-            this.splitContainer2.Size = new System.Drawing.Size(1194, 555);
+            this.splitContainer2.Size = new System.Drawing.Size(1194, 557);
             this.splitContainer2.SplitterDistance = 202;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 6;
@@ -773,7 +614,7 @@
             this.lbSession.Location = new System.Drawing.Point(0, 0);
             this.lbSession.Name = "lbSession";
             this.lbSession.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSession.Size = new System.Drawing.Size(200, 553);
+            this.lbSession.Size = new System.Drawing.Size(200, 555);
             this.lbSession.TabIndex = 7;
             this.lbSession.SelectedIndexChanged += new System.EventHandler(this.lbSession_SelectedIndexChanged);
             // 
@@ -790,7 +631,7 @@
             this.graphSession.ScrollMinX = 0D;
             this.graphSession.ScrollMinY = 0D;
             this.graphSession.ScrollMinY2 = 0D;
-            this.graphSession.Size = new System.Drawing.Size(985, 462);
+            this.graphSession.Size = new System.Drawing.Size(985, 464);
             this.graphSession.TabIndex = 5;
             this.graphSession.UseExtendedPrintDialog = true;
             // 
@@ -1104,15 +945,327 @@
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
             // 
-            // pageBackground
+            // pageDetectors
             // 
-            this.pageBackground.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.pageBackground.Location = new System.Drawing.Point(4, 25);
-            this.pageBackground.Name = "pageBackground";
-            this.pageBackground.Padding = new System.Windows.Forms.Padding(3);
-            this.pageBackground.Size = new System.Drawing.Size(1200, 634);
-            this.pageBackground.TabIndex = 3;
-            this.pageBackground.Text = "Background";
+            this.pageDetectors.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pageDetectors.Controls.Add(this.splitContainer1);
+            this.pageDetectors.Controls.Add(this.toolStrip1);
+            this.pageDetectors.Controls.Add(this.panel3);
+            this.pageDetectors.Location = new System.Drawing.Point(4, 25);
+            this.pageDetectors.Name = "pageDetectors";
+            this.pageDetectors.Padding = new System.Windows.Forms.Padding(3);
+            this.pageDetectors.Size = new System.Drawing.Size(1200, 634);
+            this.pageDetectors.TabIndex = 3;
+            this.pageDetectors.Text = "Detectors";
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.btnDetectorsCancel);
+            this.panel3.Controls.Add(this.btnDetectorsOk);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(3, 600);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(1194, 31);
+            this.panel3.TabIndex = 1;
+            // 
+            // lvDetectors
+            // 
+            this.lvDetectors.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderType,
+            this.columnHeaderSerialnumber,
+            this.columnHeaderNumChannels,
+            this.columnHeaderHV,
+            this.columnHeaderCoarseGain,
+            this.columnHeaderFineGain,
+            this.columnHeaderSlope,
+            this.columnHeaderLivetime,
+            this.columnHeaderLLD,
+            this.columnHeaderULD});
+            this.lvDetectors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvDetectors.FullRowSelect = true;
+            this.lvDetectors.Location = new System.Drawing.Point(0, 0);
+            this.lvDetectors.MultiSelect = false;
+            this.lvDetectors.Name = "lvDetectors";
+            this.lvDetectors.Size = new System.Drawing.Size(620, 572);
+            this.lvDetectors.TabIndex = 2;
+            this.lvDetectors.UseCompatibleStateImageBehavior = false;
+            this.lvDetectors.View = System.Windows.Forms.View.Details;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnDetectorsAdd});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1194, 25);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnDetectorsOk
+            // 
+            this.btnDetectorsOk.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnDetectorsOk.Location = new System.Drawing.Point(1119, 0);
+            this.btnDetectorsOk.Name = "btnDetectorsOk";
+            this.btnDetectorsOk.Size = new System.Drawing.Size(75, 31);
+            this.btnDetectorsOk.TabIndex = 0;
+            this.btnDetectorsOk.Text = "Ok";
+            this.btnDetectorsOk.UseVisualStyleBackColor = true;
+            // 
+            // btnDetectorsCancel
+            // 
+            this.btnDetectorsCancel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnDetectorsCancel.Location = new System.Drawing.Point(1044, 0);
+            this.btnDetectorsCancel.Name = "btnDetectorsCancel";
+            this.btnDetectorsCancel.Size = new System.Drawing.Size(75, 31);
+            this.btnDetectorsCancel.TabIndex = 1;
+            this.btnDetectorsCancel.Text = "Cancel";
+            this.btnDetectorsCancel.UseVisualStyleBackColor = true;
+            // 
+            // btnMenuSetup
+            // 
+            this.btnMenuSetup.FlatAppearance.BorderSize = 0;
+            this.btnMenuSetup.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuSetup.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuSetup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuSetup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMenuSetup.Image = global::crash.Properties.Resources.setup_128;
+            this.btnMenuSetup.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnMenuSetup.Location = new System.Drawing.Point(213, 50);
+            this.btnMenuSetup.Name = "btnMenuSetup";
+            this.btnMenuSetup.Size = new System.Drawing.Size(160, 170);
+            this.btnMenuSetup.TabIndex = 0;
+            this.btnMenuSetup.Text = "Calibrate";
+            this.btnMenuSetup.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuSetup.UseVisualStyleBackColor = true;
+            this.btnMenuSetup.Click += new System.EventHandler(this.btnMenuSpec_Click);
+            // 
+            // btnMenuBackgrounds
+            // 
+            this.btnMenuBackgrounds.FlatAppearance.BorderSize = 0;
+            this.btnMenuBackgrounds.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuBackgrounds.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuBackgrounds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuBackgrounds.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMenuBackgrounds.Image = global::crash.Properties.Resources.background_128;
+            this.btnMenuBackgrounds.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnMenuBackgrounds.Location = new System.Drawing.Point(47, 50);
+            this.btnMenuBackgrounds.Name = "btnMenuBackgrounds";
+            this.btnMenuBackgrounds.Size = new System.Drawing.Size(160, 170);
+            this.btnMenuBackgrounds.TabIndex = 3;
+            this.btnMenuBackgrounds.Text = "Detectors";
+            this.btnMenuBackgrounds.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuBackgrounds.UseVisualStyleBackColor = true;
+            this.btnMenuBackgrounds.Click += new System.EventHandler(this.btnMenuBackgrounds_Click);
+            // 
+            // btnMenuSession
+            // 
+            this.btnMenuSession.FlatAppearance.BorderSize = 0;
+            this.btnMenuSession.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuSession.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuSession.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMenuSession.Image = global::crash.Properties.Resources.map_128;
+            this.btnMenuSession.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnMenuSession.Location = new System.Drawing.Point(379, 50);
+            this.btnMenuSession.Name = "btnMenuSession";
+            this.btnMenuSession.Size = new System.Drawing.Size(160, 170);
+            this.btnMenuSession.TabIndex = 2;
+            this.btnMenuSession.Text = "Sessions";
+            this.btnMenuSession.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuSession.UseVisualStyleBackColor = true;
+            this.btnMenuSession.Click += new System.EventHandler(this.btnMenuSession_Click);
+            // 
+            // btnDetectorsAdd
+            // 
+            this.btnDetectorsAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDetectorsAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnDetectorsAdd.Image")));
+            this.btnDetectorsAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDetectorsAdd.Name = "btnDetectorsAdd";
+            this.btnDetectorsAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnDetectorsAdd.Text = "Add detector";
+            this.btnDetectorsAdd.Click += new System.EventHandler(this.btnDetectorsAdd_Click);
+            // 
+            // btnBack
+            // 
+            this.btnBack.AutoSize = false;
+            this.btnBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnBack.Image = global::crash.Properties.Resources.home_32;
+            this.btnBack.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnBack.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(38, 38);
+            this.btnBack.Text = "toolStripButton1";
+            this.btnBack.ToolTipText = "Back";
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
+            // btnPreferences
+            // 
+            this.btnPreferences.AutoSize = false;
+            this.btnPreferences.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPreferences.Image = global::crash.Properties.Resources.settings_32;
+            this.btnPreferences.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnPreferences.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPreferences.Name = "btnPreferences";
+            this.btnPreferences.Size = new System.Drawing.Size(38, 38);
+            this.btnPreferences.Text = "toolStripButton1";
+            this.btnPreferences.ToolTipText = "Open preferences";
+            this.btnPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
+            // 
+            // btnShowLog
+            // 
+            this.btnShowLog.AutoSize = false;
+            this.btnShowLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowLog.Image = global::crash.Properties.Resources.log_32;
+            this.btnShowLog.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowLog.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowLog.Name = "btnShowLog";
+            this.btnShowLog.Size = new System.Drawing.Size(38, 38);
+            this.btnShowLog.Text = "toolStripButton1";
+            this.btnShowLog.ToolTipText = "Show log";
+            this.btnShowLog.Click += new System.EventHandler(this.btnShowLog_Click);
+            // 
+            // btnConnect
+            // 
+            this.btnConnect.AutoSize = false;
+            this.btnConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnConnect.Image = global::crash.Properties.Resources.connect_32;
+            this.btnConnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(38, 38);
+            this.btnConnect.Text = "Connect";
+            this.btnConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
+            // 
+            // btnDisconnect
+            // 
+            this.btnDisconnect.AutoSize = false;
+            this.btnDisconnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDisconnect.Image = global::crash.Properties.Resources.disconnect_32;
+            this.btnDisconnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnDisconnect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDisconnect.Name = "btnDisconnect";
+            this.btnDisconnect.Size = new System.Drawing.Size(38, 38);
+            this.btnDisconnect.Text = "Disconnect";
+            this.btnDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
+            // 
+            // btnShowMap
+            // 
+            this.btnShowMap.AutoSize = false;
+            this.btnShowMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowMap.Image = global::crash.Properties.Resources.map_32;
+            this.btnShowMap.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowMap.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowMap.Name = "btnShowMap";
+            this.btnShowMap.Size = new System.Drawing.Size(38, 38);
+            this.btnShowMap.Text = "toolStripButton2";
+            this.btnShowMap.ToolTipText = "Show map";
+            this.btnShowMap.Click += new System.EventHandler(this.btnShowMap_Click);
+            // 
+            // btnShowWaterfallLive
+            // 
+            this.btnShowWaterfallLive.AutoSize = false;
+            this.btnShowWaterfallLive.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowWaterfallLive.Image = global::crash.Properties.Resources.waterfall_live_32;
+            this.btnShowWaterfallLive.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowWaterfallLive.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowWaterfallLive.Name = "btnShowWaterfallLive";
+            this.btnShowWaterfallLive.Size = new System.Drawing.Size(38, 38);
+            this.btnShowWaterfallLive.Text = "toolStripButton2";
+            this.btnShowWaterfallLive.ToolTipText = "Show waterfall live";
+            this.btnShowWaterfallLive.Click += new System.EventHandler(this.btnShowWaterfall_Click);
+            // 
+            // btnShowWaterfallHist
+            // 
+            this.btnShowWaterfallHist.AutoSize = false;
+            this.btnShowWaterfallHist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowWaterfallHist.Image = global::crash.Properties.Resources.waterfall_history_32;
+            this.btnShowWaterfallHist.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowWaterfallHist.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowWaterfallHist.Name = "btnShowWaterfallHist";
+            this.btnShowWaterfallHist.Size = new System.Drawing.Size(38, 38);
+            this.btnShowWaterfallHist.Text = "toolStripButton1";
+            this.btnShowWaterfallHist.ToolTipText = "Show waterfall history";
+            this.btnShowWaterfallHist.Click += new System.EventHandler(this.btnShowWaterfallHist_Click);
+            // 
+            // btnShowROIChart
+            // 
+            this.btnShowROIChart.AutoSize = false;
+            this.btnShowROIChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowROIChart.Image = global::crash.Properties.Resources.roitable_history_32;
+            this.btnShowROIChart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowROIChart.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowROIChart.Name = "btnShowROIChart";
+            this.btnShowROIChart.Size = new System.Drawing.Size(38, 38);
+            this.btnShowROIChart.Text = "toolStripButton1";
+            this.btnShowROIChart.ToolTipText = "Show ROI history";
+            this.btnShowROIChart.Click += new System.EventHandler(this.btnShowROIChart_Click);
+            // 
+            // btnShow3D
+            // 
+            this.btnShow3D.AutoSize = false;
+            this.btnShow3D.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShow3D.Image = global::crash.Properties.Resources._3D_32;
+            this.btnShow3D.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShow3D.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShow3D.Name = "btnShow3D";
+            this.btnShow3D.Size = new System.Drawing.Size(38, 38);
+            this.btnShow3D.Text = "toolStripButton1";
+            this.btnShow3D.ToolTipText = "Show 3D session";
+            this.btnShow3D.Click += new System.EventHandler(this.btnShow3D_Click);
+            // 
+            // columnHeaderType
+            // 
+            this.columnHeaderType.Text = "Type";
+            // 
+            // columnHeaderSerialnumber
+            // 
+            this.columnHeaderSerialnumber.Text = "Serialnumber";
+            // 
+            // columnHeaderNumChannels
+            // 
+            this.columnHeaderNumChannels.Text = "Num. Channels";
+            // 
+            // columnHeaderHV
+            // 
+            this.columnHeaderHV.Text = "Voltage";
+            // 
+            // columnHeaderCoarseGain
+            // 
+            this.columnHeaderCoarseGain.Text = "Coarse gain";
+            // 
+            // columnHeaderFineGain
+            // 
+            this.columnHeaderFineGain.Text = "Fine gain";
+            // 
+            // columnHeaderSlope
+            // 
+            this.columnHeaderSlope.Text = "Energy slope";
+            // 
+            // columnHeaderLivetime
+            // 
+            this.columnHeaderLivetime.Text = "Livetime";
+            // 
+            // columnHeaderLLD
+            // 
+            this.columnHeaderLLD.Text = "LLD";
+            // 
+            // columnHeaderULD
+            // 
+            this.columnHeaderULD.Text = "ULD";
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(3, 28);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.lvDetectors);
+            this.splitContainer1.Size = new System.Drawing.Size(1194, 572);
+            this.splitContainer1.SplitterDistance = 620;
+            this.splitContainer1.TabIndex = 4;
             // 
             // FormMain
             // 
@@ -1154,6 +1307,14 @@
             this.tableLayoutPanel2.PerformLayout();
             this.tblSession.ResumeLayout(false);
             this.tblSession.PerformLayout();
+            this.pageDetectors.ResumeLayout(false);
+            this.pageDetectors.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1215,7 +1376,7 @@
         private System.Windows.Forms.ToolStripButton btnPreferences;
         private System.Windows.Forms.ToolStripButton btnShowWaterfallLive;
         private System.Windows.Forms.Button btnMenuBackgrounds;
-        private System.Windows.Forms.TabPage pageBackground;
+        private System.Windows.Forms.TabPage pageDetectors;
         private System.Windows.Forms.ToolStripLabel lblInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton btnShowWaterfallHist;
@@ -1248,6 +1409,23 @@
         private System.Windows.Forms.Label lblDoserate;
         private System.Windows.Forms.ToolStripMenuItem menuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem menuItemAbout;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton btnDetectorsAdd;
+        private System.Windows.Forms.ListView lvDetectors;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button btnDetectorsCancel;
+        private System.Windows.Forms.Button btnDetectorsOk;
+        private System.Windows.Forms.ColumnHeader columnHeaderType;
+        private System.Windows.Forms.ColumnHeader columnHeaderSerialnumber;
+        private System.Windows.Forms.ColumnHeader columnHeaderNumChannels;
+        private System.Windows.Forms.ColumnHeader columnHeaderHV;
+        private System.Windows.Forms.ColumnHeader columnHeaderCoarseGain;
+        private System.Windows.Forms.ColumnHeader columnHeaderFineGain;
+        private System.Windows.Forms.ColumnHeader columnHeaderSlope;
+        private System.Windows.Forms.ColumnHeader columnHeaderLivetime;
+        private System.Windows.Forms.ColumnHeader columnHeaderLLD;
+        private System.Windows.Forms.ColumnHeader columnHeaderULD;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
 

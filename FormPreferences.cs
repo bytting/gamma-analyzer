@@ -42,6 +42,7 @@ namespace crash
         private void FormPreferences_Load(object sender, EventArgs e)
         {
             tbSessionDir.Text = settings.SessionDirectory;
+            PopulateDetectorTypeList();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -64,6 +65,27 @@ namespace crash
             {
                 tbSessionDir.Text = dialog.SelectedPath;
             }
-        }        
+        }
+
+        private void btnAddDetectorType_Click(object sender, EventArgs e)
+        {
+            FormAddDetectorType form = new FormAddDetectorType();
+            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                settings.DetectorTypes.Add(new DetectorType(form.Name, form.MaxChannels, form.MinHV, form.MaxHV));
+
+                PopulateDetectorTypeList();
+            }
+        }       
+ 
+        private void PopulateDetectorTypeList()
+        {
+            lvDetectorTypes.Items.Clear();
+            foreach (DetectorType dt in settings.DetectorTypes)
+            {
+                ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString() });
+                lvDetectorTypes.Items.Add(item);
+            }            
+        }
     }
 }

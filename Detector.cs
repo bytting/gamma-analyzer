@@ -34,15 +34,11 @@ namespace crash
         public int CurrentHV { get; set; }
         public int CurrentNumChannels { get; set; }
         public string Serialnumber { get; set; }
-        public int CurrentCoarseGain { get; set; }
+        public double CurrentCoarseGain { get; set; }
         public double CurrentFineGain { get; set; }
         public double CurrentEnergySlope { get; set; }
         public int CurrentLivetime { get; set; }
         public int CurrentLLD { get; set; }
-        public int CurrentULD { get; set; }
-
-        public Detector()
-        {
-        }
+        public int CurrentULD { get; set; }        
     }
 }

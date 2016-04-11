@@ -33,6 +33,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbSessionDir = new System.Windows.Forms.TextBox();
             this.btnSetSessionDir = new System.Windows.Forms.Button();
+            this.lvDetectorTypes = new System.Windows.Forms.ListView();
+            this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderMaxCH = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderMinHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderMaxHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnAddDetectorType = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
@@ -50,6 +56,8 @@
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.tbSessionDir, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnSetSessionDir, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lvDetectorTypes, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.btnAddDetectorType, 2, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -61,7 +69,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(635, 280);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(713, 446);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -76,37 +84,82 @@
             // tbSessionDir
             // 
             this.tbSessionDir.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSessionDir.Location = new System.Drawing.Point(98, 31);
+            this.tbSessionDir.Location = new System.Drawing.Point(109, 31);
             this.tbSessionDir.Name = "tbSessionDir";
             this.tbSessionDir.ReadOnly = true;
-            this.tbSessionDir.Size = new System.Drawing.Size(438, 20);
+            this.tbSessionDir.Size = new System.Drawing.Size(493, 20);
             this.tbSessionDir.TabIndex = 1;
             // 
             // btnSetSessionDir
             // 
             this.btnSetSessionDir.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetSessionDir.Location = new System.Drawing.Point(542, 31);
+            this.btnSetSessionDir.Location = new System.Drawing.Point(608, 31);
             this.btnSetSessionDir.Name = "btnSetSessionDir";
-            this.btnSetSessionDir.Size = new System.Drawing.Size(90, 22);
+            this.btnSetSessionDir.Size = new System.Drawing.Size(102, 22);
             this.btnSetSessionDir.TabIndex = 2;
             this.btnSetSessionDir.Text = "...";
             this.btnSetSessionDir.UseVisualStyleBackColor = true;
             this.btnSetSessionDir.Click += new System.EventHandler(this.btnSetSessionDir_Click);
+            // 
+            // lvDetectorTypes
+            // 
+            this.lvDetectorTypes.BackColor = System.Drawing.SystemColors.Window;
+            this.lvDetectorTypes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderName,
+            this.columnHeaderMaxCH,
+            this.columnHeaderMinHV,
+            this.columnHeaderMaxHV});
+            this.lvDetectorTypes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvDetectorTypes.FullRowSelect = true;
+            this.lvDetectorTypes.Location = new System.Drawing.Point(109, 171);
+            this.lvDetectorTypes.MultiSelect = false;
+            this.lvDetectorTypes.Name = "lvDetectorTypes";
+            this.lvDetectorTypes.Size = new System.Drawing.Size(493, 272);
+            this.lvDetectorTypes.TabIndex = 3;
+            this.lvDetectorTypes.UseCompatibleStateImageBehavior = false;
+            this.lvDetectorTypes.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeaderName
+            // 
+            this.columnHeaderName.Text = "Name";
+            // 
+            // columnHeaderMaxCH
+            // 
+            this.columnHeaderMaxCH.Text = "Max channels";
+            // 
+            // columnHeaderMinHV
+            // 
+            this.columnHeaderMinHV.Text = "Min HV";
+            // 
+            // columnHeaderMaxHV
+            // 
+            this.columnHeaderMaxHV.Text = "Max HV";
+            // 
+            // btnAddDetectorType
+            // 
+            this.btnAddDetectorType.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnAddDetectorType.Location = new System.Drawing.Point(608, 171);
+            this.btnAddDetectorType.Name = "btnAddDetectorType";
+            this.btnAddDetectorType.Size = new System.Drawing.Size(102, 23);
+            this.btnAddDetectorType.TabIndex = 4;
+            this.btnAddDetectorType.Text = "Add";
+            this.btnAddDetectorType.UseVisualStyleBackColor = true;
+            this.btnAddDetectorType.Click += new System.EventHandler(this.btnAddDetectorType_Click);
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 280);
+            this.panel1.Location = new System.Drawing.Point(0, 446);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(635, 26);
+            this.panel1.Size = new System.Drawing.Size(713, 26);
             this.panel1.TabIndex = 1;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(439, 0);
+            this.btnCancel.Location = new System.Drawing.Point(517, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(98, 26);
             this.btnCancel.TabIndex = 1;
@@ -117,7 +170,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(537, 0);
+            this.btnOk.Location = new System.Drawing.Point(615, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(98, 26);
             this.btnOk.TabIndex = 0;
@@ -129,7 +182,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(635, 306);
+            this.ClientSize = new System.Drawing.Size(713, 472);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -155,5 +208,11 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.ListView lvDetectorTypes;
+        private System.Windows.Forms.ColumnHeader columnHeaderName;
+        private System.Windows.Forms.ColumnHeader columnHeaderMaxCH;
+        private System.Windows.Forms.ColumnHeader columnHeaderMinHV;
+        private System.Windows.Forms.ColumnHeader columnHeaderMaxHV;
+        private System.Windows.Forms.Button btnAddDetectorType;
     }
 }
