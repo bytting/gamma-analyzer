@@ -31,9 +31,9 @@ namespace crash
 {
     public partial class FormPreferences : Form
     {
-        Settings settings;
+        CrashSettings settings;
 
-        public FormPreferences(Settings s)
+        public FormPreferences(CrashSettings s)
         {
             InitializeComponent();
             settings = s;
@@ -72,8 +72,7 @@ namespace crash
             FormAddDetectorType form = new FormAddDetectorType();
             if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                settings.DetectorTypes.Add(new DetectorType(form.Name, form.MaxChannels, form.MinHV, form.MaxHV));
-
+                settings.DetectorTypes.Add(new DetectorType(form.TypeName, form.MaxChannels, form.MinHV, form.MaxHV, form.GScript));
                 PopulateDetectorTypeList();
             }
         }       
@@ -83,7 +82,7 @@ namespace crash
             lvDetectorTypes.Items.Clear();
             foreach (DetectorType dt in settings.DetectorTypes)
             {
-                ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString() });
+                ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString(), dt.GScript });
                 lvDetectorTypes.Items.Add(item);
             }            
         }

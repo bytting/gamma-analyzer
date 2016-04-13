@@ -49,12 +49,15 @@
             this.tbHV = new System.Windows.Forms.TextBox();
             this.tbCoarseGain = new System.Windows.Forms.TextBox();
             this.tbFineGain = new System.Windows.Forms.TextBox();
-            this.tbEnergySlope = new System.Windows.Forms.TextBox();
             this.tbLivetime = new System.Windows.Forms.TextBox();
             this.tbLLD = new System.Windows.Forms.TextBox();
             this.tbULD = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.tbRegressionScript = new System.Windows.Forms.TextBox();
+            this.btnBrowseScript = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -62,17 +65,17 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 332);
+            this.panel1.Location = new System.Drawing.Point(0, 333);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(492, 33);
+            this.panel1.Size = new System.Drawing.Size(441, 27);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(342, 0);
+            this.btnCancel.Location = new System.Drawing.Point(291, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 33);
+            this.btnCancel.Size = new System.Drawing.Size(75, 27);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -81,9 +84,9 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(417, 0);
+            this.btnOk.Location = new System.Drawing.Point(366, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 33);
+            this.btnOk.Size = new System.Drawing.Size(75, 27);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -110,10 +113,10 @@
             this.tableLayoutPanel1.Controls.Add(this.tbHV, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.tbCoarseGain, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.tbFineGain, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.tbEnergySlope, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.tbLivetime, 1, 8);
             this.tableLayoutPanel1.Controls.Add(this.tbLLD, 1, 9);
             this.tableLayoutPanel1.Controls.Add(this.tbULD, 1, 10);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 7);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -130,7 +133,8 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(492, 332);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(441, 333);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // label1
@@ -156,9 +160,9 @@
             this.cboxDetectorTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxDetectorTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxDetectorTypes.FormattingEnabled = true;
-            this.cboxDetectorTypes.Location = new System.Drawing.Point(150, 31);
+            this.cboxDetectorTypes.Location = new System.Drawing.Point(135, 31);
             this.cboxDetectorTypes.Name = "cboxDetectorTypes";
-            this.cboxDetectorTypes.Size = new System.Drawing.Size(339, 21);
+            this.cboxDetectorTypes.Size = new System.Drawing.Size(303, 21);
             this.cboxDetectorTypes.TabIndex = 2;
             // 
             // label3
@@ -166,7 +170,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(3, 84);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(137, 13);
+            this.label3.Size = new System.Drawing.Size(94, 26);
             this.label3.TabIndex = 3;
             this.label3.Text = "Current number of channels";
             // 
@@ -202,18 +206,18 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(3, 196);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(104, 13);
+            this.label7.Size = new System.Drawing.Size(88, 13);
             this.label7.TabIndex = 7;
-            this.label7.Text = "Current energy slope";
+            this.label7.Text = "Regression script";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(3, 224);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(79, 13);
+            this.label8.Size = new System.Drawing.Size(108, 13);
             this.label8.TabIndex = 8;
-            this.label8.Text = "Current livetime";
+            this.label8.Text = "Current livetime (sec.)";
             // 
             // label9
             // 
@@ -245,91 +249,123 @@
             "4096",
             "8192",
             "16384"});
-            this.cboxNumChannels.Location = new System.Drawing.Point(150, 87);
+            this.cboxNumChannels.Location = new System.Drawing.Point(135, 87);
             this.cboxNumChannels.Name = "cboxNumChannels";
-            this.cboxNumChannels.Size = new System.Drawing.Size(339, 21);
+            this.cboxNumChannels.Size = new System.Drawing.Size(303, 21);
             this.cboxNumChannels.TabIndex = 11;
             // 
             // tbSerialnumber
             // 
             this.tbSerialnumber.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSerialnumber.Location = new System.Drawing.Point(150, 59);
+            this.tbSerialnumber.Location = new System.Drawing.Point(135, 59);
             this.tbSerialnumber.Name = "tbSerialnumber";
-            this.tbSerialnumber.Size = new System.Drawing.Size(339, 20);
+            this.tbSerialnumber.Size = new System.Drawing.Size(303, 20);
             this.tbSerialnumber.TabIndex = 12;
             // 
             // tbHV
             // 
             this.tbHV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbHV.Location = new System.Drawing.Point(150, 115);
+            this.tbHV.Location = new System.Drawing.Point(135, 115);
             this.tbHV.Name = "tbHV";
-            this.tbHV.Size = new System.Drawing.Size(339, 20);
+            this.tbHV.Size = new System.Drawing.Size(303, 20);
             this.tbHV.TabIndex = 13;
+            this.tbHV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbCoarseGain
             // 
             this.tbCoarseGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbCoarseGain.Location = new System.Drawing.Point(150, 143);
+            this.tbCoarseGain.Location = new System.Drawing.Point(135, 143);
             this.tbCoarseGain.Name = "tbCoarseGain";
-            this.tbCoarseGain.Size = new System.Drawing.Size(339, 20);
+            this.tbCoarseGain.Size = new System.Drawing.Size(303, 20);
             this.tbCoarseGain.TabIndex = 14;
+            this.tbCoarseGain.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Numeric_KeyPress);
             // 
             // tbFineGain
             // 
             this.tbFineGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbFineGain.Location = new System.Drawing.Point(150, 171);
+            this.tbFineGain.Location = new System.Drawing.Point(135, 171);
             this.tbFineGain.Name = "tbFineGain";
-            this.tbFineGain.Size = new System.Drawing.Size(339, 20);
+            this.tbFineGain.Size = new System.Drawing.Size(303, 20);
             this.tbFineGain.TabIndex = 15;
-            // 
-            // tbEnergySlope
-            // 
-            this.tbEnergySlope.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEnergySlope.Location = new System.Drawing.Point(150, 199);
-            this.tbEnergySlope.Name = "tbEnergySlope";
-            this.tbEnergySlope.Size = new System.Drawing.Size(339, 20);
-            this.tbEnergySlope.TabIndex = 16;
+            this.tbFineGain.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Numeric_KeyPress);
             // 
             // tbLivetime
             // 
             this.tbLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLivetime.Location = new System.Drawing.Point(150, 227);
+            this.tbLivetime.Location = new System.Drawing.Point(135, 227);
             this.tbLivetime.Name = "tbLivetime";
-            this.tbLivetime.Size = new System.Drawing.Size(339, 20);
+            this.tbLivetime.Size = new System.Drawing.Size(303, 20);
             this.tbLivetime.TabIndex = 17;
+            this.tbLivetime.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbLLD
             // 
             this.tbLLD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLLD.Location = new System.Drawing.Point(150, 255);
+            this.tbLLD.Location = new System.Drawing.Point(135, 255);
             this.tbLLD.Name = "tbLLD";
-            this.tbLLD.Size = new System.Drawing.Size(339, 20);
+            this.tbLLD.Size = new System.Drawing.Size(303, 20);
             this.tbLLD.TabIndex = 18;
+            this.tbLLD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbULD
             // 
             this.tbULD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbULD.Location = new System.Drawing.Point(150, 283);
+            this.tbULD.Location = new System.Drawing.Point(135, 283);
             this.tbULD.Name = "tbULD";
-            this.tbULD.Size = new System.Drawing.Size(339, 20);
+            this.tbULD.Size = new System.Drawing.Size(303, 20);
             this.tbULD.TabIndex = 19;
+            this.tbULD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tbRegressionScript);
+            this.panel2.Controls.Add(this.btnBrowseScript);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(135, 199);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(303, 22);
+            this.panel2.TabIndex = 20;
+            // 
+            // tbRegressionScript
+            // 
+            this.tbRegressionScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbRegressionScript.Location = new System.Drawing.Point(0, 0);
+            this.tbRegressionScript.Name = "tbRegressionScript";
+            this.tbRegressionScript.ReadOnly = true;
+            this.tbRegressionScript.Size = new System.Drawing.Size(228, 20);
+            this.tbRegressionScript.TabIndex = 16;
+            // 
+            // btnBrowseScript
+            // 
+            this.btnBrowseScript.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnBrowseScript.Location = new System.Drawing.Point(228, 0);
+            this.btnBrowseScript.Name = "btnBrowseScript";
+            this.btnBrowseScript.Size = new System.Drawing.Size(75, 22);
+            this.btnBrowseScript.TabIndex = 17;
+            this.btnBrowseScript.Text = "...";
+            this.btnBrowseScript.UseVisualStyleBackColor = true;
+            this.btnBrowseScript.Click += new System.EventHandler(this.btnBrowseScript_Click);
             // 
             // FormAddDetector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(492, 365);
+            this.ClientSize = new System.Drawing.Size(441, 360);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormAddDetector";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Crash - Add Detector";
             this.Load += new System.EventHandler(this.FormAddDetector_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -356,9 +392,11 @@
         private System.Windows.Forms.TextBox tbHV;
         private System.Windows.Forms.TextBox tbCoarseGain;
         private System.Windows.Forms.TextBox tbFineGain;
-        private System.Windows.Forms.TextBox tbEnergySlope;
+        private System.Windows.Forms.TextBox tbRegressionScript;
         private System.Windows.Forms.TextBox tbLivetime;
         private System.Windows.Forms.TextBox tbLLD;
         private System.Windows.Forms.TextBox tbULD;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnBrowseScript;
     }
 }

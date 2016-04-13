@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Drawing;
 
 namespace crash
 {    
@@ -35,8 +36,8 @@ namespace crash
         public int CurrentNumChannels { get; set; }
         public string Serialnumber { get; set; }
         public double CurrentCoarseGain { get; set; }
-        public double CurrentFineGain { get; set; }
-        public double CurrentEnergySlope { get; set; }
+        public double CurrentFineGain { get; set; }                
+        public string RegressionScript { get; set; }
         public int CurrentLivetime { get; set; }
         public int CurrentLLD { get; set; }
         public int CurrentULD { get; set; }        

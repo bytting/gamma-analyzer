@@ -23,6 +23,10 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Threading.Tasks;
+using IronPython.Hosting;
+using IronPython.Runtime;
+using Microsoft.Scripting;
+using Microsoft.Scripting.Hosting;
 
 namespace crash
 {
@@ -44,5 +48,6 @@ namespace crash
         }        
 
         public static FormLog Log = new FormLog();
+        public static ScriptRuntime IPython = Python.CreateRuntime();
     }
 }

@@ -23,18 +23,27 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using System.IO;
 
 namespace crash
-{    
+{
+    public class CrashEnvironment
+    {
+        public static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + Path.DirectorySeparatorChar + "Crash";
+        public static string RegressionScriptPath = SettingsPath + Path.DirectorySeparatorChar + "RegressionScripts";
+        public static string GScriptPath = SettingsPath + Path.DirectorySeparatorChar + "GScripts";
+        public static string SettingsFile = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";
+    }
+
     [Serializable()]
-    public class Settings
+    public class CrashSettings
     {
         public List<DetectorType> DetectorTypes = new List<DetectorType>();
         public List<Detector> Detectors = new List<Detector>();
         public string DefaultDetector;
         public string DefaultDetectorType;
         public int DefaultNrChannels;
-        public string SessionDirectory;
+        public string SessionDirectory;        
         public string LastIP;
         public string LastPort;        
     }    

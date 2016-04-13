@@ -41,8 +41,13 @@
             this.tbMaxChannels = new System.Windows.Forms.TextBox();
             this.tbMinHV = new System.Windows.Forms.TextBox();
             this.tbMaxHV = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.tbGScript = new System.Windows.Forms.TextBox();
+            this.btnBrowseGScript = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -50,15 +55,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 237);
+            this.panel1.Location = new System.Drawing.Point(0, 210);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(477, 30);
+            this.panel1.Size = new System.Drawing.Size(507, 30);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(327, 0);
+            this.btnCancel.Location = new System.Drawing.Point(357, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
             this.btnCancel.TabIndex = 1;
@@ -69,7 +74,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(402, 0);
+            this.btnOk.Location = new System.Drawing.Point(432, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 30);
             this.btnOk.TabIndex = 0;
@@ -90,17 +95,20 @@
             this.tableLayoutPanel1.Controls.Add(this.tbMaxChannels, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.tbMinHV, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.tbMaxHV, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(477, 237);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(507, 210);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // label1
@@ -142,48 +150,96 @@
             // tbName
             // 
             this.tbName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbName.Location = new System.Drawing.Point(122, 31);
+            this.tbName.Location = new System.Drawing.Point(129, 31);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(352, 20);
+            this.tbName.Size = new System.Drawing.Size(375, 20);
             this.tbName.TabIndex = 4;
             // 
             // tbMaxChannels
             // 
             this.tbMaxChannels.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMaxChannels.Location = new System.Drawing.Point(122, 59);
+            this.tbMaxChannels.Location = new System.Drawing.Point(129, 59);
             this.tbMaxChannels.Name = "tbMaxChannels";
-            this.tbMaxChannels.Size = new System.Drawing.Size(352, 20);
+            this.tbMaxChannels.Size = new System.Drawing.Size(375, 20);
             this.tbMaxChannels.TabIndex = 5;
+            this.tbMaxChannels.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbMinHV
             // 
             this.tbMinHV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMinHV.Location = new System.Drawing.Point(122, 87);
+            this.tbMinHV.Location = new System.Drawing.Point(129, 87);
             this.tbMinHV.Name = "tbMinHV";
-            this.tbMinHV.Size = new System.Drawing.Size(352, 20);
+            this.tbMinHV.Size = new System.Drawing.Size(375, 20);
             this.tbMinHV.TabIndex = 6;
+            this.tbMinHV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbMaxHV
             // 
             this.tbMaxHV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMaxHV.Location = new System.Drawing.Point(122, 115);
+            this.tbMaxHV.Location = new System.Drawing.Point(129, 115);
             this.tbMaxHV.Name = "tbMaxHV";
-            this.tbMaxHV.Size = new System.Drawing.Size(352, 20);
+            this.tbMaxHV.Size = new System.Drawing.Size(375, 20);
             this.tbMaxHV.TabIndex = 7;
+            this.tbMaxHV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 140);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(43, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "G script";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tbGScript);
+            this.panel2.Controls.Add(this.btnBrowseGScript);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(129, 143);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(375, 22);
+            this.panel2.TabIndex = 9;
+            // 
+            // tbGScript
+            // 
+            this.tbGScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbGScript.Location = new System.Drawing.Point(0, 0);
+            this.tbGScript.Name = "tbGScript";
+            this.tbGScript.ReadOnly = true;
+            this.tbGScript.Size = new System.Drawing.Size(300, 20);
+            this.tbGScript.TabIndex = 0;
+            // 
+            // btnBrowseGScript
+            // 
+            this.btnBrowseGScript.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnBrowseGScript.Location = new System.Drawing.Point(300, 0);
+            this.btnBrowseGScript.Name = "btnBrowseGScript";
+            this.btnBrowseGScript.Size = new System.Drawing.Size(75, 22);
+            this.btnBrowseGScript.TabIndex = 1;
+            this.btnBrowseGScript.Text = "...";
+            this.btnBrowseGScript.UseVisualStyleBackColor = true;
+            this.btnBrowseGScript.Click += new System.EventHandler(this.btnBrowseGScript_Click);
             // 
             // FormAddDetectorType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(477, 267);
+            this.ClientSize = new System.Drawing.Size(507, 240);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormAddDetectorType";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Crash - Add Detector Type";
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -202,5 +258,9 @@
         private System.Windows.Forms.TextBox tbMaxChannels;
         private System.Windows.Forms.TextBox tbMinHV;
         private System.Windows.Forms.TextBox tbMaxHV;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TextBox tbGScript;
+        private System.Windows.Forms.Button btnBrowseGScript;
     }
 }

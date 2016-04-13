@@ -42,6 +42,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
+            this.columnHeaderGScript = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -108,7 +109,8 @@
             this.columnHeaderName,
             this.columnHeaderMaxCH,
             this.columnHeaderMinHV,
-            this.columnHeaderMaxHV});
+            this.columnHeaderMaxHV,
+            this.columnHeaderGScript});
             this.lvDetectorTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvDetectorTypes.FullRowSelect = true;
             this.lvDetectorTypes.Location = new System.Drawing.Point(109, 171);
@@ -178,6 +180,10 @@
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
+            // columnHeaderGScript
+            // 
+            this.columnHeaderGScript.Text = "G Script";
+            // 
             // FormPreferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -214,5 +220,6 @@
         private System.Windows.Forms.ColumnHeader columnHeaderMinHV;
         private System.Windows.Forms.ColumnHeader columnHeaderMaxHV;
         private System.Windows.Forms.Button btnAddDetectorType;
+        private System.Windows.Forms.ColumnHeader columnHeaderGScript;
     }
 }

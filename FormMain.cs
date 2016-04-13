@@ -32,15 +32,16 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using ZedGraph;
+//using IronPython.Hosting;
+//using IronPython.Runtime;
+using Microsoft.Scripting;
+using Microsoft.Scripting.Hosting;
 
 namespace crash
 {
     public partial class FormMain : Form
     {
-        private static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + Path.DirectorySeparatorChar + "crash";
-        private static string SettingsFile = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";
-        
-        Settings settings = new Settings();
+        CrashSettings settings = new CrashSettings();
 
         static ConcurrentQueue<burn.Message> sendq = null;
         static ConcurrentQueue<burn.Message> recvq = null;
@@ -83,10 +84,16 @@ namespace crash
             lblConnectionStatus.ForeColor = Color.Red;
             lblConnectionStatus.Text = "Not connected";
 
-            if (!Directory.Exists(SettingsPath))
-                Directory.CreateDirectory(SettingsPath);
+            if (!Directory.Exists(CrashEnvironment.SettingsPath))
+                Directory.CreateDirectory(CrashEnvironment.SettingsPath);
 
-            if (File.Exists(SettingsFile))            
+            if (!Directory.Exists(CrashEnvironment.RegressionScriptPath))
+                Directory.CreateDirectory(CrashEnvironment.RegressionScriptPath);
+
+            if (!Directory.Exists(CrashEnvironment.GScriptPath))
+                Directory.CreateDirectory(CrashEnvironment.GScriptPath);
+
+            if (File.Exists(CrashEnvironment.SettingsFile))
                 LoadSettings();
 
             PopulateBackgroundSessions();
@@ -164,7 +171,7 @@ namespace crash
 
         private void SaveSettings()
         {
-            StreamWriter sw = new StreamWriter(SettingsFile);
+            StreamWriter sw = new StreamWriter(CrashEnvironment.SettingsFile);
             XmlSerializer x = new XmlSerializer(settings.GetType());
             x.Serialize(sw, settings);
             sw.Close();
@@ -172,11 +179,11 @@ namespace crash
 
         private void LoadSettings()
         {
-            if (File.Exists(SettingsFile))
+            if (File.Exists(CrashEnvironment.SettingsFile))
             {
-                StreamReader sr = new StreamReader(SettingsFile);
+                StreamReader sr = new StreamReader(CrashEnvironment.SettingsFile);
                 XmlSerializer x = new XmlSerializer(settings.GetType());
-                settings = x.Deserialize(sr) as Settings;
+                settings = x.Deserialize(sr) as CrashSettings;
                 sr.Close();
             }
         }        
@@ -263,7 +270,7 @@ namespace crash
 
                     if (spec.IsPreview)
                     {
-                        path = SettingsPath;                        
+                        path = CrashEnvironment.SettingsPath;                        
 
                         GraphPane pane = graphSetup.GraphPane;
                         pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
@@ -726,7 +733,7 @@ namespace crash
                 det.CurrentHV = form.HV;
                 det.CurrentCoarseGain = form.CoarseGain;
                 det.CurrentFineGain = form.FineGain;
-                det.CurrentEnergySlope = form.EnergySlope;
+                det.RegressionScript = form.RegressionScript;                
                 det.CurrentLivetime = form.Livetime;
                 det.CurrentLLD = form.LLD;
                 det.CurrentULD = form.ULD;
@@ -748,12 +755,66 @@ namespace crash
                     d.CurrentHV.ToString(), 
                     d.CurrentCoarseGain.ToString(), 
                     d.CurrentFineGain.ToString(),
-                    d.CurrentEnergySlope.ToString(),
+                    d.RegressionScript,                    
                     d.CurrentLivetime.ToString(),
                     d.CurrentLLD.ToString(),
                     d.CurrentULD.ToString()
                 });
+                item.Tag = d;
                 lvDetectors.Items.Add(item);
+            }
+        }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            // Test iron python script... (FIXME)
+
+            if (lvDetectors.SelectedItems.Count < 1)            
+                return;
+
+            Detector d = (Detector)lvDetectors.SelectedItems[0].Tag;
+
+            dynamic script = null;
+            try
+            {
+                script = Utils.IPython.UseFile(d.RegressionScript);
+                double y = script.RegressionFactor(400);
+                tbTest.Text = y.ToString();
+            }
+            catch (Exception ex)
+            {
+                if (script != null)
+                {
+                    ExceptionOperations eo = script.GetService<ExceptionOperations>();
+                    MessageBox.Show("Error running ironpython: " + eo.FormatException(ex));
+                }
+                else MessageBox.Show("Error running ironpython: " + ex.Message);
+
+                return;
+            }
+
+
+            DetectorType dt = settings.DetectorTypes.Find(x => x.Name == d.TypeName);
+            if (dt == null)
+                return;
+
+            dynamic script2 = null;
+            try
+            {
+                script2 = Utils.IPython.UseFile(dt.GScript);
+                double y = script2.GEFactor(0.4);
+                tbTest2.Text = y.ToString();
+            }
+            catch (Exception ex)
+            {
+                if (script2 != null)
+                {
+                    ExceptionOperations eo = script2.GetService<ExceptionOperations>();
+                    MessageBox.Show("Error running ironpython: " + eo.FormatException(ex));
+                }
+                else MessageBox.Show("Error running ironpython: " + ex.Message);
+
+                return;
             }
         }
     }    

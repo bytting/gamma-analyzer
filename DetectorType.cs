@@ -32,18 +32,20 @@ namespace crash
         public string Name { get; set; }        
         public int MaxNumChannels { get; set; }        
         public int MinHV { get; set; }
-        public int MaxHV { get; set; }      
+        public int MaxHV { get; set; }
+        public string GScript { get; set; } 
   
         public DetectorType()
         {
         }
 
-        public DetectorType(string name, int maxChannels, int minHV, int maxHV)
+        public DetectorType(string name, int maxChannels, int minHV, int maxHV, string gScript)
         {
             Name = name;
             MaxNumChannels = maxChannels;
             MinHV = minHV;
             MaxHV = maxHV;
+            GScript = gScript;
         }
     }
 }

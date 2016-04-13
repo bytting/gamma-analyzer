@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace crash
 {
     public partial class FormAddDetector : Form
     {
-        private List<DetectorType> DetectorTypes = null;
+        private List<DetectorType> DetectorTypes = null;        
 
         public string DetectorType { get; set; }
         public string Serialnumber { get; set; }
@@ -20,7 +21,7 @@ namespace crash
         public int HV { get; set; }
         public double CoarseGain { get; set; }
         public double FineGain { get; set; }
-        public double EnergySlope { get; set; }
+        public string RegressionScript { get; set; }
         public int Livetime { get; set; }
         public int LLD { get; set; }
         public int ULD { get; set; }
@@ -28,7 +29,7 @@ namespace crash
         public FormAddDetector(List<DetectorType> detectorTypes)
         {
             InitializeComponent();
-            DetectorTypes = detectorTypes;
+            DetectorTypes = detectorTypes;        
         }
 
         private void FormAddDetector_Load(object sender, EventArgs e)
@@ -37,6 +38,20 @@ namespace crash
             {
                 cboxDetectorTypes.Items.Add(dt.Name);
             }
+        }
+
+        private void Numeric_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char sep = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+
+            if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar != sep)
+                e.Handled = true;
+        }
+
+        private void Integer_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar))
+                e.Handled = true;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -53,7 +68,7 @@ namespace crash
                 || String.IsNullOrEmpty(tbHV.Text)
                 || String.IsNullOrEmpty(tbCoarseGain.Text)
                 || String.IsNullOrEmpty(tbFineGain.Text)
-                || String.IsNullOrEmpty(tbEnergySlope.Text)
+                || String.IsNullOrEmpty(tbRegressionScript.Text)                
                 || String.IsNullOrEmpty(tbLivetime.Text)
                 || String.IsNullOrEmpty(tbLLD.Text)
                 || String.IsNullOrEmpty(tbULD.Text))
@@ -70,7 +85,7 @@ namespace crash
                 HV = Convert.ToInt32(tbHV.Text);
                 CoarseGain = Convert.ToDouble(tbCoarseGain.Text);
                 FineGain = Convert.ToDouble(tbFineGain.Text);
-                EnergySlope = Convert.ToDouble(tbEnergySlope.Text);
+                RegressionScript = tbRegressionScript.Text;                
                 Livetime = Convert.ToInt32(tbLivetime.Text);
                 LLD = Convert.ToInt32(tbLLD.Text);
                 ULD = Convert.ToInt32(tbULD.Text);
@@ -83,6 +98,17 @@ namespace crash
 
             DialogResult = System.Windows.Forms.DialogResult.OK;
             Close();
+        }
+
+        private void btnBrowseScript_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.InitialDirectory = CrashEnvironment.RegressionScriptPath;
+            dialog.Filter = "Script Files (.py)|*.py";
+            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbRegressionScript.Text = dialog.FileName;
+            }
         }        
     }
 }

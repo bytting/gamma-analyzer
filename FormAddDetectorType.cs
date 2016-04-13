@@ -11,15 +11,22 @@ using System.Windows.Forms;
 namespace crash
 {
     public partial class FormAddDetectorType : Form
-    {
-        public string Name { get; set; }
+    {        
+        public string TypeName { get; set; }
         public int MaxChannels { get; set; }
         public int MinHV { get; set; }
         public int MaxHV { get; set; }
+        public string GScript { get; set; }
 
         public FormAddDetectorType()
         {
-            InitializeComponent();
+            InitializeComponent();    
+        }
+
+        private void Integer_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar))
+                e.Handled = true;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -32,7 +39,8 @@ namespace crash
         {
             if (String.IsNullOrEmpty(tbName.Text) 
                 || String.IsNullOrEmpty(tbMaxChannels.Text) 
-                || String.IsNullOrEmpty(tbMinHV.Text) 
+                || String.IsNullOrEmpty(tbMinHV.Text)
+                || String.IsNullOrEmpty(tbGScript.Text) 
                 || String.IsNullOrEmpty(tbMaxHV.Text))
             {
                 MessageBox.Show("One or more required fields missing");
@@ -41,10 +49,11 @@ namespace crash
 
             try
             {
-                Name = tbName.Text;
+                TypeName = tbName.Text;
                 MaxChannels = Convert.ToInt32(tbMaxChannels.Text);
                 MinHV = Convert.ToInt32(tbMinHV.Text);
                 MaxHV = Convert.ToInt32(tbMaxHV.Text);
+                GScript = tbGScript.Text;
             }
             catch
             {
@@ -54,6 +63,17 @@ namespace crash
 
             DialogResult = System.Windows.Forms.DialogResult.OK;
             Close();
+        }
+
+        private void btnBrowseGScript_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.InitialDirectory = CrashEnvironment.GScriptPath;
+            dialog.Filter = "Script Files (.py)|*.py";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                tbGScript.Text = dialog.FileName;
+            }
         }
     }
 }
