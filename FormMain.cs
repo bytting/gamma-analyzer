@@ -83,6 +83,7 @@ namespace crash
 
             lblConnectionStatus.ForeColor = Color.Red;
             lblConnectionStatus.Text = "Not connected";
+            ClearSpectrumInfo();
 
             if (!Directory.Exists(CrashEnvironment.SettingsPath))
                 Directory.CreateDirectory(CrashEnvironment.SettingsPath);
@@ -96,6 +97,7 @@ namespace crash
             if (File.Exists(CrashEnvironment.SettingsFile))
                 LoadSettings();
 
+            PopulateDetectors();
             PopulateBackgroundSessions();
 
             netThread.Start();
@@ -104,7 +106,7 @@ namespace crash
             timer.Interval = 10;
             timer.Tick += timer_Tick;
             timer.Start();            
-        }
+        }        
 
         void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
         {
@@ -118,7 +120,7 @@ namespace crash
                 int tmp = e.StartIndex;
                 e.StartIndex = e.EndIndex;
                 e.EndIndex = tmp;
-            }
+            }            
 
             if (e.StartIndex == e.EndIndex)
             {
@@ -159,7 +161,7 @@ namespace crash
         public void PopulateBackgroundSessions()
         {
             if (Directory.Exists(settings.SessionDirectory))
-            {
+            {                
                 cboxBackground.Items.Clear();
                 cboxBackground.Items.Add("");
                 string[] sessionDirectories = Directory.GetDirectories(settings.SessionDirectory);
@@ -262,9 +264,12 @@ namespace crash
                     Utils.Log.Add("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
                     break;
 
-                case "spectrum":
+                case "spectrum":                    
+
                     Spectrum spec = new Spectrum(msg);
                     Utils.Log.Add(spec.Label + " received");
+
+                    CalcDoserate(ref spec);
 
                     string path;
 
@@ -300,7 +305,9 @@ namespace crash
 
                         graphSetup.RestoreScale(pane);
                         graphSetup.AxisChange();
-                        graphSetup.Refresh();                        
+                        graphSetup.Refresh();
+
+                        lblSetupDoserate.Text = spec.Doserate.ToString();
                     }
                     else
                     {         
@@ -345,6 +352,35 @@ namespace crash
             }
             return true;
         }        
+
+        private void CalcDoserate(ref Spectrum spec)
+        {
+            Detector d = settings.Detectors.Find(it => it.Serialnumber == cboxSetupDetector.Text);
+            if (d == null)
+            {
+                MessageBox.Show("No detector selected");
+            }
+
+            DetectorType dt = settings.DetectorTypes.Find(x => x.Name == d.TypeName);
+            if (dt == null)
+            {
+                MessageBox.Show("Detector type not found");
+            }                
+            
+            dynamic geScript = Utils.IPython.UseFile(dt.GScript);
+            double slope = (d.RegressionPointY2 - d.RegressionPointY1) / (d.RegressionPointX2 - d.RegressionPointX1);
+            spec.Doserate = 0.0;
+
+            for (int i = 78; i < spec.Channels.Count; i++)
+            {
+                float sec = (float)spec.Livetime / 1000000f;
+                float ch = spec.Channels[i];
+                float cps = ch / sec;
+                double E = d.RegressionPointY1 + ((double)i * slope - d.RegressionPointX1 * slope);
+                double GE = geScript.GEFactor(E / 1000.0);
+                spec.Doserate += GE * cps * 60.0;
+            }            
+        }
 
         private void menuItemExit_Click(object sender, EventArgs e)
         {
@@ -403,7 +439,7 @@ namespace crash
             float livetime = Convert.ToSingle(tbSpecLivetime.Text);
             float delay = String.IsNullOrEmpty(tbSpecDelay.Text) ? 0 : Convert.ToSingle(tbSpecDelay.Text);
 
-            lbSession.Items.Clear();
+            ClearSession();
 
             burn.Message msg = new burn.Message("new_session", null);
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
@@ -412,7 +448,40 @@ namespace crash
             msg.AddParameter("livetime", livetime);
             msg.AddParameter("delay", delay);
             sendq.Enqueue(msg);            
-        }        
+        }
+
+        private void ClearSpectrumInfo()
+        {
+            lblRealtime.Text = "";
+            lblLivetime.Text = "";
+            lblSession.Text = "";
+            lblIndex.Text = "";
+            lblLatitudeStart.Text = "";
+            lblLongitudeStart.Text = "";
+            lblAltitudeStart.Text = "";
+            lblLatitudeEnd.Text = "";
+            lblLongitudeEnd.Text = "";
+            lblAltitudeEnd.Text = "";
+            lblGpsTimeStart.Text = "";
+            lblGpsTimeEnd.Text = "";
+            lblMaxCount.Text = "";
+            lblMinCount.Text = "";
+            lblTotalCount.Text = "";
+            lblDoserate.Text = "";
+        }
+
+        private void ClearSession()
+        {
+            lbSession.Items.Clear();
+            graphSession.GraphPane.CurveList.Clear();
+            graphSession.GraphPane.GraphObjList.Clear();
+            graphSession.Invalidate();
+            ClearSpectrumInfo();
+
+            formWaterfallLive.ClearSession();
+            formROIHistory.ClearSession();
+            formMap.ClearSession();
+        }
 
         private void btnStopNetService_Click(object sender, EventArgs e)
         {
@@ -466,8 +535,8 @@ namespace crash
             }
 
             int voltage = Convert.ToInt32(tbSetupVoltage.Text);
-            float coarse = Convert.ToInt32(tbSetupCoarseGain.Text);
-            float fine = Convert.ToInt32(tbSetupFineGain.Text);
+            float coarse = Convert.ToSingle(tbSetupCoarseGain.Text);
+            float fine = Convert.ToSingle(tbSetupFineGain.Text);
 
             burn.Message msg = new burn.Message("set_gain", null);
             msg.AddParameter("voltage", voltage);
@@ -578,7 +647,7 @@ namespace crash
             pane.YAxis.Scale.Max = maxCount + (maxCount / 10.0);
 
             pane.CurveList.Clear();            
-
+            
             if(!background.IsEmpty)            
             {
                 float[] spec = background.GetAdjustedCounts(session.Spectrums[0].Livetime);
@@ -588,7 +657,7 @@ namespace crash
 
                 LineItem bkgCurve = pane.AddCurve("Background", bkgGraphList, Color.Blue, SymbolType.None);                
             }
-
+            
             sessionGraphList.Clear();            
             for (int i = 0; i < channels.Length; i++)
                 sessionGraphList.Add((double)i, (double)channels[i]);
@@ -628,6 +697,7 @@ namespace crash
                 lblMaxCount.Text = "Max count: " + s.MaxCount;
                 lblMinCount.Text = "Min count: " + s.MinCount;
                 lblTotalCount.Text = "Total count: " + s.TotalCount;
+                lblDoserate.Text = ""; // FIXME
 
                 formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
                 formMap.SetSelectedSessionIndex(s.SessionIndex);
@@ -681,6 +751,7 @@ namespace crash
                 lblMaxCount.Text = "Max count: " + maxCnt;
                 lblMinCount.Text = "Min count: " + minCnt;
                 lblTotalCount.Text = "Total count: " + totCnt;
+                lblDoserate.Text = ""; // FIXME
 
                 formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
@@ -745,6 +816,7 @@ namespace crash
 
         private void PopulateDetectors()
         {
+            // Under detectors
             lvDetectors.Items.Clear();
             foreach(Detector d in settings.Detectors)
             {
@@ -763,58 +835,77 @@ namespace crash
                 item.Tag = d;
                 lvDetectors.Items.Add(item);
             }
+
+            // Under setup
+            cboxSetupDetector.Items.Clear();
+            foreach (Detector d in settings.Detectors)
+                cboxSetupDetector.Items.Add(d.Serialnumber);            
         }
 
         private void btnTest_Click(object sender, EventArgs e)
         {
             // Test iron python script... (FIXME)
 
-            if (lvDetectors.SelectedItems.Count < 1)            
+            if (lvDetectors.SelectedItems.Count < 1)
+                return;            
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                 return;
+
+            burn.CHN chn = new burn.CHN();
+            chn.Read(dialog.FileName, false);
 
             Detector d = (Detector)lvDetectors.SelectedItems[0].Tag;
-
-            dynamic script = null;
-            try
-            {
-                script = Utils.IPython.UseFile(d.RegressionScript);
-                double y = script.RegressionFactor(400);
-                tbTest.Text = y.ToString();
-            }
-            catch (Exception ex)
-            {
-                if (script != null)
-                {
-                    ExceptionOperations eo = script.GetService<ExceptionOperations>();
-                    MessageBox.Show("Error running ironpython: " + eo.FormatException(ex));
-                }
-                else MessageBox.Show("Error running ironpython: " + ex.Message);
-
-                return;
-            }
-
 
             DetectorType dt = settings.DetectorTypes.Find(x => x.Name == d.TypeName);
             if (dt == null)
                 return;
 
-            dynamic script2 = null;
-            try
-            {
-                script2 = Utils.IPython.UseFile(dt.GScript);
-                double y = script2.GEFactor(0.4);
-                tbTest2.Text = y.ToString();
-            }
-            catch (Exception ex)
-            {
-                if (script2 != null)
-                {
-                    ExceptionOperations eo = script2.GetService<ExceptionOperations>();
-                    MessageBox.Show("Error running ironpython: " + eo.FormatException(ex));
-                }
-                else MessageBox.Show("Error running ironpython: " + ex.Message);
+            dynamic regScript = Utils.IPython.UseFile(d.RegressionScript);
+            dynamic geScript = Utils.IPython.UseFile(dt.GScript);
+            double doserate = 0.0;
 
+            for (int i = 78; i < chn.Spectrum.Length; i++)
+            {
+                float cps = chn.Spectrum[i] / chn.LiveTimeSeconds;
+                double E = regScript.RegressionFactor(i);
+                double GE = geScript.GEFactor(E);
+                doserate += GE * cps * 60.0;
+            }
+            
+            tbTest.Text = doserate.ToString();
+        }
+
+        private void graphSetup_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Detector d = settings.Detectors.Find(it => it.Serialnumber == cboxSetupDetector.Text);
+            if(d == null)
+            {
+                MessageBox.Show("No detector selected");
                 return;
+            }
+
+            int index = 0;
+            object nearestobject = null;
+            PointF clickedPoint = new PointF(e.X, e.Y);
+            graphSetup.GraphPane.FindNearestObject(clickedPoint, this.CreateGraphics(), out nearestobject, out index);        
+            double x, y;            
+            graphSetup.GraphPane.ReverseTransform(clickedPoint, out x, out y);
+            
+            FormSetRegressionPoints form = new FormSetRegressionPoints(x);
+            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {                
+                if(form.SelectedPoint == 1)
+                {
+                    d.RegressionPointX1 = x;
+                    d.RegressionPointY1 = form.SelectedEnergy;
+                }
+                else
+                {
+                    d.RegressionPointX2 = x;
+                    d.RegressionPointY2 = form.SelectedEnergy;
+                }
             }
         }
     }    

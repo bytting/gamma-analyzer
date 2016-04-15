@@ -166,6 +166,12 @@
     <Compile Include="FormROITableHistory.Designer.cs">
       <DependentUpon>FormROITableHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSetRegressionPoints.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSetRegressionPoints.Designer.cs">
+      <DependentUpon>FormSetRegressionPoints.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormWaterfallLive.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -210,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormROITableHistory.resx">
       <DependentUpon>FormROITableHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSetRegressionPoints.resx">
+      <DependentUpon>FormSetRegressionPoints.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormWaterfallLive.resx">
       <DependentUpon>FormWaterfallLive.cs</DependentUpon>

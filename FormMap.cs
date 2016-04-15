@@ -227,6 +227,12 @@ namespace crash
                 }
             }
             gmap.Refresh();
-        }        
+        }
+
+        public void ClearSession()
+        {            
+            session = null;
+            RemoveAllMarkers();
+        }
     }    
 }

@@ -40,6 +40,11 @@ namespace crash
         public string RegressionScript { get; set; }
         public int CurrentLivetime { get; set; }
         public int CurrentLLD { get; set; }
-        public int CurrentULD { get; set; }        
+        public int CurrentULD { get; set; }
+        public double RegressionPointX1 { get; set; }
+        public double RegressionPointX2 { get; set; }
+        public double RegressionPointY1 { get; set; }
+        public double RegressionPointY2 { get; set; }
+
     }
 }

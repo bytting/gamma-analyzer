@@ -226,6 +226,17 @@ namespace crash
             SelectedSessionIndex2 = index2;
             UpdatePane();
         }
+
+        public void ClearSession()
+        {
+            if(bmpPane != null)
+            {
+                Graphics g = Graphics.FromImage(bmpPane);
+                g.Clear(SystemColors.ButtonFace);
+            }            
+            session = null;
+            roiList.Clear();
+        }
     }
 
     public class ROIData

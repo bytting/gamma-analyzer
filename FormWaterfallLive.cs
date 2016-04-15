@@ -229,5 +229,15 @@ namespace crash
             SelectedSessionIndex2 = index2;
             UpdatePane();
         }
+
+        public void ClearSession()
+        {            
+            if(bmpPane != null)
+            {
+                Graphics g = Graphics.FromImage(bmpPane);
+                g.Clear(Color.FromArgb(0, 0, 255));
+            }                
+            session = null;
+        }
     }
 }

@@ -222,7 +222,7 @@ namespace burn
             writer.Write(new char[] {'0', '1', 'J', 'A', 'N', '1', '6', '1'}); // date
             writer.Write(new char[] {'1', '2', '0', '0'}); // time
             writer.Write(Convert.ToInt16(0)); // channel offset
-            writer.Write(Convert.ToInt16(msg.Arguments["channel_count"])); // number of channels
+            writer.Write(Convert.ToInt16(msg.Arguments["num_channels"])); // number of channels
             return true;
         }
 

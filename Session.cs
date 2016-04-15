@@ -62,7 +62,7 @@ namespace crash
         {
             get
             {
-                return Spectrums.Count > 0;
+                return Spectrums.Count < 1;
             }
             private set {}            
         }

@@ -50,6 +50,7 @@ namespace crash
         public float GpsSpeedEnd { get; private set; }
         public int Realtime { get; private set; }
         public int Livetime { get; private set; }
+        public double Doserate { get; set; }
 
         public Spectrum()
         {
@@ -88,7 +89,7 @@ namespace crash
                 if (ch < MinCount)
                     MinCount = ch;
 
-                TotalCount += ch;
+                TotalCount += ch;                                
             }
         }
 
