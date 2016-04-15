@@ -1,12 +1,13 @@
-Implement doserate formulas
-
 Make waterfall and ROI history "scrollable"
 
 Fix preview UI
 
-Implement background subtraction from spectrums
 Check that session and background has compatible num_channels
 
 Implement loading of old sessions
 
 Make sure session is allocated if spectrums ticks in after connect (after a disconnect during a session)
+
+Use a standard format when serializing dates
+
+Store the actual GScript in the detector (not the path) ?

@@ -36,6 +36,7 @@ using ZedGraph;
 //using IronPython.Runtime;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
+using Newtonsoft.Json;
 
 namespace crash
 {
@@ -64,6 +65,9 @@ namespace crash
         PointPairList setupGraphList = new PointPairList();
         PointPairList sessionGraphList = new PointPairList();
         PointPairList bkgGraphList = new PointPairList();
+
+        Detector selectedDetector = null;
+        DetectorType selectedDetectorType = null;
         
         float bkgScale = 1f;
 
@@ -231,8 +235,21 @@ namespace crash
                     {
                         string session_name = msg.Arguments["session_name"];
                         Utils.Log.Add("New session created: " + session_name);
-                        
-                        session = new Session(session_name);
+
+                        session = new Session(settings.SessionDirectory, session_name);
+
+                        string detectorSettingsFile = session.SessionPath + Path.DirectorySeparatorChar + "detector.json";
+                        string jsonDet = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.Indented);
+                        TextWriter writer = new StreamWriter(detectorSettingsFile);
+                        writer.Write(jsonDet);
+                        writer.Close();
+
+                        string detectorTypeSettingsFile = session.SessionPath + Path.DirectorySeparatorChar + "detector_type.json";
+                        string jsonDetType = JsonConvert.SerializeObject(selectedDetectorType, Newtonsoft.Json.Formatting.Indented);
+                        writer = new StreamWriter(detectorTypeSettingsFile);
+                        writer.Write(jsonDetType);
+                        writer.Close();
+
                         formWaterfallLive.SetSession(session);
                         formROIHistory.SetSession(session);
                         formMap.SetSession(session);                        
@@ -266,17 +283,11 @@ namespace crash
 
                 case "spectrum":                    
 
-                    Spectrum spec = new Spectrum(msg);
-                    Utils.Log.Add(spec.Label + " received");
-
-                    CalcDoserate(ref spec);
-
-                    string path;
+                    Spectrum spec = new Spectrum(msg, selectedDetector, selectedDetectorType);
+                    Utils.Log.Add(spec.Label + " received");                                        
 
                     if (spec.IsPreview)
-                    {
-                        path = CrashEnvironment.SettingsPath;                        
-
+                    {                    
                         GraphPane pane = graphSetup.GraphPane;
                         pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
                         pane.Fill = new Fill(SystemColors.ButtonFace);                        
@@ -311,9 +322,8 @@ namespace crash
                     }
                     else
                     {         
-                        // Make sure session is allocated in case spectrums are ticking in
+                        // Make sure session is allocated in case spectrums are ticking in                        
 
-                        path = settings.SessionDirectory + Path.DirectorySeparatorChar + spec.SessionName;                        
                         session.Add(spec);
 
                         // Add list node
@@ -322,25 +332,7 @@ namespace crash
                         formMap.AddMarker(spec);
                         formWaterfallLive.UpdatePane();
                         formROIHistory.UpdatePane();
-                    }                        
-
-                    string jsonPath = path + Path.DirectorySeparatorChar + "json";
-                    if (!Directory.Exists(jsonPath))
-                        Directory.CreateDirectory(jsonPath);
-
-                    string filename = jsonPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".json";
-                    TextWriter writer = new StreamWriter(filename);
-                    writer.Write(msg.ToJson(true));
-                    writer.Close();
-
-                    if(cbStoreChn.Checked)
-                    {
-                        string chnPath = path + Path.DirectorySeparatorChar + "chn";
-                        if (!Directory.Exists(chnPath))
-                            Directory.CreateDirectory(chnPath);
-                        filename = chnPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".chn";                        
-                        burn.CHN.Write(filename, msg);
-                    }
+                    }                                            
                     break;
 
                 default:
@@ -351,36 +343,7 @@ namespace crash
                     break;
             }
             return true;
-        }        
-
-        private void CalcDoserate(ref Spectrum spec)
-        {
-            Detector d = settings.Detectors.Find(it => it.Serialnumber == cboxSetupDetector.Text);
-            if (d == null)
-            {
-                MessageBox.Show("No detector selected");
-            }
-
-            DetectorType dt = settings.DetectorTypes.Find(x => x.Name == d.TypeName);
-            if (dt == null)
-            {
-                MessageBox.Show("Detector type not found");
-            }                
-            
-            dynamic geScript = Utils.IPython.UseFile(dt.GScript);
-            double slope = (d.RegressionPointY2 - d.RegressionPointY1) / (d.RegressionPointX2 - d.RegressionPointX1);
-            spec.Doserate = 0.0;
-
-            for (int i = 78; i < spec.Channels.Count; i++)
-            {
-                float sec = (float)spec.Livetime / 1000000f;
-                float ch = spec.Channels[i];
-                float cps = ch / sec;
-                double E = d.RegressionPointY1 + ((double)i * slope - d.RegressionPointX1 * slope);
-                double GE = geScript.GEFactor(E / 1000.0);
-                spec.Doserate += GE * cps * 60.0;
-            }            
-        }
+        }                
 
         private void menuItemExit_Click(object sender, EventArgs e)
         {
@@ -427,7 +390,13 @@ namespace crash
             {
                 MessageBox.Show("You must provide a session directory under preferences");
                 return;
-            }                        
+            }   
+            
+            if(selectedDetector == null)
+            {
+                MessageBox.Show("You must specify a detector under setup");
+                return;
+            }
 
             if (String.IsNullOrEmpty(tbSpecLivetime.Text))
             {
@@ -697,7 +666,7 @@ namespace crash
                 lblMaxCount.Text = "Max count: " + s.MaxCount;
                 lblMinCount.Text = "Min count: " + s.MinCount;
                 lblTotalCount.Text = "Total count: " + s.TotalCount;
-                lblDoserate.Text = ""; // FIXME
+                lblDoserate.Text = "Doserate: " + s.Doserate;
 
                 formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
                 formMap.SetSelectedSessionIndex(s.SessionIndex);
@@ -717,6 +686,7 @@ namespace crash
                 float[] chans = new float[(int)s1.NumChannels];
                 float maxCnt = s1.MaxCount, minCnt = s1.MinCount;
                 float totCnt = 0;
+                double totDoserate = 0.0;
                 for(int i=0; i<lbSession.SelectedItems.Count; i++)
                 {
                     Spectrum s = (Spectrum)lbSession.SelectedItems[i];
@@ -729,6 +699,7 @@ namespace crash
                         minCnt = s.MinCount;
 
                     totCnt += s.TotalCount;
+                    totDoserate += s.Doserate;
 
                     realTime += ((double)s.Realtime) / 1000000.0;
                     liveTime += ((double)s.Livetime) / 1000000.0;                    
@@ -751,7 +722,7 @@ namespace crash
                 lblMaxCount.Text = "Max count: " + maxCnt;
                 lblMinCount.Text = "Min count: " + minCnt;
                 lblTotalCount.Text = "Total count: " + totCnt;
-                lblDoserate.Text = ""; // FIXME
+                lblDoserate.Text = "Total doserate: " + totDoserate;
 
                 formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
@@ -803,8 +774,7 @@ namespace crash
                 det.CurrentNumChannels = form.NumChannels;
                 det.CurrentHV = form.HV;
                 det.CurrentCoarseGain = form.CoarseGain;
-                det.CurrentFineGain = form.FineGain;
-                det.RegressionScript = form.RegressionScript;                
+                det.CurrentFineGain = form.FineGain;                
                 det.CurrentLivetime = form.Livetime;
                 det.CurrentLLD = form.LLD;
                 det.CurrentULD = form.ULD;
@@ -826,8 +796,7 @@ namespace crash
                     d.CurrentNumChannels.ToString(), 
                     d.CurrentHV.ToString(), 
                     d.CurrentCoarseGain.ToString(), 
-                    d.CurrentFineGain.ToString(),
-                    d.RegressionScript,                    
+                    d.CurrentFineGain.ToString(),                    
                     d.CurrentLivetime.ToString(),
                     d.CurrentLLD.ToString(),
                     d.CurrentULD.ToString()
@@ -839,42 +808,7 @@ namespace crash
             // Under setup
             cboxSetupDetector.Items.Clear();
             foreach (Detector d in settings.Detectors)
-                cboxSetupDetector.Items.Add(d.Serialnumber);            
-        }
-
-        private void btnTest_Click(object sender, EventArgs e)
-        {
-            // Test iron python script... (FIXME)
-
-            if (lvDetectors.SelectedItems.Count < 1)
-                return;            
-
-            OpenFileDialog dialog = new OpenFileDialog();
-            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
-                return;
-
-            burn.CHN chn = new burn.CHN();
-            chn.Read(dialog.FileName, false);
-
-            Detector d = (Detector)lvDetectors.SelectedItems[0].Tag;
-
-            DetectorType dt = settings.DetectorTypes.Find(x => x.Name == d.TypeName);
-            if (dt == null)
-                return;
-
-            dynamic regScript = Utils.IPython.UseFile(d.RegressionScript);
-            dynamic geScript = Utils.IPython.UseFile(dt.GScript);
-            double doserate = 0.0;
-
-            for (int i = 78; i < chn.Spectrum.Length; i++)
-            {
-                float cps = chn.Spectrum[i] / chn.LiveTimeSeconds;
-                double E = regScript.RegressionFactor(i);
-                double GE = geScript.GEFactor(E);
-                doserate += GE * cps * 60.0;
-            }
-            
-            tbTest.Text = doserate.ToString();
+                cboxSetupDetector.Items.Add(d.Serialnumber);
         }
 
         private void graphSetup_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -895,17 +829,36 @@ namespace crash
             
             FormSetRegressionPoints form = new FormSetRegressionPoints(x);
             if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {                
-                if(form.SelectedPoint == 1)
-                {
-                    d.RegressionPointX1 = x;
-                    d.RegressionPointY1 = form.SelectedEnergy;
-                }
-                else
-                {
-                    d.RegressionPointX2 = x;
-                    d.RegressionPointY2 = form.SelectedEnergy;
-                }
+            {
+                PointF pt = form.SelectedPoint == 1 ? d.RegressionPoint1 : d.RegressionPoint2;                
+                pt.X = (float)x;
+                pt.Y = (float)form.SelectedEnergy;                
+            }
+        }        
+
+        private void cboxSetupDetector_SelectedValueChanged(object sender, EventArgs e)
+        {
+            string detectorName = cboxSetupDetector.Text.Trim();
+
+            if (String.IsNullOrEmpty(detectorName))
+            {
+                selectedDetector = null;
+                selectedDetectorType = null;
+                return;
+            }
+
+            selectedDetector = settings.Detectors.Find(it => it.Serialnumber == detectorName);
+            if (selectedDetector == null)
+            {
+                MessageBox.Show("Detector " + detectorName + " not found");
+                return;
+            }
+
+            selectedDetectorType = settings.DetectorTypes.Find(x => x.Name == selectedDetector.TypeName);
+            if (selectedDetectorType == null)
+            {
+                MessageBox.Show("Detector type " + selectedDetector.TypeName + " not found");
+                return;
             }
         }
     }    

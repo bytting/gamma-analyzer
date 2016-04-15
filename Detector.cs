@@ -36,15 +36,16 @@ namespace crash
         public int CurrentNumChannels { get; set; }
         public string Serialnumber { get; set; }
         public double CurrentCoarseGain { get; set; }
-        public double CurrentFineGain { get; set; }                
-        public string RegressionScript { get; set; }
+        public double CurrentFineGain { get; set; }                        
         public int CurrentLivetime { get; set; }
         public int CurrentLLD { get; set; }
         public int CurrentULD { get; set; }
-        public double RegressionPointX1 { get; set; }
+        public PointF RegressionPoint1 { get; set; }
+        public PointF RegressionPoint2 { get; set; }        
+        /*public double RegressionPointX1 { get; set; }
         public double RegressionPointX2 { get; set; }
         public double RegressionPointY1 { get; set; }
-        public double RegressionPointY2 { get; set; }
+        public double RegressionPointY2 { get; set; }*/
 
     }
 }

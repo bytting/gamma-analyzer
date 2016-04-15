@@ -34,17 +34,24 @@ namespace crash
         public float MaxChannelCount { get; private set; }
         public float MinChannelCount { get; private set; }        
         public List<Spectrum> Spectrums { get; private set; }
+        public string SessionPath { get; private set; }
 
         public Session()
-        {
-            Name = String.Empty;
+        {            
             Spectrums = new List<Spectrum>();
         }
 
-        public Session(string name)
+        public Session(string sessionPath, string name)
         {
             Name = name;
+            SessionPath = sessionPath + Path.DirectorySeparatorChar + Name;            
             Spectrums = new List<Spectrum>();
+
+            if (!Directory.Exists(sessionPath))
+                Directory.CreateDirectory(sessionPath);
+
+            if (!Directory.Exists(SessionPath))
+                Directory.CreateDirectory(SessionPath);            
         }
 
         public void Add(Spectrum spec)
@@ -56,6 +63,24 @@ namespace crash
                 MaxChannelCount = spec.MaxCount;
             if (spec.MinCount < MinChannelCount)
                 MinChannelCount = spec.MinCount;
+
+            string jsonPath = SessionPath + Path.DirectorySeparatorChar + "json";
+            if (!Directory.Exists(jsonPath))
+                Directory.CreateDirectory(jsonPath);
+
+            string json = JsonConvert.SerializeObject(spec, Formatting.Indented);
+            TextWriter writer = new StreamWriter(jsonPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".json");            
+            writer.Write(json);
+            writer.Close();
+
+            /*if (cbStoreChn.Checked)
+            {
+                string chnPath = path + Path.DirectorySeparatorChar + "chn";
+                if (!Directory.Exists(chnPath))
+                    Directory.CreateDirectory(chnPath);
+                filename = chnPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".chn";
+                burn.CHN.Write(filename, msg);
+            }*/
         }
 
         public bool IsEmpty
@@ -76,21 +101,45 @@ namespace crash
             Spectrums.Clear();
         }
 
-        public bool Load(string sessionDirectory, string sessionName)
+        public bool Load(string sessionPath, string sessionName)
         {            
-            string dir = sessionDirectory + Path.DirectorySeparatorChar + sessionName + Path.DirectorySeparatorChar + "json";
-            if (!Directory.Exists(dir))
+            SessionPath = sessionPath;
+            Name = sessionName;
+            Clear();
+
+            string dir = sessionPath + Path.DirectorySeparatorChar + sessionName;
+            if (!Directory.Exists(SessionPath))
                 return false;
 
-            Clear();
-            Name = sessionName;
-            string[] files = Directory.GetFiles(dir, "*.json", SearchOption.TopDirectoryOnly);
+            if (!Directory.Exists(SessionPath + Path.DirectorySeparatorChar + Name))
+                return false;
+
+            string jsonDir = SessionPath + Path.DirectorySeparatorChar + Name + "json";
+
+            if (!Directory.Exists(jsonDir))
+                return false;            
+
+            string detectorSettingsFile = SessionPath + Path.DirectorySeparatorChar + Name + Path.DirectorySeparatorChar + "detector.json";
+            if (!File.Exists(detectorSettingsFile))
+                return false;
+
+            string detectorTypeSettingsFile = SessionPath + Path.DirectorySeparatorChar + Name + Path.DirectorySeparatorChar + "detector_type.json";
+            if (!File.Exists(detectorTypeSettingsFile))
+                return false;
+
+            string jsonDetector = File.ReadAllText(detectorSettingsFile);
+            Detector det = JsonConvert.DeserializeObject<Detector>(jsonDetector);
+
+            string jsonDetectorType = File.ReadAllText(detectorTypeSettingsFile);
+            DetectorType detType = JsonConvert.DeserializeObject<DetectorType>(jsonDetectorType);
+
+            string[] files = Directory.GetFiles(jsonDir, "*.json", SearchOption.TopDirectoryOnly);
 
             foreach (string filename in files)
             {
                 string json = File.ReadAllText(filename);
-                burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
-                Add(new Spectrum(msg));                                                
+                Spectrum spec = JsonConvert.DeserializeObject<Spectrum>(json);                
+                Add(spec);
             }
             return true;
         }
