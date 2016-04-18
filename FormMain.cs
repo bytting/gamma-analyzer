@@ -163,16 +163,8 @@ namespace crash
         }        
 
         public void PopulateBackgroundSessions()
-        {
-            if (Directory.Exists(settings.SessionDirectory))
-            {                
-                cboxBackground.Items.Clear();
-                cboxBackground.Items.Add("");
-                string[] sessionDirectories = Directory.GetDirectories(settings.SessionDirectory);
-                foreach (string sessDir in sessionDirectories)
-                    cboxBackground.Items.Add(new DirectoryInfo(sessDir).Name);
-            }
-            bkgScale = 1.0f;
+        {            
+            bkgScale = 1.0f; // FIXME
         }
 
         private void SaveSettings()
@@ -238,9 +230,17 @@ namespace crash
 
                         session = new Session(settings.SessionDirectory, session_name);
 
+                        SessionSettings sessionSettings = new SessionSettings();
+                        sessionSettings.SessionName = session_name;
+                        string sessionSettingsFile = session.SessionPath + Path.DirectorySeparatorChar + "session.json";
+                        string jsonSess = JsonConvert.SerializeObject(sessionSettings, Newtonsoft.Json.Formatting.Indented);
+                        TextWriter writer = new StreamWriter(sessionSettingsFile);
+                        writer.Write(jsonSess);
+                        writer.Close();
+
                         string detectorSettingsFile = session.SessionPath + Path.DirectorySeparatorChar + "detector.json";
                         string jsonDet = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.Indented);
-                        TextWriter writer = new StreamWriter(detectorSettingsFile);
+                        writer = new StreamWriter(detectorSettingsFile);
                         writer.Write(jsonDet);
                         writer.Close();
 
@@ -741,24 +741,7 @@ namespace crash
 
         private void btnShow3D_Click(object sender, EventArgs e)
         {            
-        }
-
-        private void cboxBackground_SelectedValueChanged(object sender, EventArgs e)
-        {            
-            if(String.IsNullOrEmpty(cboxBackground.Text))
-            {
-                background.Clear();
-                return;
-            }
-
-            if (session.IsEmpty)
-            {
-                MessageBox.Show("You must have a loaded session");
-                return;
-            }
-                        
-            background.Load(settings.SessionDirectory, cboxBackground.Text);            
-        }
+        }        
 
         private void menuItemAbout_Click(object sender, EventArgs e)
         {
@@ -868,6 +851,45 @@ namespace crash
             {
                 MessageBox.Show("Detector type " + selectedDetector.TypeName + " not found");
                 return;
+            }
+        }
+
+        private void menuItemLoadSession_Click(object sender, EventArgs e)
+        {
+            ClearSession();
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.SelectedPath = settings.SessionDirectory;
+            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                session.Load(dialog.SelectedPath);
+
+                formWaterfallLive.SetSession(session);
+                formROIHistory.SetSession(session);
+                formMap.SetSession(session);
+
+                foreach(Spectrum s in session.Spectrums)
+                {
+                    lbSession.Items.Insert(0, s);
+                    formMap.AddMarker(s);
+                }                
+
+                formWaterfallLive.UpdatePane();
+                formROIHistory.UpdatePane();
+            }
+        }        
+
+        private void menuItemLoadBackgroundSession_Click(object sender, EventArgs e)
+        {
+            if (session.IsEmpty)
+            {
+                MessageBox.Show("You must have a loaded session");
+                return;
+            }
+
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                background.Load(dialog.SelectedPath);
             }
         }
     }    

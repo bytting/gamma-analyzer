@@ -92,29 +92,25 @@ namespace crash
             Spectrums.Clear();
         }
 
-        public bool Load(string sessionPath, string sessionName)
+        public bool Load(string path)
         {            
-            SessionPath = sessionPath;
-            Name = sessionName;
+            SessionPath = path;            
             Clear();
 
-            string dir = sessionPath + Path.DirectorySeparatorChar + sessionName;
-            if (!Directory.Exists(SessionPath))
-                return false;
+            string sessionSettingsFile = SessionPath + Path.DirectorySeparatorChar + "session.json";
+            if (!File.Exists(sessionSettingsFile))
+                return false;            
 
-            if (!Directory.Exists(SessionPath + Path.DirectorySeparatorChar + Name))
-                return false;
-
-            string jsonDir = SessionPath + Path.DirectorySeparatorChar + Name + "json";
+            string jsonDir = SessionPath + Path.DirectorySeparatorChar + "json";
 
             if (!Directory.Exists(jsonDir))
                 return false;            
 
-            string detectorSettingsFile = SessionPath + Path.DirectorySeparatorChar + Name + Path.DirectorySeparatorChar + "detector.json";
+            string detectorSettingsFile = SessionPath + Path.DirectorySeparatorChar + "detector.json";
             if (!File.Exists(detectorSettingsFile))
                 return false;
 
-            string detectorTypeSettingsFile = SessionPath + Path.DirectorySeparatorChar + Name + Path.DirectorySeparatorChar + "detector_type.json";
+            string detectorTypeSettingsFile = SessionPath + Path.DirectorySeparatorChar + "detector_type.json";
             if (!File.Exists(detectorTypeSettingsFile))
                 return false;
 
@@ -170,5 +166,10 @@ namespace crash
             }
             return max;
         }
+    }
+
+    public class SessionSettings
+    {
+        public string SessionName { get; set; }
     }
 }

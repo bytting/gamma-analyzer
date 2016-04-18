@@ -38,6 +38,11 @@
             this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemPreferences = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSession = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLoadSession = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLoadBackgroundSession = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSaveCHN = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSaveIrix = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.status = new System.Windows.Forms.StatusStrip();
@@ -114,8 +119,6 @@
             this.tbSpecDelay = new System.Windows.Forms.TextBox();
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cboxBackground = new System.Windows.Forms.ComboBox();
             this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.btnSendClose = new System.Windows.Forms.Button();
             this.pageDetectors = new System.Windows.Forms.TabPage();
@@ -165,6 +168,7 @@
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemFile,
             this.menuItemEdit,
+            this.menuItemSession,
             this.menuItemHelp});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
@@ -224,6 +228,43 @@
             this.menuItemPreferences.Size = new System.Drawing.Size(135, 22);
             this.menuItemPreferences.Text = "&Preferences";
             this.menuItemPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
+            // 
+            // menuItemSession
+            // 
+            this.menuItemSession.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemLoadSession,
+            this.menuItemLoadBackgroundSession,
+            this.menuItemSaveCHN,
+            this.menuItemSaveIrix});
+            this.menuItemSession.Name = "menuItemSession";
+            this.menuItemSession.Size = new System.Drawing.Size(58, 20);
+            this.menuItemSession.Text = "&Session";
+            // 
+            // menuItemLoadSession
+            // 
+            this.menuItemLoadSession.Name = "menuItemLoadSession";
+            this.menuItemLoadSession.Size = new System.Drawing.Size(208, 22);
+            this.menuItemLoadSession.Text = "Load &existing session";
+            this.menuItemLoadSession.Click += new System.EventHandler(this.menuItemLoadSession_Click);
+            // 
+            // menuItemLoadBackgroundSession
+            // 
+            this.menuItemLoadBackgroundSession.Name = "menuItemLoadBackgroundSession";
+            this.menuItemLoadBackgroundSession.Size = new System.Drawing.Size(208, 22);
+            this.menuItemLoadBackgroundSession.Text = "Load &background session";
+            this.menuItemLoadBackgroundSession.Click += new System.EventHandler(this.menuItemLoadBackgroundSession_Click);
+            // 
+            // menuItemSaveCHN
+            // 
+            this.menuItemSaveCHN.Name = "menuItemSaveCHN";
+            this.menuItemSaveCHN.Size = new System.Drawing.Size(208, 22);
+            this.menuItemSaveCHN.Text = "Save as &CHN";
+            // 
+            // menuItemSaveIrix
+            // 
+            this.menuItemSaveIrix.Name = "menuItemSaveIrix";
+            this.menuItemSaveIrix.Size = new System.Drawing.Size(208, 22);
+            this.menuItemSaveIrix.Text = "Save as &Irix";
             // 
             // menuItemHelp
             // 
@@ -1038,10 +1079,8 @@
             this.tblSession.Controls.Add(this.tbSpecDelay, 3, 0);
             this.tblSession.Controls.Add(this.btnSendSession, 4, 0);
             this.tblSession.Controls.Add(this.btnStopSession, 5, 0);
-            this.tblSession.Controls.Add(this.label4, 0, 1);
-            this.tblSession.Controls.Add(this.cboxBackground, 1, 1);
-            this.tblSession.Controls.Add(this.cbStoreChn, 4, 1);
             this.tblSession.Controls.Add(this.btnSendClose, 7, 1);
+            this.tblSession.Controls.Add(this.cbStoreChn, 6, 0);
             this.tblSession.Dock = System.Windows.Forms.DockStyle.Top;
             this.tblSession.Location = new System.Drawing.Point(3, 3);
             this.tblSession.Name = "tblSession";
@@ -1094,7 +1133,7 @@
             this.btnSendSession.Name = "btnSendSession";
             this.btnSendSession.Size = new System.Drawing.Size(126, 24);
             this.btnSendSession.TabIndex = 17;
-            this.btnSendSession.Text = "Start session";
+            this.btnSendSession.Text = "Start new session";
             this.btnSendSession.UseVisualStyleBackColor = true;
             this.btnSendSession.Click += new System.EventHandler(this.btnSendSession_Click);
             // 
@@ -1109,32 +1148,10 @@
             this.btnStopSession.UseVisualStyleBackColor = true;
             this.btnStopSession.Click += new System.EventHandler(this.btnStopSession_Click);
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(3, 30);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(183, 15);
-            this.label4.TabIndex = 22;
-            this.label4.Text = "Use session as background";
-            // 
-            // cboxBackground
-            // 
-            this.tblSession.SetColumnSpan(this.cboxBackground, 2);
-            this.cboxBackground.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxBackground.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxBackground.FormattingEnabled = true;
-            this.cboxBackground.Location = new System.Drawing.Point(268, 33);
-            this.cboxBackground.Name = "cboxBackground";
-            this.cboxBackground.Size = new System.Drawing.Size(258, 23);
-            this.cboxBackground.TabIndex = 23;
-            this.cboxBackground.SelectedValueChanged += new System.EventHandler(this.cboxBackground_SelectedValueChanged);
-            // 
             // cbStoreChn
             // 
             this.cbStoreChn.AutoSize = true;
-            this.cbStoreChn.Location = new System.Drawing.Point(664, 33);
+            this.cbStoreChn.Location = new System.Drawing.Point(928, 3);
             this.cbStoreChn.Name = "cbStoreChn";
             this.cbStoreChn.Size = new System.Drawing.Size(109, 19);
             this.cbStoreChn.TabIndex = 16;
@@ -1413,8 +1430,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private ZedGraph.ZedGraphControl graphSession;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cboxBackground;
         private System.Windows.Forms.Label lblLatitudeStart;
         private System.Windows.Forms.Label lblLongitudeStart;
         private System.Windows.Forms.Label lblRealtime;
@@ -1453,6 +1468,11 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripButton btnShowDoserate;
         private System.Windows.Forms.Label lblSetupDoserate;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSession;
+        private System.Windows.Forms.ToolStripMenuItem menuItemLoadSession;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSaveCHN;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSaveIrix;
+        private System.Windows.Forms.ToolStripMenuItem menuItemLoadBackgroundSession;
     }
 }
 
