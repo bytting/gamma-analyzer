@@ -88,7 +88,6 @@
             this.lblSetupDoserate = new System.Windows.Forms.Label();
             this.pageMenu = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnMenuBackgrounds = new System.Windows.Forms.Button();
             this.btnMenuSetup = new System.Windows.Forms.Button();
             this.btnMenuSession = new System.Windows.Forms.Button();
             this.pageSession = new System.Windows.Forms.TabPage();
@@ -121,24 +120,6 @@
             this.btnStopSession = new System.Windows.Forms.Button();
             this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.btnSendClose = new System.Windows.Forms.Button();
-            this.pageDetectors = new System.Windows.Forms.TabPage();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.lvDetectors = new System.Windows.Forms.ListView();
-            this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderSerialnumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderNumChannels = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderCoarseGain = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderFineGain = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderRegressionScript = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderLivetime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderLLD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderULD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.btnDetectorsAdd = new System.Windows.Forms.ToolStripButton();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.btnDetectorsCancel = new System.Windows.Forms.Button();
-            this.btnDetectorsOk = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -155,12 +136,6 @@
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tblSession.SuspendLayout();
-            this.pageDetectors.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -191,26 +166,26 @@
             // menuItemConnect
             // 
             this.menuItemConnect.Name = "menuItemConnect";
-            this.menuItemConnect.Size = new System.Drawing.Size(133, 22);
+            this.menuItemConnect.Size = new System.Drawing.Size(152, 22);
             this.menuItemConnect.Text = "&Connect";
             this.menuItemConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
             // 
             // menuItemDisconnect
             // 
             this.menuItemDisconnect.Name = "menuItemDisconnect";
-            this.menuItemDisconnect.Size = new System.Drawing.Size(133, 22);
+            this.menuItemDisconnect.Size = new System.Drawing.Size(152, 22);
             this.menuItemDisconnect.Text = "&Disconnect";
             this.menuItemDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // menuItemExit
             // 
             this.menuItemExit.Name = "menuItemExit";
-            this.menuItemExit.Size = new System.Drawing.Size(133, 22);
+            this.menuItemExit.Size = new System.Drawing.Size(152, 22);
             this.menuItemExit.Text = "E&xit";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
@@ -225,7 +200,7 @@
             // menuItemPreferences
             // 
             this.menuItemPreferences.Name = "menuItemPreferences";
-            this.menuItemPreferences.Size = new System.Drawing.Size(135, 22);
+            this.menuItemPreferences.Size = new System.Drawing.Size(152, 22);
             this.menuItemPreferences.Text = "&Preferences";
             this.menuItemPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
             // 
@@ -480,6 +455,7 @@
             // 
             this.btnShow3D.AutoSize = false;
             this.btnShow3D.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShow3D.Enabled = false;
             this.btnShow3D.Image = global::crash.Properties.Resources._3D_32;
             this.btnShow3D.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShow3D.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -504,7 +480,6 @@
             this.tabs.Controls.Add(this.pageSetup);
             this.tabs.Controls.Add(this.pageMenu);
             this.tabs.Controls.Add(this.pageSession);
-            this.tabs.Controls.Add(this.pageDetectors);
             this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabs.Location = new System.Drawing.Point(0, 64);
             this.tabs.Name = "tabs";
@@ -756,7 +731,6 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.btnMenuBackgrounds);
             this.flowLayoutPanel1.Controls.Add(this.btnMenuSetup);
             this.flowLayoutPanel1.Controls.Add(this.btnMenuSession);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -765,24 +739,6 @@
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(44, 47, 44, 47);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1194, 628);
             this.flowLayoutPanel1.TabIndex = 1;
-            // 
-            // btnMenuBackgrounds
-            // 
-            this.btnMenuBackgrounds.FlatAppearance.BorderSize = 0;
-            this.btnMenuBackgrounds.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuBackgrounds.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuBackgrounds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMenuBackgrounds.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuBackgrounds.Image = global::crash.Properties.Resources.background_128;
-            this.btnMenuBackgrounds.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuBackgrounds.Location = new System.Drawing.Point(47, 50);
-            this.btnMenuBackgrounds.Name = "btnMenuBackgrounds";
-            this.btnMenuBackgrounds.Size = new System.Drawing.Size(160, 170);
-            this.btnMenuBackgrounds.TabIndex = 3;
-            this.btnMenuBackgrounds.Text = "Detectors";
-            this.btnMenuBackgrounds.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuBackgrounds.UseVisualStyleBackColor = true;
-            this.btnMenuBackgrounds.Click += new System.EventHandler(this.btnMenuBackgrounds_Click);
             // 
             // btnMenuSetup
             // 
@@ -793,7 +749,7 @@
             this.btnMenuSetup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMenuSetup.Image = global::crash.Properties.Resources.setup_128;
             this.btnMenuSetup.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuSetup.Location = new System.Drawing.Point(213, 50);
+            this.btnMenuSetup.Location = new System.Drawing.Point(47, 50);
             this.btnMenuSetup.Name = "btnMenuSetup";
             this.btnMenuSetup.Size = new System.Drawing.Size(160, 170);
             this.btnMenuSetup.TabIndex = 0;
@@ -811,7 +767,7 @@
             this.btnMenuSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMenuSession.Image = global::crash.Properties.Resources.map_128;
             this.btnMenuSession.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuSession.Location = new System.Drawing.Point(379, 50);
+            this.btnMenuSession.Location = new System.Drawing.Point(213, 50);
             this.btnMenuSession.Name = "btnMenuSession";
             this.btnMenuSession.Size = new System.Drawing.Size(160, 170);
             this.btnMenuSession.TabIndex = 2;
@@ -1169,146 +1125,6 @@
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
             // 
-            // pageDetectors
-            // 
-            this.pageDetectors.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.pageDetectors.Controls.Add(this.splitContainer1);
-            this.pageDetectors.Controls.Add(this.toolStrip1);
-            this.pageDetectors.Controls.Add(this.panel3);
-            this.pageDetectors.Location = new System.Drawing.Point(4, 25);
-            this.pageDetectors.Name = "pageDetectors";
-            this.pageDetectors.Padding = new System.Windows.Forms.Padding(3);
-            this.pageDetectors.Size = new System.Drawing.Size(1200, 634);
-            this.pageDetectors.TabIndex = 3;
-            this.pageDetectors.Text = "Detectors";
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 28);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.lvDetectors);
-            this.splitContainer1.Size = new System.Drawing.Size(1194, 572);
-            this.splitContainer1.SplitterDistance = 731;
-            this.splitContainer1.TabIndex = 4;
-            // 
-            // lvDetectors
-            // 
-            this.lvDetectors.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderType,
-            this.columnHeaderSerialnumber,
-            this.columnHeaderNumChannels,
-            this.columnHeaderHV,
-            this.columnHeaderCoarseGain,
-            this.columnHeaderFineGain,
-            this.columnHeaderRegressionScript,
-            this.columnHeaderLivetime,
-            this.columnHeaderLLD,
-            this.columnHeaderULD});
-            this.lvDetectors.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvDetectors.FullRowSelect = true;
-            this.lvDetectors.Location = new System.Drawing.Point(0, 0);
-            this.lvDetectors.MultiSelect = false;
-            this.lvDetectors.Name = "lvDetectors";
-            this.lvDetectors.Size = new System.Drawing.Size(731, 572);
-            this.lvDetectors.TabIndex = 2;
-            this.lvDetectors.UseCompatibleStateImageBehavior = false;
-            this.lvDetectors.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeaderType
-            // 
-            this.columnHeaderType.Text = "Type";
-            // 
-            // columnHeaderSerialnumber
-            // 
-            this.columnHeaderSerialnumber.Text = "Serialnumber";
-            // 
-            // columnHeaderNumChannels
-            // 
-            this.columnHeaderNumChannels.Text = "Num. Channels";
-            // 
-            // columnHeaderHV
-            // 
-            this.columnHeaderHV.Text = "Voltage";
-            // 
-            // columnHeaderCoarseGain
-            // 
-            this.columnHeaderCoarseGain.Text = "Coarse gain";
-            // 
-            // columnHeaderFineGain
-            // 
-            this.columnHeaderFineGain.Text = "Fine gain";
-            // 
-            // columnHeaderRegressionScript
-            // 
-            this.columnHeaderRegressionScript.Text = "Regression script";
-            // 
-            // columnHeaderLivetime
-            // 
-            this.columnHeaderLivetime.Text = "Livetime";
-            // 
-            // columnHeaderLLD
-            // 
-            this.columnHeaderLLD.Text = "LLD";
-            // 
-            // columnHeaderULD
-            // 
-            this.columnHeaderULD.Text = "ULD";
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnDetectorsAdd});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1194, 25);
-            this.toolStrip1.TabIndex = 3;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // btnDetectorsAdd
-            // 
-            this.btnDetectorsAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDetectorsAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnDetectorsAdd.Image")));
-            this.btnDetectorsAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDetectorsAdd.Name = "btnDetectorsAdd";
-            this.btnDetectorsAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnDetectorsAdd.Text = "Add detector";
-            this.btnDetectorsAdd.Click += new System.EventHandler(this.btnDetectorsAdd_Click);
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.btnDetectorsCancel);
-            this.panel3.Controls.Add(this.btnDetectorsOk);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(3, 600);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1194, 31);
-            this.panel3.TabIndex = 1;
-            // 
-            // btnDetectorsCancel
-            // 
-            this.btnDetectorsCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnDetectorsCancel.Location = new System.Drawing.Point(1044, 0);
-            this.btnDetectorsCancel.Name = "btnDetectorsCancel";
-            this.btnDetectorsCancel.Size = new System.Drawing.Size(75, 31);
-            this.btnDetectorsCancel.TabIndex = 1;
-            this.btnDetectorsCancel.Text = "Cancel";
-            this.btnDetectorsCancel.UseVisualStyleBackColor = true;
-            // 
-            // btnDetectorsOk
-            // 
-            this.btnDetectorsOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnDetectorsOk.Location = new System.Drawing.Point(1119, 0);
-            this.btnDetectorsOk.Name = "btnDetectorsOk";
-            this.btnDetectorsOk.Size = new System.Drawing.Size(75, 31);
-            this.btnDetectorsOk.TabIndex = 0;
-            this.btnDetectorsOk.Text = "Ok";
-            this.btnDetectorsOk.UseVisualStyleBackColor = true;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1349,14 +1165,6 @@
             this.tableLayoutPanel2.PerformLayout();
             this.tblSession.ResumeLayout(false);
             this.tblSession.PerformLayout();
-            this.pageDetectors.ResumeLayout(false);
-            this.pageDetectors.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1417,8 +1225,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemPreferences;
         private System.Windows.Forms.ToolStripButton btnPreferences;
         private System.Windows.Forms.ToolStripButton btnShowWaterfallLive;
-        private System.Windows.Forms.Button btnMenuBackgrounds;
-        private System.Windows.Forms.TabPage pageDetectors;
         private System.Windows.Forms.ToolStripLabel lblInterface;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton btnShowWaterfallHist;
@@ -1449,23 +1255,6 @@
         private System.Windows.Forms.Label lblDoserate;
         private System.Windows.Forms.ToolStripMenuItem menuItemHelp;
         private System.Windows.Forms.ToolStripMenuItem menuItemAbout;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton btnDetectorsAdd;
-        private System.Windows.Forms.ListView lvDetectors;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button btnDetectorsCancel;
-        private System.Windows.Forms.Button btnDetectorsOk;
-        private System.Windows.Forms.ColumnHeader columnHeaderType;
-        private System.Windows.Forms.ColumnHeader columnHeaderSerialnumber;
-        private System.Windows.Forms.ColumnHeader columnHeaderNumChannels;
-        private System.Windows.Forms.ColumnHeader columnHeaderHV;
-        private System.Windows.Forms.ColumnHeader columnHeaderCoarseGain;
-        private System.Windows.Forms.ColumnHeader columnHeaderFineGain;
-        private System.Windows.Forms.ColumnHeader columnHeaderRegressionScript;
-        private System.Windows.Forms.ColumnHeader columnHeaderLivetime;
-        private System.Windows.Forms.ColumnHeader columnHeaderLLD;
-        private System.Windows.Forms.ColumnHeader columnHeaderULD;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripButton btnShowDoserate;
         private System.Windows.Forms.Label lblSetupDoserate;
         private System.Windows.Forms.ToolStripMenuItem menuItemSession;

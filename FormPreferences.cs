@@ -43,6 +43,7 @@ namespace crash
         {
             tbSessionDir.Text = settings.SessionDirectory;
             PopulateDetectorTypeList();
+            PopulateDetectorList();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -83,8 +84,51 @@ namespace crash
             foreach (DetectorType dt in settings.DetectorTypes)
             {
                 ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString(), dt.GScript });
+                item.Tag = dt;
                 lvDetectorTypes.Items.Add(item);
             }            
+        }
+
+        private void PopulateDetectorList()
+        {
+            lvDetectors.Items.Clear();
+            foreach (Detector d in settings.Detectors)
+            {
+                ListViewItem item = new ListViewItem(new string[] { 
+                    d.TypeName, 
+                    d.Serialnumber, 
+                    d.CurrentNumChannels.ToString(), 
+                    d.CurrentHV.ToString(), 
+                    d.CurrentCoarseGain.ToString(), 
+                    d.CurrentFineGain.ToString(),                    
+                    d.CurrentLivetime.ToString(),
+                    d.CurrentLLD.ToString(),
+                    d.CurrentULD.ToString()
+                });
+                item.Tag = d;
+                lvDetectors.Items.Add(item);                
+            }
+        }
+
+        private void btnAddDetector_Click(object sender, EventArgs e)
+        {
+            FormAddDetector form = new FormAddDetector(settings.DetectorTypes);
+            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Detector det = new Detector();
+                det.TypeName = form.DetectorType;
+                det.Serialnumber = form.Serialnumber;
+                det.CurrentNumChannels = form.NumChannels;
+                det.CurrentHV = form.HV;
+                det.CurrentCoarseGain = form.CoarseGain;
+                det.CurrentFineGain = form.FineGain;
+                det.CurrentLivetime = form.Livetime;
+                det.CurrentLLD = form.LLD;
+                det.CurrentULD = form.ULD;
+                settings.Detectors.Add(det);
+
+                PopulateDetectorList();
+            }
         }
     }
 }

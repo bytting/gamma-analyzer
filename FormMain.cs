@@ -554,7 +554,10 @@ namespace crash
         private void menuItemPreferences_Click(object sender, EventArgs e)
         {
             FormPreferences form = new FormPreferences(settings);
-            form.ShowDialog();
+            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                PopulateDetectors();
+            }
         }
 
         private void btnShowWaterfall_Click(object sender, EventArgs e)
@@ -740,63 +743,18 @@ namespace crash
         }        
 
         private void btnShow3D_Click(object sender, EventArgs e)
-        {            
+        {
+            MessageBox.Show("Not implemented");
         }        
 
         private void menuItemAbout_Click(object sender, EventArgs e)
         {
             About about = new About();
             about.ShowDialog();            
-        }
-
-        private void btnMenuBackgrounds_Click(object sender, EventArgs e)
-        {
-            PopulateDetectors();
-            tabs.SelectedTab = pageDetectors;
-        }
-
-        private void btnDetectorsAdd_Click(object sender, EventArgs e)
-        {
-            FormAddDetector form = new FormAddDetector(settings.DetectorTypes);
-            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Detector det = new Detector();
-                det.TypeName = form.DetectorType;
-                det.Serialnumber = form.Serialnumber;
-                det.CurrentNumChannels = form.NumChannels;
-                det.CurrentHV = form.HV;
-                det.CurrentCoarseGain = form.CoarseGain;
-                det.CurrentFineGain = form.FineGain;                
-                det.CurrentLivetime = form.Livetime;
-                det.CurrentLLD = form.LLD;
-                det.CurrentULD = form.ULD;
-                settings.Detectors.Add(det);
-
-                PopulateDetectors();
-            }
-        }
+        }        
 
         private void PopulateDetectors()
-        {
-            // Under detectors
-            lvDetectors.Items.Clear();
-            foreach(Detector d in settings.Detectors)
-            {
-                ListViewItem item = new ListViewItem(new string[] { 
-                    d.TypeName, 
-                    d.Serialnumber, 
-                    d.CurrentNumChannels.ToString(), 
-                    d.CurrentHV.ToString(), 
-                    d.CurrentCoarseGain.ToString(), 
-                    d.CurrentFineGain.ToString(),                    
-                    d.CurrentLivetime.ToString(),
-                    d.CurrentLLD.ToString(),
-                    d.CurrentULD.ToString()
-                });
-                item.Tag = d;
-                lvDetectors.Items.Add(item);
-            }
-
+        {            
             // Under setup
             cboxSetupDetector.Items.Clear();
             foreach (Detector d in settings.Detectors)
@@ -859,6 +817,8 @@ namespace crash
             ClearSession();
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.SelectedPath = settings.SessionDirectory;
+            dialog.Description = "Select session directory";
+            dialog.ShowNewFolderButton = false;
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 session.Load(dialog.SelectedPath);
@@ -886,7 +846,10 @@ namespace crash
                 return;
             }
 
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            FolderBrowserDialog dialog = new FolderBrowserDialog();            
+            dialog.SelectedPath = settings.SessionDirectory;
+            dialog.Description = "Select background session directory";
+            dialog.ShowNewFolderButton = false;
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 background.Load(dialog.SelectedPath);
