@@ -36,7 +36,7 @@ namespace burn
 
         //! Protocol arguments stored as a dictionary
         [JsonProperty(PropertyName = "arguments")]
-        public Dictionary<string, string> Arguments { get; set; }               
+        public Dictionary<string, object> Arguments { get; set; }               
 
         /** 
             * Parameterized constructor for the Message class
@@ -44,12 +44,12 @@ namespace burn
             * \param args - protocol arguments
             */
         //[JsonConstructor]
-        public Message(string cmd, Dictionary<string, string> args)
+        public Message(string cmd, Dictionary<string, object> args)
         {            
             Command = cmd;                
             if(args != null)
                 Arguments = args;
-            else Arguments = new Dictionary<string, string>();
+            else Arguments = new Dictionary<string, object>();
         }
 
         /** 
@@ -59,7 +59,7 @@ namespace burn
             */
         public void AddParameter(string key, object value)
         {
-            Arguments[key] = value.ToString();
+            Arguments[key] = value;
         }   
         
         public string ToJson(bool indented = false)

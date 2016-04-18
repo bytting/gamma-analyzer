@@ -60,11 +60,11 @@ namespace crash
 
         public Spectrum(burn.Message msg, Detector det, DetectorType detType)
         {
-            SessionName = msg.Arguments["session_name"];
+            SessionName = msg.Arguments["session_name"].ToString();
             SessionIndex = Convert.ToInt32(msg.Arguments["session_index"]);
             Label = "Spectrum " + SessionIndex.ToString();
             NumChannels = Convert.ToInt32(msg.Arguments["num_channels"]);
-            IsPreview = msg.Arguments["preview"] == "1";
+            IsPreview = msg.Arguments["preview"].ToString() == "1";
             LatitudeStart = Convert.ToDouble(msg.Arguments["latitude_start"], CultureInfo.InvariantCulture);
             LongitudeStart = Convert.ToDouble(msg.Arguments["longitude_start"], CultureInfo.InvariantCulture);
             AltitudeStart = Convert.ToDouble(msg.Arguments["altitude_start"], CultureInfo.InvariantCulture);
@@ -79,7 +79,7 @@ namespace crash
             Livetime = Convert.ToInt32(msg.Arguments["livetime"]);
             mChannels = new List<float>();
             TotalCount = 0f;
-            string[] items = msg.Arguments["channels"].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] items = msg.Arguments["channels"].ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string item in items)
             {
                 float ch = Convert.ToSingle(item);

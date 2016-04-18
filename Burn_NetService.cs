@@ -97,7 +97,7 @@ namespace burn
                 case "connect":
                     // Try to connect to server
                     Client = new TcpClient();
-                    string host = msg.Arguments["host"];
+                    string host = msg.Arguments["host"].ToString();
                     int port = Convert.ToInt32(msg.Arguments["port"]);
 
                     try

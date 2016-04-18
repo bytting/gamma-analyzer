@@ -228,7 +228,7 @@ namespace burn
 
         private static bool WriteSpectrum(BinaryWriter writer, Message msg)
         {
-            string[] chans = msg.Arguments["channels"].Split(new char[] { ' ' });
+            string[] chans = msg.Arguments["channels"].ToString().Split(new char[] { ' ' });
             foreach(string ch in chans)            
                 writer.Write(Convert.ToInt32(ch));            
             return true;

@@ -62,16 +62,7 @@ namespace crash
             if (spec.MaxCount > MaxChannelCount)
                 MaxChannelCount = spec.MaxCount;
             if (spec.MinCount < MinChannelCount)
-                MinChannelCount = spec.MinCount;
-
-            string jsonPath = SessionPath + Path.DirectorySeparatorChar + "json";
-            if (!Directory.Exists(jsonPath))
-                Directory.CreateDirectory(jsonPath);
-
-            string json = JsonConvert.SerializeObject(spec, Formatting.Indented);
-            TextWriter writer = new StreamWriter(jsonPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".json");            
-            writer.Write(json);
-            writer.Close();
+                MinChannelCount = spec.MinCount;            
 
             /*if (cbStoreChn.Checked)
             {
@@ -138,7 +129,8 @@ namespace crash
             foreach (string filename in files)
             {
                 string json = File.ReadAllText(filename);
-                Spectrum spec = JsonConvert.DeserializeObject<Spectrum>(json);                
+                burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
+                Spectrum spec = new Spectrum(msg, det, detType);
                 Add(spec);
             }
             return true;

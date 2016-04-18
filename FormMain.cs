@@ -228,12 +228,12 @@ namespace crash
                     break;
 
                 case "new_session_ok":
-                    bool prev = msg.Arguments["preview"] == "1";
+                    bool prev = msg.Arguments["preview"].ToString() == "1";
                     if(prev)
                         Utils.Log.Add("Preview received");
                     else
                     {
-                        string session_name = msg.Arguments["session_name"];
+                        string session_name = msg.Arguments["session_name"].ToString();
                         Utils.Log.Add("New session created: " + session_name);
 
                         session = new Session(settings.SessionDirectory, session_name);
@@ -322,7 +322,16 @@ namespace crash
                     }
                     else
                     {         
-                        // Make sure session is allocated in case spectrums are ticking in                        
+                        // Make sure session is allocated in case spectrums are ticking in  
+
+                        string jsonPath = session.SessionPath + Path.DirectorySeparatorChar + "json";
+                        if (!Directory.Exists(jsonPath))
+                            Directory.CreateDirectory(jsonPath);
+
+                        string json = JsonConvert.SerializeObject(msg, Newtonsoft.Json.Formatting.Indented);
+                        TextWriter writer = new StreamWriter(jsonPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".json");
+                        writer.Write(json);
+                        writer.Close();
 
                         session.Add(spec);
 
@@ -337,8 +346,8 @@ namespace crash
 
                 default:
                     string info = msg.Command + " -> ";
-                    foreach (KeyValuePair<string, string> item in msg.Arguments)
-                        info += item.Key + ":" + item.Value + ", ";
+                    foreach (KeyValuePair<string, object> item in msg.Arguments)
+                        info += item.Key + ":" + item.Value.ToString() + ", ";
                     Utils.Log.Add("Unhandeled command: " + info);
                     break;
             }
