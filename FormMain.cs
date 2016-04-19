@@ -855,5 +855,20 @@ namespace crash
                 background.Load(dialog.SelectedPath);
             }
         }
+
+        private void menuItemSaveCHN_Click(object sender, EventArgs e)
+        {
+            if(session.IsEmpty)
+            {
+                MessageBox.Show("No session active");
+                return;
+            }
+
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                SessionExporter.CHN(session, dialog.SelectedPath);
+            }            
+        }
     }    
 }

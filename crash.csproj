@@ -111,7 +111,6 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Burn_Format_CHN.cs" />
     <Compile Include="Burn_NetService.cs" />
     <Compile Include="Burn_NetService_IO.cs" />
     <Compile Include="Burn_NetService_Proto.cs" />
@@ -187,6 +186,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />
+    <Compile Include="SessionExporter.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Spectrum.cs" />
     <Compile Include="Utils.cs" />

@@ -46,6 +46,38 @@ namespace crash
             PopulateDetectorList();
         }
 
+        private void PopulateDetectorTypeList()
+        {
+            lvDetectorTypes.Items.Clear();
+            foreach (DetectorType dt in settings.DetectorTypes)
+            {
+                ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString(), dt.GScript });
+                item.Tag = dt;
+                lvDetectorTypes.Items.Add(item);
+            }
+        }
+
+        private void PopulateDetectorList()
+        {
+            lvDetectors.Items.Clear();
+            foreach (Detector d in settings.Detectors)
+            {
+                ListViewItem item = new ListViewItem(new string[] { 
+                    d.TypeName, 
+                    d.Serialnumber, 
+                    d.CurrentNumChannels.ToString(), 
+                    d.CurrentHV.ToString(), 
+                    d.CurrentCoarseGain.ToString(), 
+                    d.CurrentFineGain.ToString(),                    
+                    d.CurrentLivetime.ToString(),
+                    d.CurrentLLD.ToString(),
+                    d.CurrentULD.ToString()
+                });
+                item.Tag = d;
+                lvDetectors.Items.Add(item);
+            }
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -76,39 +108,7 @@ namespace crash
                 settings.DetectorTypes.Add(new DetectorType(form.TypeName, form.MaxChannels, form.MinHV, form.MaxHV, form.GScript));
                 PopulateDetectorTypeList();
             }
-        }       
- 
-        private void PopulateDetectorTypeList()
-        {
-            lvDetectorTypes.Items.Clear();
-            foreach (DetectorType dt in settings.DetectorTypes)
-            {
-                ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString(), dt.GScript });
-                item.Tag = dt;
-                lvDetectorTypes.Items.Add(item);
-            }            
-        }
-
-        private void PopulateDetectorList()
-        {
-            lvDetectors.Items.Clear();
-            foreach (Detector d in settings.Detectors)
-            {
-                ListViewItem item = new ListViewItem(new string[] { 
-                    d.TypeName, 
-                    d.Serialnumber, 
-                    d.CurrentNumChannels.ToString(), 
-                    d.CurrentHV.ToString(), 
-                    d.CurrentCoarseGain.ToString(), 
-                    d.CurrentFineGain.ToString(),                    
-                    d.CurrentLivetime.ToString(),
-                    d.CurrentLLD.ToString(),
-                    d.CurrentULD.ToString()
-                });
-                item.Tag = d;
-                lvDetectors.Items.Add(item);                
-            }
-        }
+        }               
 
         private void btnAddDetector_Click(object sender, EventArgs e)
         {

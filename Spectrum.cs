@@ -51,7 +51,8 @@ namespace crash
         public float GpsSpeedEnd { get; private set; }
         public int Realtime { get; private set; }
         public int Livetime { get; private set; }
-        public double Doserate { get; private set; }
+        public int SpectralInput { get; private set; }
+        public double Doserate { get; private set; }        
 
         public Spectrum()
         {
@@ -77,6 +78,7 @@ namespace crash
             GpsSpeedEnd = Convert.ToSingle(msg.Arguments["gps_speed_end"], CultureInfo.InvariantCulture);
             Realtime = Convert.ToInt32(msg.Arguments["realtime"]);
             Livetime = Convert.ToInt32(msg.Arguments["livetime"]);
+            SpectralInput = Convert.ToInt32(msg.Arguments["spectral_input"]);
             mChannels = new List<float>();
             TotalCount = 0f;
             string[] items = msg.Arguments["channels"].ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

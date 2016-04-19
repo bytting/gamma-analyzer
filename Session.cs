@@ -136,6 +136,11 @@ namespace crash
             return true;
         }
 
+        public void SaveAsCHN()
+        {
+
+        }
+
         public float[] GetAdjustedCounts(float livetime)
         {
             if (Spectrums.Count < 1)

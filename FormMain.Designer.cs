@@ -234,6 +234,7 @@
             this.menuItemSaveCHN.Name = "menuItemSaveCHN";
             this.menuItemSaveCHN.Size = new System.Drawing.Size(208, 22);
             this.menuItemSaveCHN.Text = "Save as &CHN";
+            this.menuItemSaveCHN.Click += new System.EventHandler(this.menuItemSaveCHN_Click);
             // 
             // menuItemSaveIrix
             // 
