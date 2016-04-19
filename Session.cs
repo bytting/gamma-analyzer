@@ -85,6 +85,7 @@ namespace crash
 
         public void Clear()
         {
+            SessionPath = String.Empty;            
             Name = String.Empty;
             NumChannels = 0;
             MaxChannelCount = 0;
@@ -93,16 +94,15 @@ namespace crash
         }
 
         public bool Load(string path)
-        {            
-            SessionPath = path;            
+        {
             Clear();
+            SessionPath = path;                        
 
             string sessionSettingsFile = SessionPath + Path.DirectorySeparatorChar + "session.json";
             if (!File.Exists(sessionSettingsFile))
-                return false;            
+                return false;
 
             string jsonDir = SessionPath + Path.DirectorySeparatorChar + "json";
-
             if (!Directory.Exists(jsonDir))
                 return false;            
 
@@ -113,6 +113,10 @@ namespace crash
             string detectorTypeSettingsFile = SessionPath + Path.DirectorySeparatorChar + "detector_type.json";
             if (!File.Exists(detectorTypeSettingsFile))
                 return false;
+
+            string sessionSettings = File.ReadAllText(sessionSettingsFile);
+            SessionSettings sessInfo = JsonConvert.DeserializeObject<SessionSettings>(sessionSettings);
+            Name = sessInfo.SessionName;
 
             string jsonDetector = File.ReadAllText(detectorSettingsFile);
             Detector det = JsonConvert.DeserializeObject<Detector>(jsonDetector);

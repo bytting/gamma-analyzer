@@ -118,8 +118,8 @@
             this.tbSpecDelay = new System.Windows.Forms.TextBox();
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
-            this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.btnSendClose = new System.Windows.Forms.Button();
+            this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -166,26 +166,26 @@
             // menuItemConnect
             // 
             this.menuItemConnect.Name = "menuItemConnect";
-            this.menuItemConnect.Size = new System.Drawing.Size(152, 22);
+            this.menuItemConnect.Size = new System.Drawing.Size(133, 22);
             this.menuItemConnect.Text = "&Connect";
             this.menuItemConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
             // 
             // menuItemDisconnect
             // 
             this.menuItemDisconnect.Name = "menuItemDisconnect";
-            this.menuItemDisconnect.Size = new System.Drawing.Size(152, 22);
+            this.menuItemDisconnect.Size = new System.Drawing.Size(133, 22);
             this.menuItemDisconnect.Text = "&Disconnect";
             this.menuItemDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
             // 
             // menuItemExit
             // 
             this.menuItemExit.Name = "menuItemExit";
-            this.menuItemExit.Size = new System.Drawing.Size(152, 22);
+            this.menuItemExit.Size = new System.Drawing.Size(133, 22);
             this.menuItemExit.Text = "E&xit";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
@@ -200,7 +200,7 @@
             // menuItemPreferences
             // 
             this.menuItemPreferences.Name = "menuItemPreferences";
-            this.menuItemPreferences.Size = new System.Drawing.Size(152, 22);
+            this.menuItemPreferences.Size = new System.Drawing.Size(135, 22);
             this.menuItemPreferences.Text = "&Preferences";
             this.menuItemPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
             // 
@@ -1104,16 +1104,6 @@
             this.btnStopSession.UseVisualStyleBackColor = true;
             this.btnStopSession.Click += new System.EventHandler(this.btnStopSession_Click);
             // 
-            // cbStoreChn
-            // 
-            this.cbStoreChn.AutoSize = true;
-            this.cbStoreChn.Location = new System.Drawing.Point(928, 3);
-            this.cbStoreChn.Name = "cbStoreChn";
-            this.cbStoreChn.Size = new System.Drawing.Size(109, 19);
-            this.cbStoreChn.TabIndex = 16;
-            this.cbStoreChn.Text = "Store CHN files";
-            this.cbStoreChn.UseVisualStyleBackColor = true;
-            // 
             // btnSendClose
             // 
             this.btnSendClose.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1124,6 +1114,16 @@
             this.btnSendClose.Text = "Send close";
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
+            // 
+            // cbStoreChn
+            // 
+            this.cbStoreChn.AutoSize = true;
+            this.cbStoreChn.Location = new System.Drawing.Point(928, 3);
+            this.cbStoreChn.Name = "cbStoreChn";
+            this.cbStoreChn.Size = new System.Drawing.Size(109, 19);
+            this.cbStoreChn.TabIndex = 16;
+            this.cbStoreChn.Text = "Store CHN files";
+            this.cbStoreChn.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
