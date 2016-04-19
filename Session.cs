@@ -63,24 +63,16 @@ namespace crash
                 MaxChannelCount = spec.MaxCount;
             if (spec.MinCount < MinChannelCount)
                 MinChannelCount = spec.MinCount;            
+        }
 
-            /*if (cbStoreChn.Checked)
-            {
-                string chnPath = path + Path.DirectorySeparatorChar + "chn";
-                if (!Directory.Exists(chnPath))
-                    Directory.CreateDirectory(chnPath);
-                filename = chnPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".chn";
-                burn.CHN.Write(filename, msg);
-            }*/
+        public bool IsLoaded
+        {
+            get { return SessionPath != String.Empty && Name != String.Empty; }
         }
 
         public bool IsEmpty
         {
-            get
-            {
-                return Spectrums.Count < 1;
-            }
-            private set {}            
+            get { return Spectrums.Count < 1; }            
         }
 
         public void Clear()

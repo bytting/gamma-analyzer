@@ -48,8 +48,12 @@ namespace crash
             {
                 BinaryWriter writer = null;
                 try
-                {                    
-                    string filename = path + Path.DirectorySeparatorChar + session.Name + "_CHN" + Path.DirectorySeparatorChar + s.SessionIndex.ToString() + ".chn";
+                {
+                    string sessionPath = path + Path.DirectorySeparatorChar + session.Name + "_CHN";
+                    if (!Directory.Exists(sessionPath))
+                        Directory.CreateDirectory(sessionPath);
+
+                    string filename = sessionPath + Path.DirectorySeparatorChar + s.SessionIndex.ToString() + ".chn";
                     writer = new BinaryWriter(File.Create(filename));
                     writer.Write(Convert.ToInt16(-1)); // signature
                     writer.Write(Convert.ToInt16(s.SpectralInput)); // detector id
@@ -69,11 +73,7 @@ namespace crash
                     
                     foreach(float ch in s.Channels)            
                         writer.Write(Convert.ToInt32(ch));            
-                }            
-                catch(Exception ex)
-                {
-                    return false;
-                }
+                }                            
                 finally
                 {
                     if(writer != null)

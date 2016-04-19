@@ -119,7 +119,6 @@
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
-            this.cbStoreChn = new System.Windows.Forms.CheckBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -1037,7 +1036,6 @@
             this.tblSession.Controls.Add(this.btnSendSession, 4, 0);
             this.tblSession.Controls.Add(this.btnStopSession, 5, 0);
             this.tblSession.Controls.Add(this.btnSendClose, 7, 1);
-            this.tblSession.Controls.Add(this.cbStoreChn, 6, 0);
             this.tblSession.Dock = System.Windows.Forms.DockStyle.Top;
             this.tblSession.Location = new System.Drawing.Point(3, 3);
             this.tblSession.Name = "tblSession";
@@ -1116,16 +1114,6 @@
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
             // 
-            // cbStoreChn
-            // 
-            this.cbStoreChn.AutoSize = true;
-            this.cbStoreChn.Location = new System.Drawing.Point(928, 3);
-            this.cbStoreChn.Name = "cbStoreChn";
-            this.cbStoreChn.Size = new System.Drawing.Size(109, 19);
-            this.cbStoreChn.TabIndex = 16;
-            this.cbStoreChn.Text = "Store CHN files";
-            this.cbStoreChn.UseVisualStyleBackColor = true;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1201,7 +1189,6 @@
         private System.Windows.Forms.TextBox tbSpecDelay;
         private System.Windows.Forms.Button btnSendSession;
         private System.Windows.Forms.Button btnStopSession;
-        private System.Windows.Forms.CheckBox cbStoreChn;
         private System.Windows.Forms.Button btnSendClose;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;

@@ -840,9 +840,9 @@ namespace crash
 
         private void menuItemLoadBackgroundSession_Click(object sender, EventArgs e)
         {
-            if (session.IsEmpty)
+            if (!session.IsLoaded)
             {
-                MessageBox.Show("You must have a loaded session");
+                MessageBox.Show("Session is not loaded");
                 return;
             }
 
@@ -865,9 +865,18 @@ namespace crash
             }
 
             FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.ShowNewFolderButton = true;
+            dialog.Description = "Select folder to store CHN files";
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                SessionExporter.CHN(session, dialog.SelectedPath);
+                try
+                {
+                    SessionExporter.CHN(session, dialog.SelectedPath);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
+                }                    
             }            
         }
     }    
