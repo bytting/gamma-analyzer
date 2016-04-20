@@ -877,144 +877,160 @@
             // lblLatitudeStart
             // 
             this.lblLatitudeStart.AutoSize = true;
+            this.lblLatitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLatitudeStart.Location = new System.Drawing.Point(3, 20);
             this.lblLatitudeStart.Name = "lblLatitudeStart";
-            this.lblLatitudeStart.Size = new System.Drawing.Size(90, 15);
+            this.lblLatitudeStart.Size = new System.Drawing.Size(105, 15);
             this.lblLatitudeStart.TabIndex = 0;
             this.lblLatitudeStart.Text = "<LatitudeStart>";
             // 
             // lblLongitudeStart
             // 
             this.lblLongitudeStart.AutoSize = true;
+            this.lblLongitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLongitudeStart.Location = new System.Drawing.Point(249, 20);
             this.lblLongitudeStart.Name = "lblLongitudeStart";
-            this.lblLongitudeStart.Size = new System.Drawing.Size(101, 15);
+            this.lblLongitudeStart.Size = new System.Drawing.Size(117, 15);
             this.lblLongitudeStart.TabIndex = 1;
             this.lblLongitudeStart.Text = "<LongitudeStart>";
             // 
             // lblRealtime
             // 
             this.lblRealtime.AutoSize = true;
+            this.lblRealtime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRealtime.Location = new System.Drawing.Point(3, 0);
             this.lblRealtime.Name = "lblRealtime";
-            this.lblRealtime.Size = new System.Drawing.Size(71, 15);
+            this.lblRealtime.Size = new System.Drawing.Size(81, 15);
             this.lblRealtime.TabIndex = 2;
             this.lblRealtime.Text = "<Realtime>";
             // 
             // lblLivetime
             // 
             this.lblLivetime.AutoSize = true;
+            this.lblLivetime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLivetime.Location = new System.Drawing.Point(249, 0);
             this.lblLivetime.Name = "lblLivetime";
-            this.lblLivetime.Size = new System.Drawing.Size(67, 15);
+            this.lblLivetime.Size = new System.Drawing.Size(77, 15);
             this.lblLivetime.TabIndex = 3;
             this.lblLivetime.Text = "<Livetime>";
             // 
             // lblSession
             // 
             this.lblSession.AutoSize = true;
+            this.lblSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSession.Location = new System.Drawing.Point(495, 0);
             this.lblSession.Name = "lblSession";
-            this.lblSession.Size = new System.Drawing.Size(65, 15);
+            this.lblSession.Size = new System.Drawing.Size(74, 15);
             this.lblSession.TabIndex = 4;
             this.lblSession.Text = "<Session>";
             // 
             // lblIndex
             // 
             this.lblIndex.AutoSize = true;
+            this.lblIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblIndex.Location = new System.Drawing.Point(741, 0);
             this.lblIndex.Name = "lblIndex";
-            this.lblIndex.Size = new System.Drawing.Size(51, 15);
+            this.lblIndex.Size = new System.Drawing.Size(58, 15);
             this.lblIndex.TabIndex = 5;
             this.lblIndex.Text = "<Index>";
             // 
             // lblAltitudeStart
             // 
             this.lblAltitudeStart.AutoSize = true;
+            this.lblAltitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAltitudeStart.Location = new System.Drawing.Point(495, 20);
             this.lblAltitudeStart.Name = "lblAltitudeStart";
-            this.lblAltitudeStart.Size = new System.Drawing.Size(86, 15);
+            this.lblAltitudeStart.Size = new System.Drawing.Size(101, 15);
             this.lblAltitudeStart.TabIndex = 9;
             this.lblAltitudeStart.Text = "<AltitudeStart>";
             // 
             // lblMaxCount
             // 
             this.lblMaxCount.AutoSize = true;
+            this.lblMaxCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaxCount.Location = new System.Drawing.Point(3, 60);
             this.lblMaxCount.Name = "lblMaxCount";
-            this.lblMaxCount.Size = new System.Drawing.Size(77, 15);
+            this.lblMaxCount.Size = new System.Drawing.Size(87, 15);
             this.lblMaxCount.TabIndex = 6;
             this.lblMaxCount.Text = "<MaxCount>";
             // 
             // lblMinCount
             // 
             this.lblMinCount.AutoSize = true;
+            this.lblMinCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMinCount.Location = new System.Drawing.Point(249, 60);
             this.lblMinCount.Name = "lblMinCount";
-            this.lblMinCount.Size = new System.Drawing.Size(74, 15);
+            this.lblMinCount.Size = new System.Drawing.Size(84, 15);
             this.lblMinCount.TabIndex = 7;
             this.lblMinCount.Text = "<MinCount>";
             // 
             // lblTotalCount
             // 
             this.lblTotalCount.AutoSize = true;
+            this.lblTotalCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalCount.Location = new System.Drawing.Point(495, 60);
             this.lblTotalCount.Name = "lblTotalCount";
-            this.lblTotalCount.Size = new System.Drawing.Size(80, 15);
+            this.lblTotalCount.Size = new System.Drawing.Size(92, 15);
             this.lblTotalCount.TabIndex = 8;
             this.lblTotalCount.Text = "<TotalCount>";
             // 
             // lblGpsTimeStart
             // 
             this.lblGpsTimeStart.AutoSize = true;
+            this.lblGpsTimeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGpsTimeStart.Location = new System.Drawing.Point(741, 20);
             this.lblGpsTimeStart.Name = "lblGpsTimeStart";
-            this.lblGpsTimeStart.Size = new System.Drawing.Size(96, 15);
+            this.lblGpsTimeStart.Size = new System.Drawing.Size(110, 15);
             this.lblGpsTimeStart.TabIndex = 10;
             this.lblGpsTimeStart.Text = "<GpsTimeStart>";
             // 
             // lblLatitudeEnd
             // 
             this.lblLatitudeEnd.AutoSize = true;
+            this.lblLatitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLatitudeEnd.Location = new System.Drawing.Point(3, 40);
             this.lblLatitudeEnd.Name = "lblLatitudeEnd";
-            this.lblLatitudeEnd.Size = new System.Drawing.Size(87, 15);
+            this.lblLatitudeEnd.Size = new System.Drawing.Size(100, 15);
             this.lblLatitudeEnd.TabIndex = 11;
             this.lblLatitudeEnd.Text = "<LatitudeEnd>";
             // 
             // lblLongitudeEnd
             // 
             this.lblLongitudeEnd.AutoSize = true;
+            this.lblLongitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLongitudeEnd.Location = new System.Drawing.Point(249, 40);
             this.lblLongitudeEnd.Name = "lblLongitudeEnd";
-            this.lblLongitudeEnd.Size = new System.Drawing.Size(98, 15);
+            this.lblLongitudeEnd.Size = new System.Drawing.Size(112, 15);
             this.lblLongitudeEnd.TabIndex = 12;
             this.lblLongitudeEnd.Text = "<LongitudeEnd>";
             // 
             // lblAltitudeEnd
             // 
             this.lblAltitudeEnd.AutoSize = true;
+            this.lblAltitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAltitudeEnd.Location = new System.Drawing.Point(495, 40);
             this.lblAltitudeEnd.Name = "lblAltitudeEnd";
-            this.lblAltitudeEnd.Size = new System.Drawing.Size(83, 15);
+            this.lblAltitudeEnd.Size = new System.Drawing.Size(96, 15);
             this.lblAltitudeEnd.TabIndex = 13;
             this.lblAltitudeEnd.Text = "<AltitudeEnd>";
             // 
             // lblGpsTimeEnd
             // 
             this.lblGpsTimeEnd.AutoSize = true;
+            this.lblGpsTimeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGpsTimeEnd.Location = new System.Drawing.Point(741, 40);
             this.lblGpsTimeEnd.Name = "lblGpsTimeEnd";
-            this.lblGpsTimeEnd.Size = new System.Drawing.Size(93, 15);
+            this.lblGpsTimeEnd.Size = new System.Drawing.Size(105, 15);
             this.lblGpsTimeEnd.TabIndex = 14;
             this.lblGpsTimeEnd.Text = "<GpsTimeEnd>";
             // 
             // lblDoserate
             // 
             this.lblDoserate.AutoSize = true;
+            this.lblDoserate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDoserate.Location = new System.Drawing.Point(741, 60);
             this.lblDoserate.Name = "lblDoserate";
-            this.lblDoserate.Size = new System.Drawing.Size(71, 15);
+            this.lblDoserate.Size = new System.Drawing.Size(81, 15);
             this.lblDoserate.TabIndex = 15;
             this.lblDoserate.Text = "<Doserate>";
             // 

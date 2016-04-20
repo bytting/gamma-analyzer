@@ -30,15 +30,22 @@ using System.Windows.Forms;
 namespace crash
 {
     public partial class FormWaterfallLive : Form
-    {        
-        Session session = null;
-        Bitmap bmpPane = null;
-        bool colorCeilInitialized = false;
+    {
+        private Session session = null;
+        private Bitmap bmpPane = null;
+        private bool colorCeilInitialized = false;
+
         private int SelectedSessionIndex1 = -1;
         private int SelectedSessionIndex2 = -1;
-
         public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
         public event SetSessionIndexEventHandler SetSessionIndexEvent;
+
+        private int left_x = 1;
+
+        private FontFamily fontFamily = new FontFamily("Arial");
+        private Font font = null;
+
+        private int mouseX = 0;
 
         public FormWaterfallLive()
         {
@@ -48,6 +55,8 @@ namespace crash
 
         private void FormWaterfall_Load(object sender, EventArgs e)
         {
+            font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
+
             lblColorCeil.Text = "";            
 
             pane_Resize(sender, e);        
@@ -56,7 +65,9 @@ namespace crash
 
         private void UpdateStats()
         {
-            lblColorCeil.Text = "Color ceiling (min, curr, max): " + tbColorCeil.Minimum + ", " + tbColorCeil.Value + ", " + tbColorCeil.Maximum;
+            lblColorCeil.Text = "Color ceiling (min, curr, max): " + tbColorCeil.Minimum + ", " + tbColorCeil.Value + ", " + tbColorCeil.Maximum;            
+            int mx = left_x + mouseX;
+            lblMouseInfo.Text = "Mouse info: " + mx.ToString();
         }
 
         public void SetSession(Session sess)
@@ -80,6 +91,13 @@ namespace crash
             if (tbColorCeil.Value < 1)
                 return;
 
+            Graphics graphics = Graphics.FromImage(bmpPane);
+            Pen whitePenDash = new Pen(Color.White);
+            whitePenDash.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            SolidBrush whiteBrush = new SolidBrush(Color.White);
+
+            graphics.Clear(Color.FromArgb(255, 0, 0, 255));
+
             float max = tbColorCeil.Value;
             float sectorSize = max / 4f;            
             float scale = 255f / sectorSize;
@@ -90,15 +108,14 @@ namespace crash
             for (int i = h - 1; i >= 0; i--)
             {
                 Spectrum s = session.Spectrums[i];                
-
                 int w = s.Channels.Count > pane.Width ? pane.Width : s.Channels.Count; // FIXME
                 
                 bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
 
                 for (int x = 1; x < w; x++)
-                {
+                {            
                     int a = 255, r = 0, g = 0, b = 255;
-                    float cps = s.Channels[x];
+                    float cps = s.Channels[left_x + x];
                     int sectorSkip = CalcSectorSkip(cps, sectorSize);
 
                     float adj = (cps - (float)sectorSkip * sectorSize) * scale;
@@ -129,31 +146,28 @@ namespace crash
                         r = 255;
                         g -= (int)adj;
                     }
-                    
-                    if (x > 0 && x < pane.Width && y >= 0 && y < pane.Height)
-                        bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
+                                        
+                    bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
+
+                    if(((left_x + x) % 200) == 0)
+                    {                        
+                        int ch = left_x + x;
+                        graphics.DrawString(ch.ToString(), font, whiteBrush, x, pane.Height - 20);                        
+                    }
                 }
 
                 if(s.SessionIndex == SelectedSessionIndex1)
                 {
-                    Graphics g = Graphics.FromImage(bmpPane);
-                    Pen pen = new Pen(Color.White);
-                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-
-                    g.DrawLine(pen, new Point(1, y), new Point(pane.Width, y));                    
+                    graphics.DrawLine(whitePenDash, new Point(1, y), new Point(pane.Width, y));                    
                 }
 
                 if (s.SessionIndex == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)
-                {
-                    Graphics g = Graphics.FromImage(bmpPane);
-                    Pen pen = new Pen(Color.White);
-                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-
-                    g.DrawLine(pen, new Point(1, y), new Point(pane.Width, y));
+                {                
+                    graphics.DrawLine(whitePenDash, new Point(1, y), new Point(pane.Width, y));
                 }
 
                 y++;
-            }             
+            }              
 
             pane.Refresh();
         }        
@@ -168,7 +182,7 @@ namespace crash
         {
             if (bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
-
+            
             e.Graphics.DrawImage(bmpPane, 0, 0);
         }
 
@@ -180,6 +194,7 @@ namespace crash
                 return;
 
             bmpPane = new Bitmap(pane.Width, pane.Height);
+            left_x = 1;
         }
 
         private int CalcSectorSkip(float cps, float sectorSize)
@@ -238,6 +253,45 @@ namespace crash
                 g.Clear(Color.FromArgb(0, 0, 255));
             }                
             session = null;
+        }
+
+        private void btnLeftAll_Click(object sender, EventArgs e)
+        {
+            left_x = 1;
+            UpdatePane();
+        }
+
+        private void btnLeft_Click(object sender, EventArgs e)
+        {
+            left_x -= pane.Width;
+            if (left_x < 1)
+                left_x = 1;
+            UpdatePane();
+        }
+
+        private void btnRight_Click(object sender, EventArgs e)
+        {
+            int max_x = (int)session.NumChannels - pane.Width;
+            left_x += pane.Width;
+            if (left_x > max_x)
+                left_x = max_x;
+            if (left_x < 1)
+                left_x = 1;
+            UpdatePane();
+        }
+
+        private void btnRightAll_Click(object sender, EventArgs e)
+        {
+            left_x = (int)session.NumChannels - pane.Width;
+            if (left_x < 1)
+                left_x = 1;
+            UpdatePane();
+        }
+
+        private void pane_MouseMove(object sender, MouseEventArgs e)
+        {
+            mouseX = e.X;
+            UpdateStats();
         }
     }
 }

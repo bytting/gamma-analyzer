@@ -34,8 +34,15 @@
             this.lblColorCeil = new System.Windows.Forms.ToolStripStatusLabel();
             this.pane = new System.Windows.Forms.Panel();
             this.tbColorCeil = new System.Windows.Forms.TrackBar();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnLeftAll = new System.Windows.Forms.Button();
+            this.btnLeft = new System.Windows.Forms.Button();
+            this.btnRight = new System.Windows.Forms.Button();
+            this.btnRightAll = new System.Windows.Forms.Button();
+            this.lblMouseInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.status.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tools
@@ -49,7 +56,8 @@
             // status
             // 
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblColorCeil});
+            this.lblColorCeil,
+            this.lblMouseInfo});
             this.status.Location = new System.Drawing.Point(0, 449);
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(1000, 22);
@@ -69,10 +77,11 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(955, 424);
+            this.pane.Size = new System.Drawing.Size(955, 396);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
+            this.pane.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pane_MouseMove);
             this.pane.Resize += new System.EventHandler(this.pane_Resize);
             // 
             // tbColorCeil
@@ -86,12 +95,83 @@
             this.tbColorCeil.Scroll += new System.EventHandler(this.tbColorCeil_Scroll);
             this.tbColorCeil.ValueChanged += new System.EventHandler(this.tbColorCeil_ValueChanged);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnRightAll);
+            this.panel1.Controls.Add(this.btnRight);
+            this.panel1.Controls.Add(this.btnLeft);
+            this.panel1.Controls.Add(this.btnLeftAll);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 421);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(955, 28);
+            this.panel1.TabIndex = 4;
+            // 
+            // btnLeftAll
+            // 
+            this.btnLeftAll.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnLeftAll.FlatAppearance.BorderSize = 0;
+            this.btnLeftAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLeftAll.Location = new System.Drawing.Point(0, 0);
+            this.btnLeftAll.Name = "btnLeftAll";
+            this.btnLeftAll.Size = new System.Drawing.Size(75, 28);
+            this.btnLeftAll.TabIndex = 0;
+            this.btnLeftAll.Text = "<<";
+            this.btnLeftAll.UseVisualStyleBackColor = true;
+            this.btnLeftAll.Click += new System.EventHandler(this.btnLeftAll_Click);
+            // 
+            // btnLeft
+            // 
+            this.btnLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnLeft.FlatAppearance.BorderSize = 0;
+            this.btnLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLeft.Location = new System.Drawing.Point(75, 0);
+            this.btnLeft.Name = "btnLeft";
+            this.btnLeft.Size = new System.Drawing.Size(75, 28);
+            this.btnLeft.TabIndex = 1;
+            this.btnLeft.Text = "<";
+            this.btnLeft.UseVisualStyleBackColor = true;
+            this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
+            // 
+            // btnRight
+            // 
+            this.btnRight.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnRight.FlatAppearance.BorderSize = 0;
+            this.btnRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRight.Location = new System.Drawing.Point(150, 0);
+            this.btnRight.Name = "btnRight";
+            this.btnRight.Size = new System.Drawing.Size(75, 28);
+            this.btnRight.TabIndex = 2;
+            this.btnRight.Text = ">";
+            this.btnRight.UseVisualStyleBackColor = true;
+            this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
+            // 
+            // btnRightAll
+            // 
+            this.btnRightAll.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnRightAll.FlatAppearance.BorderSize = 0;
+            this.btnRightAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRightAll.Location = new System.Drawing.Point(225, 0);
+            this.btnRightAll.Name = "btnRightAll";
+            this.btnRightAll.Size = new System.Drawing.Size(75, 28);
+            this.btnRightAll.TabIndex = 3;
+            this.btnRightAll.Text = ">>";
+            this.btnRightAll.UseVisualStyleBackColor = true;
+            this.btnRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
+            // 
+            // lblMouseInfo
+            // 
+            this.lblMouseInfo.Name = "lblMouseInfo";
+            this.lblMouseInfo.Size = new System.Drawing.Size(93, 17);
+            this.lblMouseInfo.Text = "<lblMouseInfo>";
+            // 
             // FormWaterfallLive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1000, 471);
             this.Controls.Add(this.pane);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.tbColorCeil);
             this.Controls.Add(this.status);
             this.Controls.Add(this.tools);
@@ -104,6 +184,7 @@
             this.status.ResumeLayout(false);
             this.status.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,5 +197,11 @@
         private System.Windows.Forms.Panel pane;
         private System.Windows.Forms.TrackBar tbColorCeil;
         private System.Windows.Forms.ToolStripStatusLabel lblColorCeil;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnRightAll;
+        private System.Windows.Forms.Button btnRight;
+        private System.Windows.Forms.Button btnLeft;
+        private System.Windows.Forms.Button btnLeftAll;
+        private System.Windows.Forms.ToolStripStatusLabel lblMouseInfo;
     }
 }
