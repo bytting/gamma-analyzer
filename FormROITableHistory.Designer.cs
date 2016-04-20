@@ -43,10 +43,16 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnApply = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnRightAll = new System.Windows.Forms.Button();
+            this.btnRight = new System.Windows.Forms.Button();
+            this.btnLeft = new System.Windows.Forms.Button();
+            this.btnLeftAll = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridROI)).BeginInit();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -80,7 +86,7 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(697, 610);
+            this.pane.Size = new System.Drawing.Size(697, 588);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pane_MouseClick);
@@ -169,12 +175,81 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "ROI settings";
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.btnRightAll);
+            this.panel3.Controls.Add(this.btnRight);
+            this.panel3.Controls.Add(this.btnLeft);
+            this.panel3.Controls.Add(this.btnLeftAll);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(0, 613);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(697, 22);
+            this.panel3.TabIndex = 4;
+            // 
+            // btnRightAll
+            // 
+            this.btnRightAll.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnRightAll.FlatAppearance.BorderSize = 0;
+            this.btnRightAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRightAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRightAll.Location = new System.Drawing.Point(225, 0);
+            this.btnRightAll.Name = "btnRightAll";
+            this.btnRightAll.Size = new System.Drawing.Size(75, 22);
+            this.btnRightAll.TabIndex = 3;
+            this.btnRightAll.Text = ">>";
+            this.btnRightAll.UseVisualStyleBackColor = true;
+            this.btnRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
+            // 
+            // btnRight
+            // 
+            this.btnRight.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnRight.FlatAppearance.BorderSize = 0;
+            this.btnRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRight.Location = new System.Drawing.Point(150, 0);
+            this.btnRight.Name = "btnRight";
+            this.btnRight.Size = new System.Drawing.Size(75, 22);
+            this.btnRight.TabIndex = 2;
+            this.btnRight.Text = ">";
+            this.btnRight.UseVisualStyleBackColor = true;
+            this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
+            // 
+            // btnLeft
+            // 
+            this.btnLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnLeft.FlatAppearance.BorderSize = 0;
+            this.btnLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLeft.Location = new System.Drawing.Point(75, 0);
+            this.btnLeft.Name = "btnLeft";
+            this.btnLeft.Size = new System.Drawing.Size(75, 22);
+            this.btnLeft.TabIndex = 1;
+            this.btnLeft.Text = "<";
+            this.btnLeft.UseVisualStyleBackColor = true;
+            this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
+            // 
+            // btnLeftAll
+            // 
+            this.btnLeftAll.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnLeftAll.FlatAppearance.BorderSize = 0;
+            this.btnLeftAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLeftAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLeftAll.Location = new System.Drawing.Point(0, 0);
+            this.btnLeftAll.Name = "btnLeftAll";
+            this.btnLeftAll.Size = new System.Drawing.Size(75, 22);
+            this.btnLeftAll.TabIndex = 0;
+            this.btnLeftAll.Text = "<<";
+            this.btnLeftAll.UseVisualStyleBackColor = true;
+            this.btnLeftAll.Click += new System.EventHandler(this.btnLeftAll_Click);
+            // 
             // FormROITableHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1095, 657);
             this.Controls.Add(this.pane);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
@@ -189,6 +264,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridROI)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -210,5 +286,10 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn Active;
         private System.Windows.Forms.DataGridViewTextBoxColumn LineColor;
         private System.Windows.Forms.ToolStripStatusLabel lblScaling;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button btnRightAll;
+        private System.Windows.Forms.Button btnRight;
+        private System.Windows.Forms.Button btnLeft;
+        private System.Windows.Forms.Button btnLeftAll;
     }
 }

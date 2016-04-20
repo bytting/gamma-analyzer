@@ -40,6 +40,8 @@ namespace crash
         public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
         public event SetSessionIndexEventHandler SetSessionIndexEvent;
 
+        private int first_channel = 0;
+
         public FormROITableHistory()
         {
             InitializeComponent();
@@ -109,18 +111,19 @@ namespace crash
                 int x = 0;
                 int last_x = 0, last_y = pane.Height - 40;                
 
-                foreach (Spectrum s in session.Spectrums)
+                for (int i = first_channel; i < first_channel + pane.Width; i++)
                 {
+                    if (i >= (int)session.Spectrums.Count)
+                        break;
+
+                    Spectrum s = session.Spectrums[i];
                     float weightedCount = s.GetCountInROI((int)rd.StartChannel, (int)rd.EndChannel) * scaling;
                     int y = pane.Height - 40 - (int)weightedCount;
 
                     if (x >= 0 && x < pane.Width && y >= 0 && y < pane.Height)
                     {
                         g.DrawLine(pen, last_x, last_y, x, y);
-                    }
-                    last_x = x;
-                    last_y = y;
-                    x++;
+                    }                    
 
                     if ((x % 400) == 0)
                     {
@@ -130,6 +133,10 @@ namespace crash
                     }
                     
                     bmpPane.SetPixel(x, bmpPane.Height - 1, Utils.ToColor(s.SessionIndex));
+
+                    last_x = x;
+                    last_y = y;
+                    x++;
                 }
             }
 
@@ -171,6 +178,8 @@ namespace crash
                 return;
 
             bmpPane = new Bitmap(pane.Width, pane.Height);
+            first_channel = 0;
+            UpdatePane();            
         }
 
         private void btnApply_Click(object sender, EventArgs e)
@@ -236,6 +245,51 @@ namespace crash
             }            
             session = null;
             roiList.Clear();
+        }
+
+        private void btnLeftAll_Click(object sender, EventArgs e)
+        {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
+            first_channel = 0;
+            UpdatePane();
+        }
+
+        private void btnRightAll_Click(object sender, EventArgs e)
+        {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
+            first_channel = (int)session.NumChannels - pane.Width;
+            if (first_channel < 0)
+                first_channel = 0;
+            UpdatePane();
+        }
+
+        private void btnLeft_Click(object sender, EventArgs e)
+        {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
+            first_channel -= pane.Width;
+            if (first_channel < 1)
+                first_channel = 1;
+            UpdatePane();
+        }
+
+        private void btnRight_Click(object sender, EventArgs e)
+        {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
+            int max_channel = (int)session.NumChannels - pane.Width;
+            first_channel += pane.Width;
+            if (first_channel > max_channel)
+                first_channel = max_channel;
+            if (first_channel < 0)
+                first_channel = 0;
+            UpdatePane();
         }
     }
 
