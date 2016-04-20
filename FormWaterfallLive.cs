@@ -195,6 +195,7 @@ namespace crash
 
             bmpPane = new Bitmap(pane.Width, pane.Height);
             left_x = 1;
+            UpdatePane();
         }
 
         private int CalcSectorSkip(float cps, float sectorSize)
@@ -223,7 +224,10 @@ namespace crash
         }
 
         private void pane_MouseDown(object sender, MouseEventArgs e)
-        {                        
+        {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
             if (SetSessionIndexEvent != null)
             {                
                 SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
@@ -257,12 +261,18 @@ namespace crash
 
         private void btnLeftAll_Click(object sender, EventArgs e)
         {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
             left_x = 1;
             UpdatePane();
         }
 
         private void btnLeft_Click(object sender, EventArgs e)
         {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
             left_x -= pane.Width;
             if (left_x < 1)
                 left_x = 1;
@@ -271,6 +281,9 @@ namespace crash
 
         private void btnRight_Click(object sender, EventArgs e)
         {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
             int max_x = (int)session.NumChannels - pane.Width;
             left_x += pane.Width;
             if (left_x > max_x)
@@ -282,6 +295,9 @@ namespace crash
 
         private void btnRightAll_Click(object sender, EventArgs e)
         {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
             left_x = (int)session.NumChannels - pane.Width;
             if (left_x < 1)
                 left_x = 1;
