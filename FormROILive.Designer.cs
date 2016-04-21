@@ -46,9 +46,9 @@
             // 
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblScaling});
-            this.status.Location = new System.Drawing.Point(0, 635);
+            this.status.Location = new System.Drawing.Point(0, 519);
             this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(1095, 22);
+            this.status.Size = new System.Drawing.Size(934, 22);
             this.status.TabIndex = 0;
             this.status.Text = "statusStrip1";
             // 
@@ -65,7 +65,7 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(1095, 588);
+            this.pane.Size = new System.Drawing.Size(934, 472);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pane_MouseClick);
@@ -78,9 +78,9 @@
             this.panel3.Controls.Add(this.btnLeft);
             this.panel3.Controls.Add(this.btnLeftAll);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 613);
+            this.panel3.Location = new System.Drawing.Point(0, 497);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1095, 22);
+            this.panel3.Size = new System.Drawing.Size(934, 22);
             this.panel3.TabIndex = 4;
             // 
             // btnRightAll
@@ -143,7 +143,7 @@
             // 
             this.tools.Location = new System.Drawing.Point(0, 0);
             this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(1095, 25);
+            this.tools.Size = new System.Drawing.Size(934, 25);
             this.tools.TabIndex = 5;
             this.tools.Text = "toolStrip1";
             // 
@@ -151,12 +151,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1095, 657);
+            this.ClientSize = new System.Drawing.Size(934, 541);
             this.Controls.Add(this.pane);
             this.Controls.Add(this.tools);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.status);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(320, 200);
             this.Name = "FormROILive";
             this.Text = "Crash - ROI Live";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormROITableLive_FormClosing);

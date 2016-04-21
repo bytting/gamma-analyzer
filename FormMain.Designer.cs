@@ -157,7 +157,7 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menu.Size = new System.Drawing.Size(1208, 24);
+            this.menu.Size = new System.Drawing.Size(1110, 24);
             this.menu.TabIndex = 0;
             this.menu.Text = "menuStrip1";
             // 
@@ -278,10 +278,10 @@
             // 
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-            this.status.Location = new System.Drawing.Point(0, 727);
+            this.status.Location = new System.Drawing.Point(0, 664);
             this.status.Name = "status";
             this.status.Padding = new System.Windows.Forms.Padding(1, 0, 17, 0);
-            this.status.Size = new System.Drawing.Size(1208, 22);
+            this.status.Size = new System.Drawing.Size(1110, 22);
             this.status.TabIndex = 1;
             this.status.Text = "statusStrip1";
             // 
@@ -319,7 +319,7 @@
             this.btnShow3D});
             this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(1208, 40);
+            this.tools.Size = new System.Drawing.Size(1110, 40);
             this.tools.TabIndex = 2;
             this.tools.Text = "toolStrip1";
             // 
@@ -368,7 +368,7 @@
             this.tabs.Location = new System.Drawing.Point(0, 64);
             this.tabs.Name = "tabs";
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(1208, 663);
+            this.tabs.Size = new System.Drawing.Size(1110, 600);
             this.tabs.TabIndex = 4;
             this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_SelectedIndexChanged);
             // 
@@ -568,7 +568,7 @@
             this.pageMenu.Location = new System.Drawing.Point(4, 25);
             this.pageMenu.Name = "pageMenu";
             this.pageMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.pageMenu.Size = new System.Drawing.Size(1200, 634);
+            this.pageMenu.Size = new System.Drawing.Size(1102, 571);
             this.pageMenu.TabIndex = 1;
             this.pageMenu.Text = "Menu";
             // 
@@ -580,7 +580,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(44, 47, 44, 47);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1194, 628);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1096, 565);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // pageSession
@@ -1290,7 +1290,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1208, 749);
+            this.ClientSize = new System.Drawing.Size(1110, 686);
             this.Controls.Add(this.tabs);
             this.Controls.Add(this.tools);
             this.Controls.Add(this.status);

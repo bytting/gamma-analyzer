@@ -845,7 +845,7 @@ namespace crash
             }   
              
             FormRegressionPoints form = new FormRegressionPoints(selectedDetector);
-            form.ShowDialog();
+            form.Show();
         }        
 
         private void btnSelectDetector_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)

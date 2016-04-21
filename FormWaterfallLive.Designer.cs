@@ -49,7 +49,7 @@
             // 
             this.tools.Location = new System.Drawing.Point(0, 0);
             this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(1000, 25);
+            this.tools.Size = new System.Drawing.Size(926, 25);
             this.tools.TabIndex = 0;
             this.tools.Text = "toolStrip1";
             // 
@@ -58,9 +58,9 @@
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblColorCeil,
             this.lblMouseInfo});
-            this.status.Location = new System.Drawing.Point(0, 449);
+            this.status.Location = new System.Drawing.Point(0, 410);
             this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(1000, 22);
+            this.status.Size = new System.Drawing.Size(926, 22);
             this.status.TabIndex = 1;
             this.status.Text = "statusStrip1";
             // 
@@ -83,7 +83,7 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(955, 402);
+            this.pane.Size = new System.Drawing.Size(881, 363);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
@@ -93,10 +93,10 @@
             // tbColorCeil
             // 
             this.tbColorCeil.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tbColorCeil.Location = new System.Drawing.Point(955, 25);
+            this.tbColorCeil.Location = new System.Drawing.Point(881, 25);
             this.tbColorCeil.Name = "tbColorCeil";
             this.tbColorCeil.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.tbColorCeil.Size = new System.Drawing.Size(45, 424);
+            this.tbColorCeil.Size = new System.Drawing.Size(45, 385);
             this.tbColorCeil.TabIndex = 3;
             this.tbColorCeil.Scroll += new System.EventHandler(this.tbColorCeil_Scroll);
             this.tbColorCeil.ValueChanged += new System.EventHandler(this.tbColorCeil_ValueChanged);
@@ -108,9 +108,9 @@
             this.panel1.Controls.Add(this.btnLeft);
             this.panel1.Controls.Add(this.btnLeftAll);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 427);
+            this.panel1.Location = new System.Drawing.Point(0, 388);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(955, 22);
+            this.panel1.Size = new System.Drawing.Size(881, 22);
             this.panel1.TabIndex = 4;
             // 
             // btnRightAll
@@ -173,14 +173,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 471);
+            this.ClientSize = new System.Drawing.Size(926, 432);
             this.Controls.Add(this.pane);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tbColorCeil);
             this.Controls.Add(this.status);
             this.Controls.Add(this.tools);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(300, 300);
+            this.MinimumSize = new System.Drawing.Size(320, 200);
             this.Name = "FormWaterfallLive";
             this.Text = "Crash - Waterfall Live";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormWaterfall_FormClosing);
