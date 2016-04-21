@@ -62,7 +62,6 @@
             this.tbSetupVoltage = new System.Windows.Forms.TextBox();
             this.tbSetupCoarseGain = new System.Windows.Forms.TextBox();
             this.tbSetupFineGain = new System.Windows.Forms.TextBox();
-            this.cboxSetupDetector = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cboxSetupChannels = new System.Windows.Forms.ComboBox();
             this.tbSetupLLD = new System.Windows.Forms.TextBox();
@@ -127,10 +126,10 @@
             this.btnShowROITable = new System.Windows.Forms.ToolStripButton();
             this.btnShowMap = new System.Windows.Forms.ToolStripButton();
             this.btnShowWaterfallLive = new System.Windows.Forms.ToolStripButton();
-            this.btnShowWaterfallHist = new System.Windows.Forms.ToolStripButton();
             this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
             this.btnShowDoserate = new System.Windows.Forms.ToolStripButton();
             this.btnShow3D = new System.Windows.Forms.ToolStripButton();
+            this.lblSetupDetector = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -315,7 +314,6 @@
             this.lblDetector,
             this.separatorDetector,
             this.lblConnectionStatus,
-            this.btnShowWaterfallHist,
             this.btnShowROIChart,
             this.btnShowDoserate,
             this.btnShow3D});
@@ -413,7 +411,6 @@
             this.tableLayoutSetup.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.85714F));
             this.tableLayoutSetup.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.85714F));
             this.tableLayoutSetup.Controls.Add(this.btnSetupStop, 3, 3);
-            this.tableLayoutSetup.Controls.Add(this.cboxSetupDetector, 1, 1);
             this.tableLayoutSetup.Controls.Add(this.label2, 0, 1);
             this.tableLayoutSetup.Controls.Add(this.cboxSetupChannels, 1, 2);
             this.tableLayoutSetup.Controls.Add(this.label4, 0, 2);
@@ -434,6 +431,7 @@
             this.tableLayoutSetup.Controls.Add(this.label11, 2, 1);
             this.tableLayoutSetup.Controls.Add(this.btnSetupStart, 3, 2);
             this.tableLayoutSetup.Controls.Add(this.lblSetupDoserate, 3, 8);
+            this.tableLayoutSetup.Controls.Add(this.lblSetupDetector, 1, 1);
             this.tableLayoutSetup.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutSetup.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutSetup.Name = "tableLayoutSetup";
@@ -474,17 +472,6 @@
             this.tbSetupFineGain.Name = "tbSetupFineGain";
             this.tbSetupFineGain.Size = new System.Drawing.Size(207, 21);
             this.tbSetupFineGain.TabIndex = 15;
-            // 
-            // cboxSetupDetector
-            // 
-            this.cboxSetupDetector.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxSetupDetector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxSetupDetector.FormattingEnabled = true;
-            this.cboxSetupDetector.Location = new System.Drawing.Point(130, 39);
-            this.cboxSetupDetector.Name = "cboxSetupDetector";
-            this.cboxSetupDetector.Size = new System.Drawing.Size(207, 23);
-            this.cboxSetupDetector.TabIndex = 17;
-            this.cboxSetupDetector.SelectedValueChanged += new System.EventHandler(this.cboxSetupDetector_SelectedValueChanged);
             // 
             // label2
             // 
@@ -593,7 +580,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(44, 47, 44, 47);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1194, 630);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1194, 628);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // pageSession
@@ -623,7 +610,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.graphSession);
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel2);
-            this.splitContainer2.Size = new System.Drawing.Size(1194, 557);
+            this.splitContainer2.Size = new System.Drawing.Size(1194, 555);
             this.splitContainer2.SplitterDistance = 202;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 6;
@@ -638,7 +625,7 @@
             this.lbSession.Location = new System.Drawing.Point(0, 0);
             this.lbSession.Name = "lbSession";
             this.lbSession.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSession.Size = new System.Drawing.Size(200, 555);
+            this.lbSession.Size = new System.Drawing.Size(200, 553);
             this.lbSession.TabIndex = 7;
             this.lbSession.SelectedIndexChanged += new System.EventHandler(this.lbSession_SelectedIndexChanged);
             // 
@@ -655,7 +642,7 @@
             this.graphSession.ScrollMinX = 0D;
             this.graphSession.ScrollMinY = 0D;
             this.graphSession.ScrollMinY2 = 0D;
-            this.graphSession.Size = new System.Drawing.Size(985, 464);
+            this.graphSession.Size = new System.Drawing.Size(985, 462);
             this.graphSession.TabIndex = 5;
             this.graphSession.UseExtendedPrintDialog = true;
             // 
@@ -1082,6 +1069,7 @@
             // 
             // btnMenuSetup
             // 
+            this.btnMenuSetup.Enabled = false;
             this.btnMenuSetup.FlatAppearance.BorderSize = 0;
             this.btnMenuSetup.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnMenuSetup.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
@@ -1100,6 +1088,7 @@
             // 
             // btnMenuSession
             // 
+            this.btnMenuSession.Enabled = false;
             this.btnMenuSession.FlatAppearance.BorderSize = 0;
             this.btnMenuSession.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnMenuSession.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
@@ -1195,6 +1184,7 @@
             // 
             this.btnShowRegressionPoints.AutoSize = false;
             this.btnShowRegressionPoints.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowRegressionPoints.Enabled = false;
             this.btnShowRegressionPoints.Image = global::crash.Properties.Resources.regression_points_32;
             this.btnShowRegressionPoints.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShowRegressionPoints.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1219,6 +1209,7 @@
             // 
             this.btnShowMap.AutoSize = false;
             this.btnShowMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowMap.Enabled = false;
             this.btnShowMap.Image = global::crash.Properties.Resources.map_32;
             this.btnShowMap.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShowMap.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1232,6 +1223,7 @@
             // 
             this.btnShowWaterfallLive.AutoSize = false;
             this.btnShowWaterfallLive.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowWaterfallLive.Enabled = false;
             this.btnShowWaterfallLive.Image = global::crash.Properties.Resources.waterfall_live_32;
             this.btnShowWaterfallLive.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShowWaterfallLive.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1241,23 +1233,11 @@
             this.btnShowWaterfallLive.ToolTipText = "Show waterfall live";
             this.btnShowWaterfallLive.Click += new System.EventHandler(this.btnShowWaterfall_Click);
             // 
-            // btnShowWaterfallHist
-            // 
-            this.btnShowWaterfallHist.AutoSize = false;
-            this.btnShowWaterfallHist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowWaterfallHist.Image = global::crash.Properties.Resources.waterfall_history_32;
-            this.btnShowWaterfallHist.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowWaterfallHist.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowWaterfallHist.Name = "btnShowWaterfallHist";
-            this.btnShowWaterfallHist.Size = new System.Drawing.Size(38, 38);
-            this.btnShowWaterfallHist.Text = "toolStripButton1";
-            this.btnShowWaterfallHist.ToolTipText = "Show waterfall history";
-            this.btnShowWaterfallHist.Click += new System.EventHandler(this.btnShowWaterfallHist_Click);
-            // 
             // btnShowROIChart
             // 
             this.btnShowROIChart.AutoSize = false;
             this.btnShowROIChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowROIChart.Enabled = false;
             this.btnShowROIChart.Image = global::crash.Properties.Resources.roitable_history_32;
             this.btnShowROIChart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShowROIChart.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1271,6 +1251,7 @@
             // 
             this.btnShowDoserate.AutoSize = false;
             this.btnShowDoserate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowDoserate.Enabled = false;
             this.btnShowDoserate.Image = global::crash.Properties.Resources.doserate_32;
             this.btnShowDoserate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnShowDoserate.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1292,6 +1273,18 @@
             this.btnShow3D.Text = "toolStripButton1";
             this.btnShow3D.ToolTipText = "Show 3D session";
             this.btnShow3D.Click += new System.EventHandler(this.btnShow3D_Click);
+            // 
+            // lblSetupDetector
+            // 
+            this.lblSetupDetector.AutoSize = true;
+            this.lblSetupDetector.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSetupDetector.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSetupDetector.Location = new System.Drawing.Point(130, 36);
+            this.lblSetupDetector.Name = "lblSetupDetector";
+            this.lblSetupDetector.Size = new System.Drawing.Size(207, 28);
+            this.lblSetupDetector.TabIndex = 39;
+            this.lblSetupDetector.Text = "<lblSetupDetector>";
+            this.lblSetupDetector.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FormMain
             // 
@@ -1375,7 +1368,6 @@
         private System.Windows.Forms.TextBox tbSetupCoarseGain;
         private System.Windows.Forms.TextBox tbSetupFineGain;
         private System.Windows.Forms.Button btnSetupSetParams;
-        private System.Windows.Forms.ComboBox cboxSetupDetector;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cboxSetupChannels;
         private System.Windows.Forms.TextBox tbSetupLLD;
@@ -1389,7 +1381,6 @@
         private System.Windows.Forms.ToolStripButton btnShowWaterfallLive;
         private System.Windows.Forms.ToolStripLabel lblInterface;
         private System.Windows.Forms.ToolStripSeparator separatorInterface;
-        private System.Windows.Forms.ToolStripButton btnShowWaterfallHist;
         private System.Windows.Forms.ToolStripButton btnShowROIChart;
         private System.Windows.Forms.ListBox lbSession;
         private ZedGraph.ZedGraphControl graphSetup;
@@ -1440,6 +1431,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripLabel lblDetector;
         private System.Windows.Forms.ToolStripSeparator separatorDetector;
+        private System.Windows.Forms.Label lblSetupDetector;
     }
 }
 

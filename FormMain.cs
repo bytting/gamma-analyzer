@@ -573,27 +573,23 @@ namespace crash
         {
             lblInterface.Text = tabs.SelectedTab.Text;
 
-            if (tabs.SelectedTab == pageMenu)
-                btnBack.Enabled = false;
-            else btnBack.Enabled = true;
+            btnBack.Enabled = true;
+            btnShowMap.Enabled = false;
+            btnShowWaterfallLive.Enabled = false;
+            btnShowROIChart.Enabled = false;
+            btnShowDoserate.Enabled = false;
+
+            if (tabs.SelectedTab == pageMenu)            
+                btnBack.Enabled = false;            
 
             if (tabs.SelectedTab == pageSession)
             {
-                btnShowWaterfallLive.Visible = true;
-                btnShowWaterfallHist.Visible = true;
-            }
-            else
-            {
-                btnShowWaterfallLive.Visible = false;
-                btnShowWaterfallHist.Visible = false;
-            }
-        }        
-
-        private void btnShowWaterfallHist_Click(object sender, EventArgs e)
-        {
-            //formWaterfallHist.Show();
-            //formWaterfallHist.BringToFront();
-        }                
+                btnShowMap.Enabled = true;
+                btnShowWaterfallLive.Enabled = true;
+                btnShowROIChart.Enabled = true;
+                btnShowDoserate.Enabled = true;
+            }            
+        }                                
 
         private void btnShowROIChart_Click(object sender, EventArgs e)
         {
@@ -756,40 +752,14 @@ namespace crash
         }        
 
         private void PopulateDetectors()
-        {            
-            cboxSetupDetector.Items.Clear();
+        {                        
             btnSelectDetector.DropDownItems.Clear();
-            foreach (Detector d in settings.Detectors)
-            {                
-                cboxSetupDetector.Items.Add(d);                
-                btnSelectDetector.DropDownItems.Add(d.Serialnumber);
-            }                
+            foreach (Detector d in settings.Detectors)            
+                btnSelectDetector.DropDownItems.Add(d.Serialnumber);            
         }                
 
         private void cboxSetupDetector_SelectedValueChanged(object sender, EventArgs e)
-        {
-            string detectorName = cboxSetupDetector.Text.Trim();
-
-            if (String.IsNullOrEmpty(detectorName))
-            {
-                selectedDetector = null;
-                selectedDetectorType = null;
-                return;
-            }
-
-            selectedDetector = settings.Detectors.Find(it => it.Serialnumber == detectorName);
-            if (selectedDetector == null)
-            {
-                MessageBox.Show("Detector " + detectorName + " not found");
-                return;
-            }
-
-            selectedDetectorType = settings.DetectorTypes.Find(x => x.Name == selectedDetector.TypeName);
-            if (selectedDetectorType == null)
-            {
-                MessageBox.Show("Detector type " + selectedDetector.TypeName + " not found");
-                return;
-            }
+        {            
         }
 
         private void menuItemLoadSession_Click(object sender, EventArgs e)
@@ -884,7 +854,12 @@ namespace crash
             selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
 
             lblDetector.Text = "Detector " + selectedDetector.Serialnumber;
+            lblSetupDetector.Text = selectedDetector.Serialnumber;
             separatorDetector.Visible = true;
+
+            btnMenuSetup.Enabled = true;
+            btnMenuSession.Enabled = true;
+            btnShowRegressionPoints.Enabled = true;
         }
     }    
 }
