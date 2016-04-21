@@ -37,6 +37,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemROITable = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemPreferences = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemLoadSession = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +66,7 @@
             this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
             this.btnShow3D = new System.Windows.Forms.ToolStripButton();
             this.btnShowDoserate = new System.Windows.Forms.ToolStripButton();
+            this.btnShowROITable = new System.Windows.Forms.ToolStripButton();
             this.tabs = new TabControlWizard.TabControlWizard();
             this.pageSetup = new System.Windows.Forms.TabPage();
             this.graphSetup = new ZedGraph.ZedGraphControl();
@@ -191,15 +193,23 @@
             // menuItemEdit
             // 
             this.menuItemEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemROITable,
             this.menuItemPreferences});
             this.menuItemEdit.Name = "menuItemEdit";
             this.menuItemEdit.Size = new System.Drawing.Size(39, 20);
             this.menuItemEdit.Text = "&Edit";
             // 
+            // menuItemROITable
+            // 
+            this.menuItemROITable.Name = "menuItemROITable";
+            this.menuItemROITable.Size = new System.Drawing.Size(152, 22);
+            this.menuItemROITable.Text = "ROI Table";
+            this.menuItemROITable.Click += new System.EventHandler(this.menuItemROITable_Click);
+            // 
             // menuItemPreferences
             // 
             this.menuItemPreferences.Name = "menuItemPreferences";
-            this.menuItemPreferences.Size = new System.Drawing.Size(135, 22);
+            this.menuItemPreferences.Size = new System.Drawing.Size(152, 22);
             this.menuItemPreferences.Text = "&Preferences";
             this.menuItemPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
             // 
@@ -293,7 +303,8 @@
             this.btnShowWaterfallHist,
             this.btnShowROIChart,
             this.btnShow3D,
-            this.btnShowDoserate});
+            this.btnShowDoserate,
+            this.btnShowROITable});
             this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
             this.tools.Size = new System.Drawing.Size(1208, 40);
@@ -474,6 +485,16 @@
             this.btnShowDoserate.Size = new System.Drawing.Size(23, 37);
             this.btnShowDoserate.Text = "toolStripButton1";
             this.btnShowDoserate.ToolTipText = "Show doserate";
+            // 
+            // btnShowROITable
+            // 
+            this.btnShowROITable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowROITable.Image = ((System.Drawing.Image)(resources.GetObject("btnShowROITable.Image")));
+            this.btnShowROITable.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowROITable.Name = "btnShowROITable";
+            this.btnShowROITable.Size = new System.Drawing.Size(23, 37);
+            this.btnShowROITable.Text = "toolStripButton1";
+            this.btnShowROITable.Click += new System.EventHandler(this.menuItemROITable_Click);
             // 
             // tabs
             // 
@@ -1266,6 +1287,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveCHN;
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveIrix;
         private System.Windows.Forms.ToolStripMenuItem menuItemLoadBackgroundSession;
+        private System.Windows.Forms.ToolStripButton btnShowROITable;
+        private System.Windows.Forms.ToolStripMenuItem menuItemROITable;
     }
 }
 

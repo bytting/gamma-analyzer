@@ -20,8 +20,7 @@ namespace crash
         public int NumChannels { get; set; }
         public int HV { get; set; }
         public double CoarseGain { get; set; }
-        public double FineGain { get; set; }
-        public string RegressionScript { get; set; }
+        public double FineGain { get; set; }        
         public int Livetime { get; set; }
         public int LLD { get; set; }
         public int ULD { get; set; }
@@ -67,8 +66,7 @@ namespace crash
                 || String.IsNullOrEmpty(cboxNumChannels.Text)
                 || String.IsNullOrEmpty(tbHV.Text)
                 || String.IsNullOrEmpty(tbCoarseGain.Text)
-                || String.IsNullOrEmpty(tbFineGain.Text)
-                || String.IsNullOrEmpty(tbRegressionScript.Text)                
+                || String.IsNullOrEmpty(tbFineGain.Text)                
                 || String.IsNullOrEmpty(tbLivetime.Text)
                 || String.IsNullOrEmpty(tbLLD.Text)
                 || String.IsNullOrEmpty(tbULD.Text))
@@ -84,8 +82,7 @@ namespace crash
                 NumChannels = Convert.ToInt32(cboxNumChannels.Text);
                 HV = Convert.ToInt32(tbHV.Text);
                 CoarseGain = Convert.ToDouble(tbCoarseGain.Text);
-                FineGain = Convert.ToDouble(tbFineGain.Text);
-                RegressionScript = tbRegressionScript.Text;                
+                FineGain = Convert.ToDouble(tbFineGain.Text);                
                 Livetime = Convert.ToInt32(tbLivetime.Text);
                 LLD = Convert.ToInt32(tbLLD.Text);
                 ULD = Convert.ToInt32(tbULD.Text);
@@ -98,17 +95,6 @@ namespace crash
 
             DialogResult = System.Windows.Forms.DialogResult.OK;
             Close();
-        }
-
-        private void btnBrowseScript_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.InitialDirectory = CrashEnvironment.RegressionScriptPath;
-            dialog.Filter = "Script Files (.py)|*.py";
-            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                tbRegressionScript.Text = dialog.FileName;
-            }
-        }        
+        }                
     }
 }

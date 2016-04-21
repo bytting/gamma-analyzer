@@ -41,7 +41,7 @@ namespace crash
 
         private void FormPreferences_Load(object sender, EventArgs e)
         {
-            tbSessionDir.Text = settings.SessionDirectory;
+            tbSessionDir.Text = settings.SessionRootDirectory;
             PopulateDetectorTypeList();
             PopulateDetectorList();
         }
@@ -62,9 +62,9 @@ namespace crash
             lvDetectors.Items.Clear();
             foreach (Detector d in settings.Detectors)
             {
-                ListViewItem item = new ListViewItem(new string[] { 
-                    d.TypeName, 
+                ListViewItem item = new ListViewItem(new string[] {                     
                     d.Serialnumber, 
+                    d.TypeName, 
                     d.CurrentNumChannels.ToString(), 
                     d.CurrentHV.ToString(), 
                     d.CurrentCoarseGain.ToString(), 
@@ -86,7 +86,7 @@ namespace crash
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            settings.SessionDirectory = tbSessionDir.Text;
+            settings.SessionRootDirectory = tbSessionDir.Text;
             DialogResult = System.Windows.Forms.DialogResult.OK;
             Close();
         }

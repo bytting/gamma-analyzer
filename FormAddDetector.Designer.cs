@@ -40,7 +40,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -52,12 +51,8 @@
             this.tbLivetime = new System.Windows.Forms.TextBox();
             this.tbLLD = new System.Windows.Forms.TextBox();
             this.tbULD = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.tbRegressionScript = new System.Windows.Forms.TextBox();
-            this.btnBrowseScript = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -65,7 +60,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 333);
+            this.panel1.Location = new System.Drawing.Point(0, 312);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(441, 27);
             this.panel1.TabIndex = 0;
@@ -104,24 +99,21 @@
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.label6, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.label9, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.label9, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 9);
             this.tableLayoutPanel1.Controls.Add(this.cboxNumChannels, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.tbSerialnumber, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.tbHV, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.tbCoarseGain, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.tbFineGain, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.tbLivetime, 1, 8);
-            this.tableLayoutPanel1.Controls.Add(this.tbLLD, 1, 9);
-            this.tableLayoutPanel1.Controls.Add(this.tbULD, 1, 10);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.tbLivetime, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.tbLLD, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.tbULD, 1, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 12;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel1.RowCount = 11;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
@@ -134,7 +126,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(441, 333);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(441, 312);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // label1
@@ -201,19 +193,10 @@
             this.label6.TabIndex = 6;
             this.label6.Text = "Current fine gain";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 196);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 13);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "Regression script";
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 224);
+            this.label8.Location = new System.Drawing.Point(3, 196);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(108, 13);
             this.label8.TabIndex = 8;
@@ -222,7 +205,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 252);
+            this.label9.Location = new System.Drawing.Point(3, 224);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(64, 13);
             this.label9.TabIndex = 9;
@@ -231,7 +214,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 280);
+            this.label10.Location = new System.Drawing.Point(3, 252);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(66, 13);
             this.label10.TabIndex = 10;
@@ -292,7 +275,7 @@
             // tbLivetime
             // 
             this.tbLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLivetime.Location = new System.Drawing.Point(135, 227);
+            this.tbLivetime.Location = new System.Drawing.Point(135, 199);
             this.tbLivetime.Name = "tbLivetime";
             this.tbLivetime.Size = new System.Drawing.Size(303, 20);
             this.tbLivetime.TabIndex = 17;
@@ -301,7 +284,7 @@
             // tbLLD
             // 
             this.tbLLD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLLD.Location = new System.Drawing.Point(135, 255);
+            this.tbLLD.Location = new System.Drawing.Point(135, 227);
             this.tbLLD.Name = "tbLLD";
             this.tbLLD.Size = new System.Drawing.Size(303, 20);
             this.tbLLD.TabIndex = 18;
@@ -310,47 +293,17 @@
             // tbULD
             // 
             this.tbULD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbULD.Location = new System.Drawing.Point(135, 283);
+            this.tbULD.Location = new System.Drawing.Point(135, 255);
             this.tbULD.Name = "tbULD";
             this.tbULD.Size = new System.Drawing.Size(303, 20);
             this.tbULD.TabIndex = 19;
             this.tbULD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.tbRegressionScript);
-            this.panel2.Controls.Add(this.btnBrowseScript);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(135, 199);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(303, 22);
-            this.panel2.TabIndex = 20;
-            // 
-            // tbRegressionScript
-            // 
-            this.tbRegressionScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbRegressionScript.Location = new System.Drawing.Point(0, 0);
-            this.tbRegressionScript.Name = "tbRegressionScript";
-            this.tbRegressionScript.ReadOnly = true;
-            this.tbRegressionScript.Size = new System.Drawing.Size(228, 20);
-            this.tbRegressionScript.TabIndex = 16;
-            // 
-            // btnBrowseScript
-            // 
-            this.btnBrowseScript.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnBrowseScript.Location = new System.Drawing.Point(228, 0);
-            this.btnBrowseScript.Name = "btnBrowseScript";
-            this.btnBrowseScript.Size = new System.Drawing.Size(75, 22);
-            this.btnBrowseScript.TabIndex = 17;
-            this.btnBrowseScript.Text = "...";
-            this.btnBrowseScript.UseVisualStyleBackColor = true;
-            this.btnBrowseScript.Click += new System.EventHandler(this.btnBrowseScript_Click);
-            // 
             // FormAddDetector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(441, 360);
+            this.ClientSize = new System.Drawing.Size(441, 339);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -364,8 +317,6 @@
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -383,7 +334,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
@@ -392,11 +342,8 @@
         private System.Windows.Forms.TextBox tbHV;
         private System.Windows.Forms.TextBox tbCoarseGain;
         private System.Windows.Forms.TextBox tbFineGain;
-        private System.Windows.Forms.TextBox tbRegressionScript;
         private System.Windows.Forms.TextBox tbLivetime;
         private System.Windows.Forms.TextBox tbLLD;
         private System.Windows.Forms.TextBox tbULD;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btnBrowseScript;
     }
 }

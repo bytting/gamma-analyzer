@@ -31,7 +31,10 @@ using Microsoft.Scripting.Hosting;
 namespace crash
 {
     public static class Utils
-    {
+    {        
+        public static FormLog Log = new FormLog();
+        public static ScriptRuntime IPython = Python.CreateRuntime();        
+
         public static int ToArgb(Color color)
         {
             int a = color.A;
@@ -46,8 +49,5 @@ namespace crash
             byte[] b = BitConverter.GetBytes(argb);
             return Color.FromArgb(b[3], b[2], b[1], b[0]);
         }        
-
-        public static FormLog Log = new FormLog();
-        public static ScriptRuntime IPython = Python.CreateRuntime();
     }
 }

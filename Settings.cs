@@ -27,24 +27,18 @@ using System.IO;
 
 namespace crash
 {
-    public class CrashEnvironment
-    {
-        public static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + Path.DirectorySeparatorChar + "Crash";
-        public static string RegressionScriptPath = SettingsPath + Path.DirectorySeparatorChar + "RegressionScripts";
-        public static string GScriptPath = SettingsPath + Path.DirectorySeparatorChar + "GScripts";
-        public static string SettingsFile = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";
-    }
-
     [Serializable()]
     public class CrashSettings
     {
+        public CrashSettings()
+        {            
+        }
+
         public List<DetectorType> DetectorTypes = new List<DetectorType>();
         public List<Detector> Detectors = new List<Detector>();
-        public string DefaultDetector;
-        public string DefaultDetectorType;
-        public int DefaultNrChannels;
-        public string SessionDirectory;        
+        public List<ROIData> ROIList = new List<ROIData>();
+        public string SessionRootDirectory;
         public string LastIP;
-        public string LastPort;        
-    }    
+        public string LastPort;
+    }
 }

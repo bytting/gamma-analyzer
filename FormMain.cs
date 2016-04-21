@@ -55,12 +55,11 @@ namespace crash
         bool connected = false;
         Session session = new Session();
         Session background = new Session();
-        
-        FormConnect formConnect = new FormConnect();        
-        FormWaterfallLive formWaterfallLive = new FormWaterfallLive();
-        FormWaterfallHistory formWaterfallHist = new FormWaterfallHistory();
-        FormROITableHistory formROIHistory = new FormROITableHistory();
-        FormMap formMap = new FormMap();        
+
+        FormConnect formConnect = null;
+        FormWaterfallLive formWaterfallLive = null;
+        FormROILive formROILive = null;
+        FormMap formMap = null; 
 
         PointPairList setupGraphList = new PointPairList();
         PointPairList sessionGraphList = new PointPairList();
@@ -78,28 +77,30 @@ namespace crash
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
-            formMap.SetSessionIndexEvent += SetSessionIndexEvent;
-            formROIHistory.SetSessionIndexEvent += SetSessionIndexEvent;
+            if (!Directory.Exists(CrashEnvironment.SettingsPath))
+                Directory.CreateDirectory(CrashEnvironment.SettingsPath);
+
+            if (!Directory.Exists(CrashEnvironment.GScriptPath))
+                Directory.CreateDirectory(CrashEnvironment.GScriptPath);            
+
+            if (File.Exists(CrashEnvironment.SettingsFile))
+                LoadSettings();            
+
+            formConnect = new FormConnect();
+            formWaterfallLive = new FormWaterfallLive();
+            formROILive = new FormROILive(settings.ROIList);
+            formMap = new FormMap();
 
             tabs.HideTabs = true;
             tabs.SelectedTab = pageMenu;
 
             lblConnectionStatus.ForeColor = Color.Red;
             lblConnectionStatus.Text = "Not connected";
-            ClearSpectrumInfo();
+            ClearSpectrumInfo();            
 
-            if (!Directory.Exists(CrashEnvironment.SettingsPath))
-                Directory.CreateDirectory(CrashEnvironment.SettingsPath);
-
-            if (!Directory.Exists(CrashEnvironment.RegressionScriptPath))
-                Directory.CreateDirectory(CrashEnvironment.RegressionScriptPath);
-
-            if (!Directory.Exists(CrashEnvironment.GScriptPath))
-                Directory.CreateDirectory(CrashEnvironment.GScriptPath);
-
-            if (File.Exists(CrashEnvironment.SettingsFile))
-                LoadSettings();
+            formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
+            formMap.SetSessionIndexEvent += SetSessionIndexEvent;
+            formROILive.SetSessionIndexEvent += SetSessionIndexEvent;
 
             PopulateDetectors();
             PopulateBackgroundSessions();
@@ -228,7 +229,7 @@ namespace crash
                         string session_name = msg.Arguments["session_name"].ToString();
                         Utils.Log.Add("New session created: " + session_name);
 
-                        session = new Session(settings.SessionDirectory, session_name);
+                        session = new Session(settings.SessionRootDirectory, session_name);
 
                         SessionSettings sessionSettings = new SessionSettings();
                         sessionSettings.SessionName = session_name;
@@ -251,7 +252,7 @@ namespace crash
                         writer.Close();
 
                         formWaterfallLive.SetSession(session);
-                        formROIHistory.SetSession(session);
+                        formROILive.SetSession(session);
                         formMap.SetSession(session);                        
                     }                        
                     break;
@@ -340,7 +341,7 @@ namespace crash
 
                         formMap.AddMarker(spec);
                         formWaterfallLive.UpdatePane();
-                        formROIHistory.UpdatePane();
+                        formROILive.UpdatePane();
                     }                                            
                     break;
 
@@ -395,7 +396,7 @@ namespace crash
 
         private void btnSendSession_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(settings.SessionDirectory))
+            if (String.IsNullOrEmpty(settings.SessionRootDirectory))
             {
                 MessageBox.Show("You must provide a session directory under preferences");
                 return;
@@ -457,7 +458,7 @@ namespace crash
             ClearSpectrumInfo();
 
             formWaterfallLive.ClearSession();
-            formROIHistory.ClearSession();
+            formROILive.ClearSession();
             formMap.ClearSession();
         }
 
@@ -595,8 +596,8 @@ namespace crash
 
         private void btnShowROIChart_Click(object sender, EventArgs e)
         {
-            formROIHistory.Show();
-            formROIHistory.BringToFront();
+            formROILive.Show();
+            formROILive.BringToFront();
         }
 
         private void btnShowMap_Click(object sender, EventArgs e)
@@ -682,7 +683,7 @@ namespace crash
 
                 formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
                 formMap.SetSelectedSessionIndex(s.SessionIndex);
-                formROIHistory.SetSelectedSessionIndex(s.SessionIndex);
+                formROILive.SetSelectedSessionIndex(s.SessionIndex);
             }
             else
             {
@@ -738,7 +739,7 @@ namespace crash
 
                 formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
-                formROIHistory.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
+                formROILive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
             }
         }        
 
@@ -816,7 +817,7 @@ namespace crash
         {
             ClearSession();
             FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.SelectedPath = settings.SessionDirectory;
+            dialog.SelectedPath = settings.SessionRootDirectory;
             dialog.Description = "Select session directory";
             dialog.ShowNewFolderButton = false;
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -824,7 +825,7 @@ namespace crash
                 session.Load(dialog.SelectedPath);
 
                 formWaterfallLive.SetSession(session);
-                formROIHistory.SetSession(session);
+                formROILive.SetSession(session);
                 formMap.SetSession(session);
 
                 foreach(Spectrum s in session.Spectrums)
@@ -834,7 +835,7 @@ namespace crash
                 }                
 
                 formWaterfallLive.UpdatePane();
-                formROIHistory.UpdatePane();
+                formROILive.UpdatePane();
             }
         }        
 
@@ -847,7 +848,7 @@ namespace crash
             }
 
             FolderBrowserDialog dialog = new FolderBrowserDialog();            
-            dialog.SelectedPath = settings.SessionDirectory;
+            dialog.SelectedPath = settings.SessionRootDirectory;
             dialog.Description = "Select background session directory";
             dialog.ShowNewFolderButton = false;
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -877,7 +878,13 @@ namespace crash
                 {
                     MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
                 }                    
-            }            
+            }
+        }
+
+        private void menuItemROITable_Click(object sender, EventArgs e)
+        {
+            FormROITable form = new FormROITable(settings.ROIList);
+            form.ShowDialog();            
         }
     }    
 }
