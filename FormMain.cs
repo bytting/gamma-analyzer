@@ -96,6 +96,9 @@ namespace crash
 
             lblConnectionStatus.ForeColor = Color.Red;
             lblConnectionStatus.Text = "Not connected";
+            lblDetector.Text = "";
+            separatorDetector.Visible = false;
+
             ClearSpectrumInfo();            
 
             formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
@@ -243,7 +246,7 @@ namespace crash
                         string jsonDet = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.Indented);
                         writer = new StreamWriter(detectorSettingsFile);
                         writer.Write(jsonDet);
-                        writer.Close();
+                        writer.Close();                        
 
                         string detectorTypeSettingsFile = session.SessionPath + Path.DirectorySeparatorChar + "detector_type.json";
                         string jsonDetType = JsonConvert.SerializeObject(selectedDetectorType, Newtonsoft.Json.Formatting.Indented);
@@ -547,9 +550,7 @@ namespace crash
         }
 
         private void btnSetupStoreParams_Click(object sender, EventArgs e)
-        {
-            // Update settings FIXME
-            SaveSettings();
+        {            
         }                
 
         private void menuItemPreferences_Click(object sender, EventArgs e)
@@ -756,36 +757,14 @@ namespace crash
 
         private void PopulateDetectors()
         {            
-            // Under setup
             cboxSetupDetector.Items.Clear();
+            btnSelectDetector.DropDownItems.Clear();
             foreach (Detector d in settings.Detectors)
-                cboxSetupDetector.Items.Add(d.Serialnumber);
-        }
-
-        private void graphSetup_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            Detector d = settings.Detectors.Find(it => it.Serialnumber == cboxSetupDetector.Text);
-            if(d == null)
-            {
-                MessageBox.Show("No detector selected");
-                return;
-            }
-
-            int index = 0;
-            object nearestobject = null;
-            PointF clickedPoint = new PointF(e.X, e.Y);
-            graphSetup.GraphPane.FindNearestObject(clickedPoint, this.CreateGraphics(), out nearestobject, out index);        
-            double x, y;            
-            graphSetup.GraphPane.ReverseTransform(clickedPoint, out x, out y);
-            
-            FormSetRegressionPoints form = new FormSetRegressionPoints(x);
-            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                PointF pt = form.SelectedPoint == 1 ? d.RegressionPoint1 : d.RegressionPoint2;                
-                pt.X = (float)x;
-                pt.Y = (float)form.SelectedEnergy;                
-            }
-        }        
+            {                
+                cboxSetupDetector.Items.Add(d);                
+                btnSelectDetector.DropDownItems.Add(d.Serialnumber);
+            }                
+        }                
 
         private void cboxSetupDetector_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -885,6 +864,27 @@ namespace crash
         {
             FormROITable form = new FormROITable(settings.ROIList);
             form.ShowDialog();            
+        }
+
+        private void btnShowRegressionPoints_Click(object sender, EventArgs e)
+        {
+            if (selectedDetector == null)
+            {
+                MessageBox.Show("You must select a detector first");
+                return;
+            }   
+             
+            FormRegressionPoints form = new FormRegressionPoints(selectedDetector);
+            form.ShowDialog();
+        }        
+
+        private void btnSelectDetector_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            selectedDetector = settings.Detectors.Find(d => d.Serialnumber == e.ClickedItem.Text);
+            selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
+
+            lblDetector.Text = "Detector " + selectedDetector.Serialnumber;
+            separatorDetector.Visible = true;
         }
     }    
 }

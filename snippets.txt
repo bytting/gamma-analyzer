@@ -1,0 +1,8 @@
+﻿
+// Get point from graph
+int index = 0;
+object nearestobject = null;
+PointF clickedPoint = new PointF(e.X, e.Y);
+graphSetup.GraphPane.FindNearestObject(clickedPoint, this.CreateGraphics(), out nearestobject, out index);        
+double x, y;            
+graphSetup.GraphPane.ReverseTransform(clickedPoint, out x, out y);

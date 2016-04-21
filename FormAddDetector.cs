@@ -33,26 +33,19 @@ namespace crash
 
         private void FormAddDetector_Load(object sender, EventArgs e)
         {
+            tbHV.KeyPress += CustomEvents.Integer_KeyPress;
+            tbCoarseGain.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbFineGain.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbLivetime.KeyPress += CustomEvents.Integer_KeyPress;
+            tbLLD.KeyPress += CustomEvents.Integer_KeyPress;
+            tbULD.KeyPress += CustomEvents.Integer_KeyPress;
+
             foreach (DetectorType dt in DetectorTypes)
             {
                 cboxDetectorTypes.Items.Add(dt.Name);
             }
         }
-
-        private void Numeric_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            char sep = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-
-            if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar != sep)
-                e.Handled = true;
-        }
-
-        private void Integer_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar))
-                e.Handled = true;
-        }
-
+        
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = System.Windows.Forms.DialogResult.Cancel;

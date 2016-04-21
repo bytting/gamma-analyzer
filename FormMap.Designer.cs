@@ -111,13 +111,11 @@
             // 
             this.tbLat.Name = "tbLat";
             this.tbLat.Size = new System.Drawing.Size(100, 25);
-            this.tbLat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLatLon_KeyPress);
             // 
             // tbLon
             // 
             this.tbLon.Name = "tbLon";
             this.tbLon.Size = new System.Drawing.Size(100, 25);
-            this.tbLon.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbLatLon_KeyPress);
             // 
             // btnGoToLatLon
             // 

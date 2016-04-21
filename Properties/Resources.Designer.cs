@@ -103,9 +103,39 @@ namespace crash.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap delete_16 {
+            get {
+                object obj = ResourceManager.GetObject("delete-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap detecor_32 {
+            get {
+                object obj = ResourceManager.GetObject("detecor-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap disconnect_32 {
             get {
                 object obj = ResourceManager.GetObject("disconnect-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap doserate_32 {
+            get {
+                object obj = ResourceManager.GetObject("doserate-32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,6 +253,26 @@ namespace crash.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap regression_points_32 {
+            get {
+                object obj = ResourceManager.GetObject("regression-points-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roi_table_32 {
+            get {
+                object obj = ResourceManager.GetObject("roi-table-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap roitable_history_32 {
             get {
                 object obj = ResourceManager.GetObject("roitable-history-32", resourceCulture);
@@ -256,16 +306,6 @@ namespace crash.Properties {
         internal static System.Drawing.Bitmap setup_32 {
             get {
                 object obj = ResourceManager.GetObject("setup-32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap trash_16 {
-            get {
-                object obj = ResourceManager.GetObject("trash-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

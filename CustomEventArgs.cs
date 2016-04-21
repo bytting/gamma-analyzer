@@ -22,30 +22,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Drawing;
 
 namespace crash
-{    
-    [Serializable()]
-    public class Detector
+{
+    public class SetSessionIndexEventArgs : EventArgs
     {
-        public string TypeName { get; set; }
-        public int CurrentHV { get; set; }
-        public int CurrentNumChannels { get; set; }
-        public string Serialnumber { get; set; }
-        public double CurrentCoarseGain { get; set; }
-        public double CurrentFineGain { get; set; }                        
-        public int CurrentLivetime { get; set; }
-        public int CurrentLLD { get; set; }
-        public int CurrentULD { get; set; }
-        public PointF RegressionPoint1 { get; set; }
-        public PointF RegressionPoint2 { get; set; }
-
-        public override string ToString()
-        {
- 	         return Serialnumber;
-        }
-    }
+        public int StartIndex { get; set; }
+        public int EndIndex { get; set; }
+    }    
 }

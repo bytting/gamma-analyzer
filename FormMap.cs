@@ -56,6 +56,9 @@ namespace crash
 
         private void FormMap_Load(object sender, EventArgs e)
         {
+            tbLat.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbLon.KeyPress += CustomEvents.Numeric_KeyPress;
+
             gmap.Overlays.Add(overlay);
             gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);            
         }
@@ -166,18 +169,7 @@ namespace crash
             double lon = Convert.ToDouble(tbLon.Text);
 
             gmap.Position = new GMap.NET.PointLatLng(lat, lon);
-        }        
-
-        private void tbLatLon_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar)
-                && e.KeyChar.ToString() != CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator
-                && e.KeyChar != '\b')
-            {
-                e.Handled = true;
-                return;
-            }
-        }
+        }                
 
         private void gmap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {            

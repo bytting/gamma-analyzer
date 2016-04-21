@@ -40,7 +40,25 @@ namespace crash
         }
 
         private void FormROITable_Load(object sender, EventArgs e)
-        {            
+        {
+            tbStart1.KeyPress += CustomEvents.Integer_KeyPress;
+            tbStart2.KeyPress += CustomEvents.Integer_KeyPress;
+            tbStart3.KeyPress += CustomEvents.Integer_KeyPress;
+            tbStart4.KeyPress += CustomEvents.Integer_KeyPress;
+            tbStart5.KeyPress += CustomEvents.Integer_KeyPress;
+            tbStart6.KeyPress += CustomEvents.Integer_KeyPress;
+            tbStart7.KeyPress += CustomEvents.Integer_KeyPress;
+            tbStart8.KeyPress += CustomEvents.Integer_KeyPress;
+
+            tbEnd1.KeyPress += CustomEvents.Integer_KeyPress;
+            tbEnd2.KeyPress += CustomEvents.Integer_KeyPress;
+            tbEnd3.KeyPress += CustomEvents.Integer_KeyPress;
+            tbEnd4.KeyPress += CustomEvents.Integer_KeyPress;
+            tbEnd5.KeyPress += CustomEvents.Integer_KeyPress;
+            tbEnd6.KeyPress += CustomEvents.Integer_KeyPress;
+            tbEnd7.KeyPress += CustomEvents.Integer_KeyPress;
+            tbEnd8.KeyPress += CustomEvents.Integer_KeyPress;
+
             for(int i=0; i<ROIList.Count; i++)
             {
                 ((TextBox)tableLayoutROI.GetControlFromPosition(0, i + 1)).Text = ROIList[i].Name;
@@ -52,8 +70,7 @@ namespace crash
 
         private void Integer_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar))
-                e.Handled = true;
+
         }
 
         private void btnOk_Click(object sender, EventArgs e)

@@ -57,7 +57,7 @@
             // btnClear
             // 
             this.btnClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnClear.Image = ((System.Drawing.Image)(resources.GetObject("btnClear.Image")));
+            this.btnClear.Image = global::crash.Properties.Resources.delete_16;
             this.btnClear.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(23, 22);

@@ -162,7 +162,6 @@
             this.tbMaxChannels.Name = "tbMaxChannels";
             this.tbMaxChannels.Size = new System.Drawing.Size(375, 20);
             this.tbMaxChannels.TabIndex = 5;
-            this.tbMaxChannels.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbMinHV
             // 
@@ -171,7 +170,6 @@
             this.tbMinHV.Name = "tbMinHV";
             this.tbMinHV.Size = new System.Drawing.Size(375, 20);
             this.tbMinHV.TabIndex = 6;
-            this.tbMinHV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbMaxHV
             // 
@@ -180,7 +178,6 @@
             this.tbMaxHV.Name = "tbMaxHV";
             this.tbMaxHV.Size = new System.Drawing.Size(375, 20);
             this.tbMaxHV.TabIndex = 7;
-            this.tbMaxHV.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // label5
             // 
@@ -235,6 +232,7 @@
             this.Name = "FormAddDetectorType";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Crash - Add Detector Type";
+            this.Load += new System.EventHandler(this.FormAddDetectorType_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

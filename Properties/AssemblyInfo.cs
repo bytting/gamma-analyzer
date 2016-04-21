@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Crash")]
-[assembly: AssemblyDescription("Controller application for Burn\r\n\r\nAuthors:\r\nDag Robole")]
+[assembly: AssemblyDescription("Controller application for Burn\r\n\r\nAuthors:\r\nDag Robole\r\n\r\nIcons by Freepik")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("NRPA")]
 [assembly: AssemblyProduct("crash")]

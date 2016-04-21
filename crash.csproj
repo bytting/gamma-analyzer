@@ -114,6 +114,7 @@
     <Compile Include="Burn_NetService.cs" />
     <Compile Include="Burn_NetService_IO.cs" />
     <Compile Include="Burn_NetService_Proto.cs" />
+    <Compile Include="CustomEventArgs.cs" />
     <Compile Include="CustomEvents.cs" />
     <Compile Include="Detector.cs" />
     <Compile Include="DetectorType.cs" />
@@ -172,11 +173,11 @@
     <Compile Include="FormROILive.Designer.cs">
       <DependentUpon>FormROILive.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormSetRegressionPoints.cs">
+    <Compile Include="FormRegressionPoints.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSetRegressionPoints.Designer.cs">
-      <DependentUpon>FormSetRegressionPoints.cs</DependentUpon>
+    <Compile Include="FormRegressionPoints.Designer.cs">
+      <DependentUpon>FormRegressionPoints.cs</DependentUpon>
     </Compile>
     <Compile Include="FormWaterfallLive.cs">
       <SubType>Form</SubType>
@@ -222,8 +223,8 @@
     <EmbeddedResource Include="FormROILive.resx">
       <DependentUpon>FormROILive.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSetRegressionPoints.resx">
-      <DependentUpon>FormSetRegressionPoints.cs</DependentUpon>
+    <EmbeddedResource Include="FormRegressionPoints.resx">
+      <DependentUpon>FormRegressionPoints.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormWaterfallLive.resx">
       <DependentUpon>FormWaterfallLive.cs</DependentUpon>
@@ -253,6 +254,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="images\detecor-32.png" />
+    <None Include="images\regression-points-32.png" />
+    <None Include="images\roi-table-32.png" />
+    <None Include="images\doserate-32.png" />
+    <None Include="images\delete-16.png" />
+    <Content Include="snippets.txt" />
     <Resource Include="images\background-128.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -308,9 +315,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\setup-32.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="images\trash-16.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\waterfall-history-32.png">

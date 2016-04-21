@@ -23,12 +23,13 @@ namespace crash
             InitializeComponent();    
         }
 
-        private void Integer_KeyPress(object sender, KeyPressEventArgs e)
+        private void FormAddDetectorType_Load(object sender, EventArgs e)
         {
-            if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar))
-                e.Handled = true;
+            tbMaxChannels.KeyPress += CustomEvents.Integer_KeyPress;
+            tbMinHV.KeyPress += CustomEvents.Integer_KeyPress;
+            tbMaxHV.KeyPress += CustomEvents.Integer_KeyPress;
         }
-
+        
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -74,6 +75,6 @@ namespace crash
             {
                 tbGScript.Text = dialog.FileName;
             }
-        }
+        }        
     }
 }

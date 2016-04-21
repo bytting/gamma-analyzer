@@ -324,7 +324,6 @@
             this.tbStart1.Name = "tbStart1";
             this.tbStart1.Size = new System.Drawing.Size(106, 20);
             this.tbStart1.TabIndex = 12;
-            this.tbStart1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbStart2
             // 
@@ -333,7 +332,6 @@
             this.tbStart2.Name = "tbStart2";
             this.tbStart2.Size = new System.Drawing.Size(106, 20);
             this.tbStart2.TabIndex = 13;
-            this.tbStart2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbStart3
             // 
@@ -342,7 +340,6 @@
             this.tbStart3.Name = "tbStart3";
             this.tbStart3.Size = new System.Drawing.Size(106, 20);
             this.tbStart3.TabIndex = 14;
-            this.tbStart3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbStart4
             // 
@@ -351,7 +348,6 @@
             this.tbStart4.Name = "tbStart4";
             this.tbStart4.Size = new System.Drawing.Size(106, 20);
             this.tbStart4.TabIndex = 15;
-            this.tbStart4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbStart5
             // 
@@ -360,7 +356,6 @@
             this.tbStart5.Name = "tbStart5";
             this.tbStart5.Size = new System.Drawing.Size(106, 20);
             this.tbStart5.TabIndex = 16;
-            this.tbStart5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbStart6
             // 
@@ -369,7 +364,6 @@
             this.tbStart6.Name = "tbStart6";
             this.tbStart6.Size = new System.Drawing.Size(106, 20);
             this.tbStart6.TabIndex = 17;
-            this.tbStart6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbStart7
             // 
@@ -378,7 +372,6 @@
             this.tbStart7.Name = "tbStart7";
             this.tbStart7.Size = new System.Drawing.Size(106, 20);
             this.tbStart7.TabIndex = 18;
-            this.tbStart7.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbEnd1
             // 
@@ -387,7 +380,6 @@
             this.tbEnd1.Name = "tbEnd1";
             this.tbEnd1.Size = new System.Drawing.Size(106, 20);
             this.tbEnd1.TabIndex = 19;
-            this.tbEnd1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbEnd2
             // 
@@ -396,7 +388,6 @@
             this.tbEnd2.Name = "tbEnd2";
             this.tbEnd2.Size = new System.Drawing.Size(106, 20);
             this.tbEnd2.TabIndex = 20;
-            this.tbEnd2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbEnd3
             // 
@@ -405,7 +396,6 @@
             this.tbEnd3.Name = "tbEnd3";
             this.tbEnd3.Size = new System.Drawing.Size(106, 20);
             this.tbEnd3.TabIndex = 21;
-            this.tbEnd3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbEnd4
             // 
@@ -414,7 +404,6 @@
             this.tbEnd4.Name = "tbEnd4";
             this.tbEnd4.Size = new System.Drawing.Size(106, 20);
             this.tbEnd4.TabIndex = 22;
-            this.tbEnd4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbEnd5
             // 
@@ -423,7 +412,6 @@
             this.tbEnd5.Name = "tbEnd5";
             this.tbEnd5.Size = new System.Drawing.Size(106, 20);
             this.tbEnd5.TabIndex = 23;
-            this.tbEnd5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbEnd6
             // 
@@ -432,7 +420,6 @@
             this.tbEnd6.Name = "tbEnd6";
             this.tbEnd6.Size = new System.Drawing.Size(106, 20);
             this.tbEnd6.TabIndex = 24;
-            this.tbEnd6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbEnd7
             // 
@@ -441,7 +428,6 @@
             this.tbEnd7.Name = "tbEnd7";
             this.tbEnd7.Size = new System.Drawing.Size(106, 20);
             this.tbEnd7.TabIndex = 25;
-            this.tbEnd7.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbName8
             // 
@@ -458,7 +444,6 @@
             this.tbStart8.Name = "tbStart8";
             this.tbStart8.Size = new System.Drawing.Size(106, 20);
             this.tbStart8.TabIndex = 27;
-            this.tbStart8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // tbEnd8
             // 
@@ -467,7 +452,6 @@
             this.tbEnd8.Name = "tbEnd8";
             this.tbEnd8.Size = new System.Drawing.Size(106, 20);
             this.tbEnd8.TabIndex = 28;
-            this.tbEnd8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Integer_KeyPress);
             // 
             // cbActive1
             // 
