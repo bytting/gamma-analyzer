@@ -125,13 +125,10 @@ namespace crash
                 Spectrum spec = new Spectrum(msg, det, detType);
                 Add(spec);
             }
+
+            Spectrums.Sort((a, b) => a.SessionIndex.CompareTo(b.SessionIndex));
             return true;
-        }
-
-        public void SaveAsCHN()
-        {
-
-        }
+        }        
 
         public float[] GetAdjustedCounts(float livetime)
         {

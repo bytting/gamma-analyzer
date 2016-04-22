@@ -96,6 +96,9 @@ namespace crash
 
             lblConnectionStatus.ForeColor = Color.Red;
             lblConnectionStatus.Text = "Not connected";
+            lblSetupDoserate.Text = "";
+            lblSetupChannel.Text = "";
+            lblSessionChannel.Text = "";
             lblDetector.Text = "";
             separatorDetector.Visible = false;
 
@@ -676,7 +679,9 @@ namespace crash
                 lblMaxCount.Text = "Max count: " + s.MaxCount;
                 lblMinCount.Text = "Min count: " + s.MinCount;
                 lblTotalCount.Text = "Total count: " + s.TotalCount;
-                lblDoserate.Text = "Doserate: " + s.Doserate;
+                if(s.Doserate == 0.0)
+                    lblDoserate.Text = "";
+                else lblDoserate.Text = "Doserate: " + s.Doserate;
 
                 formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
                 formMap.SetSelectedSessionIndex(s.SessionIndex);
@@ -695,8 +700,7 @@ namespace crash
                 string title = "Merged: " + s1.SessionIndex + " - " + s2.SessionIndex;
                 float[] chans = new float[(int)s1.NumChannels];
                 float maxCnt = s1.MaxCount, minCnt = s1.MinCount;
-                float totCnt = 0;
-                double totDoserate = 0.0;
+                float totCnt = 0;                
                 for(int i=0; i<lbSession.SelectedItems.Count; i++)
                 {
                     Spectrum s = (Spectrum)lbSession.SelectedItems[i];
@@ -708,8 +712,7 @@ namespace crash
                     if (s.MinCount < minCnt)
                         minCnt = s.MinCount;
 
-                    totCnt += s.TotalCount;
-                    totDoserate += s.Doserate;
+                    totCnt += s.TotalCount;                
 
                     realTime += ((double)s.Realtime) / 1000000.0;
                     liveTime += ((double)s.Livetime) / 1000000.0;                    
@@ -731,8 +734,8 @@ namespace crash
                 lblGpsTimeEnd.Text = "Gps time end: " + s2.GpsTimeEnd;
                 lblMaxCount.Text = "Max count: " + maxCnt;
                 lblMinCount.Text = "Min count: " + minCnt;
-                lblTotalCount.Text = "Total count: " + totCnt;
-                lblDoserate.Text = "Total doserate: " + totDoserate;
+                lblTotalCount.Text = "Total count: " + totCnt;                
+                lblDoserate.Text = "";
 
                 formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
@@ -860,6 +863,32 @@ namespace crash
             btnMenuSetup.Enabled = true;
             btnMenuSession.Enabled = true;
             btnShowRegressionPoints.Enabled = true;
+        }
+
+        private void graphSetup_MouseMove(object sender, MouseEventArgs e)
+        {
+            // Get point from graph
+            int index = 0;
+            object nearestobject = null;
+            PointF clickedPoint = new PointF(e.X, e.Y);
+            graphSetup.GraphPane.FindNearestObject(clickedPoint, this.CreateGraphics(), out nearestobject, out index);        
+            double x, y;            
+            graphSetup.GraphPane.ReverseTransform(clickedPoint, out x, out y);
+
+            lblSetupChannel.Text = "Channel: " + String.Format("{0:###0}", x);
+        }
+
+        private void graphSession_MouseMove(object sender, MouseEventArgs e)
+        {
+            // Get point from graph
+            int index = 0;
+            object nearestobject = null;
+            PointF clickedPoint = new PointF(e.X, e.Y);
+            graphSession.GraphPane.FindNearestObject(clickedPoint, this.CreateGraphics(), out nearestobject, out index);
+            double x, y;
+            graphSession.GraphPane.ReverseTransform(clickedPoint, out x, out y);
+
+            lblSessionChannel.Text = "Channel: " + String.Format("{0:###0}", x);
         }
     }    
 }

@@ -43,9 +43,7 @@ namespace crash
         private int left_x = 1;
 
         private FontFamily fontFamily = new FontFamily("Arial");
-        private Font font = null;
-
-        private int mouseX = 0;
+        private Font font = null;        
 
         public FormWaterfallLive()
         {
@@ -65,9 +63,7 @@ namespace crash
 
         private void UpdateStats()
         {
-            lblColorCeil.Text = "Color ceiling (min, curr, max): " + tbColorCeil.Minimum + ", " + tbColorCeil.Value + ", " + tbColorCeil.Maximum;            
-            int mx = left_x + mouseX;
-            lblMouseInfo.Text = "Mouse info: " + mx.ToString();
+            lblColorCeil.Text = "Color ceiling (min, curr, max): " + tbColorCeil.Minimum + ", " + tbColorCeil.Value + ", " + tbColorCeil.Maximum;                        
         }
 
         public void SetSession(Session sess)
@@ -103,11 +99,11 @@ namespace crash
             float scale = 255f / sectorSize;
             int y = 0;
 
-            int h = pane.Height > session.Spectrums.Count ? session.Spectrums.Count : pane.Height - 1;            
+            int h = bmpPane.Height > session.Spectrums.Count ? session.Spectrums.Count : bmpPane.Height - 1;
 
             for (int i = h - 1; i >= 0; i--)
             {
-                Spectrum s = session.Spectrums[i];                
+                Spectrum s = session.Spectrums[i];
                 int w = s.Channels.Count > pane.Width ? pane.Width : s.Channels.Count; // FIXME
                 
                 bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
@@ -306,8 +302,8 @@ namespace crash
 
         private void pane_MouseMove(object sender, MouseEventArgs e)
         {
-            mouseX = e.X;
-            UpdateStats();
+            int mouseChannel = left_x + e.X;
+            lblChannel.Text = "Channel: " + mouseChannel.ToString();            
         }
     }
 }

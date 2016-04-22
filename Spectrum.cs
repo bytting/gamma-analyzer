@@ -95,7 +95,8 @@ namespace crash
                 TotalCount += ch;                                          
             }
 
-            CalculateDoserate(det, detType);
+            if (!CalculateDoserate(det, detType))
+                Doserate = 0.0;
         }
 
         public float GetCountInROI(int start, int end)
@@ -118,6 +119,9 @@ namespace crash
 
             if(!File.Exists(detType.GScript))
                 return false; // FIXME: report error            
+
+            if ((det.RegressionPoint1.X == 0f && det.RegressionPoint1.Y == 0f) || (det.RegressionPoint2.X == 0f && det.RegressionPoint2.Y == 0f))
+                return false;
 
             dynamic geScript = Utils.IPython.UseFile(detType.GScript);
             double slope = (det.RegressionPoint2.Y - det.RegressionPoint1.Y) / (det.RegressionPoint2.X - det.RegressionPoint1.X);            

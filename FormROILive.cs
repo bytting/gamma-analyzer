@@ -39,8 +39,8 @@ namespace crash
 
         public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
         public event SetSessionIndexEventHandler SetSessionIndexEvent;        
-
-        private int first_channel = 0;
+        
+        private int firstSpectrum = 0;
 
         public FormROILive(List<ROIData> roiList)
         {
@@ -79,6 +79,9 @@ namespace crash
 
             Graphics g = Graphics.FromImage(bmpPane);
             g.Clear(SystemColors.ButtonFace);
+
+            FontFamily fontFamily = new FontFamily("Arial");
+            Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
             
             float scaling = -1f;
 
@@ -100,7 +103,7 @@ namespace crash
                 }
             }            
 
-            lblScaling.Text = scaling.ToString();
+            lblScaling.Text = "Scale factor: " + scaling.ToString();
 
             foreach (ROIData rd in ROIList)
             {
@@ -109,9 +112,9 @@ namespace crash
 
                 Pen pen = new Pen(Color.FromName(rd.ColorName), 2);
                 int x = 0;
-                int last_x = 0, last_y = pane.Height - 40;                
+                int last_x = 0, last_y = pane.Height - 40;
 
-                for (int i = first_channel; i < first_channel + pane.Width; i++)
+                for (int i = firstSpectrum; i < firstSpectrum + pane.Width; i++)
                 {
                     if (i >= (int)session.Spectrums.Count)
                         break;
@@ -123,14 +126,7 @@ namespace crash
                     if (x >= 0 && x < pane.Width && y >= 0 && y < pane.Height)
                     {
                         g.DrawLine(pen, last_x, last_y, x, y);
-                    }                    
-
-                    if ((x % 400) == 0)
-                    {
-                        FontFamily fontFamily = new FontFamily("Arial");
-                        Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
-                        g.DrawString(weightedCount.ToString(), font, new SolidBrush(Color.FromName(rd.ColorName)), x, pane.Height - 20);
-                    }
+                    }                                        
                     
                     bmpPane.SetPixel(x, bmpPane.Height - 1, Utils.ToColor(s.SessionIndex));
 
@@ -143,6 +139,11 @@ namespace crash
             for(int j=0; j<bmpPane.Width; j++)
             {
                 int idx = Utils.ToArgb(bmpPane.GetPixel(j, bmpPane.Height - 1));
+
+                if(idx == 0 || (idx % 50) == 0)
+                {
+                    g.DrawString(idx.ToString(), font, new SolidBrush(Color.Black), j, pane.Height - 20);
+                }
 
                 if(idx == SelectedSessionIndex1)
                 {
@@ -178,7 +179,7 @@ namespace crash
                 return;
 
             bmpPane = new Bitmap(pane.Width, pane.Height);
-            first_channel = 0;
+            firstSpectrum = 0;
             UpdatePane();            
         }        
 
@@ -220,7 +221,7 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            first_channel = 0;
+            firstSpectrum = 0;
             UpdatePane();
         }
 
@@ -229,9 +230,9 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            first_channel = (int)session.NumChannels - pane.Width;
-            if (first_channel < 0)
-                first_channel = 0;
+            firstSpectrum = (int)session.NumChannels - pane.Width;
+            if (firstSpectrum < 0)
+                firstSpectrum = 0;
             UpdatePane();
         }
 
@@ -240,9 +241,9 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            first_channel -= pane.Width;
-            if (first_channel < 1)
-                first_channel = 1;
+            firstSpectrum -= pane.Width;
+            if (firstSpectrum < 1)
+                firstSpectrum = 1;
             UpdatePane();
         }
 
@@ -252,12 +253,29 @@ namespace crash
                 return;
 
             int max_channel = (int)session.NumChannels - pane.Width;
-            first_channel += pane.Width;
-            if (first_channel > max_channel)
-                first_channel = max_channel;
-            if (first_channel < 0)
-                first_channel = 0;
+            firstSpectrum += pane.Width;
+            if (firstSpectrum > max_channel)
+                firstSpectrum = max_channel;
+            if (firstSpectrum < 0)
+                firstSpectrum = 0;
             UpdatePane();
+        }
+
+        private void pane_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (session == null || session.IsEmpty)
+                return;
+
+            int index = firstSpectrum + e.X;
+
+            if(index < 0 || index >= session.Spectrums.Count)
+            {
+                lblSpectrum.Text = "";
+                return;
+            }                
+
+            int sessionIndex = Utils.ToArgb(bmpPane.GetPixel(index, bmpPane.Height - 1));            
+            lblSpectrum.Text = "Session index: " + sessionIndex.ToString();
         }                        
     }    
 }

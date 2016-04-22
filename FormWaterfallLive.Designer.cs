@@ -32,10 +32,14 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.status = new System.Windows.Forms.StatusStrip();
             this.lblColorCeil = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblMouseInfo = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblChannel = new System.Windows.Forms.ToolStripStatusLabel();
             this.pane = new System.Windows.Forms.Panel();
             this.tbColorCeil = new System.Windows.Forms.TrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnUpAll = new System.Windows.Forms.Button();
+            this.btnUp = new System.Windows.Forms.Button();
+            this.btnDown = new System.Windows.Forms.Button();
+            this.btnDownAll = new System.Windows.Forms.Button();
             this.btnRightAll = new System.Windows.Forms.Button();
             this.btnRight = new System.Windows.Forms.Button();
             this.btnLeft = new System.Windows.Forms.Button();
@@ -49,7 +53,7 @@
             // 
             this.tools.Location = new System.Drawing.Point(0, 0);
             this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(926, 25);
+            this.tools.Size = new System.Drawing.Size(939, 25);
             this.tools.TabIndex = 0;
             this.tools.Text = "toolStrip1";
             // 
@@ -57,10 +61,10 @@
             // 
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblColorCeil,
-            this.lblMouseInfo});
-            this.status.Location = new System.Drawing.Point(0, 410);
+            this.lblChannel});
+            this.status.Location = new System.Drawing.Point(0, 514);
             this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(926, 22);
+            this.status.Size = new System.Drawing.Size(939, 22);
             this.status.TabIndex = 1;
             this.status.Text = "statusStrip1";
             // 
@@ -70,11 +74,11 @@
             this.lblColorCeil.Size = new System.Drawing.Size(85, 17);
             this.lblColorCeil.Text = "<lblColorCeil>";
             // 
-            // lblMouseInfo
+            // lblChannel
             // 
-            this.lblMouseInfo.Name = "lblMouseInfo";
-            this.lblMouseInfo.Size = new System.Drawing.Size(93, 17);
-            this.lblMouseInfo.Text = "<lblMouseInfo>";
+            this.lblChannel.Name = "lblChannel";
+            this.lblChannel.Size = new System.Drawing.Size(80, 17);
+            this.lblChannel.Text = "<lblChannel>";
             // 
             // pane
             // 
@@ -83,7 +87,7 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(881, 363);
+            this.pane.Size = new System.Drawing.Size(894, 467);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
@@ -93,25 +97,77 @@
             // tbColorCeil
             // 
             this.tbColorCeil.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tbColorCeil.Location = new System.Drawing.Point(881, 25);
+            this.tbColorCeil.Location = new System.Drawing.Point(894, 25);
             this.tbColorCeil.Name = "tbColorCeil";
             this.tbColorCeil.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.tbColorCeil.Size = new System.Drawing.Size(45, 385);
+            this.tbColorCeil.Size = new System.Drawing.Size(45, 489);
             this.tbColorCeil.TabIndex = 3;
             this.tbColorCeil.Scroll += new System.EventHandler(this.tbColorCeil_Scroll);
             this.tbColorCeil.ValueChanged += new System.EventHandler(this.tbColorCeil_ValueChanged);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnUpAll);
+            this.panel1.Controls.Add(this.btnUp);
+            this.panel1.Controls.Add(this.btnDown);
+            this.panel1.Controls.Add(this.btnDownAll);
             this.panel1.Controls.Add(this.btnRightAll);
             this.panel1.Controls.Add(this.btnRight);
             this.panel1.Controls.Add(this.btnLeft);
             this.panel1.Controls.Add(this.btnLeftAll);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 388);
+            this.panel1.Location = new System.Drawing.Point(0, 492);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(881, 22);
+            this.panel1.Size = new System.Drawing.Size(894, 22);
             this.panel1.TabIndex = 4;
+            // 
+            // btnUpAll
+            // 
+            this.btnUpAll.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnUpAll.FlatAppearance.BorderSize = 0;
+            this.btnUpAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpAll.Image = global::crash.Properties.Resources.up_all_16;
+            this.btnUpAll.Location = new System.Drawing.Point(694, 0);
+            this.btnUpAll.Name = "btnUpAll";
+            this.btnUpAll.Size = new System.Drawing.Size(50, 22);
+            this.btnUpAll.TabIndex = 7;
+            this.btnUpAll.UseVisualStyleBackColor = true;
+            // 
+            // btnUp
+            // 
+            this.btnUp.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnUp.FlatAppearance.BorderSize = 0;
+            this.btnUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUp.Image = global::crash.Properties.Resources.up_16;
+            this.btnUp.Location = new System.Drawing.Point(744, 0);
+            this.btnUp.Name = "btnUp";
+            this.btnUp.Size = new System.Drawing.Size(50, 22);
+            this.btnUp.TabIndex = 6;
+            this.btnUp.UseVisualStyleBackColor = true;
+            // 
+            // btnDown
+            // 
+            this.btnDown.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnDown.FlatAppearance.BorderSize = 0;
+            this.btnDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDown.Image = global::crash.Properties.Resources.down_16;
+            this.btnDown.Location = new System.Drawing.Point(794, 0);
+            this.btnDown.Name = "btnDown";
+            this.btnDown.Size = new System.Drawing.Size(50, 22);
+            this.btnDown.TabIndex = 5;
+            this.btnDown.UseVisualStyleBackColor = true;
+            // 
+            // btnDownAll
+            // 
+            this.btnDownAll.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnDownAll.FlatAppearance.BorderSize = 0;
+            this.btnDownAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDownAll.Image = global::crash.Properties.Resources.down_all_16;
+            this.btnDownAll.Location = new System.Drawing.Point(844, 0);
+            this.btnDownAll.Name = "btnDownAll";
+            this.btnDownAll.Size = new System.Drawing.Size(50, 22);
+            this.btnDownAll.TabIndex = 4;
+            this.btnDownAll.UseVisualStyleBackColor = true;
             // 
             // btnRightAll
             // 
@@ -119,11 +175,11 @@
             this.btnRightAll.FlatAppearance.BorderSize = 0;
             this.btnRightAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRightAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRightAll.Location = new System.Drawing.Point(225, 0);
+            this.btnRightAll.Image = global::crash.Properties.Resources.right_all_16;
+            this.btnRightAll.Location = new System.Drawing.Point(150, 0);
             this.btnRightAll.Name = "btnRightAll";
-            this.btnRightAll.Size = new System.Drawing.Size(75, 22);
+            this.btnRightAll.Size = new System.Drawing.Size(50, 22);
             this.btnRightAll.TabIndex = 3;
-            this.btnRightAll.Text = ">>";
             this.btnRightAll.UseVisualStyleBackColor = true;
             this.btnRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
             // 
@@ -133,11 +189,11 @@
             this.btnRight.FlatAppearance.BorderSize = 0;
             this.btnRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRight.Location = new System.Drawing.Point(150, 0);
+            this.btnRight.Image = global::crash.Properties.Resources.right_16;
+            this.btnRight.Location = new System.Drawing.Point(100, 0);
             this.btnRight.Name = "btnRight";
-            this.btnRight.Size = new System.Drawing.Size(75, 22);
+            this.btnRight.Size = new System.Drawing.Size(50, 22);
             this.btnRight.TabIndex = 2;
-            this.btnRight.Text = ">";
             this.btnRight.UseVisualStyleBackColor = true;
             this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
             // 
@@ -147,11 +203,11 @@
             this.btnLeft.FlatAppearance.BorderSize = 0;
             this.btnLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLeft.Location = new System.Drawing.Point(75, 0);
+            this.btnLeft.Image = global::crash.Properties.Resources.left_16;
+            this.btnLeft.Location = new System.Drawing.Point(50, 0);
             this.btnLeft.Name = "btnLeft";
-            this.btnLeft.Size = new System.Drawing.Size(75, 22);
+            this.btnLeft.Size = new System.Drawing.Size(50, 22);
             this.btnLeft.TabIndex = 1;
-            this.btnLeft.Text = "<";
             this.btnLeft.UseVisualStyleBackColor = true;
             this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
             // 
@@ -161,11 +217,11 @@
             this.btnLeftAll.FlatAppearance.BorderSize = 0;
             this.btnLeftAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeftAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLeftAll.Image = global::crash.Properties.Resources.left_all_16;
             this.btnLeftAll.Location = new System.Drawing.Point(0, 0);
             this.btnLeftAll.Name = "btnLeftAll";
-            this.btnLeftAll.Size = new System.Drawing.Size(75, 22);
+            this.btnLeftAll.Size = new System.Drawing.Size(50, 22);
             this.btnLeftAll.TabIndex = 0;
-            this.btnLeftAll.Text = "<<";
             this.btnLeftAll.UseVisualStyleBackColor = true;
             this.btnLeftAll.Click += new System.EventHandler(this.btnLeftAll_Click);
             // 
@@ -173,7 +229,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(926, 432);
+            this.ClientSize = new System.Drawing.Size(939, 536);
             this.Controls.Add(this.pane);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tbColorCeil);
@@ -206,6 +262,10 @@
         private System.Windows.Forms.Button btnRight;
         private System.Windows.Forms.Button btnLeft;
         private System.Windows.Forms.Button btnLeftAll;
-        private System.Windows.Forms.ToolStripStatusLabel lblMouseInfo;
+        private System.Windows.Forms.ToolStripStatusLabel lblChannel;
+        private System.Windows.Forms.Button btnUpAll;
+        private System.Windows.Forms.Button btnUp;
+        private System.Windows.Forms.Button btnDown;
+        private System.Windows.Forms.Button btnDownAll;
     }
 }

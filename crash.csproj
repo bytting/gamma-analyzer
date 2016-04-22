@@ -259,6 +259,15 @@
     <None Include="images\roi-table-32.png" />
     <None Include="images\doserate-32.png" />
     <None Include="images\delete-16.png" />
+    <None Include="images\left-all-32.png" />
+    <None Include="images\left-all-16.png" />
+    <None Include="images\left-16.png" />
+    <None Include="images\right-16.png" />
+    <None Include="images\right-all-16.png" />
+    <None Include="images\up-all-16.png" />
+    <None Include="images\up-16.png" />
+    <None Include="images\down-16.png" />
+    <None Include="images\down-all-16.png" />
     <Content Include="snippets.txt" />
     <Resource Include="images\background-128.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
