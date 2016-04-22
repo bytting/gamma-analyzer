@@ -98,11 +98,12 @@ namespace crash
             float sectorSize = max / 4f;            
             float scale = 255f / sectorSize;
             int y = 0;
-
-            int h = bmpPane.Height > session.Spectrums.Count ? session.Spectrums.Count : bmpPane.Height - 1;
-
-            for (int i = h - 1; i >= 0; i--)
+            
+            for (int i = session.Spectrums.Count - 1; i >= 0; i--)
             {
+                if (y >= bmpPane.Height)
+                    break;
+
                 Spectrum s = session.Spectrums[i];
                 int w = s.Channels.Count > pane.Width ? pane.Width : s.Channels.Count; // FIXME
                 
