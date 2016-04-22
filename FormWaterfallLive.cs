@@ -34,6 +34,7 @@ namespace crash
         private Session session = null;
         private Bitmap bmpPane = null;
         private bool colorCeilInitialized = false;
+        private List<ROIData> ROIList = null;
 
         private int SelectedSessionIndex1 = -1;
         private int SelectedSessionIndex2 = -1;
@@ -43,17 +44,18 @@ namespace crash
         private int left_x = 1;
 
         private FontFamily fontFamily = new FontFamily("Arial");
-        private Font font = null;        
+        private Font font = null;
 
-        public FormWaterfallLive()
+        public FormWaterfallLive(List<ROIData> roiList)
         {
             InitializeComponent();
-            DoubleBuffered = true;            
+            DoubleBuffered = true;
+            ROIList = roiList;
         }        
 
         private void FormWaterfall_Load(object sender, EventArgs e)
         {
-            font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
+            font = new Font(fontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
 
             lblColorCeil.Text = "";            
 
@@ -88,9 +90,11 @@ namespace crash
                 return;
 
             Graphics graphics = Graphics.FromImage(bmpPane);
-            Pen whitePenDash = new Pen(Color.White);
-            whitePenDash.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            Pen penSelected = new Pen(Color.White);
+            penSelected.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             SolidBrush whiteBrush = new SolidBrush(Color.White);
+            Pen penROI = new Pen(Color.Black);
+            penROI.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;            
 
             graphics.Clear(Color.FromArgb(255, 0, 0, 255));
 
@@ -153,14 +157,29 @@ namespace crash
                     }
                 }
 
+                foreach(ROIData rd in ROIList)
+                {
+                    if (!rd.Active)
+                        continue;
+
+                    if (rd.StartChannel > left_x && rd.StartChannel < left_x + pane.Width)
+                    {
+                        graphics.DrawLine(penSelected, new Point((int)rd.StartChannel, 0), new Point((int)rd.StartChannel, pane.Height - 25));
+                        graphics.DrawString(rd.Name, font, whiteBrush, (int)rd.StartChannel + 4, pane.Height - 40);                        
+                    }
+
+                    if (rd.EndChannel > left_x && rd.EndChannel < left_x + pane.Width)
+                        graphics.DrawLine(penSelected, new Point((int)rd.EndChannel, 0), new Point((int)rd.EndChannel, pane.Height - 25));                    
+                }
+
                 if(s.SessionIndex == SelectedSessionIndex1)
                 {
-                    graphics.DrawLine(whitePenDash, new Point(1, y), new Point(pane.Width, y));                    
+                    graphics.DrawLine(penSelected, new Point(1, y), new Point(pane.Width, y));                    
                 }
 
                 if (s.SessionIndex == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)
-                {                
-                    graphics.DrawLine(whitePenDash, new Point(1, y), new Point(pane.Width, y));
+                {
+                    graphics.DrawLine(penSelected, new Point(1, y), new Point(pane.Width, y));
                 }
 
                 y++;

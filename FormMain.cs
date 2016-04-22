@@ -87,7 +87,7 @@ namespace crash
                 LoadSettings();            
 
             formConnect = new FormConnect();
-            formWaterfallLive = new FormWaterfallLive();
+            formWaterfallLive = new FormWaterfallLive(settings.ROIList);
             formROILive = new FormROILive(settings.ROIList);
             formMap = new FormMap();
 
@@ -658,7 +658,12 @@ namespace crash
         private void lbSession_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbSession.SelectedItems.Count < 1)
+            {
+                formWaterfallLive.SetSelectedSessionIndex(-1);
+                formMap.SetSelectedSessionIndex(-1);
+                formROILive.SetSelectedSessionIndex(-1);
                 return;
+            }                
             else if (lbSession.SelectedItems.Count == 1)
             {
                 bkgScale = 1;
@@ -889,6 +894,11 @@ namespace crash
             graphSession.GraphPane.ReverseTransform(clickedPoint, out x, out y);
 
             lblSessionChannel.Text = "Channel: " + String.Format("{0:###0}", x);
+        }
+
+        private void menuItemSessionUnselect_Click(object sender, EventArgs e)
+        {
+            lbSession.ClearSelected();            
         }
     }    
 }

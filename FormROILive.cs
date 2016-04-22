@@ -80,6 +80,12 @@ namespace crash
             Graphics g = Graphics.FromImage(bmpPane);
             g.Clear(SystemColors.ButtonFace);
 
+            Pen penSelect = new Pen(Color.Black);
+            penSelect.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
+            Pen penMarker = new Pen(Color.FromArgb(255, 120, 120, 120));
+            penMarker.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+
             FontFamily fontFamily = new FontFamily("Arial");
             Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
             
@@ -110,7 +116,7 @@ namespace crash
                 if (!rd.Active)
                     continue;
 
-                Pen pen = new Pen(Color.FromName(rd.ColorName), 2);
+                Pen pen = new Pen(Color.FromName(rd.ColorName), 1);
                 int x = 0;
                 int last_x = 0, last_y = pane.Height - 40;
 
@@ -140,24 +146,17 @@ namespace crash
             {
                 int idx = Utils.ToArgb(bmpPane.GetPixel(j, bmpPane.Height - 1));
 
-                if(idx == 0 || (idx % 50) == 0)
+                if(idx == 0 || (idx % 50) == 0)                
                 {
-                    g.DrawString(idx.ToString(), font, new SolidBrush(Color.Black), j, pane.Height - 20);
+                    g.DrawLine(penMarker, new Point(j, 0), new Point(j, bmpPane.Height - 30));                                    
+                    g.DrawString(idx.ToString(), font, new SolidBrush(Color.FromArgb(255, 125, 125, 125)), j, pane.Height - 20);
                 }
 
-                if(idx == SelectedSessionIndex1)
-                {
-                    Pen penSel = new Pen(Color.Black);
-                    penSel.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-                    g.DrawLine(penSel, new Point(j, 0), new Point(j, bmpPane.Height - 2));                    
-                }
+                if(idx == SelectedSessionIndex1)                
+                    g.DrawLine(penSelect, new Point(j, 0), new Point(j, bmpPane.Height - 30));                                    
 
-                if (idx == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)
-                {
-                    Pen penSel = new Pen(Color.Black);
-                    penSel.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-                    g.DrawLine(penSel, new Point(j, 0), new Point(j, bmpPane.Height - 2));
-                }
+                if (idx == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)                
+                    g.DrawLine(penSelect, new Point(j, 0), new Point(j, bmpPane.Height - 30));                
             }            
 
             pane.Refresh();

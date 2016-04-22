@@ -134,6 +134,8 @@
             this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
             this.btnShowDoserate = new System.Windows.Forms.ToolStripButton();
             this.btnShow3D = new System.Windows.Forms.ToolStripButton();
+            this.contextMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemSessionUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -151,6 +153,7 @@
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tblSession.SuspendLayout();
+            this.contextMenuSession.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -781,7 +784,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.graphSession);
             this.splitContainer2.Panel2.Controls.Add(this.panel1);
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel2);
-            this.splitContainer2.Size = new System.Drawing.Size(1096, 494);
+            this.splitContainer2.Size = new System.Drawing.Size(1096, 492);
             this.splitContainer2.SplitterDistance = 185;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 6;
@@ -790,13 +793,14 @@
             // 
             this.lbSession.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.lbSession.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbSession.ContextMenuStrip = this.contextMenuSession;
             this.lbSession.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbSession.FormattingEnabled = true;
             this.lbSession.ItemHeight = 15;
             this.lbSession.Location = new System.Drawing.Point(0, 0);
             this.lbSession.Name = "lbSession";
             this.lbSession.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSession.Size = new System.Drawing.Size(183, 492);
+            this.lbSession.Size = new System.Drawing.Size(183, 490);
             this.lbSession.TabIndex = 7;
             this.lbSession.SelectedIndexChanged += new System.EventHandler(this.lbSession_SelectedIndexChanged);
             // 
@@ -813,7 +817,7 @@
             this.graphSession.ScrollMinX = 0D;
             this.graphSession.ScrollMinY = 0D;
             this.graphSession.ScrollMinY2 = 0D;
-            this.graphSession.Size = new System.Drawing.Size(904, 381);
+            this.graphSession.Size = new System.Drawing.Size(904, 379);
             this.graphSession.TabIndex = 5;
             this.graphSession.UseExtendedPrintDialog = true;
             this.graphSession.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graphSession_MouseMove);
@@ -822,7 +826,7 @@
             // 
             this.panel1.Controls.Add(this.lblSessionChannel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 472);
+            this.panel1.Location = new System.Drawing.Point(0, 470);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(904, 20);
             this.panel1.TabIndex = 6;
@@ -1337,6 +1341,20 @@
             this.btnShow3D.ToolTipText = "Show 3D session";
             this.btnShow3D.Click += new System.EventHandler(this.btnShow3D_Click);
             // 
+            // contextMenuSession
+            // 
+            this.contextMenuSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemSessionUnselect});
+            this.contextMenuSession.Name = "contextMenuSession";
+            this.contextMenuSession.Size = new System.Drawing.Size(153, 48);
+            // 
+            // menuItemSessionUnselect
+            // 
+            this.menuItemSessionUnselect.Name = "menuItemSessionUnselect";
+            this.menuItemSessionUnselect.Size = new System.Drawing.Size(152, 22);
+            this.menuItemSessionUnselect.Text = "&Unselect";
+            this.menuItemSessionUnselect.Click += new System.EventHandler(this.menuItemSessionUnselect_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1380,6 +1398,7 @@
             this.tableLayoutPanel2.PerformLayout();
             this.tblSession.ResumeLayout(false);
             this.tblSession.PerformLayout();
+            this.contextMenuSession.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1491,6 +1510,8 @@
         private System.Windows.Forms.Label lblSessionChannel;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lblSetupChannel;
+        private System.Windows.Forms.ContextMenuStrip contextMenuSession;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSessionUnselect;
     }
 }
 
