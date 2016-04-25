@@ -41,7 +41,8 @@ namespace crash
         public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
         public event SetSessionIndexEventHandler SetSessionIndexEvent;
 
-        private int left_x = 1;
+        private bool resizeing = false;
+        private int leftX = 1, topY = 0;
 
         private FontFamily fontFamily = new FontFamily("Arial");
         private Font font = null;
@@ -103,7 +104,7 @@ namespace crash
             float scale = 255f / sectorSize;
             int y = 0;
             
-            for (int i = session.Spectrums.Count - 1; i >= 0; i--)
+            for (int i = session.Spectrums.Count - 1 - topY; i >= 0; i--)
             {
                 if (y >= bmpPane.Height)
                     break;
@@ -116,7 +117,7 @@ namespace crash
                 for (int x = 1; x < w; x++)
                 {            
                     int a = 255, r = 0, g = 0, b = 255;
-                    float cps = s.Channels[left_x + x];
+                    float cps = s.Channels[leftX + x];
                     int sectorSkip = CalcSectorSkip(cps, sectorSize);
 
                     float adj = (cps - (float)sectorSkip * sectorSize) * scale;
@@ -150,27 +151,12 @@ namespace crash
                                         
                     bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
 
-                    if(((left_x + x) % 200) == 0)
-                    {                        
-                        int ch = left_x + x;
+                    if (((leftX + x) % 200) == 0)
+                    {
+                        int ch = leftX + x;
                         graphics.DrawString(ch.ToString(), font, whiteBrush, x, pane.Height - 20);                        
                     }
-                }
-
-                foreach(ROIData rd in ROIList)
-                {
-                    if (!rd.Active)
-                        continue;
-
-                    if (rd.StartChannel > left_x && rd.StartChannel < left_x + pane.Width)
-                    {
-                        graphics.DrawLine(penSelected, new Point((int)rd.StartChannel, 0), new Point((int)rd.StartChannel, pane.Height - 25));
-                        graphics.DrawString(rd.Name, font, whiteBrush, (int)rd.StartChannel + 4, pane.Height - 40);                        
-                    }
-
-                    if (rd.EndChannel > left_x && rd.EndChannel < left_x + pane.Width)
-                        graphics.DrawLine(penSelected, new Point((int)rd.EndChannel, 0), new Point((int)rd.EndChannel, pane.Height - 25));                    
-                }
+                }                
 
                 if(s.SessionIndex == SelectedSessionIndex1)
                 {
@@ -183,7 +169,22 @@ namespace crash
                 }
 
                 y++;
-            }              
+            }
+
+            foreach (ROIData rd in ROIList)
+            {
+                if (!rd.Active)
+                    continue;
+
+                if (rd.StartChannel > leftX && rd.StartChannel < leftX + pane.Width)
+                {
+                    graphics.DrawLine(penSelected, new Point((int)rd.StartChannel - leftX, 0), new Point((int)rd.StartChannel - leftX, pane.Height - 25));
+                    graphics.DrawString(rd.Name, font, whiteBrush, (int)rd.StartChannel - leftX + 4, pane.Height - 40);
+                }
+
+                if (rd.EndChannel > leftX && rd.EndChannel < leftX + pane.Width)
+                    graphics.DrawLine(penSelected, new Point((int)rd.EndChannel - leftX, 0), new Point((int)rd.EndChannel - leftX, pane.Height - 25));
+            }
 
             pane.Refresh();
         }        
@@ -204,13 +205,11 @@ namespace crash
 
         private void pane_Resize(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Minimized)
-                return;
-            if (pane.Width < 1 || pane.Height < 1)
-                return;
+            if (WindowState == FormWindowState.Minimized || pane.Width < 1 || pane.Height < 1 || resizeing == true)
+                return;            
 
             bmpPane = new Bitmap(pane.Width, pane.Height);
-            left_x = 1;
+            leftX = 1;
             UpdatePane();
         }
 
@@ -280,7 +279,7 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            left_x = 1;
+            leftX = 1;
             UpdatePane();
         }
 
@@ -289,9 +288,9 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            left_x -= pane.Width;
-            if (left_x < 1)
-                left_x = 1;
+            leftX -= pane.Width;
+            if (leftX < 1)
+                leftX = 1;
             UpdatePane();
         }
 
@@ -300,12 +299,12 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            int max_x = (int)session.NumChannels - pane.Width;
-            left_x += pane.Width;
-            if (left_x > max_x)
-                left_x = max_x;
-            if (left_x < 1)
-                left_x = 1;
+            int maxX = (int)session.NumChannels - pane.Width;
+            leftX += pane.Width;
+            if (leftX > maxX)
+                leftX = maxX;
+            if (leftX < 1)
+                leftX = 1;
             UpdatePane();
         }
 
@@ -314,16 +313,72 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            left_x = (int)session.NumChannels - pane.Width;
-            if (left_x < 1)
-                left_x = 1;
+            leftX = (int)session.NumChannels - pane.Width;
+            if (leftX < 1)
+                leftX = 1;
             UpdatePane();
         }
 
         private void pane_MouseMove(object sender, MouseEventArgs e)
         {
-            int mouseChannel = left_x + e.X;
+            int mouseChannel = leftX + e.X;
             lblChannel.Text = "Channel: " + mouseChannel.ToString();            
+        }
+
+        private void btnUpAll_Click(object sender, EventArgs e)
+        {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
+            topY = 0;
+            UpdatePane();
+        }
+
+        private void btnUp_Click(object sender, EventArgs e)
+        {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
+            topY -= pane.Height;
+            if (topY < 0)
+                topY = 0;
+            UpdatePane();
+        }
+
+        private void btnDown_Click(object sender, EventArgs e)
+        {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
+            int maxY = session.Spectrums.Count - pane.Height - 1;
+            topY += pane.Height;
+            if (topY > maxY)
+                topY = maxY;
+            if (topY < 0)
+                topY = 0;
+            UpdatePane();
+        }
+
+        private void btnDownAll_Click(object sender, EventArgs e)
+        {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
+            topY = session.Spectrums.Count - 1 - pane.Height;
+            if (topY < 0)
+                topY = 0;
+            UpdatePane();
+        }
+
+        private void FormWaterfallLive_ResizeBegin(object sender, EventArgs e)
+        {
+            resizeing = true;            
+        }
+
+        private void FormWaterfallLive_ResizeEnd(object sender, EventArgs e)
+        {
+            resizeing = false;
+            pane_Resize(sender, e);            
         }
     }
 }
