@@ -171,19 +171,22 @@ namespace crash
                 y++;
             }
 
-            foreach (ROIData rd in ROIList)
+            if (btnROI.Checked)
             {
-                if (!rd.Active)
-                    continue;
-
-                if (rd.StartChannel > leftX && rd.StartChannel < leftX + pane.Width)
+                foreach (ROIData rd in ROIList)
                 {
-                    graphics.DrawLine(penSelected, new Point((int)rd.StartChannel - leftX, 0), new Point((int)rd.StartChannel - leftX, pane.Height - 25));
-                    graphics.DrawString(rd.Name, font, whiteBrush, (int)rd.StartChannel - leftX + 4, pane.Height - 40);
-                }
+                    if (!rd.Active)
+                        continue;
 
-                if (rd.EndChannel > leftX && rd.EndChannel < leftX + pane.Width)
-                    graphics.DrawLine(penSelected, new Point((int)rd.EndChannel - leftX, 0), new Point((int)rd.EndChannel - leftX, pane.Height - 25));
+                    if (rd.StartChannel > leftX && rd.StartChannel < leftX + pane.Width)
+                    {
+                        graphics.DrawLine(penSelected, new Point((int)rd.StartChannel - leftX, 0), new Point((int)rd.StartChannel - leftX, pane.Height - 25));
+                        graphics.DrawString(rd.Name, font, whiteBrush, (int)rd.StartChannel - leftX + 4, pane.Height - 40);
+                    }
+
+                    if (rd.EndChannel > leftX && rd.EndChannel < leftX + pane.Width)
+                        graphics.DrawLine(penSelected, new Point((int)rd.EndChannel - leftX, 0), new Point((int)rd.EndChannel - leftX, pane.Height - 25));
+                }
             }
 
             pane.Refresh();
@@ -379,6 +382,11 @@ namespace crash
         {
             resizeing = false;
             pane_Resize(sender, e);            
+        }
+
+        private void btnROI_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdatePane();
         }
     }
 }
