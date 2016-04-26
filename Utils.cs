@@ -32,9 +32,8 @@ namespace crash
 {
     public static class Utils
     {        
-        public static FormLog Log = new FormLog();
-        public static ScriptRuntime IPython = Python.CreateRuntime();
-        public static dynamic GEScript = null;
+        public static FormLog Log = new FormLog();        
+        public static dynamic PyEngine = Python.CreateEngine();        
 
         public static int ToArgb(Color color)
         {

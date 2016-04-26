@@ -241,9 +241,8 @@ namespace crash
                         string sessionName = msg.Arguments["session_name"].ToString();
                         Utils.Log.Add("New session created: " + sessionName);
 
-                        session = new Session(settings.SessionRootDirectory, sessionName, selectedDetectorType, selectedDetector);
-                        File.Copy(session.Info.DetectorType.GEScriptPath, session.SessionPath + Path.DirectorySeparatorChar + "gescript.py", true);
-                        Utils.GEScript = Utils.IPython.UseFile(session.SessionPath + Path.DirectorySeparatorChar + "gescript.py");
+                        string geScript = File.ReadAllText(selectedDetectorType.GEScriptPath);
+                        session = new Session(settings.SessionRootDirectory, sessionName, selectedDetector, geScript);                        
                         
                         string sessionSettingsFile = session.SessionPath + Path.DirectorySeparatorChar + "session.json";
                         string jSessionInfo = JsonConvert.SerializeObject(session.Info, Newtonsoft.Json.Formatting.Indented);
@@ -284,7 +283,7 @@ namespace crash
 
                 case "spectrum":
 
-                    Spectrum spec = new Spectrum(msg, session.Info.DetectorType, session.Info.Detector);
+                    Spectrum spec = new Spectrum(msg);
                     Utils.Log.Add(spec.Label + " received");                                                            
 
                     if (spec.IsPreview)
@@ -323,7 +322,7 @@ namespace crash
                     }
                     else
                     {         
-                        // Make sure session is allocated in case spectrums are ticking in                      
+                        // Make sure session is allocated in case spectrums are ticking in                                              
 
                         string jsonPath = session.SessionPath + Path.DirectorySeparatorChar + "json";
                         if (!Directory.Exists(jsonPath))
@@ -333,6 +332,9 @@ namespace crash
                         TextWriter writer = new StreamWriter(jsonPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".json");
                         writer.Write(json);
                         writer.Close();
+
+                        if(session.IsLoaded)
+                            spec.CalculateDoserate(session.Info.Detector, session.GEFactor);
 
                         session.Add(spec);
 

@@ -35,6 +35,7 @@ namespace crash
         public List<Spectrum> Spectrums { get; private set; }
         public string SessionPath { get; private set; }
         public SessionInfo Info { get; private set; }
+        public dynamic GEFactor = null;
 
         public Session()
         {
@@ -42,9 +43,14 @@ namespace crash
             Spectrums = new List<Spectrum>();
         }
 
-        public Session(string sessionPath, string name, DetectorType detType, Detector det)
+        public Session(string sessionPath, string name, Detector det, string geScript)
         {
-            Info = new SessionInfo(name, detType, det);
+            Info = new SessionInfo(name, det, geScript);
+
+            dynamic scope = Utils.PyEngine.CreateScope();
+            Utils.PyEngine.Execute(Info.GEScript, scope);
+            GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");
+
             SessionPath = sessionPath + Path.DirectorySeparatorChar + Info.Name;
             Spectrums = new List<Spectrum>();
 
@@ -94,20 +100,20 @@ namespace crash
 
             string jsonDir = SessionPath + Path.DirectorySeparatorChar + "json";
             if (!Directory.Exists(jsonDir))
-                return false;
+                return false;            
 
-            if (File.Exists(SessionPath + Path.DirectorySeparatorChar + "gescript.py"))
-                Utils.GEScript = Utils.IPython.UseFile(SessionPath + Path.DirectorySeparatorChar + "gescript.py");
-            else Utils.GEScript = null;
-
-            Info = JsonConvert.DeserializeObject<SessionInfo>(File.ReadAllText(sessionInfoFile));            
+            Info = JsonConvert.DeserializeObject<SessionInfo>(File.ReadAllText(sessionInfoFile));
+            dynamic scope = Utils.PyEngine.CreateScope();
+            Utils.PyEngine.Execute(Info.GEScript, scope);
+            GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");
 
             string[] files = Directory.GetFiles(jsonDir, "*.json", SearchOption.TopDirectoryOnly);
             foreach (string filename in files)
             {
                 string json = File.ReadAllText(filename);
                 burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
-                Spectrum spec = new Spectrum(msg, Info.DetectorType, Info.Detector);
+                Spectrum spec = new Spectrum(msg);                
+                spec.CalculateDoserate(Info.Detector, GEFactor);
                 Add(spec);
             }
 
@@ -157,16 +163,16 @@ namespace crash
         {            
         }
 
-        public SessionInfo(string name, DetectorType detType, Detector det)
+        public SessionInfo(string name, Detector det, string geScript)
         {
-            Name = name;
-            DetectorType = detType;
+            Name = name;            
             Detector = det;
+            GEScript = geScript;
         }
 
         public string Name { get; set; }        
         public string Comment { get; set; }
-        public DetectorType DetectorType;
         public Detector Detector;
+        public string GEScript { get; set; }        
     }
 }

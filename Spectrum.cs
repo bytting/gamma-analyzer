@@ -59,7 +59,7 @@ namespace crash
             mChannels = new List<float>();
         }
 
-        public Spectrum(burn.Message msg, DetectorType detType, Detector det)
+        public Spectrum(burn.Message msg)
         {
             SessionName = msg.Arguments["session_name"].ToString();
             SessionIndex = Convert.ToInt32(msg.Arguments["session_index"]);
@@ -95,8 +95,7 @@ namespace crash
                 TotalCount += ch;                                          
             }
 
-            Doserate = 0.0;            
-            CalculateDoserate(detType, det);
+            Doserate = 0.0;                        
         }
 
         public float GetCountInROI(int start, int end)
@@ -112,9 +111,9 @@ namespace crash
             return SessionName + " - " + SessionIndex.ToString();
         }
 
-        public bool CalculateDoserate(DetectorType detType, Detector det)
+        public bool CalculateDoserate(Detector det, dynamic GEFactor)
         {
-            if (det == null || detType == null || Utils.GEScript == null)
+            if (det == null)
                 return false;            
 
             if ((det.RegPoint1X == 0f && det.RegPoint1Y == 0f) || (det.RegPoint2X == 0f && det.RegPoint2Y == 0f))
@@ -128,7 +127,7 @@ namespace crash
                 float sec = (float)Livetime / 1000000f;                
                 float cps = Channels[i] / sec;
                 double E = det.RegPoint1Y + ((double)i * slope - det.RegPoint1X * slope);
-                double GE = Utils.GEScript.GEFactor(E / 1000.0);
+                double GE = GEFactor(E / 1000.0);
                 Doserate += GE * cps * 60.0;
             }
 
