@@ -52,6 +52,7 @@ namespace crash
         private void FormROITableLive_Load(object sender, EventArgs e)
         {
             lblScaling.Text = "";
+            lblSpectrum.Text = "";
             pane_Resize(sender, e);
         }
         
@@ -109,7 +110,7 @@ namespace crash
                 }
             }            
 
-            lblScaling.Text = "Scale factor: " + scaling.ToString();
+            lblScaling.Text = "Scale factor: " + String.Format("{0:0.0#}", scaling);
 
             foreach (ROIData rd in ROIList)
             {
@@ -275,6 +276,16 @@ namespace crash
 
             int sessionIndex = Utils.ToArgb(bmpPane.GetPixel(index, bmpPane.Height - 1));            
             lblSpectrum.Text = "Session index: " + sessionIndex.ToString();
-        }                        
+        }
+
+        private void menuItemUnselect_Click(object sender, EventArgs e)
+        {
+            if (SetSessionIndexEvent != null)
+            {
+                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
+                args.StartIndex = args.EndIndex = -1;
+                SetSessionIndexEvent(this, args);
+            }
+        }        
     }    
 }

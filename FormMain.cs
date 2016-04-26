@@ -80,8 +80,8 @@ namespace crash
             if (!Directory.Exists(CrashEnvironment.SettingsPath))
                 Directory.CreateDirectory(CrashEnvironment.SettingsPath);
 
-            if (!Directory.Exists(CrashEnvironment.GScriptPath))
-                Directory.CreateDirectory(CrashEnvironment.GScriptPath);            
+            if (!Directory.Exists(CrashEnvironment.GEScriptPath))
+                Directory.CreateDirectory(CrashEnvironment.GEScriptPath);            
 
             if (File.Exists(CrashEnvironment.SettingsFile))
                 LoadSettings();            
@@ -121,6 +121,12 @@ namespace crash
 
         void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
         {
+            if(e.StartIndex == -1 && e.EndIndex == -1)
+            {
+                lbSession.ClearSelected();
+                return;
+            }
+
             if (e.StartIndex >= lbSession.Items.Count || e.EndIndex >= lbSession.Items.Count || e.StartIndex < 0 || e.EndIndex < 0)
                 return;
 
@@ -135,14 +141,14 @@ namespace crash
 
             if (e.StartIndex == e.EndIndex)
             {
-                int idx1 = lbSession.FindStringExact(session.Name + " - " + e.StartIndex.ToString());
+                int idx1 = lbSession.FindStringExact(session.Info.Name + " - " + e.StartIndex.ToString());
                 if (idx1 != ListBox.NoMatches)             
                     lbSession.SetSelected(idx1, true);                
             }
             else
             {
-                int idx1 = lbSession.FindStringExact(session.Name + " - " + e.StartIndex.ToString());
-                int idx2 = lbSession.FindStringExact(session.Name + " - " + e.EndIndex.ToString());
+                int idx1 = lbSession.FindStringExact(session.Info.Name + " - " + e.StartIndex.ToString());
+                int idx2 = lbSession.FindStringExact(session.Info.Name + " - " + e.EndIndex.ToString());
                 for(int i=idx1; i<idx2; i++)
                 {
                     lbSession.SetSelected(i, true);
@@ -232,30 +238,18 @@ namespace crash
                         Utils.Log.Add("Preview received");
                     else
                     {
-                        string session_name = msg.Arguments["session_name"].ToString();
-                        Utils.Log.Add("New session created: " + session_name);
+                        string sessionName = msg.Arguments["session_name"].ToString();
+                        Utils.Log.Add("New session created: " + sessionName);
 
-                        session = new Session(settings.SessionRootDirectory, session_name);
-
-                        SessionSettings sessionSettings = new SessionSettings();
-                        sessionSettings.SessionName = session_name;
+                        session = new Session(settings.SessionRootDirectory, sessionName, selectedDetectorType, selectedDetector);
+                        File.Copy(session.Info.DetectorType.GEScriptPath, session.SessionPath + Path.DirectorySeparatorChar + "gescript.py", true);
+                        Utils.GEScript = Utils.IPython.UseFile(session.SessionPath + Path.DirectorySeparatorChar + "gescript.py");
+                        
                         string sessionSettingsFile = session.SessionPath + Path.DirectorySeparatorChar + "session.json";
-                        string jsonSess = JsonConvert.SerializeObject(sessionSettings, Newtonsoft.Json.Formatting.Indented);
+                        string jSessionInfo = JsonConvert.SerializeObject(session.Info, Newtonsoft.Json.Formatting.Indented);
                         TextWriter writer = new StreamWriter(sessionSettingsFile);
-                        writer.Write(jsonSess);
-                        writer.Close();
-
-                        string detectorSettingsFile = session.SessionPath + Path.DirectorySeparatorChar + "detector.json";
-                        string jsonDet = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.Indented);
-                        writer = new StreamWriter(detectorSettingsFile);
-                        writer.Write(jsonDet);
-                        writer.Close();                        
-
-                        string detectorTypeSettingsFile = session.SessionPath + Path.DirectorySeparatorChar + "detector_type.json";
-                        string jsonDetType = JsonConvert.SerializeObject(selectedDetectorType, Newtonsoft.Json.Formatting.Indented);
-                        writer = new StreamWriter(detectorTypeSettingsFile);
-                        writer.Write(jsonDetType);
-                        writer.Close();
+                        writer.Write(jSessionInfo);
+                        writer.Close();                                                
 
                         formWaterfallLive.SetSession(session);
                         formROILive.SetSession(session);
@@ -288,13 +282,13 @@ namespace crash
                     Utils.Log.Add("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
                     break;
 
-                case "spectrum":                    
+                case "spectrum":
 
-                    Spectrum spec = new Spectrum(msg, selectedDetector, selectedDetectorType);
-                    Utils.Log.Add(spec.Label + " received");                                        
+                    Spectrum spec = new Spectrum(msg, session.Info.DetectorType, session.Info.Detector);
+                    Utils.Log.Add(spec.Label + " received");                                                            
 
                     if (spec.IsPreview)
-                    {                    
+                    {                        
                         GraphPane pane = graphSetup.GraphPane;
                         pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
                         pane.Fill = new Fill(SystemColors.ButtonFace);                        
@@ -329,7 +323,7 @@ namespace crash
                     }
                     else
                     {         
-                        // Make sure session is allocated in case spectrums are ticking in  
+                        // Make sure session is allocated in case spectrums are ticking in                      
 
                         string jsonPath = session.SessionPath + Path.DirectorySeparatorChar + "json";
                         if (!Directory.Exists(jsonPath))
@@ -764,11 +758,7 @@ namespace crash
             btnSelectDetector.DropDownItems.Clear();
             foreach (Detector d in settings.Detectors)            
                 btnSelectDetector.DropDownItems.Add(d.Serialnumber);            
-        }                
-
-        private void cboxSetupDetector_SelectedValueChanged(object sender, EventArgs e)
-        {            
-        }
+        }        
 
         private void menuItemLoadSession_Click(object sender, EventArgs e)
         {
@@ -779,7 +769,7 @@ namespace crash
             dialog.ShowNewFolderButton = false;
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                session.Load(dialog.SelectedPath);
+                session.Load(dialog.SelectedPath);                
 
                 formWaterfallLive.SetSession(session);
                 formROILive.SetSession(session);

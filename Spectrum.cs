@@ -59,7 +59,7 @@ namespace crash
             mChannels = new List<float>();
         }
 
-        public Spectrum(burn.Message msg, Detector det, DetectorType detType)
+        public Spectrum(burn.Message msg, DetectorType detType, Detector det)
         {
             SessionName = msg.Arguments["session_name"].ToString();
             SessionIndex = Convert.ToInt32(msg.Arguments["session_index"]);
@@ -95,8 +95,8 @@ namespace crash
                 TotalCount += ch;                                          
             }
 
-            if (!CalculateDoserate(det, detType))
-                Doserate = 0.0;
+            Doserate = 0.0;            
+            CalculateDoserate(detType, det);
         }
 
         public float GetCountInROI(int start, int end)
@@ -110,29 +110,25 @@ namespace crash
         public override string ToString()
         {
             return SessionName + " - " + SessionIndex.ToString();
-        }   
-     
-        public bool CalculateDoserate(Detector det, DetectorType detType)
+        }
+
+        public bool CalculateDoserate(DetectorType detType, Detector det)
         {
-            if (det == null || detType == null)
+            if (det == null || detType == null || Utils.GEScript == null)
+                return false;            
+
+            if ((det.RegPoint1X == 0f && det.RegPoint1Y == 0f) || (det.RegPoint2X == 0f && det.RegPoint2Y == 0f))
                 return false;
-
-            if(!File.Exists(detType.GScript))
-                return false; // FIXME: report error            
-
-            if ((det.RegressionPoint1.X == 0f && det.RegressionPoint1.Y == 0f) || (det.RegressionPoint2.X == 0f && det.RegressionPoint2.Y == 0f))
-                return false;
-
-            dynamic geScript = Utils.IPython.UseFile(detType.GScript);
-            double slope = (det.RegressionPoint2.Y - det.RegressionPoint1.Y) / (det.RegressionPoint2.X - det.RegressionPoint1.X);            
+            
+            double slope = (det.RegPoint2Y - det.RegPoint1Y) / (det.RegPoint2X - det.RegPoint1X);            
             Doserate = 0.0;
 
             for (int i = det.CurrentLLD; i < det.CurrentULD; i++)
             {
                 float sec = (float)Livetime / 1000000f;                
                 float cps = Channels[i] / sec;
-                double E = det.RegressionPoint1.Y + ((double)i * slope - det.RegressionPoint1.X * slope);
-                double GE = geScript.GEFactor(E / 1000.0);
+                double E = det.RegPoint1Y + ((double)i * slope - det.RegPoint1X * slope);
+                double GE = Utils.GEScript.GEFactor(E / 1000.0);
                 Doserate += GE * cps * 60.0;
             }
 

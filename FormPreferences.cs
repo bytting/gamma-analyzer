@@ -51,7 +51,7 @@ namespace crash
             lvDetectorTypes.Items.Clear();
             foreach (DetectorType dt in settings.DetectorTypes)
             {
-                ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString(), dt.GScript });
+                ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString(), dt.GEScriptPath });
                 item.Tag = dt;
                 lvDetectorTypes.Items.Add(item);
             }
@@ -105,7 +105,7 @@ namespace crash
             FormAddDetectorType form = new FormAddDetectorType();
             if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                settings.DetectorTypes.Add(new DetectorType(form.TypeName, form.MaxChannels, form.MinHV, form.MaxHV, form.GScript));
+                settings.DetectorTypes.Add(new DetectorType(form.TypeName, form.MaxChannels, form.MinHV, form.MaxHV, form.GEScript));
                 PopulateDetectorTypeList();
             }
         }               

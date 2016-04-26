@@ -28,30 +28,28 @@ using Newtonsoft.Json;
 namespace crash
 {
     public class Session
-    {
-        public string Name { get; private set; }
+    {        
         public float NumChannels { get; private set; }
         public float MaxChannelCount { get; private set; }
         public float MinChannelCount { get; private set; }        
         public List<Spectrum> Spectrums { get; private set; }
         public string SessionPath { get; private set; }
+        public SessionInfo Info { get; private set; }
 
         public Session()
-        {            
+        {
+            Info = new SessionInfo();
             Spectrums = new List<Spectrum>();
         }
 
-        public Session(string sessionPath, string name)
+        public Session(string sessionPath, string name, DetectorType detType, Detector det)
         {
-            Name = name;
-            SessionPath = sessionPath + Path.DirectorySeparatorChar + Name;            
+            Info = new SessionInfo(name, detType, det);
+            SessionPath = sessionPath + Path.DirectorySeparatorChar + Info.Name;
             Spectrums = new List<Spectrum>();
 
-            if (!Directory.Exists(sessionPath))
-                Directory.CreateDirectory(sessionPath);
-
             if (!Directory.Exists(SessionPath))
-                Directory.CreateDirectory(SessionPath);            
+                Directory.CreateDirectory(SessionPath);
         }
 
         public void Add(Spectrum spec)
@@ -67,62 +65,49 @@ namespace crash
 
         public bool IsLoaded
         {
-            get { return SessionPath != String.Empty && Name != String.Empty; }
+            get { return Info != null && !String.IsNullOrEmpty(Info.Name); }
         }
 
         public bool IsEmpty
         {
-            get { return Spectrums.Count < 1; }            
+            get { return Spectrums.Count == 0; }            
         }
 
         public void Clear()
         {
-            SessionPath = String.Empty;            
-            Name = String.Empty;
+            SessionPath = String.Empty;                        
             NumChannels = 0;
             MaxChannelCount = 0;
             MinChannelCount = 0;
             Spectrums.Clear();
+            Info = null;
         }
 
         public bool Load(string path)
         {
             Clear();
-            SessionPath = path;                        
+            SessionPath = path;            
 
-            string sessionSettingsFile = SessionPath + Path.DirectorySeparatorChar + "session.json";
-            if (!File.Exists(sessionSettingsFile))
-                return false;
+            string sessionInfoFile = SessionPath + Path.DirectorySeparatorChar + "session.json";
+            if (!File.Exists(sessionInfoFile))
+                return false;            
 
             string jsonDir = SessionPath + Path.DirectorySeparatorChar + "json";
             if (!Directory.Exists(jsonDir))
-                return false;            
-
-            string detectorSettingsFile = SessionPath + Path.DirectorySeparatorChar + "detector.json";
-            if (!File.Exists(detectorSettingsFile))
                 return false;
 
-            string detectorTypeSettingsFile = SessionPath + Path.DirectorySeparatorChar + "detector_type.json";
-            if (!File.Exists(detectorTypeSettingsFile))
-                return false;
+            if (File.Exists(SessionPath + Path.DirectorySeparatorChar + "gescript.py"))
+                Utils.GEScript = Utils.IPython.UseFile(SessionPath + Path.DirectorySeparatorChar + "gescript.py");
+            else Utils.GEScript = null;
 
-            string sessionSettings = File.ReadAllText(sessionSettingsFile);
-            SessionSettings sessInfo = JsonConvert.DeserializeObject<SessionSettings>(sessionSettings);
-            Name = sessInfo.SessionName;
-
-            string jsonDetector = File.ReadAllText(detectorSettingsFile);
-            Detector det = JsonConvert.DeserializeObject<Detector>(jsonDetector);
-
-            string jsonDetectorType = File.ReadAllText(detectorTypeSettingsFile);
-            DetectorType detType = JsonConvert.DeserializeObject<DetectorType>(jsonDetectorType);
+            Info = JsonConvert.DeserializeObject<SessionInfo>(File.ReadAllText(sessionInfoFile));            
 
             string[] files = Directory.GetFiles(jsonDir, "*.json", SearchOption.TopDirectoryOnly);
-
             foreach (string filename in files)
             {
                 string json = File.ReadAllText(filename);
                 burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
-                Spectrum spec = new Spectrum(msg, det, detType);
+                Spectrum spec = new Spectrum(msg, Info.DetectorType, Info.Detector);
                 Add(spec);
             }
 
@@ -166,8 +151,22 @@ namespace crash
         }
     }
 
-    public class SessionSettings
+    public class SessionInfo
     {
-        public string SessionName { get; set; }
+        public SessionInfo()
+        {            
+        }
+
+        public SessionInfo(string name, DetectorType detType, Detector det)
+        {
+            Name = name;
+            DetectorType = detType;
+            Detector = det;
+        }
+
+        public string Name { get; set; }        
+        public string Comment { get; set; }
+        public DetectorType DetectorType;
+        public Detector Detector;
     }
 }

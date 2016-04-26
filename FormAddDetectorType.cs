@@ -16,7 +16,7 @@ namespace crash
         public int MaxChannels { get; set; }
         public int MinHV { get; set; }
         public int MaxHV { get; set; }
-        public string GScript { get; set; }
+        public string GEScript { get; set; }
 
         public FormAddDetectorType()
         {
@@ -53,7 +53,7 @@ namespace crash
                 MaxChannels = Convert.ToInt32(tbMaxChannels.Text);
                 MinHV = Convert.ToInt32(tbMinHV.Text);
                 MaxHV = Convert.ToInt32(tbMaxHV.Text);
-                GScript = tbGScript.Text;
+                GEScript = tbGScript.Text;
             }
             catch
             {
@@ -67,7 +67,7 @@ namespace crash
         private void btnBrowseGScript_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.InitialDirectory = CrashEnvironment.GScriptPath;
+            dialog.InitialDirectory = CrashEnvironment.GEScriptPath;
             dialog.Filter = "Script Files (.py)|*.py";
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {

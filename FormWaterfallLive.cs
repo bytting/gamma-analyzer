@@ -110,7 +110,7 @@ namespace crash
                     break;
 
                 Spectrum s = session.Spectrums[i];
-                int w = s.Channels.Count > pane.Width ? pane.Width : s.Channels.Count; // FIXME
+                int w = s.Channels.Count > bmpPane.Width ? bmpPane.Width : s.Channels.Count; // FIXME
                 
                 bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
 
@@ -154,18 +154,18 @@ namespace crash
                     if (((leftX + x) % 200) == 0)
                     {
                         int ch = leftX + x;
-                        graphics.DrawString(ch.ToString(), font, whiteBrush, x, pane.Height - 20);                        
+                        graphics.DrawString(ch.ToString(), font, whiteBrush, x, bmpPane.Height - 20);                        
                     }
                 }                
 
                 if(s.SessionIndex == SelectedSessionIndex1)
                 {
-                    graphics.DrawLine(penSelected, new Point(1, y), new Point(pane.Width, y));                    
+                    graphics.DrawLine(penSelected, new Point(1, y), new Point(bmpPane.Width, y));                    
                 }
 
                 if (s.SessionIndex == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)
                 {
-                    graphics.DrawLine(penSelected, new Point(1, y), new Point(pane.Width, y));
+                    graphics.DrawLine(penSelected, new Point(1, y), new Point(bmpPane.Width, y));
                 }
 
                 y++;
@@ -178,14 +178,14 @@ namespace crash
                     if (!rd.Active)
                         continue;
 
-                    if (rd.StartChannel > leftX && rd.StartChannel < leftX + pane.Width)
+                    if (rd.StartChannel > leftX && rd.StartChannel < leftX + bmpPane.Width)
                     {
-                        graphics.DrawLine(penSelected, new Point((int)rd.StartChannel - leftX, 0), new Point((int)rd.StartChannel - leftX, pane.Height - 25));
-                        graphics.DrawString(rd.Name, font, whiteBrush, (int)rd.StartChannel - leftX + 4, pane.Height - 40);
+                        graphics.DrawLine(penSelected, new Point((int)rd.StartChannel - leftX, 0), new Point((int)rd.StartChannel - leftX, bmpPane.Height - 25));
+                        graphics.DrawString(rd.Name, font, whiteBrush, (int)rd.StartChannel - leftX + 4, bmpPane.Height - 40);
                     }
 
-                    if (rd.EndChannel > leftX && rd.EndChannel < leftX + pane.Width)
-                        graphics.DrawLine(penSelected, new Point((int)rd.EndChannel - leftX, 0), new Point((int)rd.EndChannel - leftX, pane.Height - 25));
+                    if (rd.EndChannel > leftX && rd.EndChannel < leftX + bmpPane.Width)
+                        graphics.DrawLine(penSelected, new Point((int)rd.EndChannel - leftX, 0), new Point((int)rd.EndChannel - leftX, bmpPane.Height - 25));
                 }
             }
 
@@ -246,12 +246,15 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            if (SetSessionIndexEvent != null)
-            {                
-                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
-                args.StartIndex = args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));            
-                SetSessionIndexEvent(this, args);
-            }                
+            if (e.Button == MouseButtons.Left)
+            {
+                if (SetSessionIndexEvent != null)
+                {
+                    SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
+                    args.StartIndex = args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));
+                    SetSessionIndexEvent(this, args);
+                }
+            }
         }
 
         public void SetSelectedSessionIndex(int index)
@@ -387,6 +390,16 @@ namespace crash
         private void btnROI_CheckedChanged(object sender, EventArgs e)
         {
             UpdatePane();
+        }
+
+        private void menuItemUnselect_Click(object sender, EventArgs e)
+        {
+            if (SetSessionIndexEvent != null)
+            {
+                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
+                args.StartIndex = args.EndIndex = -1;
+                SetSessionIndexEvent(this, args);
+            }
         }
     }
 }

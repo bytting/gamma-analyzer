@@ -57,11 +57,17 @@ namespace crash
 
         private void btnOk_Click(object sender, EventArgs e)
         {            
-            if(!String.IsNullOrEmpty(tbLowChannel.Text) && !String.IsNullOrEmpty(tbLowEnergy.Text))            
-                detector.RegressionPoint1 = new PointF(Convert.ToSingle(tbLowChannel.Text), Convert.ToSingle(tbLowEnergy.Text));
+            if(!String.IsNullOrEmpty(tbLowChannel.Text) && !String.IsNullOrEmpty(tbLowEnergy.Text))
+            {
+                detector.RegPoint1X = Convert.ToSingle(tbLowChannel.Text);
+                detector.RegPoint1Y = Convert.ToSingle(tbLowEnergy.Text);
+            }                
 
             if (!String.IsNullOrEmpty(tbHighChannel.Text) && !String.IsNullOrEmpty(tbHighEnergy.Text))
-                detector.RegressionPoint2 = new PointF(Convert.ToSingle(tbHighChannel.Text), Convert.ToSingle(tbHighEnergy.Text));                
+            {
+                detector.RegPoint2X = Convert.ToSingle(tbHighChannel.Text);
+                detector.RegPoint2Y = Convert.ToSingle(tbHighEnergy.Text);
+            }                            
 
             Close();
         }

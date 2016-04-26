@@ -40,8 +40,10 @@ namespace crash
         public int CurrentLivetime { get; set; }
         public int CurrentLLD { get; set; }
         public int CurrentULD { get; set; }
-        public PointF RegressionPoint1 { get; set; }
-        public PointF RegressionPoint2 { get; set; }
+        public float RegPoint1X { get; set; }
+        public float RegPoint1Y { get; set; }
+        public float RegPoint2X { get; set; }
+        public float RegPoint2Y { get; set; }        
 
         public override string ToString()
         {
