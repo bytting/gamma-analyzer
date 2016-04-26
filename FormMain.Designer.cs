@@ -57,7 +57,6 @@
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
             this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSelectDetector = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnShowRegressionPoints = new System.Windows.Forms.ToolStripButton();
             this.btnShowROITable = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -97,7 +96,6 @@
             this.tbSetupLivetime = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.btnSetupStart = new System.Windows.Forms.Button();
-            this.lblSetupDetector = new System.Windows.Forms.Label();
             this.lblSetupDoserate = new System.Windows.Forms.Label();
             this.pageMenu = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -136,6 +134,9 @@
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
+            this.tbSessionComment = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cboxSetupDetector = new System.Windows.Forms.ComboBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -312,7 +313,6 @@
             this.btnConnect,
             this.btnDisconnect,
             this.toolStripSeparator3,
-            this.btnSelectDetector,
             this.btnShowRegressionPoints,
             this.btnShowROITable,
             this.toolStripSeparator6,
@@ -409,18 +409,6 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 40);
-            // 
-            // btnSelectDetector
-            // 
-            this.btnSelectDetector.AutoSize = false;
-            this.btnSelectDetector.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSelectDetector.Image = global::crash.Properties.Resources.detecor_32;
-            this.btnSelectDetector.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSelectDetector.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSelectDetector.Name = "btnSelectDetector";
-            this.btnSelectDetector.Size = new System.Drawing.Size(38, 38);
-            this.btnSelectDetector.Text = "Select detector";
-            this.btnSelectDetector.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.btnSelectDetector_DropDownItemClicked);
             // 
             // btnShowRegressionPoints
             // 
@@ -649,8 +637,8 @@
             this.tableLayoutSetup.Controls.Add(this.tbSetupLivetime, 3, 1);
             this.tableLayoutSetup.Controls.Add(this.label11, 2, 1);
             this.tableLayoutSetup.Controls.Add(this.btnSetupStart, 3, 2);
-            this.tableLayoutSetup.Controls.Add(this.lblSetupDetector, 1, 1);
             this.tableLayoutSetup.Controls.Add(this.lblSetupDoserate, 5, 1);
+            this.tableLayoutSetup.Controls.Add(this.cboxSetupDetector, 1, 1);
             this.tableLayoutSetup.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutSetup.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutSetup.Name = "tableLayoutSetup";
@@ -717,6 +705,7 @@
             // 
             this.tbSetupVoltage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSetupVoltage.Location = new System.Drawing.Point(120, 95);
+            this.tbSetupVoltage.MaxLength = 4;
             this.tbSetupVoltage.Name = "tbSetupVoltage";
             this.tbSetupVoltage.Size = new System.Drawing.Size(189, 21);
             this.tbSetupVoltage.TabIndex = 13;
@@ -725,6 +714,7 @@
             // 
             this.tbSetupCoarseGain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSetupCoarseGain.Location = new System.Drawing.Point(120, 123);
+            this.tbSetupCoarseGain.MaxLength = 5;
             this.tbSetupCoarseGain.Name = "tbSetupCoarseGain";
             this.tbSetupCoarseGain.Size = new System.Drawing.Size(189, 21);
             this.tbSetupCoarseGain.TabIndex = 14;
@@ -733,6 +723,7 @@
             // 
             this.tbSetupFineGain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSetupFineGain.Location = new System.Drawing.Point(120, 151);
+            this.tbSetupFineGain.MaxLength = 5;
             this.tbSetupFineGain.Name = "tbSetupFineGain";
             this.tbSetupFineGain.Size = new System.Drawing.Size(189, 21);
             this.tbSetupFineGain.TabIndex = 15;
@@ -777,6 +768,7 @@
             // 
             this.tbSetupULD.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSetupULD.Location = new System.Drawing.Point(120, 207);
+            this.tbSetupULD.MaxLength = 5;
             this.tbSetupULD.Name = "tbSetupULD";
             this.tbSetupULD.Size = new System.Drawing.Size(189, 21);
             this.tbSetupULD.TabIndex = 23;
@@ -785,6 +777,7 @@
             // 
             this.tbSetupLLD.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSetupLLD.Location = new System.Drawing.Point(120, 179);
+            this.tbSetupLLD.MaxLength = 5;
             this.tbSetupLLD.Name = "tbSetupLLD";
             this.tbSetupLLD.Size = new System.Drawing.Size(189, 21);
             this.tbSetupLLD.TabIndex = 22;
@@ -857,6 +850,7 @@
             // 
             this.tbSetupLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSetupLivetime.Location = new System.Drawing.Point(510, 39);
+            this.tbSetupLivetime.MaxLength = 5;
             this.tbSetupLivetime.Name = "tbSetupLivetime";
             this.tbSetupLivetime.Size = new System.Drawing.Size(189, 21);
             this.tbSetupLivetime.TabIndex = 24;
@@ -883,18 +877,6 @@
             this.btnSetupStart.Text = "Start";
             this.btnSetupStart.UseVisualStyleBackColor = true;
             this.btnSetupStart.Click += new System.EventHandler(this.btnSetupStart_Click);
-            // 
-            // lblSetupDetector
-            // 
-            this.lblSetupDetector.AutoSize = true;
-            this.lblSetupDetector.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSetupDetector.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSetupDetector.Location = new System.Drawing.Point(120, 36);
-            this.lblSetupDetector.Name = "lblSetupDetector";
-            this.lblSetupDetector.Size = new System.Drawing.Size(189, 28);
-            this.lblSetupDetector.TabIndex = 39;
-            this.lblSetupDetector.Text = "<lblSetupDetector>";
-            this.lblSetupDetector.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblSetupDoserate
             // 
@@ -929,7 +911,6 @@
             // 
             // btnMenuSetup
             // 
-            this.btnMenuSetup.Enabled = false;
             this.btnMenuSetup.FlatAppearance.BorderSize = 0;
             this.btnMenuSetup.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnMenuSetup.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
@@ -1004,6 +985,7 @@
             this.lbSession.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lbSession.ContextMenuStrip = this.contextMenuSession;
             this.lbSession.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbSession.FormattingEnabled = true;
             this.lbSession.ItemHeight = 15;
             this.lbSession.Location = new System.Drawing.Point(0, 0);
@@ -1102,160 +1084,160 @@
             // lblLatitudeStart
             // 
             this.lblLatitudeStart.AutoSize = true;
-            this.lblLatitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLatitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLatitudeStart.Location = new System.Drawing.Point(3, 20);
             this.lblLatitudeStart.Name = "lblLatitudeStart";
-            this.lblLatitudeStart.Size = new System.Drawing.Size(105, 15);
+            this.lblLatitudeStart.Size = new System.Drawing.Size(94, 13);
             this.lblLatitudeStart.TabIndex = 0;
             this.lblLatitudeStart.Text = "<LatitudeStart>";
             // 
             // lblLongitudeStart
             // 
             this.lblLongitudeStart.AutoSize = true;
-            this.lblLongitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLongitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLongitudeStart.Location = new System.Drawing.Point(229, 20);
             this.lblLongitudeStart.Name = "lblLongitudeStart";
-            this.lblLongitudeStart.Size = new System.Drawing.Size(117, 15);
+            this.lblLongitudeStart.Size = new System.Drawing.Size(104, 13);
             this.lblLongitudeStart.TabIndex = 1;
             this.lblLongitudeStart.Text = "<LongitudeStart>";
             // 
             // lblRealtime
             // 
             this.lblRealtime.AutoSize = true;
-            this.lblRealtime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRealtime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRealtime.Location = new System.Drawing.Point(3, 0);
             this.lblRealtime.Name = "lblRealtime";
-            this.lblRealtime.Size = new System.Drawing.Size(81, 15);
+            this.lblRealtime.Size = new System.Drawing.Size(70, 13);
             this.lblRealtime.TabIndex = 2;
             this.lblRealtime.Text = "<Realtime>";
             // 
             // lblLivetime
             // 
             this.lblLivetime.AutoSize = true;
-            this.lblLivetime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLivetime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLivetime.Location = new System.Drawing.Point(229, 0);
             this.lblLivetime.Name = "lblLivetime";
-            this.lblLivetime.Size = new System.Drawing.Size(77, 15);
+            this.lblLivetime.Size = new System.Drawing.Size(68, 13);
             this.lblLivetime.TabIndex = 3;
             this.lblLivetime.Text = "<Livetime>";
             // 
             // lblSession
             // 
             this.lblSession.AutoSize = true;
-            this.lblSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSession.Location = new System.Drawing.Point(455, 0);
             this.lblSession.Name = "lblSession";
-            this.lblSession.Size = new System.Drawing.Size(74, 15);
+            this.lblSession.Size = new System.Drawing.Size(65, 13);
             this.lblSession.TabIndex = 4;
             this.lblSession.Text = "<Session>";
             // 
             // lblIndex
             // 
             this.lblIndex.AutoSize = true;
-            this.lblIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblIndex.Location = new System.Drawing.Point(681, 0);
             this.lblIndex.Name = "lblIndex";
-            this.lblIndex.Size = new System.Drawing.Size(58, 15);
+            this.lblIndex.Size = new System.Drawing.Size(52, 13);
             this.lblIndex.TabIndex = 5;
             this.lblIndex.Text = "<Index>";
             // 
             // lblAltitudeStart
             // 
             this.lblAltitudeStart.AutoSize = true;
-            this.lblAltitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAltitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAltitudeStart.Location = new System.Drawing.Point(455, 20);
             this.lblAltitudeStart.Name = "lblAltitudeStart";
-            this.lblAltitudeStart.Size = new System.Drawing.Size(101, 15);
+            this.lblAltitudeStart.Size = new System.Drawing.Size(91, 13);
             this.lblAltitudeStart.TabIndex = 9;
             this.lblAltitudeStart.Text = "<AltitudeStart>";
             // 
             // lblMaxCount
             // 
             this.lblMaxCount.AutoSize = true;
-            this.lblMaxCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaxCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaxCount.Location = new System.Drawing.Point(3, 60);
             this.lblMaxCount.Name = "lblMaxCount";
-            this.lblMaxCount.Size = new System.Drawing.Size(87, 15);
+            this.lblMaxCount.Size = new System.Drawing.Size(77, 13);
             this.lblMaxCount.TabIndex = 6;
             this.lblMaxCount.Text = "<MaxCount>";
             // 
             // lblMinCount
             // 
             this.lblMinCount.AutoSize = true;
-            this.lblMinCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMinCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMinCount.Location = new System.Drawing.Point(229, 60);
             this.lblMinCount.Name = "lblMinCount";
-            this.lblMinCount.Size = new System.Drawing.Size(84, 15);
+            this.lblMinCount.Size = new System.Drawing.Size(74, 13);
             this.lblMinCount.TabIndex = 7;
             this.lblMinCount.Text = "<MinCount>";
             // 
             // lblTotalCount
             // 
             this.lblTotalCount.AutoSize = true;
-            this.lblTotalCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalCount.Location = new System.Drawing.Point(455, 60);
             this.lblTotalCount.Name = "lblTotalCount";
-            this.lblTotalCount.Size = new System.Drawing.Size(92, 15);
+            this.lblTotalCount.Size = new System.Drawing.Size(83, 13);
             this.lblTotalCount.TabIndex = 8;
             this.lblTotalCount.Text = "<TotalCount>";
             // 
             // lblGpsTimeStart
             // 
             this.lblGpsTimeStart.AutoSize = true;
-            this.lblGpsTimeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGpsTimeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGpsTimeStart.Location = new System.Drawing.Point(681, 20);
             this.lblGpsTimeStart.Name = "lblGpsTimeStart";
-            this.lblGpsTimeStart.Size = new System.Drawing.Size(110, 15);
+            this.lblGpsTimeStart.Size = new System.Drawing.Size(97, 13);
             this.lblGpsTimeStart.TabIndex = 10;
             this.lblGpsTimeStart.Text = "<GpsTimeStart>";
             // 
             // lblLatitudeEnd
             // 
             this.lblLatitudeEnd.AutoSize = true;
-            this.lblLatitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLatitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLatitudeEnd.Location = new System.Drawing.Point(3, 40);
             this.lblLatitudeEnd.Name = "lblLatitudeEnd";
-            this.lblLatitudeEnd.Size = new System.Drawing.Size(100, 15);
+            this.lblLatitudeEnd.Size = new System.Drawing.Size(89, 13);
             this.lblLatitudeEnd.TabIndex = 11;
             this.lblLatitudeEnd.Text = "<LatitudeEnd>";
             // 
             // lblLongitudeEnd
             // 
             this.lblLongitudeEnd.AutoSize = true;
-            this.lblLongitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLongitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLongitudeEnd.Location = new System.Drawing.Point(229, 40);
             this.lblLongitudeEnd.Name = "lblLongitudeEnd";
-            this.lblLongitudeEnd.Size = new System.Drawing.Size(112, 15);
+            this.lblLongitudeEnd.Size = new System.Drawing.Size(99, 13);
             this.lblLongitudeEnd.TabIndex = 12;
             this.lblLongitudeEnd.Text = "<LongitudeEnd>";
             // 
             // lblAltitudeEnd
             // 
             this.lblAltitudeEnd.AutoSize = true;
-            this.lblAltitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAltitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAltitudeEnd.Location = new System.Drawing.Point(455, 40);
             this.lblAltitudeEnd.Name = "lblAltitudeEnd";
-            this.lblAltitudeEnd.Size = new System.Drawing.Size(96, 15);
+            this.lblAltitudeEnd.Size = new System.Drawing.Size(86, 13);
             this.lblAltitudeEnd.TabIndex = 13;
             this.lblAltitudeEnd.Text = "<AltitudeEnd>";
             // 
             // lblGpsTimeEnd
             // 
             this.lblGpsTimeEnd.AutoSize = true;
-            this.lblGpsTimeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGpsTimeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGpsTimeEnd.Location = new System.Drawing.Point(681, 40);
             this.lblGpsTimeEnd.Name = "lblGpsTimeEnd";
-            this.lblGpsTimeEnd.Size = new System.Drawing.Size(105, 15);
+            this.lblGpsTimeEnd.Size = new System.Drawing.Size(92, 13);
             this.lblGpsTimeEnd.TabIndex = 14;
             this.lblGpsTimeEnd.Text = "<GpsTimeEnd>";
             // 
             // lblDoserate
             // 
             this.lblDoserate.AutoSize = true;
-            this.lblDoserate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDoserate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDoserate.Location = new System.Drawing.Point(681, 60);
             this.lblDoserate.Name = "lblDoserate";
-            this.lblDoserate.Size = new System.Drawing.Size(81, 15);
+            this.lblDoserate.Size = new System.Drawing.Size(72, 13);
             this.lblDoserate.TabIndex = 15;
             this.lblDoserate.Text = "<Doserate>";
             // 
@@ -1274,9 +1256,11 @@
             this.tblSession.Controls.Add(this.tbSpecCount, 1, 0);
             this.tblSession.Controls.Add(this.tbSpecLivetime, 2, 0);
             this.tblSession.Controls.Add(this.tbSpecDelay, 3, 0);
-            this.tblSession.Controls.Add(this.btnSendSession, 4, 0);
-            this.tblSession.Controls.Add(this.btnStopSession, 5, 0);
             this.tblSession.Controls.Add(this.btnSendClose, 7, 1);
+            this.tblSession.Controls.Add(this.tbSessionComment, 1, 1);
+            this.tblSession.Controls.Add(this.label12, 0, 1);
+            this.tblSession.Controls.Add(this.btnSendSession, 4, 1);
+            this.tblSession.Controls.Add(this.btnStopSession, 5, 1);
             this.tblSession.Dock = System.Windows.Forms.DockStyle.Top;
             this.tblSession.Location = new System.Drawing.Point(3, 3);
             this.tblSession.Name = "tblSession";
@@ -1291,17 +1275,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(231, 15);
+            this.label1.Size = new System.Drawing.Size(237, 30);
             this.label1.TabIndex = 0;
             this.label1.Text = "Spectrum count, livetime and delay";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbSpecCount
             // 
             this.tbSpecCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSpecCount.Location = new System.Drawing.Point(246, 3);
+            this.tbSpecCount.MaxLength = 5;
             this.tbSpecCount.Name = "tbSpecCount";
             this.tbSpecCount.Size = new System.Drawing.Size(115, 21);
             this.tbSpecCount.TabIndex = 18;
@@ -1310,6 +1297,7 @@
             // 
             this.tbSpecLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSpecLivetime.Location = new System.Drawing.Point(367, 3);
+            this.tbSpecLivetime.MaxLength = 5;
             this.tbSpecLivetime.Name = "tbSpecLivetime";
             this.tbSpecLivetime.Size = new System.Drawing.Size(115, 21);
             this.tbSpecLivetime.TabIndex = 19;
@@ -1318,6 +1306,7 @@
             // 
             this.tbSpecDelay.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSpecDelay.Location = new System.Drawing.Point(488, 3);
+            this.tbSpecDelay.MaxLength = 5;
             this.tbSpecDelay.Name = "tbSpecDelay";
             this.tbSpecDelay.Size = new System.Drawing.Size(115, 21);
             this.tbSpecDelay.TabIndex = 20;
@@ -1325,7 +1314,7 @@
             // btnSendSession
             // 
             this.btnSendSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSendSession.Location = new System.Drawing.Point(609, 3);
+            this.btnSendSession.Location = new System.Drawing.Point(609, 33);
             this.btnSendSession.Name = "btnSendSession";
             this.btnSendSession.Size = new System.Drawing.Size(115, 24);
             this.btnSendSession.TabIndex = 17;
@@ -1336,7 +1325,7 @@
             // btnStopSession
             // 
             this.btnStopSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStopSession.Location = new System.Drawing.Point(730, 3);
+            this.btnStopSession.Location = new System.Drawing.Point(730, 33);
             this.btnStopSession.Name = "btnStopSession";
             this.btnStopSession.Size = new System.Drawing.Size(115, 24);
             this.btnStopSession.TabIndex = 21;
@@ -1354,6 +1343,39 @@
             this.btnSendClose.Text = "Send close";
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
+            // 
+            // tbSessionComment
+            // 
+            this.tblSession.SetColumnSpan(this.tbSessionComment, 3);
+            this.tbSessionComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSessionComment.Location = new System.Drawing.Point(246, 33);
+            this.tbSessionComment.MaxLength = 120;
+            this.tbSessionComment.Name = "tbSessionComment";
+            this.tbSessionComment.Size = new System.Drawing.Size(357, 21);
+            this.tbSessionComment.TabIndex = 22;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(3, 30);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(237, 30);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "Session comment";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cboxSetupDetector
+            // 
+            this.cboxSetupDetector.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSetupDetector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSetupDetector.FormattingEnabled = true;
+            this.cboxSetupDetector.Location = new System.Drawing.Point(120, 39);
+            this.cboxSetupDetector.Name = "cboxSetupDetector";
+            this.cboxSetupDetector.Size = new System.Drawing.Size(189, 23);
+            this.cboxSetupDetector.TabIndex = 39;
+            this.cboxSetupDetector.SelectedIndexChanged += new System.EventHandler(this.cboxSetupDetector_SelectedIndexChanged);
             // 
             // FormMain
             // 
@@ -1501,17 +1523,18 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ToolStripButton btnShowRegressionPoints;
-        private System.Windows.Forms.ToolStripDropDownButton btnSelectDetector;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripLabel lblDetector;
         private System.Windows.Forms.ToolStripSeparator separatorDetector;
-        private System.Windows.Forms.Label lblSetupDetector;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblSessionChannel;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lblSetupChannel;
         private System.Windows.Forms.ContextMenuStrip contextMenuSession;
         private System.Windows.Forms.ToolStripMenuItem menuItemSessionUnselect;
+        private System.Windows.Forms.TextBox tbSessionComment;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox cboxSetupDetector;
     }
 }
 

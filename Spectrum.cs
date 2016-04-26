@@ -111,9 +111,9 @@ namespace crash
             return SessionName + " - " + SessionIndex.ToString();
         }
 
-        public bool CalculateDoserate(Detector det, dynamic GEFactor)
+        public bool CalculateDoserate(Detector det, dynamic GEFactor = null)
         {
-            if (det == null)
+            if (det == null || GEFactor == null)
                 return false;            
 
             if ((det.RegPoint1X == 0f && det.RegPoint1Y == 0f) || (det.RegPoint2X == 0f && det.RegPoint2Y == 0f))

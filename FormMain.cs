@@ -242,7 +242,7 @@ namespace crash
                         Utils.Log.Add("New session created: " + sessionName);
 
                         string geScript = File.ReadAllText(selectedDetectorType.GEScriptPath);
-                        session = new Session(settings.SessionRootDirectory, sessionName, selectedDetector, geScript);                        
+                        session = new Session(settings.SessionRootDirectory, sessionName, tbSessionComment.Text, selectedDetector, geScript);                        
                         
                         string sessionSettingsFile = session.SessionPath + Path.DirectorySeparatorChar + "session.json";
                         string jSessionInfo = JsonConvert.SerializeObject(session.Info, Newtonsoft.Json.Formatting.Indented);
@@ -667,8 +667,8 @@ namespace crash
                 ShowSpectrum(s.SessionName + " - " + s.SessionIndex.ToString(), s.Channels.ToArray(), s.MaxCount, s.MinCount);
                 lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
                 lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
-                lblSession.Text = "Session name: " + s.SessionName;
-                lblIndex.Text = "Session index: " + s.SessionIndex;
+                lblSession.Text = "Name: " + s.SessionName;
+                lblIndex.Text = "Index: " + s.SessionIndex;
                 lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart;
                 lblAltitudeStart.Text = "Alt. start: " + s.AltitudeStart;
@@ -682,7 +682,7 @@ namespace crash
                 lblTotalCount.Text = "Total count: " + s.TotalCount;
                 if(s.Doserate == 0.0)
                     lblDoserate.Text = "";
-                else lblDoserate.Text = "Doserate: " + s.Doserate;
+                else lblDoserate.Text = "Doserate: " + String.Format("{0:###0.0##}", s.Doserate);
 
                 formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
                 formMap.SetSelectedSessionIndex(s.SessionIndex);
@@ -756,10 +756,9 @@ namespace crash
         }        
 
         private void PopulateDetectors()
-        {                        
-            btnSelectDetector.DropDownItems.Clear();
-            foreach (Detector d in settings.Detectors)            
-                btnSelectDetector.DropDownItems.Add(d.Serialnumber);            
+        {
+            cboxSetupDetector.Items.Clear();      
+            cboxSetupDetector.Items.AddRange(settings.Detectors.ToArray());            
         }        
 
         private void menuItemLoadSession_Click(object sender, EventArgs e)
@@ -771,7 +770,8 @@ namespace crash
             dialog.ShowNewFolderButton = false;
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                session.Load(dialog.SelectedPath);                
+                session.Load(dialog.SelectedPath);
+                tbSessionComment.Text = session.Info.Comment;
 
                 formWaterfallLive.SetSession(session);
                 formROILive.SetSession(session);
@@ -848,20 +848,6 @@ namespace crash
             form.Show();
         }        
 
-        private void btnSelectDetector_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            selectedDetector = settings.Detectors.Find(d => d.Serialnumber == e.ClickedItem.Text);
-            selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
-
-            lblDetector.Text = "Detector " + selectedDetector.Serialnumber;
-            lblSetupDetector.Text = selectedDetector.Serialnumber;
-            separatorDetector.Visible = true;
-
-            btnMenuSetup.Enabled = true;
-            btnMenuSession.Enabled = true;
-            btnShowRegressionPoints.Enabled = true;
-        }
-
         private void graphSetup_MouseMove(object sender, MouseEventArgs e)
         {
             // Get point from graph
@@ -891,6 +877,32 @@ namespace crash
         private void menuItemSessionUnselect_Click(object sender, EventArgs e)
         {
             lbSession.ClearSelected();            
+        }
+
+        private void cboxSetupDetector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboxSetupDetector.SelectedItem == null)
+                return;
+
+            selectedDetector = (Detector)cboxSetupDetector.SelectedItem;
+            selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
+
+            lblDetector.Text = "Detector " + selectedDetector.Serialnumber;
+            separatorDetector.Visible = true;
+            
+            btnMenuSession.Enabled = true;
+            btnShowRegressionPoints.Enabled = true;
+
+            cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
+            tbSetupVoltage.Text = selectedDetector.CurrentHV.ToString();
+            tbSetupCoarseGain.Text = selectedDetector.CurrentCoarseGain.ToString();
+            tbSetupFineGain.Text = selectedDetector.CurrentFineGain.ToString();
+            tbSetupLLD.Text = selectedDetector.CurrentLLD.ToString();
+            tbSetupULD.Text = selectedDetector.CurrentULD.ToString();
+            cboxSetupChannels.Items.Clear();
+            for(int i = 256; i <= selectedDetectorType.MaxNumChannels; i = i * 2)            
+                cboxSetupChannels.Items.Add(i.ToString());
+            cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
         }
     }    
 }

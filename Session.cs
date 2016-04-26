@@ -43,9 +43,9 @@ namespace crash
             Spectrums = new List<Spectrum>();
         }
 
-        public Session(string sessionPath, string name, Detector det, string geScript)
+        public Session(string sessionPath, string name, string comment, Detector det, string geScript)
         {
-            Info = new SessionInfo(name, det, geScript);
+            Info = new SessionInfo(name, comment, det, geScript);
 
             dynamic scope = Utils.PyEngine.CreateScope();
             Utils.PyEngine.Execute(Info.GEScript, scope);
@@ -163,9 +163,10 @@ namespace crash
         {            
         }
 
-        public SessionInfo(string name, Detector det, string geScript)
+        public SessionInfo(string name, string comment, Detector det, string geScript)
         {
-            Name = name;            
+            Name = name;
+            Comment = comment;
             Detector = det;
             GEScript = geScript;
         }
