@@ -95,8 +95,7 @@ namespace crash
             tabs.SelectedTab = pageMenu;
 
             lblConnectionStatus.ForeColor = Color.Red;
-            lblConnectionStatus.Text = "Not connected";
-            lblSetupDoserate.Text = "";
+            lblConnectionStatus.Text = "Not connected";            
             lblSetupChannel.Text = "";
             lblSessionChannel.Text = "";
             lblDetector.Text = "";
@@ -316,9 +315,7 @@ namespace crash
 
                         graphSetup.RestoreScale(pane);
                         graphSetup.AxisChange();
-                        graphSetup.Refresh();
-
-                        lblSetupDoserate.Text = spec.Doserate.ToString();
+                        graphSetup.Refresh();                        
                     }
                     else
                     {         
