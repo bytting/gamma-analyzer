@@ -97,7 +97,7 @@ namespace crash
                 if (!rd.Active)
                     continue;                                
 
-                float s = (pane.Height - 40) / session.GetMaxCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
+                float s = (bmpPane.Height - 40) / session.GetMaxCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
 
                 if(scaling == -1f)
                 {
@@ -121,7 +121,7 @@ namespace crash
                 int x = 0;
                 int last_x = 0, last_y = pane.Height - 40;
 
-                for (int i = firstSpectrum; i < firstSpectrum + pane.Width; i++)
+                for (int i = firstSpectrum; i < firstSpectrum + bmpPane.Width; i++)
                 {
                     if (i >= (int)session.Spectrums.Count)
                         break;
@@ -130,7 +130,7 @@ namespace crash
                     float weightedCount = s.GetCountInROI((int)rd.StartChannel, (int)rd.EndChannel) * scaling;
                     int y = pane.Height - 40 - (int)weightedCount;
 
-                    if (x >= 0 && x < pane.Width && y >= 0 && y < pane.Height)
+                    if (x >= 0 && x < bmpPane.Width && y >= 0 && y < bmpPane.Height)
                     {
                         g.DrawLine(pen, last_x, last_y, x, y);
                     }                                        
@@ -150,7 +150,7 @@ namespace crash
                 if(idx == 0 || (idx % 50) == 0)                
                 {
                     g.DrawLine(penMarker, new Point(j, 0), new Point(j, bmpPane.Height - 30));                                    
-                    g.DrawString(idx.ToString(), font, new SolidBrush(Color.FromArgb(255, 125, 125, 125)), j, pane.Height - 20);
+                    g.DrawString(idx.ToString(), font, new SolidBrush(Color.FromArgb(255, 125, 125, 125)), j, bmpPane.Height - 20);
                 }
 
                 if(idx == SelectedSessionIndex1)                
@@ -173,10 +173,8 @@ namespace crash
 
         private void pane_Resize(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Minimized)
-                return;
-            if (pane.Width < 1 || pane.Height < 1)
-                return;
+            if (pane.Width < 1 || pane.Height < 1 || WindowState == FormWindowState.Minimized)
+                return;            
 
             bmpPane = new Bitmap(pane.Width, pane.Height);
             firstSpectrum = 0;
@@ -222,6 +220,7 @@ namespace crash
                 return;
 
             firstSpectrum = 0;
+
             UpdatePane();
         }
 
@@ -230,9 +229,10 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            firstSpectrum = (int)session.NumChannels - pane.Width;
+            firstSpectrum = (int)session.Spectrums.Count - bmpPane.Width;
             if (firstSpectrum < 0)
                 firstSpectrum = 0;
+
             UpdatePane();
         }
 
@@ -241,9 +241,10 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            firstSpectrum -= pane.Width;
-            if (firstSpectrum < 1)
-                firstSpectrum = 1;
+            firstSpectrum -= bmpPane.Width;
+            if (firstSpectrum < 0)
+                firstSpectrum = 0;
+
             UpdatePane();
         }
 
@@ -252,12 +253,16 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            int max_channel = (int)session.NumChannels - pane.Width;
-            firstSpectrum += pane.Width;
-            if (firstSpectrum > max_channel)
-                firstSpectrum = max_channel;
+            int maxSpectrum = (int)session.Spectrums.Count - bmpPane.Width;
+            if (maxSpectrum < 0)
+                maxSpectrum = 0;
+
+            firstSpectrum += bmpPane.Width;
+            if (firstSpectrum > maxSpectrum)
+                firstSpectrum = maxSpectrum;
             if (firstSpectrum < 0)
                 firstSpectrum = 0;
+
             UpdatePane();
         }
 
