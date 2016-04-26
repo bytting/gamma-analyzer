@@ -1,5 +1,3 @@
 Check that session and background has compatible num_channels
 
 Make sure session is allocated if spectrums ticks in after connect (after a disconnect during a session)
-
-Store the actual GScript in the detector (not the path) ?
