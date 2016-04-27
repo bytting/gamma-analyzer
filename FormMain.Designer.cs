@@ -136,6 +136,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
+            this.btnSessionSaveComment = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -961,6 +962,7 @@
             // 
             this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer2.Location = new System.Drawing.Point(3, 76);
             this.splitContainer2.Name = "splitContainer2";
             // 
@@ -1083,162 +1085,194 @@
             // lblLatitudeStart
             // 
             this.lblLatitudeStart.AutoSize = true;
+            this.lblLatitudeStart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLatitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLatitudeStart.Location = new System.Drawing.Point(3, 20);
             this.lblLatitudeStart.Name = "lblLatitudeStart";
-            this.lblLatitudeStart.Size = new System.Drawing.Size(94, 13);
+            this.lblLatitudeStart.Size = new System.Drawing.Size(220, 20);
             this.lblLatitudeStart.TabIndex = 0;
             this.lblLatitudeStart.Text = "<LatitudeStart>";
+            this.lblLatitudeStart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblLongitudeStart
             // 
             this.lblLongitudeStart.AutoSize = true;
+            this.lblLongitudeStart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLongitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLongitudeStart.Location = new System.Drawing.Point(229, 20);
             this.lblLongitudeStart.Name = "lblLongitudeStart";
-            this.lblLongitudeStart.Size = new System.Drawing.Size(104, 13);
+            this.lblLongitudeStart.Size = new System.Drawing.Size(220, 20);
             this.lblLongitudeStart.TabIndex = 1;
             this.lblLongitudeStart.Text = "<LongitudeStart>";
+            this.lblLongitudeStart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblRealtime
             // 
             this.lblRealtime.AutoSize = true;
+            this.lblRealtime.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblRealtime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRealtime.Location = new System.Drawing.Point(3, 0);
             this.lblRealtime.Name = "lblRealtime";
-            this.lblRealtime.Size = new System.Drawing.Size(70, 13);
+            this.lblRealtime.Size = new System.Drawing.Size(220, 20);
             this.lblRealtime.TabIndex = 2;
             this.lblRealtime.Text = "<Realtime>";
+            this.lblRealtime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblLivetime
             // 
             this.lblLivetime.AutoSize = true;
+            this.lblLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLivetime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLivetime.Location = new System.Drawing.Point(229, 0);
             this.lblLivetime.Name = "lblLivetime";
-            this.lblLivetime.Size = new System.Drawing.Size(68, 13);
+            this.lblLivetime.Size = new System.Drawing.Size(220, 20);
             this.lblLivetime.TabIndex = 3;
             this.lblLivetime.Text = "<Livetime>";
+            this.lblLivetime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblSession
             // 
             this.lblSession.AutoSize = true;
+            this.lblSession.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSession.Location = new System.Drawing.Point(455, 0);
             this.lblSession.Name = "lblSession";
-            this.lblSession.Size = new System.Drawing.Size(65, 13);
+            this.lblSession.Size = new System.Drawing.Size(220, 20);
             this.lblSession.TabIndex = 4;
             this.lblSession.Text = "<Session>";
+            this.lblSession.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblIndex
             // 
             this.lblIndex.AutoSize = true;
+            this.lblIndex.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblIndex.Location = new System.Drawing.Point(681, 0);
             this.lblIndex.Name = "lblIndex";
-            this.lblIndex.Size = new System.Drawing.Size(52, 13);
+            this.lblIndex.Size = new System.Drawing.Size(220, 20);
             this.lblIndex.TabIndex = 5;
             this.lblIndex.Text = "<Index>";
+            this.lblIndex.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblAltitudeStart
             // 
             this.lblAltitudeStart.AutoSize = true;
+            this.lblAltitudeStart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblAltitudeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAltitudeStart.Location = new System.Drawing.Point(455, 20);
             this.lblAltitudeStart.Name = "lblAltitudeStart";
-            this.lblAltitudeStart.Size = new System.Drawing.Size(91, 13);
+            this.lblAltitudeStart.Size = new System.Drawing.Size(220, 20);
             this.lblAltitudeStart.TabIndex = 9;
             this.lblAltitudeStart.Text = "<AltitudeStart>";
+            this.lblAltitudeStart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblMaxCount
             // 
             this.lblMaxCount.AutoSize = true;
+            this.lblMaxCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblMaxCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaxCount.Location = new System.Drawing.Point(3, 60);
             this.lblMaxCount.Name = "lblMaxCount";
-            this.lblMaxCount.Size = new System.Drawing.Size(77, 13);
+            this.lblMaxCount.Size = new System.Drawing.Size(220, 20);
             this.lblMaxCount.TabIndex = 6;
             this.lblMaxCount.Text = "<MaxCount>";
+            this.lblMaxCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblMinCount
             // 
             this.lblMinCount.AutoSize = true;
+            this.lblMinCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblMinCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMinCount.Location = new System.Drawing.Point(229, 60);
             this.lblMinCount.Name = "lblMinCount";
-            this.lblMinCount.Size = new System.Drawing.Size(74, 13);
+            this.lblMinCount.Size = new System.Drawing.Size(220, 20);
             this.lblMinCount.TabIndex = 7;
             this.lblMinCount.Text = "<MinCount>";
+            this.lblMinCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblTotalCount
             // 
             this.lblTotalCount.AutoSize = true;
+            this.lblTotalCount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTotalCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTotalCount.Location = new System.Drawing.Point(455, 60);
             this.lblTotalCount.Name = "lblTotalCount";
-            this.lblTotalCount.Size = new System.Drawing.Size(83, 13);
+            this.lblTotalCount.Size = new System.Drawing.Size(220, 20);
             this.lblTotalCount.TabIndex = 8;
             this.lblTotalCount.Text = "<TotalCount>";
+            this.lblTotalCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblGpsTimeStart
             // 
             this.lblGpsTimeStart.AutoSize = true;
+            this.lblGpsTimeStart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblGpsTimeStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGpsTimeStart.Location = new System.Drawing.Point(681, 20);
             this.lblGpsTimeStart.Name = "lblGpsTimeStart";
-            this.lblGpsTimeStart.Size = new System.Drawing.Size(97, 13);
+            this.lblGpsTimeStart.Size = new System.Drawing.Size(220, 20);
             this.lblGpsTimeStart.TabIndex = 10;
             this.lblGpsTimeStart.Text = "<GpsTimeStart>";
+            this.lblGpsTimeStart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblLatitudeEnd
             // 
             this.lblLatitudeEnd.AutoSize = true;
+            this.lblLatitudeEnd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLatitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLatitudeEnd.Location = new System.Drawing.Point(3, 40);
             this.lblLatitudeEnd.Name = "lblLatitudeEnd";
-            this.lblLatitudeEnd.Size = new System.Drawing.Size(89, 13);
+            this.lblLatitudeEnd.Size = new System.Drawing.Size(220, 20);
             this.lblLatitudeEnd.TabIndex = 11;
             this.lblLatitudeEnd.Text = "<LatitudeEnd>";
+            this.lblLatitudeEnd.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblLongitudeEnd
             // 
             this.lblLongitudeEnd.AutoSize = true;
+            this.lblLongitudeEnd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLongitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLongitudeEnd.Location = new System.Drawing.Point(229, 40);
             this.lblLongitudeEnd.Name = "lblLongitudeEnd";
-            this.lblLongitudeEnd.Size = new System.Drawing.Size(99, 13);
+            this.lblLongitudeEnd.Size = new System.Drawing.Size(220, 20);
             this.lblLongitudeEnd.TabIndex = 12;
             this.lblLongitudeEnd.Text = "<LongitudeEnd>";
+            this.lblLongitudeEnd.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblAltitudeEnd
             // 
             this.lblAltitudeEnd.AutoSize = true;
+            this.lblAltitudeEnd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblAltitudeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAltitudeEnd.Location = new System.Drawing.Point(455, 40);
             this.lblAltitudeEnd.Name = "lblAltitudeEnd";
-            this.lblAltitudeEnd.Size = new System.Drawing.Size(86, 13);
+            this.lblAltitudeEnd.Size = new System.Drawing.Size(220, 20);
             this.lblAltitudeEnd.TabIndex = 13;
             this.lblAltitudeEnd.Text = "<AltitudeEnd>";
+            this.lblAltitudeEnd.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblGpsTimeEnd
             // 
             this.lblGpsTimeEnd.AutoSize = true;
+            this.lblGpsTimeEnd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblGpsTimeEnd.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGpsTimeEnd.Location = new System.Drawing.Point(681, 40);
             this.lblGpsTimeEnd.Name = "lblGpsTimeEnd";
-            this.lblGpsTimeEnd.Size = new System.Drawing.Size(92, 13);
+            this.lblGpsTimeEnd.Size = new System.Drawing.Size(220, 20);
             this.lblGpsTimeEnd.TabIndex = 14;
             this.lblGpsTimeEnd.Text = "<GpsTimeEnd>";
+            this.lblGpsTimeEnd.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblDoserate
             // 
             this.lblDoserate.AutoSize = true;
+            this.lblDoserate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDoserate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDoserate.Location = new System.Drawing.Point(681, 60);
             this.lblDoserate.Name = "lblDoserate";
-            this.lblDoserate.Size = new System.Drawing.Size(72, 13);
+            this.lblDoserate.Size = new System.Drawing.Size(220, 20);
             this.lblDoserate.TabIndex = 15;
             this.lblDoserate.Text = "<Doserate>";
+            this.lblDoserate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tblSession
             // 
@@ -1258,8 +1292,9 @@
             this.tblSession.Controls.Add(this.btnSendClose, 7, 1);
             this.tblSession.Controls.Add(this.tbSessionComment, 1, 1);
             this.tblSession.Controls.Add(this.label12, 0, 1);
-            this.tblSession.Controls.Add(this.btnSendSession, 4, 1);
-            this.tblSession.Controls.Add(this.btnStopSession, 5, 1);
+            this.tblSession.Controls.Add(this.btnSendSession, 4, 0);
+            this.tblSession.Controls.Add(this.btnStopSession, 5, 0);
+            this.tblSession.Controls.Add(this.btnSessionSaveComment, 4, 1);
             this.tblSession.Dock = System.Windows.Forms.DockStyle.Top;
             this.tblSession.Location = new System.Drawing.Point(3, 3);
             this.tblSession.Name = "tblSession";
@@ -1346,7 +1381,7 @@
             // btnSendSession
             // 
             this.btnSendSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSendSession.Location = new System.Drawing.Point(609, 33);
+            this.btnSendSession.Location = new System.Drawing.Point(609, 3);
             this.btnSendSession.Name = "btnSendSession";
             this.btnSendSession.Size = new System.Drawing.Size(115, 24);
             this.btnSendSession.TabIndex = 17;
@@ -1357,13 +1392,24 @@
             // btnStopSession
             // 
             this.btnStopSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStopSession.Location = new System.Drawing.Point(730, 33);
+            this.btnStopSession.Location = new System.Drawing.Point(730, 3);
             this.btnStopSession.Name = "btnStopSession";
             this.btnStopSession.Size = new System.Drawing.Size(115, 24);
             this.btnStopSession.TabIndex = 21;
             this.btnStopSession.Text = "Stop session";
             this.btnStopSession.UseVisualStyleBackColor = true;
             this.btnStopSession.Click += new System.EventHandler(this.btnStopSession_Click);
+            // 
+            // btnSessionSaveComment
+            // 
+            this.btnSessionSaveComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSessionSaveComment.Location = new System.Drawing.Point(609, 33);
+            this.btnSessionSaveComment.Name = "btnSessionSaveComment";
+            this.btnSessionSaveComment.Size = new System.Drawing.Size(115, 24);
+            this.btnSessionSaveComment.TabIndex = 24;
+            this.btnSessionSaveComment.Text = "Save comment";
+            this.btnSessionSaveComment.UseVisualStyleBackColor = true;
+            this.btnSessionSaveComment.Click += new System.EventHandler(this.btnSessionSaveComment_Click);
             // 
             // FormMain
             // 
@@ -1377,7 +1423,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
-            this.MinimumSize = new System.Drawing.Size(300, 300);
+            this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Crash";
@@ -1522,6 +1568,7 @@
         private System.Windows.Forms.TextBox tbSessionComment;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox cboxSetupDetector;
+        private System.Windows.Forms.Button btnSessionSaveComment;
     }
 }
 

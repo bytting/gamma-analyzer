@@ -248,13 +248,8 @@ namespace crash
                         Utils.Log.Add("New session created: " + sessionName);
 
                         string geScript = File.ReadAllText(selectedDetectorType.GEScriptPath);
-                        session = new Session(settings.SessionRootDirectory, sessionName, tbSessionComment.Text, selectedDetector, geScript);                        
-                        
-                        string sessionSettingsFile = session.SessionPath + Path.DirectorySeparatorChar + "session.json";
-                        string jSessionInfo = JsonConvert.SerializeObject(session.Info, Newtonsoft.Json.Formatting.Indented);
-                        TextWriter writer = new StreamWriter(sessionSettingsFile);
-                        writer.Write(jSessionInfo);
-                        writer.Close();                                                
+                        session = new Session(settings.SessionRootDirectory, sessionName, tbSessionComment.Text, selectedDetector, geScript);
+                        session.SaveInfo();
 
                         formWaterfallLive.SetSession(session, background);
                         formROILive.SetSession(session);
@@ -916,6 +911,17 @@ namespace crash
             for(int i = 256; i <= selectedDetectorType.MaxNumChannels; i = i * 2)            
                 cboxSetupChannels.Items.Add(i.ToString());
             cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
+        }
+
+        private void btnSessionSaveComment_Click(object sender, EventArgs e)
+        {
+            if(session == null || !session.IsLoaded)
+            {
+                MessageBox.Show("Cannot save comment. No session loaded");
+                return;
+            }
+            session.Info.Comment = tbSessionComment.Text;
+            session.SaveInfo();
         }
     }    
 }

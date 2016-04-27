@@ -119,7 +119,16 @@ namespace crash
 
             Spectrums.Sort((a, b) => a.SessionIndex.CompareTo(b.SessionIndex));
             return true;
-        }        
+        }   
+     
+        public void SaveInfo()
+        {
+            string sessionSettingsFile = SessionPath + Path.DirectorySeparatorChar + "session.json";
+            string jSessionInfo = JsonConvert.SerializeObject(Info, Newtonsoft.Json.Formatting.Indented);
+            TextWriter writer = new StreamWriter(sessionSettingsFile);
+            writer.Write(jSessionInfo);
+            writer.Close();  
+        }
 
         public float[] GetAdjustedCounts(float livetime)
         {
