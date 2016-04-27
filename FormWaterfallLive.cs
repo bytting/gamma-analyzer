@@ -32,6 +32,7 @@ namespace crash
     public partial class FormWaterfallLive : Form
     {
         private Session session = null;
+        private Session background = null;
         private Bitmap bmpPane = null;
         private bool colorCeilInitialized = false;
         private List<ROIData> ROIList = null;
@@ -69,9 +70,10 @@ namespace crash
             lblColorCeil.Text = "Color ceiling (min, curr, max): " + tbColorCeil.Minimum + ", " + tbColorCeil.Value + ", " + tbColorCeil.Maximum;                        
         }
 
-        public void SetSession(Session sess)
+        public void SetSession(Session sess, Session bkg)
         {
             session = sess;
+            background = bkg;
         }
 
         public void UpdatePane()
@@ -103,13 +105,17 @@ namespace crash
             float sectorSize = max / 4f;            
             float scale = 255f / sectorSize;
             int y = 0;
-            
+
+            float[] bkgSpec = null;
+            if (btnSubtractBackground.Checked && background != null && !session.IsEmpty)
+                bkgSpec = background.GetAdjustedCounts(session.Spectrums[0].Livetime);                                            
+
             for (int i = session.Spectrums.Count - 1 - topY; i >= 0; i--)
             {
                 if (y >= bmpPane.Height)
                     break;
 
-                Spectrum s = session.Spectrums[i];
+                Spectrum s = session.Spectrums[i];                
                 int w = s.Channels.Count > bmpPane.Width ? bmpPane.Width : s.Channels.Count; // FIXME
                 
                 bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
@@ -118,6 +124,13 @@ namespace crash
                 {            
                     int a = 255, r = 0, g = 0, b = 255;
                     float cps = s.Channels[leftX + x];
+                    if (btnSubtractBackground.Checked && bkgSpec != null)
+                    {
+                        cps -= bkgSpec[leftX + x];
+                        if (cps < 0)
+                            cps = 0;
+                    }                        
+                    
                     int sectorSkip = CalcSectorSkip(cps, sectorSize);
 
                     float adj = (cps - (float)sectorSkip * sectorSize) * scale;
@@ -405,6 +418,11 @@ namespace crash
                 args.StartIndex = args.EndIndex = -1;
                 SetSessionIndexEvent(this, args);
             }
+        }
+
+        private void btnSubtractBackground_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdatePane();
         }
     }
 }

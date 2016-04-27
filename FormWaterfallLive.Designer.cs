@@ -50,6 +50,7 @@
             this.btnDown = new System.Windows.Forms.Button();
             this.btnDownAll = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnSubtractBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.tools.SuspendLayout();
             this.paneMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).BeginInit();
@@ -70,7 +71,8 @@
             // btnShow
             // 
             this.btnShow.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnROI});
+            this.btnROI,
+            this.btnSubtractBackground});
             this.btnShow.Image = global::crash.Properties.Resources.options1_16;
             this.btnShow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnShow.Name = "btnShow";
@@ -83,7 +85,7 @@
             this.btnROI.CheckOnClick = true;
             this.btnROI.CheckState = System.Windows.Forms.CheckState.Checked;
             this.btnROI.Name = "btnROI";
-            this.btnROI.Size = new System.Drawing.Size(152, 22);
+            this.btnROI.Size = new System.Drawing.Size(185, 22);
             this.btnROI.Text = "Show &ROI lines";
             this.btnROI.CheckedChanged += new System.EventHandler(this.btnROI_CheckedChanged);
             // 
@@ -295,6 +297,14 @@
             this.panel3.Size = new System.Drawing.Size(28, 26);
             this.panel3.TabIndex = 5;
             // 
+            // btnSubtractBackground
+            // 
+            this.btnSubtractBackground.CheckOnClick = true;
+            this.btnSubtractBackground.Name = "btnSubtractBackground";
+            this.btnSubtractBackground.Size = new System.Drawing.Size(185, 22);
+            this.btnSubtractBackground.Text = "Subtract &background";
+            this.btnSubtractBackground.CheckedChanged += new System.EventHandler(this.btnSubtractBackground_CheckedChanged);
+            // 
             // FormWaterfallLive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -347,5 +357,6 @@
         private System.Windows.Forms.ToolStripMenuItem btnROI;
         private System.Windows.Forms.ContextMenuStrip paneMenu;
         private System.Windows.Forms.ToolStripMenuItem menuItemUnselect;
+        private System.Windows.Forms.ToolStripMenuItem btnSubtractBackground;
     }
 }

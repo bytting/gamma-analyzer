@@ -256,7 +256,7 @@ namespace crash
                         writer.Write(jSessionInfo);
                         writer.Close();                                                
 
-                        formWaterfallLive.SetSession(session);
+                        formWaterfallLive.SetSession(session, background);
                         formROILive.SetSession(session);
                         formMap.SetSession(session);                        
                     }                        
@@ -780,7 +780,7 @@ namespace crash
                 session.Load(dialog.SelectedPath);
                 tbSessionComment.Text = session.Info.Comment;
 
-                formWaterfallLive.SetSession(session);
+                formWaterfallLive.SetSession(session, background);
                 formROILive.SetSession(session);
                 formMap.SetSession(session);
 
@@ -810,6 +810,12 @@ namespace crash
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 background.Load(dialog.SelectedPath);
+
+                if(background.NumChannels != session.NumChannels)
+                {
+                    background.Clear();
+                    MessageBox.Show("Cannot load a background with different number of channels than the session");
+                }
             }
         }
 
