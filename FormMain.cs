@@ -248,7 +248,7 @@ namespace crash
                         Utils.Log.Add("New session created: " + sessionName);
 
                         string geScript = File.ReadAllText(selectedDetectorType.GEScriptPath);
-                        session = new Session(settings.SessionRootDirectory, sessionName, tbSessionComment.Text, selectedDetector, geScript);
+                        session = new Session(settings.SessionRootDirectory, sessionName, selectedDetector, geScript);
                         session.SaveInfo();
 
                         formWaterfallLive.SetSession(session, background);
@@ -772,8 +772,7 @@ namespace crash
             dialog.ShowNewFolderButton = false;
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                session.Load(dialog.SelectedPath);
-                tbSessionComment.Text = session.Info.Comment;
+                session.Load(dialog.SelectedPath);                
 
                 formWaterfallLive.SetSession(session, background);
                 formROILive.SetSession(session);
@@ -913,15 +912,29 @@ namespace crash
             cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
         }
 
-        private void btnSessionSaveComment_Click(object sender, EventArgs e)
+        private void menuItemSessionInfo_Click(object sender, EventArgs e)
         {
             if(session == null || !session.IsLoaded)
             {
-                MessageBox.Show("Cannot save comment. No session loaded");
+                MessageBox.Show("Can not open session info. No session loaded");
                 return;
             }
-            session.Info.Comment = tbSessionComment.Text;
-            session.SaveInfo();
+
+            FormSessionInfo form = new FormSessionInfo(session, "Session Info");
+            form.ShowDialog();
+
+        }
+
+        private void menuItemBackgroundInfo_Click(object sender, EventArgs e)
+        {
+            if (background == null || !background.IsLoaded)
+            {
+                MessageBox.Show("Can not open background info. No background loaded");
+                return;
+            }
+
+            FormSessionInfo form = new FormSessionInfo(background, "Background Info");
+            form.ShowDialog();
         }
     }    
 }

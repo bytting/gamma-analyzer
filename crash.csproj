@@ -179,6 +179,12 @@
     <Compile Include="FormRegressionPoints.Designer.cs">
       <DependentUpon>FormRegressionPoints.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSessionInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSessionInfo.Designer.cs">
+      <DependentUpon>FormSessionInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormWaterfallLive.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -225,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormRegressionPoints.resx">
       <DependentUpon>FormRegressionPoints.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSessionInfo.resx">
+      <DependentUpon>FormSessionInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormWaterfallLive.resx">
       <DependentUpon>FormWaterfallLive.cs</DependentUpon>
