@@ -34,6 +34,8 @@
             this.btnShow = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnROI = new System.Windows.Forms.ToolStripMenuItem();
             this.pane = new System.Windows.Forms.Panel();
+            this.paneMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.tbColorCeil = new System.Windows.Forms.TrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblChannel = new System.Windows.Forms.Label();
@@ -48,13 +50,11 @@
             this.btnDown = new System.Windows.Forms.Button();
             this.btnDownAll = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.paneMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuItemUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.tools.SuspendLayout();
+            this.paneMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.paneMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // tools
@@ -101,6 +101,20 @@
             this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
             this.pane.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pane_MouseMove);
             this.pane.Resize += new System.EventHandler(this.pane_Resize);
+            // 
+            // paneMenu
+            // 
+            this.paneMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemUnselect});
+            this.paneMenu.Name = "paneMenu";
+            this.paneMenu.Size = new System.Drawing.Size(120, 26);
+            // 
+            // menuItemUnselect
+            // 
+            this.menuItemUnselect.Name = "menuItemUnselect";
+            this.menuItemUnselect.Size = new System.Drawing.Size(119, 22);
+            this.menuItemUnselect.Text = "&Unselect";
+            this.menuItemUnselect.Click += new System.EventHandler(this.menuItemUnselect_Click);
             // 
             // tbColorCeil
             // 
@@ -281,20 +295,6 @@
             this.panel3.Size = new System.Drawing.Size(28, 26);
             this.panel3.TabIndex = 5;
             // 
-            // paneMenu
-            // 
-            this.paneMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemUnselect});
-            this.paneMenu.Name = "paneMenu";
-            this.paneMenu.Size = new System.Drawing.Size(120, 26);
-            // 
-            // menuItemUnselect
-            // 
-            this.menuItemUnselect.Name = "menuItemUnselect";
-            this.menuItemUnselect.Size = new System.Drawing.Size(119, 22);
-            this.menuItemUnselect.Text = "&Unselect";
-            this.menuItemUnselect.Click += new System.EventHandler(this.menuItemUnselect_Click);
-            // 
             // FormWaterfallLive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -314,12 +314,12 @@
             this.ResizeEnd += new System.EventHandler(this.FormWaterfallLive_ResizeEnd);
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            this.paneMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.paneMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

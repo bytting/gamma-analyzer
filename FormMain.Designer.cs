@@ -76,26 +76,27 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblSetupChannel = new System.Windows.Forms.Label();
             this.tableLayoutSetup = new System.Windows.Forms.TableLayoutPanel();
-            this.btnSetupStop = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.cboxSetupChannels = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.tbSetupVoltage = new System.Windows.Forms.TextBox();
-            this.tbSetupCoarseGain = new System.Windows.Forms.TextBox();
-            this.tbSetupFineGain = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tbSetupULD = new System.Windows.Forms.TextBox();
             this.tbSetupLLD = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.btnSetupSetParams = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.cboxSetupDetector = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbSetupLivetime = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.cboxSetupChannels = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbSetupCoarseGain = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tbSetupFineGain = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tbSetupULD = new System.Windows.Forms.TextBox();
+            this.btnSetupSetParams = new System.Windows.Forms.Button();
             this.btnSetupStart = new System.Windows.Forms.Button();
+            this.btnSetupStop = new System.Windows.Forms.Button();
             this.pageMenu = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnMenuSetup = new System.Windows.Forms.Button();
@@ -130,12 +131,11 @@
             this.tbSpecCount = new System.Windows.Forms.TextBox();
             this.tbSpecLivetime = new System.Windows.Forms.TextBox();
             this.tbSpecDelay = new System.Windows.Forms.TextBox();
-            this.btnSendSession = new System.Windows.Forms.Button();
-            this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
             this.tbSessionComment = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.cboxSetupDetector = new System.Windows.Forms.ComboBox();
+            this.btnSendSession = new System.Windows.Forms.Button();
+            this.btnStopSession = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -653,17 +653,6 @@
             this.tableLayoutSetup.Size = new System.Drawing.Size(1096, 195);
             this.tableLayoutSetup.TabIndex = 20;
             // 
-            // btnSetupStop
-            // 
-            this.btnSetupStop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetupStop.Location = new System.Drawing.Point(866, 95);
-            this.btnSetupStop.Name = "btnSetupStop";
-            this.btnSetupStop.Size = new System.Drawing.Size(227, 22);
-            this.btnSetupStop.TabIndex = 25;
-            this.btnSetupStop.Text = "Stop";
-            this.btnSetupStop.UseVisualStyleBackColor = true;
-            this.btnSetupStop.Click += new System.EventHandler(this.btnSetupStop_Click);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -676,28 +665,6 @@
             this.label2.Text = "Detector";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // cboxSetupChannels
-            // 
-            this.cboxSetupChannels.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxSetupChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxSetupChannels.FormattingEnabled = true;
-            this.cboxSetupChannels.Location = new System.Drawing.Point(460, 39);
-            this.cboxSetupChannels.Name = "cboxSetupChannels";
-            this.cboxSetupChannels.Size = new System.Drawing.Size(225, 23);
-            this.cboxSetupChannels.TabIndex = 20;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(347, 36);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(107, 28);
-            this.label4.TabIndex = 30;
-            this.label4.Text = "#channels";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // tbSetupVoltage
             // 
             this.tbSetupVoltage.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -706,24 +673,6 @@
             this.tbSetupVoltage.Name = "tbSetupVoltage";
             this.tbSetupVoltage.Size = new System.Drawing.Size(225, 21);
             this.tbSetupVoltage.TabIndex = 13;
-            // 
-            // tbSetupCoarseGain
-            // 
-            this.tbSetupCoarseGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupCoarseGain.Location = new System.Drawing.Point(116, 95);
-            this.tbSetupCoarseGain.MaxLength = 5;
-            this.tbSetupCoarseGain.Name = "tbSetupCoarseGain";
-            this.tbSetupCoarseGain.Size = new System.Drawing.Size(225, 21);
-            this.tbSetupCoarseGain.TabIndex = 14;
-            // 
-            // tbSetupFineGain
-            // 
-            this.tbSetupFineGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupFineGain.Location = new System.Drawing.Point(460, 95);
-            this.tbSetupFineGain.MaxLength = 5;
-            this.tbSetupFineGain.Name = "tbSetupFineGain";
-            this.tbSetupFineGain.Size = new System.Drawing.Size(225, 21);
-            this.tbSetupFineGain.TabIndex = 15;
             // 
             // label6
             // 
@@ -736,39 +685,6 @@
             this.label6.TabIndex = 31;
             this.label6.Text = "Voltage";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(3, 92);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(107, 28);
-            this.label7.TabIndex = 32;
-            this.label7.Text = "Coarse gain";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(347, 92);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(107, 28);
-            this.label8.TabIndex = 33;
-            this.label8.Text = "Fine gain";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tbSetupULD
-            // 
-            this.tbSetupULD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupULD.Location = new System.Drawing.Point(460, 123);
-            this.tbSetupULD.MaxLength = 5;
-            this.tbSetupULD.Name = "tbSetupULD";
-            this.tbSetupULD.Size = new System.Drawing.Size(225, 21);
-            this.tbSetupULD.TabIndex = 23;
             // 
             // tbSetupLLD
             // 
@@ -791,30 +707,6 @@
             this.label9.Text = "LLD";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(347, 120);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(107, 28);
-            this.label10.TabIndex = 35;
-            this.label10.Text = "ULD";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // btnSetupSetParams
-            // 
-            this.btnSetupSetParams.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetupSetParams.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupSetParams.Location = new System.Drawing.Point(460, 151);
-            this.btnSetupSetParams.Name = "btnSetupSetParams";
-            this.btnSetupSetParams.Size = new System.Drawing.Size(225, 22);
-            this.btnSetupSetParams.TabIndex = 16;
-            this.btnSetupSetParams.Text = "Set detector params";
-            this.btnSetupSetParams.UseVisualStyleBackColor = true;
-            this.btnSetupSetParams.Click += new System.EventHandler(this.btnSetupSetParams_Click);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -828,6 +720,17 @@
             this.label3.TabIndex = 36;
             this.label3.Text = "Configure detector";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // cboxSetupDetector
+            // 
+            this.cboxSetupDetector.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSetupDetector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSetupDetector.FormattingEnabled = true;
+            this.cboxSetupDetector.Location = new System.Drawing.Point(116, 39);
+            this.cboxSetupDetector.Name = "cboxSetupDetector";
+            this.cboxSetupDetector.Size = new System.Drawing.Size(225, 23);
+            this.cboxSetupDetector.TabIndex = 39;
+            this.cboxSetupDetector.SelectedIndexChanged += new System.EventHandler(this.cboxSetupDetector_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -864,6 +767,103 @@
             this.label11.Text = "Livetime";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // cboxSetupChannels
+            // 
+            this.cboxSetupChannels.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSetupChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSetupChannels.FormattingEnabled = true;
+            this.cboxSetupChannels.Location = new System.Drawing.Point(460, 39);
+            this.cboxSetupChannels.Name = "cboxSetupChannels";
+            this.cboxSetupChannels.Size = new System.Drawing.Size(225, 23);
+            this.cboxSetupChannels.TabIndex = 20;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(347, 36);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(107, 28);
+            this.label4.TabIndex = 30;
+            this.label4.Text = "#channels";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(3, 92);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(107, 28);
+            this.label7.TabIndex = 32;
+            this.label7.Text = "Coarse gain";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbSetupCoarseGain
+            // 
+            this.tbSetupCoarseGain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupCoarseGain.Location = new System.Drawing.Point(116, 95);
+            this.tbSetupCoarseGain.MaxLength = 5;
+            this.tbSetupCoarseGain.Name = "tbSetupCoarseGain";
+            this.tbSetupCoarseGain.Size = new System.Drawing.Size(225, 21);
+            this.tbSetupCoarseGain.TabIndex = 14;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(347, 92);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(107, 28);
+            this.label8.TabIndex = 33;
+            this.label8.Text = "Fine gain";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbSetupFineGain
+            // 
+            this.tbSetupFineGain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupFineGain.Location = new System.Drawing.Point(460, 95);
+            this.tbSetupFineGain.MaxLength = 5;
+            this.tbSetupFineGain.Name = "tbSetupFineGain";
+            this.tbSetupFineGain.Size = new System.Drawing.Size(225, 21);
+            this.tbSetupFineGain.TabIndex = 15;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(347, 120);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(107, 28);
+            this.label10.TabIndex = 35;
+            this.label10.Text = "ULD";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbSetupULD
+            // 
+            this.tbSetupULD.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupULD.Location = new System.Drawing.Point(460, 123);
+            this.tbSetupULD.MaxLength = 5;
+            this.tbSetupULD.Name = "tbSetupULD";
+            this.tbSetupULD.Size = new System.Drawing.Size(225, 21);
+            this.tbSetupULD.TabIndex = 23;
+            // 
+            // btnSetupSetParams
+            // 
+            this.btnSetupSetParams.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSetupSetParams.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetupSetParams.Location = new System.Drawing.Point(460, 151);
+            this.btnSetupSetParams.Name = "btnSetupSetParams";
+            this.btnSetupSetParams.Size = new System.Drawing.Size(225, 22);
+            this.btnSetupSetParams.TabIndex = 16;
+            this.btnSetupSetParams.Text = "Set detector params";
+            this.btnSetupSetParams.UseVisualStyleBackColor = true;
+            this.btnSetupSetParams.Click += new System.EventHandler(this.btnSetupSetParams_Click);
+            // 
             // btnSetupStart
             // 
             this.btnSetupStart.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -874,6 +874,17 @@
             this.btnSetupStart.Text = "Start";
             this.btnSetupStart.UseVisualStyleBackColor = true;
             this.btnSetupStart.Click += new System.EventHandler(this.btnSetupStart_Click);
+            // 
+            // btnSetupStop
+            // 
+            this.btnSetupStop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSetupStop.Location = new System.Drawing.Point(866, 95);
+            this.btnSetupStop.Name = "btnSetupStop";
+            this.btnSetupStop.Size = new System.Drawing.Size(227, 22);
+            this.btnSetupStop.TabIndex = 25;
+            this.btnSetupStop.Text = "Stop";
+            this.btnSetupStop.UseVisualStyleBackColor = true;
+            this.btnSetupStop.Click += new System.EventHandler(this.btnSetupStop_Click);
             // 
             // pageMenu
             // 
@@ -1299,28 +1310,6 @@
             this.tbSpecDelay.Size = new System.Drawing.Size(115, 21);
             this.tbSpecDelay.TabIndex = 20;
             // 
-            // btnSendSession
-            // 
-            this.btnSendSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSendSession.Location = new System.Drawing.Point(609, 33);
-            this.btnSendSession.Name = "btnSendSession";
-            this.btnSendSession.Size = new System.Drawing.Size(115, 24);
-            this.btnSendSession.TabIndex = 17;
-            this.btnSendSession.Text = "Start new session";
-            this.btnSendSession.UseVisualStyleBackColor = true;
-            this.btnSendSession.Click += new System.EventHandler(this.btnSendSession_Click);
-            // 
-            // btnStopSession
-            // 
-            this.btnStopSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStopSession.Location = new System.Drawing.Point(730, 33);
-            this.btnStopSession.Name = "btnStopSession";
-            this.btnStopSession.Size = new System.Drawing.Size(115, 24);
-            this.btnStopSession.TabIndex = 21;
-            this.btnStopSession.Text = "Stop session";
-            this.btnStopSession.UseVisualStyleBackColor = true;
-            this.btnStopSession.Click += new System.EventHandler(this.btnStopSession_Click);
-            // 
             // btnSendClose
             // 
             this.btnSendClose.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1354,16 +1343,27 @@
             this.label12.Text = "Session comment";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // cboxSetupDetector
+            // btnSendSession
             // 
-            this.cboxSetupDetector.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxSetupDetector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxSetupDetector.FormattingEnabled = true;
-            this.cboxSetupDetector.Location = new System.Drawing.Point(116, 39);
-            this.cboxSetupDetector.Name = "cboxSetupDetector";
-            this.cboxSetupDetector.Size = new System.Drawing.Size(225, 23);
-            this.cboxSetupDetector.TabIndex = 39;
-            this.cboxSetupDetector.SelectedIndexChanged += new System.EventHandler(this.cboxSetupDetector_SelectedIndexChanged);
+            this.btnSendSession.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSendSession.Location = new System.Drawing.Point(609, 33);
+            this.btnSendSession.Name = "btnSendSession";
+            this.btnSendSession.Size = new System.Drawing.Size(115, 24);
+            this.btnSendSession.TabIndex = 17;
+            this.btnSendSession.Text = "Start new session";
+            this.btnSendSession.UseVisualStyleBackColor = true;
+            this.btnSendSession.Click += new System.EventHandler(this.btnSendSession_Click);
+            // 
+            // btnStopSession
+            // 
+            this.btnStopSession.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnStopSession.Location = new System.Drawing.Point(730, 33);
+            this.btnStopSession.Name = "btnStopSession";
+            this.btnStopSession.Size = new System.Drawing.Size(115, 24);
+            this.btnStopSession.TabIndex = 21;
+            this.btnStopSession.Text = "Stop session";
+            this.btnStopSession.UseVisualStyleBackColor = true;
+            this.btnStopSession.Click += new System.EventHandler(this.btnStopSession_Click);
             // 
             // FormMain
             // 

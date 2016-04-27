@@ -246,15 +246,20 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left && SetSessionIndexEvent != null)
             {
-                if (SetSessionIndexEvent != null)
-                {
-                    SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
-                    args.StartIndex = args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));
-                    SetSessionIndexEvent(this, args);
+                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
+                if (ModifierKeys.HasFlag(Keys.Shift) && SelectedSessionIndex1 != -1)
+                {                    
+                    args.StartIndex = SelectedSessionIndex1;
+                    args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));                
                 }
-            }
+                else
+                {                    
+                    args.StartIndex = args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));                    
+                }
+                SetSessionIndexEvent(this, args);
+            }            
         }
 
         public void SetSelectedSessionIndex(int index)

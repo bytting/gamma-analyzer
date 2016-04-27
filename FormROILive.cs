@@ -183,11 +183,22 @@ namespace crash
 
         private void pane_MouseClick(object sender, MouseEventArgs e)
         {
-            if (SetSessionIndexEvent != null)
-            {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
+            if (e.Button == MouseButtons.Left && SetSessionIndexEvent != null)
+            {                
                 SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
-                args.StartIndex = args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1));
-                SetSessionIndexEvent(this, args);
+                if (ModifierKeys.HasFlag(Keys.Shift) && SelectedSessionIndex1 != -1)
+                {
+                    args.StartIndex = SelectedSessionIndex1;
+                    args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1));
+                }
+                else
+                {
+                    args.StartIndex = args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1));
+                }
+                SetSessionIndexEvent(this, args);            
             }
         }
 

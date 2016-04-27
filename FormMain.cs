@@ -69,6 +69,7 @@ namespace crash
         DetectorType selectedDetectorType = null;
         
         float bkgScale = 1f;
+        bool selectionRun = false;
 
         public FormMain()
         {
@@ -131,7 +132,7 @@ namespace crash
 
             lbSession.ClearSelected();
 
-            if (e.StartIndex > e.EndIndex)
+            if (e.StartIndex < e.EndIndex) // Bizarre, but true
             {
                 int tmp = e.StartIndex;
                 e.StartIndex = e.EndIndex;
@@ -150,7 +151,13 @@ namespace crash
                 int idx2 = lbSession.FindStringExact(session.Info.Name + " - " + e.EndIndex.ToString());
                 for(int i=idx1; i<idx2; i++)
                 {
+                    if (i == idx2 - 1)
+                        selectionRun = false;
+
                     lbSession.SetSelected(i, true);
+
+                    if (i == idx1)
+                        selectionRun = true;
                 }
             }
         }
@@ -687,6 +694,9 @@ namespace crash
             }
             else
             {
+                if (selectionRun == true)
+                    return;
+
                 bkgScale = (float)lbSession.SelectedIndices.Count;
 
                 Spectrum s1 = (Spectrum)lbSession.Items[lbSession.SelectedIndices[lbSession.SelectedIndices.Count - 1]];
