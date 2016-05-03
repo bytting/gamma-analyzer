@@ -36,6 +36,7 @@ namespace crash
         public string SessionPath { get; private set; }
         public SessionInfo Info { get; private set; }
         public dynamic GEFactor = null;
+        public float[] Background = null;
 
         public Session()
         {
@@ -43,9 +44,9 @@ namespace crash
             Spectrums = new List<Spectrum>();
         }
 
-        public Session(string sessionPath, string name, Detector det, string geScript)
+        public Session(string sessionPath, string name, float livetime, int iterations, Detector det, string geScript)
         {
-            Info = new SessionInfo(name, "", det, geScript);
+            Info = new SessionInfo(name, "", livetime, iterations, det, geScript);
 
             dynamic scope = Utils.PyEngine.CreateScope();
             Utils.PyEngine.Execute(Info.GEScript, scope);
@@ -86,7 +87,8 @@ namespace crash
             MaxChannelCount = 0;
             MinChannelCount = 0;
             Spectrums.Clear();
-            Info = null;
+            Info.Clear();
+            Background = null;
         }
 
         public bool Load(string path)
@@ -121,6 +123,22 @@ namespace crash
             return true;
         }   
      
+        public bool SetBackground(Session bkg)
+        {
+            if (bkg == null)
+            {
+                Background = null;
+                return true;
+            }                
+
+            if (IsEmpty || !IsLoaded)
+                return false;
+            
+            Background = bkg.GetAdjustedCounts(Info.Livetime);
+
+            return true;
+        }
+
         public void SaveInfo()
         {
             string sessionSettingsFile = SessionPath + Path.DirectorySeparatorChar + "session.json";
@@ -130,7 +148,7 @@ namespace crash
             writer.Close();  
         }
 
-        public float[] GetAdjustedCounts(float livetime)
+        private float[] GetAdjustedCounts(float livetime)
         {
             if (Spectrums.Count < 1)
                 return null;
@@ -141,7 +159,7 @@ namespace crash
                 for (int i = 0; i < s.Channels.Count; i++)                
                     spec[i] += s.Channels[i];                                     
             
-            float scale = livetime / Spectrums[0].Livetime;
+            float scale = livetime / Info.Livetime;
 
             for (int i = 0; i < spec.Length; i++)
             {
@@ -150,6 +168,19 @@ namespace crash
             }
 
             return spec;
+        }
+
+        public float GetCountInBkg(int start, int end)
+        {
+            if (Background == null)
+                return 0f;
+
+            float cnt = 0f;
+
+            for (int i = start; i < end; i++)            
+                cnt += Background[i];                
+            
+            return cnt;
         }
 
         public float GetMaxCountInROI(int start, int end)
@@ -164,25 +195,5 @@ namespace crash
             }
             return max;
         }
-    }
-
-    public class SessionInfo
-    {
-        public SessionInfo()
-        {            
-        }
-
-        public SessionInfo(string name, string comment, Detector det, string geScript)
-        {
-            Name = name;
-            Comment = comment;
-            Detector = det;
-            GEScript = geScript;
-        }
-
-        public string Name { get; set; }        
-        public string Comment { get; set; }
-        public Detector Detector;
-        public string GEScript { get; set; }        
-    }
+    }    
 }

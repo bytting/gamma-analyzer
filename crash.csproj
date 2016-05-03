@@ -58,6 +58,9 @@
     <Reference Include="GMap.NET.WindowsForms">
       <HintPath>packages\GMap.NET.WindowsForms.1.7\lib\net40\GMap.NET.WindowsForms.dll</HintPath>
     </Reference>
+    <Reference Include="GraphLib">
+      <HintPath>..\Hapapap\GraphLib.dll</HintPath>
+    </Reference>
     <Reference Include="IronPython">
       <HintPath>packages\IronPython.2.7.5\lib\Net45\IronPython.dll</HintPath>
     </Reference>
@@ -161,6 +164,12 @@
     <Compile Include="FormPreferences.Designer.cs">
       <DependentUpon>FormPreferences.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormROIHist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormROIHist.Designer.cs">
+      <DependentUpon>FormROIHist.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormROITable.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +205,7 @@
     <Compile Include="ROIData.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="SessionExporter.cs" />
+    <Compile Include="SessionInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Spectrum.cs" />
     <Compile Include="Utils.cs" />
@@ -222,6 +232,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPreferences.resx">
       <DependentUpon>FormPreferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormROIHist.resx">
+      <DependentUpon>FormROIHist.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormROITable.resx">
       <DependentUpon>FormROITable.cs</DependentUpon>

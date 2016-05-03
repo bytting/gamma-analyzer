@@ -31,8 +31,7 @@ namespace crash
 {
     public partial class FormWaterfallLive : Form
     {
-        private Session session = null;
-        private Session background = null;
+        private Session session = null;        
         private Bitmap bmpPane = null;
         private bool colorCeilInitialized = false;
         private List<ROIData> ROIList = null;
@@ -70,10 +69,9 @@ namespace crash
             lblColorCeil.Text = "Color ceiling (min, curr, max): " + tbColorCeil.Minimum + ", " + tbColorCeil.Value + ", " + tbColorCeil.Maximum;                        
         }
 
-        public void SetSession(Session sess, Session bkg)
+        public void SetSession(Session sess)
         {
-            session = sess;
-            background = bkg;
+            session = sess;            
         }
 
         public void UpdatePane()
@@ -104,11 +102,7 @@ namespace crash
             float max = tbColorCeil.Value;
             float sectorSize = max / 4f;            
             float scale = 255f / sectorSize;
-            int y = 0;
-
-            float[] bkgSpec = null;
-            if (btnSubtractBackground.Checked && background != null && !session.IsEmpty)
-                bkgSpec = background.GetAdjustedCounts(session.Spectrums[0].Livetime);                                            
+            int y = 0;            
 
             for (int i = session.Spectrums.Count - 1 - topY; i >= 0; i--)
             {
@@ -124,9 +118,9 @@ namespace crash
                 {            
                     int a = 255, r = 0, g = 0, b = 255;
                     float cps = s.Channels[leftX + x];
-                    if (btnSubtractBackground.Checked && bkgSpec != null)
+                    if (btnSubtractBackground.Checked && session.Background != null)
                     {
-                        cps -= bkgSpec[leftX + x];
+                        cps -= session.Background[leftX + x];
                         if (cps < 0)
                             cps = 0;
                     }                        

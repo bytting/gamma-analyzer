@@ -32,7 +32,7 @@ namespace crash
     public partial class FormROILive : Form
     {
         private List<ROIData> ROIList = null;
-        private Session session = null;
+        private Session session = null;        
         private Bitmap bmpPane = null;        
         private int SelectedSessionIndex1 = -1;
         private int SelectedSessionIndex2 = -1;
@@ -64,7 +64,7 @@ namespace crash
 
         public void SetSession(Session sess)
         {
-            session = sess;
+            session = sess;            
         }
 
         public void UpdatePane()
@@ -95,7 +95,7 @@ namespace crash
             foreach (ROIData rd in ROIList)
             {
                 if (!rd.Active)
-                    continue;                                
+                    continue;                
 
                 float s = (bmpPane.Height - 40) / session.GetMaxCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
 
@@ -124,14 +124,16 @@ namespace crash
                 for (int i = firstSpectrum; i < firstSpectrum + bmpPane.Width; i++)
                 {
                     if (i >= (int)session.Spectrums.Count)
-                        break;
+                        break;                    
 
                     Spectrum s = session.Spectrums[i];
-                    float weightedCount = s.GetCountInROI((int)rd.StartChannel, (int)rd.EndChannel) * scaling;
+                    float weightedCount = s.GetCountInROI((int)rd.StartChannel, (int)rd.EndChannel) * scaling;                    
+
                     int y = pane.Height - 40 - (int)weightedCount;
 
                     if (x >= 0 && x < bmpPane.Width && y >= 0 && y < bmpPane.Height)
                     {
+                        //bmpPane.SetPixel(x, y, Color.FromName(rd.ColorName));
                         g.DrawLine(pen, last_x, last_y, x, y);
                     }                                        
                     

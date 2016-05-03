@@ -66,12 +66,7 @@ namespace crash
                 ((TextBox)tableLayoutROI.GetControlFromPosition(2, i + 1)).Text = ROIList[i].EndChannel.ToString();
                 ((CheckBox)tableLayoutROI.GetControlFromPosition(3, i + 1)).Checked = ROIList[i].Active;
             }            
-        }
-
-        private void Integer_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
+        }        
 
         private void btnOk_Click(object sender, EventArgs e)
         {

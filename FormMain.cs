@@ -54,12 +54,13 @@ namespace crash
 
         bool connected = false;
         Session session = new Session();
-        Session background = new Session();
+        //Session background = new Session();
 
         FormConnect formConnect = null;
         FormWaterfallLive formWaterfallLive = null;
         FormROILive formROILive = null;
-        FormMap formMap = null; 
+        FormMap formMap = null;
+        FormROIHist formROIHist = null;
 
         PointPairList setupGraphList = new PointPairList();
         PointPairList sessionGraphList = new PointPairList();
@@ -90,6 +91,7 @@ namespace crash
             formConnect = new FormConnect();
             formWaterfallLive = new FormWaterfallLive(settings.ROIList);
             formROILive = new FormROILive(settings.ROIList);
+            formROIHist = new FormROIHist(settings.ROIList);
             formMap = new FormMap();
 
             tabs.HideTabs = true;
@@ -102,14 +104,14 @@ namespace crash
             lblDetector.Text = "";
             separatorDetector.Visible = false;
 
+            lblBackground.Text = "";
             ClearSpectrumInfo();            
 
             formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
             formMap.SetSessionIndexEvent += SetSessionIndexEvent;
             formROILive.SetSessionIndexEvent += SetSessionIndexEvent;
 
-            PopulateDetectors();
-            PopulateBackgroundSessions();
+            PopulateDetectors();            
 
             netThread.Start();
             while (!netThread.IsAlive);            
@@ -179,12 +181,7 @@ namespace crash
             timer.Stop();
 
             SaveSettings();
-        }        
-
-        public void PopulateBackgroundSessions()
-        {            
-            bkgScale = 1.0f; // FIXME
-        }
+        }                
 
         private void SaveSettings()
         {
@@ -247,11 +244,14 @@ namespace crash
                         string sessionName = msg.Arguments["session_name"].ToString();
                         Utils.Log.Add("New session created: " + sessionName);
 
+                        float livetime = Convert.ToSingle(msg.Arguments["livetime"]);
+                        int iterations = Convert.ToInt32(msg.Arguments["iterations"]);
+
                         string geScript = File.ReadAllText(selectedDetectorType.GEScriptPath);
-                        session = new Session(settings.SessionRootDirectory, sessionName, selectedDetector, geScript);
+                        session = new Session(settings.SessionRootDirectory, sessionName, livetime, iterations, selectedDetector, geScript);
                         session.SaveInfo();
 
-                        formWaterfallLive.SetSession(session, background);
+                        formWaterfallLive.SetSession(session);
                         formROILive.SetSession(session);
                         formMap.SetSession(session);                        
                     }                        
@@ -266,8 +266,7 @@ namespace crash
                     break;
 
                 case "session_finished":
-                    Utils.Log.Add("Session " + msg.Arguments["session_name"] + " finished");
-                    PopulateBackgroundSessions();
+                    Utils.Log.Add("Session " + msg.Arguments["session_name"] + " finished");                    
                     break;
 
                 case "error":
@@ -343,6 +342,8 @@ namespace crash
                         formMap.AddMarker(spec);
                         formWaterfallLive.UpdatePane();
                         formROILive.UpdatePane();
+                        formROIHist.AddSpectrum(spec);
+                        formROIHist.RestoreScale();
                     }                                            
                     break;
 
@@ -432,9 +433,9 @@ namespace crash
 
         private void ClearSpectrumInfo()
         {
-            lblRealtime.Text = "";
-            lblLivetime.Text = "";
             lblSession.Text = "";
+            lblRealtime.Text = "";
+            lblLivetime.Text = "";            
             lblIndex.Text = "";
             lblLatitudeStart.Text = "";
             lblLongitudeStart.Text = "";
@@ -461,6 +462,16 @@ namespace crash
             formWaterfallLive.ClearSession();
             formROILive.ClearSession();
             formMap.ClearSession();
+
+            session.Clear();            
+        }
+
+        private void ClearBackground()
+        {
+            session.SetBackground(null);
+
+            lblBackground.Text = "";
+            graphSession.Invalidate();            
         }
 
         private void btnStopNetService_Click(object sender, EventArgs e)
@@ -625,21 +636,24 @@ namespace crash
 
             pane.CurveList.Clear();            
             
-            if(!background.IsEmpty)            
-            {
-                float[] spec = background.GetAdjustedCounts(session.Spectrums[0].Livetime);
+            if(session.Background != null)            
+            {                
                 bkgGraphList.Clear();
-                for (int i = 0; i < spec.Length; i++)
-                    bkgGraphList.Add((double)i, (double)spec[i] * bkgScale);
+                for (int i = 0; i < session.Background.Length; i++)
+                    bkgGraphList.Add((double)i, (double)session.Background[i] * bkgScale);
 
-                LineItem bkgCurve = pane.AddCurve("Background", bkgGraphList, Color.Blue, SymbolType.None);                
+                LineItem bkgCurve = pane.AddCurve("Background", bkgGraphList, Color.Blue, SymbolType.None);
+                bkgCurve.Line.IsSmooth = true;
+                bkgCurve.Line.SmoothTension = 0.5f;
             }
             
             sessionGraphList.Clear();            
             for (int i = 0; i < channels.Length; i++)
                 sessionGraphList.Add((double)i, (double)channels[i]);
 
-            LineItem curve = pane.AddCurve("Spectrum", sessionGraphList, Color.Red, SymbolType.None);                                                
+            LineItem curve = pane.AddCurve("Spectrum", sessionGraphList, Color.Red, SymbolType.None);
+            curve.Line.IsSmooth = true;
+            curve.Line.SmoothTension = 0.5f;
             
             pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
             pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
@@ -666,7 +680,7 @@ namespace crash
                 ShowSpectrum(s.SessionName + " - " + s.SessionIndex.ToString(), s.Channels.ToArray(), s.MaxCount, s.MinCount);
                 lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
                 lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
-                lblSession.Text = "Name: " + s.SessionName;
+                lblSession.Text = "Session: " + s.SessionName;
                 lblIndex.Text = "Index: " + s.SessionIndex;
                 lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart;
@@ -725,8 +739,8 @@ namespace crash
 
                 lblRealtime.Text = "Realtime:" + realTime;
                 lblLivetime.Text = "Livetime:" + liveTime;
-                lblSession.Text = "Session name: " + s1.SessionName;
-                lblIndex.Text = "Session index: " + s1.SessionIndex + " - " + s2.SessionIndex;
+                lblSession.Text = "Session: " + s1.SessionName;
+                lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;
                 lblLatitudeStart.Text = "Lat. start: " + s1.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s1.LongitudeStart;
                 lblAltitudeStart.Text = "Alt. start: " + s1.AltitudeStart;
@@ -764,28 +778,34 @@ namespace crash
         }        
 
         private void menuItemLoadSession_Click(object sender, EventArgs e)
-        {
-            ClearSession();
+        {            
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.SelectedPath = settings.SessionRootDirectory;
             dialog.Description = "Select session directory";
             dialog.ShowNewFolderButton = false;
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                ClearSession();
                 session.Load(dialog.SelectedPath);                
 
-                formWaterfallLive.SetSession(session, background);
+                formWaterfallLive.SetSession(session);
                 formROILive.SetSession(session);
                 formMap.SetSession(session);
+
+                formROIHist.Clear();
 
                 foreach(Spectrum s in session.Spectrums)
                 {
                     lbSession.Items.Insert(0, s);
                     formMap.AddMarker(s);
-                }                
+                    formROIHist.AddSpectrum(s);
+                }
+                formROIHist.RestoreScale();
 
                 formWaterfallLive.UpdatePane();
                 formROILive.UpdatePane();
+
+                lblSession.Text = "Session: " + session.Info.Name;
             }
         }        
 
@@ -803,13 +823,20 @@ namespace crash
             dialog.ShowNewFolderButton = false;
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                background.Load(dialog.SelectedPath);
+                ClearBackground();
+                Session bkgSess = new Session();
+                bkgSess.Load(dialog.SelectedPath);
 
-                if(background.NumChannels != session.NumChannels)
+                if (bkgSess.NumChannels != session.NumChannels)
                 {
-                    background.Clear();
+                    bkgSess.Clear();
                     MessageBox.Show("Cannot load a background with different number of channels than the session");
+                    return;
                 }
+
+                session.SetBackground(bkgSess);
+
+                lblBackground.Text = "Background: " + bkgSess.Info.Name;
             }
         }
 
@@ -840,7 +867,10 @@ namespace crash
         private void menuItemROITable_Click(object sender, EventArgs e)
         {
             FormROITable form = new FormROITable(settings.ROIList);
-            form.ShowDialog();            
+            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                formROIHist.UpdateROIList();
+            }
         }
 
         private void btnShowRegressionPoints_Click(object sender, EventArgs e)
@@ -927,14 +957,30 @@ namespace crash
 
         private void menuItemBackgroundInfo_Click(object sender, EventArgs e)
         {
-            if (background == null || !background.IsLoaded)
+            /*if (session.Background == null)
             {
                 MessageBox.Show("Can not open background info. No background loaded");
                 return;
             }
 
             FormSessionInfo form = new FormSessionInfo(background, "Background Info");
-            form.ShowDialog();
+            form.ShowDialog();*/
+        }
+
+        private void menuItemClearSession_Click(object sender, EventArgs e)
+        {
+            ClearSession();
+        }
+
+        private void menuItemClearBackground_Click(object sender, EventArgs e)
+        {
+            ClearBackground();
+        }
+
+        private void btnShowROIHist_Click(object sender, EventArgs e)
+        {
+            formROIHist.Show();
+            formROIHist.BringToFront();
         }
     }    
 }
