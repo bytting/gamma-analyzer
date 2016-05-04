@@ -506,16 +506,6 @@ namespace crash
         private void btnMenuSpec_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageSetup;
-        }
-
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = pageMenu;
-        }        
-
-        private void btnMenuMap_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = pageSession;
         }        
 
         private void btnMenuSession_Click(object sender, EventArgs e)
@@ -623,13 +613,7 @@ namespace crash
                 btnShow3D.Enabled = true;
                 menuItemShow3DMap.Enabled = true;
             }            
-        }                                                
-
-        private void btnShowLog_Click(object sender, EventArgs e)
-        {
-            Utils.Log.Show();
-            Utils.Log.BringToFront();
-        }
+        }        
 
         public void ShowSpectrum(string title, float[] channels, float maxCount, float minCount)
         {
@@ -913,13 +897,13 @@ namespace crash
             lblSessionChannel.Text = "Channel: " + String.Format("{0:###0}", x);
 
             // Show energy
-            if(session.IsLoaded)
+            /*if(session.IsLoaded) // FIXME: Formula not working
             {
                 Detector det = session.Info.Detector;
                 double slope = (det.RegPoint2Y - det.RegPoint1Y) / (det.RegPoint2X - det.RegPoint1X);
                 double E = det.RegPoint1Y + ((double)x * slope - det.RegPoint1X * slope);
                 lblSessionEnergy.Text = "Energy: " + String.Format("{0:###0.0###}", E);
-            }            
+            } */           
         }
 
         private void menuItemSessionUnselect_Click(object sender, EventArgs e)
@@ -1025,6 +1009,17 @@ namespace crash
         private void menuItemShow3DMap_Click(object sender, EventArgs e)
         {
             MessageBox.Show("3D not implemented");
+        }
+
+        private void menuItemBack_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageMenu;
+        }
+
+        private void menuItemShowLog_Click(object sender, EventArgs e)
+        {
+            Utils.Log.Show();
+            Utils.Log.BringToFront();
         }
     }    
 }

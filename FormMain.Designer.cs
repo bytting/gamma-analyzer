@@ -149,9 +149,12 @@
             this.btnShowROITable = new System.Windows.Forms.ToolStripButton();
             this.btnShowMap = new System.Windows.Forms.ToolStripButton();
             this.btnShowWaterfallLive = new System.Windows.Forms.ToolStripButton();
-            this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
             this.btnShowROIHist = new System.Windows.Forms.ToolStripButton();
+            this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
             this.btnShow3D = new System.Windows.Forms.ToolStripButton();
+            this.menuItemBack = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuItemShowLog = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -190,6 +193,8 @@
             // menuItemFile
             // 
             this.menuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemBack,
+            this.toolStripSeparator10,
             this.menuItemConnect,
             this.menuItemDisconnect,
             this.toolStripSeparator1,
@@ -201,26 +206,26 @@
             // menuItemConnect
             // 
             this.menuItemConnect.Name = "menuItemConnect";
-            this.menuItemConnect.Size = new System.Drawing.Size(133, 22);
+            this.menuItemConnect.Size = new System.Drawing.Size(152, 22);
             this.menuItemConnect.Text = "&Connect";
             this.menuItemConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
             // 
             // menuItemDisconnect
             // 
             this.menuItemDisconnect.Name = "menuItemDisconnect";
-            this.menuItemDisconnect.Size = new System.Drawing.Size(133, 22);
+            this.menuItemDisconnect.Size = new System.Drawing.Size(152, 22);
             this.menuItemDisconnect.Text = "&Disconnect";
             this.menuItemDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // menuItemExit
             // 
             this.menuItemExit.Name = "menuItemExit";
-            this.menuItemExit.Size = new System.Drawing.Size(133, 22);
+            this.menuItemExit.Size = new System.Drawing.Size(152, 22);
             this.menuItemExit.Text = "E&xit";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
@@ -236,14 +241,14 @@
             // menuItemROITable
             // 
             this.menuItemROITable.Name = "menuItemROITable";
-            this.menuItemROITable.Size = new System.Drawing.Size(135, 22);
+            this.menuItemROITable.Size = new System.Drawing.Size(152, 22);
             this.menuItemROITable.Text = "ROI Table";
             this.menuItemROITable.Click += new System.EventHandler(this.menuItemROITable_Click);
             // 
             // menuItemPreferences
             // 
             this.menuItemPreferences.Name = "menuItemPreferences";
-            this.menuItemPreferences.Size = new System.Drawing.Size(135, 22);
+            this.menuItemPreferences.Size = new System.Drawing.Size(152, 22);
             this.menuItemPreferences.Text = "&Preferences";
             this.menuItemPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
             // 
@@ -332,7 +337,7 @@
             // menuItemAbout
             // 
             this.menuItemAbout.Name = "menuItemAbout";
-            this.menuItemAbout.Size = new System.Drawing.Size(107, 22);
+            this.menuItemAbout.Size = new System.Drawing.Size(152, 22);
             this.menuItemAbout.Text = "&About";
             this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
             // 
@@ -806,7 +811,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(44, 47, 44, 47);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1096, 567);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1096, 565);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // pageSession
@@ -838,7 +843,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.graphSession);
             this.splitContainer2.Panel2.Controls.Add(this.panel1);
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel2);
-            this.splitContainer2.Size = new System.Drawing.Size(1096, 519);
+            this.splitContainer2.Size = new System.Drawing.Size(1096, 517);
             this.splitContainer2.SplitterDistance = 185;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 6;
@@ -855,7 +860,7 @@
             this.lbSession.Location = new System.Drawing.Point(0, 0);
             this.lbSession.Name = "lbSession";
             this.lbSession.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSession.Size = new System.Drawing.Size(183, 517);
+            this.lbSession.Size = new System.Drawing.Size(183, 515);
             this.lbSession.TabIndex = 7;
             this.lbSession.SelectedIndexChanged += new System.EventHandler(this.lbSession_SelectedIndexChanged);
             // 
@@ -886,7 +891,7 @@
             this.graphSession.ScrollMinX = 0D;
             this.graphSession.ScrollMinY = 0D;
             this.graphSession.ScrollMinY2 = 0D;
-            this.graphSession.Size = new System.Drawing.Size(904, 385);
+            this.graphSession.Size = new System.Drawing.Size(904, 383);
             this.graphSession.TabIndex = 5;
             this.graphSession.UseExtendedPrintDialog = true;
             this.graphSession.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graphSession_MouseMove);
@@ -896,7 +901,7 @@
             this.panel1.Controls.Add(this.lblSessionEnergy);
             this.panel1.Controls.Add(this.lblSessionChannel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 497);
+            this.panel1.Location = new System.Drawing.Point(0, 495);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(904, 20);
             this.panel1.TabIndex = 6;
@@ -1266,6 +1271,7 @@
             // menuItemView
             // 
             this.menuItemView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemShowLog,
             this.menuItemShowRegressionPoints,
             this.menuItemShowROITable,
             this.toolStripSeparator9,
@@ -1380,7 +1386,7 @@
             this.btnBack.Size = new System.Drawing.Size(38, 38);
             this.btnBack.Text = "toolStripButton1";
             this.btnBack.ToolTipText = "Back";
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            this.btnBack.Click += new System.EventHandler(this.menuItemBack_Click);
             // 
             // btnPreferences
             // 
@@ -1406,7 +1412,7 @@
             this.btnShowLog.Size = new System.Drawing.Size(38, 38);
             this.btnShowLog.Text = "toolStripButton1";
             this.btnShowLog.ToolTipText = "Show log";
-            this.btnShowLog.Click += new System.EventHandler(this.btnShowLog_Click);
+            this.btnShowLog.Click += new System.EventHandler(this.menuItemShowLog_Click);
             // 
             // btnConnect
             // 
@@ -1499,6 +1505,19 @@
             this.btnShowWaterfallLive.ToolTipText = "Show waterfall live";
             this.btnShowWaterfallLive.Click += new System.EventHandler(this.menuItemShowWaterfall_Click);
             // 
+            // btnShowROIHist
+            // 
+            this.btnShowROIHist.AutoSize = false;
+            this.btnShowROIHist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowROIHist.Enabled = false;
+            this.btnShowROIHist.Image = global::crash.Properties.Resources.doserate_32;
+            this.btnShowROIHist.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowROIHist.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowROIHist.Name = "btnShowROIHist";
+            this.btnShowROIHist.Size = new System.Drawing.Size(38, 38);
+            this.btnShowROIHist.Text = "toolStripButton1";
+            this.btnShowROIHist.Click += new System.EventHandler(this.menuItemShowROIHistory_Click);
+            // 
             // btnShowROIChart
             // 
             this.btnShowROIChart.AutoSize = false;
@@ -1513,19 +1532,6 @@
             this.btnShowROIChart.ToolTipText = "Show ROI live";
             this.btnShowROIChart.Click += new System.EventHandler(this.menuItemShowROIChart_Click);
             // 
-            // btnShowROIHist
-            // 
-            this.btnShowROIHist.AutoSize = false;
-            this.btnShowROIHist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowROIHist.Enabled = false;
-            this.btnShowROIHist.Image = global::crash.Properties.Resources.doserate_32;
-            this.btnShowROIHist.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowROIHist.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowROIHist.Name = "btnShowROIHist";
-            this.btnShowROIHist.Size = new System.Drawing.Size(38, 38);
-            this.btnShowROIHist.Text = "toolStripButton1";
-            this.btnShowROIHist.Click += new System.EventHandler(this.menuItemShowROIHistory_Click);
-            // 
             // btnShow3D
             // 
             this.btnShow3D.AutoSize = false;
@@ -1539,6 +1545,25 @@
             this.btnShow3D.Text = "toolStripButton1";
             this.btnShow3D.ToolTipText = "Show 3D session";
             this.btnShow3D.Click += new System.EventHandler(this.menuItemShow3DMap_Click);
+            // 
+            // menuItemBack
+            // 
+            this.menuItemBack.Name = "menuItemBack";
+            this.menuItemBack.Size = new System.Drawing.Size(152, 22);
+            this.menuItemBack.Text = "&Back";
+            this.menuItemBack.Click += new System.EventHandler(this.menuItemBack_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
+            // 
+            // menuItemShowLog
+            // 
+            this.menuItemShowLog.Name = "menuItemShowLog";
+            this.menuItemShowLog.Size = new System.Drawing.Size(196, 22);
+            this.menuItemShowLog.Text = "Show &log";
+            this.menuItemShowLog.Click += new System.EventHandler(this.menuItemShowLog_Click);
             // 
             // FormMain
             // 
@@ -1713,6 +1738,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemShowROIChart;
         private System.Windows.Forms.ToolStripMenuItem menuItemShowROIHistory;
         private System.Windows.Forms.ToolStripMenuItem menuItemShow3DMap;
+        private System.Windows.Forms.ToolStripMenuItem menuItemBack;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem menuItemShowLog;
     }
 }
 
