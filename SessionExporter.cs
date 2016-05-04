@@ -28,7 +28,7 @@ namespace crash
 {
     public static class SessionExporter
     {
-        public static bool CHN(Session session, string path)
+        public static void ExportAsCHN(Session session, string path)
         {
             Dictionary<string, string> MonthMap = new Dictionary<string, string>();
             MonthMap["JAN"] = "01";
@@ -73,14 +73,13 @@ namespace crash
                     
                     foreach(float ch in s.Channels)            
                         writer.Write(Convert.ToInt32(ch));            
-                }                            
+                }
                 finally
                 {
                     if(writer != null)
                         writer.Close();
                 }
-            }
-            return true;
+            }            
         }
     }
 }

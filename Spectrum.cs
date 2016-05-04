@@ -122,7 +122,7 @@ namespace crash
             double slope = (det.RegPoint2Y - det.RegPoint1Y) / (det.RegPoint2X - det.RegPoint1X);            
             Doserate = 0.0;
 
-            for (int i = det.CurrentLLD; i < det.CurrentULD; i++)
+            for (int i = det.CurrentLLD; i < det.CurrentULD; i++) // FIXME: CurrentLLD/ULD is not supposed to be used here
             {
                 float sec = (float)Livetime / 1000000f;                
                 float cps = Channels[i] / sec;

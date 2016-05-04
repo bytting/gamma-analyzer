@@ -101,6 +101,7 @@ namespace crash
             lblConnectionStatus.Text = "Not connected";            
             lblSetupChannel.Text = "";
             lblSessionChannel.Text = "";
+            lblSessionEnergy.Text = "";
             lblDetector.Text = "";
             separatorDetector.Visible = false;
 
@@ -283,11 +284,12 @@ namespace crash
 
                 case "spectrum":
 
-                    Spectrum spec = new Spectrum(msg);
-                    Utils.Log.Add(spec.Label + " received");                                                            
+                    Spectrum spec = new Spectrum(msg);                    
 
                     if (spec.IsPreview)
-                    {                        
+                    {
+                        Utils.Log.Add(spec.Label + " preview spectrum received");
+
                         GraphPane pane = graphSetup.GraphPane;
                         pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
                         pane.Fill = new Fill(SystemColors.ButtonFace);                        
@@ -319,7 +321,9 @@ namespace crash
                         graphSetup.Refresh();                        
                     }
                     else
-                    {         
+                    {
+                        Utils.Log.Add(spec.Label + " session spectrum received");
+
                         // Make sure session is allocated in case spectrums are ticking in                                              
 
                         string jsonPath = session.SessionPath + Path.DirectorySeparatorChar + "json";
@@ -376,7 +380,9 @@ namespace crash
             burn.Message msg = new burn.Message("connect", null);
             msg.AddParameter("host", formConnect.IP);
             msg.AddParameter("port", formConnect.Port);            
-            sendq.Enqueue(msg);           
+            sendq.Enqueue(msg);
+
+            Utils.Log.Add("connect command sent");
         }
 
         private void menuItemDisconnect_Click(object sender, EventArgs e)
@@ -386,6 +392,8 @@ namespace crash
                     return;
 
             sendq.Enqueue(new burn.Message("disconnect", null));
+
+            Utils.Log.Add("disconnect command sent");
         }        
 
         private void btnSendClose_Click(object sender, EventArgs e)
@@ -393,7 +401,9 @@ namespace crash
             if (MessageBox.Show("Are you sure you want to close the remote server?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
                 return;
 
-            sendq.Enqueue(new burn.Message("close", null));                        
+            sendq.Enqueue(new burn.Message("close", null));
+
+            Utils.Log.Add("close command sent");          
         }
 
         private void btnSendSession_Click(object sender, EventArgs e)
@@ -428,7 +438,9 @@ namespace crash
             msg.AddParameter("iterations", count);
             msg.AddParameter("livetime", livetime);
             msg.AddParameter("delay", delay);
-            sendq.Enqueue(msg);            
+            sendq.Enqueue(msg);
+
+            Utils.Log.Add("new_session command sent");
         }
 
         private void ClearSpectrumInfo()
@@ -449,6 +461,8 @@ namespace crash
             lblMinCount.Text = "";
             lblTotalCount.Text = "";
             lblDoserate.Text = "";
+            lblSessionChannel.Text = "";
+            lblSessionEnergy.Text = "";
         }
 
         private void ClearSession()
@@ -478,11 +492,15 @@ namespace crash
         {
             netService.RequestStop();
             netThread.Join();
+
+            Utils.Log.Add("net service closed");
         }                
         
         private void btnStopSession_Click(object sender, EventArgs e)
         {
             sendq.Enqueue(new burn.Message("stop_session", null));
+
+            Utils.Log.Add("stop_session command sent");
         }
         
         private void btnMenuSpec_Click(object sender, EventArgs e)
@@ -534,6 +552,8 @@ namespace crash
             msg.AddParameter("coarse_gain", coarse);
             msg.AddParameter("fine_gain", fine);
             sendq.Enqueue(msg);
+
+            Utils.Log.Add("set_gain command sent");
         }
 
         private void btnSetupStart_Click(object sender, EventArgs e)
@@ -551,16 +571,16 @@ namespace crash
             msg.AddParameter("livetime", Convert.ToSingle(tbSetupLivetime.Text));
             msg.AddParameter("delay", 0);
             sendq.Enqueue(msg);
+
+            Utils.Log.Add("new_session (preview) command sent");
         }
 
         private void btnSetupStop_Click(object sender, EventArgs e)
         {
             sendq.Enqueue(new burn.Message("stop_session", null));
-        }
 
-        private void btnSetupStoreParams_Click(object sender, EventArgs e)
-        {            
-        }                
+            Utils.Log.Add("stop_session command sent");
+        }
 
         private void menuItemPreferences_Click(object sender, EventArgs e)
         {
@@ -570,23 +590,22 @@ namespace crash
                 PopulateDetectors();
             }
         }
-
-        private void btnShowWaterfall_Click(object sender, EventArgs e)
-        {
-            formWaterfallLive.Show();
-            formWaterfallLive.BringToFront();
-            formWaterfallLive.UpdatePane();
-        }        
-
+        
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblInterface.Text = tabs.SelectedTab.Text;
 
             btnBack.Enabled = true;
             btnShowMap.Enabled = false;
+            menuItemShowMap.Enabled = false;
             btnShowWaterfallLive.Enabled = false;
+            menuItemShowWaterfall.Enabled = false;
             btnShowROIChart.Enabled = false;
-            btnShowDoserate.Enabled = false;
+            menuItemShowROIChart.Enabled = false;
+            btnShowROIHist.Enabled = false;
+            menuItemShowROIHistory.Enabled = false;
+            btnShow3D.Enabled = false;
+            menuItemShow3DMap.Enabled = false;
 
             if (tabs.SelectedTab == pageMenu)            
                 btnBack.Enabled = false;            
@@ -594,23 +613,17 @@ namespace crash
             if (tabs.SelectedTab == pageSession)
             {
                 btnShowMap.Enabled = true;
+                menuItemShowMap.Enabled = true;
                 btnShowWaterfallLive.Enabled = true;
+                menuItemShowWaterfall.Enabled = true;
                 btnShowROIChart.Enabled = true;
-                btnShowDoserate.Enabled = true;
+                menuItemShowROIChart.Enabled = true;
+                btnShowROIHist.Enabled = true;
+                menuItemShowROIHistory.Enabled = true;
+                btnShow3D.Enabled = true;
+                menuItemShow3DMap.Enabled = true;
             }            
-        }                                
-
-        private void btnShowROIChart_Click(object sender, EventArgs e)
-        {
-            formROILive.Show();
-            formROILive.BringToFront();
-        }
-
-        private void btnShowMap_Click(object sender, EventArgs e)
-        {
-            formMap.Show();
-            formMap.BringToFront();
-        }
+        }                                                
 
         private void btnShowLog_Click(object sender, EventArgs e)
         {
@@ -758,12 +771,7 @@ namespace crash
                 formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 formROILive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
             }
-        }        
-
-        private void btnShow3D_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Not implemented");
-        }        
+        }                        
 
         private void menuItemAbout_Click(object sender, EventArgs e)
         {
@@ -806,6 +814,8 @@ namespace crash
                 formROILive.UpdatePane();
 
                 lblSession.Text = "Session: " + session.Info.Name;
+
+                Utils.Log.Add("session " + session.Info.Name + " loaded");
             }
         }        
 
@@ -837,6 +847,8 @@ namespace crash
                 session.SetBackground(bkgSess);
 
                 lblBackground.Text = "Background: " + bkgSess.Info.Name;
+
+                Utils.Log.Add("background " + bkgSess.Info.Name + " loaded for session " + session.Info.Name);
             }
         }
 
@@ -855,11 +867,13 @@ namespace crash
             {
                 try
                 {
-                    SessionExporter.CHN(session, dialog.SelectedPath);
+                    SessionExporter.ExportAsCHN(session, dialog.SelectedPath);
+                    Utils.Log.Add("session " + session.Info.Name + " stored with CHN format in " + dialog.SelectedPath);
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
+                    Utils.Log.Add("Failed to export session " + session.Info.Name + " with CHN format in " + dialog.SelectedPath);
+                    MessageBox.Show("Failed to export session to CHN format: " + ex.Message);                    
                 }                    
             }
         }
@@ -871,19 +885,7 @@ namespace crash
             {
                 formROIHist.UpdateROIList();
             }
-        }
-
-        private void btnShowRegressionPoints_Click(object sender, EventArgs e)
-        {
-            if (selectedDetector == null)
-            {
-                MessageBox.Show("You must select a detector first");
-                return;
-            }   
-             
-            FormRegressionPoints form = new FormRegressionPoints(selectedDetector);
-            form.Show();
-        }        
+        }                
 
         private void graphSetup_MouseMove(object sender, MouseEventArgs e)
         {
@@ -909,6 +911,15 @@ namespace crash
             graphSession.GraphPane.ReverseTransform(clickedPoint, out x, out y);
 
             lblSessionChannel.Text = "Channel: " + String.Format("{0:###0}", x);
+
+            // Show energy
+            if(session.IsLoaded)
+            {
+                Detector det = session.Info.Detector;
+                double slope = (det.RegPoint2Y - det.RegPoint1Y) / (det.RegPoint2X - det.RegPoint1X);
+                double E = det.RegPoint1Y + ((double)x * slope - det.RegPoint1X * slope);
+                lblSessionEnergy.Text = "Energy: " + String.Format("{0:###0.0###}", E);
+            }            
         }
 
         private void menuItemSessionUnselect_Click(object sender, EventArgs e)
@@ -953,19 +964,7 @@ namespace crash
             FormSessionInfo form = new FormSessionInfo(session, "Session Info");
             form.ShowDialog();
 
-        }
-
-        private void menuItemBackgroundInfo_Click(object sender, EventArgs e)
-        {
-            /*if (session.Background == null)
-            {
-                MessageBox.Show("Can not open background info. No background loaded");
-                return;
-            }
-
-            FormSessionInfo form = new FormSessionInfo(background, "Background Info");
-            form.ShowDialog();*/
-        }
+        }        
 
         private void menuItemClearSession_Click(object sender, EventArgs e)
         {
@@ -975,12 +974,57 @@ namespace crash
         private void menuItemClearBackground_Click(object sender, EventArgs e)
         {
             ClearBackground();
+        }        
+
+        private void menuItemShowRegressionPoints_Click(object sender, EventArgs e)
+        {
+            if (selectedDetector == null)
+            {
+                MessageBox.Show("You must select a detector first");
+                return;
+            }
+
+            FormRegressionPoints form = new FormRegressionPoints(selectedDetector);
+            form.Show();
         }
 
-        private void btnShowROIHist_Click(object sender, EventArgs e)
+        private void menuItemShowROITable_Click(object sender, EventArgs e)
+        {
+            FormROITable form = new FormROITable(settings.ROIList);
+            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                formROIHist.UpdateROIList();
+            }
+        }
+
+        private void menuItemShowMap_Click(object sender, EventArgs e)
+        {
+            formMap.Show();
+            formMap.BringToFront();
+        }
+
+        private void menuItemShowWaterfall_Click(object sender, EventArgs e)
+        {
+            formWaterfallLive.Show();
+            formWaterfallLive.BringToFront();
+            formWaterfallLive.UpdatePane();
+        }
+
+        private void menuItemShowROIChart_Click(object sender, EventArgs e)
+        {
+            formROILive.Show();
+            formROILive.BringToFront();
+        }
+
+        private void menuItemShowROIHistory_Click(object sender, EventArgs e)
         {
             formROIHist.Show();
             formROIHist.BringToFront();
+        }
+
+        private void menuItemShow3DMap_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("3D not implemented");
         }
     }    
 }
