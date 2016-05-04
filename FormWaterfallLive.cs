@@ -58,7 +58,9 @@ namespace crash
         {
             font = new Font(fontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
 
-            lblColorCeil.Text = "";            
+            lblColorCeil.Text = "";
+            lblChannel.Text = "";
+            lblSessionId.Text = "";
 
             pane_Resize(sender, e);        
             UpdateStats();
@@ -162,7 +164,7 @@ namespace crash
                     {
                         int ch = leftX + x;
                         graphics.DrawString(ch.ToString(), font, whiteBrush, x, bmpPane.Height - 20);                        
-                    }
+                    }                    
                 }                
 
                 if(s.SessionIndex == SelectedSessionIndex1)
@@ -340,7 +342,14 @@ namespace crash
         private void pane_MouseMove(object sender, MouseEventArgs e)
         {
             int mouseChannel = leftX + e.X;
-            lblChannel.Text = "Channel: " + mouseChannel.ToString();            
+            lblChannel.Text = "Channel: " + mouseChannel.ToString();
+
+            if(e.Y < session.Spectrums.Count - 1)
+            {
+                int sessionId = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));
+                lblSessionId.Text = "Session Id: " + sessionId.ToString();
+            }
+            else lblSessionId.Text = "";
         }
 
         private void btnUpAll_Click(object sender, EventArgs e)

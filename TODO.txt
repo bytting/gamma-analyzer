@@ -1,1 +1,3 @@
 Make sure session is allocated if spectrums ticks in after connect (after a disconnect during a session)
+
+Add details in UI

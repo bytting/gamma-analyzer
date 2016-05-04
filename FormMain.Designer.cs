@@ -910,10 +910,10 @@
             // 
             this.lblSessionChannel.AutoSize = true;
             this.lblSessionChannel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSessionChannel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSessionChannel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSessionChannel.Location = new System.Drawing.Point(0, 0);
             this.lblSessionChannel.Name = "lblSessionChannel";
-            this.lblSessionChannel.Size = new System.Drawing.Size(105, 13);
+            this.lblSessionChannel.Size = new System.Drawing.Size(124, 15);
             this.lblSessionChannel.TabIndex = 0;
             this.lblSessionChannel.Text = "<lblSessionChannel>";
             // 
@@ -1262,7 +1262,7 @@
             // 
             this.lblSessionEnergy.AutoSize = true;
             this.lblSessionEnergy.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSessionEnergy.Location = new System.Drawing.Point(105, 0);
+            this.lblSessionEnergy.Location = new System.Drawing.Point(124, 0);
             this.lblSessionEnergy.Name = "lblSessionEnergy";
             this.lblSessionEnergy.Size = new System.Drawing.Size(116, 15);
             this.lblSessionEnergy.TabIndex = 1;
