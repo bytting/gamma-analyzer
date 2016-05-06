@@ -274,6 +274,7 @@ namespace crash
         public void SetSelectedSessionIndex(int index)
         {
             SelectedSessionIndex1 = SelectedSessionIndex2 = index;
+
             UpdatePane();            
         }
 
@@ -281,6 +282,7 @@ namespace crash
         {
             SelectedSessionIndex1 = index1;
             SelectedSessionIndex2 = index2;
+
             UpdatePane();
         }
 
@@ -300,6 +302,7 @@ namespace crash
                 return;
 
             leftX = 1;
+
             UpdatePane();
         }
 
@@ -308,9 +311,10 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            leftX -= pane.Width;
+            leftX -= bmpPane.Width / 2;
             if (leftX < 1)
                 leftX = 1;
+
             UpdatePane();
         }
 
@@ -319,12 +323,14 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            int maxX = (int)session.NumChannels - pane.Width;
-            leftX += pane.Width;
+            int maxX = (int)session.NumChannels - bmpPane.Width;
+
+            leftX += bmpPane.Width / 2;
             if (leftX > maxX)
                 leftX = maxX;
             if (leftX < 1)
                 leftX = 1;
+
             UpdatePane();
         }
 
@@ -333,9 +339,10 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            leftX = (int)session.NumChannels - pane.Width;
+            leftX = (int)session.NumChannels - bmpPane.Width;
             if (leftX < 1)
                 leftX = 1;
+
             UpdatePane();
         }
 
@@ -358,6 +365,7 @@ namespace crash
                 return;
 
             topY = 0;
+
             UpdatePane();
         }
 
@@ -366,9 +374,10 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            topY -= pane.Height;
+            topY -= bmpPane.Height;
             if (topY < 0)
                 topY = 0;
+
             UpdatePane();
         }
 
@@ -377,12 +386,14 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            int maxY = session.Spectrums.Count - pane.Height - 1;
-            topY += pane.Height;
+            int maxY = session.Spectrums.Count - bmpPane.Height - 1;
+
+            topY += bmpPane.Height;
             if (topY > maxY)
                 topY = maxY;
             if (topY < 0)
                 topY = 0;
+
             UpdatePane();
         }
 
@@ -391,9 +402,10 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            topY = session.Spectrums.Count - 1 - pane.Height;
+            topY = session.Spectrums.Count - 1 - bmpPane.Height;
             if (topY < 0)
                 topY = 0;
+
             UpdatePane();
         }
 
@@ -424,7 +436,7 @@ namespace crash
         }
 
         private void btnSubtractBackground_CheckedChanged(object sender, EventArgs e)
-        {
+        {                 
             UpdatePane();
         }
     }

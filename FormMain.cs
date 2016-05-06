@@ -836,32 +836,6 @@ namespace crash
             }
         }
 
-        private void menuItemSaveCHN_Click(object sender, EventArgs e)
-        {
-            if(session.IsEmpty)
-            {
-                MessageBox.Show("No session active");
-                return;
-            }
-
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.ShowNewFolderButton = true;
-            dialog.Description = "Select folder to store CHN files";
-            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                try
-                {
-                    SessionExporter.ExportAsCHN(session, dialog.SelectedPath);
-                    Utils.Log.Add("session " + session.Info.Name + " stored with CHN format in " + dialog.SelectedPath);
-                }
-                catch(Exception ex)
-                {
-                    Utils.Log.Add("Failed to export session " + session.Info.Name + " with CHN format in " + dialog.SelectedPath);
-                    MessageBox.Show("Failed to export session to CHN format: " + ex.Message);                    
-                }                    
-            }
-        }
-
         private void menuItemROITable_Click(object sender, EventArgs e)
         {
             FormROITable form = new FormROITable(settings.ROIList);
@@ -1020,6 +994,32 @@ namespace crash
         {
             Utils.Log.Show();
             Utils.Log.BringToFront();
+        }
+
+        private void menuItemSaveAsCHN_Click(object sender, EventArgs e)
+        {
+            if (session.IsEmpty)
+            {
+                MessageBox.Show("No session active");
+                return;
+            }
+
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.ShowNewFolderButton = true;
+            dialog.Description = "Select folder to store CHN files";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    SessionExporter.ExportAsCHN(session, dialog.SelectedPath);
+                    Utils.Log.Add("session " + session.Info.Name + " stored with CHN format in " + dialog.SelectedPath);
+                }
+                catch (Exception ex)
+                {
+                    Utils.Log.Add("Failed to export session " + session.Info.Name + " with CHN format in " + dialog.SelectedPath);
+                    MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
+                }
+            }
         }
     }    
 }

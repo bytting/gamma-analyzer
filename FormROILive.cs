@@ -180,6 +180,7 @@ namespace crash
 
             bmpPane = new Bitmap(pane.Width, pane.Height);
             firstSpectrum = 0;
+
             UpdatePane();            
         }        
 
@@ -200,6 +201,7 @@ namespace crash
                 {
                     args.StartIndex = args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1));
                 }
+
                 SetSessionIndexEvent(this, args);            
             }
         }
@@ -207,6 +209,7 @@ namespace crash
         public void SetSelectedSessionIndex(int index)
         {
             SelectedSessionIndex1 = SelectedSessionIndex2 = index;
+
             UpdatePane();
         }
 
@@ -214,6 +217,7 @@ namespace crash
         {
             SelectedSessionIndex1 = index1;
             SelectedSessionIndex2 = index2;
+
             UpdatePane();
         }
 
@@ -254,7 +258,7 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            firstSpectrum -= bmpPane.Width;
+            firstSpectrum -= bmpPane.Width / 2;
             if (firstSpectrum < 0)
                 firstSpectrum = 0;
 
@@ -270,11 +274,9 @@ namespace crash
             if (maxSpectrum < 0)
                 maxSpectrum = 0;
 
-            firstSpectrum += bmpPane.Width;
+            firstSpectrum += bmpPane.Width / 2;
             if (firstSpectrum > maxSpectrum)
-                firstSpectrum = maxSpectrum;
-            if (firstSpectrum < 0)
-                firstSpectrum = 0;
+                firstSpectrum = maxSpectrum;            
 
             UpdatePane();
         }
