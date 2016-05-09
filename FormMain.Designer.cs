@@ -95,6 +95,7 @@
             this.pageSetup = new System.Windows.Forms.TabPage();
             this.graphSetup = new ZedGraph.ZedGraphControl();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lblSetupEnergy = new System.Windows.Forms.Label();
             this.lblSetupChannel = new System.Windows.Forms.Label();
             this.tableLayoutSetup = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
@@ -157,7 +158,6 @@
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
-            this.lblSetupEnergy = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -782,6 +782,16 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1096, 20);
             this.panel2.TabIndex = 22;
+            // 
+            // lblSetupEnergy
+            // 
+            this.lblSetupEnergy.AutoSize = true;
+            this.lblSetupEnergy.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSetupEnergy.Location = new System.Drawing.Point(112, 0);
+            this.lblSetupEnergy.Name = "lblSetupEnergy";
+            this.lblSetupEnergy.Size = new System.Drawing.Size(104, 15);
+            this.lblSetupEnergy.TabIndex = 1;
+            this.lblSetupEnergy.Text = "<lblSetupEnergy>";
             // 
             // lblSetupChannel
             // 
@@ -1585,16 +1595,6 @@
             this.btnSendClose.Text = "Send close";
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
-            // 
-            // lblSetupEnergy
-            // 
-            this.lblSetupEnergy.AutoSize = true;
-            this.lblSetupEnergy.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSetupEnergy.Location = new System.Drawing.Point(112, 0);
-            this.lblSetupEnergy.Name = "lblSetupEnergy";
-            this.lblSetupEnergy.Size = new System.Drawing.Size(104, 15);
-            this.lblSetupEnergy.TabIndex = 1;
-            this.lblSetupEnergy.Text = "<lblSetupEnergy>";
             // 
             // FormMain
             // 

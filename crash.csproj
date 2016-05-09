@@ -291,7 +291,7 @@
     <None Include="images\down-16.png" />
     <None Include="images\down-all-16.png" />
     <None Include="images\options1-16.png" />
-    <Content Include="snippets.txt" />
+    <None Include="snippets.txt" />
     <Resource Include="images\background-128.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
