@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormROIHist));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.graph = new ZedGraph.ZedGraphControl();
@@ -36,9 +37,9 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 620);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 480);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(904, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(895, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -46,7 +47,7 @@
             // 
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(904, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(895, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -62,7 +63,7 @@
             this.graph.ScrollMinX = 0D;
             this.graph.ScrollMinY = 0D;
             this.graph.ScrollMinY2 = 0D;
-            this.graph.Size = new System.Drawing.Size(904, 595);
+            this.graph.Size = new System.Drawing.Size(895, 455);
             this.graph.TabIndex = 2;
             this.graph.UseExtendedPrintDialog = true;
             // 
@@ -70,13 +71,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(904, 642);
+            this.ClientSize = new System.Drawing.Size(895, 502);
             this.Controls.Add(this.graph);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormROIHist";
-            this.Text = "FormROIHist";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormROIHist_FormClosing);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Crash - ROI History";
             this.Load += new System.EventHandler(this.FormROIHist_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -61,6 +61,7 @@ namespace crash
             lblColorCeil.Text = "";
             lblChannel.Text = "";
             lblSessionId.Text = "";
+            lblEnergy.Text = "";
 
             pane_Resize(sender, e);        
             UpdateStats();
@@ -68,7 +69,7 @@ namespace crash
 
         private void UpdateStats()
         {
-            lblColorCeil.Text = "Color ceiling (min, curr, max): " + tbColorCeil.Minimum + ", " + tbColorCeil.Value + ", " + tbColorCeil.Maximum;                        
+            lblColorCeil.Text = "Col. Levels: " + tbColorCeil.Minimum + ", " + tbColorCeil.Value + ", " + tbColorCeil.Maximum;                        
         }
 
         public void SetSession(Session sess)
@@ -348,15 +349,27 @@ namespace crash
 
         private void pane_MouseMove(object sender, MouseEventArgs e)
         {
+            // Show channel
             int mouseChannel = leftX + e.X;
-            lblChannel.Text = "Channel: " + mouseChannel.ToString();
+            lblChannel.Text = "Ch: " + String.Format("{0:###0}", mouseChannel);
 
+            // Show session index
             if(e.Y < session.Spectrums.Count - 1)
             {
                 int sessionId = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));
-                lblSessionId.Text = "Session Id: " + sessionId.ToString();
+                lblSessionId.Text = "Idx: " + sessionId.ToString();
             }
             else lblSessionId.Text = "";
+
+            // Show energy
+            if (session.IsLoaded)
+            {
+                Detector det = session.Info.Detector;
+                double slope = (det.RegPoint2Y - det.RegPoint1Y) / (det.RegPoint2X - det.RegPoint1X);
+                double E = det.RegPoint1Y + ((double)mouseChannel * slope - det.RegPoint1X * slope);
+                lblEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);
+            }
+            else lblEnergy.Text = "";
         }
 
         private void btnUpAll_Click(object sender, EventArgs e)

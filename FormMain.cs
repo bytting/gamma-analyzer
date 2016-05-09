@@ -59,8 +59,7 @@ namespace crash
         FormConnect formConnect = null;
         FormWaterfallLive formWaterfallLive = null;
         FormROILive formROILive = null;
-        FormMap formMap = null;
-        FormROIHist formROIHist = null;
+        FormMap formMap = null;        
 
         PointPairList setupGraphList = new PointPairList();
         PointPairList sessionGraphList = new PointPairList();
@@ -90,8 +89,7 @@ namespace crash
 
             formConnect = new FormConnect();
             formWaterfallLive = new FormWaterfallLive(settings.ROIList);
-            formROILive = new FormROILive(settings.ROIList);
-            formROIHist = new FormROIHist(settings.ROIList);
+            formROILive = new FormROILive(settings.ROIList);            
             formMap = new FormMap();
 
             tabs.HideTabs = true;
@@ -102,6 +100,7 @@ namespace crash
             lblSetupChannel.Text = "";
             lblSessionChannel.Text = "";
             lblSessionEnergy.Text = "";
+            lblSetupEnergy.Text = "";
             lblDetector.Text = "";
             separatorDetector.Visible = false;
 
@@ -345,9 +344,7 @@ namespace crash
 
                         formMap.AddMarker(spec);
                         formWaterfallLive.UpdatePane();
-                        formROILive.UpdatePane();
-                        formROIHist.AddSpectrum(spec);
-                        formROIHist.RestoreScale();
+                        formROILive.UpdatePane();                        
                     }                                            
                     break;
 
@@ -782,17 +779,13 @@ namespace crash
 
                 formWaterfallLive.SetSession(session);
                 formROILive.SetSession(session);
-                formMap.SetSession(session);
-
-                formROIHist.Clear();
+                formMap.SetSession(session);                
 
                 foreach(Spectrum s in session.Spectrums)
                 {
                     lbSession.Items.Insert(0, s);
-                    formMap.AddMarker(s);
-                    formROIHist.AddSpectrum(s);
-                }
-                formROIHist.RestoreScale();
+                    formMap.AddMarker(s);                    
+                }                
 
                 formWaterfallLive.UpdatePane();
                 formROILive.UpdatePane();
@@ -839,10 +832,7 @@ namespace crash
         private void menuItemROITable_Click(object sender, EventArgs e)
         {
             FormROITable form = new FormROITable(settings.ROIList);
-            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                formROIHist.UpdateROIList();
-            }
+            form.ShowDialog();            
         }                
 
         private void graphSetup_MouseMove(object sender, MouseEventArgs e)
@@ -855,7 +845,17 @@ namespace crash
             double x, y;            
             graphSetup.GraphPane.ReverseTransform(clickedPoint, out x, out y);
 
-            lblSetupChannel.Text = "Channel: " + String.Format("{0:###0}", x);
+            lblSetupChannel.Text = "Ch: " + String.Format("{0:###0}", x);
+
+            // Show energy
+            if (selectedDetector != null)
+            {
+                Detector det = selectedDetector;
+                double slope = (det.RegPoint2Y - det.RegPoint1Y) / (det.RegPoint2X - det.RegPoint1X);
+                double E = det.RegPoint1Y + ((double)x * slope - det.RegPoint1X * slope);
+                lblSetupEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);
+            }
+            else lblSetupEnergy.Text = "";
         }
 
         private void graphSession_MouseMove(object sender, MouseEventArgs e)
@@ -868,16 +868,17 @@ namespace crash
             double x, y;
             graphSession.GraphPane.ReverseTransform(clickedPoint, out x, out y);
 
-            lblSessionChannel.Text = "Channel: " + String.Format("{0:###0}", x);
+            lblSessionChannel.Text = "Ch: " + String.Format("{0:###0}", x);
 
             // Show energy
-            /*if(session.IsLoaded) // FIXME: Formula not working
+            if (session.IsLoaded)
             {
                 Detector det = session.Info.Detector;
                 double slope = (det.RegPoint2Y - det.RegPoint1Y) / (det.RegPoint2X - det.RegPoint1X);
                 double E = det.RegPoint1Y + ((double)x * slope - det.RegPoint1X * slope);
-                lblSessionEnergy.Text = "Energy: " + String.Format("{0:###0.0###}", E);
-            } */           
+                lblSessionEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);
+            }
+            else lblSessionEnergy.Text = "";
         }
 
         private void menuItemSessionUnselect_Click(object sender, EventArgs e)
@@ -908,7 +909,7 @@ namespace crash
             cboxSetupChannels.Items.Clear();
             for(int i = 256; i <= selectedDetectorType.MaxNumChannels; i = i * 2)            
                 cboxSetupChannels.Items.Add(i.ToString());
-            cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
+            cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();            
         }
 
         private void menuItemSessionInfo_Click(object sender, EventArgs e)
@@ -949,10 +950,7 @@ namespace crash
         private void menuItemShowROITable_Click(object sender, EventArgs e)
         {
             FormROITable form = new FormROITable(settings.ROIList);
-            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                formROIHist.UpdateROIList();
-            }
+            form.ShowDialog();            
         }
 
         private void menuItemShowMap_Click(object sender, EventArgs e)
@@ -976,8 +974,8 @@ namespace crash
 
         private void menuItemShowROIHistory_Click(object sender, EventArgs e)
         {
-            formROIHist.Show();
-            formROIHist.BringToFront();
+            FormROIHist form = new FormROIHist(session, settings.ROIList);
+            form.ShowDialog();
         }
 
         private void menuItemShow3DMap_Click(object sender, EventArgs e)

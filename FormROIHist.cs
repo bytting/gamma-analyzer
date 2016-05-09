@@ -13,72 +13,56 @@ namespace crash
 {
     public partial class FormROIHist : Form
     {
+        Session session = null;
         List<ROIData> ROIList = null;        
         List<PointPairList> pointLists = new List<PointPairList>();
         GraphPane pane = null;        
 
-        public FormROIHist(List<ROIData> roiList)
+        public FormROIHist(Session sess, List<ROIData> roiList)
         {
             InitializeComponent();
-            ROIList = roiList;
-            pane = graph.GraphPane;
-            //pane.YAxis.Type = AxisType.Log;
-            UpdateROIList();
+            session = sess;
+            ROIList = roiList;            
         }
 
         private void FormROIHist_Load(object sender, EventArgs e)
-        {                                    
+        {
+            pane = graph.GraphPane;
+            //pane.YAxis.Type = AxisType.Log;
+            UpdateROIList();                     
         }        
 
         public void UpdateROIList()
         {
+            foreach (PointPairList list in pointLists)
+                list.Clear();        
+
             pointLists.Clear();
+
+            if (session == null || ROIList.Count == 0)
+                return;
+
             foreach (ROIData rd in ROIList)
             {
                 if (!rd.Active)
                     continue;
 
+                int i = 0;
                 PointPairList list = new PointPairList();
-                pointLists.Add(list);
+                foreach (Spectrum spec in session.Spectrums)
+                {
+                    float cnt = spec.GetCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
+                    list.Add(i, cnt);
+                    i++;
+                }
+
                 LineItem line = pane.AddCurve(rd.Name, list, Color.FromName(rd.ColorName), SymbolType.None);
                 line.Line.IsSmooth = true;
                 line.Line.SmoothTension = 0.5f;
             }
-        }        
 
-        public void AddSpectrum(Spectrum spec)
-        {
-            for(int i=0; i<ROIList.Count; i++)
-            {
-                if (!ROIList[i].Active)
-                    continue;
-
-                float cnt = spec.GetCountInROI((int)ROIList[i].StartChannel, (int)ROIList[i].EndChannel);        
-
-                pointLists[i].Add(pointLists[i].Count, cnt);
-            }
             graph.AxisChange();
+            graph.RestoreScale(pane);
         }        
-
-        public void Clear()
-        {
-            foreach (PointPairList list in pointLists)
-                list.Clear();        
-        }
-
-        public void RestoreScale()
-        {            
-            graph.RestoreScale(pane);                                    
-        }
-
-        private void FormROIHist_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            Hide();
-        }
-
-        private void pane_Resize(object sender, EventArgs e)
-        {            
-        }
     }
 }

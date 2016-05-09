@@ -49,6 +49,10 @@
             this.menuItemLoadBackgroundSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemClearBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuItemExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSaveAsCHN = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSaveAsIRIX = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSaveAsKMZ = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemView = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowLog = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowRegressionPoints = new System.Windows.Forms.ToolStripMenuItem();
@@ -153,10 +157,7 @@
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
-            this.menuItemExport = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemSaveAsCHN = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemSaveAsIRIX = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemSaveAsKMZ = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblSetupEnergy = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -325,6 +326,35 @@
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(205, 6);
+            // 
+            // menuItemExport
+            // 
+            this.menuItemExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemSaveAsCHN,
+            this.menuItemSaveAsIRIX,
+            this.menuItemSaveAsKMZ});
+            this.menuItemExport.Name = "menuItemExport";
+            this.menuItemExport.Size = new System.Drawing.Size(208, 22);
+            this.menuItemExport.Text = "E&xport session as ...";
+            // 
+            // menuItemSaveAsCHN
+            // 
+            this.menuItemSaveAsCHN.Name = "menuItemSaveAsCHN";
+            this.menuItemSaveAsCHN.Size = new System.Drawing.Size(100, 22);
+            this.menuItemSaveAsCHN.Text = "&CHN";
+            this.menuItemSaveAsCHN.Click += new System.EventHandler(this.menuItemSaveAsCHN_Click);
+            // 
+            // menuItemSaveAsIRIX
+            // 
+            this.menuItemSaveAsIRIX.Name = "menuItemSaveAsIRIX";
+            this.menuItemSaveAsIRIX.Size = new System.Drawing.Size(100, 22);
+            this.menuItemSaveAsIRIX.Text = "&IRIX";
+            // 
+            // menuItemSaveAsKMZ
+            // 
+            this.menuItemSaveAsKMZ.Name = "menuItemSaveAsKMZ";
+            this.menuItemSaveAsKMZ.Size = new System.Drawing.Size(100, 22);
+            this.menuItemSaveAsKMZ.Text = "KM&Z";
             // 
             // menuItemView
             // 
@@ -668,6 +698,7 @@
             this.btnShowROIHist.Name = "btnShowROIHist";
             this.btnShowROIHist.Size = new System.Drawing.Size(38, 38);
             this.btnShowROIHist.Text = "toolStripButton1";
+            this.btnShowROIHist.ToolTipText = "Show ROI History";
             this.btnShowROIHist.Click += new System.EventHandler(this.menuItemShowROIHistory_Click);
             // 
             // btnShowROIChart
@@ -744,6 +775,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.lblSetupEnergy);
             this.panel2.Controls.Add(this.lblSetupChannel);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(3, 548);
@@ -754,10 +786,11 @@
             // lblSetupChannel
             // 
             this.lblSetupChannel.AutoSize = true;
-            this.lblSetupChannel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSetupChannel.Location = new System.Drawing.Point(6, 4);
+            this.lblSetupChannel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSetupChannel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSetupChannel.Location = new System.Drawing.Point(0, 0);
             this.lblSetupChannel.Name = "lblSetupChannel";
-            this.lblSetupChannel.Size = new System.Drawing.Size(96, 13);
+            this.lblSetupChannel.Size = new System.Drawing.Size(112, 15);
             this.lblSetupChannel.TabIndex = 0;
             this.lblSetupChannel.Text = "<lblSetupChannel>";
             // 
@@ -1553,34 +1586,15 @@
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
             // 
-            // menuItemExport
+            // lblSetupEnergy
             // 
-            this.menuItemExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemSaveAsCHN,
-            this.menuItemSaveAsIRIX,
-            this.menuItemSaveAsKMZ});
-            this.menuItemExport.Name = "menuItemExport";
-            this.menuItemExport.Size = new System.Drawing.Size(208, 22);
-            this.menuItemExport.Text = "E&xport session as ...";
-            // 
-            // menuItemSaveAsCHN
-            // 
-            this.menuItemSaveAsCHN.Name = "menuItemSaveAsCHN";
-            this.menuItemSaveAsCHN.Size = new System.Drawing.Size(152, 22);
-            this.menuItemSaveAsCHN.Text = "&CHN";
-            this.menuItemSaveAsCHN.Click += new System.EventHandler(this.menuItemSaveAsCHN_Click);
-            // 
-            // menuItemSaveAsIRIX
-            // 
-            this.menuItemSaveAsIRIX.Name = "menuItemSaveAsIRIX";
-            this.menuItemSaveAsIRIX.Size = new System.Drawing.Size(152, 22);
-            this.menuItemSaveAsIRIX.Text = "&IRIX";
-            // 
-            // menuItemSaveAsKMZ
-            // 
-            this.menuItemSaveAsKMZ.Name = "menuItemSaveAsKMZ";
-            this.menuItemSaveAsKMZ.Size = new System.Drawing.Size(152, 22);
-            this.menuItemSaveAsKMZ.Text = "KM&Z";
+            this.lblSetupEnergy.AutoSize = true;
+            this.lblSetupEnergy.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSetupEnergy.Location = new System.Drawing.Point(112, 0);
+            this.lblSetupEnergy.Name = "lblSetupEnergy";
+            this.lblSetupEnergy.Size = new System.Drawing.Size(104, 15);
+            this.lblSetupEnergy.TabIndex = 1;
+            this.lblSetupEnergy.Text = "<lblSetupEnergy>";
             // 
             // FormMain
             // 
@@ -1760,6 +1774,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsCHN;
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsIRIX;
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsKMZ;
+        private System.Windows.Forms.Label lblSetupEnergy;
     }
 }
 

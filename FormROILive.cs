@@ -295,7 +295,7 @@ namespace crash
             }                
 
             int sessionIndex = Utils.ToArgb(bmpPane.GetPixel(index, bmpPane.Height - 1));            
-            lblSpectrum.Text = "Session index: " + sessionIndex.ToString();
+            lblSpectrum.Text = "Idx: " + sessionIndex.ToString();
         }
 
         private void menuItemUnselect_Click(object sender, EventArgs e)
