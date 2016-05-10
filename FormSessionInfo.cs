@@ -22,8 +22,8 @@ namespace crash
         }
 
         private void FormSessionInfo_Load(object sender, EventArgs e)
-        {            
-            //
+        {
+            tbComment.Text = session.Info.Comment;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -32,7 +32,8 @@ namespace crash
         }
 
         private void btnOk_Click(object sender, EventArgs e)
-        {            
+        {
+            session.Info.Comment = tbComment.Text;
             Close();
         }        
     }

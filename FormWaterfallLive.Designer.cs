@@ -39,20 +39,20 @@
             this.menuItemUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.tbColorCeil = new System.Windows.Forms.TrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblSessionId = new System.Windows.Forms.Label();
+            this.lblEnergy = new System.Windows.Forms.Label();
             this.lblChannel = new System.Windows.Forms.Label();
-            this.lblColorCeil = new System.Windows.Forms.Label();
             this.btnLeftAll = new System.Windows.Forms.Button();
             this.btnLeft = new System.Windows.Forms.Button();
             this.btnRight = new System.Windows.Forms.Button();
             this.btnRightAll = new System.Windows.Forms.Button();
+            this.lblSessionId = new System.Windows.Forms.Label();
+            this.lblColorCeil = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnUpAll = new System.Windows.Forms.Button();
             this.btnUp = new System.Windows.Forms.Button();
             this.btnDown = new System.Windows.Forms.Button();
             this.btnDownAll = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.lblEnergy = new System.Windows.Forms.Label();
             this.tools.SuspendLayout();
             this.paneMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).BeginInit();
@@ -155,17 +155,17 @@
             this.panel1.Size = new System.Drawing.Size(825, 26);
             this.panel1.TabIndex = 4;
             // 
-            // lblSessionId
+            // lblEnergy
             // 
-            this.lblSessionId.AutoSize = true;
-            this.lblSessionId.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSessionId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSessionId.Location = new System.Drawing.Point(84, 0);
-            this.lblSessionId.Name = "lblSessionId";
-            this.lblSessionId.Padding = new System.Windows.Forms.Padding(5, 2, 0, 0);
-            this.lblSessionId.Size = new System.Drawing.Size(92, 17);
-            this.lblSessionId.TabIndex = 6;
-            this.lblSessionId.Text = "<lblSpectrum>";
+            this.lblEnergy.AutoSize = true;
+            this.lblEnergy.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblEnergy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEnergy.Location = new System.Drawing.Point(261, 0);
+            this.lblEnergy.Name = "lblEnergy";
+            this.lblEnergy.Padding = new System.Windows.Forms.Padding(5, 2, 0, 0);
+            this.lblEnergy.Size = new System.Drawing.Size(77, 17);
+            this.lblEnergy.TabIndex = 7;
+            this.lblEnergy.Text = "<lblEnergy>";
             // 
             // lblChannel
             // 
@@ -178,18 +178,6 @@
             this.lblChannel.Size = new System.Drawing.Size(85, 17);
             this.lblChannel.TabIndex = 5;
             this.lblChannel.Text = "<lblChannel>";
-            // 
-            // lblColorCeil
-            // 
-            this.lblColorCeil.AutoSize = true;
-            this.lblColorCeil.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblColorCeil.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblColorCeil.Location = new System.Drawing.Point(0, 0);
-            this.lblColorCeil.Name = "lblColorCeil";
-            this.lblColorCeil.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblColorCeil.Size = new System.Drawing.Size(84, 17);
-            this.lblColorCeil.TabIndex = 4;
-            this.lblColorCeil.Text = "<lblColorCeil>";
             // 
             // btnLeftAll
             // 
@@ -246,6 +234,30 @@
             this.btnRightAll.TabIndex = 3;
             this.btnRightAll.UseVisualStyleBackColor = true;
             this.btnRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
+            // 
+            // lblSessionId
+            // 
+            this.lblSessionId.AutoSize = true;
+            this.lblSessionId.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSessionId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSessionId.Location = new System.Drawing.Point(84, 0);
+            this.lblSessionId.Name = "lblSessionId";
+            this.lblSessionId.Padding = new System.Windows.Forms.Padding(5, 2, 0, 0);
+            this.lblSessionId.Size = new System.Drawing.Size(92, 17);
+            this.lblSessionId.TabIndex = 6;
+            this.lblSessionId.Text = "<lblSpectrum>";
+            // 
+            // lblColorCeil
+            // 
+            this.lblColorCeil.AutoSize = true;
+            this.lblColorCeil.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblColorCeil.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblColorCeil.Location = new System.Drawing.Point(0, 0);
+            this.lblColorCeil.Name = "lblColorCeil";
+            this.lblColorCeil.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.lblColorCeil.Size = new System.Drawing.Size(84, 17);
+            this.lblColorCeil.TabIndex = 4;
+            this.lblColorCeil.Text = "<lblColorCeil>";
             // 
             // panel2
             // 
@@ -321,18 +333,6 @@
             this.panel3.Size = new System.Drawing.Size(28, 26);
             this.panel3.TabIndex = 5;
             // 
-            // lblEnergy
-            // 
-            this.lblEnergy.AutoSize = true;
-            this.lblEnergy.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblEnergy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEnergy.Location = new System.Drawing.Point(261, 0);
-            this.lblEnergy.Name = "lblEnergy";
-            this.lblEnergy.Padding = new System.Windows.Forms.Padding(5, 2, 0, 0);
-            this.lblEnergy.Size = new System.Drawing.Size(77, 17);
-            this.lblEnergy.TabIndex = 7;
-            this.lblEnergy.Text = "<lblEnergy>";
-            // 
             // FormWaterfallLive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -345,6 +345,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(500, 320);
             this.Name = "FormWaterfallLive";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Crash - Waterfall Live";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormWaterfall_FormClosing);
             this.Load += new System.EventHandler(this.FormWaterfall_Load);

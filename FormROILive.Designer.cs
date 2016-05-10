@@ -55,7 +55,7 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(934, 490);
+            this.pane.Size = new System.Drawing.Size(858, 423);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pane_MouseClick);
@@ -85,9 +85,9 @@
             this.panel3.Controls.Add(this.btnRight);
             this.panel3.Controls.Add(this.btnRightAll);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 515);
+            this.panel3.Location = new System.Drawing.Point(0, 448);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(934, 26);
+            this.panel3.Size = new System.Drawing.Size(858, 26);
             this.panel3.TabIndex = 4;
             // 
             // lblSpectrum
@@ -121,7 +121,7 @@
             this.btnLeftAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeftAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLeftAll.Image = global::crash.Properties.Resources.left_all_16;
-            this.btnLeftAll.Location = new System.Drawing.Point(774, 0);
+            this.btnLeftAll.Location = new System.Drawing.Point(698, 0);
             this.btnLeftAll.Name = "btnLeftAll";
             this.btnLeftAll.Size = new System.Drawing.Size(40, 26);
             this.btnLeftAll.TabIndex = 0;
@@ -135,7 +135,7 @@
             this.btnLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLeft.Image = global::crash.Properties.Resources.left_16;
-            this.btnLeft.Location = new System.Drawing.Point(814, 0);
+            this.btnLeft.Location = new System.Drawing.Point(738, 0);
             this.btnLeft.Name = "btnLeft";
             this.btnLeft.Size = new System.Drawing.Size(40, 26);
             this.btnLeft.TabIndex = 1;
@@ -149,7 +149,7 @@
             this.btnRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRight.Image = global::crash.Properties.Resources.right_16;
-            this.btnRight.Location = new System.Drawing.Point(854, 0);
+            this.btnRight.Location = new System.Drawing.Point(778, 0);
             this.btnRight.Name = "btnRight";
             this.btnRight.Size = new System.Drawing.Size(40, 26);
             this.btnRight.TabIndex = 2;
@@ -163,7 +163,7 @@
             this.btnRightAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRightAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRightAll.Image = global::crash.Properties.Resources.right_all_16;
-            this.btnRightAll.Location = new System.Drawing.Point(894, 0);
+            this.btnRightAll.Location = new System.Drawing.Point(818, 0);
             this.btnRightAll.Name = "btnRightAll";
             this.btnRightAll.Size = new System.Drawing.Size(40, 26);
             this.btnRightAll.TabIndex = 3;
@@ -176,7 +176,7 @@
             this.btnOptions});
             this.tools.Location = new System.Drawing.Point(0, 0);
             this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(934, 25);
+            this.tools.Size = new System.Drawing.Size(858, 25);
             this.tools.TabIndex = 5;
             this.tools.Text = "toolStrip1";
             // 
@@ -192,13 +192,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 541);
+            this.ClientSize = new System.Drawing.Size(858, 474);
             this.Controls.Add(this.pane);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.tools);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(320, 320);
             this.Name = "FormROILive";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Crash - ROI Live";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormROITableLive_FormClosing);
             this.Load += new System.EventHandler(this.FormROITableLive_Load);

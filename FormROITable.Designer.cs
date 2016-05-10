@@ -571,7 +571,7 @@
             // 
             // color5
             // 
-            this.color5.BackColor = System.Drawing.Color.Yellow;
+            this.color5.BackColor = System.Drawing.Color.Fuchsia;
             this.color5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.color5.Location = new System.Drawing.Point(451, 143);
             this.color5.Name = "color5";
@@ -589,7 +589,7 @@
             // 
             // color7
             // 
-            this.color7.BackColor = System.Drawing.Color.Fuchsia;
+            this.color7.BackColor = System.Drawing.Color.Yellow;
             this.color7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.color7.Location = new System.Drawing.Point(451, 199);
             this.color7.Name = "color7";

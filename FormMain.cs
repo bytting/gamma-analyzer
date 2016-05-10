@@ -105,6 +105,7 @@ namespace crash
             separatorDetector.Visible = false;
 
             lblBackground.Text = "";
+            lblComment.Text = "";
             ClearSpectrumInfo();            
 
             formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
@@ -775,7 +776,8 @@ namespace crash
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 ClearSession();
-                session.Load(dialog.SelectedPath);                
+                session.Load(dialog.SelectedPath);
+                lblComment.Text = session.Info.Comment;
 
                 formWaterfallLive.SetSession(session);
                 formROILive.SetSession(session);
@@ -921,8 +923,11 @@ namespace crash
             }
 
             FormSessionInfo form = new FormSessionInfo(session, "Session Info");
-            form.ShowDialog();
-
+            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                session.SaveInfo();
+                lblComment.Text = session.Info.Comment;
+            }
         }        
 
         private void menuItemClearSession_Click(object sender, EventArgs e)
@@ -933,25 +938,7 @@ namespace crash
         private void menuItemClearBackground_Click(object sender, EventArgs e)
         {
             ClearBackground();
-        }        
-
-        private void menuItemShowRegressionPoints_Click(object sender, EventArgs e)
-        {
-            if (selectedDetector == null)
-            {
-                MessageBox.Show("You must select a detector first");
-                return;
-            }
-
-            FormRegressionPoints form = new FormRegressionPoints(selectedDetector);
-            form.Show();
-        }
-
-        private void menuItemShowROITable_Click(object sender, EventArgs e)
-        {
-            FormROITable form = new FormROITable(settings.ROIList);
-            form.ShowDialog();            
-        }
+        }                
 
         private void menuItemShowMap_Click(object sender, EventArgs e)
         {
@@ -1018,6 +1005,18 @@ namespace crash
                     MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
                 }
             }
+        }
+
+        private void menuItemRegressionPoints_Click(object sender, EventArgs e)
+        {
+            if (selectedDetector == null)
+            {
+                MessageBox.Show("You must select a detector first");
+                return;
+            }
+
+            FormRegressionPoints form = new FormRegressionPoints(selectedDetector);
+            form.Show();
         }
     }    
 }

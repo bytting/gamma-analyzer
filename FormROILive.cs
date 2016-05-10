@@ -131,11 +131,8 @@ namespace crash
 
                     int y = pane.Height - 40 - (int)weightedCount;
 
-                    if (x >= 0 && x < bmpPane.Width && y >= 0 && y < bmpPane.Height)
-                    {
-                        //bmpPane.SetPixel(x, y, Color.FromName(rd.ColorName));
-                        g.DrawLine(pen, last_x, last_y, x, y);
-                    }                                        
+                    if (x >= 0 && x < bmpPane.Width && y >= 0 && y < bmpPane.Height)                    
+                        g.DrawLine(pen, last_x, last_y, x, y);                    
                     
                     bmpPane.SetPixel(x, bmpPane.Height - 1, Utils.ToColor(s.SessionIndex));
 
@@ -149,7 +146,7 @@ namespace crash
             {
                 int idx = Utils.ToArgb(bmpPane.GetPixel(j, bmpPane.Height - 1));
 
-                if(idx == 0 || (idx % 50) == 0)                
+                if(idx % 100 == 0)                
                 {
                     g.DrawLine(penMarker, new Point(j, 0), new Point(j, bmpPane.Height - 30));                                    
                     g.DrawString(idx.ToString(), font, new SolidBrush(Color.FromArgb(255, 125, 125, 125)), j, bmpPane.Height - 20);

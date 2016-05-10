@@ -48,6 +48,11 @@ namespace crash
             tbHighChannel.KeyPress += CustomEvents.Integer_KeyPress;
             tbLowEnergy.KeyPress += CustomEvents.Numeric_KeyPress;
             tbHighEnergy.KeyPress += CustomEvents.Numeric_KeyPress;
+
+            tbLowChannel.Text = detector.RegPoint1X.ToString();
+            tbLowEnergy.Text = detector.RegPoint1Y.ToString();            
+            tbHighChannel.Text = detector.RegPoint2X.ToString();
+            tbHighEnergy.Text = detector.RegPoint2Y.ToString();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
