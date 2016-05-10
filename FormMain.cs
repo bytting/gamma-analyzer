@@ -769,7 +769,7 @@ namespace crash
 
         private void menuItemLoadSession_Click(object sender, EventArgs e)
         {            
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            FolderBrowserDialog dialog = new FolderBrowserDialog();            
             dialog.SelectedPath = settings.SessionRootDirectory;
             dialog.Description = "Select session directory";
             dialog.ShowNewFolderButton = false;

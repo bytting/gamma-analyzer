@@ -40,8 +40,8 @@
             this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemROITable = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemPreferences = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemRegressionPoints = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemPreferences = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemLoadSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemClearSession = new System.Windows.Forms.ToolStripMenuItem();
@@ -148,6 +148,7 @@
             this.lblRealtime = new System.Windows.Forms.Label();
             this.lblIndex = new System.Windows.Forms.Label();
             this.lblBackground = new System.Windows.Forms.Label();
+            this.lblComment = new System.Windows.Forms.Label();
             this.tblSession = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.tbSpecCount = new System.Windows.Forms.TextBox();
@@ -156,7 +157,6 @@
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
-            this.lblComment = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -260,19 +260,19 @@
             this.menuItemROITable.Text = "ROI Table";
             this.menuItemROITable.Click += new System.EventHandler(this.menuItemROITable_Click);
             // 
-            // menuItemPreferences
-            // 
-            this.menuItemPreferences.Name = "menuItemPreferences";
-            this.menuItemPreferences.Size = new System.Drawing.Size(167, 22);
-            this.menuItemPreferences.Text = "&Preferences";
-            this.menuItemPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
-            // 
             // menuItemRegressionPoints
             // 
             this.menuItemRegressionPoints.Name = "menuItemRegressionPoints";
             this.menuItemRegressionPoints.Size = new System.Drawing.Size(167, 22);
             this.menuItemRegressionPoints.Text = "Regression &Points";
             this.menuItemRegressionPoints.Click += new System.EventHandler(this.menuItemRegressionPoints_Click);
+            // 
+            // menuItemPreferences
+            // 
+            this.menuItemPreferences.Name = "menuItemPreferences";
+            this.menuItemPreferences.Size = new System.Drawing.Size(167, 22);
+            this.menuItemPreferences.Text = "&Preferences";
+            this.menuItemPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
             // 
             // menuItemSession
             // 
@@ -1481,6 +1481,19 @@
             this.lblBackground.Text = "<lblBackground>";
             this.lblBackground.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // lblComment
+            // 
+            this.lblComment.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.lblComment, 2);
+            this.lblComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblComment.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblComment.Location = new System.Drawing.Point(229, 0);
+            this.lblComment.Name = "lblComment";
+            this.lblComment.Size = new System.Drawing.Size(446, 20);
+            this.lblComment.TabIndex = 17;
+            this.lblComment.Text = "<lblComment>";
+            this.lblComment.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // tblSession
             // 
             this.tblSession.ColumnCount = 8;
@@ -1580,19 +1593,6 @@
             this.btnSendClose.Text = "Send close";
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
-            // 
-            // lblComment
-            // 
-            this.lblComment.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.lblComment, 2);
-            this.lblComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblComment.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblComment.Location = new System.Drawing.Point(229, 0);
-            this.lblComment.Name = "lblComment";
-            this.lblComment.Size = new System.Drawing.Size(446, 20);
-            this.lblComment.TabIndex = 17;
-            this.lblComment.Text = "<lblComment>";
-            this.lblComment.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FormMain
             // 

@@ -23,7 +23,11 @@ namespace crash
 
         private void FormSessionInfo_Load(object sender, EventArgs e)
         {
+            lblName.Text = session.Info.Name;
+            lblDetector.Text = session.Info.Detector.Serialnumber;
+            lblLivetime.Text = session.Info.Livetime.ToString();
             tbComment.Text = session.Info.Comment;
+            tbGEScript.Text = session.Info.GEScript;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
