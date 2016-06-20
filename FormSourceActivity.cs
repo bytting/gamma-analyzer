@@ -43,7 +43,16 @@ namespace crash
 
         private void btnGetElevation_Click(object sender, EventArgs e)
         {
-            tbElevation.Text = "";
+            string apiKey = tbApiKey.Text.Trim();
+            if(String.IsNullOrEmpty(apiKey))
+            {
+                MessageBox.Show("Google API key is required");
+                return;
+            }
+
+            mSettings.LastApiKey = apiKey;
+
+            tbElevation.Text = "";            
             double elevation = mSpectrum.GetElevation(tbApiKey.Text);
             if (elevation == double.MinValue)
             {                
@@ -51,8 +60,7 @@ namespace crash
                 return;
             }                
 
-            tbElevation.Text = String.Format("{0:###0.0##}", elevation);
-            mSettings.LastApiKey = tbApiKey.Text;
+            tbElevation.Text = String.Format("{0:###0.0##}", elevation);            
         }                
     }
 }
