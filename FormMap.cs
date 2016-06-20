@@ -60,7 +60,7 @@ namespace crash
             tbLon.KeyPress += CustomEvents.Numeric_KeyPress;
 
             gmap.Overlays.Add(overlay);
-            gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);            
+            gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
         }
 
         private void cboxMapMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -108,7 +108,7 @@ namespace crash
                         break;
                 }
                 //gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
-                //gmap.Zoom = 12;
+                //gmap.Zoom = 12;                                
             }
         }  
       

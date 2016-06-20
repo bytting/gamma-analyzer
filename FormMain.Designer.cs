@@ -157,6 +157,7 @@
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
+            this.lblElevation = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -1264,6 +1265,7 @@
             this.tableLayoutPanel2.Controls.Add(this.lblIndex, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.lblBackground, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.lblComment, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblElevation, 3, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -1594,6 +1596,18 @@
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
             // 
+            // lblElevation
+            // 
+            this.lblElevation.AutoSize = true;
+            this.lblElevation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblElevation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblElevation.Location = new System.Drawing.Point(681, 20);
+            this.lblElevation.Name = "lblElevation";
+            this.lblElevation.Size = new System.Drawing.Size(220, 20);
+            this.lblElevation.TabIndex = 18;
+            this.lblElevation.Text = "<Elevation>";
+            this.lblElevation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1772,6 +1786,7 @@
         private System.Windows.Forms.Label lblSetupEnergy;
         private System.Windows.Forms.ToolStripMenuItem menuItemRegressionPoints;
         private System.Windows.Forms.Label lblComment;
+        private System.Windows.Forms.Label lblElevation;
     }
 }
 

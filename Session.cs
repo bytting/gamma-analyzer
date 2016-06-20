@@ -114,7 +114,7 @@ namespace crash
             {
                 string json = File.ReadAllText(filename);
                 burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
-                Spectrum spec = new Spectrum(msg);                
+                Spectrum spec = new Spectrum(msg, false);                
                 spec.CalculateDoserate(Info.Detector, GEFactor);
                 Add(spec);
             }

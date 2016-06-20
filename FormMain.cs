@@ -284,7 +284,7 @@ namespace crash
 
                 case "spectrum":
 
-                    Spectrum spec = new Spectrum(msg);                    
+                    Spectrum spec = new Spectrum(msg, true);                    
 
                     if (spec.IsPreview)
                     {
@@ -447,6 +447,7 @@ namespace crash
             lblRealtime.Text = "";
             lblLivetime.Text = "";            
             lblIndex.Text = "";
+            lblElevation.Text = "";
             lblLatitudeStart.Text = "";
             lblLongitudeStart.Text = "";
             lblAltitudeStart.Text = "";
@@ -677,6 +678,7 @@ namespace crash
                 lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
                 lblSession.Text = "Session: " + s.SessionName;
                 lblIndex.Text = "Index: " + s.SessionIndex;
+                lblElevation.Text = "Elevation: " + String.Format("{0:###0.0##}", s.Elevation);
                 lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart;
                 lblAltitudeStart.Text = "Alt. start: " + s.AltitudeStart;
@@ -736,6 +738,7 @@ namespace crash
                 lblLivetime.Text = "Livetime:" + liveTime;
                 lblSession.Text = "Session: " + s1.SessionName;
                 lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;
+                lblElevation.Text = "";
                 lblLatitudeStart.Text = "Lat. start: " + s1.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s1.LongitudeStart;
                 lblAltitudeStart.Text = "Alt. start: " + s1.AltitudeStart;

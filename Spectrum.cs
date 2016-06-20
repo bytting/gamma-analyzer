@@ -24,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace crash
 {
@@ -52,15 +53,17 @@ namespace crash
         public int Realtime { get; private set; }
         public int Livetime { get; private set; }
         public int SpectralInput { get; private set; }
-        public double Doserate { get; private set; }        
+        public double Doserate { get; private set; }
+        public double Elevation { get; private set; }
 
         public Spectrum()
         {
             mChannels = new List<float>();
         }
 
-        public Spectrum(burn.Message msg)
+        public Spectrum(burn.Message msg, bool fetchElevation)
         {
+            // FIXME: sanity checks
             SessionName = msg.Arguments["session_name"].ToString();
             SessionIndex = Convert.ToInt32(msg.Arguments["session_index"]);
             Label = "Spectrum " + SessionIndex.ToString();
@@ -79,6 +82,9 @@ namespace crash
             Realtime = Convert.ToInt32(msg.Arguments["realtime"]);
             Livetime = Convert.ToInt32(msg.Arguments["livetime"]);
             SpectralInput = Convert.ToInt32(msg.Arguments["spectral_input"]);
+            if (fetchElevation)
+                Elevation = GetElevation(LatitudeStart, LongitudeStart);
+            else Elevation = double.MinValue;
             mChannels = new List<float>();
             TotalCount = 0f;
             string[] items = msg.Arguments["channels"].ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -104,6 +110,24 @@ namespace crash
             for (int i = start; i < end; i++)
                 max += mChannels[i];
             return max;
+        }
+
+        public double GetElevation(double lat, double lon)
+        {
+            // https://maps.googleapis.com/maps/api/elevation/json?locations=59.948446221,10.602406477&key=AIzaSyCWnm7h4qFTPuUtvQxEdo6I1JpZSI69pHI
+
+            using (System.Net.WebClient wc = new System.Net.WebClient())
+            {
+                string query = "https://maps.googleapis.com/maps/api/elevation/json?locations=" 
+                    + lat.ToString(CultureInfo.InvariantCulture) + "," + lon.ToString(CultureInfo.InvariantCulture) 
+                    + "&key=AIzaSyCWnm7h4qFTPuUtvQxEdo6I1JpZSI69pHI";
+                var json = wc.DownloadString(query);
+
+                ElevationData ed = JsonConvert.DeserializeObject<ElevationData>(json);
+                if (ed.Status.ToUpper() == "OK" && ed.Results.Count > 0)
+                    return ed.Results[0].Elevation;
+                else return double.MinValue;
+            }
         }
 
         public override string ToString()
@@ -133,5 +157,26 @@ namespace crash
 
             return true;
         }
+    }
+
+    public class ElevationResult
+    {
+        [JsonProperty(PropertyName = "elevation")]
+        public double Elevation { get; set; }
+
+        [JsonProperty(PropertyName = "location")]
+        public Dictionary<string, object> Location { get; set; }   
+
+        [JsonProperty(PropertyName = "resolution")]
+        public double Resolution { get; set; }
+    }
+
+    public class ElevationData
+    {
+        [JsonProperty(PropertyName = "results")]
+        public List<ElevationResult> Results { get; set; }
+
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; set; }
     }
 }
