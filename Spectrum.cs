@@ -109,14 +109,13 @@ namespace crash
         }
 
         public double GetElevation(string apiKey)
-        {
-            // https://maps.googleapis.com/maps/api/elevation/json?locations=59.948446221,10.602406477&key=AIzaSyCWnm7h4qFTPuUtvQxEdo6I1JpZSI69pHI
-
+        {            
             using (System.Net.WebClient wc = new System.Net.WebClient())
             {
                 string query = "https://maps.googleapis.com/maps/api/elevation/json?locations=" 
                     + LatitudeStart.ToString(CultureInfo.InvariantCulture) + "," + LongitudeStart.ToString(CultureInfo.InvariantCulture) 
                     + "&key=" + apiKey;
+
                 var json = wc.DownloadString(query);
 
                 ElevationData ed = JsonConvert.DeserializeObject<ElevationData>(json);
