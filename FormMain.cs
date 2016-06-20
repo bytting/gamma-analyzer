@@ -284,7 +284,7 @@ namespace crash
 
                 case "spectrum":
 
-                    Spectrum spec = new Spectrum(msg, true);                    
+                    Spectrum spec = new Spectrum(msg);                    
 
                     if (spec.IsPreview)
                     {
@@ -446,8 +446,7 @@ namespace crash
             lblSession.Text = "";
             lblRealtime.Text = "";
             lblLivetime.Text = "";            
-            lblIndex.Text = "";
-            lblElevation.Text = "";
+            lblIndex.Text = "";            
             lblLatitudeStart.Text = "";
             lblLongitudeStart.Text = "";
             lblAltitudeStart.Text = "";
@@ -677,8 +676,7 @@ namespace crash
                 lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
                 lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
                 lblSession.Text = "Session: " + s.SessionName;
-                lblIndex.Text = "Index: " + s.SessionIndex;
-                lblElevation.Text = "Elevation: " + String.Format("{0:###0.0##}", s.Elevation);
+                lblIndex.Text = "Index: " + s.SessionIndex;                
                 lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart;
                 lblAltitudeStart.Text = "Alt. start: " + s.AltitudeStart;
@@ -737,8 +735,7 @@ namespace crash
                 lblRealtime.Text = "Realtime:" + realTime;
                 lblLivetime.Text = "Livetime:" + liveTime;
                 lblSession.Text = "Session: " + s1.SessionName;
-                lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;
-                lblElevation.Text = "";
+                lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;                
                 lblLatitudeStart.Text = "Lat. start: " + s1.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s1.LongitudeStart;
                 lblAltitudeStart.Text = "Alt. start: " + s1.AltitudeStart;
@@ -1020,6 +1017,19 @@ namespace crash
 
             FormRegressionPoints form = new FormRegressionPoints(selectedDetector);
             form.Show();
+        }
+
+        private void menuItemSourceActivity_Click(object sender, EventArgs e)
+        {
+            if (lbSession.SelectedItems.Count != 1)
+            {
+                MessageBox.Show("You must select a single spectrum");
+                return;
+            }
+                
+            Spectrum s = lbSession.SelectedItem as Spectrum;
+            FormSourceActivity form = new FormSourceActivity(settings, s);
+            form.ShowDialog();
         }
     }    
 }

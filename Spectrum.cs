@@ -53,15 +53,14 @@ namespace crash
         public int Realtime { get; private set; }
         public int Livetime { get; private set; }
         public int SpectralInput { get; private set; }
-        public double Doserate { get; private set; }
-        public double Elevation { get; private set; }
+        public double Doserate { get; private set; }        
 
         public Spectrum()
         {
             mChannels = new List<float>();
         }
 
-        public Spectrum(burn.Message msg, bool fetchElevation)
+        public Spectrum(burn.Message msg)
         {
             // FIXME: sanity checks
             SessionName = msg.Arguments["session_name"].ToString();
@@ -81,10 +80,7 @@ namespace crash
             GpsSpeedEnd = Convert.ToSingle(msg.Arguments["gps_speed_end"], CultureInfo.InvariantCulture);
             Realtime = Convert.ToInt32(msg.Arguments["realtime"]);
             Livetime = Convert.ToInt32(msg.Arguments["livetime"]);
-            SpectralInput = Convert.ToInt32(msg.Arguments["spectral_input"]);
-            if (fetchElevation)
-                Elevation = GetElevation(LatitudeStart, LongitudeStart);
-            else Elevation = double.MinValue;
+            SpectralInput = Convert.ToInt32(msg.Arguments["spectral_input"]);            
             mChannels = new List<float>();
             TotalCount = 0f;
             string[] items = msg.Arguments["channels"].ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -112,15 +108,15 @@ namespace crash
             return max;
         }
 
-        public double GetElevation(double lat, double lon)
+        public double GetElevation(string apiKey)
         {
             // https://maps.googleapis.com/maps/api/elevation/json?locations=59.948446221,10.602406477&key=AIzaSyCWnm7h4qFTPuUtvQxEdo6I1JpZSI69pHI
 
             using (System.Net.WebClient wc = new System.Net.WebClient())
             {
                 string query = "https://maps.googleapis.com/maps/api/elevation/json?locations=" 
-                    + lat.ToString(CultureInfo.InvariantCulture) + "," + lon.ToString(CultureInfo.InvariantCulture) 
-                    + "&key=AIzaSyCWnm7h4qFTPuUtvQxEdo6I1JpZSI69pHI";
+                    + LatitudeStart.ToString(CultureInfo.InvariantCulture) + "," + LongitudeStart.ToString(CultureInfo.InvariantCulture) 
+                    + "&key=" + apiKey;
                 var json = wc.DownloadString(query);
 
                 ElevationData ed = JsonConvert.DeserializeObject<ElevationData>(json);

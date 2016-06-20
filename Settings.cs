@@ -40,5 +40,6 @@ namespace crash
         public string SessionRootDirectory;
         public string LastIP;
         public string LastPort;
+        public string LastApiKey;
     }
 }
