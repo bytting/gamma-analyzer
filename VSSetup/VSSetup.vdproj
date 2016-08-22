@@ -15,8 +15,20 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_219B2984E0F746DDB145056C166E44B5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_3071BDE31BDF90E0B19BECFDDC17F601"
         "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4762D52CD0794690901D9B489D4DDE77"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -83,6 +95,12 @@
         {
         "MsmKey" = "8:_8901C2071DEF8C20E087B31726416314"
         "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_916142B81BCF4A8B8116B68994F1E0F5"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -208,12 +226,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D2DEDE8AC53ACD5930F3EA4B9D454BDB"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -295,6 +307,12 @@
         "OwnerKey" = "8:_A89478F74EE3881276E86F23A455F83E"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_D2DEDE8AC53ACD5930F3EA4B9D454BDB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -313,6 +331,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -329,6 +355,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -358,6 +392,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_219B2984E0F746DDB145056C166E44B5"
+            {
+            "SourcePath" = "8:..\\template_NaI-2tom.py"
+            "TargetName" = "8:template_NaI-2tom.py"
+            "Tag" = "8:"
+            "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3071BDE31BDF90E0B19BECFDDC17F601"
             {
             "AssemblyRegister" = "3:1"
@@ -387,6 +441,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4762D52CD0794690901D9B489D4DDE77"
+            {
+            "SourcePath" = "8:..\\template_settings.xml"
+            "TargetName" = "8:template_settings.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5877F9043662B36B263045C089852369"
@@ -542,6 +616,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_916142B81BCF4A8B8116B68994F1E0F5"
+            {
+            "SourcePath" = "8:..\\template_NaI-3tom.py"
+            "TargetName" = "8:template_NaI-3tom.py"
+            "Tag" = "8:"
+            "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_963AEB5418B0C91DFAEEAA8A3BF56706"

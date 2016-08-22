@@ -77,15 +77,24 @@ namespace crash
         }
 
         private void FormMain_Load(object sender, EventArgs e)
-        {
+        {            
             if (!Directory.Exists(CrashEnvironment.SettingsPath))
-                Directory.CreateDirectory(CrashEnvironment.SettingsPath);
+                Directory.CreateDirectory(CrashEnvironment.SettingsPath);            
 
             if (!Directory.Exists(CrashEnvironment.GEScriptPath))
-                Directory.CreateDirectory(CrashEnvironment.GEScriptPath);            
+                Directory.CreateDirectory(CrashEnvironment.GEScriptPath);
 
-            if (File.Exists(CrashEnvironment.SettingsFile))
-                LoadSettings();            
+            try
+            {
+                string InstallDir = (new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location)).Directory + Path.DirectorySeparatorChar.ToString();
+
+                File.Copy(InstallDir + "template_settings.xml", CrashEnvironment.SettingsFile, false);
+                File.Copy(InstallDir + "template_Nai-2tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py", false);
+                File.Copy(InstallDir + "template_Nai-3tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py", false);
+            }
+            catch { }
+            
+            LoadSettings();            
 
             formConnect = new FormConnect();
             formWaterfallLive = new FormWaterfallLive(settings.ROIList);
