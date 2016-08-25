@@ -107,7 +107,7 @@
             this.lvDetectors.Location = new System.Drawing.Point(128, 287);
             this.lvDetectors.MultiSelect = false;
             this.lvDetectors.Name = "lvDetectors";
-            this.lvDetectors.Size = new System.Drawing.Size(579, 251);
+            this.lvDetectors.Size = new System.Drawing.Size(579, 174);
             this.lvDetectors.TabIndex = 8;
             this.lvDetectors.UseCompatibleStateImageBehavior = false;
             this.lvDetectors.View = System.Windows.Forms.View.Details;
@@ -199,22 +199,27 @@
             // columnHeaderName
             // 
             this.columnHeaderName.Text = "Name";
+            this.columnHeaderName.Width = 100;
             // 
             // columnHeaderMaxCH
             // 
             this.columnHeaderMaxCH.Text = "Max channels";
+            this.columnHeaderMaxCH.Width = 100;
             // 
             // columnHeaderMinHV
             // 
             this.columnHeaderMinHV.Text = "Min HV";
+            this.columnHeaderMinHV.Width = 100;
             // 
             // columnHeaderMaxHV
             // 
             this.columnHeaderMaxHV.Text = "Max HV";
+            this.columnHeaderMaxHV.Width = 100;
             // 
             // columnHeaderGScript
             // 
             this.columnHeaderGScript.Text = "G Script";
+            this.columnHeaderGScript.Width = 100;
             // 
             // btnAddDetectorType
             // 

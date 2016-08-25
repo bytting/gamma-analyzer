@@ -42,7 +42,7 @@ namespace crash
 
             foreach (DetectorType dt in DetectorTypes)
             {
-                cboxDetectorTypes.Items.Add(dt.Name);
+                cboxDetectorTypes.Items.Add(dt);
             }
         }
         
@@ -86,6 +86,25 @@ namespace crash
             }
             
             Close();
+        }
+
+        private void cboxDetectorTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cboxNumChannels.Items.Clear();
+            DetectorType dt = (DetectorType)cboxDetectorTypes.SelectedItem;
+            for(int i = 256; i <= dt.MaxNumChannels; i *= 2)
+            {
+                cboxNumChannels.Items.Add(i.ToString());
+            }
+
+            tbarCurrHV.Maximum = dt.MaxHV;
+            tbarCurrHV.Minimum = dt.MinHV;
+            tbarCurrHV.Value = dt.MinHV;
+        }
+
+        private void tbarCurrHV_ValueChanged(object sender, EventArgs e)
+        {
+            lblCurrHV.Text = tbarCurrHV.Value.ToString();
         }                
     }
 }

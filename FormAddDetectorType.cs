@@ -24,10 +24,7 @@ namespace crash
         }
 
         private void FormAddDetectorType_Load(object sender, EventArgs e)
-        {
-            tbMaxChannels.KeyPress += CustomEvents.Integer_KeyPress;
-            tbMinHV.KeyPress += CustomEvents.Integer_KeyPress;
-            tbMaxHV.KeyPress += CustomEvents.Integer_KeyPress;
+        {                        
         }
         
         private void btnCancel_Click(object sender, EventArgs e)
@@ -38,21 +35,25 @@ namespace crash
         private void btnOk_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(tbName.Text) 
-                || String.IsNullOrEmpty(tbMaxChannels.Text) 
-                || String.IsNullOrEmpty(tbMinHV.Text)
-                || String.IsNullOrEmpty(tbGScript.Text) 
-                || String.IsNullOrEmpty(tbMaxHV.Text))
+                || String.IsNullOrEmpty(cboxMaxChannels.Text)                 
+                || String.IsNullOrEmpty(tbGScript.Text))
             {
                 MessageBox.Show("One or more required fields missing");
+                return;
+            }
+
+            if(tbarMinHV.Value > tbarMaxHV.Value)
+            {
+                MessageBox.Show("Min HV can not be bigger than max HV");
                 return;
             }
 
             try
             {
                 TypeName = tbName.Text;
-                MaxChannels = Convert.ToInt32(tbMaxChannels.Text);
-                MinHV = Convert.ToInt32(tbMinHV.Text);
-                MaxHV = Convert.ToInt32(tbMaxHV.Text);
+                MaxChannels = Convert.ToInt32(cboxMaxChannels.Text);
+                MinHV = tbarMinHV.Value;
+                MaxHV = tbarMaxHV.Value;
                 GEScript = tbGScript.Text;
             }
             catch
@@ -73,6 +74,16 @@ namespace crash
             {
                 tbGScript.Text = dialog.FileName;
             }
+        }
+
+        private void tbarMinHV_ValueChanged(object sender, EventArgs e)
+        {
+            lblMinHV.Text = tbarMinHV.Value.ToString();
+        }
+
+        private void tbarMaxHV_ValueChanged(object sender, EventArgs e)
+        {
+            lblMaxHV.Text = tbarMaxHV.Value.ToString();
         }        
     }
 }

@@ -51,8 +51,13 @@
             this.tbLivetime = new System.Windows.Forms.TextBox();
             this.tbLLD = new System.Windows.Forms.TextBox();
             this.tbULD = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lblCurrHV = new System.Windows.Forms.Label();
+            this.tbarCurrHV = new System.Windows.Forms.TrackBar();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbarCurrHV)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -106,12 +111,13 @@
             this.tableLayoutPanel1.Controls.Add(this.label10, 0, 9);
             this.tableLayoutPanel1.Controls.Add(this.cboxNumChannels, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.tbSerialnumber, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.tbHV, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.tbCoarseGain, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.tbFineGain, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.tbLivetime, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.tbLLD, 1, 8);
             this.tableLayoutPanel1.Controls.Add(this.tbULD, 1, 9);
+            this.tableLayoutPanel1.Controls.Add(this.tbHV, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -157,6 +163,7 @@
             this.cboxDetectorTypes.Name = "cboxDetectorTypes";
             this.cboxDetectorTypes.Size = new System.Drawing.Size(225, 21);
             this.cboxDetectorTypes.TabIndex = 2;
+            this.cboxDetectorTypes.SelectedIndexChanged += new System.EventHandler(this.cboxDetectorTypes_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -226,13 +233,6 @@
             this.cboxNumChannels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxNumChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxNumChannels.FormattingEnabled = true;
-            this.cboxNumChannels.Items.AddRange(new object[] {
-            "512",
-            "1024",
-            "2048",
-            "4096",
-            "8192",
-            "16384"});
             this.cboxNumChannels.Location = new System.Drawing.Point(156, 87);
             this.cboxNumChannels.Name = "cboxNumChannels";
             this.cboxNumChannels.Size = new System.Drawing.Size(225, 21);
@@ -248,10 +248,9 @@
             // 
             // tbHV
             // 
-            this.tbHV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbHV.Location = new System.Drawing.Point(156, 115);
+            this.tbHV.Location = new System.Drawing.Point(3, 283);
             this.tbHV.Name = "tbHV";
-            this.tbHV.Size = new System.Drawing.Size(225, 20);
+            this.tbHV.Size = new System.Drawing.Size(63, 20);
             this.tbHV.TabIndex = 13;
             // 
             // tbCoarseGain
@@ -294,6 +293,36 @@
             this.tbULD.Size = new System.Drawing.Size(225, 20);
             this.tbULD.TabIndex = 19;
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tbarCurrHV);
+            this.panel2.Controls.Add(this.lblCurrHV);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(156, 115);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(225, 22);
+            this.panel2.TabIndex = 20;
+            // 
+            // lblCurrHV
+            // 
+            this.lblCurrHV.AutoSize = true;
+            this.lblCurrHV.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblCurrHV.Location = new System.Drawing.Point(212, 0);
+            this.lblCurrHV.Name = "lblCurrHV";
+            this.lblCurrHV.Size = new System.Drawing.Size(13, 13);
+            this.lblCurrHV.TabIndex = 0;
+            this.lblCurrHV.Text = "1";
+            // 
+            // tbarCurrHV
+            // 
+            this.tbarCurrHV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbarCurrHV.Location = new System.Drawing.Point(0, 0);
+            this.tbarCurrHV.Name = "tbarCurrHV";
+            this.tbarCurrHV.Size = new System.Drawing.Size(212, 22);
+            this.tbarCurrHV.TabIndex = 1;
+            this.tbarCurrHV.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbarCurrHV.ValueChanged += new System.EventHandler(this.tbarCurrHV_ValueChanged);
+            // 
             // FormAddDetector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -312,6 +341,9 @@
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbarCurrHV)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -340,5 +372,8 @@
         private System.Windows.Forms.TextBox tbLivetime;
         private System.Windows.Forms.TextBox tbLLD;
         private System.Windows.Forms.TextBox tbULD;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TrackBar tbarCurrHV;
+        private System.Windows.Forms.Label lblCurrHV;
     }
 }

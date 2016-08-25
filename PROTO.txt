@@ -42,11 +42,17 @@ set_gain ->
 	voltage
 	coarse_gain
 	fine_gain
+	num_channels
+	lld
+	uld
 	
 set_gain_ok ->
 	voltage
 	coarse_gain
 	fine_gain
+	num_channels
+	lld
+	uld
 	
 set_gain_failed ->
 	message

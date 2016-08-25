@@ -38,16 +38,24 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
-            this.tbMaxChannels = new System.Windows.Forms.TextBox();
-            this.tbMinHV = new System.Windows.Forms.TextBox();
-            this.tbMaxHV = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tbGScript = new System.Windows.Forms.TextBox();
             this.btnBrowseGScript = new System.Windows.Forms.Button();
+            this.cboxMaxChannels = new System.Windows.Forms.ComboBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.tbarMinHV = new System.Windows.Forms.TrackBar();
+            this.lblMinHV = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.tbarMaxHV = new System.Windows.Forms.TrackBar();
+            this.lblMaxHV = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbarMinHV)).BeginInit();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbarMaxHV)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -94,11 +102,11 @@
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.tbName, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tbMaxChannels, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.tbMinHV, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.tbMaxHV, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.cboxMaxChannels, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.panel3, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.panel4, 1, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -157,30 +165,6 @@
             this.tbName.Size = new System.Drawing.Size(375, 20);
             this.tbName.TabIndex = 4;
             // 
-            // tbMaxChannels
-            // 
-            this.tbMaxChannels.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMaxChannels.Location = new System.Drawing.Point(129, 59);
-            this.tbMaxChannels.Name = "tbMaxChannels";
-            this.tbMaxChannels.Size = new System.Drawing.Size(375, 20);
-            this.tbMaxChannels.TabIndex = 5;
-            // 
-            // tbMinHV
-            // 
-            this.tbMinHV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMinHV.Location = new System.Drawing.Point(129, 87);
-            this.tbMinHV.Name = "tbMinHV";
-            this.tbMinHV.Size = new System.Drawing.Size(375, 20);
-            this.tbMinHV.TabIndex = 6;
-            // 
-            // tbMaxHV
-            // 
-            this.tbMaxHV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbMaxHV.Location = new System.Drawing.Point(129, 115);
-            this.tbMaxHV.Name = "tbMaxHV";
-            this.tbMaxHV.Size = new System.Drawing.Size(375, 20);
-            this.tbMaxHV.TabIndex = 7;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -220,6 +204,83 @@
             this.btnBrowseGScript.UseVisualStyleBackColor = true;
             this.btnBrowseGScript.Click += new System.EventHandler(this.btnBrowseGScript_Click);
             // 
+            // cboxMaxChannels
+            // 
+            this.cboxMaxChannels.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxMaxChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxMaxChannels.FormattingEnabled = true;
+            this.cboxMaxChannels.Items.AddRange(new object[] {
+            "256",
+            "512",
+            "1024",
+            "2048"});
+            this.cboxMaxChannels.Location = new System.Drawing.Point(129, 59);
+            this.cboxMaxChannels.Name = "cboxMaxChannels";
+            this.cboxMaxChannels.Size = new System.Drawing.Size(375, 21);
+            this.cboxMaxChannels.TabIndex = 10;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.tbarMinHV);
+            this.panel3.Controls.Add(this.lblMinHV);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(129, 87);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(375, 22);
+            this.panel3.TabIndex = 11;
+            // 
+            // tbarMinHV
+            // 
+            this.tbarMinHV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbarMinHV.Location = new System.Drawing.Point(0, 0);
+            this.tbarMinHV.Maximum = 1500;
+            this.tbarMinHV.Name = "tbarMinHV";
+            this.tbarMinHV.Size = new System.Drawing.Size(362, 22);
+            this.tbarMinHV.TabIndex = 1;
+            this.tbarMinHV.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbarMinHV.ValueChanged += new System.EventHandler(this.tbarMinHV_ValueChanged);
+            // 
+            // lblMinHV
+            // 
+            this.lblMinHV.AutoSize = true;
+            this.lblMinHV.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblMinHV.Location = new System.Drawing.Point(362, 0);
+            this.lblMinHV.Name = "lblMinHV";
+            this.lblMinHV.Size = new System.Drawing.Size(13, 13);
+            this.lblMinHV.TabIndex = 0;
+            this.lblMinHV.Text = "1";
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.tbarMaxHV);
+            this.panel4.Controls.Add(this.lblMaxHV);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(129, 115);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(375, 22);
+            this.panel4.TabIndex = 12;
+            // 
+            // tbarMaxHV
+            // 
+            this.tbarMaxHV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbarMaxHV.Location = new System.Drawing.Point(0, 0);
+            this.tbarMaxHV.Maximum = 1500;
+            this.tbarMaxHV.Name = "tbarMaxHV";
+            this.tbarMaxHV.Size = new System.Drawing.Size(362, 22);
+            this.tbarMaxHV.TabIndex = 1;
+            this.tbarMaxHV.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbarMaxHV.ValueChanged += new System.EventHandler(this.tbarMaxHV_ValueChanged);
+            // 
+            // lblMaxHV
+            // 
+            this.lblMaxHV.AutoSize = true;
+            this.lblMaxHV.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblMaxHV.Location = new System.Drawing.Point(362, 0);
+            this.lblMaxHV.Name = "lblMaxHV";
+            this.lblMaxHV.Size = new System.Drawing.Size(13, 13);
+            this.lblMaxHV.TabIndex = 0;
+            this.lblMaxHV.Text = "1";
+            // 
             // FormAddDetectorType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -240,6 +301,12 @@
             this.tableLayoutPanel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbarMinHV)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbarMaxHV)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -255,12 +322,16 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbName;
-        private System.Windows.Forms.TextBox tbMaxChannels;
-        private System.Windows.Forms.TextBox tbMinHV;
-        private System.Windows.Forms.TextBox tbMaxHV;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TextBox tbGScript;
         private System.Windows.Forms.Button btnBrowseGScript;
+        private System.Windows.Forms.ComboBox cboxMaxChannels;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.TrackBar tbarMinHV;
+        private System.Windows.Forms.Label lblMinHV;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TrackBar tbarMaxHV;
+        private System.Windows.Forms.Label lblMaxHV;
     }
 }

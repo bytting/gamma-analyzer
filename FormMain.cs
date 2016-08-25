@@ -31,6 +31,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Globalization;
 using ZedGraph;
 //using IronPython.Hosting;
 //using IronPython.Runtime;
@@ -41,7 +42,7 @@ using Newtonsoft.Json;
 namespace crash
 {
     public partial class FormMain : Form
-    {
+    {        
         CrashSettings settings = new CrashSettings();
 
         static ConcurrentQueue<burn.Message> sendq = null;
@@ -219,21 +220,21 @@ namespace crash
                 case "connect_ok":
                     lblConnectionStatus.ForeColor = Color.Green;
                     lblConnectionStatus.Text = "Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"];
-                    Utils.Log.Add("Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
+                    Utils.Log.Add("RECV: Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
                     connected = true;
                     break;
 
                 case "connect_failed":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"];
-                    Utils.Log.Add("Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
+                    Utils.Log.Add("RECV: Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
                     connected = false;
                     break;
 
                 case "disconnect_ok":
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    Utils.Log.Add("Disconnected from peer");
+                    Utils.Log.Add("RECV: Disconnected from peer");
                     connected = false;
                     break;
 
@@ -242,17 +243,17 @@ namespace crash
                     netThread.Join();
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    Utils.Log.Add("Disconnected from peer, peer closed");
+                    Utils.Log.Add("RECV: Disconnected from peer, peer closed");
                     break;
 
                 case "new_session_ok":
                     bool prev = msg.Arguments["preview"].ToString() == "1";
                     if(prev)
-                        Utils.Log.Add("Preview received");
+                        Utils.Log.Add("RECV: Preview received");
                     else
                     {
                         string sessionName = msg.Arguments["session_name"].ToString();
-                        Utils.Log.Add("New session created: " + sessionName);
+                        Utils.Log.Add("RECV: New session created: " + sessionName);
 
                         float livetime = Convert.ToSingle(msg.Arguments["livetime"]);
                         int iterations = Convert.ToInt32(msg.Arguments["iterations"]);
@@ -268,27 +269,33 @@ namespace crash
                     break;
 
                 case "new_session_failed":
-                    Utils.Log.Add("New session failed: " + msg.Arguments["message"]);
+                    Utils.Log.Add("RECV: New session failed: " + msg.Arguments["message"]);
                     break;
 
                 case "stop_session_ok":
-                    Utils.Log.Add("Session stopped");
+                    Utils.Log.Add("RECV: Session stopped");
                     break;
 
                 case "session_finished":
-                    Utils.Log.Add("Session " + msg.Arguments["session_name"] + " finished");                    
+                    Utils.Log.Add("RECV: Session " + msg.Arguments["session_name"] + " finished");                    
                     break;
 
                 case "error":
-                    Utils.Log.Add("Error: " + msg.Arguments["message"]);
+                    Utils.Log.Add("RECV: Error: " + msg.Arguments["message"]);
                     break;
 
                 case "error_socket":
-                    Utils.Log.Add("Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
+                    Utils.Log.Add("RECV: Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
                     break;                
 
                 case "set_gain_ok":
-                    Utils.Log.Add("set gain: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
+                    Utils.Log.Add("RECV: set_gain ok: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
+                    selectedDetector.CurrentHV = Convert.ToInt32(msg.Arguments["voltage"]);
+                    selectedDetector.CurrentCoarseGain = Convert.ToDouble(msg.Arguments["coarse_gain"]);
+                    selectedDetector.CurrentFineGain = Convert.ToDouble(msg.Arguments["fine_gain"]);
+                    selectedDetector.CurrentNumChannels = Convert.ToInt32(msg.Arguments["num_channels"]);
+                    selectedDetector.CurrentLLD = Convert.ToInt32(msg.Arguments["lld"]);
+                    selectedDetector.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);
                     break;
 
                 case "spectrum":
@@ -297,7 +304,7 @@ namespace crash
 
                     if (spec.IsPreview)
                     {
-                        Utils.Log.Add(spec.Label + " preview spectrum received");
+                        Utils.Log.Add("RECV: " + spec.Label + " preview spectrum received");
 
                         GraphPane pane = graphSetup.GraphPane;
                         pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
@@ -331,7 +338,7 @@ namespace crash
                     }
                     else
                     {
-                        Utils.Log.Add(spec.Label + " session spectrum received");
+                        Utils.Log.Add("RECV: " + spec.Label + " session spectrum received");
 
                         // Make sure session is allocated in case spectrums are ticking in                                              
 
@@ -362,7 +369,7 @@ namespace crash
                     string info = msg.Command + " -> ";
                     foreach (KeyValuePair<string, object> item in msg.Arguments)
                         info += item.Key + ":" + item.Value.ToString() + ", ";
-                    Utils.Log.Add("Unhandeled command: " + info);
+                    Utils.Log.Add("RECV: Unhandeled command: " + info);
                     break;
             }
             return true;
@@ -400,7 +407,7 @@ namespace crash
 
             sendq.Enqueue(new burn.Message("disconnect", null));
 
-            Utils.Log.Add("disconnect command sent");
+            Utils.Log.Add("SEND: disconnect");
         }        
 
         private void btnSendClose_Click(object sender, EventArgs e)
@@ -410,7 +417,7 @@ namespace crash
 
             sendq.Enqueue(new burn.Message("close", null));
 
-            Utils.Log.Add("close command sent");          
+            Utils.Log.Add("SEND: close");          
         }
 
         private void btnSendSession_Click(object sender, EventArgs e)
@@ -447,7 +454,7 @@ namespace crash
             msg.AddParameter("delay", delay);
             sendq.Enqueue(msg);
 
-            Utils.Log.Add("new_session command sent");
+            Utils.Log.Add("SEND: new_session");
         }
 
         private void ClearSpectrumInfo()
@@ -507,7 +514,7 @@ namespace crash
         {
             sendq.Enqueue(new burn.Message("stop_session", null));
 
-            Utils.Log.Add("stop_session command sent");
+            Utils.Log.Add("SEND: stop_session");
         }
         
         private void btnMenuSpec_Click(object sender, EventArgs e)
@@ -522,61 +529,73 @@ namespace crash
         
         private void btnSetupSetParams_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(tbSetupVoltage.Text))
+            /*if(!connected)
             {
-                MessageBox.Show("You must specify voltage");
+                MessageBox.Show("Can not set parameters. Not connected");
+                return;
+            }*/                        
+
+            int voltage = tbarSetupVoltage.Value;                        
+            double coarse = 0f;
+            double fine = 0f;
+
+            try
+            {
+                coarse = Convert.ToSingle(cboxSetupCoarseGain.Text);
+                fine = Convert.ToDouble((double)tbarSetupFineGain.Value / 1000d);
+            }
+            catch
+            {
+                MessageBox.Show("Gain: Invalid format (fine gain or coarse gain");
                 return;
             }
 
-            if (String.IsNullOrEmpty(tbSetupCoarseGain.Text))
+            int nchannels = 256;
+            int lld = 1;
+            int uld = 256;
+
+            nchannels = Convert.ToInt32(cboxSetupChannels.Text);
+            
+            lld = tbarSetupLLD.Value;
+            uld = tbarSetupULD.Value;            
+            if(lld > uld)
             {
-                MessageBox.Show("You must specify coarse gain");
+                MessageBox.Show("LLD can not be bigger than ULD");
                 return;
             }
-
-            if (String.IsNullOrEmpty(tbSetupFineGain.Text))
-            {
-                MessageBox.Show("You must specify fine gain");
-                return;
-            }
-
-            int voltage = Convert.ToInt32(tbSetupVoltage.Text);
-            float coarse = Convert.ToSingle(tbSetupCoarseGain.Text);
-            float fine = Convert.ToSingle(tbSetupFineGain.Text);
-
+            
             burn.Message msg = new burn.Message("set_gain", null);
             msg.AddParameter("voltage", voltage);
             msg.AddParameter("coarse_gain", coarse);
             msg.AddParameter("fine_gain", fine);
+            msg.AddParameter("num_channels", nchannels);
+            msg.AddParameter("lld", lld);
+            msg.AddParameter("uld", uld);
             sendq.Enqueue(msg);
 
-            Utils.Log.Add("set_gain command sent");
+            Utils.Log.Add("SEND: set_gain");
         }
 
         private void btnSetupStart_Click(object sender, EventArgs e)
-        {
-            if (String.IsNullOrEmpty(tbSetupLivetime.Text))
-            {
-                MessageBox.Show("You must specify a livetime");
-                return;
-            }
+        {            
+            double livetime = (double)tbarSetupLivetime.Value;                        
 
             burn.Message msg = new burn.Message("new_session", null);
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
             msg.AddParameter("preview", 1);
             msg.AddParameter("iterations", 1);
-            msg.AddParameter("livetime", Convert.ToSingle(tbSetupLivetime.Text));
+            msg.AddParameter("livetime", livetime);
             msg.AddParameter("delay", 0);
             sendq.Enqueue(msg);
 
-            Utils.Log.Add("new_session (preview) command sent");
+            Utils.Log.Add("SEND: new_session (preview)");
         }
 
         private void btnSetupStop_Click(object sender, EventArgs e)
         {
             sendq.Enqueue(new burn.Message("stop_session", null));
 
-            Utils.Log.Add("stop_session command sent");
+            Utils.Log.Add("SEND: stop_session");
         }
 
         private void menuItemPreferences_Click(object sender, EventArgs e)
@@ -836,7 +855,7 @@ namespace crash
 
                 lblBackground.Text = "Background: " + bkgSess.Info.Name;
 
-                Utils.Log.Add("background " + bkgSess.Info.Name + " loaded for session " + session.Info.Name);
+                Utils.Log.Add("Background " + bkgSess.Info.Name + " loaded for session " + session.Info.Name);
             }
         }
 
@@ -912,15 +931,22 @@ namespace crash
             btnShowRegressionPoints.Enabled = true;
 
             cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
-            tbSetupVoltage.Text = selectedDetector.CurrentHV.ToString();
-            tbSetupCoarseGain.Text = selectedDetector.CurrentCoarseGain.ToString();
-            tbSetupFineGain.Text = selectedDetector.CurrentFineGain.ToString();
-            tbSetupLLD.Text = selectedDetector.CurrentLLD.ToString();
-            tbSetupULD.Text = selectedDetector.CurrentULD.ToString();
+
+            tbarSetupVoltage.Minimum = selectedDetectorType.MinHV;
+            tbarSetupVoltage.Maximum = selectedDetectorType.MaxHV;
+            tbarSetupVoltage.Value = selectedDetector.CurrentHV;
+
+            int coarse = Convert.ToInt32(selectedDetector.CurrentCoarseGain);
+            cboxSetupCoarseGain.SelectedIndex = cboxSetupCoarseGain.FindStringExact(coarse.ToString());
+            tbarSetupFineGain.Value = (int)((double)selectedDetector.CurrentFineGain * 1000d);
+            tbarSetupLLD.Value = selectedDetector.CurrentLLD;
+            tbarSetupULD.Value = selectedDetector.CurrentULD;
             cboxSetupChannels.Items.Clear();
             for(int i = 256; i <= selectedDetectorType.MaxNumChannels; i = i * 2)            
                 cboxSetupChannels.Items.Add(i.ToString());
-            cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();            
+            cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
+
+            tbarSetupLivetime.Value = (selectedDetector.CurrentLivetime <= tbarSetupLivetime.Maximum) ? selectedDetector.CurrentLivetime : 1;
         }
 
         private void menuItemSessionInfo_Click(object sender, EventArgs e)
@@ -1039,6 +1065,37 @@ namespace crash
             Spectrum s = lbSession.SelectedItem as Spectrum;
             FormSourceActivity form = new FormSourceActivity(settings, s);
             form.ShowDialog();
+        }
+
+        private void tbarSetupFineGain_Scroll(object sender, EventArgs e)
+        {
+            tbarSetupFineGain_ValueChanged(sender, e);
+        }
+
+        private void tbarSetupFineGain_ValueChanged(object sender, EventArgs e)
+        {
+            double fVal = (double)tbarSetupFineGain.Value / 1000d;
+            lblSetupFineGain.Text = fVal.ToString("F3");
+        }
+
+        private void tbarSetupVoltage_ValueChanged(object sender, EventArgs e)
+        {
+            lblSetupVoltage.Text = tbarSetupVoltage.Value.ToString();
+        }
+
+        private void tbarSetupLLD_ValueChanged(object sender, EventArgs e)
+        {
+            lblSetupLLD.Text = tbarSetupLLD.Value.ToString();
+        }
+
+        private void tbarSetupULD_ValueChanged(object sender, EventArgs e)
+        {
+            lblSetupULD.Text = tbarSetupULD.Value.ToString();
+        }
+
+        private void tbarSetupLivetime_ValueChanged(object sender, EventArgs e)
+        {
+            lblSetupLivetime.Text = tbarSetupLivetime.Value.ToString();
         }
     }    
 }

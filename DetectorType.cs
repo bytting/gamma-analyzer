@@ -47,5 +47,10 @@ namespace crash
             MaxHV = maxHV;
             GEScriptPath = geScriptPath;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
