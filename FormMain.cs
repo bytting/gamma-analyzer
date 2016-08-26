@@ -53,7 +53,7 @@ namespace crash
         
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
-        bool connected = false;
+        bool connected = false;        
         Session session = new Session();
         //Session background = new Session();
 
@@ -74,13 +74,13 @@ namespace crash
 
         public FormMain()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {            
             if (!Directory.Exists(CrashEnvironment.SettingsPath))
-                Directory.CreateDirectory(CrashEnvironment.SettingsPath);            
+                Directory.CreateDirectory(CrashEnvironment.SettingsPath);
 
             if (!Directory.Exists(CrashEnvironment.GEScriptPath))
                 Directory.CreateDirectory(CrashEnvironment.GEScriptPath);
@@ -95,18 +95,18 @@ namespace crash
             }
             catch { }
             
-            LoadSettings();            
+            LoadSettings();
 
             formConnect = new FormConnect();
             formWaterfallLive = new FormWaterfallLive(settings.ROIList);
-            formROILive = new FormROILive(settings.ROIList);            
+            formROILive = new FormROILive(settings.ROIList);
             formMap = new FormMap();
 
             tabs.HideTabs = true;
             tabs.SelectedTab = pageMenu;
 
             lblConnectionStatus.ForeColor = Color.Red;
-            lblConnectionStatus.Text = "Not connected";            
+            lblConnectionStatus.Text = "Not connected";
             lblSetupChannel.Text = "";
             lblSessionChannel.Text = "";
             lblSessionEnergy.Text = "";
@@ -116,20 +116,20 @@ namespace crash
 
             lblBackground.Text = "";
             lblComment.Text = "";
-            ClearSpectrumInfo();            
+            ClearSpectrumInfo();
 
             formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
             formMap.SetSessionIndexEvent += SetSessionIndexEvent;
             formROILive.SetSessionIndexEvent += SetSessionIndexEvent;
 
-            PopulateDetectors();            
+            PopulateDetectors();
 
             netThread.Start();
-            while (!netThread.IsAlive);            
+            while (!netThread.IsAlive);
                     
             timer.Interval = 10;
             timer.Tick += timer_Tick;
-            timer.Start();            
+            timer.Start();
         }        
 
         void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
@@ -150,13 +150,13 @@ namespace crash
                 int tmp = e.StartIndex;
                 e.StartIndex = e.EndIndex;
                 e.EndIndex = tmp;
-            }            
+            }
 
             if (e.StartIndex == e.EndIndex)
             {
                 int idx1 = lbSession.FindStringExact(session.Info.Name + " - " + e.StartIndex.ToString());
-                if (idx1 != ListBox.NoMatches)             
-                    lbSession.SetSelected(idx1, true);                
+                if (idx1 != ListBox.NoMatches)
+                    lbSession.SetSelected(idx1, true);
             }
             else
             {
@@ -179,9 +179,9 @@ namespace crash
         {
             while (!recvq.IsEmpty)
             {
-                burn.Message msg;                
+                burn.Message msg;
                 if (recvq.TryDequeue(out msg))
-                    dispatchRecvMsg(msg);                                    
+                    dispatchRecvMsg(msg);
             }            
         }        
 
@@ -212,6 +212,11 @@ namespace crash
                 sr.Close();
             }
         }        
+
+        private void sendMsg(burn.Message msg)
+        {            
+            sendq.Enqueue(msg);
+        }
 
         private bool dispatchRecvMsg(burn.Message msg)
         {            
@@ -249,11 +254,11 @@ namespace crash
                 case "new_session_ok":
                     bool prev = msg.Arguments["preview"].ToString() == "1";
                     if(prev)
-                        Utils.Log.Add("RECV: Preview received");
+                        Utils.Log.Add("RECV: Preview session started");
                     else
                     {
                         string sessionName = msg.Arguments["session_name"].ToString();
-                        Utils.Log.Add("RECV: New session created: " + sessionName);
+                        Utils.Log.Add("RECV: New session started: " + sessionName);
 
                         float livetime = Convert.ToSingle(msg.Arguments["livetime"]);
                         int iterations = Convert.ToInt32(msg.Arguments["iterations"]);
@@ -264,8 +269,8 @@ namespace crash
 
                         formWaterfallLive.SetSession(session);
                         formROILive.SetSession(session);
-                        formMap.SetSession(session);                        
-                    }                        
+                        formMap.SetSession(session);
+                    }
                     break;
 
                 case "new_session_failed":
@@ -277,7 +282,7 @@ namespace crash
                     break;
 
                 case "session_finished":
-                    Utils.Log.Add("RECV: Session " + msg.Arguments["session_name"] + " finished");                    
+                    Utils.Log.Add("RECV: Session " + msg.Arguments["session_name"] + " finished");
                     break;
 
                 case "error":
@@ -286,10 +291,12 @@ namespace crash
 
                 case "error_socket":
                     Utils.Log.Add("RECV: Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
-                    break;                
+                    break;
 
                 case "set_gain_ok":
-                    Utils.Log.Add("RECV: set_gain ok: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"]);
+                    Utils.Log.Add("RECV: set_gain ok: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " " 
+                        + msg.Arguments["fine_gain"] + " " + msg.Arguments["num_channels"] + " " + msg.Arguments["lld"] + " " 
+                        + msg.Arguments["uld"]);
                     selectedDetector.CurrentHV = Convert.ToInt32(msg.Arguments["voltage"]);
                     selectedDetector.CurrentCoarseGain = Convert.ToDouble(msg.Arguments["coarse_gain"]);
                     selectedDetector.CurrentFineGain = Convert.ToDouble(msg.Arguments["fine_gain"]);
@@ -300,7 +307,7 @@ namespace crash
 
                 case "spectrum":
 
-                    Spectrum spec = new Spectrum(msg);                    
+                    Spectrum spec = new Spectrum(msg);
 
                     if (spec.IsPreview)
                     {
@@ -308,7 +315,7 @@ namespace crash
 
                         GraphPane pane = graphSetup.GraphPane;
                         pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
-                        pane.Fill = new Fill(SystemColors.ButtonFace);                        
+                        pane.Fill = new Fill(SystemColors.ButtonFace);
 
                         pane.Title.Text = "Setup";
                         pane.XAxis.Title.Text = "Channel";
@@ -327,20 +334,20 @@ namespace crash
                         pane.CurveList.Clear();
 
                         LineItem curve = pane.AddCurve("Spectrum", setupGraphList, Color.Red, SymbolType.None);
-                        curve.Line.Fill = new Fill(SystemColors.ButtonFace, Color.Red, 45F);                        
+                        curve.Line.Fill = new Fill(SystemColors.ButtonFace, Color.Red, 45F);
                         pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
-                        pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);                        
-                        pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);                        
+                        pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+                        pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
 
                         graphSetup.RestoreScale(pane);
                         graphSetup.AxisChange();
-                        graphSetup.Refresh();                        
+                        graphSetup.Refresh();
                     }
                     else
                     {
                         Utils.Log.Add("RECV: " + spec.Label + " session spectrum received");
 
-                        // Make sure session is allocated in case spectrums are ticking in                                              
+                        // Make sure session is allocated in case spectrums are ticking in
 
                         string jsonPath = session.SessionPath + Path.DirectorySeparatorChar + "json";
                         if (!Directory.Exists(jsonPath))
@@ -361,8 +368,8 @@ namespace crash
 
                         formMap.AddMarker(spec);
                         formWaterfallLive.UpdatePane();
-                        formROILive.UpdatePane();                        
-                    }                                            
+                        formROILive.UpdatePane();
+                    }
                     break;
 
                 default:
@@ -373,7 +380,7 @@ namespace crash
                     break;
             }
             return true;
-        }                
+        }
 
         private void menuItemExit_Click(object sender, EventArgs e)
         {
@@ -393,8 +400,8 @@ namespace crash
 
             burn.Message msg = new burn.Message("connect", null);
             msg.AddParameter("host", formConnect.IP);
-            msg.AddParameter("port", formConnect.Port);            
-            sendq.Enqueue(msg);
+            msg.AddParameter("port", formConnect.Port);
+            sendMsg(msg);
 
             Utils.Log.Add("connect command sent");
         }
@@ -404,8 +411,8 @@ namespace crash
             if(connected)
                 if (MessageBox.Show("Are you sure you want to disconnect?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
                     return;
-
-            sendq.Enqueue(new burn.Message("disconnect", null));
+            
+            sendMsg(new burn.Message("disconnect", null));
 
             Utils.Log.Add("SEND: disconnect");
         }        
@@ -415,9 +422,9 @@ namespace crash
             if (MessageBox.Show("Are you sure you want to close the remote server?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
                 return;
 
-            sendq.Enqueue(new burn.Message("close", null));
+            sendMsg(new burn.Message("close", null));
 
-            Utils.Log.Add("SEND: close");          
+            Utils.Log.Add("SEND: close");
         }
 
         private void btnSendSession_Click(object sender, EventArgs e)
@@ -452,7 +459,7 @@ namespace crash
             msg.AddParameter("iterations", count);
             msg.AddParameter("livetime", livetime);
             msg.AddParameter("delay", delay);
-            sendq.Enqueue(msg);
+            sendMsg(msg);
 
             Utils.Log.Add("SEND: new_session");
         }
@@ -461,8 +468,8 @@ namespace crash
         {
             lblSession.Text = "";
             lblRealtime.Text = "";
-            lblLivetime.Text = "";            
-            lblIndex.Text = "";            
+            lblLivetime.Text = "";
+            lblIndex.Text = "";
             lblLatitudeStart.Text = "";
             lblLongitudeStart.Text = "";
             lblAltitudeStart.Text = "";
@@ -491,7 +498,7 @@ namespace crash
             formROILive.ClearSession();
             formMap.ClearSession();
 
-            session.Clear();            
+            session.Clear();
         }
 
         private void ClearBackground()
@@ -499,7 +506,7 @@ namespace crash
             session.SetBackground(null);
 
             lblBackground.Text = "";
-            graphSession.Invalidate();            
+            graphSession.Invalidate();
         }
 
         private void btnStopNetService_Click(object sender, EventArgs e)
@@ -512,7 +519,7 @@ namespace crash
         
         private void btnStopSession_Click(object sender, EventArgs e)
         {
-            sendq.Enqueue(new burn.Message("stop_session", null));
+            sendMsg(new burn.Message("stop_session", null));
 
             Utils.Log.Add("SEND: stop_session");
         }
@@ -535,7 +542,13 @@ namespace crash
                 return;
             }*/                        
 
-            int voltage = tbarSetupVoltage.Value;                        
+            if(String.IsNullOrEmpty(cboxSetupDetector.Text.Trim()))
+            {
+                MessageBox.Show("No detector selected");
+                return;
+            }
+
+            int voltage = tbarSetupVoltage.Value;
             double coarse = 0f;
             double fine = 0f;
 
@@ -557,7 +570,7 @@ namespace crash
             nchannels = Convert.ToInt32(cboxSetupChannels.Text);
             
             lld = tbarSetupLLD.Value;
-            uld = tbarSetupULD.Value;            
+            uld = tbarSetupULD.Value;
             if(lld > uld)
             {
                 MessageBox.Show("LLD can not be bigger than ULD");
@@ -571,14 +584,14 @@ namespace crash
             msg.AddParameter("num_channels", nchannels);
             msg.AddParameter("lld", lld);
             msg.AddParameter("uld", uld);
-            sendq.Enqueue(msg);
+            sendMsg(msg);
 
             Utils.Log.Add("SEND: set_gain");
         }
 
         private void btnSetupStart_Click(object sender, EventArgs e)
         {            
-            double livetime = (double)tbarSetupLivetime.Value;                        
+            double livetime = (double)tbarSetupLivetime.Value;
 
             burn.Message msg = new burn.Message("new_session", null);
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
@@ -586,14 +599,14 @@ namespace crash
             msg.AddParameter("iterations", 1);
             msg.AddParameter("livetime", livetime);
             msg.AddParameter("delay", 0);
-            sendq.Enqueue(msg);
+            sendMsg(msg);
 
             Utils.Log.Add("SEND: new_session (preview)");
         }
 
         private void btnSetupStop_Click(object sender, EventArgs e)
-        {
-            sendq.Enqueue(new burn.Message("stop_session", null));
+        {            
+            sendMsg(new burn.Message("stop_session", null));
 
             Utils.Log.Add("SEND: stop_session");
         }
@@ -623,8 +636,8 @@ namespace crash
             btnShow3D.Enabled = false;
             menuItemShow3DMap.Enabled = false;
 
-            if (tabs.SelectedTab == pageMenu)            
-                btnBack.Enabled = false;            
+            if (tabs.SelectedTab == pageMenu)
+                btnBack.Enabled = false;
 
             if (tabs.SelectedTab == pageSession)
             {
@@ -649,7 +662,7 @@ namespace crash
 
             pane.Title.Text = title;
             pane.XAxis.Title.Text = "Channel";
-            pane.YAxis.Title.Text = "Counts";                        
+            pane.YAxis.Title.Text = "Counts";
 
             pane.XAxis.Scale.Min = 0;
             pane.XAxis.Scale.Max = maxCount;
@@ -657,10 +670,10 @@ namespace crash
             pane.YAxis.Scale.Min = minCount;
             pane.YAxis.Scale.Max = maxCount + (maxCount / 10.0);
 
-            pane.CurveList.Clear();            
+            pane.CurveList.Clear();
             
-            if(session.Background != null)            
-            {                
+            if(session.Background != null)
+            {
                 bkgGraphList.Clear();
                 for (int i = 0; i < session.Background.Length; i++)
                     bkgGraphList.Add((double)i, (double)session.Background[i] * bkgScale);
@@ -670,7 +683,7 @@ namespace crash
                 bkgCurve.Line.SmoothTension = 0.5f;
             }
             
-            sessionGraphList.Clear();            
+            sessionGraphList.Clear();
             for (int i = 0; i < channels.Length; i++)
                 sessionGraphList.Add((double)i, (double)channels[i]);
 
@@ -680,7 +693,7 @@ namespace crash
             
             pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
             pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
-            pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);                        
+            pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
 
             graphSession.RestoreScale(pane);
             graphSession.AxisChange();
@@ -704,7 +717,7 @@ namespace crash
                 lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
                 lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
                 lblSession.Text = "Session: " + s.SessionName;
-                lblIndex.Text = "Index: " + s.SessionIndex;                
+                lblIndex.Text = "Index: " + s.SessionIndex;
                 lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart;
                 lblAltitudeStart.Text = "Alt. start: " + s.AltitudeStart;
@@ -740,22 +753,22 @@ namespace crash
                 string title = "Merged: " + s1.SessionIndex + " - " + s2.SessionIndex;
                 float[] chans = new float[(int)s1.NumChannels];
                 float maxCnt = s1.MaxCount, minCnt = s1.MinCount;
-                float totCnt = 0;                
+                float totCnt = 0;
                 for(int i=0; i<lbSession.SelectedItems.Count; i++)
                 {
                     Spectrum s = (Spectrum)lbSession.SelectedItems[i];
-                    for(int j=0; j<s.NumChannels; j++)                    
-                        chans[j] += s.Channels[j];                                            
+                    for(int j=0; j<s.NumChannels; j++)
+                        chans[j] += s.Channels[j];
 
                     if (s.MaxCount > maxCnt)
                         maxCnt = s.MaxCount;
                     if (s.MinCount < minCnt)
                         minCnt = s.MinCount;
 
-                    totCnt += s.TotalCount;                
+                    totCnt += s.TotalCount;
 
                     realTime += ((double)s.Realtime) / 1000000.0;
-                    liveTime += ((double)s.Livetime) / 1000000.0;                    
+                    liveTime += ((double)s.Livetime) / 1000000.0;
                 }
 
                 ShowSpectrum(title, chans, maxCnt, minCnt);
@@ -763,7 +776,7 @@ namespace crash
                 lblRealtime.Text = "Realtime:" + realTime;
                 lblLivetime.Text = "Livetime:" + liveTime;
                 lblSession.Text = "Session: " + s1.SessionName;
-                lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;                
+                lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;
                 lblLatitudeStart.Text = "Lat. start: " + s1.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s1.LongitudeStart;
                 lblAltitudeStart.Text = "Alt. start: " + s1.AltitudeStart;
@@ -774,30 +787,30 @@ namespace crash
                 lblGpsTimeEnd.Text = "Gps time end: " + s2.GpsTimeEnd;
                 lblMaxCount.Text = "Max count: " + maxCnt;
                 lblMinCount.Text = "Min count: " + minCnt;
-                lblTotalCount.Text = "Total count: " + totCnt;                
+                lblTotalCount.Text = "Total count: " + totCnt;
                 lblDoserate.Text = "";
 
                 formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 formROILive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
             }
-        }                        
+        }
 
         private void menuItemAbout_Click(object sender, EventArgs e)
         {
             About about = new About();
-            about.ShowDialog();            
-        }        
+            about.ShowDialog();
+        }
 
         private void PopulateDetectors()
         {
             cboxSetupDetector.Items.Clear();      
-            cboxSetupDetector.Items.AddRange(settings.Detectors.ToArray());            
-        }        
+            cboxSetupDetector.Items.AddRange(settings.Detectors.ToArray());
+        }
 
         private void menuItemLoadSession_Click(object sender, EventArgs e)
-        {            
-            FolderBrowserDialog dialog = new FolderBrowserDialog();            
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.SelectedPath = settings.SessionRootDirectory;
             dialog.Description = "Select session directory";
             dialog.ShowNewFolderButton = false;
@@ -809,13 +822,13 @@ namespace crash
 
                 formWaterfallLive.SetSession(session);
                 formROILive.SetSession(session);
-                formMap.SetSession(session);                
+                formMap.SetSession(session);
 
                 foreach(Spectrum s in session.Spectrums)
                 {
                     lbSession.Items.Insert(0, s);
-                    formMap.AddMarker(s);                    
-                }                
+                    formMap.AddMarker(s);
+                }
 
                 formWaterfallLive.UpdatePane();
                 formROILive.UpdatePane();
@@ -834,7 +847,7 @@ namespace crash
                 return;
             }
 
-            FolderBrowserDialog dialog = new FolderBrowserDialog();            
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.SelectedPath = settings.SessionRootDirectory;
             dialog.Description = "Select background session directory";
             dialog.ShowNewFolderButton = false;
@@ -862,8 +875,8 @@ namespace crash
         private void menuItemROITable_Click(object sender, EventArgs e)
         {
             FormROITable form = new FormROITable(settings.ROIList);
-            form.ShowDialog();            
-        }                
+            form.ShowDialog();
+        }
 
         private void graphSetup_MouseMove(object sender, MouseEventArgs e)
         {
@@ -913,7 +926,7 @@ namespace crash
 
         private void menuItemSessionUnselect_Click(object sender, EventArgs e)
         {
-            lbSession.ClearSelected();            
+            lbSession.ClearSelected();
         }
 
         private void cboxSetupDetector_SelectedIndexChanged(object sender, EventArgs e)
@@ -942,7 +955,7 @@ namespace crash
             tbarSetupLLD.Value = selectedDetector.CurrentLLD;
             tbarSetupULD.Value = selectedDetector.CurrentULD;
             cboxSetupChannels.Items.Clear();
-            for(int i = 256; i <= selectedDetectorType.MaxNumChannels; i = i * 2)            
+            for(int i = 256; i <= selectedDetectorType.MaxNumChannels; i = i * 2)
                 cboxSetupChannels.Items.Add(i.ToString());
             cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
 
@@ -963,7 +976,7 @@ namespace crash
                 session.SaveInfo();
                 lblComment.Text = session.Info.Comment;
             }
-        }        
+        }
 
         private void menuItemClearSession_Click(object sender, EventArgs e)
         {
@@ -973,7 +986,7 @@ namespace crash
         private void menuItemClearBackground_Click(object sender, EventArgs e)
         {
             ClearBackground();
-        }                
+        }
 
         private void menuItemShowMap_Click(object sender, EventArgs e)
         {
@@ -1061,7 +1074,7 @@ namespace crash
                 MessageBox.Show("You must select a single spectrum");
                 return;
             }
-                
+
             Spectrum s = lbSession.SelectedItem as Spectrum;
             FormSourceActivity form = new FormSourceActivity(settings, s);
             form.ShowDialog();
@@ -1097,5 +1110,5 @@ namespace crash
         {
             lblSetupLivetime.Text = tbarSetupLivetime.Value.ToString();
         }
-    }    
+    }
 }
