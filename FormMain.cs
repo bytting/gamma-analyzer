@@ -114,6 +114,7 @@ namespace crash
             lblDetector.Text = "";
             separatorDetector.Visible = false;
 
+            lblSessionDetector.Text = "";
             lblBackground.Text = "";
             lblComment.Text = "";
             ClearSpectrumInfo();
@@ -466,7 +467,7 @@ namespace crash
 
         private void ClearSpectrumInfo()
         {
-            lblSession.Text = "";
+            lblSession.Text = "";            
             lblRealtime.Text = "";
             lblLivetime.Text = "";
             lblIndex.Text = "";
@@ -489,6 +490,7 @@ namespace crash
         private void ClearSession()
         {
             lbSession.Items.Clear();
+            lblSessionDetector.Text = "";
             graphSession.GraphPane.CurveList.Clear();
             graphSession.GraphPane.GraphObjList.Clear();
             graphSession.Invalidate();
@@ -717,6 +719,7 @@ namespace crash
                 lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
                 lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
                 lblSession.Text = "Session: " + s.SessionName;
+                lblSessionDetector.Text = "Det." + session.Info.Detector.Serialnumber + " (" + session.Info.Detector.TypeName + ")";
                 lblIndex.Text = "Index: " + s.SessionIndex;
                 lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart;

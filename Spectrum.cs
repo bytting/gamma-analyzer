@@ -102,9 +102,12 @@ namespace crash
 
         public float GetCountInROI(int start, int end)
         {
+            if (start < 0 || start >= mChannels.Count || end < 0 || end >= mChannels.Count)
+                return 0f;
+
             float max = 0f;
-            for (int i = start; i < end; i++)
-                max += mChannels[i];
+            for (int i = start; i < end; i++)            
+                max += mChannels[i];            
             return max;
         }
 

@@ -125,7 +125,7 @@ namespace crash
 
             overlay = new GMapOverlay();
             gmap.Overlays.Add(overlay);
-            gmap.Refresh();
+            gmap.Refresh();            
         }
 
         public void SetSession(Session sess)
@@ -225,6 +225,26 @@ namespace crash
         {            
             session = null;
             RemoveAllMarkers();
+        }
+
+        private void btnZoomToMax_Click(object sender, EventArgs e)
+        {
+            gmap.Zoom = (double)gmap.MinZoom;
+        }
+
+        private void btnZoomToMin_Click(object sender, EventArgs e)
+        {
+            gmap.Zoom = (double)gmap.MaxZoom;
+        }
+
+        private void btnZoomOut_Click(object sender, EventArgs e)
+        {
+            gmap.Zoom -= 1.0;
+        }
+
+        private void btnZoomIn_Click(object sender, EventArgs e)
+        {
+            gmap.Zoom += 1.0;
         }
     }    
 }

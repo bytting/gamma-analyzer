@@ -95,7 +95,13 @@ namespace crash
             foreach (ROIData rd in ROIList)
             {
                 if (!rd.Active)
-                    continue;                
+                    continue;
+
+                if (rd.StartChannel < 0 || rd.StartChannel >= session.NumChannels || rd.EndChannel < 0 || rd.EndChannel >= session.NumChannels)
+                {
+                    Utils.Log.Add("Warning: ROI entry " + rd.Name + " is outside spectrum");
+                    continue;
+                }
 
                 float s = (bmpPane.Height - 40) / session.GetMaxCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
 

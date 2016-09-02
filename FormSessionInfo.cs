@@ -23,9 +23,16 @@ namespace crash
 
         private void FormSessionInfo_Load(object sender, EventArgs e)
         {
-            lblName.Text = session.Info.Name;
+            lblName.Text = session.Info.Name + " (" + session.Info.Detector.TypeName + ")";
             lblDetector.Text = session.Info.Detector.Serialnumber;
             lblLivetime.Text = session.Info.Livetime.ToString();
+            lblNumChannels.Text = session.NumChannels.ToString();
+            lblHV.Text = session.Info.Detector.CurrentHV.ToString();
+            lblCoarseGain.Text = session.Info.Detector.CurrentCoarseGain.ToString();
+            lblFineGain.Text = session.Info.Detector.CurrentFineGain.ToString();
+            lblLLDULD.Text = session.Info.Detector.CurrentLLD.ToString() + ", " + session.Info.Detector.CurrentULD.ToString();
+            lblRegPoints.Text = session.Info.Detector.RegPoint1X.ToString() + ", " + session.Info.Detector.RegPoint1Y.ToString() + 
+                " - " + session.Info.Detector.RegPoint2X.ToString() + ", " + session.Info.Detector.RegPoint2Y.ToString();
             tbComment.Text = session.Info.Comment;
             tbGEScript.Text = session.Info.GEScript;
         }

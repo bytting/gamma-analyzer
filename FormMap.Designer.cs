@@ -40,6 +40,10 @@
             this.btnGoToLatLon = new System.Windows.Forms.ToolStripButton();
             this.gmap = new GMap.NET.WindowsForms.GMapControl();
             this.status = new System.Windows.Forms.StatusStrip();
+            this.btnZoomToMax = new System.Windows.Forms.ToolStripButton();
+            this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
+            this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
+            this.btnZoomToMin = new System.Windows.Forms.ToolStripButton();
             this.toolsMap.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,7 +58,11 @@
             this.toolStripLabel3,
             this.tbLat,
             this.tbLon,
-            this.btnGoToLatLon});
+            this.btnGoToLatLon,
+            this.btnZoomToMax,
+            this.btnZoomOut,
+            this.btnZoomIn,
+            this.btnZoomToMin});
             this.toolsMap.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolsMap.Location = new System.Drawing.Point(0, 0);
             this.toolsMap.Name = "toolsMap";
@@ -119,10 +127,9 @@
             // 
             // btnGoToLatLon
             // 
-            this.btnGoToLatLon.Image = ((System.Drawing.Image)(resources.GetObject("btnGoToLatLon.Image")));
             this.btnGoToLatLon.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGoToLatLon.Name = "btnGoToLatLon";
-            this.btnGoToLatLon.Size = new System.Drawing.Size(42, 22);
+            this.btnGoToLatLon.Size = new System.Drawing.Size(26, 22);
             this.btnGoToLatLon.Text = "Go";
             this.btnGoToLatLon.Click += new System.EventHandler(this.btnGoToLatLon_Click);
             // 
@@ -161,6 +168,46 @@
             this.status.TabIndex = 6;
             this.status.Text = "statusStrip1";
             // 
+            // btnZoomToMax
+            // 
+            this.btnZoomToMax.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnZoomToMax.Image = global::crash.Properties.Resources.left_all_16;
+            this.btnZoomToMax.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnZoomToMax.Name = "btnZoomToMax";
+            this.btnZoomToMax.Size = new System.Drawing.Size(23, 22);
+            this.btnZoomToMax.Text = "toolStripButton1";
+            this.btnZoomToMax.Click += new System.EventHandler(this.btnZoomToMax_Click);
+            // 
+            // btnZoomOut
+            // 
+            this.btnZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnZoomOut.Image = global::crash.Properties.Resources.left_16;
+            this.btnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnZoomOut.Name = "btnZoomOut";
+            this.btnZoomOut.Size = new System.Drawing.Size(23, 22);
+            this.btnZoomOut.Text = "toolStripButton2";
+            this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
+            // 
+            // btnZoomIn
+            // 
+            this.btnZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnZoomIn.Image = global::crash.Properties.Resources.right_16;
+            this.btnZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnZoomIn.Name = "btnZoomIn";
+            this.btnZoomIn.Size = new System.Drawing.Size(23, 22);
+            this.btnZoomIn.Text = "toolStripButton3";
+            this.btnZoomIn.Click += new System.EventHandler(this.btnZoomIn_Click);
+            // 
+            // btnZoomToMin
+            // 
+            this.btnZoomToMin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnZoomToMin.Image = global::crash.Properties.Resources.right_all_16;
+            this.btnZoomToMin.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnZoomToMin.Name = "btnZoomToMin";
+            this.btnZoomToMin.Size = new System.Drawing.Size(23, 22);
+            this.btnZoomToMin.Text = "toolStripButton4";
+            this.btnZoomToMin.Click += new System.EventHandler(this.btnZoomToMin_Click);
+            // 
             // FormMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -195,5 +242,9 @@
         private System.Windows.Forms.ToolStripTextBox tbLat;
         private System.Windows.Forms.ToolStripTextBox tbLon;
         private System.Windows.Forms.ToolStripButton btnGoToLatLon;
+        private System.Windows.Forms.ToolStripButton btnZoomToMax;
+        private System.Windows.Forms.ToolStripButton btnZoomOut;
+        private System.Windows.Forms.ToolStripButton btnZoomIn;
+        private System.Windows.Forms.ToolStripButton btnZoomToMin;
     }
 }

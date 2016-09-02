@@ -47,6 +47,12 @@ namespace crash
                 if (!rd.Active)
                     continue;
 
+                if(rd.StartChannel < 0 || rd.StartChannel >= session.NumChannels || rd.EndChannel < 0 || rd.EndChannel >= session.NumChannels)
+                {
+                    Utils.Log.Add("Warning: ROI entry " + rd.Name + " is outside spectrum");
+                    continue;
+                }
+
                 int i = 0;
                 PointPairList list = new PointPairList();
                 foreach (Spectrum spec in session.Spectrums)

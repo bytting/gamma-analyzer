@@ -169,6 +169,7 @@
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
+            this.lblSessionDetector = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -594,6 +595,7 @@
             this.btnSessionInfo.Name = "btnSessionInfo";
             this.btnSessionInfo.Size = new System.Drawing.Size(38, 38);
             this.btnSessionInfo.Text = "toolStripButton1";
+            this.btnSessionInfo.ToolTipText = "Show session info";
             this.btnSessionInfo.Click += new System.EventHandler(this.menuItemSessionInfo_Click);
             // 
             // toolStripSeparator8
@@ -1420,11 +1422,12 @@
             this.tableLayoutPanel2.Controls.Add(this.lblGpsTimeEnd, 3, 3);
             this.tableLayoutPanel2.Controls.Add(this.lblDoserate, 3, 4);
             this.tableLayoutPanel2.Controls.Add(this.lblSession, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.lblLivetime, 2, 1);
-            this.tableLayoutPanel2.Controls.Add(this.lblRealtime, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.lblIndex, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.lblBackground, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.lblComment, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lblLivetime, 3, 1);
+            this.tableLayoutPanel2.Controls.Add(this.lblRealtime, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.lblIndex, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.lblSessionDetector, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -1599,7 +1602,7 @@
             this.lblLivetime.AutoSize = true;
             this.lblLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLivetime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLivetime.Location = new System.Drawing.Point(455, 20);
+            this.lblLivetime.Location = new System.Drawing.Point(681, 20);
             this.lblLivetime.Name = "lblLivetime";
             this.lblLivetime.Size = new System.Drawing.Size(220, 20);
             this.lblLivetime.TabIndex = 3;
@@ -1611,7 +1614,7 @@
             this.lblRealtime.AutoSize = true;
             this.lblRealtime.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblRealtime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRealtime.Location = new System.Drawing.Point(229, 20);
+            this.lblRealtime.Location = new System.Drawing.Point(455, 20);
             this.lblRealtime.Name = "lblRealtime";
             this.lblRealtime.Size = new System.Drawing.Size(220, 20);
             this.lblRealtime.TabIndex = 2;
@@ -1623,7 +1626,7 @@
             this.lblIndex.AutoSize = true;
             this.lblIndex.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIndex.Location = new System.Drawing.Point(3, 20);
+            this.lblIndex.Location = new System.Drawing.Point(229, 20);
             this.lblIndex.Name = "lblIndex";
             this.lblIndex.Size = new System.Drawing.Size(220, 20);
             this.lblIndex.TabIndex = 5;
@@ -1754,6 +1757,18 @@
             this.btnSendClose.Text = "Send close";
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
+            // 
+            // lblSessionDetector
+            // 
+            this.lblSessionDetector.AutoSize = true;
+            this.lblSessionDetector.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSessionDetector.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSessionDetector.Location = new System.Drawing.Point(3, 20);
+            this.lblSessionDetector.Name = "lblSessionDetector";
+            this.lblSessionDetector.Size = new System.Drawing.Size(220, 20);
+            this.lblSessionDetector.TabIndex = 18;
+            this.lblSessionDetector.Text = "<lblSessionDetector>";
+            this.lblSessionDetector.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FormMain
             // 
@@ -1961,6 +1976,7 @@
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.TrackBar tbarSetupLivetime;
         private System.Windows.Forms.Label lblSetupLivetime;
+        private System.Windows.Forms.Label lblSessionDetector;
     }
 }
 
