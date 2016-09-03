@@ -112,20 +112,32 @@ namespace crash
                 if (y >= bmpPane.Height)
                     break;
 
+                if (i >= session.Spectrums.Count) // FIXME
+                    continue;
+
                 Spectrum s = session.Spectrums[i];                
                 int w = s.Channels.Count > bmpPane.Width ? bmpPane.Width : s.Channels.Count; // FIXME
-                
+
+                if (y < 0 || y >= bmpPane.Height) // FIXME
+                    continue; 
+
                 bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
 
                 for (int x = 1; x < w; x++)
-                {            
+                {
+                    if (leftX + x >= s.Channels.Count) // FIXME
+                        break;
+
                     int a = 255, r = 0, g = 0, b = 255;
                     float cps = s.Channels[leftX + x];
                     if (btnSubtractBackground.Checked && session.Background != null)
                     {
-                        cps -= session.Background[leftX + x];
-                        if (cps < 0)
-                            cps = 0;
+                        if (leftX + x < session.Background.Length) // FIXME
+                        {
+                            cps -= session.Background[leftX + x];
+                            if (cps < 0)
+                                cps = 0;
+                        }
                     }                        
                     
                     int sectorSkip = CalcSectorSkip(cps, sectorSize);
@@ -158,7 +170,10 @@ namespace crash
                         r = 255;
                         g -= (int)adj;
                     }
-                                        
+
+                    if (x < 0 || x >= bmpPane.Width || y < 0 || y >= bmpPane.Height) // FIXME
+                        continue;
+
                     bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
 
                     if (((leftX + x) % 200) == 0)
@@ -254,6 +269,9 @@ namespace crash
         private void pane_MouseDown(object sender, MouseEventArgs e)
         {
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
+            if (e.Y < 0 || e.Y >= bmpPane.Height)
                 return;
 
             if (e.Button == MouseButtons.Left && SetSessionIndexEvent != null)
@@ -354,7 +372,7 @@ namespace crash
             lblChannel.Text = "Ch: " + String.Format("{0:###0}", mouseChannel);
 
             // Show session index
-            if(e.Y < session.Spectrums.Count - 1)
+            if(e.Y < session.Spectrums.Count - 1 && e.Y >= 0 && e.Y <= bmpPane.Height)
             {
                 int sessionId = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));
                 lblSessionId.Text = "Idx: " + sessionId.ToString();

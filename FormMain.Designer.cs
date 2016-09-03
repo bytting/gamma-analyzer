@@ -156,11 +156,12 @@
             this.lblGpsTimeEnd = new System.Windows.Forms.Label();
             this.lblDoserate = new System.Windows.Forms.Label();
             this.lblSession = new System.Windows.Forms.Label();
+            this.lblBackground = new System.Windows.Forms.Label();
+            this.lblComment = new System.Windows.Forms.Label();
             this.lblLivetime = new System.Windows.Forms.Label();
             this.lblRealtime = new System.Windows.Forms.Label();
             this.lblIndex = new System.Windows.Forms.Label();
-            this.lblBackground = new System.Windows.Forms.Label();
-            this.lblComment = new System.Windows.Forms.Label();
+            this.lblSessionDetector = new System.Windows.Forms.Label();
             this.tblSession = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.tbSpecCount = new System.Windows.Forms.TextBox();
@@ -169,7 +170,6 @@
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
-            this.lblSessionDetector = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -1597,6 +1597,31 @@
             this.lblSession.Text = "<lblSession>";
             this.lblSession.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // lblBackground
+            // 
+            this.lblBackground.AutoSize = true;
+            this.lblBackground.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblBackground.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBackground.Location = new System.Drawing.Point(681, 0);
+            this.lblBackground.Name = "lblBackground";
+            this.lblBackground.Size = new System.Drawing.Size(220, 20);
+            this.lblBackground.TabIndex = 16;
+            this.lblBackground.Text = "<lblBackground>";
+            this.lblBackground.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblComment
+            // 
+            this.lblComment.AutoSize = true;
+            this.tableLayoutPanel2.SetColumnSpan(this.lblComment, 2);
+            this.lblComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblComment.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblComment.Location = new System.Drawing.Point(229, 0);
+            this.lblComment.Name = "lblComment";
+            this.lblComment.Size = new System.Drawing.Size(446, 20);
+            this.lblComment.TabIndex = 17;
+            this.lblComment.Text = "<lblComment>";
+            this.lblComment.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // lblLivetime
             // 
             this.lblLivetime.AutoSize = true;
@@ -1633,30 +1658,17 @@
             this.lblIndex.Text = "<Index>";
             this.lblIndex.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblBackground
+            // lblSessionDetector
             // 
-            this.lblBackground.AutoSize = true;
-            this.lblBackground.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblBackground.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBackground.Location = new System.Drawing.Point(681, 0);
-            this.lblBackground.Name = "lblBackground";
-            this.lblBackground.Size = new System.Drawing.Size(220, 20);
-            this.lblBackground.TabIndex = 16;
-            this.lblBackground.Text = "<lblBackground>";
-            this.lblBackground.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblComment
-            // 
-            this.lblComment.AutoSize = true;
-            this.tableLayoutPanel2.SetColumnSpan(this.lblComment, 2);
-            this.lblComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblComment.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblComment.Location = new System.Drawing.Point(229, 0);
-            this.lblComment.Name = "lblComment";
-            this.lblComment.Size = new System.Drawing.Size(446, 20);
-            this.lblComment.TabIndex = 17;
-            this.lblComment.Text = "<lblComment>";
-            this.lblComment.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblSessionDetector.AutoSize = true;
+            this.lblSessionDetector.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSessionDetector.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSessionDetector.Location = new System.Drawing.Point(3, 20);
+            this.lblSessionDetector.Name = "lblSessionDetector";
+            this.lblSessionDetector.Size = new System.Drawing.Size(220, 20);
+            this.lblSessionDetector.TabIndex = 18;
+            this.lblSessionDetector.Text = "<lblSessionDetector>";
+            this.lblSessionDetector.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tblSession
             // 
@@ -1757,18 +1769,6 @@
             this.btnSendClose.Text = "Send close";
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
-            // 
-            // lblSessionDetector
-            // 
-            this.lblSessionDetector.AutoSize = true;
-            this.lblSessionDetector.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSessionDetector.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSessionDetector.Location = new System.Drawing.Point(3, 20);
-            this.lblSessionDetector.Name = "lblSessionDetector";
-            this.lblSessionDetector.Size = new System.Drawing.Size(220, 20);
-            this.lblSessionDetector.TabIndex = 18;
-            this.lblSessionDetector.Text = "<lblSessionDetector>";
-            this.lblSessionDetector.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // FormMain
             // 
