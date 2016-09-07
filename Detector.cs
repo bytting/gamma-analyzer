@@ -40,6 +40,7 @@ namespace crash
         public int CurrentLivetime { get; set; }
         public int CurrentLLD { get; set; }
         public int CurrentULD { get; set; }
+        public string RegressionScript { get; set; }
         public float RegPoint1X { get; set; }
         public float RegPoint1Y { get; set; }
         public float RegPoint2X { get; set; }

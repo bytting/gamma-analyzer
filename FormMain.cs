@@ -68,6 +68,7 @@ namespace crash
 
         Detector selectedDetector = null;
         DetectorType selectedDetectorType = null;
+        dynamic selectedEngeryCalCurve = null;
         
         float bkgScale = 1f;
         bool selectionRun = false;
@@ -84,6 +85,9 @@ namespace crash
 
             if (!Directory.Exists(CrashEnvironment.GEScriptPath))
                 Directory.CreateDirectory(CrashEnvironment.GEScriptPath);
+
+            if (!Directory.Exists(CrashEnvironment.RegScriptPath))
+                Directory.CreateDirectory(CrashEnvironment.RegScriptPath);
 
             try
             {
@@ -359,8 +363,8 @@ namespace crash
                         writer.Write(json);
                         writer.Close();
 
-                        if(session.IsLoaded)
-                            spec.CalculateDoserate(session.Info.Detector, session.GEFactor);
+                        if (session.IsLoaded && selectedEngeryCalCurve != null)
+                            spec.CalculateDoserate(session.Info.Detector, session.GEFactor, selectedEngeryCalCurve);
 
                         session.Add(spec);
 
@@ -821,6 +825,16 @@ namespace crash
             {
                 ClearSession();
                 session.Load(dialog.SelectedPath);
+
+                if (File.Exists(session.Info.Detector.RegressionScript))
+                {
+                    string pyScript = File.ReadAllText(session.Info.Detector.RegressionScript);
+                    dynamic scope = Utils.PyEngine.CreateScope();
+                    Utils.PyEngine.Execute(pyScript, scope);
+                    selectedEngeryCalCurve = scope.GetVariable<Func<double, double>>("EnergyCalibrationCurve");
+                }
+                else selectedEngeryCalCurve = null;
+                
                 lblComment.Text = session.Info.Comment;
 
                 formWaterfallLive.SetSession(session);
@@ -894,11 +908,9 @@ namespace crash
             lblSetupChannel.Text = "Ch: " + String.Format("{0:###0}", x);
 
             // Show energy
-            if (selectedDetector != null)
+            if (selectedDetector != null && selectedEngeryCalCurve != null)
             {
-                Detector det = selectedDetector;
-                double slope = (det.RegPoint2Y - det.RegPoint1Y) / (det.RegPoint2X - det.RegPoint1X);
-                double E = det.RegPoint1Y + ((double)x * slope - det.RegPoint1X * slope);
+                double E = selectedEngeryCalCurve((double)x);
                 lblSetupEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);
             }
             else lblSetupEnergy.Text = "";
@@ -917,12 +929,10 @@ namespace crash
             lblSessionChannel.Text = "Ch: " + String.Format("{0:###0}", x);
 
             // Show energy
-            if (session.IsLoaded)
+            if (session.IsLoaded && selectedEngeryCalCurve != null)
             {
-                Detector det = session.Info.Detector;
-                double slope = (det.RegPoint2Y - det.RegPoint1Y) / (det.RegPoint2X - det.RegPoint1X);
-                double E = det.RegPoint1Y + ((double)x * slope - det.RegPoint1X * slope);
-                lblSessionEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);
+                double E = selectedEngeryCalCurve((double)x);
+                lblSessionEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);                
             }
             else lblSessionEnergy.Text = "";
         }
@@ -939,6 +949,15 @@ namespace crash
 
             selectedDetector = (Detector)cboxSetupDetector.SelectedItem;
             selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
+
+            if (File.Exists(selectedDetector.RegressionScript))
+            {
+                string pyScript = File.ReadAllText(selectedDetector.RegressionScript);
+                dynamic scope = Utils.PyEngine.CreateScope();
+                Utils.PyEngine.Execute(pyScript, scope);
+                selectedEngeryCalCurve = scope.GetVariable<Func<double, double>>("EnergyCalibrationCurve");
+            }
+            else selectedEngeryCalCurve = null;
 
             lblDetector.Text = "Detector " + selectedDetector.Serialnumber;
             separatorDetector.Visible = true;

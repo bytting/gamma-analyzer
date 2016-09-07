@@ -104,10 +104,20 @@ namespace crash
             if (!Directory.Exists(jsonDir))
                 return false;            
 
-            Info = JsonConvert.DeserializeObject<SessionInfo>(File.ReadAllText(sessionInfoFile));
+            Info = JsonConvert.DeserializeObject<SessionInfo>(File.ReadAllText(sessionInfoFile));            
+
             dynamic scope = Utils.PyEngine.CreateScope();
             Utils.PyEngine.Execute(Info.GEScript, scope);
             GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");
+
+            dynamic energyCalCurve = null;
+            if (File.Exists(Info.Detector.RegressionScript))
+            {
+                string pyScript = File.ReadAllText(Info.Detector.RegressionScript);
+                dynamic scope2 = Utils.PyEngine.CreateScope();
+                Utils.PyEngine.Execute(pyScript, scope2);
+                energyCalCurve = scope2.GetVariable<Func<double, double>>("EnergyCalibrationCurve");
+            }            
 
             string[] files = Directory.GetFiles(jsonDir, "*.json", SearchOption.TopDirectoryOnly);
             foreach (string filename in files)
@@ -115,7 +125,8 @@ namespace crash
                 string json = File.ReadAllText(filename);
                 burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
                 Spectrum spec = new Spectrum(msg);                
-                spec.CalculateDoserate(Info.Detector, GEFactor);
+                if(energyCalCurve != null)
+                    spec.CalculateDoserate(Info.Detector, GEFactor, energyCalCurve);
                 Add(spec);
             }
 

@@ -24,6 +24,7 @@ namespace crash
         public int Livetime { get; set; }
         public int LLD { get; set; }
         public int ULD { get; set; }
+        public string RegressionScript { get; set; }
 
         public FormAddDetector(List<DetectorType> detectorTypes)
         {
@@ -32,8 +33,7 @@ namespace crash
         }
 
         private void FormAddDetector_Load(object sender, EventArgs e)
-        {
-            tbHV.KeyPress += CustomEvents.Integer_KeyPress;
+        {            
             tbCoarseGain.KeyPress += CustomEvents.Numeric_KeyPress;
             tbFineGain.KeyPress += CustomEvents.Numeric_KeyPress;
             tbLivetime.KeyPress += CustomEvents.Integer_KeyPress;
@@ -55,13 +55,13 @@ namespace crash
         {
             if (String.IsNullOrEmpty(cboxDetectorTypes.Text) 
                 || String.IsNullOrEmpty(tbSerialnumber.Text)
-                || String.IsNullOrEmpty(cboxNumChannels.Text)
-                || String.IsNullOrEmpty(tbHV.Text)
+                || String.IsNullOrEmpty(cboxNumChannels.Text)                
                 || String.IsNullOrEmpty(tbCoarseGain.Text)
                 || String.IsNullOrEmpty(tbFineGain.Text)                
                 || String.IsNullOrEmpty(tbLivetime.Text)
                 || String.IsNullOrEmpty(tbLLD.Text)
-                || String.IsNullOrEmpty(tbULD.Text))
+                || String.IsNullOrEmpty(tbULD.Text)
+                || String.IsNullOrEmpty(tbRegScript.Text))
             {
                 MessageBox.Show("One or more required fields missing");
                 return;
@@ -72,12 +72,13 @@ namespace crash
                 DetectorType = cboxDetectorTypes.Text;
                 Serialnumber = tbSerialnumber.Text;
                 NumChannels = Convert.ToInt32(cboxNumChannels.Text);
-                HV = Convert.ToInt32(tbHV.Text);
+                HV = tbarCurrHV.Value;
                 CoarseGain = Convert.ToDouble(tbCoarseGain.Text);
                 FineGain = Convert.ToDouble(tbFineGain.Text);                
                 Livetime = Convert.ToInt32(tbLivetime.Text);
                 LLD = Convert.ToInt32(tbLLD.Text);
                 ULD = Convert.ToInt32(tbULD.Text);
+                RegressionScript = tbRegScript.Text;
             }
             catch
             {
@@ -105,6 +106,16 @@ namespace crash
         private void tbarCurrHV_ValueChanged(object sender, EventArgs e)
         {
             lblCurrHV.Text = tbarCurrHV.Value.ToString();
+        }
+
+        private void btnSelectRegScript_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.InitialDirectory = CrashEnvironment.RegScriptPath;
+            if(dialog.ShowDialog() == DialogResult.OK)
+            {
+                tbRegScript.Text = dialog.FileName;
+            }
         }                
     }
 }

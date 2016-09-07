@@ -58,6 +58,7 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.tools = new System.Windows.Forms.ToolStrip();
             this.status = new System.Windows.Forms.StatusStrip();
+            this.columnHeaderRegScript = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPref.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -88,7 +89,7 @@
             this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPref.Size = new System.Drawing.Size(804, 491);
+            this.tableLayoutPref.Size = new System.Drawing.Size(904, 510);
             this.tableLayoutPref.TabIndex = 0;
             // 
             // lvDetectors
@@ -102,13 +103,14 @@
             this.columnHeaderFineGain,
             this.columnHeaderLivetime,
             this.columnHeaderLLD,
-            this.columnHeaderULD});
+            this.columnHeaderULD,
+            this.columnHeaderRegScript});
             this.lvDetectors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvDetectors.FullRowSelect = true;
-            this.lvDetectors.Location = new System.Drawing.Point(123, 287);
+            this.lvDetectors.Location = new System.Drawing.Point(138, 287);
             this.lvDetectors.MultiSelect = false;
             this.lvDetectors.Name = "lvDetectors";
-            this.lvDetectors.Size = new System.Drawing.Size(556, 194);
+            this.lvDetectors.Size = new System.Drawing.Size(626, 194);
             this.lvDetectors.TabIndex = 8;
             this.lvDetectors.UseCompatibleStateImageBehavior = false;
             this.lvDetectors.View = System.Windows.Forms.View.Details;
@@ -161,18 +163,18 @@
             // tbSessionDir
             // 
             this.tbSessionDir.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSessionDir.Location = new System.Drawing.Point(123, 31);
+            this.tbSessionDir.Location = new System.Drawing.Point(138, 31);
             this.tbSessionDir.Name = "tbSessionDir";
             this.tbSessionDir.ReadOnly = true;
-            this.tbSessionDir.Size = new System.Drawing.Size(556, 20);
+            this.tbSessionDir.Size = new System.Drawing.Size(626, 20);
             this.tbSessionDir.TabIndex = 1;
             // 
             // btnSetSessionDir
             // 
             this.btnSetSessionDir.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetSessionDir.Location = new System.Drawing.Point(685, 31);
+            this.btnSetSessionDir.Location = new System.Drawing.Point(770, 31);
             this.btnSetSessionDir.Name = "btnSetSessionDir";
-            this.btnSetSessionDir.Size = new System.Drawing.Size(116, 22);
+            this.btnSetSessionDir.Size = new System.Drawing.Size(131, 22);
             this.btnSetSessionDir.TabIndex = 2;
             this.btnSetSessionDir.Text = "...";
             this.btnSetSessionDir.UseVisualStyleBackColor = true;
@@ -189,10 +191,10 @@
             this.columnHeaderGScript});
             this.lvDetectorTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvDetectorTypes.FullRowSelect = true;
-            this.lvDetectorTypes.Location = new System.Drawing.Point(123, 87);
+            this.lvDetectorTypes.Location = new System.Drawing.Point(138, 87);
             this.lvDetectorTypes.MultiSelect = false;
             this.lvDetectorTypes.Name = "lvDetectorTypes";
-            this.lvDetectorTypes.Size = new System.Drawing.Size(556, 194);
+            this.lvDetectorTypes.Size = new System.Drawing.Size(626, 194);
             this.lvDetectorTypes.TabIndex = 3;
             this.lvDetectorTypes.UseCompatibleStateImageBehavior = false;
             this.lvDetectorTypes.View = System.Windows.Forms.View.Details;
@@ -225,9 +227,9 @@
             // btnAddDetectorType
             // 
             this.btnAddDetectorType.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnAddDetectorType.Location = new System.Drawing.Point(685, 87);
+            this.btnAddDetectorType.Location = new System.Drawing.Point(770, 87);
             this.btnAddDetectorType.Name = "btnAddDetectorType";
-            this.btnAddDetectorType.Size = new System.Drawing.Size(116, 23);
+            this.btnAddDetectorType.Size = new System.Drawing.Size(131, 23);
             this.btnAddDetectorType.TabIndex = 4;
             this.btnAddDetectorType.Text = "Add";
             this.btnAddDetectorType.UseVisualStyleBackColor = true;
@@ -254,9 +256,9 @@
             // btnAddDetector
             // 
             this.btnAddDetector.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnAddDetector.Location = new System.Drawing.Point(685, 287);
+            this.btnAddDetector.Location = new System.Drawing.Point(770, 287);
             this.btnAddDetector.Name = "btnAddDetector";
-            this.btnAddDetector.Size = new System.Drawing.Size(116, 23);
+            this.btnAddDetector.Size = new System.Drawing.Size(131, 23);
             this.btnAddDetector.TabIndex = 7;
             this.btnAddDetector.Text = "Add";
             this.btnAddDetector.UseVisualStyleBackColor = true;
@@ -267,15 +269,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 516);
+            this.panel1.Location = new System.Drawing.Point(0, 535);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(804, 26);
+            this.panel1.Size = new System.Drawing.Size(904, 26);
             this.panel1.TabIndex = 1;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(608, 0);
+            this.btnCancel.Location = new System.Drawing.Point(708, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(98, 26);
             this.btnCancel.TabIndex = 1;
@@ -286,7 +288,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(706, 0);
+            this.btnOk.Location = new System.Drawing.Point(806, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(98, 26);
             this.btnOk.TabIndex = 0;
@@ -298,23 +300,27 @@
             // 
             this.tools.Location = new System.Drawing.Point(0, 0);
             this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(804, 25);
+            this.tools.Size = new System.Drawing.Size(904, 25);
             this.tools.TabIndex = 2;
             this.tools.Text = "toolStrip1";
             // 
             // status
             // 
-            this.status.Location = new System.Drawing.Point(0, 542);
+            this.status.Location = new System.Drawing.Point(0, 561);
             this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(804, 22);
+            this.status.Size = new System.Drawing.Size(904, 22);
             this.status.TabIndex = 3;
             this.status.Text = "statusStrip1";
+            // 
+            // columnHeaderRegScript
+            // 
+            this.columnHeaderRegScript.Text = "Reg. Script";
             // 
             // FormPreferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 564);
+            this.ClientSize = new System.Drawing.Size(904, 583);
             this.Controls.Add(this.tableLayoutPref);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.status);
@@ -365,5 +371,6 @@
         private System.Windows.Forms.ColumnHeader columnHeaderULD;
         private System.Windows.Forms.ToolStrip tools;
         private System.Windows.Forms.StatusStrip status;
+        private System.Windows.Forms.ColumnHeader columnHeaderRegScript;
     }
 }

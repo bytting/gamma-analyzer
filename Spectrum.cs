@@ -133,24 +133,27 @@ namespace crash
             return SessionName + " - " + SessionIndex.ToString();
         }
 
-        public bool CalculateDoserate(Detector det, dynamic GEFactor = null)
+        public bool CalculateDoserate(Detector det, dynamic GEFactor = null, dynamic energyCalCurve = null)
         {
-            if (det == null || GEFactor == null)
-                return false;            
-
-            if ((det.RegPoint1X == 0f && det.RegPoint1Y == 0f) || (det.RegPoint2X == 0f && det.RegPoint2Y == 0f))
-                return false;
+            if (det == null || GEFactor == null || energyCalCurve == null)
+                return false;                        
             
-            double slope = (det.RegPoint2Y - det.RegPoint1Y) / (det.RegPoint2X - det.RegPoint1X);            
             Doserate = 0.0;
 
-            for (int i = det.CurrentLLD; i < det.CurrentULD; i++) // FIXME: CurrentLLD/ULD is not supposed to be used here
+            int startChan = (int)((double)det.CurrentNumChannels * ((double)det.CurrentLLD / 100.0));            
+            int endChan = det.CurrentNumChannels;
+
+            for (int i = startChan; i < endChan; i++)
             {
                 float sec = (float)Livetime / 1000000f;                
-                float cps = Channels[i] / sec;
-                double E = det.RegPoint1Y + ((double)i * slope - det.RegPoint1X * slope);
+                float cps = Channels[i] / sec;                
+                double E = energyCalCurve((double)i);
+                if (E < 0.05)
+                    continue;
                 double GE = GEFactor(E / 1000.0);
-                Doserate += GE * cps * 60.0;
+                double chanDose = GE * (cps * 60.0);
+                Doserate += chanDose;
+                //Doserate += GE * cps * 60.0;
             }
 
             return true;
