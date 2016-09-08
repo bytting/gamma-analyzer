@@ -168,6 +168,8 @@
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
+            this.btnSetupGoToSessions = new System.Windows.Forms.Button();
+            this.menuItemChangeDetector = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -269,7 +271,8 @@
             // 
             this.menuItemEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemROITable,
-            this.menuItemPreferences});
+            this.menuItemPreferences,
+            this.menuItemChangeDetector});
             this.menuItemEdit.Name = "menuItemEdit";
             this.menuItemEdit.Size = new System.Drawing.Size(39, 20);
             this.menuItemEdit.Text = "&Edit";
@@ -277,14 +280,14 @@
             // menuItemROITable
             // 
             this.menuItemROITable.Name = "menuItemROITable";
-            this.menuItemROITable.Size = new System.Drawing.Size(152, 22);
+            this.menuItemROITable.Size = new System.Drawing.Size(162, 22);
             this.menuItemROITable.Text = "ROI Table";
             this.menuItemROITable.Click += new System.EventHandler(this.menuItemROITable_Click);
             // 
             // menuItemPreferences
             // 
             this.menuItemPreferences.Name = "menuItemPreferences";
-            this.menuItemPreferences.Size = new System.Drawing.Size(152, 22);
+            this.menuItemPreferences.Size = new System.Drawing.Size(162, 22);
             this.menuItemPreferences.Text = "&Preferences";
             this.menuItemPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
             // 
@@ -843,6 +846,7 @@
             this.tableLayoutSetup.Controls.Add(this.panel6, 3, 2);
             this.tableLayoutSetup.Controls.Add(this.panel7, 3, 3);
             this.tableLayoutSetup.Controls.Add(this.panel8, 6, 1);
+            this.tableLayoutSetup.Controls.Add(this.btnSetupGoToSessions, 6, 4);
             this.tableLayoutSetup.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutSetup.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutSetup.Name = "tableLayoutSetup";
@@ -941,6 +945,7 @@
             this.cboxSetupChannels.Name = "cboxSetupChannels";
             this.cboxSetupChannels.Size = new System.Drawing.Size(241, 23);
             this.cboxSetupChannels.TabIndex = 20;
+            this.cboxSetupChannels.SelectedIndexChanged += new System.EventHandler(this.cboxSetupChannels_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -1038,6 +1043,7 @@
             this.cboxSetupCoarseGain.Name = "cboxSetupCoarseGain";
             this.cboxSetupCoarseGain.Size = new System.Drawing.Size(241, 23);
             this.cboxSetupCoarseGain.TabIndex = 40;
+            this.cboxSetupCoarseGain.SelectedIndexChanged += new System.EventHandler(this.cboxSetupCoarseGain_SelectedIndexChanged);
             // 
             // panel3
             // 
@@ -1262,7 +1268,6 @@
             // 
             // btnMenuSession
             // 
-            this.btnMenuSession.Enabled = false;
             this.btnMenuSession.FlatAppearance.BorderSize = 0;
             this.btnMenuSession.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
             this.btnMenuSession.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
@@ -1746,6 +1751,24 @@
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
             // 
+            // btnSetupGoToSessions
+            // 
+            this.btnSetupGoToSessions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSetupGoToSessions.Location = new System.Drawing.Point(927, 123);
+            this.btnSetupGoToSessions.Name = "btnSetupGoToSessions";
+            this.btnSetupGoToSessions.Size = new System.Drawing.Size(243, 22);
+            this.btnSetupGoToSessions.TabIndex = 48;
+            this.btnSetupGoToSessions.Text = "Go to sessions";
+            this.btnSetupGoToSessions.UseVisualStyleBackColor = true;
+            this.btnSetupGoToSessions.Click += new System.EventHandler(this.btnSetupGoToSessions_Click);
+            // 
+            // menuItemChangeDetector
+            // 
+            this.menuItemChangeDetector.Name = "menuItemChangeDetector";
+            this.menuItemChangeDetector.Size = new System.Drawing.Size(162, 22);
+            this.menuItemChangeDetector.Text = "&Change detector";
+            this.menuItemChangeDetector.Click += new System.EventHandler(this.menuItemChangeDetector_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1952,6 +1975,8 @@
         private System.Windows.Forms.Button btnSendSession;
         private System.Windows.Forms.Button btnStopSession;
         private System.Windows.Forms.Button btnSendClose;
+        private System.Windows.Forms.Button btnSetupGoToSessions;
+        private System.Windows.Forms.ToolStripMenuItem menuItemChangeDetector;
     }
 }
 

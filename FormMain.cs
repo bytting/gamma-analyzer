@@ -54,8 +54,7 @@ namespace crash
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
         bool connected = false;        
-        Session session = new Session();
-        //Session background = new Session();
+        Session session = new Session();        
 
         FormConnect formConnect = null;
         FormWaterfallLive formWaterfallLive = null;
@@ -67,11 +66,11 @@ namespace crash
         PointPairList bkgGraphList = new PointPairList();
 
         Detector selectedDetector = null;
-        DetectorType selectedDetectorType = null;
-        //dynamic selectedEngergyCalCurve = null;
+        DetectorType selectedDetectorType = null;        
         
         float bkgScale = 1f;
         bool selectionRun = false;
+        bool detectorReady = false;
 
         public FormMain()
         {
@@ -309,6 +308,7 @@ namespace crash
                     selectedDetector.CurrentNumChannels = Convert.ToInt32(msg.Arguments["num_channels"]);
                     selectedDetector.CurrentLLD = Convert.ToInt32(msg.Arguments["lld"]);
                     selectedDetector.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);
+                    detectorReady = true;
                     break;
 
                 case "spectrum":
@@ -439,8 +439,14 @@ namespace crash
             {
                 MessageBox.Show("You must provide a session directory under preferences");
                 return;
-            }   
-            
+            }
+
+            if (!detectorReady)
+            {
+                tabs.SelectedTab = pageSetup;
+                return;
+            }
+
             if(selectedDetector == null)
             {
                 MessageBox.Show("You must specify a detector under setup");
@@ -741,9 +747,12 @@ namespace crash
                     lblDoserate.Text = "";
                 else lblDoserate.Text = "Doserate: " + String.Format("{0:###0.0##}", s.Doserate);
 
-                formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
-                formMap.SetSelectedSessionIndex(s.SessionIndex);
-                formROILive.SetSelectedSessionIndex(s.SessionIndex);
+                if (formWaterfallLive.Visible)
+                    formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
+                if (formMap.Visible)
+                    formMap.SetSelectedSessionIndex(s.SessionIndex);
+                if (formROILive.Visible)
+                    formROILive.SetSelectedSessionIndex(s.SessionIndex);
             }
             else
             {
@@ -798,9 +807,12 @@ namespace crash
                 lblTotalCount.Text = "Total count: " + totCnt;
                 lblDoserate.Text = "";
 
-                formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
-                formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
-                formROILive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
+                if (formWaterfallLive.Visible)
+                    formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
+                if (formMap.Visible)
+                    formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
+                if (formROILive.Visible)
+                    formROILive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
             }
         }
 
@@ -937,6 +949,8 @@ namespace crash
 
         private void cboxSetupDetector_SelectedIndexChanged(object sender, EventArgs e)
         {
+            detectorReady = false;
+
             if (cboxSetupDetector.SelectedItem == null)
                 return;
 
@@ -946,8 +960,6 @@ namespace crash
 
             lblDetector.Text = "Detector " + selectedDetector.Serialnumber;
             separatorDetector.Visible = true;
-            
-            btnMenuSession.Enabled = true;            
 
             cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
 
@@ -1081,28 +1093,57 @@ namespace crash
 
         private void tbarSetupFineGain_ValueChanged(object sender, EventArgs e)
         {
+            detectorReady = false;
             double fVal = (double)tbarSetupFineGain.Value / 1000d;
             lblSetupFineGain.Text = fVal.ToString("F3");
         }
 
         private void tbarSetupVoltage_ValueChanged(object sender, EventArgs e)
         {
+            detectorReady = false;
             lblSetupVoltage.Text = tbarSetupVoltage.Value.ToString();
         }
 
         private void tbarSetupLLD_ValueChanged(object sender, EventArgs e)
         {
+            detectorReady = false;
             lblSetupLLD.Text = tbarSetupLLD.Value.ToString();
         }
 
         private void tbarSetupULD_ValueChanged(object sender, EventArgs e)
         {
+            detectorReady = false;
             lblSetupULD.Text = tbarSetupULD.Value.ToString();
         }
 
         private void tbarSetupLivetime_ValueChanged(object sender, EventArgs e)
         {
             lblSetupLivetime.Text = tbarSetupLivetime.Value.ToString();
+        }
+
+        private void cboxSetupCoarseGain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            detectorReady = false;
+        }
+
+        private void cboxSetupChannels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            detectorReady = false;
+        }
+
+        private void btnSetupGoToSessions_Click(object sender, EventArgs e)
+        {
+            if(detectorReady)
+                tabs.SelectedTab = pageSession;
+            else
+            {
+                MessageBox.Show("You must set the detector parameters");
+            }
+        }
+
+        private void menuItemChangeDetector_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageSetup;
         }
     }
 }
