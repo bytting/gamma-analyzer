@@ -1,7 +1,3 @@
-Make sure session is allocated if spectrums ticks in after connect (after a disconnect during a session)
-
-Add details in UI
-
 Add comments to spectrums
 
 Add ability to select a following background (one collection behind the selected spectrum, and optionally one in front)
