@@ -100,9 +100,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="TabControlWizard">
-      <HintPath>..\Hapapap\TabControlWizard.dll</HintPath>
-    </Reference>
     <Reference Include="ZedGraph">
       <HintPath>packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
     </Reference>

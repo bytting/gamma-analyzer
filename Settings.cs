@@ -37,7 +37,7 @@ namespace crash
         public List<DetectorType> DetectorTypes = new List<DetectorType>();
         public List<Detector> Detectors = new List<Detector>();
         public List<ROIData> ROIList = new List<ROIData>();
-        public string SessionRootDirectory;
+        public string SessionRootDirectory;        
         public string LastIP;
         public string LastPort;
         public string LastApiKey;

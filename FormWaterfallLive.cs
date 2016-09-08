@@ -69,7 +69,7 @@ namespace crash
 
         private void UpdateStats()
         {
-            lblColorCeil.Text = "Col. Levels: " + tbColorCeil.Minimum + ", " + tbColorCeil.Value + ", " + tbColorCeil.Maximum;                        
+            lblColorCeil.Text = "Color ceiling: " + tbColorCeil.Value + " [" + tbColorCeil.Minimum + ", " + tbColorCeil.Maximum + "]";
         }
 
         public void SetSession(Session sess)
@@ -380,11 +380,9 @@ namespace crash
             else lblSessionId.Text = "";
 
             // Show energy
-            if (session.IsLoaded)
+            if (session.IsLoaded && Utils.EnergyCalculationFunc != null)
             {
-                Detector det = session.Info.Detector;
-                double slope = (det.RegPoint2Y - det.RegPoint1Y) / (det.RegPoint2X - det.RegPoint1X);
-                double E = det.RegPoint1Y + ((double)mouseChannel * slope - det.RegPoint1X * slope);
+                double E = Utils.EnergyCalculationFunc((double)e.X);
                 lblEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);
             }
             else lblEnergy.Text = "";
@@ -395,8 +393,7 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            topY = 0;
-
+            topY = 0;            
             UpdatePane();
         }
 

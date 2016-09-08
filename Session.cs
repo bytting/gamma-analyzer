@@ -126,7 +126,7 @@ namespace crash
                 burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
                 Spectrum spec = new Spectrum(msg);                
                 if(energyCalCurve != null)
-                    spec.CalculateDoserate(Info.Detector, GEFactor, energyCalCurve);
+                    spec.CalculateDoserate(Info.Detector, GEFactor);
                 Add(spec);
             }
 

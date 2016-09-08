@@ -18,6 +18,7 @@
 // Authors: Dag robole,
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,8 +33,9 @@ namespace crash
 {
     public static class Utils
     {        
-        public static FormLog Log = new FormLog();        
-        public static dynamic PyEngine = Python.CreateEngine();        
+        public static FormLog Log = new FormLog();
+        public static dynamic PyEngine = Python.CreateEngine();
+        public static dynamic EnergyCalculationFunc = null;
 
         public static int ToArgb(Color color)
         {
@@ -48,6 +50,24 @@ namespace crash
         {            
             byte[] b = BitConverter.GetBytes(argb);
             return Color.FromArgb(b[3], b[2], b[1], b[0]);
-        }        
+        }
+
+        public static void SetEnergyCalculationFunc(Detector d)
+        {
+            if (d == null)
+            {
+                EnergyCalculationFunc = null;
+                return;
+            }
+
+            if (File.Exists(d.RegressionScript))
+            {
+                string pyScript = File.ReadAllText(d.RegressionScript);
+                dynamic scope = Utils.PyEngine.CreateScope();
+                Utils.PyEngine.Execute(pyScript, scope);
+                EnergyCalculationFunc = scope.GetVariable<Func<double, double>>("EnergyCalibrationCurve");
+            }
+            else EnergyCalculationFunc = null;
+        }
     }
 }

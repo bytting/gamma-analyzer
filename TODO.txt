@@ -7,3 +7,12 @@ Add comments to spectrums
 Add ability to select a following background (one collection behind the selected spectrum, and optionally one in front)
 
 Make GUI workflow more intuitive (tree like structure)
+
+Use IAEA color codes on map markers
+
+Energy calib
+
+Better maps
+
+Remove tab dll
+

@@ -68,7 +68,7 @@ namespace crash
 
         Detector selectedDetector = null;
         DetectorType selectedDetectorType = null;
-        dynamic selectedEngeryCalCurve = null;
+        //dynamic selectedEngergyCalCurve = null;
         
         float bkgScale = 1f;
         bool selectionRun = false;
@@ -79,7 +79,11 @@ namespace crash
         }
 
         private void FormMain_Load(object sender, EventArgs e)
-        {            
+        {
+            tabs.ItemSize = new Size(0, 1);
+            tabs.SizeMode = TabSizeMode.Fixed;            
+            tabs.SelectedTab = pageMenu;            
+
             if (!Directory.Exists(CrashEnvironment.SettingsPath))
                 Directory.CreateDirectory(CrashEnvironment.SettingsPath);
 
@@ -104,10 +108,7 @@ namespace crash
             formConnect = new FormConnect();
             formWaterfallLive = new FormWaterfallLive(settings.ROIList);
             formROILive = new FormROILive(settings.ROIList);
-            formMap = new FormMap();
-
-            tabs.HideTabs = true;
-            tabs.SelectedTab = pageMenu;
+            formMap = new FormMap();                       
 
             lblConnectionStatus.ForeColor = Color.Red;
             lblConnectionStatus.Text = "Not connected";
@@ -363,8 +364,8 @@ namespace crash
                         writer.Write(json);
                         writer.Close();
 
-                        if (session.IsLoaded && selectedEngeryCalCurve != null)
-                            spec.CalculateDoserate(session.Info.Detector, session.GEFactor, selectedEngeryCalCurve);
+                        if (session.IsLoaded && Utils.EnergyCalculationFunc != null)
+                            spec.CalculateDoserate(session.Info.Detector, session.GEFactor);
 
                         session.Add(spec);
 
@@ -806,7 +807,7 @@ namespace crash
         private void menuItemAbout_Click(object sender, EventArgs e)
         {
             About about = new About();
-            about.ShowDialog();
+            about.ShowDialog();            
         }
 
         private void PopulateDetectors()
@@ -818,22 +819,14 @@ namespace crash
         private void menuItemLoadSession_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.SelectedPath = settings.SessionRootDirectory;
+            dialog.SelectedPath = settings.SessionRootDirectory;            
             dialog.Description = "Select session directory";
             dialog.ShowNewFolderButton = false;
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 ClearSession();
                 session.Load(dialog.SelectedPath);
-
-                if (File.Exists(session.Info.Detector.RegressionScript))
-                {
-                    string pyScript = File.ReadAllText(session.Info.Detector.RegressionScript);
-                    dynamic scope = Utils.PyEngine.CreateScope();
-                    Utils.PyEngine.Execute(pyScript, scope);
-                    selectedEngeryCalCurve = scope.GetVariable<Func<double, double>>("EnergyCalibrationCurve");
-                }
-                else selectedEngeryCalCurve = null;
+                Utils.SetEnergyCalculationFunc(session.Info.Detector);                
                 
                 lblComment.Text = session.Info.Comment;
 
@@ -908,9 +901,9 @@ namespace crash
             lblSetupChannel.Text = "Ch: " + String.Format("{0:###0}", x);
 
             // Show energy
-            if (selectedDetector != null && selectedEngeryCalCurve != null)
+            if (selectedDetector != null && Utils.EnergyCalculationFunc != null)
             {
-                double E = selectedEngeryCalCurve((double)x);
+                double E = Utils.EnergyCalculationFunc((double)x);
                 lblSetupEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);
             }
             else lblSetupEnergy.Text = "";
@@ -929,9 +922,9 @@ namespace crash
             lblSessionChannel.Text = "Ch: " + String.Format("{0:###0}", x);
 
             // Show energy
-            if (session.IsLoaded && selectedEngeryCalCurve != null)
+            if (session.IsLoaded && Utils.EnergyCalculationFunc != null)
             {
-                double E = selectedEngeryCalCurve((double)x);
+                double E = Utils.EnergyCalculationFunc((double)x);
                 lblSessionEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);                
             }
             else lblSessionEnergy.Text = "";
@@ -940,7 +933,7 @@ namespace crash
         private void menuItemSessionUnselect_Click(object sender, EventArgs e)
         {
             lbSession.ClearSelected();
-        }
+        }        
 
         private void cboxSetupDetector_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -949,15 +942,7 @@ namespace crash
 
             selectedDetector = (Detector)cboxSetupDetector.SelectedItem;
             selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
-
-            if (File.Exists(selectedDetector.RegressionScript))
-            {
-                string pyScript = File.ReadAllText(selectedDetector.RegressionScript);
-                dynamic scope = Utils.PyEngine.CreateScope();
-                Utils.PyEngine.Execute(pyScript, scope);
-                selectedEngeryCalCurve = scope.GetVariable<Func<double, double>>("EnergyCalibrationCurve");
-            }
-            else selectedEngeryCalCurve = null;
+            Utils.SetEnergyCalculationFunc(selectedDetector);
 
             lblDetector.Text = "Detector " + selectedDetector.Serialnumber;
             separatorDetector.Visible = true;

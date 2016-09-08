@@ -133,9 +133,9 @@ namespace crash
             return SessionName + " - " + SessionIndex.ToString();
         }
 
-        public bool CalculateDoserate(Detector det, dynamic GEFactor = null, dynamic energyCalCurve = null)
+        public bool CalculateDoserate(Detector det, dynamic GEFactor = null)
         {
-            if (det == null || GEFactor == null || energyCalCurve == null)
+            if (det == null || GEFactor == null || Utils.EnergyCalculationFunc == null)
                 return false;                        
             
             Doserate = 0.0;
@@ -146,8 +146,8 @@ namespace crash
             for (int i = startChan; i < endChan; i++)
             {
                 float sec = (float)Livetime / 1000000f;                
-                float cps = Channels[i] / sec;                
-                double E = energyCalCurve((double)i);
+                float cps = Channels[i] / sec;
+                double E = Utils.EnergyCalculationFunc((double)i);
                 if (E < 0.05)
                     continue;
                 double GE = GEFactor(E / 1000.0);

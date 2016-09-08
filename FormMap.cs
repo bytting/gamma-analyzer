@@ -94,6 +94,9 @@ namespace crash
                     case "Google Map Terrain":
                         gmap.MapProvider = GoogleTerrainMapProvider.Instance;
                         break;
+                    case "Google Map Sattelite":
+                        gmap.MapProvider = GoogleSatelliteMapProvider.Instance;                        
+                        break;
                     case "Open Street Map":
                         gmap.MapProvider = OpenStreetMapProvider.Instance;
                         break;
@@ -106,7 +109,7 @@ namespace crash
                     case "Bing Map":
                         gmap.MapProvider = BingMapProvider.Instance;
                         break;
-                }
+                }                
                 //gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
                 //gmap.Zoom = 12;                                
             }
