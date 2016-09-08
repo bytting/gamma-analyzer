@@ -270,9 +270,9 @@
             // menuItemEdit
             // 
             this.menuItemEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemChangeDetector,
             this.menuItemROITable,
-            this.menuItemPreferences,
-            this.menuItemChangeDetector});
+            this.menuItemPreferences});
             this.menuItemEdit.Name = "menuItemEdit";
             this.menuItemEdit.Size = new System.Drawing.Size(39, 20);
             this.menuItemEdit.Text = "&Edit";

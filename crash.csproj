@@ -149,6 +149,9 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMain_static.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormMap.cs">
       <SubType>Form</SubType>
     </Compile>
