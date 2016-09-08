@@ -55,8 +55,6 @@
             this.lblFineGain = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.lblLLDULD = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.lblRegPoints = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -219,8 +217,6 @@
             this.tableLayoutPanel1.Controls.Add(this.lblFineGain, 3, 4);
             this.tableLayoutPanel1.Controls.Add(this.label9, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.lblLLDULD, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 2, 5);
-            this.tableLayoutPanel1.Controls.Add(this.lblRegPoints, 3, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -379,28 +375,6 @@
             this.lblLLDULD.Text = "<lblLLDULD>";
             this.lblLLDULD.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(371, 140);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(104, 28);
-            this.label10.TabIndex = 23;
-            this.label10.Text = "Reg. Points";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblRegPoints
-            // 
-            this.lblRegPoints.AutoSize = true;
-            this.lblRegPoints.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblRegPoints.Location = new System.Drawing.Point(481, 140);
-            this.lblRegPoints.Name = "lblRegPoints";
-            this.lblRegPoints.Size = new System.Drawing.Size(254, 28);
-            this.lblRegPoints.TabIndex = 24;
-            this.lblRegPoints.Text = "<lblRegPoints>";
-            this.lblRegPoints.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // FormSessionInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -453,7 +427,5 @@
         private System.Windows.Forms.Label lblFineGain;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblLLDULD;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label lblRegPoints;
     }
 }

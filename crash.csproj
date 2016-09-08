@@ -179,12 +179,6 @@
     <Compile Include="FormROILive.Designer.cs">
       <DependentUpon>FormROILive.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormRegressionPoints.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormRegressionPoints.Designer.cs">
-      <DependentUpon>FormRegressionPoints.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormSessionInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -244,9 +238,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormROILive.resx">
       <DependentUpon>FormROILive.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormRegressionPoints.resx">
-      <DependentUpon>FormRegressionPoints.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSessionInfo.resx">
       <DependentUpon>FormSessionInfo.cs</DependentUpon>

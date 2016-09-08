@@ -40,7 +40,6 @@
             this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemROITable = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemRegressionPoints = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemPreferences = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemLoadSession = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,7 +75,6 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnSessionInfo = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnShowRegressionPoints = new System.Windows.Forms.ToolStripButton();
             this.btnShowROITable = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.btnShowMap = new System.Windows.Forms.ToolStripButton();
@@ -271,7 +269,6 @@
             // 
             this.menuItemEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemROITable,
-            this.menuItemRegressionPoints,
             this.menuItemPreferences});
             this.menuItemEdit.Name = "menuItemEdit";
             this.menuItemEdit.Size = new System.Drawing.Size(39, 20);
@@ -280,21 +277,14 @@
             // menuItemROITable
             // 
             this.menuItemROITable.Name = "menuItemROITable";
-            this.menuItemROITable.Size = new System.Drawing.Size(167, 22);
+            this.menuItemROITable.Size = new System.Drawing.Size(152, 22);
             this.menuItemROITable.Text = "ROI Table";
             this.menuItemROITable.Click += new System.EventHandler(this.menuItemROITable_Click);
-            // 
-            // menuItemRegressionPoints
-            // 
-            this.menuItemRegressionPoints.Name = "menuItemRegressionPoints";
-            this.menuItemRegressionPoints.Size = new System.Drawing.Size(167, 22);
-            this.menuItemRegressionPoints.Text = "Regression &Points";
-            this.menuItemRegressionPoints.Click += new System.EventHandler(this.menuItemRegressionPoints_Click);
             // 
             // menuItemPreferences
             // 
             this.menuItemPreferences.Name = "menuItemPreferences";
-            this.menuItemPreferences.Size = new System.Drawing.Size(167, 22);
+            this.menuItemPreferences.Size = new System.Drawing.Size(152, 22);
             this.menuItemPreferences.Text = "&Preferences";
             this.menuItemPreferences.Click += new System.EventHandler(this.menuItemPreferences_Click);
             // 
@@ -488,7 +478,6 @@
             this.toolStripSeparator3,
             this.btnSessionInfo,
             this.toolStripSeparator8,
-            this.btnShowRegressionPoints,
             this.btnShowROITable,
             this.toolStripSeparator6,
             this.btnShowMap,
@@ -602,20 +591,6 @@
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(6, 40);
-            // 
-            // btnShowRegressionPoints
-            // 
-            this.btnShowRegressionPoints.AutoSize = false;
-            this.btnShowRegressionPoints.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowRegressionPoints.Enabled = false;
-            this.btnShowRegressionPoints.Image = global::crash.Properties.Resources.regression_points_32;
-            this.btnShowRegressionPoints.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowRegressionPoints.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowRegressionPoints.Name = "btnShowRegressionPoints";
-            this.btnShowRegressionPoints.Size = new System.Drawing.Size(38, 38);
-            this.btnShowRegressionPoints.Text = "toolStripButton1";
-            this.btnShowRegressionPoints.ToolTipText = "Show Regression points";
-            this.btnShowRegressionPoints.Click += new System.EventHandler(this.menuItemRegressionPoints_Click);
             // 
             // btnShowROITable
             // 
@@ -1872,7 +1847,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemLoadBackgroundSession;
         private System.Windows.Forms.ToolStripButton btnShowROITable;
         private System.Windows.Forms.ToolStripMenuItem menuItemROITable;
-        private System.Windows.Forms.ToolStripButton btnShowRegressionPoints;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripLabel lblDetector;
         private System.Windows.Forms.ToolStripSeparator separatorDetector;
@@ -1899,7 +1873,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsCHN;
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsIRIX;
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsKMZ;
-        private System.Windows.Forms.ToolStripMenuItem menuItemRegressionPoints;
         private System.Windows.Forms.ToolStripMenuItem menuItemSourceActivity;
         private System.Windows.Forms.TabControl tabs;
         private System.Windows.Forms.TabPage pageSetup;

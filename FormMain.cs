@@ -947,8 +947,7 @@ namespace crash
             lblDetector.Text = "Detector " + selectedDetector.Serialnumber;
             separatorDetector.Visible = true;
             
-            btnMenuSession.Enabled = true;
-            btnShowRegressionPoints.Enabled = true;
+            btnMenuSession.Enabled = true;            
 
             cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
 
@@ -1060,18 +1059,6 @@ namespace crash
                     MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
                 }
             }
-        }
-
-        private void menuItemRegressionPoints_Click(object sender, EventArgs e)
-        {
-            if (selectedDetector == null)
-            {
-                MessageBox.Show("You must select a detector first");
-                return;
-            }
-
-            FormRegressionPoints form = new FormRegressionPoints(selectedDetector);
-            form.Show();
         }
 
         private void menuItemSourceActivity_Click(object sender, EventArgs e)

@@ -13,6 +13,3 @@ Use IAEA color codes on map markers
 Energy calib
 
 Better maps
-
-Remove tab dll
-
