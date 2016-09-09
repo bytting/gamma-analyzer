@@ -44,9 +44,9 @@ namespace crash
 
         private static Bitmap bmpBlue = new Bitmap(crash.Properties.Resources.marker_blue_10);
         //private static Bitmap bmpCyan = new Bitmap(crash.Properties.Resources.marker_cyan_10);
-        //private static Bitmap bmpGreen = new Bitmap(crash.Properties.Resources.marker_green_10);
-        //private static Bitmap bmpYellow = new Bitmap(crash.Properties.Resources.marker_yellow_10);
-        //private static Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);
+        private static Bitmap bmpGreen = new Bitmap(crash.Properties.Resources.marker_green_10);
+        private static Bitmap bmpYellow = new Bitmap(crash.Properties.Resources.marker_yellow_10);
+        private static Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);
         private static Bitmap bmpRed = new Bitmap(crash.Properties.Resources.marker_red_10);
 
         public FormMap()
@@ -142,8 +142,21 @@ namespace crash
             if (session == null)
                 return;            
 
+            Bitmap bmp = null;
+            double dose = s.Doserate / 1000.0;
+
+            if (dose <= 1.0)
+                bmp = bmpBlue;
+            else if (dose <= 5.0)
+                bmp = bmpGreen;
+            else if (dose <= 10.0)
+                bmp = bmpYellow;
+            else if (dose <= 20.0)
+                bmp = bmpOrange;
+            else bmp = bmpRed;
+
             // Add map marker            
-            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.LatitudeStart, s.LongitudeStart), bmpBlue);
+            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.LatitudeStart, s.LongitudeStart), bmp);
             marker.Tag = s;
             marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
             marker.ToolTipText = s.ToString() 
