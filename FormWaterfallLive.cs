@@ -35,6 +35,8 @@ namespace crash
         private Bitmap bmpPane = null;
         private bool colorCeilInitialized = false;
         private List<ROIData> ROIList = null;
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        bool needRepaint = false;
 
         private int SelectedSessionIndex1 = -1;
         private int SelectedSessionIndex2 = -1;
@@ -55,7 +57,7 @@ namespace crash
         }        
 
         private void FormWaterfall_Load(object sender, EventArgs e)
-        {
+        {            
             font = new Font(fontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
 
             lblColorCeil.Text = "";
@@ -63,49 +65,48 @@ namespace crash
             lblSessionId.Text = "";
             lblEnergy.Text = "";
 
+            timer.Interval = 500;
+            timer.Tick += timer_Tick;
+            timer.Start();
+
             pane_Resize(sender, e);        
             UpdateStats();
-        }    
-
-        private void UpdateStats()
-        {
-            lblColorCeil.Text = "Color ceiling: " + tbColorCeil.Value + " [" + tbColorCeil.Minimum + ", " + tbColorCeil.Maximum + "]";
         }
 
-        public void SetSession(Session sess)
-        {
-            session = sess;            
-        }
-
-        public void UpdatePane()
+        void timer_Tick(object sender, EventArgs e)
         {            
+
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
             tbColorCeil.Maximum = (int)session.MaxChannelCount;
             tbColorCeil.Minimum = (int)session.MinChannelCount;
 
-            if (!colorCeilInitialized)            
-                tbColorCeil.Value = tbColorCeil.Maximum;            
+            if (!colorCeilInitialized)
+                tbColorCeil.Value = tbColorCeil.Maximum;
 
-            UpdateStats();            
+            UpdateStats();
 
             if (tbColorCeil.Value < 1)
                 return;
+
+            if (!needRepaint)
+                return;
+            needRepaint = false;
 
             Graphics graphics = Graphics.FromImage(bmpPane);
             Pen penSelected = new Pen(Color.White);
             penSelected.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             SolidBrush whiteBrush = new SolidBrush(Color.White);
             Pen penROI = new Pen(Color.Black);
-            penROI.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;            
+            penROI.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
 
             graphics.Clear(Color.FromArgb(255, 0, 0, 255));
 
             float max = tbColorCeil.Value;
-            float sectorSize = max / 4f;            
+            float sectorSize = max / 4f;
             float scale = 255f / sectorSize;
-            int y = 0;            
+            int y = 0;
 
             for (int i = session.Spectrums.Count - 1 - topY; i >= 0; i--)
             {
@@ -115,11 +116,11 @@ namespace crash
                 if (i >= session.Spectrums.Count) // FIXME
                     continue;
 
-                Spectrum s = session.Spectrums[i];                
+                Spectrum s = session.Spectrums[i];
                 int w = s.Channels.Count > bmpPane.Width ? bmpPane.Width : s.Channels.Count; // FIXME
 
                 if (y < 0 || y >= bmpPane.Height) // FIXME
-                    continue; 
+                    continue;
 
                 bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
 
@@ -138,15 +139,15 @@ namespace crash
                             if (cps < 0)
                                 cps = 0;
                         }
-                    }                        
-                    
+                    }
+
                     int sectorSkip = CalcSectorSkip(cps, sectorSize);
 
                     float adj = (cps - (float)sectorSkip * sectorSize) * scale;
                     if (adj < 0)
                         adj = 0;
-                    if (adj > 255)                    
-                        adj = 255;                                            
+                    if (adj > 255)
+                        adj = 255;
 
                     if (sectorSkip == 0)
                     {
@@ -179,13 +180,13 @@ namespace crash
                     if (((leftX + x) % 200) == 0)
                     {
                         int ch = leftX + x;
-                        graphics.DrawString(ch.ToString(), font, whiteBrush, x, bmpPane.Height - 20);                        
-                    }                    
-                }                
+                        graphics.DrawString(ch.ToString(), font, whiteBrush, x, bmpPane.Height - 20);
+                    }
+                }
 
-                if(s.SessionIndex == SelectedSessionIndex1)
+                if (s.SessionIndex == SelectedSessionIndex1)
                 {
-                    graphics.DrawLine(penSelected, new Point(1, y), new Point(bmpPane.Width, y));                    
+                    graphics.DrawLine(penSelected, new Point(1, y), new Point(bmpPane.Width, y));
                 }
 
                 if (s.SessionIndex == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)
@@ -215,6 +216,21 @@ namespace crash
             }
 
             pane.Refresh();
+        }
+
+        private void UpdateStats()
+        {
+            lblColorCeil.Text = "Color ceiling: " + tbColorCeil.Value + " [" + tbColorCeil.Minimum + ", " + tbColorCeil.Maximum + "]";
+        }
+
+        public void SetSession(Session sess)
+        {
+            session = sess;            
+        }
+
+        public void UpdatePane()
+        {
+            needRepaint = true;
         }        
 
         private void FormWaterfall_FormClosing(object sender, FormClosingEventArgs e)

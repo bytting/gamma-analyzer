@@ -39,6 +39,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemChangeDetector = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemROITable = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemPreferences = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSession = new System.Windows.Forms.ToolStripMenuItem();
@@ -129,6 +130,7 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.tbarSetupLivetime = new System.Windows.Forms.TrackBar();
             this.lblSetupLivetime = new System.Windows.Forms.Label();
+            this.btnSetupGoToSessions = new System.Windows.Forms.Button();
             this.pageMenu = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnMenuSetup = new System.Windows.Forms.Button();
@@ -168,8 +170,6 @@
             this.btnSendSession = new System.Windows.Forms.Button();
             this.btnStopSession = new System.Windows.Forms.Button();
             this.btnSendClose = new System.Windows.Forms.Button();
-            this.btnSetupGoToSessions = new System.Windows.Forms.Button();
-            this.menuItemChangeDetector = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -276,6 +276,13 @@
             this.menuItemEdit.Name = "menuItemEdit";
             this.menuItemEdit.Size = new System.Drawing.Size(39, 20);
             this.menuItemEdit.Text = "&Edit";
+            // 
+            // menuItemChangeDetector
+            // 
+            this.menuItemChangeDetector.Name = "menuItemChangeDetector";
+            this.menuItemChangeDetector.Size = new System.Drawing.Size(162, 22);
+            this.menuItemChangeDetector.Text = "&Change detector";
+            this.menuItemChangeDetector.Click += new System.EventHandler(this.menuItemChangeDetector_Click);
             // 
             // menuItemROITable
             // 
@@ -1226,6 +1233,17 @@
             this.lblSetupLivetime.TabIndex = 0;
             this.lblSetupLivetime.Text = "1";
             // 
+            // btnSetupGoToSessions
+            // 
+            this.btnSetupGoToSessions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSetupGoToSessions.Location = new System.Drawing.Point(927, 123);
+            this.btnSetupGoToSessions.Name = "btnSetupGoToSessions";
+            this.btnSetupGoToSessions.Size = new System.Drawing.Size(243, 22);
+            this.btnSetupGoToSessions.TabIndex = 48;
+            this.btnSetupGoToSessions.Text = "Go to sessions";
+            this.btnSetupGoToSessions.UseVisualStyleBackColor = true;
+            this.btnSetupGoToSessions.Click += new System.EventHandler(this.btnSetupGoToSessions_Click);
+            // 
             // pageMenu
             // 
             this.pageMenu.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -1750,24 +1768,6 @@
             this.btnSendClose.Text = "Shutdown remote";
             this.btnSendClose.UseVisualStyleBackColor = true;
             this.btnSendClose.Click += new System.EventHandler(this.btnSendClose_Click);
-            // 
-            // btnSetupGoToSessions
-            // 
-            this.btnSetupGoToSessions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetupGoToSessions.Location = new System.Drawing.Point(927, 123);
-            this.btnSetupGoToSessions.Name = "btnSetupGoToSessions";
-            this.btnSetupGoToSessions.Size = new System.Drawing.Size(243, 22);
-            this.btnSetupGoToSessions.TabIndex = 48;
-            this.btnSetupGoToSessions.Text = "Go to sessions";
-            this.btnSetupGoToSessions.UseVisualStyleBackColor = true;
-            this.btnSetupGoToSessions.Click += new System.EventHandler(this.btnSetupGoToSessions_Click);
-            // 
-            // menuItemChangeDetector
-            // 
-            this.menuItemChangeDetector.Name = "menuItemChangeDetector";
-            this.menuItemChangeDetector.Size = new System.Drawing.Size(162, 22);
-            this.menuItemChangeDetector.Text = "&Change detector";
-            this.menuItemChangeDetector.Click += new System.EventHandler(this.menuItemChangeDetector_Click);
             // 
             // FormMain
             // 
