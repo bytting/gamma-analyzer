@@ -13,6 +13,10 @@ close_ok ->
 close_failed ->
 	message
 
+ping ->
+
+ping_ok ->
+
 new_session ->
 	session_name
 	preview

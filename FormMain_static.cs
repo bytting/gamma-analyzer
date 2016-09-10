@@ -60,7 +60,7 @@ namespace crash
 
         float bkgScale = 1f;
         bool selectionRun = false;
-        bool detectorReady = false;
+        //bool detectorReady = false;
         bool sessionRunning = false;
 
         private void SaveSettings()
@@ -91,30 +91,37 @@ namespace crash
         {
             switch (msg.Command)
             {
-                case "connect_ok":
-                    lblConnectionStatus.ForeColor = Color.Green;
-                    lblConnectionStatus.Text = "Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"];
-                    Utils.Log.Add("RECV: Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
-                    connected = true;
+                case "connect_ok":                    
+                    Utils.Log.Add("RECV: Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);                    
+
+                    burn.Message msgPing = new burn.Message("ping", null);
+                    sendMsg(msgPing);
+                    Utils.Log.Add("SEND: Sending ping message");
                     break;
 
                 case "connect_failed":
-                    lblConnectionStatus.ForeColor = Color.Red;
-                    lblConnectionStatus.Text = "Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"];
-                    Utils.Log.Add("RECV: Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);
-                    connected = false;
+                    connected = false;                    
+                    Utils.Log.Add("RECV: Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);                    
                     break;
 
                 case "disconnect_ok":
+                    connected = false;
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    Utils.Log.Add("RECV: Disconnected from peer");
-                    connected = false;
+                    Utils.Log.Add("RECV: Disconnected from peer");                    
+                    break;
+
+                case "ping_ok":                    
+                    connected = true;
+                    lblConnectionStatus.ForeColor = Color.Green;
+                    lblConnectionStatus.Text = "Connected to " + settings.LastIP + ":" + settings.LastPort;                    
+                    Utils.Log.Add("RECV: Received ping_ok from peer");
                     break;
 
                 case "close_ok":
                     netService.RequestStop();
                     netThread.Join();
+                    connected = false;
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
                     Utils.Log.Add("RECV: Disconnected from peer, peer closed");
@@ -175,8 +182,7 @@ namespace crash
                     selectedDetector.CurrentFineGain = Convert.ToDouble(msg.Arguments["fine_gain"]);
                     selectedDetector.CurrentNumChannels = Convert.ToInt32(msg.Arguments["num_channels"]);
                     selectedDetector.CurrentLLD = Convert.ToInt32(msg.Arguments["lld"]);
-                    selectedDetector.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);
-                    detectorReady = true;
+                    selectedDetector.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);                    
                     break;
 
                 case "spectrum":

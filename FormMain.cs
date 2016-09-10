@@ -71,10 +71,7 @@ namespace crash
                 formWaterfallLive = new FormWaterfallLive(settings.ROIList);
                 formROILive = new FormROILive(settings.ROIList);
                 formMap = new FormMap();
-
-                tbSetupIP.Text = settings.LastIP;
-                tbSetupPort.Text = settings.LastPort;
-                tbSetupPort.KeyPress += CustomEvents.Integer_KeyPress;
+                
                 tbSetupSpecCount.KeyPress += CustomEvents.Integer_KeyPress;
 
                 tbSessionDir.Text = settings.SessionRootDirectory;
@@ -141,20 +138,9 @@ namespace crash
 
         private void menuItemConnect_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(tbSetupIP.Text))
-            {
-                MessageBox.Show("No IP address provided");
+            FormConnect form = new FormConnect(settings);
+            if (form.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                 return;
-            }
-
-            if (String.IsNullOrEmpty(tbSetupPort.Text))
-            {
-                MessageBox.Show("No port provided");
-                return;
-            }
-
-            settings.LastIP = tbSetupIP.Text.Trim();
-            settings.LastPort = tbSetupPort.Text.Trim();
 
             burn.Message msg = new burn.Message("connect", null);
             msg.AddParameter("host", settings.LastIP);
@@ -254,10 +240,10 @@ namespace crash
         }
 
         private void btnSetupStop_Click(object sender, EventArgs e)
-        {            
-            sendMsg(new burn.Message("stop_session", null));
-
-            Utils.Log.Add("SEND: stop_session");
+        {   
+            // FIXME
+            //sendMsg(new burn.Message("stop_session", null));
+            //Utils.Log.Add("SEND: stop_session");
         }
         
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
@@ -506,8 +492,6 @@ namespace crash
 
         private void cboxSetupDetector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            detectorReady = false;
-
             if (cboxSetupDetector.SelectedItem == null)
                 return;
 
@@ -646,67 +630,29 @@ namespace crash
         }
 
         private void tbarSetupFineGain_ValueChanged(object sender, EventArgs e)
-        {
-            detectorReady = false;
+        {            
             double fVal = (double)tbarSetupFineGain.Value / 1000d;
             lblSetupFineGain.Text = fVal.ToString("F3");
         }
 
         private void tbarSetupVoltage_ValueChanged(object sender, EventArgs e)
-        {
-            detectorReady = false;
+        {            
             lblSetupVoltage.Text = tbarSetupVoltage.Value.ToString();
         }
 
         private void tbarSetupLLD_ValueChanged(object sender, EventArgs e)
-        {
-            detectorReady = false;
+        {        
             lblSetupLLD.Text = tbarSetupLLD.Value.ToString();
         }
 
         private void tbarSetupULD_ValueChanged(object sender, EventArgs e)
-        {
-            detectorReady = false;
+        {        
             lblSetupULD.Text = tbarSetupULD.Value.ToString();
         }
 
         private void tbarSetupLivetime_ValueChanged(object sender, EventArgs e)
         {
             lblSetupLivetime.Text = tbarSetupLivetime.Value.ToString();
-        }
-
-        private void cboxSetupCoarseGain_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            detectorReady = false;
-        }
-
-        private void cboxSetupChannels_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            detectorReady = false;
-        }
-
-        private void btnSetupCancel_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = pageSessions;
-        }
-
-        private void btnSetupStartSession_Click(object sender, EventArgs e)
-        {
-            int count = String.IsNullOrEmpty(tbSetupSpecCount.Text) ? -1 : Convert.ToInt32(tbSetupSpecCount.Text);
-            float livetime = (float)tbarSetupLivetime.Value;
-            float delay = (float)tbarSetupDelay.Value;
-
-            ClearSession();
-
-            burn.Message msg = new burn.Message("new_session", null);
-            msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
-            msg.AddParameter("preview", 0);
-            msg.AddParameter("iterations", count);
-            msg.AddParameter("livetime", livetime);
-            msg.AddParameter("delay", delay);
-            sendMsg(msg);
-
-            Utils.Log.Add("SEND: new_session");
         }
 
         private void tbarSetupDelay_ValueChanged(object sender, EventArgs e)
@@ -763,6 +709,12 @@ namespace crash
 
         private void menuItemStartNewSession_Click(object sender, EventArgs e)
         {
+            if(!connected)
+            {
+                MessageBox.Show("You must connect first");
+                return;
+            }
+
             if (sessionRunning)
             {
                 MessageBox.Show("A session is already running");
@@ -805,6 +757,41 @@ namespace crash
             sendMsg(new burn.Message("close", null));
 
             Utils.Log.Add("SEND: close");
+        }
+
+        private void btnSetupBack_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageSessions;
+        }
+
+        private void btnPreviewNext_Click(object sender, EventArgs e)
+        {
+            int count = String.IsNullOrEmpty(tbSetupSpecCount.Text) ? -1 : Convert.ToInt32(tbSetupSpecCount.Text);
+            float livetime = (float)tbarSetupLivetime.Value;
+            float delay = (float)tbarSetupDelay.Value;
+
+            ClearSession();
+
+            burn.Message msg = new burn.Message("new_session", null);
+            msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
+            msg.AddParameter("preview", 0);
+            msg.AddParameter("iterations", count);
+            msg.AddParameter("livetime", livetime);
+            msg.AddParameter("delay", delay);
+            sendMsg(msg);
+
+            Utils.Log.Add("SEND: new_session");
+            tabs.SelectedTab = pageSessions;
+        }
+
+        private void btnPreviewBack_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageSetup;
+        }
+
+        private void btnSetupNext_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pagePreview;
         }
     }
 }
