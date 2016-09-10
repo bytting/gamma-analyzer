@@ -50,15 +50,11 @@ namespace crash
             if (!Directory.Exists(CrashEnvironment.RegScriptPath))
                 Directory.CreateDirectory(CrashEnvironment.RegScriptPath);
 
-            try
-            {
-                string InstallDir = (new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location)).Directory + Path.DirectorySeparatorChar.ToString();
-
-                File.Copy(InstallDir + "template_settings.xml", CrashEnvironment.SettingsFile, false);
-                File.Copy(InstallDir + "template_Nai-2tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py", false);
-                File.Copy(InstallDir + "template_Nai-3tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py", false);
-            }
-            catch { }
+            string InstallDir = (new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location)).Directory + Path.DirectorySeparatorChar.ToString();
+            try { File.Copy(InstallDir + "template_settings.xml", CrashEnvironment.SettingsFile, false); } catch { }
+            try { File.Copy(InstallDir + "template_nuclides.lib", CrashEnvironment.NuclidesFile, false); } catch { }
+            try { File.Copy(InstallDir + "template_Nai-2tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py", false); } catch { }
+            try { File.Copy(InstallDir + "template_Nai-3tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py", false); } catch { }
             
             LoadSettings();
 
