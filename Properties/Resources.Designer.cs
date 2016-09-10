@@ -153,6 +153,86 @@ namespace crash.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap drone1_32 {
+            get {
+                object obj = ResourceManager.GetObject("drone1-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap drone2_32 {
+            get {
+                object obj = ResourceManager.GetObject("drone2-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap drone3_32 {
+            get {
+                object obj = ResourceManager.GetObject("drone3-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap drone4_32 {
+            get {
+                object obj = ResourceManager.GetObject("drone4-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap drone5_32 {
+            get {
+                object obj = ResourceManager.GetObject("drone5-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap drone6_32 {
+            get {
+                object obj = ResourceManager.GetObject("drone6-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap drone7_32 {
+            get {
+                object obj = ResourceManager.GetObject("drone7-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap drone8_32 {
+            get {
+                object obj = ResourceManager.GetObject("drone8-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap home_32 {
             get {
                 object obj = ResourceManager.GetObject("home-32", resourceCulture);
@@ -313,6 +393,16 @@ namespace crash.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap remote_control_32 {
+            get {
+                object obj = ResourceManager.GetObject("remote-control-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap right_16 {
             get {
                 object obj = ResourceManager.GetObject("right-16", resourceCulture);
@@ -376,6 +466,26 @@ namespace crash.Properties {
         internal static System.Drawing.Bitmap setup_32 {
             get {
                 object obj = ResourceManager.GetObject("setup-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap start_session_32 {
+            get {
+                object obj = ResourceManager.GetObject("start-session-32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stop_session_32 {
+            get {
+                object obj = ResourceManager.GetObject("stop-session-32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

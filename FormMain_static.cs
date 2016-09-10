@@ -107,7 +107,10 @@ namespace crash
                     connected = false;
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
-                    Utils.Log.Add("RECV: Disconnected from peer");                    
+                    Utils.Log.Add("RECV: Disconnected from peer");
+
+                    if (tabs.SelectedTab == pageSetup || tabs.SelectedTab == pagePreview)
+                        tabs.SelectedTab = pageSessions;
                     break;
 
                 case "ping_ok":                    

@@ -265,6 +265,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="images\drone1-32.png" />
+    <None Include="images\drone2-32.png" />
+    <None Include="images\drone3-32.png" />
+    <None Include="images\drone4-32.png" />
+    <None Include="images\drone5-32.png" />
+    <None Include="images\drone6-32.png" />
+    <None Include="images\drone7-32.png" />
+    <None Include="images\drone8-32.png" />
+    <None Include="images\start-session-32.png" />
+    <None Include="images\stop-session-32.png" />
+    <None Include="images\remote-control-32.png" />
     <Content Include="template_nuclides.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

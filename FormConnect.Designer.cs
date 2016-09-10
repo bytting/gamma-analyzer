@@ -44,15 +44,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 95);
+            this.panel1.Location = new System.Drawing.Point(0, 99);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(306, 28);
+            this.panel1.Size = new System.Drawing.Size(368, 28);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(156, 0);
+            this.btnCancel.Location = new System.Drawing.Point(218, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 28);
             this.btnCancel.TabIndex = 1;
@@ -63,7 +63,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(231, 0);
+            this.btnOk.Location = new System.Drawing.Point(293, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 28);
             this.btnOk.TabIndex = 0;
@@ -74,7 +74,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 25);
+            this.label1.Location = new System.Drawing.Point(12, 21);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(57, 13);
             this.label1.TabIndex = 1;
@@ -83,7 +83,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 56);
+            this.label2.Location = new System.Drawing.Point(43, 52);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(26, 13);
             this.label2.TabIndex = 2;
@@ -93,21 +93,21 @@
             // 
             this.tbIP.Location = new System.Drawing.Point(75, 18);
             this.tbIP.Name = "tbIP";
-            this.tbIP.Size = new System.Drawing.Size(205, 20);
+            this.tbIP.Size = new System.Drawing.Size(262, 20);
             this.tbIP.TabIndex = 3;
             // 
             // tbPort
             // 
             this.tbPort.Location = new System.Drawing.Point(75, 49);
             this.tbPort.Name = "tbPort";
-            this.tbPort.Size = new System.Drawing.Size(205, 20);
+            this.tbPort.Size = new System.Drawing.Size(262, 20);
             this.tbPort.TabIndex = 4;
             // 
             // FormConnect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(306, 123);
+            this.ClientSize = new System.Drawing.Size(368, 127);
             this.Controls.Add(this.tbPort);
             this.Controls.Add(this.tbIP);
             this.Controls.Add(this.label2);
