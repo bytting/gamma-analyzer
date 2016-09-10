@@ -24,6 +24,7 @@ using System.IO;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 using ZedGraph;
 
 namespace crash
@@ -133,6 +134,7 @@ namespace crash
         private void menuItemExit_Click(object sender, EventArgs e)
         {
             menuItemDisconnect_Click(sender, e);
+            Thread.Sleep(2000); // FIXME
             Close();
         }
 
@@ -151,10 +153,18 @@ namespace crash
         }
 
         private void menuItemDisconnect_Click(object sender, EventArgs e)
-        {        
-            if(connected)
-                if (MessageBox.Show("Are you sure you want to disconnect?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
-                    return;
+        {
+            if (!connected)            
+                return;            
+
+            if(sessionRunning)
+            {
+                MessageBox.Show("You must stop the running session first");
+                return;
+            }
+            
+            if (MessageBox.Show("Are you sure you want to disconnect?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
+                return;
             
             sendMsg(new burn.Message("disconnect", null));
 
@@ -269,6 +279,10 @@ namespace crash
             {
                 menuItemBack.Enabled = true;
                 btnBack.Enabled = true;
+                btnSetupNext.Enabled = false;
+            }
+            else if (tabs.SelectedTab == pagePreview)
+            {                
             }
         }                
 
@@ -574,9 +588,7 @@ namespace crash
 
         private void menuItemBack_Click(object sender, EventArgs e)
         {
-            if (tabs.SelectedTab == pageSetup)
-                tabs.SelectedTab = pageSessions;
-            else tabs.SelectedTab = pageMenu;
+            tabs.SelectedTab = pageMenu;
         }
 
         private void menuItemShowLog_Click(object sender, EventArgs e)
@@ -792,6 +804,26 @@ namespace crash
         private void btnSetupNext_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pagePreview;
+        }
+
+        private void graphSession_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // TODO
+            int x, y;
+            GetGraphPointFromMousePos(e.X, e.Y, graphSession, out x, out y);
+
+            GraphPane pane = graphSession.GraphPane;
+            LineObj redLine = new LineObj(
+                Color.Green,
+                (double)x,
+                pane.YAxis.Scale.Min,
+                (double)x,
+                pane.YAxis.Scale.Max);
+            pane.GraphObjList.Add(redLine);
+
+            graphSession.RestoreScale(pane);
+            graphSession.AxisChange();
+            graphSession.Refresh();
         }
     }
 }

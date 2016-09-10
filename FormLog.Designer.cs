@@ -38,9 +38,9 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 355);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 151);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(633, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(730, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -50,7 +50,7 @@
             this.btnClear});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(633, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(730, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -73,14 +73,14 @@
             this.lbLog.Location = new System.Drawing.Point(0, 25);
             this.lbLog.Name = "lbLog";
             this.lbLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbLog.Size = new System.Drawing.Size(633, 330);
+            this.lbLog.Size = new System.Drawing.Size(730, 126);
             this.lbLog.TabIndex = 7;
             // 
             // FormLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(633, 377);
+            this.ClientSize = new System.Drawing.Size(730, 173);
             this.Controls.Add(this.lbLog);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);

@@ -59,8 +59,7 @@ namespace crash
         DetectorType selectedDetectorType = null;
 
         float bkgScale = 1f;
-        bool selectionRun = false;
-        //bool detectorReady = false;
+        bool selectionRun = false;        
         bool sessionRunning = false;
 
         private void SaveSettings()
@@ -182,7 +181,9 @@ namespace crash
                     selectedDetector.CurrentFineGain = Convert.ToDouble(msg.Arguments["fine_gain"]);
                     selectedDetector.CurrentNumChannels = Convert.ToInt32(msg.Arguments["num_channels"]);
                     selectedDetector.CurrentLLD = Convert.ToInt32(msg.Arguments["lld"]);
-                    selectedDetector.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);                    
+                    selectedDetector.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);
+
+                    btnSetupNext.Enabled = true;
                     break;
 
                 case "spectrum":
