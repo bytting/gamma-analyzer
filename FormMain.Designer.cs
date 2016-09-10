@@ -39,6 +39,9 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSession = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemStartNewSession = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemStopSession = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemLoadSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemClearSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSessionInfo = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +57,7 @@
             this.menuItemShowLog = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowMap = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowWaterfall = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemROITable = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowROIHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowROIChart = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,9 +68,10 @@
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnShowLog = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnStartNewSession = new System.Windows.Forms.ToolStripButton();
+            this.btnStopSession = new System.Windows.Forms.ToolStripButton();
             this.btnSessionInfo = new System.Windows.Forms.ToolStripButton();
-            this.btnShowROITable = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnShowMap = new System.Windows.Forms.ToolStripButton();
             this.btnShowWaterfallLive = new System.Windows.Forms.ToolStripButton();
             this.lblInterface = new System.Windows.Forms.ToolStripLabel();
@@ -74,8 +79,11 @@
             this.lblDetector = new System.Windows.Forms.ToolStripLabel();
             this.separatorDetector = new System.Windows.Forms.ToolStripSeparator();
             this.lblConnectionStatus = new System.Windows.Forms.ToolStripLabel();
+            this.btnShowROITable = new System.Windows.Forms.ToolStripButton();
             this.btnShowROIHist = new System.Windows.Forms.ToolStripButton();
             this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
+            this.menuItemRemoteCommands = new System.Windows.Forms.ToolStripDropDownButton();
+            this.menuItemShutdownRemoteServer = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemSessionUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSourceActivity = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +91,8 @@
             this.pageSetup = new System.Windows.Forms.TabPage();
             this.graphSetup = new ZedGraph.ZedGraphControl();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnSetupCancel = new System.Windows.Forms.Button();
+            this.btnSetupStartSession = new System.Windows.Forms.Button();
             this.lblSetupEnergy = new System.Windows.Forms.Label();
             this.lblSetupChannel = new System.Windows.Forms.Label();
             this.tableLayoutSetup = new System.Windows.Forms.TableLayoutPanel();
@@ -95,8 +105,6 @@
             this.cboxSetupChannels = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.btnSetupStart = new System.Windows.Forms.Button();
-            this.btnSetupStop = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -118,13 +126,32 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.tbarSetupLivetime = new System.Windows.Forms.TrackBar();
             this.lblSetupLivetime = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tbSetupIP = new System.Windows.Forms.TextBox();
+            this.tbSetupPort = new System.Windows.Forms.TextBox();
+            this.btnSetupDisconnect = new System.Windows.Forms.Button();
+            this.btnSetupConnect = new System.Windows.Forms.Button();
+            this.btnSetupStop = new System.Windows.Forms.Button();
+            this.btnSetupStart = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.tbarSetupDelay = new System.Windows.Forms.TrackBar();
+            this.lblSetupDelay = new System.Windows.Forms.Label();
+            this.tbSetupSpecCount = new System.Windows.Forms.TextBox();
             this.pageMenu = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnMenuPreferences = new System.Windows.Forms.Button();
             this.btnMenuSession = new System.Windows.Forms.Button();
+            this.btnMenuPreferences = new System.Windows.Forms.Button();
             this.pageSessions = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.lbSession = new System.Windows.Forms.ListBox();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.lbNuclides = new System.Windows.Forms.ListBox();
+            this.tbarNuclides = new System.Windows.Forms.TrackBar();
+            this.label19 = new System.Windows.Forms.Label();
             this.graphSession = new ZedGraph.ZedGraphControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblSessionEnergy = new System.Windows.Forms.Label();
@@ -149,21 +176,6 @@
             this.lblRealtime = new System.Windows.Forms.Label();
             this.lblIndex = new System.Windows.Forms.Label();
             this.lblSessionDetector = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tbSetupIP = new System.Windows.Forms.TextBox();
-            this.tbSetupPort = new System.Windows.Forms.TextBox();
-            this.btnSetupConnect = new System.Windows.Forms.Button();
-            this.btnSetupDisconnect = new System.Windows.Forms.Button();
-            this.btnSetupStartSession = new System.Windows.Forms.Button();
-            this.btnSetupCancel = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.lblSetupDelay = new System.Windows.Forms.Label();
-            this.tbarSetupDelay = new System.Windows.Forms.TrackBar();
-            this.tbSetupSpecCount = new System.Windows.Forms.TextBox();
             this.pagePreferences = new System.Windows.Forms.TabPage();
             this.tableLayoutPref = new System.Windows.Forms.TableLayoutPanel();
             this.lvDetectors = new System.Windows.Forms.ListView();
@@ -190,18 +202,6 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.btnAddDetector = new System.Windows.Forms.Button();
-            this.btnStartNewSession = new System.Windows.Forms.ToolStripButton();
-            this.menuItemStartNewSession = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemStopSession = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnStopSession = new System.Windows.Forms.ToolStripButton();
-            this.menuItemRemoteCommands = new System.Windows.Forms.ToolStripDropDownButton();
-            this.menuItemShutdownRemoteServer = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuItemROITable = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.label19 = new System.Windows.Forms.Label();
-            this.tbarNuclides = new System.Windows.Forms.TrackBar();
-            this.lbNuclides = new System.Windows.Forms.ListBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -221,6 +221,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupULD)).BeginInit();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupLivetime)).BeginInit();
+            this.panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupDelay)).BeginInit();
             this.pageMenu.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.pageSessions.SuspendLayout();
@@ -228,14 +230,12 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.panel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupDelay)).BeginInit();
-            this.pagePreferences.SuspendLayout();
-            this.tableLayoutPref.SuspendLayout();
             this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarNuclides)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.pagePreferences.SuspendLayout();
+            this.tableLayoutPref.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -268,38 +268,38 @@
             // menuItemBack
             // 
             this.menuItemBack.Name = "menuItemBack";
-            this.menuItemBack.Size = new System.Drawing.Size(152, 22);
+            this.menuItemBack.Size = new System.Drawing.Size(133, 22);
             this.menuItemBack.Text = "&Back";
             this.menuItemBack.Click += new System.EventHandler(this.menuItemBack_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(130, 6);
             // 
             // menuItemConnect
             // 
             this.menuItemConnect.Name = "menuItemConnect";
-            this.menuItemConnect.Size = new System.Drawing.Size(152, 22);
+            this.menuItemConnect.Size = new System.Drawing.Size(133, 22);
             this.menuItemConnect.Text = "&Connect";
             this.menuItemConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
             // 
             // menuItemDisconnect
             // 
             this.menuItemDisconnect.Name = "menuItemDisconnect";
-            this.menuItemDisconnect.Size = new System.Drawing.Size(152, 22);
+            this.menuItemDisconnect.Size = new System.Drawing.Size(133, 22);
             this.menuItemDisconnect.Text = "&Disconnect";
             this.menuItemDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
             // 
             // menuItemExit
             // 
             this.menuItemExit.Name = "menuItemExit";
-            this.menuItemExit.Size = new System.Drawing.Size(152, 22);
+            this.menuItemExit.Size = new System.Drawing.Size(133, 22);
             this.menuItemExit.Text = "E&xit";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
@@ -320,6 +320,25 @@
             this.menuItemSession.Name = "menuItemSession";
             this.menuItemSession.Size = new System.Drawing.Size(58, 20);
             this.menuItemSession.Text = "&Session";
+            // 
+            // menuItemStartNewSession
+            // 
+            this.menuItemStartNewSession.Name = "menuItemStartNewSession";
+            this.menuItemStartNewSession.Size = new System.Drawing.Size(208, 22);
+            this.menuItemStartNewSession.Text = "Start new session";
+            this.menuItemStartNewSession.Click += new System.EventHandler(this.menuItemStartNewSession_Click);
+            // 
+            // menuItemStopSession
+            // 
+            this.menuItemStopSession.Name = "menuItemStopSession";
+            this.menuItemStopSession.Size = new System.Drawing.Size(208, 22);
+            this.menuItemStopSession.Text = "Stop session";
+            this.menuItemStopSession.Click += new System.EventHandler(this.menuItemStopSession_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(205, 6);
             // 
             // menuItemLoadSession
             // 
@@ -379,20 +398,20 @@
             // menuItemSaveAsCHN
             // 
             this.menuItemSaveAsCHN.Name = "menuItemSaveAsCHN";
-            this.menuItemSaveAsCHN.Size = new System.Drawing.Size(152, 22);
+            this.menuItemSaveAsCHN.Size = new System.Drawing.Size(100, 22);
             this.menuItemSaveAsCHN.Text = "&CHN";
             this.menuItemSaveAsCHN.Click += new System.EventHandler(this.menuItemSaveAsCHN_Click);
             // 
             // menuItemSaveAsIRIX
             // 
             this.menuItemSaveAsIRIX.Name = "menuItemSaveAsIRIX";
-            this.menuItemSaveAsIRIX.Size = new System.Drawing.Size(152, 22);
+            this.menuItemSaveAsIRIX.Size = new System.Drawing.Size(100, 22);
             this.menuItemSaveAsIRIX.Text = "&IRIX";
             // 
             // menuItemSaveAsKMZ
             // 
             this.menuItemSaveAsKMZ.Name = "menuItemSaveAsKMZ";
-            this.menuItemSaveAsKMZ.Size = new System.Drawing.Size(152, 22);
+            this.menuItemSaveAsKMZ.Size = new System.Drawing.Size(100, 22);
             this.menuItemSaveAsKMZ.Text = "KM&Z";
             // 
             // menuItemView
@@ -429,6 +448,12 @@
             this.menuItemShowWaterfall.Text = "Show &waterfall";
             this.menuItemShowWaterfall.Click += new System.EventHandler(this.menuItemShowWaterfall_Click);
             // 
+            // menuItemROITable
+            // 
+            this.menuItemROITable.Name = "menuItemROITable";
+            this.menuItemROITable.Size = new System.Drawing.Size(164, 22);
+            this.menuItemROITable.Text = "Show ROI Table";
+            // 
             // menuItemShowROIHistory
             // 
             this.menuItemShowROIHistory.Name = "menuItemShowROIHistory";
@@ -454,7 +479,7 @@
             // menuItemAbout
             // 
             this.menuItemAbout.Name = "menuItemAbout";
-            this.menuItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.menuItemAbout.Size = new System.Drawing.Size(107, 22);
             this.menuItemAbout.Text = "&About";
             this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
             // 
@@ -534,10 +559,29 @@
             this.btnShowLog.ToolTipText = "Show log";
             this.btnShowLog.Click += new System.EventHandler(this.menuItemShowLog_Click);
             // 
-            // toolStripSeparator5
+            // btnStartNewSession
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 40);
+            this.btnStartNewSession.AutoSize = false;
+            this.btnStartNewSession.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStartNewSession.Image = ((System.Drawing.Image)(resources.GetObject("btnStartNewSession.Image")));
+            this.btnStartNewSession.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStartNewSession.Name = "btnStartNewSession";
+            this.btnStartNewSession.Size = new System.Drawing.Size(38, 38);
+            this.btnStartNewSession.Text = "toolStripButton1";
+            this.btnStartNewSession.ToolTipText = "Start new session";
+            this.btnStartNewSession.Click += new System.EventHandler(this.menuItemStartNewSession_Click);
+            // 
+            // btnStopSession
+            // 
+            this.btnStopSession.AutoSize = false;
+            this.btnStopSession.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStopSession.Image = ((System.Drawing.Image)(resources.GetObject("btnStopSession.Image")));
+            this.btnStopSession.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStopSession.Name = "btnStopSession";
+            this.btnStopSession.Size = new System.Drawing.Size(38, 38);
+            this.btnStopSession.Text = "toolStripButton1";
+            this.btnStopSession.ToolTipText = "Stop session";
+            this.btnStopSession.Click += new System.EventHandler(this.menuItemStopSession_Click);
             // 
             // btnSessionInfo
             // 
@@ -552,18 +596,10 @@
             this.btnSessionInfo.ToolTipText = "Show session info";
             this.btnSessionInfo.Click += new System.EventHandler(this.menuItemSessionInfo_Click);
             // 
-            // btnShowROITable
+            // toolStripSeparator5
             // 
-            this.btnShowROITable.AutoSize = false;
-            this.btnShowROITable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowROITable.Image = global::crash.Properties.Resources.roi_table_32;
-            this.btnShowROITable.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowROITable.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowROITable.Name = "btnShowROITable";
-            this.btnShowROITable.Size = new System.Drawing.Size(38, 38);
-            this.btnShowROITable.Text = "toolStripButton1";
-            this.btnShowROITable.ToolTipText = "Show ROI Table";
-            this.btnShowROITable.Click += new System.EventHandler(this.menuItemROITable_Click);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 40);
             // 
             // btnShowMap
             // 
@@ -625,6 +661,19 @@
             this.lblConnectionStatus.Size = new System.Drawing.Size(130, 37);
             this.lblConnectionStatus.Text = "<lblConnectionStatus>";
             // 
+            // btnShowROITable
+            // 
+            this.btnShowROITable.AutoSize = false;
+            this.btnShowROITable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowROITable.Image = global::crash.Properties.Resources.roi_table_32;
+            this.btnShowROITable.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowROITable.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowROITable.Name = "btnShowROITable";
+            this.btnShowROITable.Size = new System.Drawing.Size(38, 38);
+            this.btnShowROITable.Text = "toolStripButton1";
+            this.btnShowROITable.ToolTipText = "Show ROI Table";
+            this.btnShowROITable.Click += new System.EventHandler(this.menuItemROITable_Click);
+            // 
             // btnShowROIHist
             // 
             this.btnShowROIHist.AutoSize = false;
@@ -650,6 +699,26 @@
             this.btnShowROIChart.Text = "toolStripButton1";
             this.btnShowROIChart.ToolTipText = "Show ROI live";
             this.btnShowROIChart.Click += new System.EventHandler(this.menuItemShowROIChart_Click);
+            // 
+            // menuItemRemoteCommands
+            // 
+            this.menuItemRemoteCommands.AutoSize = false;
+            this.menuItemRemoteCommands.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.menuItemRemoteCommands.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemShutdownRemoteServer});
+            this.menuItemRemoteCommands.Image = ((System.Drawing.Image)(resources.GetObject("menuItemRemoteCommands.Image")));
+            this.menuItemRemoteCommands.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.menuItemRemoteCommands.Name = "menuItemRemoteCommands";
+            this.menuItemRemoteCommands.Size = new System.Drawing.Size(38, 38);
+            this.menuItemRemoteCommands.Text = "toolStripDropDownButton1";
+            this.menuItemRemoteCommands.ToolTipText = "Remote commands";
+            // 
+            // menuItemShutdownRemoteServer
+            // 
+            this.menuItemShutdownRemoteServer.Name = "menuItemShutdownRemoteServer";
+            this.menuItemShutdownRemoteServer.Size = new System.Drawing.Size(203, 22);
+            this.menuItemShutdownRemoteServer.Text = "&Shutdown remote server";
+            this.menuItemShutdownRemoteServer.Click += new System.EventHandler(this.menuItemShutdownRemoteServer_Click);
             // 
             // contextMenuSession
             // 
@@ -729,6 +798,30 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1260, 28);
             this.panel2.TabIndex = 22;
+            // 
+            // btnSetupCancel
+            // 
+            this.btnSetupCancel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSetupCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetupCancel.Location = new System.Drawing.Point(1020, 0);
+            this.btnSetupCancel.Name = "btnSetupCancel";
+            this.btnSetupCancel.Size = new System.Drawing.Size(120, 28);
+            this.btnSetupCancel.TabIndex = 3;
+            this.btnSetupCancel.Text = "Cancel";
+            this.btnSetupCancel.UseVisualStyleBackColor = true;
+            this.btnSetupCancel.Click += new System.EventHandler(this.btnSetupCancel_Click);
+            // 
+            // btnSetupStartSession
+            // 
+            this.btnSetupStartSession.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSetupStartSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetupStartSession.Location = new System.Drawing.Point(1140, 0);
+            this.btnSetupStartSession.Name = "btnSetupStartSession";
+            this.btnSetupStartSession.Size = new System.Drawing.Size(120, 28);
+            this.btnSetupStartSession.TabIndex = 2;
+            this.btnSetupStartSession.Text = "Start session";
+            this.btnSetupStartSession.UseVisualStyleBackColor = true;
+            this.btnSetupStartSession.Click += new System.EventHandler(this.btnSetupStartSession_Click);
             // 
             // lblSetupEnergy
             // 
@@ -818,7 +911,7 @@
             this.label2.Size = new System.Drawing.Size(151, 28);
             this.label2.TabIndex = 18;
             this.label2.Text = "Detector";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label6
             // 
@@ -830,7 +923,7 @@
             this.label6.Size = new System.Drawing.Size(151, 28);
             this.label6.TabIndex = 31;
             this.label6.Text = "Voltage";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label3
             // 
@@ -844,7 +937,7 @@
             this.label3.Size = new System.Drawing.Size(622, 36);
             this.label3.TabIndex = 36;
             this.label3.Text = "Configure detector";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cboxSetupDetector
             // 
@@ -869,7 +962,7 @@
             this.label5.Size = new System.Drawing.Size(312, 36);
             this.label5.TabIndex = 37;
             this.label5.Text = "Aquire test spectrum";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label11
             // 
@@ -881,7 +974,7 @@
             this.label11.Size = new System.Drawing.Size(151, 28);
             this.label11.TabIndex = 38;
             this.label11.Text = "Livetime (s)";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cboxSetupChannels
             // 
@@ -904,7 +997,7 @@
             this.label4.Size = new System.Drawing.Size(151, 28);
             this.label4.TabIndex = 30;
             this.label4.Text = "#channels";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label7
             // 
@@ -916,29 +1009,7 @@
             this.label7.Size = new System.Drawing.Size(151, 28);
             this.label7.TabIndex = 32;
             this.label7.Text = "Coarse gain";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // btnSetupStart
-            // 
-            this.btnSetupStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetupStart.Location = new System.Drawing.Point(1102, 123);
-            this.btnSetupStart.Name = "btnSetupStart";
-            this.btnSetupStart.Size = new System.Drawing.Size(155, 22);
-            this.btnSetupStart.TabIndex = 26;
-            this.btnSetupStart.Text = "Start";
-            this.btnSetupStart.UseVisualStyleBackColor = true;
-            this.btnSetupStart.Click += new System.EventHandler(this.btnSetupStart_Click);
-            // 
-            // btnSetupStop
-            // 
-            this.btnSetupStop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetupStop.Location = new System.Drawing.Point(945, 123);
-            this.btnSetupStop.Name = "btnSetupStop";
-            this.btnSetupStop.Size = new System.Drawing.Size(151, 22);
-            this.btnSetupStop.TabIndex = 25;
-            this.btnSetupStop.Text = "Stop";
-            this.btnSetupStop.UseVisualStyleBackColor = true;
-            this.btnSetupStop.Click += new System.EventHandler(this.btnSetupStop_Click);
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label8
             // 
@@ -950,7 +1021,7 @@
             this.label8.Size = new System.Drawing.Size(151, 28);
             this.label8.TabIndex = 33;
             this.label8.Text = "Fine gain";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label9
             // 
@@ -962,7 +1033,7 @@
             this.label9.Size = new System.Drawing.Size(151, 28);
             this.label9.TabIndex = 34;
             this.label9.Text = "LLD (%)";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label10
             // 
@@ -974,7 +1045,7 @@
             this.label10.Size = new System.Drawing.Size(151, 28);
             this.label10.TabIndex = 35;
             this.label10.Text = "ULD (%)";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cboxSetupCoarseGain
             // 
@@ -1173,6 +1244,167 @@
             this.lblSetupLivetime.TabIndex = 0;
             this.lblSetupLivetime.Text = "1";
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.tableLayoutSetup.SetColumnSpan(this.label12, 2);
+            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.label12.Location = new System.Drawing.Point(3, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(308, 36);
+            this.label12.TabIndex = 49;
+            this.label12.Text = "Connection";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(3, 36);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(151, 28);
+            this.label13.TabIndex = 50;
+            this.label13.Text = "IP address";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(3, 64);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(151, 28);
+            this.label14.TabIndex = 51;
+            this.label14.Text = "Port";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbSetupIP
+            // 
+            this.tbSetupIP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupIP.Location = new System.Drawing.Point(160, 39);
+            this.tbSetupIP.Name = "tbSetupIP";
+            this.tbSetupIP.Size = new System.Drawing.Size(151, 21);
+            this.tbSetupIP.TabIndex = 52;
+            // 
+            // tbSetupPort
+            // 
+            this.tbSetupPort.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupPort.Location = new System.Drawing.Point(160, 67);
+            this.tbSetupPort.Name = "tbSetupPort";
+            this.tbSetupPort.Size = new System.Drawing.Size(151, 21);
+            this.tbSetupPort.TabIndex = 53;
+            // 
+            // btnSetupDisconnect
+            // 
+            this.btnSetupDisconnect.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSetupDisconnect.Location = new System.Drawing.Point(3, 123);
+            this.btnSetupDisconnect.Name = "btnSetupDisconnect";
+            this.btnSetupDisconnect.Size = new System.Drawing.Size(151, 22);
+            this.btnSetupDisconnect.TabIndex = 55;
+            this.btnSetupDisconnect.Text = "Disconnect";
+            this.btnSetupDisconnect.UseVisualStyleBackColor = true;
+            this.btnSetupDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
+            // 
+            // btnSetupConnect
+            // 
+            this.btnSetupConnect.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSetupConnect.Location = new System.Drawing.Point(160, 123);
+            this.btnSetupConnect.Name = "btnSetupConnect";
+            this.btnSetupConnect.Size = new System.Drawing.Size(151, 22);
+            this.btnSetupConnect.TabIndex = 54;
+            this.btnSetupConnect.Text = "Connect";
+            this.btnSetupConnect.UseVisualStyleBackColor = true;
+            this.btnSetupConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
+            // 
+            // btnSetupStop
+            // 
+            this.btnSetupStop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSetupStop.Location = new System.Drawing.Point(945, 123);
+            this.btnSetupStop.Name = "btnSetupStop";
+            this.btnSetupStop.Size = new System.Drawing.Size(151, 22);
+            this.btnSetupStop.TabIndex = 25;
+            this.btnSetupStop.Text = "Stop";
+            this.btnSetupStop.UseVisualStyleBackColor = true;
+            this.btnSetupStop.Click += new System.EventHandler(this.btnSetupStop_Click);
+            // 
+            // btnSetupStart
+            // 
+            this.btnSetupStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSetupStart.Location = new System.Drawing.Point(1102, 123);
+            this.btnSetupStart.Name = "btnSetupStart";
+            this.btnSetupStart.Size = new System.Drawing.Size(155, 22);
+            this.btnSetupStart.TabIndex = 26;
+            this.btnSetupStart.Text = "Start";
+            this.btnSetupStart.UseVisualStyleBackColor = true;
+            this.btnSetupStart.Click += new System.EventHandler(this.btnSetupStart_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(945, 64);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(151, 28);
+            this.label15.TabIndex = 56;
+            this.label15.Text = "Spectrum count";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(945, 92);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(151, 28);
+            this.label16.TabIndex = 57;
+            this.label16.Text = "Delay (s)";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.tbarSetupDelay);
+            this.panel9.Controls.Add(this.lblSetupDelay);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel9.Location = new System.Drawing.Point(1102, 95);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(155, 22);
+            this.panel9.TabIndex = 58;
+            // 
+            // tbarSetupDelay
+            // 
+            this.tbarSetupDelay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbarSetupDelay.Location = new System.Drawing.Point(0, 0);
+            this.tbarSetupDelay.Maximum = 256;
+            this.tbarSetupDelay.Name = "tbarSetupDelay";
+            this.tbarSetupDelay.Size = new System.Drawing.Size(141, 22);
+            this.tbarSetupDelay.TabIndex = 1;
+            this.tbarSetupDelay.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbarSetupDelay.ValueChanged += new System.EventHandler(this.tbarSetupDelay_ValueChanged);
+            // 
+            // lblSetupDelay
+            // 
+            this.lblSetupDelay.AutoSize = true;
+            this.lblSetupDelay.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblSetupDelay.Location = new System.Drawing.Point(141, 0);
+            this.lblSetupDelay.Name = "lblSetupDelay";
+            this.lblSetupDelay.Size = new System.Drawing.Size(14, 15);
+            this.lblSetupDelay.TabIndex = 0;
+            this.lblSetupDelay.Text = "0";
+            // 
+            // tbSetupSpecCount
+            // 
+            this.tbSetupSpecCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupSpecCount.Location = new System.Drawing.Point(1102, 67);
+            this.tbSetupSpecCount.Name = "tbSetupSpecCount";
+            this.tbSetupSpecCount.Size = new System.Drawing.Size(155, 21);
+            this.tbSetupSpecCount.TabIndex = 59;
+            // 
             // pageMenu
             // 
             this.pageMenu.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -1194,24 +1426,6 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1260, 615);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
-            // btnMenuPreferences
-            // 
-            this.btnMenuPreferences.FlatAppearance.BorderSize = 0;
-            this.btnMenuPreferences.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuPreferences.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuPreferences.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMenuPreferences.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuPreferences.Image = global::crash.Properties.Resources.setup_128;
-            this.btnMenuPreferences.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuPreferences.Location = new System.Drawing.Point(213, 50);
-            this.btnMenuPreferences.Name = "btnMenuPreferences";
-            this.btnMenuPreferences.Size = new System.Drawing.Size(160, 170);
-            this.btnMenuPreferences.TabIndex = 0;
-            this.btnMenuPreferences.Text = "Preferences";
-            this.btnMenuPreferences.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuPreferences.UseVisualStyleBackColor = true;
-            this.btnMenuPreferences.Click += new System.EventHandler(this.btnMenuPreferences_Click);
-            // 
             // btnMenuSession
             // 
             this.btnMenuSession.FlatAppearance.BorderSize = 0;
@@ -1229,6 +1443,24 @@
             this.btnMenuSession.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMenuSession.UseVisualStyleBackColor = true;
             this.btnMenuSession.Click += new System.EventHandler(this.btnMenuSession_Click);
+            // 
+            // btnMenuPreferences
+            // 
+            this.btnMenuPreferences.FlatAppearance.BorderSize = 0;
+            this.btnMenuPreferences.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuPreferences.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuPreferences.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuPreferences.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMenuPreferences.Image = global::crash.Properties.Resources.setup_128;
+            this.btnMenuPreferences.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnMenuPreferences.Location = new System.Drawing.Point(213, 50);
+            this.btnMenuPreferences.Name = "btnMenuPreferences";
+            this.btnMenuPreferences.Size = new System.Drawing.Size(160, 170);
+            this.btnMenuPreferences.TabIndex = 0;
+            this.btnMenuPreferences.Text = "Preferences";
+            this.btnMenuPreferences.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuPreferences.UseVisualStyleBackColor = true;
+            this.btnMenuPreferences.Click += new System.EventHandler(this.btnMenuPreferences_Click);
             // 
             // pageSessions
             // 
@@ -1278,6 +1510,52 @@
             this.lbSession.Size = new System.Drawing.Size(183, 434);
             this.lbSession.TabIndex = 7;
             this.lbSession.SelectedIndexChanged += new System.EventHandler(this.lbSession_SelectedIndexChanged);
+            // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.lbNuclides);
+            this.panel10.Controls.Add(this.tbarNuclides);
+            this.panel10.Controls.Add(this.label19);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel10.Location = new System.Drawing.Point(0, 434);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(183, 179);
+            this.panel10.TabIndex = 8;
+            // 
+            // lbNuclides
+            // 
+            this.lbNuclides.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.lbNuclides.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbNuclides.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbNuclides.FormattingEnabled = true;
+            this.lbNuclides.ItemHeight = 15;
+            this.lbNuclides.Location = new System.Drawing.Point(0, 47);
+            this.lbNuclides.Name = "lbNuclides";
+            this.lbNuclides.Size = new System.Drawing.Size(183, 132);
+            this.lbNuclides.TabIndex = 2;
+            // 
+            // tbarNuclides
+            // 
+            this.tbarNuclides.AutoSize = false;
+            this.tbarNuclides.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tbarNuclides.Location = new System.Drawing.Point(0, 21);
+            this.tbarNuclides.Name = "tbarNuclides";
+            this.tbarNuclides.Size = new System.Drawing.Size(183, 26);
+            this.tbarNuclides.TabIndex = 1;
+            this.tbarNuclides.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbarNuclides.Value = 5;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(0, 0);
+            this.label19.Name = "label19";
+            this.label19.Padding = new System.Windows.Forms.Padding(3);
+            this.label19.Size = new System.Drawing.Size(143, 21);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "Nuclide suggestions";
             // 
             // graphSession
             // 
@@ -1596,169 +1874,6 @@
             this.lblSessionDetector.Text = "<lblSessionDetector>";
             this.lblSessionDetector.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.tableLayoutSetup.SetColumnSpan(this.label12, 2);
-            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label12.Location = new System.Drawing.Point(3, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(308, 36);
-            this.label12.TabIndex = 49;
-            this.label12.Text = "Connection";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(3, 36);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(151, 28);
-            this.label13.TabIndex = 50;
-            this.label13.Text = "IP address";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(3, 64);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(151, 28);
-            this.label14.TabIndex = 51;
-            this.label14.Text = "Port";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbSetupIP
-            // 
-            this.tbSetupIP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupIP.Location = new System.Drawing.Point(160, 39);
-            this.tbSetupIP.Name = "tbSetupIP";
-            this.tbSetupIP.Size = new System.Drawing.Size(151, 21);
-            this.tbSetupIP.TabIndex = 52;
-            // 
-            // tbSetupPort
-            // 
-            this.tbSetupPort.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupPort.Location = new System.Drawing.Point(160, 67);
-            this.tbSetupPort.Name = "tbSetupPort";
-            this.tbSetupPort.Size = new System.Drawing.Size(151, 21);
-            this.tbSetupPort.TabIndex = 53;
-            // 
-            // btnSetupConnect
-            // 
-            this.btnSetupConnect.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetupConnect.Location = new System.Drawing.Point(160, 123);
-            this.btnSetupConnect.Name = "btnSetupConnect";
-            this.btnSetupConnect.Size = new System.Drawing.Size(151, 22);
-            this.btnSetupConnect.TabIndex = 54;
-            this.btnSetupConnect.Text = "Connect";
-            this.btnSetupConnect.UseVisualStyleBackColor = true;
-            this.btnSetupConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
-            // 
-            // btnSetupDisconnect
-            // 
-            this.btnSetupDisconnect.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetupDisconnect.Location = new System.Drawing.Point(3, 123);
-            this.btnSetupDisconnect.Name = "btnSetupDisconnect";
-            this.btnSetupDisconnect.Size = new System.Drawing.Size(151, 22);
-            this.btnSetupDisconnect.TabIndex = 55;
-            this.btnSetupDisconnect.Text = "Disconnect";
-            this.btnSetupDisconnect.UseVisualStyleBackColor = true;
-            this.btnSetupDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
-            // 
-            // btnSetupStartSession
-            // 
-            this.btnSetupStartSession.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSetupStartSession.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupStartSession.Location = new System.Drawing.Point(1140, 0);
-            this.btnSetupStartSession.Name = "btnSetupStartSession";
-            this.btnSetupStartSession.Size = new System.Drawing.Size(120, 28);
-            this.btnSetupStartSession.TabIndex = 2;
-            this.btnSetupStartSession.Text = "Start session";
-            this.btnSetupStartSession.UseVisualStyleBackColor = true;
-            this.btnSetupStartSession.Click += new System.EventHandler(this.btnSetupStartSession_Click);
-            // 
-            // btnSetupCancel
-            // 
-            this.btnSetupCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSetupCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupCancel.Location = new System.Drawing.Point(1020, 0);
-            this.btnSetupCancel.Name = "btnSetupCancel";
-            this.btnSetupCancel.Size = new System.Drawing.Size(120, 28);
-            this.btnSetupCancel.TabIndex = 3;
-            this.btnSetupCancel.Text = "Cancel";
-            this.btnSetupCancel.UseVisualStyleBackColor = true;
-            this.btnSetupCancel.Click += new System.EventHandler(this.btnSetupCancel_Click);
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(945, 64);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(151, 28);
-            this.label15.TabIndex = 56;
-            this.label15.Text = "Spectrum count";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(945, 92);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(151, 28);
-            this.label16.TabIndex = 57;
-            this.label16.Text = "Delay (s)";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel9
-            // 
-            this.panel9.Controls.Add(this.tbarSetupDelay);
-            this.panel9.Controls.Add(this.lblSetupDelay);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(1102, 95);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(155, 22);
-            this.panel9.TabIndex = 58;
-            // 
-            // lblSetupDelay
-            // 
-            this.lblSetupDelay.AutoSize = true;
-            this.lblSetupDelay.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblSetupDelay.Location = new System.Drawing.Point(141, 0);
-            this.lblSetupDelay.Name = "lblSetupDelay";
-            this.lblSetupDelay.Size = new System.Drawing.Size(14, 15);
-            this.lblSetupDelay.TabIndex = 0;
-            this.lblSetupDelay.Text = "0";
-            // 
-            // tbarSetupDelay
-            // 
-            this.tbarSetupDelay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbarSetupDelay.Location = new System.Drawing.Point(0, 0);
-            this.tbarSetupDelay.Maximum = 256;
-            this.tbarSetupDelay.Name = "tbarSetupDelay";
-            this.tbarSetupDelay.Size = new System.Drawing.Size(141, 22);
-            this.tbarSetupDelay.TabIndex = 1;
-            this.tbarSetupDelay.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbarSetupDelay.ValueChanged += new System.EventHandler(this.tbarSetupDelay_ValueChanged);
-            // 
-            // tbSetupSpecCount
-            // 
-            this.tbSetupSpecCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupSpecCount.Location = new System.Drawing.Point(1102, 67);
-            this.tbSetupSpecCount.Name = "tbSetupSpecCount";
-            this.tbSetupSpecCount.Size = new System.Drawing.Size(155, 21);
-            this.tbSetupSpecCount.TabIndex = 59;
-            // 
             // pagePreferences
             // 
             this.pagePreferences.Controls.Add(this.tableLayoutPref);
@@ -1973,120 +2088,6 @@
             this.btnAddDetector.UseVisualStyleBackColor = true;
             this.btnAddDetector.Click += new System.EventHandler(this.btnAddDetector_Click);
             // 
-            // btnStartNewSession
-            // 
-            this.btnStartNewSession.AutoSize = false;
-            this.btnStartNewSession.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStartNewSession.Image = ((System.Drawing.Image)(resources.GetObject("btnStartNewSession.Image")));
-            this.btnStartNewSession.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStartNewSession.Name = "btnStartNewSession";
-            this.btnStartNewSession.Size = new System.Drawing.Size(38, 38);
-            this.btnStartNewSession.Text = "toolStripButton1";
-            this.btnStartNewSession.ToolTipText = "Start new session";
-            this.btnStartNewSession.Click += new System.EventHandler(this.menuItemStartNewSession_Click);
-            // 
-            // menuItemStartNewSession
-            // 
-            this.menuItemStartNewSession.Name = "menuItemStartNewSession";
-            this.menuItemStartNewSession.Size = new System.Drawing.Size(208, 22);
-            this.menuItemStartNewSession.Text = "Start new session";
-            this.menuItemStartNewSession.Click += new System.EventHandler(this.menuItemStartNewSession_Click);
-            // 
-            // menuItemStopSession
-            // 
-            this.menuItemStopSession.Name = "menuItemStopSession";
-            this.menuItemStopSession.Size = new System.Drawing.Size(208, 22);
-            this.menuItemStopSession.Text = "Stop session";
-            this.menuItemStopSession.Click += new System.EventHandler(this.menuItemStopSession_Click);
-            // 
-            // btnStopSession
-            // 
-            this.btnStopSession.AutoSize = false;
-            this.btnStopSession.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStopSession.Image = ((System.Drawing.Image)(resources.GetObject("btnStopSession.Image")));
-            this.btnStopSession.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStopSession.Name = "btnStopSession";
-            this.btnStopSession.Size = new System.Drawing.Size(38, 38);
-            this.btnStopSession.Text = "toolStripButton1";
-            this.btnStopSession.ToolTipText = "Stop session";
-            this.btnStopSession.Click += new System.EventHandler(this.menuItemStopSession_Click);
-            // 
-            // menuItemRemoteCommands
-            // 
-            this.menuItemRemoteCommands.AutoSize = false;
-            this.menuItemRemoteCommands.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.menuItemRemoteCommands.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemShutdownRemoteServer});
-            this.menuItemRemoteCommands.Image = ((System.Drawing.Image)(resources.GetObject("menuItemRemoteCommands.Image")));
-            this.menuItemRemoteCommands.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.menuItemRemoteCommands.Name = "menuItemRemoteCommands";
-            this.menuItemRemoteCommands.Size = new System.Drawing.Size(38, 38);
-            this.menuItemRemoteCommands.Text = "toolStripDropDownButton1";
-            this.menuItemRemoteCommands.ToolTipText = "Remote commands";
-            // 
-            // menuItemShutdownRemoteServer
-            // 
-            this.menuItemShutdownRemoteServer.Name = "menuItemShutdownRemoteServer";
-            this.menuItemShutdownRemoteServer.Size = new System.Drawing.Size(203, 22);
-            this.menuItemShutdownRemoteServer.Text = "&Shutdown remote server";
-            this.menuItemShutdownRemoteServer.Click += new System.EventHandler(this.menuItemShutdownRemoteServer_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(205, 6);
-            // 
-            // menuItemROITable
-            // 
-            this.menuItemROITable.Name = "menuItemROITable";
-            this.menuItemROITable.Size = new System.Drawing.Size(164, 22);
-            this.menuItemROITable.Text = "Show ROI Table";
-            // 
-            // panel10
-            // 
-            this.panel10.Controls.Add(this.lbNuclides);
-            this.panel10.Controls.Add(this.tbarNuclides);
-            this.panel10.Controls.Add(this.label19);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(0, 434);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(183, 179);
-            this.panel10.TabIndex = 8;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(0, 0);
-            this.label19.Name = "label19";
-            this.label19.Padding = new System.Windows.Forms.Padding(3);
-            this.label19.Size = new System.Drawing.Size(143, 21);
-            this.label19.TabIndex = 0;
-            this.label19.Text = "Nuclide suggestions";
-            // 
-            // tbarNuclides
-            // 
-            this.tbarNuclides.AutoSize = false;
-            this.tbarNuclides.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tbarNuclides.Location = new System.Drawing.Point(0, 21);
-            this.tbarNuclides.Name = "tbarNuclides";
-            this.tbarNuclides.Size = new System.Drawing.Size(183, 26);
-            this.tbarNuclides.TabIndex = 1;
-            this.tbarNuclides.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
-            // lbNuclides
-            // 
-            this.lbNuclides.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbNuclides.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbNuclides.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbNuclides.FormattingEnabled = true;
-            this.lbNuclides.ItemHeight = 15;
-            this.lbNuclides.Location = new System.Drawing.Point(0, 47);
-            this.lbNuclides.Name = "lbNuclides";
-            this.lbNuclides.Size = new System.Drawing.Size(183, 132);
-            this.lbNuclides.TabIndex = 2;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2135,6 +2136,9 @@
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupLivetime)).EndInit();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupDelay)).EndInit();
             this.pageMenu.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.pageSessions.ResumeLayout(false);
@@ -2142,19 +2146,16 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
+            this.panel10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbarNuclides)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
-            this.panel9.ResumeLayout(false);
-            this.panel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupDelay)).EndInit();
             this.pagePreferences.ResumeLayout(false);
             this.tableLayoutPref.ResumeLayout(false);
             this.tableLayoutPref.PerformLayout();
-            this.panel10.ResumeLayout(false);
-            this.panel10.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarNuclides)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

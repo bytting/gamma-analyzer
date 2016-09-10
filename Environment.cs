@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-// Authors: Dag robole,
+// Authors: Dag Robole,
 
 using System;
 using System.IO;
@@ -28,10 +28,10 @@ namespace crash
 {
     public static class CrashEnvironment
     {
-        public static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + Path.DirectorySeparatorChar + "Crash";
+        public static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + Path.DirectorySeparatorChar + "Crash";
         public static string GEScriptPath = SettingsPath + Path.DirectorySeparatorChar + "GEScripts";
         public static string RegScriptPath = SettingsPath + Path.DirectorySeparatorChar + "RegressionScripts";
-        public static string SettingsFile = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";
+        public static string SettingsFile = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";        
         public static string NuclidesFile = SettingsPath + Path.DirectorySeparatorChar + "nuclides.lib";
     }    
 }

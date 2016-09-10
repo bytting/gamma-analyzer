@@ -37,66 +37,81 @@ namespace crash
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            tabs.ItemSize = new Size(0, 1);
-            tabs.SizeMode = TabSizeMode.Fixed;            
-            tabs.SelectedTab = pageMenu;            
+            try
+            {                
+                tabs.ItemSize = new Size(0, 1);
+                tabs.SizeMode = TabSizeMode.Fixed;
+                tabs.SelectedTab = pageMenu;
 
-            if (!Directory.Exists(CrashEnvironment.SettingsPath))
-                Directory.CreateDirectory(CrashEnvironment.SettingsPath);
+                if (!Directory.Exists(CrashEnvironment.SettingsPath))
+                    Directory.CreateDirectory(CrashEnvironment.SettingsPath);
 
-            if (!Directory.Exists(CrashEnvironment.GEScriptPath))
-                Directory.CreateDirectory(CrashEnvironment.GEScriptPath);
+                if (!Directory.Exists(CrashEnvironment.GEScriptPath))
+                    Directory.CreateDirectory(CrashEnvironment.GEScriptPath);
 
-            if (!Directory.Exists(CrashEnvironment.RegScriptPath))
-                Directory.CreateDirectory(CrashEnvironment.RegScriptPath);
+                if (!Directory.Exists(CrashEnvironment.RegScriptPath))
+                    Directory.CreateDirectory(CrashEnvironment.RegScriptPath);
 
-            string InstallDir = (new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location)).Directory + Path.DirectorySeparatorChar.ToString();
-            try { File.Copy(InstallDir + "template_settings.xml", CrashEnvironment.SettingsFile, false); } catch { }
-            try { File.Copy(InstallDir + "template_nuclides.lib", CrashEnvironment.NuclidesFile, false); } catch { }
-            try { File.Copy(InstallDir + "template_Nai-2tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py", false); } catch { }
-            try { File.Copy(InstallDir + "template_Nai-3tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py", false); } catch { }
-            
-            LoadSettings();
+                string InstallDir = (new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location)).Directory + Path.DirectorySeparatorChar.ToString();
 
-            tbSetupIP.Text = settings.LastIP;
-            tbSetupPort.Text = settings.LastPort;
-            tbSetupPort.KeyPress += CustomEvents.Integer_KeyPress;
-            tbSetupSpecCount.KeyPress += CustomEvents.Integer_KeyPress;
+                if (!File.Exists(CrashEnvironment.SettingsFile))
+                    File.Copy(InstallDir + "template_settings.xml", CrashEnvironment.SettingsFile, false);
 
-            tbSessionDir.Text = settings.SessionRootDirectory;
-            PopulateDetectorTypeList();
-            PopulateDetectorList();
-            
-            formWaterfallLive = new FormWaterfallLive(settings.ROIList);
-            formROILive = new FormROILive(settings.ROIList);
-            formMap = new FormMap();                       
+                if (!File.Exists(CrashEnvironment.NuclidesFile))
+                    File.Copy(InstallDir + "template_nuclides.lib", CrashEnvironment.NuclidesFile, false);
 
-            lblConnectionStatus.ForeColor = Color.Red;
-            lblConnectionStatus.Text = "Not connected";
-            lblSetupChannel.Text = "";
-            lblSessionChannel.Text = "";
-            lblSessionEnergy.Text = "";
-            lblSetupEnergy.Text = "";
-            lblDetector.Text = "";
-            separatorDetector.Visible = false;
+                // FIXME
+                try { File.Copy(InstallDir + "template_Nai-2tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py", false); }
+                catch { }
+                try { File.Copy(InstallDir + "template_Nai-3tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py", false); }
+                catch { }
 
-            lblSessionDetector.Text = "";
-            lblBackground.Text = "";
-            lblComment.Text = "";
-            ClearSpectrumInfo();
+                LoadSettings();
 
-            formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
-            formMap.SetSessionIndexEvent += SetSessionIndexEvent;
-            formROILive.SetSessionIndexEvent += SetSessionIndexEvent;
+                formWaterfallLive = new FormWaterfallLive(settings.ROIList);
+                formROILive = new FormROILive(settings.ROIList);
+                formMap = new FormMap();
 
-            PopulateDetectors();
+                tbSetupIP.Text = settings.LastIP;
+                tbSetupPort.Text = settings.LastPort;
+                tbSetupPort.KeyPress += CustomEvents.Integer_KeyPress;
+                tbSetupSpecCount.KeyPress += CustomEvents.Integer_KeyPress;
 
-            netThread.Start();
-            while (!netThread.IsAlive);
-                    
-            timer.Interval = 10;
-            timer.Tick += timer_Tick;
-            timer.Start();
+                tbSessionDir.Text = settings.SessionRootDirectory;
+                PopulateDetectorTypeList();
+                PopulateDetectorList();
+                PopulateDetectors();                
+
+                lblConnectionStatus.ForeColor = Color.Red;
+                lblConnectionStatus.Text = "Not connected";
+                lblSetupChannel.Text = "";
+                lblSessionChannel.Text = "";
+                lblSessionEnergy.Text = "";
+                lblSetupEnergy.Text = "";
+                lblDetector.Text = "";
+                separatorDetector.Visible = false;
+
+                lblSessionDetector.Text = "";
+                lblBackground.Text = "";
+                lblComment.Text = "";
+                ClearSpectrumInfo();
+
+                formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
+                formMap.SetSessionIndexEvent += SetSessionIndexEvent;
+                formROILive.SetSessionIndexEvent += SetSessionIndexEvent;                
+
+                netThread.Start();
+                while (!netThread.IsAlive) ;
+
+                timer.Interval = 10;
+                timer.Tick += timer_Tick;
+                timer.Start();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+                Environment.Exit(1);
+            }
         }        
 
         void timer_Tick(object sender, EventArgs e)
@@ -202,14 +217,9 @@ namespace crash
                 return;
             }
 
-            int nchannels = 256;
-            int lld = 1;
-            int uld = 256;
-
-            nchannels = Convert.ToInt32(cboxSetupChannels.Text);
-            
-            lld = tbarSetupLLD.Value;
-            uld = tbarSetupULD.Value;
+            int nchannels = Convert.ToInt32(cboxSetupChannels.Text);            
+            int lld = tbarSetupLLD.Value;
+            int uld = tbarSetupULD.Value;
             if(lld > uld)
             {
                 MessageBox.Show("LLD can not be bigger than ULD");
