@@ -133,8 +133,7 @@ namespace crash
 
         private void menuItemExit_Click(object sender, EventArgs e)
         {
-            menuItemDisconnect_Click(sender, e);
-            Thread.Sleep(2000); // FIXME
+            menuItemDisconnect_Click(sender, e);            
             Close();
         }
 
@@ -167,8 +166,8 @@ namespace crash
                 return;
             
             sendMsg(new burn.Message("disconnect", null));
-
             Utils.Log.Add("Disconnecting from " + settings.LastIP + ":" + settings.LastPort);
+            Thread.Sleep(2000); // FIXME
         }        
 
         private void btnStopNetService_Click(object sender, EventArgs e)
