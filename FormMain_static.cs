@@ -46,8 +46,7 @@ namespace crash
 
         bool connected = false;
         Session session = new Session();
-
-        FormConnect formConnect = null;
+        
         FormWaterfallLive formWaterfallLive = null;
         FormROILive formROILive = null;
         FormMap formMap = null;
@@ -408,6 +407,38 @@ namespace crash
             graph.GraphPane.ReverseTransform(clickedPoint, out dx, out dy);
             x = (int)dx;
             y = (int)dy;
+        }
+
+        private void PopulateDetectorTypeList()
+        {
+            lvDetectorTypes.Items.Clear();
+            foreach (DetectorType dt in settings.DetectorTypes)
+            {
+                ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString(), dt.GEScriptPath });
+                item.Tag = dt;
+                lvDetectorTypes.Items.Add(item);
+            }
+        }
+
+        private void PopulateDetectorList()
+        {
+            lvDetectors.Items.Clear();
+            foreach (Detector d in settings.Detectors)
+            {
+                ListViewItem item = new ListViewItem(new string[] {                     
+                    d.Serialnumber, 
+                    d.TypeName, 
+                    d.CurrentNumChannels.ToString(), 
+                    d.CurrentHV.ToString(), 
+                    d.CurrentCoarseGain.ToString(), 
+                    d.CurrentFineGain.ToString(),                    
+                    d.CurrentLivetime.ToString(),
+                    d.CurrentLLD.ToString(),
+                    d.CurrentULD.ToString()
+                });
+                item.Tag = d;
+                lvDetectors.Items.Add(item);
+            }
         }
     }
 }

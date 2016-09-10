@@ -62,7 +62,15 @@ namespace crash
             
             LoadSettings();
 
-            formConnect = new FormConnect();
+            tbSetupIP.Text = settings.LastIP;
+            tbSetupPort.Text = settings.LastPort;
+            tbSetupPort.KeyPress += CustomEvents.Integer_KeyPress;
+            tbSetupSpecCount.KeyPress += CustomEvents.Integer_KeyPress;
+
+            tbSessionDir.Text = settings.SessionRootDirectory;
+            PopulateDetectorTypeList();
+            PopulateDetectorList();
+            
             formWaterfallLive = new FormWaterfallLive(settings.ROIList);
             formROILive = new FormROILive(settings.ROIList);
             formMap = new FormMap();                       
@@ -122,20 +130,27 @@ namespace crash
 
         private void menuItemConnect_Click(object sender, EventArgs e)
         {
-            formConnect.IP = settings.LastIP;
-            formConnect.Port = settings.LastPort;
-            if (formConnect.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            if (String.IsNullOrEmpty(tbSetupIP.Text))
+            {
+                MessageBox.Show("No IP address provided");
                 return;
+            }
 
-            settings.LastIP = formConnect.IP;
-            settings.LastPort = formConnect.Port;
+            if (String.IsNullOrEmpty(tbSetupPort.Text))
+            {
+                MessageBox.Show("No port provided");
+                return;
+            }
+
+            settings.LastIP = tbSetupIP.Text.Trim();
+            settings.LastPort = tbSetupPort.Text.Trim();
 
             burn.Message msg = new burn.Message("connect", null);
-            msg.AddParameter("host", formConnect.IP);
-            msg.AddParameter("port", formConnect.Port);
+            msg.AddParameter("host", settings.LastIP);
+            msg.AddParameter("port", settings.LastPort);
             sendMsg(msg);
 
-            Utils.Log.Add("connect command sent");
+            Utils.Log.Add("Connecting to " + settings.LastIP + ":" + settings.LastPort + "...");
         }
 
         private void menuItemDisconnect_Click(object sender, EventArgs e)
@@ -146,72 +161,7 @@ namespace crash
             
             sendMsg(new burn.Message("disconnect", null));
 
-            Utils.Log.Add("SEND: disconnect");
-        }        
-
-        private void btnSendClose_Click(object sender, EventArgs e)
-        {
-            if(!connected)
-            {
-                MessageBox.Show("You must be connected before shutting down remote");
-                return;
-            }
-
-            if (MessageBox.Show("Are you sure you want to close the remote server?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
-                return;
-
-            sendMsg(new burn.Message("close", null));
-
-            Utils.Log.Add("SEND: close");
-        }
-
-        private void btnSendSession_Click(object sender, EventArgs e)
-        {
-            if (sessionRunning)
-            {
-                MessageBox.Show("A session is already running");
-                return;
-            }
-
-            if (String.IsNullOrEmpty(settings.SessionRootDirectory))
-            {
-                MessageBox.Show("You must provide a session directory under preferences");
-                return;
-            }
-
-            if (!detectorReady)
-            {
-                tabs.SelectedTab = pageSetup;
-                return;
-            }
-
-            if(selectedDetector == null)
-            {
-                MessageBox.Show("You must specify a detector under setup");
-                return;
-            }
-
-            if (String.IsNullOrEmpty(tbSpecLivetime.Text))
-            {
-                MessageBox.Show("You must specify a livetime");
-                return;
-            }            
-
-            int count = String.IsNullOrEmpty(tbSpecCount.Text) ? -1 : Convert.ToInt32(tbSpecCount.Text);
-            float livetime = Convert.ToSingle(tbSpecLivetime.Text);
-            float delay = String.IsNullOrEmpty(tbSpecDelay.Text) ? 0 : Convert.ToSingle(tbSpecDelay.Text);
-
-            ClearSession();
-
-            burn.Message msg = new burn.Message("new_session", null);
-            msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
-            msg.AddParameter("preview", 0);
-            msg.AddParameter("iterations", count);
-            msg.AddParameter("livetime", livetime);
-            msg.AddParameter("delay", delay);
-            sendMsg(msg);
-
-            Utils.Log.Add("SEND: new_session");
+            Utils.Log.Add("Disconnecting from " + settings.LastIP + ":" + settings.LastPort);
         }        
 
         private void btnStopNetService_Click(object sender, EventArgs e)
@@ -220,29 +170,11 @@ namespace crash
             netThread.Join();
 
             Utils.Log.Add("net service closed");
-        }                
-        
-        private void btnStopSession_Click(object sender, EventArgs e)
-        {
-            if(!sessionRunning)
-            {
-                MessageBox.Show("No session is running");
-                return;
-            }
-
-            sendMsg(new burn.Message("stop_session", null));
-
-            Utils.Log.Add("SEND: stop_session");
-        }
-        
-        private void btnMenuSpec_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = pageSetup;
         }        
 
         private void btnMenuSession_Click(object sender, EventArgs e)
         {
-            tabs.SelectedTab = pageSession;
+            tabs.SelectedTab = pageSessions;
         }
         
         private void btnSetupSetParams_Click(object sender, EventArgs e)
@@ -321,48 +253,31 @@ namespace crash
 
             Utils.Log.Add("SEND: stop_session");
         }
-
-        private void menuItemPreferences_Click(object sender, EventArgs e)
-        {
-            FormPreferences form = new FormPreferences(settings);
-            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                PopulateDetectors();
-            }
-        }
         
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblInterface.Text = tabs.SelectedTab.Text;
+            lblInterface.Text = tabs.SelectedTab.Text.ToUpper();
 
-            btnBack.Enabled = true;
-            btnShowMap.Enabled = false;
-            menuItemShowMap.Enabled = false;
-            btnShowWaterfallLive.Enabled = false;
-            menuItemShowWaterfall.Enabled = false;
-            btnShowROIChart.Enabled = false;
-            menuItemShowROIChart.Enabled = false;
-            btnShowROIHist.Enabled = false;
-            menuItemShowROIHistory.Enabled = false;
-            btnShow3D.Enabled = false;
-            menuItemShow3DMap.Enabled = false;
+            menuItemBack.Enabled = false;
+            btnBack.Enabled = false;
+            menuItemSession.Visible = false;            
 
-            if (tabs.SelectedTab == pageMenu)
-                btnBack.Enabled = false;
-
-            if (tabs.SelectedTab == pageSession)
+            if (tabs.SelectedTab == pagePreferences)
             {
-                btnShowMap.Enabled = true;
-                menuItemShowMap.Enabled = true;
-                btnShowWaterfallLive.Enabled = true;
-                menuItemShowWaterfall.Enabled = true;
-                btnShowROIChart.Enabled = true;
-                menuItemShowROIChart.Enabled = true;
-                btnShowROIHist.Enabled = true;
-                menuItemShowROIHistory.Enabled = true;
-                btnShow3D.Enabled = true;
-                menuItemShow3DMap.Enabled = true;
+                menuItemBack.Enabled = true;
+                btnBack.Enabled = true;
             }            
+            else if (tabs.SelectedTab == pageSessions)
+            {
+                menuItemBack.Enabled = true;
+                btnBack.Enabled = true;
+                menuItemSession.Visible = true;
+            }
+            else if (tabs.SelectedTab == pageSetup)
+            {
+                menuItemBack.Enabled = true;
+                btnBack.Enabled = true;
+            }
         }                
 
         private void lbSession_SelectedIndexChanged(object sender, EventArgs e)
@@ -667,14 +582,11 @@ namespace crash
             form.ShowDialog();
         }
 
-        private void menuItemShow3DMap_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("3D not implemented");
-        }
-
         private void menuItemBack_Click(object sender, EventArgs e)
         {
-            tabs.SelectedTab = pageMenu;
+            if (tabs.SelectedTab == pageSetup)
+                tabs.SelectedTab = pageSessions;
+            else tabs.SelectedTab = pageMenu;
         }
 
         private void menuItemShowLog_Click(object sender, EventArgs e)
@@ -767,17 +679,126 @@ namespace crash
             detectorReady = false;
         }
 
-        private void btnSetupGoToSessions_Click(object sender, EventArgs e)
+        private void btnSetupCancel_Click(object sender, EventArgs e)
         {
-            if(detectorReady)
-                tabs.SelectedTab = pageSession;
-            else            
-                MessageBox.Show("You must set the detector parameters");            
+            tabs.SelectedTab = pageSessions;
         }
 
-        private void menuItemChangeDetector_Click(object sender, EventArgs e)
+        private void btnSetupStartSession_Click(object sender, EventArgs e)
         {
+            int count = String.IsNullOrEmpty(tbSetupSpecCount.Text) ? -1 : Convert.ToInt32(tbSetupSpecCount.Text);
+            float livetime = (float)tbarSetupLivetime.Value;
+            float delay = (float)tbarSetupDelay.Value;
+
+            ClearSession();
+
+            burn.Message msg = new burn.Message("new_session", null);
+            msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
+            msg.AddParameter("preview", 0);
+            msg.AddParameter("iterations", count);
+            msg.AddParameter("livetime", livetime);
+            msg.AddParameter("delay", delay);
+            sendMsg(msg);
+
+            Utils.Log.Add("SEND: new_session");
+        }
+
+        private void tbarSetupDelay_ValueChanged(object sender, EventArgs e)
+        {
+            lblSetupDelay.Text = tbarSetupDelay.Value.ToString();            
+        }
+
+        private void btnMenuPreferences_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pagePreferences;
+        }
+
+        private void btnAddDetectorType_Click(object sender, EventArgs e)
+        {
+            FormAddDetectorType form = new FormAddDetectorType();
+            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                settings.DetectorTypes.Add(new DetectorType(form.TypeName, form.MaxChannels, form.MinHV, form.MaxHV, form.GEScript));
+                PopulateDetectorTypeList();
+            }
+        }
+
+        private void btnAddDetector_Click(object sender, EventArgs e)
+        {
+            FormAddDetector form = new FormAddDetector(settings.DetectorTypes);
+            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Detector det = new Detector();
+                det.TypeName = form.DetectorType;
+                det.Serialnumber = form.Serialnumber;
+                det.CurrentNumChannels = form.NumChannels;
+                det.CurrentHV = form.HV;
+                det.CurrentCoarseGain = form.CoarseGain;
+                det.CurrentFineGain = form.FineGain;
+                det.CurrentLivetime = form.Livetime;
+                det.CurrentLLD = form.LLD;
+                det.CurrentULD = form.ULD;
+                settings.Detectors.Add(det);
+
+                PopulateDetectorList();
+                PopulateDetectors();
+            }
+        }
+
+        private void btnSetSessionDir_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                tbSessionDir.Text = dialog.SelectedPath;
+                settings.SessionRootDirectory = tbSessionDir.Text;
+            }
+        }
+
+        private void menuItemStartNewSession_Click(object sender, EventArgs e)
+        {
+            if (sessionRunning)
+            {
+                MessageBox.Show("A session is already running");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(settings.SessionRootDirectory))
+            {
+                MessageBox.Show("You must provide a session directory under preferences");
+                return;
+            }
+
             tabs.SelectedTab = pageSetup;
+        }
+
+        private void menuItemStopSession_Click(object sender, EventArgs e)
+        {
+            if (!sessionRunning)
+            {
+                MessageBox.Show("No session is running");
+                return;
+            }
+
+            sendMsg(new burn.Message("stop_session", null));
+
+            Utils.Log.Add("SEND: stop_session");
+        }
+
+        private void menuItemShutdownRemoteServer_Click(object sender, EventArgs e)
+        {
+            if (!connected)
+            {
+                MessageBox.Show("You must be connected before shutting down remote");
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to close the remote server?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
+                return;
+
+            sendMsg(new burn.Message("close", null));
+
+            Utils.Log.Add("SEND: close");
         }
     }
 }
