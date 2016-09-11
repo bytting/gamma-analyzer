@@ -40,6 +40,11 @@ namespace crash
         public int CurrentLivetime { get; set; }
         public int CurrentLLD { get; set; }
         public int CurrentULD { get; set; }
+        public double EnergyCurveCoeffA { get; set; }
+        public double EnergyCurveCoeffB { get; set; }
+        public double EnergyCurveCoeffC { get; set; }
+        public double EnergyCurveCoeffD { get; set; }
+        public double EnergyCurveCoeffE { get; set; }
         public string RegressionScript { get; set; }        
 
         public override string ToString()

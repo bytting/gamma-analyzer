@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Text;
 using System.Threading;
+using System.Globalization;
 using System.Windows.Forms;
 using ZedGraph;
 using Newtonsoft.Json;
@@ -62,8 +63,10 @@ namespace crash
         bool selectionRun = false;        
         bool sessionRunning = false;
 
+        List<NuclideInfo> NuclideLibrary = new List<NuclideInfo>();
+
         private void SaveSettings()
-        {
+        {            
             StreamWriter sw = new StreamWriter(CrashEnvironment.SettingsFile);
             XmlSerializer x = new XmlSerializer(settings.GetType());
             x.Serialize(sw, settings);
@@ -78,6 +81,40 @@ namespace crash
                 XmlSerializer x = new XmlSerializer(settings.GetType());
                 settings = x.Deserialize(sr) as CrashSettings;
                 sr.Close();
+            }
+        }
+
+        private void LoadNuclideLibrary()
+        {
+            if (File.Exists(CrashEnvironment.NuclideLibraryFile))
+            {
+                TextReader reader = File.OpenText(CrashEnvironment.NuclideLibraryFile);
+                char[] itemDelims = new char[] { ' ', '\t' };
+                char[] energyDelims = new char[] { ':' };
+                string line;
+                while((line = reader.ReadLine()) != null)
+                {
+                    line = line.Trim();
+                    if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
+                        continue;
+                    string[] items = line.Split(itemDelims, StringSplitOptions.RemoveEmptyEntries);
+                    string name = items[0];
+                    double halfLife = Convert.ToDouble(items[1], CultureInfo.InvariantCulture);
+                    string halfLifeUnit = items[2];
+
+                    NuclideInfo ni = new NuclideInfo(name, halfLife, halfLifeUnit);                    
+
+                    for(int i=3; i<items.Length; i++)
+                    {
+                        string[] energy = items[i].Split(energyDelims, StringSplitOptions.RemoveEmptyEntries);
+                        double e = Convert.ToDouble(energy[0], CultureInfo.InvariantCulture);
+                        double p = Convert.ToDouble(energy[1], CultureInfo.InvariantCulture);
+                        ni.Energies.Add(new NuclideEnergy(e, p));
+                    }
+
+                    NuclideLibrary.Add(ni);
+                }
+                reader.Close();
             }
         }
 

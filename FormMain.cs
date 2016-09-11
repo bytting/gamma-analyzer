@@ -58,8 +58,8 @@ namespace crash
                 if (!File.Exists(CrashEnvironment.SettingsFile))
                     File.Copy(InstallDir + "template_settings.xml", CrashEnvironment.SettingsFile, false);
 
-                if (!File.Exists(CrashEnvironment.NuclidesFile))
-                    File.Copy(InstallDir + "template_nuclides.lib", CrashEnvironment.NuclidesFile, false);
+                if (!File.Exists(CrashEnvironment.NuclideLibraryFile))
+                    File.Copy(InstallDir + "template_nuclides.lib", CrashEnvironment.NuclideLibraryFile, false);
 
                 // FIXME
                 try { File.Copy(InstallDir + "template_Nai-2tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py", false); }
@@ -68,6 +68,7 @@ namespace crash
                 catch { }
 
                 LoadSettings();
+                LoadNuclideLibrary();
 
                 formWaterfallLive = new FormWaterfallLive(settings.ROIList);
                 formROILive = new FormROILive(settings.ROIList);
@@ -384,6 +385,13 @@ namespace crash
                 if (formROILive.Visible)
                     formROILive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
             }
+
+            GraphPane pane = graphSession.GraphPane;            
+            pane.GraphObjList.Clear();
+            graphSession.RestoreScale(pane);
+            graphSession.AxisChange();
+            graphSession.Refresh();            
+            lbNuclides.Items.Clear();
         }
 
         private void menuItemAbout_Click(object sender, EventArgs e)
@@ -394,6 +402,12 @@ namespace crash
 
         private void menuItemLoadSession_Click(object sender, EventArgs e)
         {
+            if(sessionRunning)
+            {
+                MessageBox.Show("A session is already running");
+                return;
+            }
+
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.SelectedPath = settings.SessionRootDirectory;            
             dialog.Description = "Select session directory";
@@ -401,7 +415,7 @@ namespace crash
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 ClearSession();
-                session.Load(dialog.SelectedPath);
+                session.Load(dialog.SelectedPath);                
                 Utils.SetEnergyCalculationFunc(session.Info.Detector);                
                 
                 lblComment.Text = session.Info.Comment;
@@ -420,7 +434,6 @@ namespace crash
                 formROILive.UpdatePane();
 
                 lblSession.Text = "Session: " + session.Info.Name;
-
                 Utils.Log.Add("session " + session.Info.Name + " loaded");
             }
         }        
@@ -800,17 +813,24 @@ namespace crash
             GetGraphPointFromMousePos(e.X, e.Y, graphSession, out x, out y);
 
             GraphPane pane = graphSession.GraphPane;
-            LineObj redLine = new LineObj(
+            LineObj greenLine = new LineObj(
                 Color.Green,
                 (double)x,
                 pane.YAxis.Scale.Min,
                 (double)x,
                 pane.YAxis.Scale.Max);
-            pane.GraphObjList.Add(redLine);
+            pane.GraphObjList.Add(greenLine);
 
             graphSession.RestoreScale(pane);
             graphSession.AxisChange();
             graphSession.Refresh();
+
+            // List nuclides
+            lbNuclides.Items.Clear();
+            foreach(NuclideInfo ni in NuclideLibrary)
+            {
+                lbNuclides.Items.Add(ni);
+            }
         }        
     }
 }

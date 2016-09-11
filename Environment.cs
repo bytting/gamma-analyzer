@@ -32,6 +32,6 @@ namespace crash
         public static string GEScriptPath = SettingsPath + Path.DirectorySeparatorChar + "GEScripts";
         public static string RegScriptPath = SettingsPath + Path.DirectorySeparatorChar + "RegressionScripts";
         public static string SettingsFile = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";        
-        public static string NuclidesFile = SettingsPath + Path.DirectorySeparatorChar + "nuclides.lib";
+        public static string NuclideLibraryFile = SettingsPath + Path.DirectorySeparatorChar + "nuclides.lib";
     }    
 }
