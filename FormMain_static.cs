@@ -109,7 +109,7 @@ namespace crash
                     lblConnectionStatus.Text = "Not connected";
                     Utils.Log.Add("RECV: Disconnected from peer");
 
-                    if (tabs.SelectedTab == pageSetup || tabs.SelectedTab == pagePreview)
+                    if (tabs.SelectedTab == pageSetup)
                         tabs.SelectedTab = pageSessions;
                     break;
 
@@ -187,6 +187,7 @@ namespace crash
                     selectedDetector.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);
 
                     btnSetupNext.Enabled = true;
+                    btnSetupStart.Enabled = true;
                     break;
 
                 case "spectrum":

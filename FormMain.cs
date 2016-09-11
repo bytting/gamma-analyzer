@@ -279,10 +279,8 @@ namespace crash
                 menuItemBack.Enabled = true;
                 btnBack.Enabled = true;
                 btnSetupNext.Enabled = false;
-            }
-            else if (tabs.SelectedTab == pagePreview)
-            {                
-            }
+                btnSetupStart.Enabled = false;
+            }            
         }                
 
         private void lbSession_SelectedIndexChanged(object sender, EventArgs e)
@@ -775,7 +773,7 @@ namespace crash
             tabs.SelectedTab = pageSessions;
         }
 
-        private void btnPreviewNext_Click(object sender, EventArgs e)
+        private void btnSetupNext_Click(object sender, EventArgs e)
         {
             int count = String.IsNullOrEmpty(tbSetupSpecCount.Text) ? -1 : Convert.ToInt32(tbSetupSpecCount.Text);
             float livetime = (float)tbarSetupLivetime.Value;
@@ -793,16 +791,6 @@ namespace crash
 
             Utils.Log.Add("SEND: new_session");
             tabs.SelectedTab = pageSessions;
-        }
-
-        private void btnPreviewBack_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = pageSetup;
-        }
-
-        private void btnSetupNext_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = pagePreview;
         }
 
         private void graphSession_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -823,6 +811,6 @@ namespace crash
             graphSession.RestoreScale(pane);
             graphSession.AxisChange();
             graphSession.Refresh();
-        }
+        }        
     }
 }
