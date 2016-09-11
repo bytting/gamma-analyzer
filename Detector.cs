@@ -21,10 +21,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Drawing;
 
 namespace crash
 {    
@@ -40,11 +38,7 @@ namespace crash
         public int CurrentLivetime { get; set; }
         public int CurrentLLD { get; set; }
         public int CurrentULD { get; set; }
-        public double EnergyCurveCoeffA { get; set; }
-        public double EnergyCurveCoeffB { get; set; }
-        public double EnergyCurveCoeffC { get; set; }
-        public double EnergyCurveCoeffD { get; set; }
-        public double EnergyCurveCoeffE { get; set; }
+        public List<double> EnergyCurveCoefficients = new List<double>();        
         public string RegressionScript { get; set; }        
 
         public override string ToString()

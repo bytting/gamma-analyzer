@@ -30,9 +30,7 @@ namespace crash
     [Serializable()]
     public class CrashSettings
     {
-        public CrashSettings()
-        {            
-        }
+        public CrashSettings() {}
 
         public List<DetectorType> DetectorTypes = new List<DetectorType>();
         public List<Detector> Detectors = new List<Detector>();
