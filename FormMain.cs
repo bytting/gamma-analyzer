@@ -808,17 +808,14 @@ namespace crash
 
         private void graphSession_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            // TODO
+            // TODO            
             int x, y;
             GetGraphPointFromMousePos(e.X, e.Y, graphSession, out x, out y);
 
             GraphPane pane = graphSession.GraphPane;
-            LineObj greenLine = new LineObj(
-                Color.Green,
-                (double)x,
-                pane.YAxis.Scale.Min,
-                (double)x,
-                pane.YAxis.Scale.Max);
+            pane.GraphObjList.Clear();
+
+            LineObj greenLine = new LineObj(Color.Green, (double)x, pane.YAxis.Scale.Min, (double)x, pane.YAxis.Scale.Max);
             pane.GraphObjList.Add(greenLine);
 
             graphSession.RestoreScale(pane);
