@@ -158,6 +158,17 @@ namespace crash
 
             return true;
         }
+
+        public Spectrum Merge(Spectrum s)
+        {
+            Spectrum res = s;
+            res.Livetime += Livetime;
+            res.Realtime += Realtime;
+            for(int i=0; i<res.Channels.Count; i++)            
+                res.Channels[i] += Channels[i];            
+            // FIXME: more fields
+            return res;
+        }
     }
 
     public class ElevationResult

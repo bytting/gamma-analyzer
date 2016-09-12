@@ -19,38 +19,44 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
+using System.Windows.Forms;
+using System.Globalization;
 
 namespace crash
-{    
-    [Serializable()]
-    public class Detector
+{
+    public partial class FormAskDecimal : Form
     {
-        public Detector()
+        private string Description;
+        public double Value;
+
+        public FormAskDecimal(string description)
         {
-            EnergyCurveCoefficients = new List<double>();        
+            InitializeComponent();
+            Description = description;
+            tbValue.KeyPress += CustomEvents.Numeric_KeyPress;
         }
 
-        public string TypeName { get; set; }
-        public int CurrentHV { get; set; }
-        public int CurrentNumChannels { get; set; }
-        public string Serialnumber { get; set; }
-        public double CurrentCoarseGain { get; set; }
-        public double CurrentFineGain { get; set; }                        
-        public int CurrentLivetime { get; set; }
-        public int CurrentLLD { get; set; }
-        public int CurrentULD { get; set; }
-        [XmlArray("EnergyCurveCoefficients")]
-        [XmlArrayItem("Value")]
-        public List<double> EnergyCurveCoefficients { get; set; }
-        public string RegressionScript { get; set; }        
-
-        public override string ToString()
+        private void FormAskDecimal_Load(object sender, EventArgs e)
         {
- 	         return Serialnumber;
+            lblDescription.Text = Description;
         }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            Value = Convert.ToDouble(tbValue.Text.Trim(), CultureInfo.CurrentCulture);
+            DialogResult = DialogResult.OK;
+            Close();
+        }        
     }
 }

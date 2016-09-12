@@ -32,8 +32,11 @@ namespace crash
     {
         public CrashSettings() {}
 
+        [XmlArray("DetectorTypes")]
         public List<DetectorType> DetectorTypes = new List<DetectorType>();
+        [XmlArray("Detectors")]
         public List<Detector> Detectors = new List<Detector>();
+        [XmlArray("ROIList")]
         public List<ROIData> ROIList = new List<ROIData>();
         public string SessionRootDirectory;        
         public string LastIP;

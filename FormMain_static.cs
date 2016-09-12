@@ -65,8 +65,11 @@ namespace crash
 
         List<NuclideInfo> NuclideLibrary = new List<NuclideInfo>();
 
+        Spectrum previewSpec = null;
+        List<PointF> coeffList = new List<PointF>();
+
         private void SaveSettings()
-        {            
+        {
             StreamWriter sw = new StreamWriter(CrashEnvironment.SettingsFile);
             XmlSerializer x = new XmlSerializer(settings.GetType());
             x.Serialize(sw, settings);
@@ -225,6 +228,7 @@ namespace crash
 
                     btnSetupNext.Enabled = true;
                     btnSetupStart.Enabled = true;
+                    btnSetupStop.Enabled = true;
                     break;
 
                 case "spectrum":
@@ -235,6 +239,10 @@ namespace crash
                     {
                         Utils.Log.Add("RECV: " + spec.Label + " preview spectrum received");
 
+                        if (previewSpec == null)
+                            previewSpec = spec;
+                        else previewSpec = previewSpec.Merge(spec);                        
+
                         GraphPane pane = graphSetup.GraphPane;
                         pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
                         pane.Fill = new Fill(SystemColors.ButtonFace);
@@ -244,14 +252,14 @@ namespace crash
                         pane.YAxis.Title.Text = "Counts";
 
                         setupGraphList.Clear();
-                        for (int i = 0; i < spec.Channels.Count; i++)
-                            setupGraphList.Add((double)i, (double)spec.Channels[i]);
+                        for (int i = 0; i < previewSpec.Channels.Count; i++)
+                            setupGraphList.Add((double)i, (double)previewSpec.Channels[i]);
 
                         pane.XAxis.Scale.Min = 0;
-                        pane.XAxis.Scale.Max = spec.MaxCount;
+                        pane.XAxis.Scale.Max = previewSpec.MaxCount;
 
                         pane.YAxis.Scale.Min = 0;
-                        pane.YAxis.Scale.Max = spec.MaxCount + (spec.MaxCount / 10.0);
+                        pane.YAxis.Scale.Max = previewSpec.MaxCount + (previewSpec.MaxCount / 10.0);
 
                         pane.CurveList.Clear();
 
@@ -302,7 +310,7 @@ namespace crash
                     break;
             }
             return true;
-        }
+        }        
 
         void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
         {
@@ -442,7 +450,9 @@ namespace crash
         private void PopulateDetectors()
         {
             cboxSetupDetector.Items.Clear();
-            cboxSetupDetector.Items.AddRange(settings.Detectors.ToArray());
+            foreach (Detector d in settings.Detectors)
+                cboxSetupDetector.Items.Add(d);
+            //cboxSetupDetector.Items.AddRange(settings.Detectors.ToArray());
         }
 
         private void GetGraphPointFromMousePos(int posX, int posY, ZedGraphControl graph, out int x, out int y)

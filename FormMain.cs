@@ -26,6 +26,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using ZedGraph;
+using MathNet.Numerics;
 
 namespace crash
 {
@@ -235,17 +236,29 @@ namespace crash
         }
 
         private void btnSetupStart_Click(object sender, EventArgs e)
-        {            
+        {   
+            if(sessionRunning)
+            {
+                MessageBox.Show("A session is already running");
+                return;
+            }
+
             double livetime = (double)tbarSetupLivetime.Value;
+            int iterations = -1;
+            if(!String.IsNullOrEmpty(tbSetupSpecCount.Text.Trim()))
+                iterations = Convert.ToInt32(tbSetupSpecCount.Text.Trim());
 
             burn.Message msg = new burn.Message("new_session", null);
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
             msg.AddParameter("preview", 1);
-            msg.AddParameter("iterations", 1);
+            msg.AddParameter("iterations", iterations);
             msg.AddParameter("livetime", livetime);
-            msg.AddParameter("delay", 0);
+            msg.AddParameter("delay", tbarSetupDelay.Value);
             sendMsg(msg);
 
+            graphSetup.GraphPane.CurveList.Clear();
+            graphSetup.Refresh();
+            previewSpec = null;
             Utils.Log.Add("SEND: new_session (preview)");
         }
 
@@ -281,6 +294,7 @@ namespace crash
                 btnBack.Enabled = true;
                 btnSetupNext.Enabled = false;
                 btnSetupStart.Enabled = false;
+                btnSetupStop.Enabled = false;
             }            
         }                
 
@@ -828,6 +842,69 @@ namespace crash
             {
                 lbNuclides.Items.Add(ni);
             }
+        }
+
+        private void btnSetupStop_Click_1(object sender, EventArgs e)
+        {
+            sendMsg(new burn.Message("stop_session", null));
+            Utils.Log.Add("SEND: stop_session for preview");
+        }
+
+        private void resetCoefficientsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            coeffList.Clear();            
+            GraphPane pane = graphSetup.GraphPane;
+            pane.GraphObjList.Clear();
+            lblSetupCoefficients.Text = "";
+        }
+
+        private void graphSetup_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            int x, y;
+            GetGraphPointFromMousePos(e.X, e.Y, graphSetup, out x, out y);
+
+            FormAskDecimal form = new FormAskDecimal("Enter expected energy");
+            if(form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+                return;
+
+            PointF coeffPoint = new PointF((float)x, (float)form.Value);
+            coeffList.Add(coeffPoint);
+
+            if(coeffList.Count > 1)
+            {
+                lblSetupCoefficients.Text = "";
+                List<double> xList = new List<double>();
+                List<double> yList = new List<double>();
+                foreach(PointF p in coeffList)
+                {
+                    xList.Add((double)p.X);
+                    yList.Add((double)p.Y);
+                }
+
+                selectedDetector.EnergyCurveCoefficients.Clear();
+                double[] coefficients = Fit.Polynomial(xList.ToArray(), yList.ToArray(), coeffList.Count - 1);
+                foreach (double d in coefficients)
+                {
+                    selectedDetector.EnergyCurveCoefficients.Add(d);
+                    lblSetupCoefficients.Text += d + " ";                    
+                }
+            }
+
+            GraphPane pane = graphSetup.GraphPane;            
+            LineObj orangeLine = new LineObj(Color.Orange, (double)x, pane.YAxis.Scale.Min, (double)x, pane.YAxis.Scale.Max);
+            pane.GraphObjList.Add(orangeLine);
+
+            graphSetup.RestoreScale(pane);
+            graphSetup.AxisChange();
+            graphSetup.Refresh();
+        }
+
+        private void storeCoefficientsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            /*Detector d = settings.Detectors.Find(dt => dt.Serialnumber == selectedDetector.Serialnumber);
+            d.EnergyCurveCoefficients.Clear();
+            foreach(PointF pt in coeffList)
+                d.EnergyCurveCoefficients.Add(pt.);            */
         }        
     }
 }
