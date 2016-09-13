@@ -25,6 +25,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using System.Globalization;
 using ZedGraph;
 using MathNet.Numerics;
 
@@ -74,8 +75,10 @@ namespace crash
                 formWaterfallLive = new FormWaterfallLive(settings.ROIList);
                 formROILive = new FormROILive(settings.ROIList);
                 formMap = new FormMap();
-                
-                tbSetupSpecCount.KeyPress += CustomEvents.Integer_KeyPress;
+
+                tbSetupLivetime.KeyPress += CustomEvents.Integer_KeyPress;
+                tbSetupSpectrumCount.KeyPress += CustomEvents.Integer_KeyPress;
+                tbSetupDelay.KeyPress += CustomEvents.Integer_KeyPress;
 
                 tbSessionDir.Text = settings.SessionRootDirectory;
                 PopulateDetectorTypeList();
@@ -130,7 +133,7 @@ namespace crash
                 btnStopNetService_Click(sender, e);
             timer.Stop();
 
-            SaveSettings();
+            SaveSettings();            
         }
 
         private void menuItemExit_Click(object sender, EventArgs e)
@@ -163,7 +166,7 @@ namespace crash
                 MessageBox.Show("You must stop the running session first");
                 return;
             }
-            
+                        
             if (MessageBox.Show("Are you sure you want to disconnect?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
                 return;
             
@@ -233,41 +236,7 @@ namespace crash
             sendMsg(msg);
 
             Utils.Log.Add("SEND: set_gain");
-        }
-
-        private void btnSetupStart_Click(object sender, EventArgs e)
-        {   
-            if(sessionRunning)
-            {
-                MessageBox.Show("A session is already running");
-                return;
-            }
-
-            double livetime = (double)tbarSetupLivetime.Value;
-            int iterations = -1;
-            if(!String.IsNullOrEmpty(tbSetupSpecCount.Text.Trim()))
-                iterations = Convert.ToInt32(tbSetupSpecCount.Text.Trim());
-
-            burn.Message msg = new burn.Message("new_session", null);
-            msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
-            msg.AddParameter("preview", 1);
-            msg.AddParameter("iterations", iterations);
-            msg.AddParameter("livetime", livetime);
-            msg.AddParameter("delay", tbarSetupDelay.Value);
-            sendMsg(msg);
-
-            graphSetup.GraphPane.CurveList.Clear();
-            graphSetup.Refresh();
-            previewSpec = null;
-            Utils.Log.Add("SEND: new_session (preview)");
-        }
-
-        private void btnSetupStop_Click(object sender, EventArgs e)
-        {   
-            // FIXME
-            //sendMsg(new burn.Message("stop_session", null));
-            //Utils.Log.Add("SEND: stop_session");
-        }
+        }        
         
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -293,8 +262,7 @@ namespace crash
                 menuItemBack.Enabled = true;
                 btnBack.Enabled = true;
                 btnSetupNext.Enabled = false;
-                btnSetupStart.Enabled = false;
-                btnSetupStop.Enabled = false;
+                panelSetupGraph.Enabled = false;
             }            
         }                
 
@@ -315,7 +283,7 @@ namespace crash
                 lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
                 lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
                 lblSession.Text = "Session: " + s.SessionName;
-                lblSessionDetector.Text = "Det." + session.Info.Detector.Serialnumber + " (" + session.Info.Detector.TypeName + ")";
+                lblSessionDetector.Text = "Det." + selectedDetector.Serialnumber + " (" + selectedDetector.TypeName + ")";
                 lblIndex.Text = "Index: " + s.SessionIndex;
                 lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart;
@@ -429,12 +397,13 @@ namespace crash
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 ClearSession();
-                session.Load(dialog.SelectedPath);                
-                Utils.SetEnergyCalculationFunc(session.Info.Detector);                
+                session.Load(dialog.SelectedPath);                                
+                selectedDetector = session.Info.Detector;
                 
                 lblComment.Text = session.Info.Comment;
 
                 formWaterfallLive.SetSession(session);
+                formWaterfallLive.SetDetector(selectedDetector);
                 formROILive.SetSession(session);
                 formMap.SetSession(session);
 
@@ -496,13 +465,13 @@ namespace crash
             int x, y;
             GetGraphPointFromMousePos(e.X, e.Y, graphSetup, out x, out y);            
 
-            lblSetupChannel.Text = "Ch: " + String.Format("{0:###0}", x);
+            lblSetupChannel.Text = "Ch: " + String.Format("{0:####0}", x);
 
             // Show energy
-            if (selectedDetector != null && Utils.EnergyCalculationFunc != null)
+            if (selectedDetector != null)
             {
-                double E = Utils.EnergyCalculationFunc((double)x);
-                lblSetupEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);
+                double en = selectedDetector.GetEnergy(x);
+                lblSetupEnergy.Text = "En: " + String.Format("{0:#######0.0###}", en);
             }
             else lblSetupEnergy.Text = "";
         }
@@ -512,13 +481,15 @@ namespace crash
             int x, y;
             GetGraphPointFromMousePos(e.X, e.Y, graphSession, out x, out y);
 
-            lblSessionChannel.Text = "Ch: " + String.Format("{0:###0}", x);
+            lblSessionChannel.Text = "Ch: " + String.Format("{0:####0}", x);
 
             // Show energy
-            if (session.IsLoaded && Utils.EnergyCalculationFunc != null)
+            if (session.IsLoaded && selectedDetector != null)
             {
-                double E = Utils.EnergyCalculationFunc((double)x);
-                lblSessionEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);                
+                double en = selectedDetector.GetEnergy(x);            
+                if (en == 0.0)
+                    lblSessionEnergy.Text = "";
+                else lblSessionEnergy.Text = "En: " + String.Format("{0:#######0.0###}", en);
             }
             else lblSessionEnergy.Text = "";
         }
@@ -534,8 +505,7 @@ namespace crash
                 return;
 
             selectedDetector = (Detector)cboxSetupDetector.SelectedItem;
-            selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
-            Utils.SetEnergyCalculationFunc(selectedDetector);
+            selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);            
 
             lblDetector.Text = "Detector " + selectedDetector.Serialnumber;
             separatorDetector.Visible = true;
@@ -556,7 +526,9 @@ namespace crash
                 cboxSetupChannels.Items.Add(i.ToString());
             cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
 
-            tbarSetupLivetime.Value = (selectedDetector.CurrentLivetime <= tbarSetupLivetime.Maximum) ? selectedDetector.CurrentLivetime : 1;
+            tbSetupLivetime.Text = selectedDetector.CurrentLivetime.ToString();
+
+            formWaterfallLive.SetDetector(selectedDetector);
         }
 
         private void menuItemSessionInfo_Click(object sender, EventArgs e)
@@ -592,7 +564,7 @@ namespace crash
         }
 
         private void menuItemShowWaterfall_Click(object sender, EventArgs e)
-        {
+        {            
             formWaterfallLive.Show();
             formWaterfallLive.BringToFront();
             formWaterfallLive.UpdatePane();
@@ -686,16 +658,6 @@ namespace crash
             lblSetupULD.Text = tbarSetupULD.Value.ToString();
         }
 
-        private void tbarSetupLivetime_ValueChanged(object sender, EventArgs e)
-        {
-            lblSetupLivetime.Text = tbarSetupLivetime.Value.ToString();
-        }
-
-        private void tbarSetupDelay_ValueChanged(object sender, EventArgs e)
-        {
-            lblSetupDelay.Text = tbarSetupDelay.Value.ToString();            
-        }
-
         private void btnMenuPreferences_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pagePreferences;
@@ -745,7 +707,7 @@ namespace crash
 
         private void menuItemStartNewSession_Click(object sender, EventArgs e)
         {
-            if(!connected)
+            if (!connected)
             {
                 MessageBox.Show("You must connect first");
                 return;
@@ -802,9 +764,13 @@ namespace crash
 
         private void btnSetupNext_Click(object sender, EventArgs e)
         {
-            int count = String.IsNullOrEmpty(tbSetupSpecCount.Text) ? -1 : Convert.ToInt32(tbSetupSpecCount.Text);
-            float livetime = (float)tbarSetupLivetime.Value;
-            float delay = (float)tbarSetupDelay.Value;
+            float livetime = (float)selectedDetector.CurrentLivetime;
+            if (!String.IsNullOrEmpty(tbSetupLivetime.Text.Trim()))
+                livetime = Convert.ToSingle(tbSetupLivetime.Text);
+            int count = String.IsNullOrEmpty(tbSetupSpectrumCount.Text.Trim()) ? -1 : Convert.ToInt32(tbSetupSpectrumCount.Text.Trim());
+            float delay = 0f;
+            if (!String.IsNullOrEmpty(tbSetupDelay.Text.Trim()))
+                delay = Convert.ToSingle(tbSetupDelay.Text.Trim());
 
             ClearSession();
 
@@ -844,50 +810,29 @@ namespace crash
             }
         }
 
-        private void btnSetupStop_Click_1(object sender, EventArgs e)
-        {
-            sendMsg(new burn.Message("stop_session", null));
-            Utils.Log.Add("SEND: stop_session for preview");
-        }
-
-        private void resetCoefficientsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            coeffList.Clear();            
-            GraphPane pane = graphSetup.GraphPane;
-            pane.GraphObjList.Clear();
-            lblSetupCoefficients.Text = "";
-        }
-
         private void graphSetup_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             int x, y;
             GetGraphPointFromMousePos(e.X, e.Y, graphSetup, out x, out y);
 
-            FormAskDecimal form = new FormAskDecimal("Enter expected energy");
+            FormAskDecimal form = new FormAskDecimal("Enter expected energy for channel " + x);
             if(form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
                 return;
+            
+            energyList.Add(new EnergyComp((double)x, (double)form.Value));
 
-            PointF coeffPoint = new PointF((float)x, (float)form.Value);
-            coeffList.Add(coeffPoint);
-
-            if(coeffList.Count > 1)
+            if(energyList.Count > 1)
             {
                 lblSetupCoefficients.Text = "";
                 List<double> xList = new List<double>();
                 List<double> yList = new List<double>();
-                foreach(PointF p in coeffList)
+                foreach (EnergyComp ec in energyList)
                 {
-                    xList.Add((double)p.X);
-                    yList.Add((double)p.Y);
+                    xList.Add((double)ec.Channel);
+                    yList.Add((double)ec.Energy);
                 }
-
-                selectedDetector.EnergyCurveCoefficients.Clear();
-                double[] coefficients = Fit.Polynomial(xList.ToArray(), yList.ToArray(), coeffList.Count - 1);
-                foreach (double d in coefficients)
-                {
-                    selectedDetector.EnergyCurveCoefficients.Add(d);
-                    lblSetupCoefficients.Text += d + " ";                    
-                }
+                
+                coeffList = new List<double>(Fit.Polynomial(xList.ToArray(), yList.ToArray(), energyList.Count - 1));                
             }
 
             GraphPane pane = graphSetup.GraphPane;            
@@ -899,12 +844,155 @@ namespace crash
             graphSetup.Refresh();
         }
 
-        private void storeCoefficientsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ShowEnergyCurve()
         {
-            /*Detector d = settings.Detectors.Find(dt => dt.Serialnumber == selectedDetector.Serialnumber);
-            d.EnergyCurveCoefficients.Clear();
-            foreach(PointF pt in coeffList)
-                d.EnergyCurveCoefficients.Add(pt.);            */
+            GraphPane pane = graphSetup.GraphPane;
+            int w = (int)(pane.Rect.Right - pane.Rect.Left);
+            double x, y;
+            PointPairList list = new PointPairList();
+            for (int i = 50; i < 1000; i++)
+            {
+                y = selectedDetector.GetEnergy(i);
+                list.Add((double)i, y);
+            }
+
+            LineItem energyCurve = pane.AddCurve("Curve", list, Color.Green, SymbolType.None);
+
+            graphSetup.RestoreScale(pane);
+            graphSetup.AxisChange();
+            graphSetup.Refresh();            
+        }
+
+        private void btnSetupStartTest_Click(object sender, EventArgs e)
+        {
+            if (sessionRunning)
+            {
+                MessageBox.Show("A session is already running");
+                return;
+            }
+
+            double livetime = 1d;
+            if (!String.IsNullOrEmpty(tbSetupLivetime.Text.Trim()))
+                Convert.ToDouble(tbSetupLivetime.Text.Trim());
+
+            int iterations = -1;
+            if (!String.IsNullOrEmpty(tbSetupSpectrumCount.Text.Trim()))
+                iterations = Convert.ToInt32(tbSetupSpectrumCount.Text.Trim());
+
+            int delay = 0;
+            if (!String.IsNullOrEmpty(tbSetupDelay.Text.Trim()))
+                delay = Convert.ToInt32(tbSetupDelay.Text);
+
+            burn.Message msg = new burn.Message("new_session", null);
+            msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
+            msg.AddParameter("preview", 1);
+            msg.AddParameter("iterations", iterations);
+            msg.AddParameter("livetime", livetime);
+            msg.AddParameter("delay", delay);
+            sendMsg(msg);
+
+            graphSetup.GraphPane.CurveList.Clear();
+            graphSetup.Refresh();
+            previewSpec = null;
+            Utils.Log.Add("SEND: new_session (preview)");
+        }
+
+        private void btnSetupStopTest_Click(object sender, EventArgs e)
+        {
+            sendMsg(new burn.Message("stop_session", null));
+            Utils.Log.Add("SEND: stop_session for preview");
+        }
+
+        private void menuItemSaveAsCVS_Click(object sender, EventArgs e)
+        {
+            if (!session.IsLoaded)
+                return;
+            
+            SaveFileDialog dialog = new SaveFileDialog();            
+            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                StreamWriter writer = new StreamWriter(dialog.FileName, false, Encoding.UTF8);
+                foreach(Spectrum s in session.Spectrums)
+                {
+                    writer.WriteLine(
+                        s.SessionName + "|" 
+                        + s.SessionIndex.ToString() + "|" 
+                        + s.GpsTimeStart.ToString("yyyy-MM-ddTHH:mm:ss") + "|" 
+                        + s.LatitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.LongitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.AltitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.Doserate.ToString(CultureInfo.InvariantCulture) 
+                        + "|mSv/h");
+                }
+                writer.Close();
+            }
+        }
+
+        private void menuItemResetCoefficients_Click(object sender, EventArgs e)
+        {
+            coeffList.Clear();
+            GraphPane pane = graphSetup.GraphPane;
+            pane.GraphObjList.Clear();
+            lblSetupCoefficients.Text = "";
+        }
+
+        private void menuItemStoreCoefficients_Click(object sender, EventArgs e)
+        {
+            selectedDetector.EnergyCurveCoefficients.Clear();
+            selectedDetector.EnergyCurveCoefficients.AddRange(coeffList);
+            ShowEnergyCurve();
+        }
+
+        private void menuItemLayout1_Click(object sender, EventArgs e)
+        {
+            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+
+            formMap.Show();
+            formWaterfallLive.Show();
+            formROILive.Hide();
+            Utils.Log.Hide();
+
+            Left = 0;
+            Top = 0;
+            Width = screenWidth;
+            Height = (screenHeight / 3) * 2;
+
+            formWaterfallLive.Left = 0;
+            formWaterfallLive.Top = (screenHeight / 3) * 2;
+            formWaterfallLive.Width = screenWidth / 2;
+            formWaterfallLive.Height = screenHeight / 3;
+
+            formMap.Left = screenWidth / 2;
+            formMap.Top = (screenHeight / 3) * 2;
+            formMap.Width = screenWidth / 2;
+            formMap.Height = screenHeight / 3;
+        }
+
+        private void menuItemLayout2_Click(object sender, EventArgs e)
+        {
+            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+
+            formMap.Show();
+            formWaterfallLive.Hide();
+            formROILive.Hide();
+            Utils.Log.Show();
+
+            Left = 0;
+            Top = 0;
+            Width = screenWidth;
+            Height = (screenHeight / 3) * 2;
+
+            Utils.Log.Left = 0;
+            Utils.Log.Top = (screenHeight / 3) * 2;
+            Utils.Log.Width = screenWidth / 2;
+            Utils.Log.Height = screenHeight / 3;
+
+            formMap.Left = screenWidth / 2;
+            formMap.Top = (screenHeight / 3) * 2;
+            formMap.Width = screenWidth / 2;
+            formMap.Height = screenHeight / 3;
         }        
     }
 }

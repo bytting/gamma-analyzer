@@ -107,25 +107,15 @@ namespace crash
 
             dynamic scope = Utils.PyEngine.CreateScope();
             Utils.PyEngine.Execute(Info.GEScript, scope);
-            GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");
-
-            dynamic energyCalCurve = null;
-            if (File.Exists(Info.Detector.RegressionScript))
-            {
-                string pyScript = File.ReadAllText(Info.Detector.RegressionScript);
-                dynamic scope2 = Utils.PyEngine.CreateScope();
-                Utils.PyEngine.Execute(pyScript, scope2);
-                energyCalCurve = scope2.GetVariable<Func<double, double>>("EnergyCalibrationCurve");
-            }            
+            GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");                        
 
             string[] files = Directory.GetFiles(jsonDir, "*.json", SearchOption.TopDirectoryOnly);
             foreach (string filename in files)
             {
                 string json = File.ReadAllText(filename);
                 burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
-                Spectrum spec = new Spectrum(msg);                
-                if(energyCalCurve != null)
-                    spec.CalculateDoserate(Info.Detector, GEFactor);
+                Spectrum spec = new Spectrum(msg);                                
+                spec.CalculateDoserate(Info.Detector, GEFactor);
                 Add(spec);
             }
 

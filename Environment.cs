@@ -27,7 +27,7 @@ namespace crash
 {
     public static class CrashEnvironment
     {
-        public static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + Path.DirectorySeparatorChar + "Crash";
+        public static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + Path.DirectorySeparatorChar + "Crash";
         public static string GEScriptPath = SettingsPath + Path.DirectorySeparatorChar + "GEScripts";
         public static string RegScriptPath = SettingsPath + Path.DirectorySeparatorChar + "RegressionScripts";
         public static string SettingsFile = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";        

@@ -45,12 +45,23 @@ namespace crash
         public int CurrentULD { get; set; }
         [XmlArray("EnergyCurveCoefficients")]
         [XmlArrayItem("Value")]
-        public List<double> EnergyCurveCoefficients { get; set; }
-        public string RegressionScript { get; set; }        
+        public List<double> EnergyCurveCoefficients { get; set; }        
 
         public override string ToString()
         {
  	         return Serialnumber;
+        }
+
+        public double GetEnergy(int x)
+        {
+            if (EnergyCurveCoefficients.Count < 2 || EnergyCurveCoefficients.Count > 5)
+                return 0.0;
+
+            double dx = (double)x;
+            double E = 0.0;
+            for(int i=0; i<EnergyCurveCoefficients.Count; i++)            
+                E += EnergyCurveCoefficients[i] * Math.Pow(dx, (double)i);            
+            return E;
         }
     }
 }

@@ -31,9 +31,10 @@ namespace crash
 {
     public partial class FormWaterfallLive : Form
     {
-        private Session session = null;        
+        private Session session = null;
         private Bitmap bmpPane = null;
         private bool colorCeilInitialized = false;
+        private Detector currentDetector = null;
         private List<ROIData> ROIList = null;
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         bool needRepaint = false;
@@ -53,7 +54,7 @@ namespace crash
         {
             InitializeComponent();
             DoubleBuffered = true;
-            ROIList = roiList;
+            ROIList = roiList;            
         }        
 
         private void FormWaterfall_Load(object sender, EventArgs e)
@@ -228,6 +229,11 @@ namespace crash
             session = sess;            
         }
 
+        public void SetDetector(Detector det)
+        {
+            currentDetector = det;            
+        }
+
         public void UpdatePane()
         {
             needRepaint = true;
@@ -396,10 +402,11 @@ namespace crash
             else lblSessionId.Text = "";
 
             // Show energy
-            if (session.IsLoaded && Utils.EnergyCalculationFunc != null)
+            if (session.IsLoaded && currentDetector != null)
             {
-                double E = Utils.EnergyCalculationFunc((double)e.X);
-                lblEnergy.Text = "En: " + String.Format("{0:###0.0###}", E);
+                //double E = Utils.EnergyCalculationFunc((double)e.X);
+                double en = currentDetector.GetEnergy(e.X);
+                lblEnergy.Text = "En: " + String.Format("{0:#######0.0###}", en);
             }
             else lblEnergy.Text = "";
         }

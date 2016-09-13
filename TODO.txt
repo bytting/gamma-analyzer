@@ -2,12 +2,18 @@ Add comments to spectrums
 
 Add ability to select a following background (one collection behind the selected spectrum, and optionally one in front)
 
-Energy calib
-
 Better maps
-
-Fix no doserate on loaded session
 
 Separate detector communication and analysis tools, and make proper APIs
 
 Documentation for detector communication protocol
+
+
+
+
+log messages on status
+open/close session buttons
+deaktivere flere buttons
+aktivitetsindikator
+tooltips
+polynom formel som navn på kurve

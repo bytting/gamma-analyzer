@@ -109,9 +109,7 @@ namespace crash
                     case "Bing Map":
                         gmap.MapProvider = BingMapProvider.Instance;
                         break;
-                }                
-                //gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
-                //gmap.Zoom = 12;                                
+                }
             }
         }  
       
@@ -162,13 +160,13 @@ namespace crash
             marker.ToolTipText = s.ToString() 
                 + Environment.NewLine + "Lat start: " + s.LatitudeStart 
                 + Environment.NewLine + "Lon start: " + s.LongitudeStart 
-                + Environment.NewLine + "Alt start: " + s.AltitudeStart;
-            marker.ToolTip.Fill = System.Drawing.SystemBrushes.Control;
+                + Environment.NewLine + "Alt start: " + s.AltitudeStart;            
             overlay.Markers.Add(marker);                        
         }
 
         private void FormMap_FormClosing(object sender, FormClosingEventArgs e)
         {
+            gmap.Manager.CancelTileCaching();
             e.Cancel = true;
             Hide();
         }
@@ -203,16 +201,10 @@ namespace crash
             foreach (GMarkerGoogle m in overlay.Markers)
             {                   
                 Spectrum s = (Spectrum)m.Tag;
-                if (s.SessionIndex == index)
-                {
-                    m.ToolTipMode = MarkerTooltipMode.Always;
-                    m.ToolTip.Fill = System.Drawing.SystemBrushes.Info;
-                }
-                else
-                {
+                if (s.SessionIndex == index)                
+                    m.ToolTipMode = MarkerTooltipMode.Always;                                
+                else                
                     m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                    m.ToolTip.Fill = System.Drawing.SystemBrushes.Control;
-                }                
             }
             gmap.Refresh();
         }
@@ -223,16 +215,10 @@ namespace crash
             foreach (GMarkerGoogle m in overlay.Markers)
             {
                 Spectrum s = (Spectrum)m.Tag;
-                if (s.SessionIndex >= index1 && s.SessionIndex <= index2)
-                {
+                if (s.SessionIndex >= index1 && s.SessionIndex <= index2)                
                     m.ToolTipMode = MarkerTooltipMode.Always;
-                    m.ToolTip.Fill = System.Drawing.SystemBrushes.Info;
-                }
-                else
-                {
+                else                
                     m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                    m.ToolTip.Fill = System.Drawing.SystemBrushes.Control;
-                }
             }
             gmap.Refresh();
         }

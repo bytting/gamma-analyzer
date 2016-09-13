@@ -66,7 +66,8 @@ namespace crash
         List<NuclideInfo> NuclideLibrary = new List<NuclideInfo>();
 
         Spectrum previewSpec = null;
-        List<PointF> coeffList = new List<PointF>();
+        List<EnergyComp> energyList = new List<EnergyComp>();
+        List<double> coeffList = new List<double>();
 
         private void SaveSettings()
         {
@@ -131,7 +132,7 @@ namespace crash
             switch (msg.Command)
             {
                 case "connect_ok":                    
-                    Utils.Log.Add("RECV: Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);                    
+                    Utils.Log.Add("RECV: Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
 
                     burn.Message msgPing = new burn.Message("ping", null);
                     sendMsg(msgPing);
@@ -227,8 +228,7 @@ namespace crash
                     selectedDetector.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);
 
                     btnSetupNext.Enabled = true;
-                    btnSetupStart.Enabled = true;
-                    btnSetupStop.Enabled = true;
+                    panelSetupGraph.Enabled = true;                    
                     break;
 
                 case "spectrum":
@@ -288,8 +288,9 @@ namespace crash
                         writer.Write(json);
                         writer.Close();
 
-                        if (session.IsLoaded && Utils.EnergyCalculationFunc != null)
-                            spec.CalculateDoserate(session.Info.Detector, session.GEFactor);
+                        if (session.IsLoaded)
+                            spec.CalculateDoserate(selectedDetector, session.GEFactor);
+                            //spec.CalculateDoserate(session.Info.Detector, session.GEFactor);
 
                         session.Add(spec);
 
@@ -384,7 +385,7 @@ namespace crash
             graphSession.GraphPane.CurveList.Clear();
             graphSession.GraphPane.GraphObjList.Clear();
             graphSession.Invalidate();
-            ClearSpectrumInfo();
+            ClearSpectrumInfo();            
 
             formWaterfallLive.ClearSession();
             formROILive.ClearSession();
@@ -451,8 +452,7 @@ namespace crash
         {
             cboxSetupDetector.Items.Clear();
             foreach (Detector d in settings.Detectors)
-                cboxSetupDetector.Items.Add(d);
-            //cboxSetupDetector.Items.AddRange(settings.Detectors.ToArray());
+                cboxSetupDetector.Items.Add(d);            
         }
 
         private void GetGraphPointFromMousePos(int posX, int posY, ZedGraphControl graph, out int x, out int y)

@@ -135,25 +135,26 @@ namespace crash
 
         public bool CalculateDoserate(Detector det, dynamic GEFactor = null)
         {
-            if (det == null || GEFactor == null || Utils.EnergyCalculationFunc == null)
+            if (det == null || GEFactor == null)
                 return false;                        
             
             Doserate = 0.0;
 
-            int startChan = (int)((double)det.CurrentNumChannels * ((double)det.CurrentLLD / 100.0));            
-            int endChan = det.CurrentNumChannels;
+            int startChan = (int)((double)det.CurrentNumChannels * ((double)det.CurrentLLD / 100.0));
+            int endChan = (int)((double)det.CurrentNumChannels * ((double)det.CurrentULD / 100.0));
+            if(endChan > det.CurrentNumChannels) // FIXME: Can not exceed 100% atm
+                endChan = det.CurrentNumChannels;
 
             for (int i = startChan; i < endChan; i++)
             {
                 float sec = (float)Livetime / 1000000f;                
                 float cps = Channels[i] / sec;
-                double E = Utils.EnergyCalculationFunc((double)i);
+                double E = det.GetEnergy(i);
                 if (E < 0.05)
                     continue;
                 double GE = GEFactor(E / 1000.0);
                 double chanDose = GE * (cps * 60.0);
-                Doserate += chanDose;
-                //Doserate += GE * cps * 60.0;
+                Doserate += chanDose;                
             }
 
             return true;

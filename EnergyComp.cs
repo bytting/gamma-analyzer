@@ -15,39 +15,25 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-// Authors: Dag robole,
+// Authors: Dag Robole,
 
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Drawing;
-using IronPython.Hosting;
-using IronPython.Runtime;
-using Microsoft.Scripting;
-using Microsoft.Scripting.Hosting;
 
 namespace crash
 {
-    public static class Utils
-    {        
-        public static FormLog Log = new FormLog();
-        public static dynamic PyEngine = Python.CreateEngine();        
-
-        public static int ToArgb(Color color)
+    class EnergyComp
+    {
+        public EnergyComp() {}
+        public EnergyComp(double ch, double en) 
         {
-            int a = color.A;
-            int r = color.R;
-            int g = color.G;
-            int b = color.B;
-            return a << 24 | r << 16 | g << 8 | b;
+            Channel = ch;
+            Energy = en;
         }
 
-        public static Color ToColor(int argb)
-        {            
-            byte[] b = BitConverter.GetBytes(argb);
-            return Color.FromArgb(b[3], b[2], b[1], b[0]);
-        }        
+        public double Channel { get; set; }
+        public double Energy { get; set; }
     }
 }
