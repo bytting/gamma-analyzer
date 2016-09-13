@@ -16,4 +16,3 @@ open/close session buttons
 deaktivere flere buttons
 aktivitetsindikator
 tooltips
-polynom formel som navn på kurve

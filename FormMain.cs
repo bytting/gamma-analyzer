@@ -262,6 +262,7 @@ namespace crash
                 menuItemBack.Enabled = true;
                 btnBack.Enabled = true;
                 btnSetupNext.Enabled = false;
+                btnSetupStopTest.Enabled = false;
                 panelSetupGraph.Enabled = false;
             }            
         }                
@@ -846,6 +847,18 @@ namespace crash
 
         private void ShowEnergyCurve()
         {
+            if (selectedDetector.EnergyCurveCoefficients.Count < 2)
+                return;
+
+            string curveName = "";
+            int counter = 0;
+            foreach(double coeff in selectedDetector.EnergyCurveCoefficients)
+            {
+                curveName += coeff.ToString("E") + " * x^" + counter.ToString() + " + ";
+                counter++;
+            }
+            curveName = curveName.Substring(0, curveName.Length - 3);
+
             GraphPane pane = graphSetup.GraphPane;
             int w = (int)(pane.Rect.Right - pane.Rect.Left);
             double x, y;
@@ -856,7 +869,7 @@ namespace crash
                 list.Add((double)i, y);
             }
 
-            LineItem energyCurve = pane.AddCurve("Curve", list, Color.Green, SymbolType.None);
+            LineItem energyCurve = pane.AddCurve(curveName, list, Color.Green, SymbolType.None);
 
             graphSetup.RestoreScale(pane);
             graphSetup.AxisChange();
@@ -895,12 +908,17 @@ namespace crash
             graphSetup.Refresh();
             previewSpec = null;
             Utils.Log.Add("SEND: new_session (preview)");
+
+            btnSetupStartTest.Enabled = false;
+            btnSetupStopTest.Enabled = true;
         }
 
         private void btnSetupStopTest_Click(object sender, EventArgs e)
         {
             sendMsg(new burn.Message("stop_session", null));
             Utils.Log.Add("SEND: stop_session for preview");
+            btnSetupStartTest.Enabled = true;
+            btnSetupStopTest.Enabled = false;
         }
 
         private void menuItemSaveAsCVS_Click(object sender, EventArgs e)
