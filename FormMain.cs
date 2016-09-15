@@ -970,6 +970,27 @@ namespace crash
             frmMap.Top = (screenHeight / 3) * 2;
             frmMap.Width = screenWidth / 2;
             frmMap.Height = screenHeight / 3;
+        }
+
+        private void menuItemLayoutSession2_Click(object sender, EventArgs e)
+        {
+            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+
+            frmMap.Show();
+            formWaterfallLive.Hide();
+            formROILive.Hide();
+            Utils.Log.Hide();
+
+            Left = 0;
+            Top = 0;
+            Width = screenWidth / 2;
+            Height = screenHeight;            
+
+            frmMap.Left = screenWidth / 2;
+            frmMap.Top = 0;
+            frmMap.Width = screenWidth / 2;
+            frmMap.Height = screenHeight;
         }        
     }
 }

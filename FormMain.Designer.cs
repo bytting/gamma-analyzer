@@ -212,6 +212,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.btnAddDetector = new System.Windows.Forms.Button();
+            this.menuItemLayoutSession2 = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -798,7 +799,8 @@
             this.btnSelectLayout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnSelectLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemLayoutSetup1,
-            this.menuItemLayoutSession1});
+            this.menuItemLayoutSession1,
+            this.menuItemLayoutSession2});
             this.btnSelectLayout.Image = ((System.Drawing.Image)(resources.GetObject("btnSelectLayout.Image")));
             this.btnSelectLayout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSelectLayout.Name = "btnSelectLayout";
@@ -809,14 +811,14 @@
             // menuItemLayoutSetup1
             // 
             this.menuItemLayoutSetup1.Name = "menuItemLayoutSetup1";
-            this.menuItemLayoutSetup1.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutSetup1.Size = new System.Drawing.Size(161, 22);
             this.menuItemLayoutSetup1.Text = "Layout Setup";
             this.menuItemLayoutSetup1.Click += new System.EventHandler(this.menuItemLayoutSetup1_Click);
             // 
             // menuItemLayoutSession1
             // 
             this.menuItemLayoutSession1.Name = "menuItemLayoutSession1";
-            this.menuItemLayoutSession1.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutSession1.Size = new System.Drawing.Size(161, 22);
             this.menuItemLayoutSession1.Text = "Layout Session";
             this.menuItemLayoutSession1.Click += new System.EventHandler(this.menuItemLayoutSession1_Click);
             // 
@@ -2148,6 +2150,13 @@
             this.btnAddDetector.UseVisualStyleBackColor = true;
             this.btnAddDetector.Click += new System.EventHandler(this.btnAddDetector_Click);
             // 
+            // menuItemLayoutSession2
+            // 
+            this.menuItemLayoutSession2.Name = "menuItemLayoutSession2";
+            this.menuItemLayoutSession2.Size = new System.Drawing.Size(161, 22);
+            this.menuItemLayoutSession2.Text = "Layout Session 2";
+            this.menuItemLayoutSession2.Click += new System.EventHandler(this.menuItemLayoutSession2_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2411,6 +2420,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemLayoutSession1;
         private System.Windows.Forms.ToolStripDropDownButton btnOptions;
         private System.Windows.Forms.ToolStripMenuItem subtractBackgroundToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuItemLayoutSession2;
     }
 }
 
