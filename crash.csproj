@@ -316,6 +316,10 @@
     <None Include="images\stop-session-32.png" />
     <None Include="images\remote-control-32.png" />
     <None Include="images\connection-32.png" />
+    <None Include="images\layouts-32.png" />
+    <None Include="images\layout-2.png" />
+    <None Include="images\layout-3.png" />
+    <None Include="images\layout-1.png" />
     <Content Include="template_nuclides.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -118,8 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="drone2-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\drone2-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="options1-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\options1-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="map-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\map-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -205,6 +205,9 @@
   <data name="drone8-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\drone8-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="connection-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\connection-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="background-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\background-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -220,11 +223,14 @@
   <data name="drone4-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\drone4-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="marker-blue-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\marker-blue-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="layout-2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\layout-2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="connect-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\connect-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marker-blue-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\marker-blue-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="marker-yellow-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\marker-yellow-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -247,19 +253,25 @@
   <data name="drone3-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\drone3-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="layout-3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\layout-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="drone5-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\drone5-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="marker-red-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\marker-red-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="options1-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\options1-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="drone2-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\drone2-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="layouts-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\layouts-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="marker-cyan-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\marker-cyan-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="connection-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\connection-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="layout-1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\layout-1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
