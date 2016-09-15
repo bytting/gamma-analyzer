@@ -50,7 +50,7 @@ namespace crash
         
         FormWaterfallLive formWaterfallLive = null;
         FormROILive formROILive = null;
-        FormMap formMap = null;
+        FormMap frmMap = null;
 
         PointPairList setupGraphList = new PointPairList();
         PointPairList sessionGraphList = new PointPairList();
@@ -188,10 +188,12 @@ namespace crash
 
                         formWaterfallLive.SetSession(session);
                         formROILive.SetSession(session);
-                        formMap.SetSession(session);
+                        frmMap.SetSession(session);
 
                         sessionRunning = true;
                     }
+                    btnSetupStartTest.Enabled = false;
+                    btnSetupStopTest.Enabled = true;
                     break;
 
                 case "new_session_failed":
@@ -201,6 +203,8 @@ namespace crash
                 case "stop_session_ok":
                     Utils.Log.Add("RECV: Session stopped");
                     sessionRunning = false;
+                    btnSetupStartTest.Enabled = true;
+                    btnSetupStopTest.Enabled = false;
                     break;
 
                 case "session_finished":
@@ -297,7 +301,7 @@ namespace crash
                         // Add list node
                         lbSession.Items.Insert(0, spec);
 
-                        formMap.AddMarker(spec);
+                        frmMap.AddMarker(spec);
                         formWaterfallLive.UpdatePane();
                         formROILive.UpdatePane();
                     }
@@ -389,7 +393,7 @@ namespace crash
 
             formWaterfallLive.ClearSession();
             formROILive.ClearSession();
-            formMap.ClearSession();
+            frmMap.ClearSession();
 
             session.Clear();
         }

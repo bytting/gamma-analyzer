@@ -23,8 +23,7 @@ namespace crash
         public double FineGain { get; set; }        
         public int Livetime { get; set; }
         public int LLD { get; set; }
-        public int ULD { get; set; }
-        public string RegressionScript { get; set; }
+        public int ULD { get; set; }        
 
         public FormAddDetector(List<DetectorType> detectorTypes)
         {
@@ -60,8 +59,7 @@ namespace crash
                 || String.IsNullOrEmpty(tbFineGain.Text)                
                 || String.IsNullOrEmpty(tbLivetime.Text)
                 || String.IsNullOrEmpty(tbLLD.Text)
-                || String.IsNullOrEmpty(tbULD.Text)
-                || String.IsNullOrEmpty(tbRegScript.Text))
+                || String.IsNullOrEmpty(tbULD.Text))
             {
                 MessageBox.Show("One or more required fields missing");
                 return;
@@ -77,8 +75,7 @@ namespace crash
                 FineGain = Convert.ToDouble(tbFineGain.Text);                
                 Livetime = Convert.ToInt32(tbLivetime.Text);
                 LLD = Convert.ToInt32(tbLLD.Text);
-                ULD = Convert.ToInt32(tbULD.Text);
-                RegressionScript = tbRegScript.Text;
+                ULD = Convert.ToInt32(tbULD.Text);                
             }
             catch
             {
@@ -106,16 +103,6 @@ namespace crash
         private void tbarCurrHV_ValueChanged(object sender, EventArgs e)
         {
             lblCurrHV.Text = tbarCurrHV.Value.ToString();
-        }
-
-        private void btnSelectRegScript_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.InitialDirectory = CrashEnvironment.RegScriptPath;
-            if(dialog.ShowDialog() == DialogResult.OK)
-            {
-                tbRegScript.Text = dialog.FileName;
-            }
-        }                
+        }                        
     }
 }

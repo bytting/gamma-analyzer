@@ -91,8 +91,8 @@
             this.menuItemRemoteCommands = new System.Windows.Forms.ToolStripDropDownButton();
             this.menuItemShutdownRemoteServer = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSelectLayout = new System.Windows.Forms.ToolStripDropDownButton();
-            this.menuItemLayout1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemLayout2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutSetup1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutSession1 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemSessionUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSourceActivity = new System.Windows.Forms.ToolStripMenuItem();
@@ -181,8 +181,8 @@
             this.lblIndex = new System.Windows.Forms.Label();
             this.lblSessionDetector = new System.Windows.Forms.Label();
             this.toolsSession = new System.Windows.Forms.ToolStrip();
-            this.btnCreateNewSession = new System.Windows.Forms.ToolStripButton();
-            this.btnStopCurrentSession = new System.Windows.Forms.ToolStripButton();
+            this.btnOptions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.subtractBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblSessionEnergy = new System.Windows.Forms.Label();
             this.lblSessionChannel = new System.Windows.Forms.Label();
@@ -338,66 +338,66 @@
             // menuItemStartNewSession
             // 
             this.menuItemStartNewSession.Name = "menuItemStartNewSession";
-            this.menuItemStartNewSession.Size = new System.Drawing.Size(208, 22);
+            this.menuItemStartNewSession.Size = new System.Drawing.Size(209, 22);
             this.menuItemStartNewSession.Text = "Start new session";
             this.menuItemStartNewSession.Click += new System.EventHandler(this.menuItemStartNewSession_Click);
             // 
             // menuItemStopSession
             // 
             this.menuItemStopSession.Name = "menuItemStopSession";
-            this.menuItemStopSession.Size = new System.Drawing.Size(208, 22);
+            this.menuItemStopSession.Size = new System.Drawing.Size(209, 22);
             this.menuItemStopSession.Text = "Stop session";
             this.menuItemStopSession.Click += new System.EventHandler(this.menuItemStopSession_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(205, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(206, 6);
             // 
             // menuItemLoadSession
             // 
             this.menuItemLoadSession.Name = "menuItemLoadSession";
-            this.menuItemLoadSession.Size = new System.Drawing.Size(208, 22);
+            this.menuItemLoadSession.Size = new System.Drawing.Size(209, 22);
             this.menuItemLoadSession.Text = "Load &existing session";
             this.menuItemLoadSession.Click += new System.EventHandler(this.menuItemLoadSession_Click);
             // 
             // menuItemClearSession
             // 
             this.menuItemClearSession.Name = "menuItemClearSession";
-            this.menuItemClearSession.Size = new System.Drawing.Size(208, 22);
+            this.menuItemClearSession.Size = new System.Drawing.Size(209, 22);
             this.menuItemClearSession.Text = "C&lear session";
             this.menuItemClearSession.Click += new System.EventHandler(this.menuItemClearSession_Click);
             // 
             // menuItemSessionInfo
             // 
             this.menuItemSessionInfo.Name = "menuItemSessionInfo";
-            this.menuItemSessionInfo.Size = new System.Drawing.Size(208, 22);
+            this.menuItemSessionInfo.Size = new System.Drawing.Size(209, 22);
             this.menuItemSessionInfo.Text = "Edit &session info";
             this.menuItemSessionInfo.Click += new System.EventHandler(this.menuItemSessionInfo_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(205, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(206, 6);
             // 
             // menuItemLoadBackgroundSession
             // 
             this.menuItemLoadBackgroundSession.Name = "menuItemLoadBackgroundSession";
-            this.menuItemLoadBackgroundSession.Size = new System.Drawing.Size(208, 22);
+            this.menuItemLoadBackgroundSession.Size = new System.Drawing.Size(209, 22);
             this.menuItemLoadBackgroundSession.Text = "Load &background session";
             this.menuItemLoadBackgroundSession.Click += new System.EventHandler(this.menuItemLoadBackgroundSession_Click);
             // 
             // menuItemClearBackground
             // 
             this.menuItemClearBackground.Name = "menuItemClearBackground";
-            this.menuItemClearBackground.Size = new System.Drawing.Size(208, 22);
-            this.menuItemClearBackground.Text = "Clear back&ground";
+            this.menuItemClearBackground.Size = new System.Drawing.Size(209, 22);
+            this.menuItemClearBackground.Text = "Clear back&ground session";
             this.menuItemClearBackground.Click += new System.EventHandler(this.menuItemClearBackground_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(205, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(206, 6);
             // 
             // menuItemExport
             // 
@@ -407,7 +407,7 @@
             this.menuItemSaveAsKMZ,
             this.menuItemSaveAsCVS});
             this.menuItemExport.Name = "menuItemExport";
-            this.menuItemExport.Size = new System.Drawing.Size(208, 22);
+            this.menuItemExport.Size = new System.Drawing.Size(209, 22);
             this.menuItemExport.Text = "E&xport session as ...";
             // 
             // menuItemSaveAsCHN
@@ -797,8 +797,8 @@
             // 
             this.btnSelectLayout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnSelectLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemLayout1,
-            this.menuItemLayout2});
+            this.menuItemLayoutSetup1,
+            this.menuItemLayoutSession1});
             this.btnSelectLayout.Image = ((System.Drawing.Image)(resources.GetObject("btnSelectLayout.Image")));
             this.btnSelectLayout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSelectLayout.Name = "btnSelectLayout";
@@ -806,19 +806,19 @@
             this.btnSelectLayout.Text = "toolStripDropDownButton1";
             this.btnSelectLayout.ToolTipText = "Select pre-defined layout";
             // 
-            // menuItemLayout1
+            // menuItemLayoutSetup1
             // 
-            this.menuItemLayout1.Name = "menuItemLayout1";
-            this.menuItemLayout1.Size = new System.Drawing.Size(152, 22);
-            this.menuItemLayout1.Text = "Layout 1";
-            this.menuItemLayout1.Click += new System.EventHandler(this.menuItemLayout1_Click);
+            this.menuItemLayoutSetup1.Name = "menuItemLayoutSetup1";
+            this.menuItemLayoutSetup1.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutSetup1.Text = "Layout Setup";
+            this.menuItemLayoutSetup1.Click += new System.EventHandler(this.menuItemLayoutSetup1_Click);
             // 
-            // menuItemLayout2
+            // menuItemLayoutSession1
             // 
-            this.menuItemLayout2.Name = "menuItemLayout2";
-            this.menuItemLayout2.Size = new System.Drawing.Size(152, 22);
-            this.menuItemLayout2.Text = "Layout 2";
-            this.menuItemLayout2.Click += new System.EventHandler(this.menuItemLayout2_Click);
+            this.menuItemLayoutSession1.Name = "menuItemLayoutSession1";
+            this.menuItemLayoutSession1.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutSession1.Text = "Layout Session";
+            this.menuItemLayoutSession1.Click += new System.EventHandler(this.menuItemLayoutSession1_Click);
             // 
             // contextMenuSession
             // 
@@ -1001,8 +1001,8 @@
             this.btnSetupResetCoefficients.Image = ((System.Drawing.Image)(resources.GetObject("btnSetupResetCoefficients.Image")));
             this.btnSetupResetCoefficients.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSetupResetCoefficients.Name = "btnSetupResetCoefficients";
-            this.btnSetupResetCoefficients.Size = new System.Drawing.Size(153, 22);
-            this.btnSetupResetCoefficients.Text = "Reset energy calibration";
+            this.btnSetupResetCoefficients.Size = new System.Drawing.Size(120, 22);
+            this.btnSetupResetCoefficients.Text = "Clear energy lines";
             this.btnSetupResetCoefficients.ToolTipText = "Reset the current energy calibration";
             this.btnSetupResetCoefficients.Click += new System.EventHandler(this.menuItemResetCoefficients_Click);
             // 
@@ -1411,7 +1411,7 @@
             this.pageMenu.Controls.Add(this.flowLayoutPanel1);
             this.pageMenu.Location = new System.Drawing.Point(4, 27);
             this.pageMenu.Name = "pageMenu";
-            this.pageMenu.Size = new System.Drawing.Size(1407, 650);
+            this.pageMenu.Size = new System.Drawing.Size(1341, 616);
             this.pageMenu.TabIndex = 3;
             this.pageMenu.Text = "Menu";
             // 
@@ -1423,7 +1423,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(44, 47, 44, 47);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1407, 650);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1341, 616);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // btnMenuSession
@@ -1878,33 +1878,30 @@
             // 
             this.toolsSession.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolsSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnCreateNewSession,
-            this.btnStopCurrentSession});
+            this.btnOptions});
             this.toolsSession.Location = new System.Drawing.Point(0, 0);
             this.toolsSession.Name = "toolsSession";
             this.toolsSession.Size = new System.Drawing.Size(1149, 25);
             this.toolsSession.TabIndex = 7;
             this.toolsSession.Text = "toolStrip1";
             // 
-            // btnCreateNewSession
+            // btnOptions
             // 
-            this.btnCreateNewSession.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCreateNewSession.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateNewSession.Image")));
-            this.btnCreateNewSession.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCreateNewSession.Name = "btnCreateNewSession";
-            this.btnCreateNewSession.Size = new System.Drawing.Size(23, 22);
-            this.btnCreateNewSession.Text = "toolStripButton1";
-            this.btnCreateNewSession.Click += new System.EventHandler(this.menuItemStartNewSession_Click);
+            this.btnOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.subtractBackgroundToolStripMenuItem});
+            this.btnOptions.Image = global::crash.Properties.Resources.options1_16;
+            this.btnOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(78, 22);
+            this.btnOptions.Text = "Options";
+            this.btnOptions.ToolTipText = "Session options";
             // 
-            // btnStopCurrentSession
+            // subtractBackgroundToolStripMenuItem
             // 
-            this.btnStopCurrentSession.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStopCurrentSession.Image = ((System.Drawing.Image)(resources.GetObject("btnStopCurrentSession.Image")));
-            this.btnStopCurrentSession.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStopCurrentSession.Name = "btnStopCurrentSession";
-            this.btnStopCurrentSession.Size = new System.Drawing.Size(23, 22);
-            this.btnStopCurrentSession.Text = "toolStripButton1";
-            this.btnStopCurrentSession.Click += new System.EventHandler(this.menuItemStopSession_Click);
+            this.subtractBackgroundToolStripMenuItem.CheckOnClick = true;
+            this.subtractBackgroundToolStripMenuItem.Name = "subtractBackgroundToolStripMenuItem";
+            this.subtractBackgroundToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.subtractBackgroundToolStripMenuItem.Text = "Subtract background";
             // 
             // panel1
             // 
@@ -1942,7 +1939,7 @@
             this.pagePreferences.Controls.Add(this.tableLayoutPref);
             this.pagePreferences.Location = new System.Drawing.Point(4, 27);
             this.pagePreferences.Name = "pagePreferences";
-            this.pagePreferences.Size = new System.Drawing.Size(1407, 650);
+            this.pagePreferences.Size = new System.Drawing.Size(1341, 616);
             this.pagePreferences.TabIndex = 5;
             this.pagePreferences.Text = "Preferences";
             this.pagePreferences.UseVisualStyleBackColor = true;
@@ -1972,7 +1969,7 @@
             this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPref.Size = new System.Drawing.Size(1407, 650);
+            this.tableLayoutPref.Size = new System.Drawing.Size(1341, 616);
             this.tableLayoutPref.TabIndex = 1;
             // 
             // lvDetectors
@@ -1990,10 +1987,10 @@
             this.columnHeaderRegScript});
             this.lvDetectors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvDetectors.FullRowSelect = true;
-            this.lvDetectors.Location = new System.Drawing.Point(143, 287);
+            this.lvDetectors.Location = new System.Drawing.Point(137, 287);
             this.lvDetectors.MultiSelect = false;
             this.lvDetectors.Name = "lvDetectors";
-            this.lvDetectors.Size = new System.Drawing.Size(1119, 194);
+            this.lvDetectors.Size = new System.Drawing.Size(1066, 194);
             this.lvDetectors.TabIndex = 8;
             this.lvDetectors.UseCompatibleStateImageBehavior = false;
             this.lvDetectors.View = System.Windows.Forms.View.Details;
@@ -2050,18 +2047,18 @@
             // tbSessionDir
             // 
             this.tbSessionDir.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSessionDir.Location = new System.Drawing.Point(143, 31);
+            this.tbSessionDir.Location = new System.Drawing.Point(137, 31);
             this.tbSessionDir.Name = "tbSessionDir";
             this.tbSessionDir.ReadOnly = true;
-            this.tbSessionDir.Size = new System.Drawing.Size(1119, 21);
+            this.tbSessionDir.Size = new System.Drawing.Size(1066, 21);
             this.tbSessionDir.TabIndex = 1;
             // 
             // btnSetSessionDir
             // 
             this.btnSetSessionDir.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSetSessionDir.Location = new System.Drawing.Point(1268, 31);
+            this.btnSetSessionDir.Location = new System.Drawing.Point(1209, 31);
             this.btnSetSessionDir.Name = "btnSetSessionDir";
-            this.btnSetSessionDir.Size = new System.Drawing.Size(136, 22);
+            this.btnSetSessionDir.Size = new System.Drawing.Size(129, 22);
             this.btnSetSessionDir.TabIndex = 2;
             this.btnSetSessionDir.Text = "...";
             this.btnSetSessionDir.UseVisualStyleBackColor = true;
@@ -2078,10 +2075,10 @@
             this.columnHeaderGScript});
             this.lvDetectorTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvDetectorTypes.FullRowSelect = true;
-            this.lvDetectorTypes.Location = new System.Drawing.Point(143, 87);
+            this.lvDetectorTypes.Location = new System.Drawing.Point(137, 87);
             this.lvDetectorTypes.MultiSelect = false;
             this.lvDetectorTypes.Name = "lvDetectorTypes";
-            this.lvDetectorTypes.Size = new System.Drawing.Size(1119, 194);
+            this.lvDetectorTypes.Size = new System.Drawing.Size(1066, 194);
             this.lvDetectorTypes.TabIndex = 3;
             this.lvDetectorTypes.UseCompatibleStateImageBehavior = false;
             this.lvDetectorTypes.View = System.Windows.Forms.View.Details;
@@ -2114,9 +2111,9 @@
             // btnAddDetectorType
             // 
             this.btnAddDetectorType.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnAddDetectorType.Location = new System.Drawing.Point(1268, 87);
+            this.btnAddDetectorType.Location = new System.Drawing.Point(1209, 87);
             this.btnAddDetectorType.Name = "btnAddDetectorType";
-            this.btnAddDetectorType.Size = new System.Drawing.Size(136, 23);
+            this.btnAddDetectorType.Size = new System.Drawing.Size(129, 23);
             this.btnAddDetectorType.TabIndex = 4;
             this.btnAddDetectorType.Text = "Add";
             this.btnAddDetectorType.UseVisualStyleBackColor = true;
@@ -2143,9 +2140,9 @@
             // btnAddDetector
             // 
             this.btnAddDetector.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnAddDetector.Location = new System.Drawing.Point(1268, 287);
+            this.btnAddDetector.Location = new System.Drawing.Point(1209, 287);
             this.btnAddDetector.Name = "btnAddDetector";
-            this.btnAddDetector.Size = new System.Drawing.Size(136, 23);
+            this.btnAddDetector.Size = new System.Drawing.Size(129, 23);
             this.btnAddDetector.TabIndex = 7;
             this.btnAddDetector.Text = "Add";
             this.btnAddDetector.UseVisualStyleBackColor = true;
@@ -2409,11 +2406,11 @@
         private System.Windows.Forms.ToolStripButton btnSetupResetCoefficients;
         private System.Windows.Forms.ToolStripButton btnSetupStoreCoefficients;
         private System.Windows.Forms.ToolStripDropDownButton btnSelectLayout;
-        private System.Windows.Forms.ToolStripMenuItem menuItemLayout1;
+        private System.Windows.Forms.ToolStripMenuItem menuItemLayoutSetup1;
         private System.Windows.Forms.ToolStrip toolsSession;
-        private System.Windows.Forms.ToolStripButton btnCreateNewSession;
-        private System.Windows.Forms.ToolStripButton btnStopCurrentSession;
-        private System.Windows.Forms.ToolStripMenuItem menuItemLayout2;
+        private System.Windows.Forms.ToolStripMenuItem menuItemLayoutSession1;
+        private System.Windows.Forms.ToolStripDropDownButton btnOptions;
+        private System.Windows.Forms.ToolStripMenuItem subtractBackgroundToolStripMenuItem;
     }
 }
 

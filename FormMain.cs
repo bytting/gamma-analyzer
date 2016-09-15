@@ -40,8 +40,8 @@ namespace crash
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            try
-            {                
+            //try
+            //{                
                 tabs.ItemSize = new Size(0, 1);
                 tabs.SizeMode = TabSizeMode.Fixed;
                 tabs.SelectedTab = pageMenu;
@@ -50,10 +50,7 @@ namespace crash
                     Directory.CreateDirectory(CrashEnvironment.SettingsPath);
 
                 if (!Directory.Exists(CrashEnvironment.GEScriptPath))
-                    Directory.CreateDirectory(CrashEnvironment.GEScriptPath);
-
-                if (!Directory.Exists(CrashEnvironment.RegScriptPath))
-                    Directory.CreateDirectory(CrashEnvironment.RegScriptPath);
+                    Directory.CreateDirectory(CrashEnvironment.GEScriptPath);                
 
                 string InstallDir = (new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location)).Directory + Path.DirectorySeparatorChar.ToString();
 
@@ -74,7 +71,7 @@ namespace crash
 
                 formWaterfallLive = new FormWaterfallLive(settings.ROIList);
                 formROILive = new FormROILive(settings.ROIList);
-                formMap = new FormMap();
+                frmMap = new FormMap();
 
                 tbSetupLivetime.KeyPress += CustomEvents.Integer_KeyPress;
                 tbSetupSpectrumCount.KeyPress += CustomEvents.Integer_KeyPress;
@@ -100,7 +97,7 @@ namespace crash
                 ClearSpectrumInfo();
 
                 formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
-                formMap.SetSessionIndexEvent += SetSessionIndexEvent;
+                frmMap.SetSessionIndexEvent += SetSessionIndexEvent;
                 formROILive.SetSessionIndexEvent += SetSessionIndexEvent;                
 
                 netThread.Start();
@@ -109,12 +106,12 @@ namespace crash
                 timer.Interval = 10;
                 timer.Tick += timer_Tick;
                 timer.Start();
-            }
+            /*}
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
                 Environment.Exit(1);
-            }
+            }*/
         }        
 
         void timer_Tick(object sender, EventArgs e)
@@ -272,7 +269,7 @@ namespace crash
             if (lbSession.SelectedItems.Count < 1)
             {
                 formWaterfallLive.SetSelectedSessionIndex(-1);
-                formMap.SetSelectedSessionIndex(-1);
+                frmMap.SetSelectedSessionIndex(-1);
                 formROILive.SetSelectedSessionIndex(-1);
                 return;
             }                
@@ -303,8 +300,8 @@ namespace crash
 
                 if (formWaterfallLive.Visible)
                     formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
-                if (formMap.Visible)
-                    formMap.SetSelectedSessionIndex(s.SessionIndex);
+                if (frmMap.Visible)
+                    frmMap.SetSelectedSessionIndex(s.SessionIndex);
                 if (formROILive.Visible)
                     formROILive.SetSelectedSessionIndex(s.SessionIndex);
             }
@@ -363,8 +360,8 @@ namespace crash
 
                 if (formWaterfallLive.Visible)
                     formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
-                if (formMap.Visible)
-                    formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
+                if (frmMap.Visible)
+                    frmMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 if (formROILive.Visible)
                     formROILive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
             }
@@ -406,12 +403,12 @@ namespace crash
                 formWaterfallLive.SetSession(session);
                 formWaterfallLive.SetDetector(selectedDetector);
                 formROILive.SetSession(session);
-                formMap.SetSession(session);
+                frmMap.SetSession(session);
 
                 foreach(Spectrum s in session.Spectrums)
                 {
                     lbSession.Items.Insert(0, s);
-                    formMap.AddMarker(s);
+                    frmMap.AddMarker(s);
                 }
 
                 formWaterfallLive.UpdatePane();
@@ -560,8 +557,8 @@ namespace crash
 
         private void menuItemShowMap_Click(object sender, EventArgs e)
         {
-            formMap.Show();
-            formMap.BringToFront();
+            frmMap.Show();
+            frmMap.BringToFront();
         }
 
         private void menuItemShowWaterfall_Click(object sender, EventArgs e)
@@ -843,38 +840,7 @@ namespace crash
             graphSetup.RestoreScale(pane);
             graphSetup.AxisChange();
             graphSetup.Refresh();
-        }
-
-        private void ShowEnergyCurve()
-        {
-            if (selectedDetector.EnergyCurveCoefficients.Count < 2)
-                return;
-
-            string curveName = "";
-            int counter = 0;
-            foreach(double coeff in selectedDetector.EnergyCurveCoefficients)
-            {
-                curveName += coeff.ToString("E") + " * x^" + counter.ToString() + " + ";
-                counter++;
-            }
-            curveName = curveName.Substring(0, curveName.Length - 3);
-
-            GraphPane pane = graphSetup.GraphPane;
-            int w = (int)(pane.Rect.Right - pane.Rect.Left);
-            double x, y;
-            PointPairList list = new PointPairList();
-            for (int i = 50; i < 1000; i++)
-            {
-                y = selectedDetector.GetEnergy(i);
-                list.Add((double)i, y);
-            }
-
-            LineItem energyCurve = pane.AddCurve(curveName, list, Color.Green, SymbolType.None);
-
-            graphSetup.RestoreScale(pane);
-            graphSetup.AxisChange();
-            graphSetup.Refresh();            
-        }
+        }        
 
         private void btnSetupStartTest_Click(object sender, EventArgs e)
         {
@@ -907,18 +873,13 @@ namespace crash
             graphSetup.GraphPane.CurveList.Clear();
             graphSetup.Refresh();
             previewSpec = null;
-            Utils.Log.Add("SEND: new_session (preview)");
-
-            btnSetupStartTest.Enabled = false;
-            btnSetupStopTest.Enabled = true;
+            Utils.Log.Add("SEND: new_session (preview)");            
         }
 
         private void btnSetupStopTest_Click(object sender, EventArgs e)
         {
             sendMsg(new burn.Message("stop_session", null));
-            Utils.Log.Add("SEND: stop_session for preview");
-            btnSetupStartTest.Enabled = true;
-            btnSetupStopTest.Enabled = false;
+            Utils.Log.Add("SEND: stop_session for preview");            
         }
 
         private void menuItemSaveAsCVS_Click(object sender, EventArgs e)
@@ -956,17 +917,41 @@ namespace crash
 
         private void menuItemStoreCoefficients_Click(object sender, EventArgs e)
         {
-            selectedDetector.EnergyCurveCoefficients.Clear();
-            selectedDetector.EnergyCurveCoefficients.AddRange(coeffList);
-            ShowEnergyCurve();
-        }
+            FormEnergyCurve form = new FormEnergyCurve(selectedDetector, coeffList);
+            if (form.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                return;
 
-        private void menuItemLayout1_Click(object sender, EventArgs e)
+            selectedDetector.EnergyCurveCoefficients.Clear();
+            selectedDetector.EnergyCurveCoefficients.AddRange(coeffList);            
+        }        
+
+        private void menuItemLayoutSetup1_Click(object sender, EventArgs e)
         {
             int screenWidth = Screen.PrimaryScreen.Bounds.Width;
             int screenHeight = Screen.PrimaryScreen.Bounds.Height;
 
-            formMap.Show();
+            frmMap.Hide();
+            formWaterfallLive.Hide();
+            formROILive.Hide();
+            Utils.Log.Show();
+
+            Left = 0;
+            Top = 0;
+            Width = screenWidth;
+            Height = (screenHeight / 3) * 2;
+
+            Utils.Log.Left = 0;
+            Utils.Log.Top = (screenHeight / 3) * 2;
+            Utils.Log.Width = screenWidth;
+            Utils.Log.Height = screenHeight / 3;            
+        }
+
+        private void menuItemLayoutSession1_Click(object sender, EventArgs e)
+        {
+            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+
+            frmMap.Show();
             formWaterfallLive.Show();
             formROILive.Hide();
             Utils.Log.Hide();
@@ -981,36 +966,10 @@ namespace crash
             formWaterfallLive.Width = screenWidth / 2;
             formWaterfallLive.Height = screenHeight / 3;
 
-            formMap.Left = screenWidth / 2;
-            formMap.Top = (screenHeight / 3) * 2;
-            formMap.Width = screenWidth / 2;
-            formMap.Height = screenHeight / 3;
-        }
-
-        private void menuItemLayout2_Click(object sender, EventArgs e)
-        {
-            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
-            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
-
-            formMap.Show();
-            formWaterfallLive.Hide();
-            formROILive.Hide();
-            Utils.Log.Show();
-
-            Left = 0;
-            Top = 0;
-            Width = screenWidth;
-            Height = (screenHeight / 3) * 2;
-
-            Utils.Log.Left = 0;
-            Utils.Log.Top = (screenHeight / 3) * 2;
-            Utils.Log.Width = screenWidth / 2;
-            Utils.Log.Height = screenHeight / 3;
-
-            formMap.Left = screenWidth / 2;
-            formMap.Top = (screenHeight / 3) * 2;
-            formMap.Width = screenWidth / 2;
-            formMap.Height = screenHeight / 3;
+            frmMap.Left = screenWidth / 2;
+            frmMap.Top = (screenHeight / 3) * 2;
+            frmMap.Width = screenWidth / 2;
+            frmMap.Height = screenHeight / 3;
         }        
     }
 }

@@ -36,18 +36,17 @@ namespace crash
 {
     public partial class FormMap : Form
     {
-        Session session = null;
+        Session currentSession = null;
         GMapOverlay overlay = new GMapOverlay();
 
         public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
         public event SetSessionIndexEventHandler SetSessionIndexEvent;
 
-        private static Bitmap bmpBlue = new Bitmap(crash.Properties.Resources.marker_blue_10);
-        //private static Bitmap bmpCyan = new Bitmap(crash.Properties.Resources.marker_cyan_10);
-        private static Bitmap bmpGreen = new Bitmap(crash.Properties.Resources.marker_green_10);
-        private static Bitmap bmpYellow = new Bitmap(crash.Properties.Resources.marker_yellow_10);
-        private static Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);
-        private static Bitmap bmpRed = new Bitmap(crash.Properties.Resources.marker_red_10);
+        private Bitmap bmpBlue = new Bitmap(crash.Properties.Resources.marker_blue_10);        
+        private Bitmap bmpGreen = new Bitmap(crash.Properties.Resources.marker_green_10);
+        private Bitmap bmpYellow = new Bitmap(crash.Properties.Resources.marker_yellow_10);
+        private Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);
+        private Bitmap bmpRed = new Bitmap(crash.Properties.Resources.marker_red_10);
 
         public FormMap()
         {
@@ -59,8 +58,8 @@ namespace crash
             tbLat.KeyPress += CustomEvents.Numeric_KeyPress;
             tbLon.KeyPress += CustomEvents.Numeric_KeyPress;
 
-            gmap.Overlays.Add(overlay);
-            gmap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
+            gmnMap.Overlays.Add(overlay);
+            gmnMap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
         }
 
         private void cboxMapMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -83,31 +82,52 @@ namespace crash
         }
 
         private void cboxMapProvider_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {            
             if (!String.IsNullOrEmpty(cboxMapProvider.Text))
             {
                 switch (cboxMapProvider.Text)
                 {
                     case "Google Map":
-                        gmap.MapProvider = GoogleMapProvider.Instance;
+                        gmnMap.MapProvider = GoogleMapProvider.Instance;
                         break;
                     case "Google Map Terrain":
-                        gmap.MapProvider = GoogleTerrainMapProvider.Instance;
+                        gmnMap.MapProvider = GoogleTerrainMapProvider.Instance;
                         break;
-                    case "Google Map Sattelite":
-                        gmap.MapProvider = GoogleSatelliteMapProvider.Instance;                        
+                    case "Google Map Satellite":
+                        gmnMap.MapProvider = GoogleSatelliteMapProvider.Instance;                        
                         break;
                     case "Open Street Map":
-                        gmap.MapProvider = OpenStreetMapProvider.Instance;
+                        gmnMap.MapProvider = OpenStreetMapProvider.Instance;
                         break;
                     case "Open Street Map Quest":
-                        gmap.MapProvider = OpenStreetMapQuestProvider.Instance;
+                        gmnMap.MapProvider = OpenStreetMapQuestProvider.Instance;
                         break;
                     case "ArcGIS World Topo":
-                        gmap.MapProvider = ArcGIS_World_Topo_MapProvider.Instance;
+                        gmnMap.MapProvider = ArcGIS_World_Topo_MapProvider.Instance;
                         break;
+                    case "ArcGIS World 2D":
+                        gmnMap.MapProvider = ArcGIS_Imagery_World_2D_MapProvider.Instance;
+                        break;                    
+                    case "ArcGIS World Shaded":
+                        gmnMap.MapProvider = ArcGIS_World_Shaded_Relief_MapProvider.Instance;
+                        break;                    
                     case "Bing Map":
-                        gmap.MapProvider = BingMapProvider.Instance;
+                        gmnMap.MapProvider = BingMapProvider.Instance;                         
+                        break;
+                    case "Bing Map Hybrid":
+                        gmnMap.MapProvider = BingHybridMapProvider.Instance;
+                        break;
+                    case "Bing Map Satellite":
+                        gmnMap.MapProvider = BingSatelliteMapProvider.Instance;
+                        break;
+                    case "Yahoo Map":
+                        gmnMap.MapProvider = YahooMapProvider.Instance;
+                        break;
+                    case "Yahoo Map Hybrid":
+                        gmnMap.MapProvider = YahooHybridMapProvider.Instance;                        
+                        break;
+                    case "Yahoo Map Satellite":                        
+                        gmnMap.MapProvider = YahooSatelliteMapProvider.Instance;
                         break;
                 }
             }
@@ -122,22 +142,22 @@ namespace crash
                 overlay.Markers.RemoveAt(i);
             overlay.Markers.Clear();
             overlay.Clear();
-            gmap.Overlays.Remove(overlay);
+            gmnMap.Overlays.Remove(overlay);
 
             overlay = new GMapOverlay();
-            gmap.Overlays.Add(overlay);
-            gmap.Refresh();            
+            gmnMap.Overlays.Add(overlay);
+            gmnMap.Refresh();
         }
 
         public void SetSession(Session sess)
         {
-            session = sess;
+            currentSession = sess;
             RemoveAllMarkers();
         }
 
         public void AddMarker(Spectrum s)
         {
-            if (session == null)
+            if (currentSession == null)
                 return;            
 
             Bitmap bmp = null;
@@ -160,13 +180,13 @@ namespace crash
             marker.ToolTipText = s.ToString() 
                 + Environment.NewLine + "Lat start: " + s.LatitudeStart 
                 + Environment.NewLine + "Lon start: " + s.LongitudeStart 
-                + Environment.NewLine + "Alt start: " + s.AltitudeStart;            
-            overlay.Markers.Add(marker);                        
+                + Environment.NewLine + "Alt start: " + s.AltitudeStart;
+            overlay.Markers.Add(marker);
         }
 
         private void FormMap_FormClosing(object sender, FormClosingEventArgs e)
         {
-            gmap.Manager.CancelTileCaching();
+            gmnMap.Manager.CancelTileCaching();
             e.Cancel = true;
             Hide();
         }
@@ -182,7 +202,7 @@ namespace crash
             double lat = Convert.ToDouble(tbLat.Text);
             double lon = Convert.ToDouble(tbLon.Text);
 
-            gmap.Position = new GMap.NET.PointLatLng(lat, lon);
+            gmnMap.Position = new GMap.NET.PointLatLng(lat, lon);
         }                
 
         private void gmap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
@@ -206,7 +226,7 @@ namespace crash
                 else                
                     m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
             }
-            gmap.Refresh();
+            gmnMap.Refresh();
         }
 
         public void SetSelectedSessionIndices(int index1, int index2)
@@ -220,33 +240,33 @@ namespace crash
                 else                
                     m.ToolTipMode = MarkerTooltipMode.OnMouseOver;
             }
-            gmap.Refresh();
+            gmnMap.Refresh();
         }
 
         public void ClearSession()
-        {            
-            session = null;
+        {
+            currentSession = null;
             RemoveAllMarkers();
         }
 
         private void btnZoomToMax_Click(object sender, EventArgs e)
         {
-            gmap.Zoom = (double)gmap.MinZoom;
+            gmnMap.Zoom = (double)gmnMap.MinZoom;
         }
 
         private void btnZoomToMin_Click(object sender, EventArgs e)
         {
-            gmap.Zoom = (double)gmap.MaxZoom;
+            gmnMap.Zoom = (double)gmnMap.MaxZoom;
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)
         {
-            gmap.Zoom -= 1.0;
+            gmnMap.Zoom -= 1.0;
         }
 
         private void btnZoomIn_Click(object sender, EventArgs e)
         {
-            gmap.Zoom += 1.0;
+            gmnMap.Zoom += 1.0;
         }
     }    
 }

@@ -42,8 +42,8 @@
             this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
             this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
             this.btnZoomToMin = new System.Windows.Forms.ToolStripButton();
-            this.gmap = new GMap.NET.WindowsForms.GMapControl();
             this.status = new System.Windows.Forms.StatusStrip();
+            this.gmnMap = new GMap.NET.WindowsForms.GMapControl();
             this.toolsMap.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,7 +87,14 @@
             "Open Street Map",
             "Open Street Map Quest",
             "ArcGIS World Topo",
-            "Bing Map"});
+            "ArcGIS World 2D",
+            "ArcGIS World Shaded",
+            "Bing Map",
+            "Bing Map Hybrid",
+            "Bing Map Satellite",
+            "Yahoo Map",
+            "Yahoo Map Hybrid",
+            "Yahoo Map Satellite"});
             this.cboxMapProvider.Name = "cboxMapProvider";
             this.cboxMapProvider.Size = new System.Drawing.Size(132, 25);
             this.cboxMapProvider.SelectedIndexChanged += new System.EventHandler(this.cboxMapProvider_SelectedIndexChanged);
@@ -174,33 +181,6 @@
             this.btnZoomToMin.Text = "toolStripButton4";
             this.btnZoomToMin.Click += new System.EventHandler(this.btnZoomToMin_Click);
             // 
-            // gmap
-            // 
-            this.gmap.Bearing = 0F;
-            this.gmap.CanDragMap = true;
-            this.gmap.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gmap.EmptyTileColor = System.Drawing.Color.Navy;
-            this.gmap.GrayScaleMode = false;
-            this.gmap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-            this.gmap.LevelsKeepInMemmory = 5;
-            this.gmap.Location = new System.Drawing.Point(0, 25);
-            this.gmap.MarkersEnabled = true;
-            this.gmap.MaxZoom = 18;
-            this.gmap.MinZoom = 0;
-            this.gmap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-            this.gmap.Name = "gmap";
-            this.gmap.NegativeMode = false;
-            this.gmap.PolygonsEnabled = true;
-            this.gmap.RetryLoadTile = 0;
-            this.gmap.RoutesEnabled = true;
-            this.gmap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
-            this.gmap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-            this.gmap.ShowTileGridLines = false;
-            this.gmap.Size = new System.Drawing.Size(851, 561);
-            this.gmap.TabIndex = 5;
-            this.gmap.Zoom = 12D;
-            this.gmap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.gmap_OnMarkerClick);
-            // 
             // status
             // 
             this.status.Location = new System.Drawing.Point(0, 586);
@@ -209,12 +189,39 @@
             this.status.TabIndex = 6;
             this.status.Text = "statusStrip1";
             // 
+            // gmnMap
+            // 
+            this.gmnMap.Bearing = 0F;
+            this.gmnMap.CanDragMap = true;
+            this.gmnMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gmnMap.EmptyTileColor = System.Drawing.Color.Navy;
+            this.gmnMap.GrayScaleMode = false;
+            this.gmnMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.gmnMap.LevelsKeepInMemmory = 5;
+            this.gmnMap.Location = new System.Drawing.Point(0, 25);
+            this.gmnMap.MarkersEnabled = true;
+            this.gmnMap.MaxZoom = 24;
+            this.gmnMap.MinZoom = 2;
+            this.gmnMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.gmnMap.Name = "gmnMap";
+            this.gmnMap.NegativeMode = false;
+            this.gmnMap.PolygonsEnabled = true;
+            this.gmnMap.RetryLoadTile = 0;
+            this.gmnMap.RoutesEnabled = true;
+            this.gmnMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.gmnMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.gmnMap.ShowTileGridLines = false;
+            this.gmnMap.Size = new System.Drawing.Size(851, 561);
+            this.gmnMap.TabIndex = 7;
+            this.gmnMap.Zoom = 10D;
+            this.gmnMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.gmap_OnMarkerClick);
+            // 
             // FormMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(851, 608);
-            this.Controls.Add(this.gmap);
+            this.Controls.Add(this.gmnMap);
             this.Controls.Add(this.status);
             this.Controls.Add(this.toolsMap);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -237,7 +244,6 @@
         private System.Windows.Forms.ToolStripComboBox cboxMapProvider;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox cboxMapMode;
-        private GMap.NET.WindowsForms.GMapControl gmap;
         private System.Windows.Forms.StatusStrip status;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripTextBox tbLat;
@@ -247,5 +253,6 @@
         private System.Windows.Forms.ToolStripButton btnZoomOut;
         private System.Windows.Forms.ToolStripButton btnZoomIn;
         private System.Windows.Forms.ToolStripButton btnZoomToMin;
+        private GMap.NET.WindowsForms.GMapControl gmnMap;
     }
 }

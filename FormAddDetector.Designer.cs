@@ -53,15 +53,10 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.tbarCurrHV = new System.Windows.Forms.TrackBar();
             this.lblCurrHV = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.tbRegScript = new System.Windows.Forms.TextBox();
-            this.btnSelectRegScript = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarCurrHV)).BeginInit();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -69,16 +64,16 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 383);
+            this.panel1.Location = new System.Drawing.Point(0, 349);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(414, 27);
+            this.panel1.Size = new System.Drawing.Size(385, 27);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(264, 0);
+            this.btnCancel.Location = new System.Drawing.Point(235, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 27);
             this.btnCancel.TabIndex = 1;
@@ -90,7 +85,7 @@
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(339, 0);
+            this.btnOk.Location = new System.Drawing.Point(310, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 27);
             this.btnOk.TabIndex = 0;
@@ -121,13 +116,10 @@
             this.tableLayoutPanel1.Controls.Add(this.tbLLD, 1, 8);
             this.tableLayoutPanel1.Controls.Add(this.tbULD, 1, 9);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 10);
-            this.tableLayoutPanel1.Controls.Add(this.panel3, 1, 10);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 12;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel1.RowCount = 11;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
@@ -140,7 +132,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(414, 383);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(385, 349);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // label1
@@ -166,9 +158,9 @@
             this.cboxDetectorTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxDetectorTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxDetectorTypes.FormattingEnabled = true;
-            this.cboxDetectorTypes.Location = new System.Drawing.Point(168, 35);
+            this.cboxDetectorTypes.Location = new System.Drawing.Point(157, 35);
             this.cboxDetectorTypes.Name = "cboxDetectorTypes";
-            this.cboxDetectorTypes.Size = new System.Drawing.Size(243, 21);
+            this.cboxDetectorTypes.Size = new System.Drawing.Size(225, 21);
             this.cboxDetectorTypes.TabIndex = 2;
             this.cboxDetectorTypes.SelectedIndexChanged += new System.EventHandler(this.cboxDetectorTypes_SelectedIndexChanged);
             // 
@@ -240,57 +232,57 @@
             this.cboxNumChannels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxNumChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxNumChannels.FormattingEnabled = true;
-            this.cboxNumChannels.Location = new System.Drawing.Point(168, 99);
+            this.cboxNumChannels.Location = new System.Drawing.Point(157, 99);
             this.cboxNumChannels.Name = "cboxNumChannels";
-            this.cboxNumChannels.Size = new System.Drawing.Size(243, 21);
+            this.cboxNumChannels.Size = new System.Drawing.Size(225, 21);
             this.cboxNumChannels.TabIndex = 11;
             // 
             // tbSerialnumber
             // 
             this.tbSerialnumber.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSerialnumber.Location = new System.Drawing.Point(168, 67);
+            this.tbSerialnumber.Location = new System.Drawing.Point(157, 67);
             this.tbSerialnumber.Name = "tbSerialnumber";
-            this.tbSerialnumber.Size = new System.Drawing.Size(243, 20);
+            this.tbSerialnumber.Size = new System.Drawing.Size(225, 20);
             this.tbSerialnumber.TabIndex = 12;
             // 
             // tbCoarseGain
             // 
             this.tbCoarseGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbCoarseGain.Location = new System.Drawing.Point(168, 163);
+            this.tbCoarseGain.Location = new System.Drawing.Point(157, 163);
             this.tbCoarseGain.Name = "tbCoarseGain";
-            this.tbCoarseGain.Size = new System.Drawing.Size(243, 20);
+            this.tbCoarseGain.Size = new System.Drawing.Size(225, 20);
             this.tbCoarseGain.TabIndex = 14;
             // 
             // tbFineGain
             // 
             this.tbFineGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbFineGain.Location = new System.Drawing.Point(168, 195);
+            this.tbFineGain.Location = new System.Drawing.Point(157, 195);
             this.tbFineGain.Name = "tbFineGain";
-            this.tbFineGain.Size = new System.Drawing.Size(243, 20);
+            this.tbFineGain.Size = new System.Drawing.Size(225, 20);
             this.tbFineGain.TabIndex = 15;
             // 
             // tbLivetime
             // 
             this.tbLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLivetime.Location = new System.Drawing.Point(168, 227);
+            this.tbLivetime.Location = new System.Drawing.Point(157, 227);
             this.tbLivetime.Name = "tbLivetime";
-            this.tbLivetime.Size = new System.Drawing.Size(243, 20);
+            this.tbLivetime.Size = new System.Drawing.Size(225, 20);
             this.tbLivetime.TabIndex = 17;
             // 
             // tbLLD
             // 
             this.tbLLD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLLD.Location = new System.Drawing.Point(168, 259);
+            this.tbLLD.Location = new System.Drawing.Point(157, 259);
             this.tbLLD.Name = "tbLLD";
-            this.tbLLD.Size = new System.Drawing.Size(243, 20);
+            this.tbLLD.Size = new System.Drawing.Size(225, 20);
             this.tbLLD.TabIndex = 18;
             // 
             // tbULD
             // 
             this.tbULD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbULD.Location = new System.Drawing.Point(168, 291);
+            this.tbULD.Location = new System.Drawing.Point(157, 291);
             this.tbULD.Name = "tbULD";
-            this.tbULD.Size = new System.Drawing.Size(243, 20);
+            this.tbULD.Size = new System.Drawing.Size(225, 20);
             this.tbULD.TabIndex = 19;
             // 
             // panel2
@@ -298,9 +290,9 @@
             this.panel2.Controls.Add(this.tbarCurrHV);
             this.panel2.Controls.Add(this.lblCurrHV);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(168, 131);
+            this.panel2.Location = new System.Drawing.Point(157, 131);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(243, 26);
+            this.panel2.Size = new System.Drawing.Size(225, 26);
             this.panel2.TabIndex = 20;
             // 
             // tbarCurrHV
@@ -308,7 +300,7 @@
             this.tbarCurrHV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbarCurrHV.Location = new System.Drawing.Point(0, 0);
             this.tbarCurrHV.Name = "tbarCurrHV";
-            this.tbarCurrHV.Size = new System.Drawing.Size(230, 26);
+            this.tbarCurrHV.Size = new System.Drawing.Size(212, 26);
             this.tbarCurrHV.TabIndex = 1;
             this.tbarCurrHV.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbarCurrHV.ValueChanged += new System.EventHandler(this.tbarCurrHV_ValueChanged);
@@ -317,56 +309,17 @@
             // 
             this.lblCurrHV.AutoSize = true;
             this.lblCurrHV.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblCurrHV.Location = new System.Drawing.Point(230, 0);
+            this.lblCurrHV.Location = new System.Drawing.Point(212, 0);
             this.lblCurrHV.Name = "lblCurrHV";
             this.lblCurrHV.Size = new System.Drawing.Size(13, 13);
             this.lblCurrHV.TabIndex = 0;
             this.lblCurrHV.Text = "1";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 320);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(92, 13);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "Energy Cal. Curve";
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.tbRegScript);
-            this.panel3.Controls.Add(this.btnSelectRegScript);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(168, 323);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(243, 26);
-            this.panel3.TabIndex = 22;
-            // 
-            // tbRegScript
-            // 
-            this.tbRegScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbRegScript.Location = new System.Drawing.Point(0, 0);
-            this.tbRegScript.Name = "tbRegScript";
-            this.tbRegScript.ReadOnly = true;
-            this.tbRegScript.Size = new System.Drawing.Size(192, 20);
-            this.tbRegScript.TabIndex = 1;
-            // 
-            // btnSelectRegScript
-            // 
-            this.btnSelectRegScript.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSelectRegScript.Location = new System.Drawing.Point(192, 0);
-            this.btnSelectRegScript.Name = "btnSelectRegScript";
-            this.btnSelectRegScript.Size = new System.Drawing.Size(51, 26);
-            this.btnSelectRegScript.TabIndex = 0;
-            this.btnSelectRegScript.Text = "...";
-            this.btnSelectRegScript.UseVisualStyleBackColor = true;
-            this.btnSelectRegScript.Click += new System.EventHandler(this.btnSelectRegScript_Click);
-            // 
             // FormAddDetector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(414, 410);
+            this.ClientSize = new System.Drawing.Size(385, 376);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -383,8 +336,6 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarCurrHV)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -415,9 +366,5 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TrackBar tbarCurrHV;
         private System.Windows.Forms.Label lblCurrHV;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button btnSelectRegScript;
-        private System.Windows.Forms.TextBox tbRegScript;
     }
 }
