@@ -40,8 +40,8 @@ namespace crash
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            //try
-            //{                
+            try
+            {                
                 tabs.ItemSize = new Size(0, 1);
                 tabs.SizeMode = TabSizeMode.Fixed;
                 tabs.SelectedTab = pageMenu;
@@ -106,12 +106,12 @@ namespace crash
                 timer.Interval = 10;
                 timer.Tick += timer_Tick;
                 timer.Start();
-            /*}
+            }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error");
+                MessageBox.Show(ex.Message + Path.DirectorySeparatorChar + ex.StackTrace, "Error");
                 Environment.Exit(1);
-            }*/
+            }
         }        
 
         void timer_Tick(object sender, EventArgs e)
@@ -934,7 +934,9 @@ namespace crash
             formWaterfallLive.Hide();
             formROILive.Hide();
             Utils.Log.Show();
+            Utils.Log.WindowState = FormWindowState.Normal;
 
+            WindowState = FormWindowState.Normal;
             Left = 0;
             Top = 0;
             Width = screenWidth;
@@ -952,10 +954,13 @@ namespace crash
             int screenHeight = Screen.PrimaryScreen.Bounds.Height;
 
             frmMap.Show();
+            frmMap.WindowState = FormWindowState.Normal;
             formWaterfallLive.Show();
+            formWaterfallLive.WindowState = FormWindowState.Normal;
             formROILive.Hide();
             Utils.Log.Hide();
 
+            WindowState = FormWindowState.Normal;
             Left = 0;
             Top = 0;
             Width = screenWidth;
@@ -976,12 +981,14 @@ namespace crash
         {
             int screenWidth = Screen.PrimaryScreen.Bounds.Width;
             int screenHeight = Screen.PrimaryScreen.Bounds.Height;
-
+            
             frmMap.Show();
+            frmMap.WindowState = FormWindowState.Normal;
             formWaterfallLive.Hide();
             formROILive.Hide();
             Utils.Log.Hide();
 
+            WindowState = FormWindowState.Normal;
             Left = 0;
             Top = 0;
             Width = screenWidth / 2;
