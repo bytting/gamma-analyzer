@@ -213,6 +213,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.btnAddDetector = new System.Windows.Forms.Button();
+            this.menuItemVersion = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -494,7 +495,8 @@
             // menuItemHelp
             // 
             this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemAbout});
+            this.menuItemAbout,
+            this.menuItemVersion});
             this.menuItemHelp.Name = "menuItemHelp";
             this.menuItemHelp.Size = new System.Drawing.Size(44, 20);
             this.menuItemHelp.Text = "&Help";
@@ -502,7 +504,7 @@
             // menuItemAbout
             // 
             this.menuItemAbout.Name = "menuItemAbout";
-            this.menuItemAbout.Size = new System.Drawing.Size(107, 22);
+            this.menuItemAbout.Size = new System.Drawing.Size(152, 22);
             this.menuItemAbout.Text = "&About";
             this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
             // 
@@ -2162,6 +2164,13 @@
             this.btnAddDetector.UseVisualStyleBackColor = true;
             this.btnAddDetector.Click += new System.EventHandler(this.btnAddDetector_Click);
             // 
+            // menuItemVersion
+            // 
+            this.menuItemVersion.Name = "menuItemVersion";
+            this.menuItemVersion.Size = new System.Drawing.Size(152, 22);
+            this.menuItemVersion.Text = "&Version";
+            this.menuItemVersion.Click += new System.EventHandler(this.menuItemVersion_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2426,6 +2435,7 @@
         private System.Windows.Forms.ToolStripDropDownButton btnOptions;
         private System.Windows.Forms.ToolStripMenuItem subtractBackgroundToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuItemLayoutSession2;
+        private System.Windows.Forms.ToolStripMenuItem menuItemVersion;
     }
 }
 

@@ -932,9 +932,7 @@ namespace crash
 
             frmMap.Hide();
             formWaterfallLive.Hide();
-            formROILive.Hide();
-            Utils.Log.Show();
-            Utils.Log.WindowState = FormWindowState.Normal;
+            formROILive.Hide();            
 
             WindowState = FormWindowState.Normal;
             Left = 0;
@@ -942,6 +940,8 @@ namespace crash
             Width = screenWidth;
             Height = (screenHeight / 3) * 2;
 
+            Utils.Log.Show();
+            Utils.Log.WindowState = FormWindowState.Normal;
             Utils.Log.Left = 0;
             Utils.Log.Top = (screenHeight / 3) * 2;
             Utils.Log.Width = screenWidth;
@@ -952,11 +952,7 @@ namespace crash
         {
             int screenWidth = Screen.PrimaryScreen.Bounds.Width;
             int screenHeight = Screen.PrimaryScreen.Bounds.Height;
-
-            frmMap.Show();
-            frmMap.WindowState = FormWindowState.Normal;
-            formWaterfallLive.Show();
-            formWaterfallLive.WindowState = FormWindowState.Normal;
+                        
             formROILive.Hide();
             Utils.Log.Hide();
 
@@ -966,11 +962,15 @@ namespace crash
             Width = screenWidth;
             Height = (screenHeight / 3) * 2;
 
+            formWaterfallLive.Show();
+            formWaterfallLive.WindowState = FormWindowState.Normal;
             formWaterfallLive.Left = 0;
             formWaterfallLive.Top = (screenHeight / 3) * 2;
             formWaterfallLive.Width = screenWidth / 2;
             formWaterfallLive.Height = screenHeight / 3;
 
+            frmMap.Show();
+            frmMap.WindowState = FormWindowState.Normal;
             frmMap.Left = screenWidth / 2;
             frmMap.Top = (screenHeight / 3) * 2;
             frmMap.Width = screenWidth / 2;
@@ -981,9 +981,7 @@ namespace crash
         {
             int screenWidth = Screen.PrimaryScreen.Bounds.Width;
             int screenHeight = Screen.PrimaryScreen.Bounds.Height;
-            
-            frmMap.Show();
-            frmMap.WindowState = FormWindowState.Normal;
+                        
             formWaterfallLive.Hide();
             formROILive.Hide();
             Utils.Log.Hide();
@@ -992,12 +990,20 @@ namespace crash
             Left = 0;
             Top = 0;
             Width = screenWidth / 2;
-            Height = screenHeight;            
+            Height = screenHeight;
 
+            frmMap.Show();
+            frmMap.WindowState = FormWindowState.Normal;
             frmMap.Left = screenWidth / 2;
             frmMap.Top = 0;
             frmMap.Width = screenWidth / 2;
             frmMap.Height = screenHeight;
+        }
+
+        private void menuItemVersion_Click(object sender, EventArgs e)
+        {
+            string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            MessageBox.Show(version);
         }        
     }
 }
