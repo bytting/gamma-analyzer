@@ -52,7 +52,8 @@ namespace crash
                 if (!Directory.Exists(CrashEnvironment.GEScriptPath))
                     Directory.CreateDirectory(CrashEnvironment.GEScriptPath);                
 
-                string InstallDir = (new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location)).Directory + Path.DirectorySeparatorChar.ToString();
+                //string InstallDir = (new FileInfo(System.Reflection.Assembly.GetEntryAssembly().Location)).Directory + Path.DirectorySeparatorChar.ToString();
+                string InstallDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]) + Path.DirectorySeparatorChar;                
 
                 if (!File.Exists(CrashEnvironment.SettingsFile))
                     File.Copy(InstallDir + "template_settings.xml", CrashEnvironment.SettingsFile, false);
@@ -60,18 +61,21 @@ namespace crash
                 if (!File.Exists(CrashEnvironment.NuclideLibraryFile))
                     File.Copy(InstallDir + "template_nuclides.lib", CrashEnvironment.NuclideLibraryFile, false);
 
-                // FIXME
-                try { File.Copy(InstallDir + "template_Nai-2tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py", false); }
-                catch { }
-                try { File.Copy(InstallDir + "template_Nai-3tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py", false); }
-                catch { }
+                if (!File.Exists(CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py"))
+                    File.Copy(InstallDir + "template_Nai-2tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py", true);
+
+                if (!File.Exists(CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py"))
+                    File.Copy(InstallDir + "template_Nai-3tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py", true);
 
                 LoadSettings();
                 LoadNuclideLibrary();
 
                 formWaterfallLive = new FormWaterfallLive(settings.ROIList);
+                formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
                 formROILive = new FormROILive(settings.ROIList);
+                formROILive.SetSessionIndexEvent += SetSessionIndexEvent;
                 frmMap = new FormMap();
+                frmMap.SetSessionIndexEvent += SetSessionIndexEvent;
 
                 tbSetupLivetime.KeyPress += CustomEvents.Integer_KeyPress;
                 tbSetupSpectrumCount.KeyPress += CustomEvents.Integer_KeyPress;
@@ -94,11 +98,7 @@ namespace crash
                 lblSessionDetector.Text = "";
                 lblBackground.Text = "";
                 lblComment.Text = "";
-                ClearSpectrumInfo();
-
-                formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
-                frmMap.SetSessionIndexEvent += SetSessionIndexEvent;
-                formROILive.SetSessionIndexEvent += SetSessionIndexEvent;                
+                ClearSpectrumInfo();                                               
 
                 netThread.Start();
                 while (!netThread.IsAlive) ;

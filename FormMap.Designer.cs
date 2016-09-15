@@ -59,10 +59,10 @@
             this.tbLat,
             this.tbLon,
             this.btnGoToLatLon,
-            this.btnZoomToMax,
-            this.btnZoomOut,
+            this.btnZoomToMin,
             this.btnZoomIn,
-            this.btnZoomToMin});
+            this.btnZoomOut,
+            this.btnZoomToMax});
             this.toolsMap.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolsMap.Location = new System.Drawing.Point(0, 0);
             this.toolsMap.Name = "toolsMap";
@@ -126,12 +126,12 @@
             // tbLat
             // 
             this.tbLat.Name = "tbLat";
-            this.tbLat.Size = new System.Drawing.Size(100, 25);
+            this.tbLat.Size = new System.Drawing.Size(80, 25);
             // 
             // tbLon
             // 
             this.tbLon.Name = "tbLon";
-            this.tbLon.Size = new System.Drawing.Size(100, 25);
+            this.tbLon.Size = new System.Drawing.Size(80, 25);
             // 
             // btnGoToLatLon
             // 
@@ -143,6 +143,7 @@
             // 
             // btnZoomToMax
             // 
+            this.btnZoomToMax.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btnZoomToMax.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnZoomToMax.Image = global::crash.Properties.Resources.left_all_16;
             this.btnZoomToMax.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -153,6 +154,7 @@
             // 
             // btnZoomOut
             // 
+            this.btnZoomOut.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btnZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnZoomOut.Image = global::crash.Properties.Resources.left_16;
             this.btnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -163,6 +165,7 @@
             // 
             // btnZoomIn
             // 
+            this.btnZoomIn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btnZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnZoomIn.Image = global::crash.Properties.Resources.right_16;
             this.btnZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -173,6 +176,7 @@
             // 
             // btnZoomToMin
             // 
+            this.btnZoomToMin.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.btnZoomToMin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnZoomToMin.Image = global::crash.Properties.Resources.right_all_16;
             this.btnZoomToMin.ImageTransparentColor = System.Drawing.Color.Magenta;
