@@ -34,14 +34,11 @@
             this.cboxMapProvider = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.cboxMapMode = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
-            this.tbLat = new System.Windows.Forms.ToolStripTextBox();
-            this.tbLon = new System.Windows.Forms.ToolStripTextBox();
             this.btnGoToLatLon = new System.Windows.Forms.ToolStripButton();
-            this.btnZoomToMax = new System.Windows.Forms.ToolStripButton();
-            this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
-            this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
             this.btnZoomToMin = new System.Windows.Forms.ToolStripButton();
+            this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
+            this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
+            this.btnZoomToMax = new System.Windows.Forms.ToolStripButton();
             this.status = new System.Windows.Forms.StatusStrip();
             this.gmnMap = new GMap.NET.WindowsForms.GMapControl();
             this.toolsMap.SuspendLayout();
@@ -55,9 +52,6 @@
             this.cboxMapProvider,
             this.toolStripLabel1,
             this.cboxMapMode,
-            this.toolStripLabel3,
-            this.tbLat,
-            this.tbLon,
             this.btnGoToLatLon,
             this.btnZoomToMin,
             this.btnZoomIn,
@@ -73,8 +67,8 @@
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(81, 22);
-            this.toolStripLabel2.Text = "Map provider:";
+            this.toolStripLabel2.Size = new System.Drawing.Size(51, 22);
+            this.toolStripLabel2.Text = "Provider";
             // 
             // cboxMapProvider
             // 
@@ -96,14 +90,14 @@
             "Yahoo Map Hybrid",
             "Yahoo Map Satellite"});
             this.cboxMapProvider.Name = "cboxMapProvider";
-            this.cboxMapProvider.Size = new System.Drawing.Size(132, 25);
+            this.cboxMapProvider.Size = new System.Drawing.Size(120, 25);
             this.cboxMapProvider.SelectedIndexChanged += new System.EventHandler(this.cboxMapProvider_SelectedIndexChanged);
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(68, 22);
-            this.toolStripLabel1.Text = "Map mode:";
+            this.toolStripLabel1.Size = new System.Drawing.Size(38, 22);
+            this.toolStripLabel1.Text = "Mode";
             // 
             // cboxMapMode
             // 
@@ -114,54 +108,27 @@
             "Cache",
             "Server and Cache"});
             this.cboxMapMode.Name = "cboxMapMode";
-            this.cboxMapMode.Size = new System.Drawing.Size(121, 25);
+            this.cboxMapMode.Size = new System.Drawing.Size(105, 25);
             this.cboxMapMode.SelectedIndexChanged += new System.EventHandler(this.cboxMapMode_SelectedIndexChanged);
-            // 
-            // toolStripLabel3
-            // 
-            this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(77, 22);
-            this.toolStripLabel3.Text = "Go to lat/lon:";
-            // 
-            // tbLat
-            // 
-            this.tbLat.Name = "tbLat";
-            this.tbLat.Size = new System.Drawing.Size(80, 25);
-            // 
-            // tbLon
-            // 
-            this.tbLon.Name = "tbLon";
-            this.tbLon.Size = new System.Drawing.Size(80, 25);
             // 
             // btnGoToLatLon
             // 
             this.btnGoToLatLon.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGoToLatLon.Name = "btnGoToLatLon";
-            this.btnGoToLatLon.Size = new System.Drawing.Size(26, 22);
-            this.btnGoToLatLon.Text = "Go";
+            this.btnGoToLatLon.Size = new System.Drawing.Size(49, 22);
+            this.btnGoToLatLon.Text = "Go to...";
             this.btnGoToLatLon.Click += new System.EventHandler(this.btnGoToLatLon_Click);
             // 
-            // btnZoomToMax
+            // btnZoomToMin
             // 
-            this.btnZoomToMax.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnZoomToMax.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnZoomToMax.Image = global::crash.Properties.Resources.left_all_16;
-            this.btnZoomToMax.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnZoomToMax.Name = "btnZoomToMax";
-            this.btnZoomToMax.Size = new System.Drawing.Size(23, 22);
-            this.btnZoomToMax.Text = "toolStripButton1";
-            this.btnZoomToMax.Click += new System.EventHandler(this.btnZoomToMax_Click);
-            // 
-            // btnZoomOut
-            // 
-            this.btnZoomOut.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnZoomOut.Image = global::crash.Properties.Resources.left_16;
-            this.btnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnZoomOut.Name = "btnZoomOut";
-            this.btnZoomOut.Size = new System.Drawing.Size(23, 22);
-            this.btnZoomOut.Text = "toolStripButton2";
-            this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
+            this.btnZoomToMin.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnZoomToMin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnZoomToMin.Image = global::crash.Properties.Resources.right_all_16;
+            this.btnZoomToMin.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnZoomToMin.Name = "btnZoomToMin";
+            this.btnZoomToMin.Size = new System.Drawing.Size(23, 22);
+            this.btnZoomToMin.Text = "toolStripButton4";
+            this.btnZoomToMin.Click += new System.EventHandler(this.btnZoomToMin_Click);
             // 
             // btnZoomIn
             // 
@@ -174,16 +141,27 @@
             this.btnZoomIn.Text = "toolStripButton3";
             this.btnZoomIn.Click += new System.EventHandler(this.btnZoomIn_Click);
             // 
-            // btnZoomToMin
+            // btnZoomOut
             // 
-            this.btnZoomToMin.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnZoomToMin.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnZoomToMin.Image = global::crash.Properties.Resources.right_all_16;
-            this.btnZoomToMin.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnZoomToMin.Name = "btnZoomToMin";
-            this.btnZoomToMin.Size = new System.Drawing.Size(23, 22);
-            this.btnZoomToMin.Text = "toolStripButton4";
-            this.btnZoomToMin.Click += new System.EventHandler(this.btnZoomToMin_Click);
+            this.btnZoomOut.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnZoomOut.Image = global::crash.Properties.Resources.left_16;
+            this.btnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnZoomOut.Name = "btnZoomOut";
+            this.btnZoomOut.Size = new System.Drawing.Size(23, 22);
+            this.btnZoomOut.Text = "toolStripButton2";
+            this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
+            // 
+            // btnZoomToMax
+            // 
+            this.btnZoomToMax.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnZoomToMax.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnZoomToMax.Image = global::crash.Properties.Resources.left_all_16;
+            this.btnZoomToMax.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnZoomToMax.Name = "btnZoomToMax";
+            this.btnZoomToMax.Size = new System.Drawing.Size(23, 22);
+            this.btnZoomToMax.Text = "toolStripButton1";
+            this.btnZoomToMax.Click += new System.EventHandler(this.btnZoomToMax_Click);
             // 
             // status
             // 
@@ -249,9 +227,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox cboxMapMode;
         private System.Windows.Forms.StatusStrip status;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
-        private System.Windows.Forms.ToolStripTextBox tbLat;
-        private System.Windows.Forms.ToolStripTextBox tbLon;
         private System.Windows.Forms.ToolStripButton btnGoToLatLon;
         private System.Windows.Forms.ToolStripButton btnZoomToMax;
         private System.Windows.Forms.ToolStripButton btnZoomOut;

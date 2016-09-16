@@ -817,11 +817,10 @@ namespace crash
             if(form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
                 return;
             
-            energyList.Add(new EnergyComp((double)x, (double)form.Value));
+            energyList.Add(new EnergyComp((double)x, form.Value));
 
             if(energyList.Count > 1)
-            {
-                lblSetupCoefficients.Text = "";
+            {                
                 List<double> xList = new List<double>();
                 List<double> yList = new List<double>();
                 foreach (EnergyComp ec in energyList)
@@ -829,8 +828,9 @@ namespace crash
                     xList.Add((double)ec.Channel);
                     yList.Add((double)ec.Energy);
                 }
-                
-                coeffList = new List<double>(Fit.Polynomial(xList.ToArray(), yList.ToArray(), energyList.Count - 1));                
+
+                coeffList.Clear();
+                coeffList.AddRange(Fit.Polynomial(xList.ToArray(), yList.ToArray(), energyList.Count - 1));
             }
 
             GraphPane pane = graphSetup.GraphPane;            
@@ -852,7 +852,7 @@ namespace crash
 
             double livetime = 1d;
             if (!String.IsNullOrEmpty(tbSetupLivetime.Text.Trim()))
-                Convert.ToDouble(tbSetupLivetime.Text.Trim());
+                livetime = Convert.ToDouble(tbSetupLivetime.Text.Trim());
 
             int iterations = -1;
             if (!String.IsNullOrEmpty(tbSetupSpectrumCount.Text.Trim()))
@@ -860,7 +860,7 @@ namespace crash
 
             int delay = 0;
             if (!String.IsNullOrEmpty(tbSetupDelay.Text.Trim()))
-                delay = Convert.ToInt32(tbSetupDelay.Text);
+                delay = Convert.ToInt32(tbSetupDelay.Text.Trim());
 
             burn.Message msg = new burn.Message("new_session", null);
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
@@ -909,10 +909,13 @@ namespace crash
 
         private void menuItemResetCoefficients_Click(object sender, EventArgs e)
         {
-            coeffList.Clear();
+            energyList.Clear();            
             GraphPane pane = graphSetup.GraphPane;
             pane.GraphObjList.Clear();
-            lblSetupCoefficients.Text = "";
+
+            graphSetup.RestoreScale(pane);
+            graphSetup.AxisChange();
+            graphSetup.Refresh();
         }
 
         private void menuItemStoreCoefficients_Click(object sender, EventArgs e)
@@ -1000,10 +1003,53 @@ namespace crash
             frmMap.Height = screenHeight;
         }
 
+        private void menuItemLayoutSession3_Click(object sender, EventArgs e)
+        {
+            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+            int screenWidthThird = screenWidth / 3;
+            int screenHeightThird = screenHeight / 3;
+            int screenHeightHalfThird = screenHeightThird / 2;
+
+            WindowState = FormWindowState.Normal;
+            Left = 0;
+            Top = 0;
+            Width = screenWidthThird * 2;
+            Height = screenHeightThird * 2;
+
+            frmMap.Show();
+            frmMap.WindowState = FormWindowState.Normal;
+            frmMap.Left = screenWidthThird * 2;
+            frmMap.Top = 0;
+            frmMap.Width = screenWidthThird;
+            frmMap.Height = screenHeightThird + screenHeightHalfThird;
+
+            formROILive.Show();
+            formROILive.WindowState = FormWindowState.Normal;
+            formROILive.Left = screenWidthThird * 2;
+            formROILive.Top = screenHeightThird + screenHeightHalfThird;
+            formROILive.Width = screenWidthThird;
+            formROILive.Height = screenHeightThird;
+
+            Utils.Log.Show();
+            Utils.Log.WindowState = FormWindowState.Normal;
+            Utils.Log.Left = screenWidthThird * 2;
+            Utils.Log.Top = (screenHeightThird * 2) + screenHeightHalfThird;
+            Utils.Log.Width = screenWidthThird;
+            Utils.Log.Height = screenHeightHalfThird;
+
+            formWaterfallLive.Show();
+            formWaterfallLive.WindowState = FormWindowState.Normal;
+            formWaterfallLive.Left = 0;
+            formWaterfallLive.Top = screenHeightThird * 2;
+            formWaterfallLive.Width = screenWidthThird * 2;
+            formWaterfallLive.Height = screenHeightThird;
+        }
+
         private void menuItemVersion_Click(object sender, EventArgs e)
         {
             string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             MessageBox.Show(version);
-        }        
+        }                
     }
 }

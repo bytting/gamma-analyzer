@@ -63,6 +63,7 @@
             this.menuItemShowROIChart = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemVersion = new System.Windows.Forms.ToolStripMenuItem();
             this.status = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblLogMessages = new System.Windows.Forms.ToolStripStatusLabel();
@@ -142,7 +143,6 @@
             this.lblSetupFineGain = new System.Windows.Forms.Label();
             this.btnSetupSetParams = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.lblSetupCoefficients = new System.Windows.Forms.Label();
             this.lblSetupEnergy = new System.Windows.Forms.Label();
             this.lblSetupChannel = new System.Windows.Forms.Label();
             this.btnSetupBack = new System.Windows.Forms.Button();
@@ -213,7 +213,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.btnAddDetector = new System.Windows.Forms.Button();
-            this.menuItemVersion = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutSession3 = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -504,9 +504,16 @@
             // menuItemAbout
             // 
             this.menuItemAbout.Name = "menuItemAbout";
-            this.menuItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.menuItemAbout.Size = new System.Drawing.Size(113, 22);
             this.menuItemAbout.Text = "&About";
             this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
+            // 
+            // menuItemVersion
+            // 
+            this.menuItemVersion.Name = "menuItemVersion";
+            this.menuItemVersion.Size = new System.Drawing.Size(113, 22);
+            this.menuItemVersion.Text = "&Version";
+            this.menuItemVersion.Click += new System.EventHandler(this.menuItemVersion_Click);
             // 
             // status
             // 
@@ -803,7 +810,8 @@
             this.btnSelectLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemLayoutSetup1,
             this.menuItemLayoutSession1,
-            this.menuItemLayoutSession2});
+            this.menuItemLayoutSession2,
+            this.menuItemLayoutSession3});
             this.btnSelectLayout.Image = global::crash.Properties.Resources.layouts_32;
             this.btnSelectLayout.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnSelectLayout.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1149,7 +1157,7 @@
             this.label3.Size = new System.Drawing.Size(1335, 28);
             this.label3.TabIndex = 0;
             this.label3.Text = "Configure detector";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel5
             // 
@@ -1355,7 +1363,6 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.lblSetupCoefficients);
             this.panel2.Controls.Add(this.lblSetupEnergy);
             this.panel2.Controls.Add(this.lblSetupChannel);
             this.panel2.Controls.Add(this.btnSetupBack);
@@ -1365,16 +1372,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1341, 28);
             this.panel2.TabIndex = 22;
-            // 
-            // lblSetupCoefficients
-            // 
-            this.lblSetupCoefficients.AutoSize = true;
-            this.lblSetupCoefficients.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSetupCoefficients.Location = new System.Drawing.Point(216, 0);
-            this.lblSetupCoefficients.Name = "lblSetupCoefficients";
-            this.lblSetupCoefficients.Size = new System.Drawing.Size(129, 15);
-            this.lblSetupCoefficients.TabIndex = 6;
-            this.lblSetupCoefficients.Text = "<lblSetupCoefficients>";
             // 
             // lblSetupEnergy
             // 
@@ -1401,9 +1398,9 @@
             // 
             this.btnSetupBack.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSetupBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupBack.Location = new System.Drawing.Point(1041, 0);
+            this.btnSetupBack.Location = new System.Drawing.Point(972, 0);
             this.btnSetupBack.Name = "btnSetupBack";
-            this.btnSetupBack.Size = new System.Drawing.Size(150, 28);
+            this.btnSetupBack.Size = new System.Drawing.Size(183, 28);
             this.btnSetupBack.TabIndex = 3;
             this.btnSetupBack.Text = "Back";
             this.btnSetupBack.UseVisualStyleBackColor = true;
@@ -1413,9 +1410,9 @@
             // 
             this.btnSetupNext.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSetupNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupNext.Location = new System.Drawing.Point(1191, 0);
+            this.btnSetupNext.Location = new System.Drawing.Point(1155, 0);
             this.btnSetupNext.Name = "btnSetupNext";
-            this.btnSetupNext.Size = new System.Drawing.Size(150, 28);
+            this.btnSetupNext.Size = new System.Drawing.Size(186, 28);
             this.btnSetupNext.TabIndex = 2;
             this.btnSetupNext.Text = "Start session";
             this.btnSetupNext.UseVisualStyleBackColor = true;
@@ -1526,7 +1523,7 @@
             // 
             this.splitContainerSessionLeft.Panel2.Controls.Add(this.panelNuclides);
             this.splitContainerSessionLeft.Size = new System.Drawing.Size(183, 614);
-            this.splitContainerSessionLeft.SplitterDistance = 331;
+            this.splitContainerSessionLeft.SplitterDistance = 363;
             this.splitContainerSessionLeft.TabIndex = 9;
             // 
             // lbSession
@@ -1541,7 +1538,7 @@
             this.lbSession.Location = new System.Drawing.Point(0, 0);
             this.lbSession.Name = "lbSession";
             this.lbSession.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSession.Size = new System.Drawing.Size(183, 331);
+            this.lbSession.Size = new System.Drawing.Size(183, 363);
             this.lbSession.TabIndex = 7;
             this.lbSession.SelectedIndexChanged += new System.EventHandler(this.lbSession_SelectedIndexChanged);
             // 
@@ -1554,7 +1551,7 @@
             this.panelNuclides.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelNuclides.Location = new System.Drawing.Point(0, 0);
             this.panelNuclides.Name = "panelNuclides";
-            this.panelNuclides.Size = new System.Drawing.Size(183, 279);
+            this.panelNuclides.Size = new System.Drawing.Size(183, 247);
             this.panelNuclides.TabIndex = 8;
             // 
             // lbNuclides
@@ -1566,7 +1563,7 @@
             this.lbNuclides.ItemHeight = 15;
             this.lbNuclides.Location = new System.Drawing.Point(0, 62);
             this.lbNuclides.Name = "lbNuclides";
-            this.lbNuclides.Size = new System.Drawing.Size(183, 217);
+            this.lbNuclides.Size = new System.Drawing.Size(183, 185);
             this.lbNuclides.TabIndex = 2;
             // 
             // label12
@@ -2164,12 +2161,12 @@
             this.btnAddDetector.UseVisualStyleBackColor = true;
             this.btnAddDetector.Click += new System.EventHandler(this.btnAddDetector_Click);
             // 
-            // menuItemVersion
+            // menuItemLayoutSession3
             // 
-            this.menuItemVersion.Name = "menuItemVersion";
-            this.menuItemVersion.Size = new System.Drawing.Size(152, 22);
-            this.menuItemVersion.Text = "&Version";
-            this.menuItemVersion.Click += new System.EventHandler(this.menuItemVersion_Click);
+            this.menuItemLayoutSession3.Name = "menuItemLayoutSession3";
+            this.menuItemLayoutSession3.Size = new System.Drawing.Size(161, 22);
+            this.menuItemLayoutSession3.Text = "Layout Session 3";
+            this.menuItemLayoutSession3.Click += new System.EventHandler(this.menuItemLayoutSession3_Click);
             // 
             // FormMain
             // 
@@ -2412,7 +2409,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ContextMenuStrip contextMenuSetup;
         private System.Windows.Forms.ToolStripMenuItem menuItemResetCoefficients;
-        private System.Windows.Forms.Label lblSetupCoefficients;
         private System.Windows.Forms.ToolStripMenuItem menuItemStoreCoefficients;
         private System.Windows.Forms.Panel panelSetupGraph;
         private System.Windows.Forms.ToolStrip toolsSetup;
@@ -2436,6 +2432,7 @@
         private System.Windows.Forms.ToolStripMenuItem subtractBackgroundToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuItemLayoutSession2;
         private System.Windows.Forms.ToolStripMenuItem menuItemVersion;
+        private System.Windows.Forms.ToolStripMenuItem menuItemLayoutSession3;
     }
 }
 

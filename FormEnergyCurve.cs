@@ -37,9 +37,8 @@ namespace crash
             curveName = curveName.Substring(0, curveName.Length - 3);
 
             GraphPane pane = graph.GraphPane;
-            int w = (int)(pane.Rect.Right - pane.Rect.Left);            
             PointPairList list = new PointPairList();
-            for (int i = 0; i < w; i++)            
+            for (int i = 0; i < Det.CurrentNumChannels; i++)
                 list.Add((double)i, Det.GetEnergy(i));            
 
             LineItem energyCurve = pane.AddCurve(curveName, list, Color.Green, SymbolType.None);

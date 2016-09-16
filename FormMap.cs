@@ -55,9 +55,6 @@ namespace crash
 
         private void FormMap_Load(object sender, EventArgs e)
         {
-            tbLat.KeyPress += CustomEvents.Numeric_KeyPress;
-            tbLon.KeyPress += CustomEvents.Numeric_KeyPress;
-
             gmnMap.Overlays.Add(overlay);
             gmnMap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
         }
@@ -193,16 +190,11 @@ namespace crash
 
         private void btnGoToLatLon_Click(object sender, EventArgs e)
         {
-            if(String.IsNullOrEmpty(tbLat.Text) || String.IsNullOrEmpty(tbLon.Text))
-            {
-                MessageBox.Show("Missing one or more coordinates");
-                return;
-            }
+            FormAskCoordinates form = new FormAskCoordinates();
+            if (form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+                return;            
 
-            double lat = Convert.ToDouble(tbLat.Text);
-            double lon = Convert.ToDouble(tbLon.Text);
-
-            gmnMap.Position = new GMap.NET.PointLatLng(lat, lon);
+            gmnMap.Position = new GMap.NET.PointLatLng(form.Latitude, form.Longitude);
         }                
 
         private void gmap_OnMarkerClick(GMapMarker item, MouseEventArgs e)

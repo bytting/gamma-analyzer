@@ -389,6 +389,9 @@ namespace crash
 
         private void pane_MouseMove(object sender, MouseEventArgs e)
         {
+            if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
+                return;
+
             // Show channel
             int mouseChannel = leftX + e.X;
             lblChannel.Text = "Ch: " + String.Format("{0:###0}", mouseChannel);
