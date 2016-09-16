@@ -817,20 +817,20 @@ namespace crash
             if(form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
                 return;
             
-            energyList.Add(new EnergyComp((double)x, form.Value));
+            energyLines.Add(new EnergyComp((double)x, form.Value));
 
-            if(energyList.Count > 1)
+            if (energyLines.Count > 1)
             {                
                 List<double> xList = new List<double>();
                 List<double> yList = new List<double>();
-                foreach (EnergyComp ec in energyList)
+                foreach (EnergyComp ec in energyLines)
                 {
                     xList.Add((double)ec.Channel);
                     yList.Add((double)ec.Energy);
                 }
 
-                coeffList.Clear();
-                coeffList.AddRange(Fit.Polynomial(xList.ToArray(), yList.ToArray(), energyList.Count - 1));
+                coefficients.Clear();
+                coefficients.AddRange(Fit.Polynomial(xList.ToArray(), yList.ToArray(), energyLines.Count - 1));
             }
 
             GraphPane pane = graphSetup.GraphPane;            
@@ -909,7 +909,7 @@ namespace crash
 
         private void menuItemResetCoefficients_Click(object sender, EventArgs e)
         {
-            energyList.Clear();            
+            energyLines.Clear();            
             GraphPane pane = graphSetup.GraphPane;
             pane.GraphObjList.Clear();
 
@@ -920,12 +920,12 @@ namespace crash
 
         private void menuItemStoreCoefficients_Click(object sender, EventArgs e)
         {
-            FormEnergyCurve form = new FormEnergyCurve(selectedDetector, coeffList);
+            FormEnergyCurve form = new FormEnergyCurve(selectedDetector, coefficients);
             if (form.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                 return;
 
             selectedDetector.EnergyCurveCoefficients.Clear();
-            selectedDetector.EnergyCurveCoefficients.AddRange(coeffList);            
+            selectedDetector.EnergyCurveCoefficients.AddRange(coefficients);            
         }        
 
         private void menuItemLayoutSetup1_Click(object sender, EventArgs e)

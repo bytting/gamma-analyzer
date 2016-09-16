@@ -19,6 +19,7 @@ namespace crash
         {
             InitializeComponent();
             CoeffList = coeffList;
+            Det = new Detector();
             Det = detector;
         }
 
@@ -35,6 +36,8 @@ namespace crash
                 counter++;
             }
             curveName = curveName.Substring(0, curveName.Length - 3);
+            
+            Det.EnergyCurveCoefficients.AddRange(CoeffList);
 
             GraphPane pane = graph.GraphPane;
             PointPairList list = new PointPairList();

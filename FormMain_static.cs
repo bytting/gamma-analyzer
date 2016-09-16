@@ -66,8 +66,8 @@ namespace crash
         List<NuclideInfo> NuclideLibrary = new List<NuclideInfo>();
 
         Spectrum previewSpec = null;
-        List<EnergyComp> energyList = new List<EnergyComp>();
-        List<double> coeffList = new List<double>();
+        List<EnergyComp> energyLines = new List<EnergyComp>();
+        List<double> coefficients = new List<double>();
 
         private void SaveSettings()
         {
