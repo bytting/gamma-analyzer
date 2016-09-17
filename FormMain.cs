@@ -785,6 +785,8 @@ namespace crash
 
         private void btnSetupNext_Click(object sender, EventArgs e)
         {
+            SaveSettings();
+
             Detector det = (Detector)cboxSetupDetector.SelectedItem;
             
             if(!String.IsNullOrEmpty(tbSetupLivetime.Text.Trim()))
@@ -874,26 +876,14 @@ namespace crash
             {
                 MessageBox.Show("A session is already running");
                 return;
-            }
-
-            double livetime = 1d;
-            if (!String.IsNullOrEmpty(tbSetupLivetime.Text.Trim()))
-                livetime = Convert.ToDouble(tbSetupLivetime.Text.Trim());
-
-            int iterations = -1;
-            if (!String.IsNullOrEmpty(tbSetupSpectrumCount.Text.Trim()))
-                iterations = Convert.ToInt32(tbSetupSpectrumCount.Text.Trim());
-
-            int delay = 0;
-            if (!String.IsNullOrEmpty(tbSetupDelay.Text.Trim()))
-                delay = Convert.ToInt32(tbSetupDelay.Text.Trim());
+            }                                    
 
             burn.Message msg = new burn.Message("new_session", null);
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
             msg.AddParameter("preview", 1);
-            msg.AddParameter("iterations", iterations);
-            msg.AddParameter("livetime", livetime);
-            msg.AddParameter("delay", delay);
+            msg.AddParameter("iterations", -1);
+            msg.AddParameter("livetime", 1);
+            msg.AddParameter("delay", 0);
             sendMsg(msg);
 
             graphSetup.GraphPane.CurveList.Clear();
@@ -968,14 +958,14 @@ namespace crash
             Left = 0;
             Top = 0;
             Width = screenWidth;
-            Height = (screenHeight / 3) * 2;
+            Height = screenHeight - (screenHeight / 5);
 
             Utils.Log.Show();
             Utils.Log.WindowState = FormWindowState.Normal;
             Utils.Log.Left = 0;
-            Utils.Log.Top = (screenHeight / 3) * 2;
+            Utils.Log.Top = screenHeight - (screenHeight / 5);
             Utils.Log.Width = screenWidth;
-            Utils.Log.Height = screenHeight / 3;            
+            Utils.Log.Height = screenHeight / 5;
         }
 
         private void menuItemLayoutSession1_Click(object sender, EventArgs e)
