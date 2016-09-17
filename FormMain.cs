@@ -26,6 +26,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.Globalization;
+using Newtonsoft.Json;
 using ZedGraph;
 using MathNet.Numerics;
 
@@ -281,7 +282,7 @@ namespace crash
                 lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
                 lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
                 lblSession.Text = "Session: " + s.SessionName;
-                lblSessionDetector.Text = "Det." + selectedDetector.Serialnumber + " (" + selectedDetector.TypeName + ")";
+                lblSessionDetector.Text = "Det." + session.Detector.Serialnumber + " (" + session.Detector.TypeName + ")";
                 lblIndex.Text = "Index: " + s.SessionIndex;
                 lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart;
                 lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart;
@@ -293,7 +294,7 @@ namespace crash
                 lblGpsTimeEnd.Text = "Time end: " + s.GpsTimeEnd;
                 lblMaxCount.Text = "Max count: " + s.MaxCount;
                 lblMinCount.Text = "Min count: " + s.MinCount;
-                lblTotalCount.Text = "Total count: " + s.TotalCount;
+                lblTotalCount.Text = "Total count: " + s.TotalCount;                
                 if(s.Doserate == 0.0)
                     lblDoserate.Text = "";
                 else lblDoserate.Text = "Doserate: " + String.Format("{0:###0.0##}", s.Doserate);
@@ -395,13 +396,28 @@ namespace crash
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 ClearSession();
-                session.Load(dialog.SelectedPath);                                
-                selectedDetector = session.Info.Detector;
+
+                string sessionFile = dialog.SelectedPath + Path.DirectorySeparatorChar + "session.json";
+                if (!File.Exists(sessionFile))
+                {
+                    Utils.Log.Add("ERROR: Can not load session. Directory " + dialog.SelectedPath + " has no session.json file");
+                    return;
+                }                    
+
+                session = JsonConvert.DeserializeObject<Session>(File.ReadAllText(sessionFile));
+                if(!session.LoadGEFactor())                
+                    Utils.Log.Add("WARNING: Loading GEFactor failed for session " + session.Name);
+
+                if (!session.LoadSpectrums(dialog.SelectedPath))
+                {
+                    Utils.Log.Add("ERROR: Loading spectrums failed for session " + session.Name);
+                    return;
+                }
                 
-                lblComment.Text = session.Info.Comment;
+                lblComment.Text = session.Comment;
 
                 formWaterfallLive.SetSession(session);
-                formWaterfallLive.SetDetector(selectedDetector);
+                formWaterfallLive.SetDetector(session.Detector);
                 formROILive.SetSession(session);
                 frmMap.SetSession(session);
 
@@ -414,8 +430,8 @@ namespace crash
                 formWaterfallLive.UpdatePane();
                 formROILive.UpdatePane();
 
-                lblSession.Text = "Session: " + session.Info.Name;
-                Utils.Log.Add("session " + session.Info.Name + " loaded");
+                lblSession.Text = "Session: " + session.Name;
+                Utils.Log.Add("session " + session.Name + " loaded");
             }
         }        
 
@@ -435,7 +451,23 @@ namespace crash
             {
                 ClearBackground();
                 Session bkgSess = new Session();
-                bkgSess.Load(dialog.SelectedPath);
+
+                string bkgSessionFile = dialog.SelectedPath + Path.DirectorySeparatorChar + "session.json";
+                if (!File.Exists(bkgSessionFile))
+                {
+                    Utils.Log.Add("ERROR: Can not load background session. Directory " + dialog.SelectedPath + " has no session.json file");
+                    return;
+                }
+
+                bkgSess = JsonConvert.DeserializeObject<Session>(File.ReadAllText(bkgSessionFile));
+                if (!bkgSess.LoadGEFactor())
+                    Utils.Log.Add("WARNING: Loading GEFactor failed for background session " + bkgSess.Name);
+
+                if (!bkgSess.LoadSpectrums(dialog.SelectedPath))
+                {
+                    Utils.Log.Add("ERROR: Loading spectrums failed for background session " + bkgSess.Name);
+                    return;
+                }                
 
                 if (bkgSess.NumChannels != session.NumChannels)
                 {
@@ -446,9 +478,8 @@ namespace crash
 
                 session.SetBackground(bkgSess);
 
-                lblBackground.Text = "Background: " + bkgSess.Info.Name;
-
-                Utils.Log.Add("Background " + bkgSess.Info.Name + " loaded for session " + session.Info.Name);
+                lblBackground.Text = "Background: " + bkgSess.Name;
+                Utils.Log.Add("Background " + bkgSess.Name + " loaded for session " + session.Name);
             }
         }
 
@@ -466,11 +497,8 @@ namespace crash
             lblSetupChannel.Text = "Ch: " + String.Format("{0:####0}", x);
 
             // Show energy
-            if (selectedDetector != null)
-            {
-                double en = selectedDetector.GetEnergy(x);
-                lblSetupEnergy.Text = "En: " + String.Format("{0:#######0.0###}", en);
-            }
+            if (session.Detector != null)            
+                lblSetupEnergy.Text = "En: " + String.Format("{0:#######0.0###}", session.Detector.GetEnergy(x));            
             else lblSetupEnergy.Text = "";
         }
 
@@ -482,13 +510,8 @@ namespace crash
             lblSessionChannel.Text = "Ch: " + String.Format("{0:####0}", x);
 
             // Show energy
-            if (session.IsLoaded && selectedDetector != null)
-            {
-                double en = selectedDetector.GetEnergy(x);            
-                if (en == 0.0)
-                    lblSessionEnergy.Text = "";
-                else lblSessionEnergy.Text = "En: " + String.Format("{0:#######0.0###}", en);
-            }
+            if (session.IsLoaded && session.Detector != null)            
+                lblSessionEnergy.Text = "En: " + String.Format("{0:#######0.0###}", session.Detector.GetEnergy(x));            
             else lblSessionEnergy.Text = "";
         }
 
@@ -502,8 +525,8 @@ namespace crash
             if (cboxSetupDetector.SelectedItem == null)
                 return;
 
-            selectedDetector = (Detector)cboxSetupDetector.SelectedItem;
-            selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);            
+            Detector selectedDetector = (Detector)cboxSetupDetector.SelectedItem;
+            DetectorType selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);            
 
             lblDetector.Text = "Detector " + selectedDetector.Serialnumber;
             separatorDetector.Visible = true;
@@ -540,8 +563,8 @@ namespace crash
             FormSessionInfo form = new FormSessionInfo(session, "Session Info");
             if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                session.SaveInfo();
-                lblComment.Text = session.Info.Comment;
+                SaveSession(session);
+                lblComment.Text = session.Comment;
             }
         }
 
@@ -607,11 +630,11 @@ namespace crash
                 try
                 {
                     SessionExporter.ExportAsCHN(session, dialog.SelectedPath);
-                    Utils.Log.Add("session " + session.Info.Name + " stored with CHN format in " + dialog.SelectedPath);
+                    Utils.Log.Add("session " + session.Name + " stored with CHN format in " + dialog.SelectedPath);
                 }
                 catch (Exception ex)
                 {
-                    Utils.Log.Add("Failed to export session " + session.Info.Name + " with CHN format in " + dialog.SelectedPath);
+                    Utils.Log.Add("Failed to export session " + session.Name + " with CHN format in " + dialog.SelectedPath);
                     MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
                 }
             }
@@ -762,7 +785,8 @@ namespace crash
 
         private void btnSetupNext_Click(object sender, EventArgs e)
         {
-            float livetime = (float)selectedDetector.CurrentLivetime;
+            Detector det = (Detector)cboxSetupDetector.SelectedItem;
+            float livetime = (float)det.CurrentLivetime;
             if (!String.IsNullOrEmpty(tbSetupLivetime.Text.Trim()))
                 livetime = Convert.ToSingle(tbSetupLivetime.Text);
             int count = String.IsNullOrEmpty(tbSetupSpectrumCount.Text.Trim()) ? -1 : Convert.ToInt32(tbSetupSpectrumCount.Text.Trim());
@@ -920,12 +944,13 @@ namespace crash
 
         private void menuItemStoreCoefficients_Click(object sender, EventArgs e)
         {
-            FormEnergyCurve form = new FormEnergyCurve(selectedDetector, coefficients);
+            Detector det = (Detector)cboxSetupDetector.SelectedItem;
+            FormEnergyCurve form = new FormEnergyCurve(det, coefficients);
             if (form.ShowDialog() != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            selectedDetector.EnergyCurveCoefficients.Clear();
-            selectedDetector.EnergyCurveCoefficients.AddRange(coefficients);            
+            det.EnergyCurveCoefficients.Clear();
+            det.EnergyCurveCoefficients.AddRange(coefficients);            
         }        
 
         private void menuItemLayoutSetup1_Click(object sender, EventArgs e)
@@ -1043,13 +1068,23 @@ namespace crash
             formWaterfallLive.Left = 0;
             formWaterfallLive.Top = screenHeightThird * 2;
             formWaterfallLive.Width = screenWidthThird * 2;
-            formWaterfallLive.Height = screenHeightThird;
+            formWaterfallLive.Height = screenHeightThird;            
         }
 
         private void menuItemVersion_Click(object sender, EventArgs e)
         {
             string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             MessageBox.Show(version);
+        }
+
+        private void btnEditDetectorType_Click(object sender, EventArgs e)
+        {
+            if(lvDetectorTypes.SelectedItems.Count == 0)
+                return;
+
+            DetectorType detType = (DetectorType)lvDetectorTypes.SelectedItems[0].Tag;
+            FormEditDetectorType form = new FormEditDetectorType(detType);
+            form.ShowDialog();
         }                
     }
 }

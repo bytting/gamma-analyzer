@@ -27,32 +27,47 @@ using Newtonsoft.Json;
 namespace crash
 {
     public class Session
-    {        
+    {
+        public string Name { get; set; }
+        public string Comment { get; set; }
+        public float Livetime { get; set; }
+        public int Iterations { get; set; }        
         public float NumChannels { get; private set; }
         public float MaxChannelCount { get; private set; }
-        public float MinChannelCount { get; private set; }        
-        public List<Spectrum> Spectrums { get; private set; }
+        public float MinChannelCount { get; private set; }                
         public string SessionPath { get; private set; }
-        public SessionInfo Info { get; private set; }
-        public dynamic GEFactor = null;
+        public Detector Detector { get; set; }
+        public DetectorType DetectorType { get; set; }
+        [JsonIgnore]
+        public dynamic GEFactor { get; set; }
+        [JsonIgnore]
+        public List<Spectrum> Spectrums { get; private set; }
+        [JsonIgnore]
         public float[] Background = null;
+        [JsonIgnore]
+        public bool IsLoaded { get { return !String.IsNullOrEmpty(Name); } }
+        [JsonIgnore]
+        public bool IsEmpty { get { return Spectrums.Count == 0; } }
 
         public Session()
         {
-            Info = new SessionInfo();
             Spectrums = new List<Spectrum>();
+            Clear();            
         }
 
-        public Session(string sessionPath, string name, float livetime, int iterations, Detector det, string geScript)
+        public Session(string sessionPath, string name, string comment, float livetime, int iterations, Detector det, DetectorType detType)
         {
-            Info = new SessionInfo(name, "", livetime, iterations, det, geScript);
-
-            dynamic scope = Utils.PyEngine.CreateScope();
-            Utils.PyEngine.Execute(Info.GEScript, scope);
-            GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");
-
-            SessionPath = sessionPath + Path.DirectorySeparatorChar + Info.Name;
             Spectrums = new List<Spectrum>();
+            Clear();            
+
+            Name = name;
+            Comment = comment;
+            Livetime = livetime;
+            Iterations = iterations;
+            SessionPath = sessionPath + Path.DirectorySeparatorChar + Name;
+            Detector = det;
+            DetectorType = detType;
+            LoadGEFactor();            
 
             if (!Directory.Exists(SessionPath))
                 Directory.CreateDirectory(SessionPath);
@@ -67,47 +82,43 @@ namespace crash
                 MaxChannelCount = spec.MaxCount;
             if (spec.MinCount < MinChannelCount)
                 MinChannelCount = spec.MinCount;            
-        }
-
-        public bool IsLoaded
-        {
-            get { return Info != null && !String.IsNullOrEmpty(Info.Name); }
-        }
-
-        public bool IsEmpty
-        {
-            get { return Spectrums.Count == 0; }            
-        }
+        }        
 
         public void Clear()
         {
-            SessionPath = String.Empty;                        
+            Name = String.Empty;
+            Comment = String.Empty;
+            Livetime = 0;
+            Iterations = 0;
+            Detector = null;
+            DetectorType = null;            
             NumChannels = 0;
             MaxChannelCount = 0;
             MinChannelCount = 0;
-            Spectrums.Clear();
-            Info.Clear();
+            GEFactor = null;
+            Spectrums.Clear();            
             Background = null;
         }
 
-        public bool Load(string path)
+        public bool LoadGEFactor()
         {
-            Clear();
-            SessionPath = path;            
+            if (DetectorType == null)
+                return false;
+            if (!File.Exists(CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + DetectorType.GEScript))
+                return false;
 
-            string sessionInfoFile = SessionPath + Path.DirectorySeparatorChar + "session.json";
-            if (!File.Exists(sessionInfoFile))
-                return false;            
-
-            string jsonDir = SessionPath + Path.DirectorySeparatorChar + "json";
-            if (!Directory.Exists(jsonDir))
-                return false;            
-
-            Info = JsonConvert.DeserializeObject<SessionInfo>(File.ReadAllText(sessionInfoFile));            
-
+            string script = File.ReadAllText(CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + DetectorType.GEScript);
             dynamic scope = Utils.PyEngine.CreateScope();
-            Utils.PyEngine.Execute(Info.GEScript, scope);
-            GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");                        
+            Utils.PyEngine.Execute(script, scope);
+            GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");
+            return GEFactor != null;
+        }
+
+        public bool LoadSpectrums(string path)
+        {
+            string jsonDir = path + Path.DirectorySeparatorChar + "json";
+            if (!Directory.Exists(jsonDir))
+                return false;
 
             string[] files = Directory.GetFiles(jsonDir, "*.json", SearchOption.TopDirectoryOnly);
             foreach (string filename in files)
@@ -115,7 +126,7 @@ namespace crash
                 string json = File.ReadAllText(filename);
                 burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
                 Spectrum spec = new Spectrum(msg);                                
-                spec.CalculateDoserate(Info.Detector, GEFactor);
+                spec.CalculateDoserate(Detector, GEFactor);
                 Add(spec);
             }
 
@@ -134,19 +145,10 @@ namespace crash
             if (IsEmpty || !IsLoaded)
                 return false;
             
-            Background = bkg.GetAdjustedCounts(Info.Livetime);
+            Background = bkg.GetAdjustedCounts(Livetime);
 
             return true;
-        }
-
-        public void SaveInfo()
-        {
-            string sessionSettingsFile = SessionPath + Path.DirectorySeparatorChar + "session.json";
-            string jSessionInfo = JsonConvert.SerializeObject(Info, Newtonsoft.Json.Formatting.Indented);
-            TextWriter writer = new StreamWriter(sessionSettingsFile);
-            writer.Write(jSessionInfo);
-            writer.Close();  
-        }
+        }        
 
         private float[] GetAdjustedCounts(float livetime)
         {
@@ -159,7 +161,7 @@ namespace crash
                 for (int i = 0; i < s.Channels.Count; i++)                
                     spec[i] += s.Channels[i];                                     
             
-            float scale = livetime / Info.Livetime;
+            float scale = livetime / Livetime;
 
             for (int i = 0; i < spec.Length; i++)
             {

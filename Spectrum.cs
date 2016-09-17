@@ -133,10 +133,10 @@ namespace crash
             return SessionName + " - " + SessionIndex.ToString();
         }
 
-        public bool CalculateDoserate(Detector det, dynamic GEFactor = null)
+        public double CalculateDoserate(Detector det, dynamic GEFactorFunc)
         {
-            if (det == null || GEFactor == null)
-                return false;                        
+            if (det == null || GEFactorFunc == null)
+                return 0d;                        
             
             Doserate = 0.0;
 
@@ -152,12 +152,12 @@ namespace crash
                 double E = det.GetEnergy(i);
                 if (E < 0.05)
                     continue;
-                double GE = GEFactor(E / 1000.0);
+                double GE = GEFactorFunc(E / 1000.0);
                 double chanDose = GE * (cps * 60.0);
                 Doserate += chanDose;                
             }
 
-            return true;
+            return Doserate;
         }
 
         public Spectrum Merge(Spectrum s)

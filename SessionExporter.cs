@@ -49,7 +49,7 @@ namespace crash
                 BinaryWriter writer = null;
                 try
                 {
-                    string sessionPath = path + Path.DirectorySeparatorChar + session.Info.Name + "_CHN";
+                    string sessionPath = path + Path.DirectorySeparatorChar + session.Name + "_CHN";
                     if (!Directory.Exists(sessionPath))
                         Directory.CreateDirectory(sessionPath);
 

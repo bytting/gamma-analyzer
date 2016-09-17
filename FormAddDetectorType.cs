@@ -20,11 +20,7 @@ namespace crash
 
         public FormAddDetectorType()
         {
-            InitializeComponent();    
-        }
-
-        private void FormAddDetectorType_Load(object sender, EventArgs e)
-        {                        
+            InitializeComponent();
         }
         
         private void btnCancel_Click(object sender, EventArgs e)
@@ -34,9 +30,9 @@ namespace crash
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(tbName.Text) 
-                || String.IsNullOrEmpty(cboxMaxChannels.Text)                 
-                || String.IsNullOrEmpty(tbGScript.Text))
+            if (String.IsNullOrEmpty(tbName.Text.Trim()) 
+                || String.IsNullOrEmpty(cboxMaxChannels.Text.Trim())
+                || String.IsNullOrEmpty(tbGEScript.Text.Trim()))
             {
                 MessageBox.Show("One or more required fields missing");
                 return;
@@ -50,11 +46,11 @@ namespace crash
 
             try
             {
-                TypeName = tbName.Text;
-                MaxChannels = Convert.ToInt32(cboxMaxChannels.Text);
+                TypeName = tbName.Text.Trim();
+                MaxChannels = Convert.ToInt32(cboxMaxChannels.Text.Trim());
                 MinHV = tbarMinHV.Value;
                 MaxHV = tbarMaxHV.Value;
-                GEScript = tbGScript.Text;
+                GEScript = tbGEScript.Text.Trim();
             }
             catch
             {
@@ -65,17 +61,6 @@ namespace crash
             Close();
         }
 
-        private void btnBrowseGScript_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.InitialDirectory = CrashEnvironment.GEScriptPath;
-            dialog.Filter = "Script Files (.py)|*.py";
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                tbGScript.Text = dialog.FileName;
-            }
-        }
-
         private void tbarMinHV_ValueChanged(object sender, EventArgs e)
         {
             lblMinHV.Text = tbarMinHV.Value.ToString();
@@ -84,6 +69,14 @@ namespace crash
         private void tbarMaxHV_ValueChanged(object sender, EventArgs e)
         {
             lblMaxHV.Text = tbarMaxHV.Value.ToString();
+        }
+
+        private void btnBrowseGEScript_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.InitialDirectory = CrashEnvironment.GEScriptPath;
+            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                tbGEScript.Text = dialog.SafeFileName;
         }        
     }
 }

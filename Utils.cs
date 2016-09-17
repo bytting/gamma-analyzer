@@ -33,7 +33,7 @@ namespace crash
     public static class Utils
     {        
         public static FormLog Log = new FormLog();
-        public static dynamic PyEngine = Python.CreateEngine();        
+        public static dynamic PyEngine = Python.CreateEngine();    
 
         public static int ToArgb(Color color)
         {
@@ -45,7 +45,7 @@ namespace crash
         }
 
         public static Color ToColor(int argb)
-        {            
+        {
             byte[] b = BitConverter.GetBytes(argb);
             return Color.FromArgb(b[3], b[2], b[1], b[0]);
         }        

@@ -23,16 +23,16 @@ namespace crash
 
         private void FormSessionInfo_Load(object sender, EventArgs e)
         {
-            lblName.Text = session.Info.Name + " (" + session.Info.Detector.TypeName + ")";
-            lblDetector.Text = session.Info.Detector.Serialnumber;
-            lblLivetime.Text = session.Info.Livetime.ToString();
+            lblName.Text = session.Name + " (" + session.Detector.TypeName + ")";
+            lblDetector.Text = session.Detector.Serialnumber;
+            lblLivetime.Text = session.Livetime.ToString();
             lblNumChannels.Text = session.NumChannels.ToString();
-            lblHV.Text = session.Info.Detector.CurrentHV.ToString();
-            lblCoarseGain.Text = session.Info.Detector.CurrentCoarseGain.ToString();
-            lblFineGain.Text = session.Info.Detector.CurrentFineGain.ToString();
-            lblLLDULD.Text = session.Info.Detector.CurrentLLD.ToString() + ", " + session.Info.Detector.CurrentULD.ToString();            
-            tbComment.Text = session.Info.Comment;
-            tbGEScript.Text = session.Info.GEScript;
+            lblHV.Text = session.Detector.CurrentHV.ToString();
+            lblCoarseGain.Text = session.Detector.CurrentCoarseGain.ToString();
+            lblFineGain.Text = session.Detector.CurrentFineGain.ToString();
+            lblLLDULD.Text = session.Detector.CurrentLLD.ToString() + ", " + session.Detector.CurrentULD.ToString();            
+            tbComment.Text = session.Comment;
+            tbGEFactorCode.Text = session.DetectorType.GEScript;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -42,7 +42,7 @@ namespace crash
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            session.Info.Comment = tbComment.Text;
+            session.Comment = tbComment.Text;
             Close();
         }        
     }

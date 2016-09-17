@@ -40,7 +40,7 @@
             this.lblLivetime = new System.Windows.Forms.Label();
             this.lblDetector = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.tbGEScript = new System.Windows.Forms.TextBox();
+            this.tbGEFactorCode = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -173,22 +173,22 @@
             this.label2.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
             this.label2.Size = new System.Drawing.Size(104, 193);
             this.label2.TabIndex = 8;
-            this.label2.Text = "GE Script";
+            this.label2.Text = "GE Factor code";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // tbGEScript
+            // tbGEFactorCode
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.tbGEScript, 3);
-            this.tbGEScript.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbGEScript.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbGEScript.Location = new System.Drawing.Point(113, 171);
-            this.tbGEScript.Multiline = true;
-            this.tbGEScript.Name = "tbGEScript";
-            this.tbGEScript.ReadOnly = true;
-            this.tbGEScript.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbGEScript.Size = new System.Drawing.Size(622, 187);
-            this.tbGEScript.TabIndex = 9;
-            this.tbGEScript.WordWrap = false;
+            this.tableLayoutPanel1.SetColumnSpan(this.tbGEFactorCode, 3);
+            this.tbGEFactorCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbGEFactorCode.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbGEFactorCode.Location = new System.Drawing.Point(113, 171);
+            this.tbGEFactorCode.Multiline = true;
+            this.tbGEFactorCode.Name = "tbGEFactorCode";
+            this.tbGEFactorCode.ReadOnly = true;
+            this.tbGEFactorCode.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbGEFactorCode.Size = new System.Drawing.Size(622, 187);
+            this.tbGEFactorCode.TabIndex = 9;
+            this.tbGEFactorCode.WordWrap = false;
             // 
             // tableLayoutPanel1
             // 
@@ -197,7 +197,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel1.Controls.Add(this.tbGEScript, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.tbGEFactorCode, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.tbComment, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
@@ -412,7 +412,7 @@
         private System.Windows.Forms.Label lblLivetime;
         private System.Windows.Forms.Label lblDetector;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbGEScript;
+        private System.Windows.Forms.TextBox tbGEFactorCode;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;

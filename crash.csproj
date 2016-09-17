@@ -169,6 +169,12 @@
     <Compile Include="FormConnect.Designer.cs">
       <DependentUpon>FormConnect.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormEditDetectorType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEditDetectorType.Designer.cs">
+      <DependentUpon>FormEditDetectorType.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormEnergyCurve.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,7 +244,6 @@
     <Compile Include="ROIData.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="SessionExporter.cs" />
-    <Compile Include="SessionInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Spectrum.cs" />
     <Compile Include="Utils.cs" />
@@ -259,6 +264,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormConnect.resx">
       <DependentUpon>FormConnect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEditDetectorType.resx">
+      <DependentUpon>FormEditDetectorType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormEnergyCurve.resx">
       <DependentUpon>FormEnergyCurve.cs</DependentUpon>

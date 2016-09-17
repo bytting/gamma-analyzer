@@ -29,23 +29,21 @@ namespace crash
     [Serializable()]
     public class DetectorType
     {
-        public string Name { get; set; }        
-        public int MaxNumChannels { get; set; }        
+        public string Name { get; set; }
+        public int MaxNumChannels { get; set; }
         public int MinHV { get; set; }
         public int MaxHV { get; set; }
-        public string GEScriptPath { get; set; }        
-  
-        public DetectorType()
-        {
-        }
+        public string GEScript { get; set; }
 
-        public DetectorType(string name, int maxChannels, int minHV, int maxHV, string geScriptPath)
+        public DetectorType() { }
+
+        public DetectorType(string name, int maxChannels, int minHV, int maxHV, string geScript)
         {
             Name = name;
             MaxNumChannels = maxChannels;
             MinHV = minHV;
             MaxHV = maxHV;
-            GEScriptPath = geScriptPath;
+            GEScript = geScript;
         }
 
         public override string ToString()

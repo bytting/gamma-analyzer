@@ -56,8 +56,8 @@ namespace crash
         PointPairList sessionGraphList = new PointPairList();
         PointPairList bkgGraphList = new PointPairList();
 
-        Detector selectedDetector = null;
-        DetectorType selectedDetectorType = null;
+        //Detector selectedDetector = null;
+        //DetectorType selectedDetectorType = null;
 
         float bkgScale = 1f;
         bool selectionRun = false;        
@@ -129,6 +129,9 @@ namespace crash
 
         private bool dispatchRecvMsg(burn.Message msg)
         {
+            Detector det = null;
+            DetectorType detType = null;
+
             switch (msg.Command)
             {
                 case "connect_ok":                    
@@ -182,9 +185,11 @@ namespace crash
                         float livetime = Convert.ToSingle(msg.Arguments["livetime"]);
                         int iterations = Convert.ToInt32(msg.Arguments["iterations"]);
 
-                        string geScript = File.ReadAllText(selectedDetectorType.GEScriptPath);
-                        session = new Session(settings.SessionRootDirectory, sessionName, livetime, iterations, selectedDetector, geScript);
-                        session.SaveInfo();
+                        det = (Detector)cboxSetupDetector.SelectedItem;
+                        detType = settings.DetectorTypes.Find(dt => dt.Name == det.TypeName);                        
+                        session = new Session(settings.SessionRootDirectory, sessionName, "", livetime, iterations, det, detType);
+
+                        SaveSession(session);                        
 
                         formWaterfallLive.SetSession(session);
                         formROILive.SetSession(session);
@@ -224,20 +229,24 @@ namespace crash
                     Utils.Log.Add("RECV: set_gain ok: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " "
                         + msg.Arguments["fine_gain"] + " " + msg.Arguments["num_channels"] + " " + msg.Arguments["lld"] + " "
                         + msg.Arguments["uld"]);
-                    selectedDetector.CurrentHV = Convert.ToInt32(msg.Arguments["voltage"]);
-                    selectedDetector.CurrentCoarseGain = Convert.ToDouble(msg.Arguments["coarse_gain"]);
-                    selectedDetector.CurrentFineGain = Convert.ToDouble(msg.Arguments["fine_gain"]);
-                    selectedDetector.CurrentNumChannels = Convert.ToInt32(msg.Arguments["num_channels"]);
-                    selectedDetector.CurrentLLD = Convert.ToInt32(msg.Arguments["lld"]);
-                    selectedDetector.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);
+
+                    det = (Detector)cboxSetupDetector.SelectedItem;
+
+                    det.CurrentHV = Convert.ToInt32(msg.Arguments["voltage"]);
+                    det.CurrentCoarseGain = Convert.ToDouble(msg.Arguments["coarse_gain"]);
+                    det.CurrentFineGain = Convert.ToDouble(msg.Arguments["fine_gain"]);
+                    det.CurrentNumChannels = Convert.ToInt32(msg.Arguments["num_channels"]);
+                    det.CurrentLLD = Convert.ToInt32(msg.Arguments["lld"]);
+                    det.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);
 
                     btnSetupNext.Enabled = true;
-                    panelSetupGraph.Enabled = true;                    
+                    panelSetupGraph.Enabled = true;
                     break;
 
                 case "spectrum":
 
                     Spectrum spec = new Spectrum(msg);
+                    spec.CalculateDoserate(session.Detector, session.GEFactor);
 
                     if (spec.IsPreview)
                     {
@@ -290,11 +299,7 @@ namespace crash
                         string json = JsonConvert.SerializeObject(msg, Newtonsoft.Json.Formatting.Indented);
                         TextWriter writer = new StreamWriter(jsonPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".json");
                         writer.Write(json);
-                        writer.Close();
-
-                        if (session.IsLoaded)
-                            spec.CalculateDoserate(selectedDetector, session.GEFactor);
-                            //spec.CalculateDoserate(session.Info.Detector, session.GEFactor);
+                        writer.Close();                        
 
                         session.Add(spec);
 
@@ -316,6 +321,15 @@ namespace crash
             }
             return true;
         }        
+
+        public void SaveSession(Session s)
+        {
+            string sessionSettingsFile = s.SessionPath + Path.DirectorySeparatorChar + "session.json";
+            string jSessionInfo = JsonConvert.SerializeObject(s, Newtonsoft.Json.Formatting.Indented);
+            TextWriter writer = new StreamWriter(sessionSettingsFile);
+            writer.Write(jSessionInfo);
+            writer.Close();  
+        }
 
         void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
         {
@@ -339,14 +353,14 @@ namespace crash
 
             if (e.StartIndex == e.EndIndex)
             {
-                int idx1 = lbSession.FindStringExact(session.Info.Name + " - " + e.StartIndex.ToString());
+                int idx1 = lbSession.FindStringExact(session.Name + " - " + e.StartIndex.ToString());
                 if (idx1 != ListBox.NoMatches)
                     lbSession.SetSelected(idx1, true);
             }
             else
             {
-                int idx1 = lbSession.FindStringExact(session.Info.Name + " - " + e.StartIndex.ToString());
-                int idx2 = lbSession.FindStringExact(session.Info.Name + " - " + e.EndIndex.ToString());
+                int idx1 = lbSession.FindStringExact(session.Name + " - " + e.StartIndex.ToString());
+                int idx2 = lbSession.FindStringExact(session.Name + " - " + e.EndIndex.ToString());
                 for (int i = idx1; i < idx2; i++)
                 {
                     if (i == idx2 - 1)
@@ -476,7 +490,7 @@ namespace crash
             lvDetectorTypes.Items.Clear();
             foreach (DetectorType dt in settings.DetectorTypes)
             {
-                ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString(), dt.GEScriptPath });
+                ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString() });
                 item.Tag = dt;
                 lvDetectorTypes.Items.Add(item);
             }
