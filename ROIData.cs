@@ -18,20 +18,13 @@
 // Authors: Dag robole,
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace crash
 {
     [Serializable()]
     public class ROIData
     {
-        public ROIData()
-        {
-        }
+        public ROIData() {}
 
         public ROIData(string name, int startChannel, int endChannel, bool active, string colorName)
         {
