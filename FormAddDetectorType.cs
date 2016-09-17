@@ -11,20 +11,39 @@ using System.Windows.Forms;
 namespace crash
 {
     public partial class FormAddDetectorType : Form
-    {        
+    {
+        private DetectorType DetType = null;
+
         public string TypeName { get; set; }
         public int MaxChannels { get; set; }
         public int MinHV { get; set; }
         public int MaxHV { get; set; }
         public string GEScript { get; set; }
 
-        public FormAddDetectorType()
+        public FormAddDetectorType(DetectorType detType)
         {
             InitializeComponent();
+            DetType = detType;
         }
-        
+
+        private void FormAddDetectorType_Load(object sender, EventArgs e)
+        {
+            if(DetType != null)
+            {
+                tbName.Text = DetType.Name;
+                tbName.ReadOnly = true;
+                int idx = cboxMaxChannels.FindStringExact(DetType.MaxNumChannels.ToString());
+                if (idx != -1)
+                    cboxMaxChannels.SelectedItem = cboxMaxChannels.Items[idx];
+                tbarMinHV.Value = DetType.MinHV;
+                tbarMaxHV.Value = DetType.MaxHV;
+                tbGEScript.Text = DetType.GEScript;
+            }
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            DialogResult = System.Windows.Forms.DialogResult.Cancel;
             Close();
         }
 
@@ -57,7 +76,8 @@ namespace crash
                 MessageBox.Show("Invalid format found");
                 return;
             }
-            
+
+            DialogResult = System.Windows.Forms.DialogResult.OK;
             Close();
         }
 
@@ -77,6 +97,6 @@ namespace crash
             dialog.InitialDirectory = CrashEnvironment.GEScriptPath;
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 tbGEScript.Text = dialog.SafeFileName;
-        }        
+        }                
     }
 }

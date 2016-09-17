@@ -531,31 +531,31 @@ namespace crash
             if (cboxSetupDetector.SelectedItem == null)
                 return;
 
-            Detector selectedDetector = (Detector)cboxSetupDetector.SelectedItem;
-            DetectorType selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);            
+            Detector det = (Detector)cboxSetupDetector.SelectedItem;
+            DetectorType detType = settings.DetectorTypes.Find(dt => dt.Name == det.TypeName);
 
-            lblDetector.Text = "Detector " + selectedDetector.Serialnumber;
+            lblDetector.Text = "Detector " + det.Serialnumber;
             separatorDetector.Visible = true;
 
-            cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
+            cboxSetupChannels.Text = det.CurrentNumChannels.ToString();
 
-            tbarSetupVoltage.Minimum = selectedDetectorType.MinHV;
-            tbarSetupVoltage.Maximum = selectedDetectorType.MaxHV;
-            tbarSetupVoltage.Value = selectedDetector.CurrentHV;
+            tbarSetupVoltage.Minimum = detType.MinHV;
+            tbarSetupVoltage.Maximum = detType.MaxHV;
+            tbarSetupVoltage.Value = det.CurrentHV;
 
-            int coarse = Convert.ToInt32(selectedDetector.CurrentCoarseGain);
+            int coarse = Convert.ToInt32(det.CurrentCoarseGain);
             cboxSetupCoarseGain.SelectedIndex = cboxSetupCoarseGain.FindStringExact(coarse.ToString());
-            tbarSetupFineGain.Value = (int)((double)selectedDetector.CurrentFineGain * 1000d);
-            tbarSetupLLD.Value = selectedDetector.CurrentLLD;
-            tbarSetupULD.Value = selectedDetector.CurrentULD;
+            tbarSetupFineGain.Value = (int)((double)det.CurrentFineGain * 1000d);
+            tbarSetupLLD.Value = det.CurrentLLD;
+            tbarSetupULD.Value = det.CurrentULD;
             cboxSetupChannels.Items.Clear();
-            for(int i = 256; i <= selectedDetectorType.MaxNumChannels; i = i * 2)
+            for (int i = 256; i <= detType.MaxNumChannels; i = i * 2)
                 cboxSetupChannels.Items.Add(i.ToString());
-            cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
+            cboxSetupChannels.Text = det.CurrentNumChannels.ToString();
 
-            tbSetupLivetime.Text = selectedDetector.CurrentLivetime.ToString();
+            tbSetupLivetime.Text = det.CurrentLivetime.ToString();            
 
-            formWaterfallLive.SetDetector(selectedDetector);
+            formWaterfallLive.SetDetector(det);
         }
 
         private void menuItemSessionInfo_Click(object sender, EventArgs e)
@@ -692,7 +692,7 @@ namespace crash
 
         private void btnAddDetectorType_Click(object sender, EventArgs e)
         {
-            FormAddDetectorType form = new FormAddDetectorType();
+            FormAddDetectorType form = new FormAddDetectorType(null);
             if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 settings.DetectorTypes.Add(new DetectorType(form.TypeName, form.MaxChannels, form.MinHV, form.MaxHV, form.GEScript));
@@ -702,24 +702,24 @@ namespace crash
 
         private void btnAddDetector_Click(object sender, EventArgs e)
         {
-            FormAddDetector form = new FormAddDetector(settings.DetectorTypes);
-            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Detector det = new Detector();
-                det.TypeName = form.DetectorType;
-                det.Serialnumber = form.Serialnumber;
-                det.CurrentNumChannels = form.NumChannels;
-                det.CurrentHV = form.HV;
-                det.CurrentCoarseGain = form.CoarseGain;
-                det.CurrentFineGain = form.FineGain;
-                det.CurrentLivetime = form.Livetime;
-                det.CurrentLLD = form.LLD;
-                det.CurrentULD = form.ULD;
-                settings.Detectors.Add(det);
+            FormAddDetector form = new FormAddDetector(null, settings.DetectorTypes);
+            if (form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+                return;
 
-                PopulateDetectorList();
-                PopulateDetectors();
-            }
+            Detector det = new Detector();
+            det.TypeName = form.DetectorType;
+            det.Serialnumber = form.Serialnumber;
+            det.CurrentNumChannels = form.NumChannels;
+            det.CurrentHV = form.HV;
+            det.CurrentCoarseGain = form.CoarseGain;
+            det.CurrentFineGain = form.FineGain;
+            det.CurrentLivetime = form.Livetime;
+            det.CurrentLLD = form.LLD;
+            det.CurrentULD = form.ULD;
+            settings.Detectors.Add(det);
+
+            PopulateDetectorList();
+            PopulateDetectors();
         }
 
         private void btnSetSessionDir_Click(object sender, EventArgs e)
@@ -1076,8 +1076,39 @@ namespace crash
                 return;
 
             DetectorType detType = (DetectorType)lvDetectorTypes.SelectedItems[0].Tag;
-            FormEditDetectorType form = new FormEditDetectorType(detType);
-            form.ShowDialog();
+            FormAddDetectorType form = new FormAddDetectorType(detType);
+            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                detType.MaxNumChannels = form.MaxChannels;
+                detType.MinHV = form.MinHV;
+                detType.MaxHV = form.MaxHV;
+                detType.GEScript = form.GEScript;
+                PopulateDetectorTypeList();
+            }
+        }
+
+        private void btnEditDetector_Click(object sender, EventArgs e)
+        {
+            if (lvDetectors.SelectedItems.Count == 0)
+                return;
+
+            FormAddDetector form = new FormAddDetector((Detector)lvDetectors.SelectedItems[0].Tag, settings.DetectorTypes);
+            if (form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+                return;
+
+            Detector det = (Detector)lvDetectors.SelectedItems[0].Tag;
+            det.TypeName = form.DetectorType;
+            det.Serialnumber = form.Serialnumber;
+            det.CurrentNumChannels = form.NumChannels;
+            det.CurrentHV = form.HV;
+            det.CurrentCoarseGain = form.CoarseGain;
+            det.CurrentFineGain = form.FineGain;
+            det.CurrentLivetime = form.Livetime;
+            det.CurrentLLD = form.LLD;
+            det.CurrentULD = form.ULD;
+
+            PopulateDetectorList();
+            PopulateDetectors();
         }                
     }
 }

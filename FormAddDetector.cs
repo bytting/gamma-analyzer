@@ -13,6 +13,7 @@ namespace crash
 {
     public partial class FormAddDetector : Form
     {
+        private Detector Det = null;
         private List<DetectorType> DetectorTypes = null;        
 
         public string DetectorType { get; set; }
@@ -25,9 +26,10 @@ namespace crash
         public int LLD { get; set; }
         public int ULD { get; set; }        
 
-        public FormAddDetector(List<DetectorType> detectorTypes)
+        public FormAddDetector(Detector detector, List<DetectorType> detectorTypes)
         {
             InitializeComponent();
+            Det = detector;
             DetectorTypes = detectorTypes;        
         }
 
@@ -37,16 +39,33 @@ namespace crash
             tbFineGain.KeyPress += CustomEvents.Numeric_KeyPress;
             tbLivetime.KeyPress += CustomEvents.Integer_KeyPress;
             tbLLD.KeyPress += CustomEvents.Integer_KeyPress;
-            tbULD.KeyPress += CustomEvents.Integer_KeyPress;
+            tbULD.KeyPress += CustomEvents.Integer_KeyPress;            
 
             foreach (DetectorType dt in DetectorTypes)
-            {
                 cboxDetectorTypes.Items.Add(dt);
+
+            if(Det != null)
+            {
+                int idx = cboxDetectorTypes.FindStringExact(Det.TypeName);
+                if (idx != -1)
+                    cboxDetectorTypes.SelectedItem = cboxDetectorTypes.Items[idx];
+                tbSerialnumber.Text = Det.Serialnumber;
+                tbSerialnumber.ReadOnly = true;
+                idx = cboxNumChannels.FindStringExact(Det.CurrentNumChannels.ToString());
+                if (idx != -1)
+                    cboxNumChannels.SelectedItem = cboxNumChannels.Items[idx];
+                tbarCurrHV.Value = Det.CurrentHV;
+                tbCoarseGain.Text = Det.CurrentCoarseGain.ToString();
+                tbFineGain.Text = Det.CurrentFineGain.ToString();
+                tbLivetime.Text = Det.CurrentLivetime.ToString();
+                tbLLD.Text = Det.CurrentLLD.ToString();
+                tbULD.Text = Det.CurrentULD.ToString();
             }
         }
         
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            DialogResult = System.Windows.Forms.DialogResult.Cancel;
             Close();
         }
 
@@ -82,7 +101,8 @@ namespace crash
                 MessageBox.Show("Invalid format found");
                 return;
             }
-            
+
+            DialogResult = System.Windows.Forms.DialogResult.OK;
             Close();
         }
 
@@ -90,10 +110,8 @@ namespace crash
         {
             cboxNumChannels.Items.Clear();
             DetectorType dt = (DetectorType)cboxDetectorTypes.SelectedItem;
-            for(int i = 256; i <= dt.MaxNumChannels; i *= 2)
-            {
-                cboxNumChannels.Items.Add(i.ToString());
-            }
+            for(int i = 256; i <= dt.MaxNumChannels; i *= 2)            
+                cboxNumChannels.Items.Add(i.ToString());            
 
             tbarCurrHV.Maximum = dt.MaxHV;
             tbarCurrHV.Minimum = dt.MinHV;

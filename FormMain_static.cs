@@ -469,14 +469,7 @@ namespace crash
             graphSession.RestoreScale(pane);
             graphSession.AxisChange();
             graphSession.Refresh();
-        }
-
-        private void PopulateDetectors()
-        {
-            cboxSetupDetector.Items.Clear();
-            foreach (Detector d in settings.Detectors)
-                cboxSetupDetector.Items.Add(d);            
-        }
+        }        
 
         private void GetGraphPointFromMousePos(int posX, int posY, ZedGraphControl graph, out int x, out int y)
         {            
@@ -488,17 +481,31 @@ namespace crash
             graph.GraphPane.ReverseTransform(clickedPoint, out dx, out dy);
             x = (int)dx;
             y = (int)dy;
-        }
+        }        
 
         private void PopulateDetectorTypeList()
         {
             lvDetectorTypes.Items.Clear();
             foreach (DetectorType dt in settings.DetectorTypes)
             {
-                ListViewItem item = new ListViewItem(new string[] { dt.Name, dt.MaxNumChannels.ToString(), dt.MinHV.ToString(), dt.MaxHV.ToString() });
+                ListViewItem item = new ListViewItem(
+                    new string[] { 
+                        dt.Name, 
+                        dt.MaxNumChannels.ToString(), 
+                        dt.MinHV.ToString(), 
+                        dt.MaxHV.ToString(),
+                        dt.GEScript
+                });
                 item.Tag = dt;
                 lvDetectorTypes.Items.Add(item);
             }
+        }
+
+        private void PopulateDetectors()
+        {
+            cboxSetupDetector.Items.Clear();
+            foreach (Detector d in settings.Detectors)
+                cboxSetupDetector.Items.Add(d);
         }
 
         private void PopulateDetectorList()

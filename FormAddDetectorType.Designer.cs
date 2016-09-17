@@ -295,6 +295,7 @@
             this.Name = "FormAddDetectorType";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Crash - Add Detector Type";
+            this.Load += new System.EventHandler(this.FormAddDetectorType_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

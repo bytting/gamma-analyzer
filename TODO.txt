@@ -2,8 +2,6 @@ Add comments to spectrums
 
 Add ability to select a following background (one collection behind the selected spectrum, and optionally one in front)
 
-Better maps
-
 Separate detector communication and analysis tools, and make proper APIs
 
 Documentation for detector communication protocol
@@ -17,5 +15,3 @@ open/close session buttons
 deactivate more buttons when necessary
 
 activity indicator
-
-more tooltips

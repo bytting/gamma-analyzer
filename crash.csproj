@@ -169,12 +169,6 @@
     <Compile Include="FormConnect.Designer.cs">
       <DependentUpon>FormConnect.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormEditDetectorType.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormEditDetectorType.Designer.cs">
-      <DependentUpon>FormEditDetectorType.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormEnergyCurve.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -264,9 +258,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormConnect.resx">
       <DependentUpon>FormConnect.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormEditDetectorType.resx">
-      <DependentUpon>FormEditDetectorType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormEnergyCurve.resx">
       <DependentUpon>FormEnergyCurve.cs</DependentUpon>
@@ -366,7 +357,6 @@
     <None Include="images\down-16.png" />
     <None Include="images\down-all-16.png" />
     <None Include="images\options1-16.png" />
-    <None Include="snippets.txt" />
     <Resource Include="images\background-128.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
