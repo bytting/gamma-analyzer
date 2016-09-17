@@ -492,14 +492,20 @@ namespace crash
         private void graphSetup_MouseMove(object sender, MouseEventArgs e)
         {
             int x, y;
-            GetGraphPointFromMousePos(e.X, e.Y, graphSetup, out x, out y);            
+            GetGraphPointFromMousePos(e.X, e.Y, graphSetup, out x, out y);
 
+            // Show channel
             lblSetupChannel.Text = "Ch: " + String.Format("{0:####0}", x);
 
+            if(cboxSetupDetector.SelectedItem == null)
+            {
+                lblSetupEnergy.Text = "";
+                return;
+            }
+
             // Show energy
-            if (session.Detector != null)            
-                lblSetupEnergy.Text = "En: " + String.Format("{0:#######0.0###}", session.Detector.GetEnergy(x));            
-            else lblSetupEnergy.Text = "";
+            Detector det = (Detector)cboxSetupDetector.SelectedItem;            
+            lblSetupEnergy.Text = "En: " + String.Format("{0:#######0.0###}", det.GetEnergy(x));                        
         }
 
         private void graphSession_MouseMove(object sender, MouseEventArgs e)
@@ -906,20 +912,21 @@ namespace crash
             SaveFileDialog dialog = new SaveFileDialog();            
             if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                StreamWriter writer = new StreamWriter(dialog.FileName, false, Encoding.UTF8);
-                foreach(Spectrum s in session.Spectrums)
+                using (StreamWriter writer = new StreamWriter(dialog.FileName, false, Encoding.UTF8))
                 {
-                    writer.WriteLine(
-                        s.SessionName + "|" 
-                        + s.SessionIndex.ToString() + "|" 
-                        + s.GpsTimeStart.ToString("yyyy-MM-ddTHH:mm:ss") + "|" 
-                        + s.LatitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                        + s.LongitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                        + s.AltitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                        + s.Doserate.ToString(CultureInfo.InvariantCulture) 
-                        + "|mSv/h");
-                }
-                writer.Close();
+                    foreach (Spectrum s in session.Spectrums)
+                    {
+                        writer.WriteLine(
+                            s.SessionName + "|"
+                            + s.SessionIndex.ToString() + "|"
+                            + s.GpsTimeStart.ToString("yyyy-MM-ddTHH:mm:ss") + "|"
+                            + s.LatitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                            + s.LongitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                            + s.AltitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                            + s.Doserate.ToString(CultureInfo.InvariantCulture)
+                            + "|mSv/h");
+                    }
+                }                
             }
         }
 

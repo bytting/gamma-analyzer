@@ -68,32 +68,37 @@ namespace crash
 
         private void SaveSettings()
         {
-            StreamWriter sw = new StreamWriter(CrashEnvironment.SettingsFile);
-            XmlSerializer x = new XmlSerializer(settings.GetType());
-            x.Serialize(sw, settings);
-            sw.Close();
+            using (StreamWriter sw = new StreamWriter(CrashEnvironment.SettingsFile))
+            {
+                XmlSerializer x = new XmlSerializer(settings.GetType());
+                x.Serialize(sw, settings);
+            }
         }
 
         private void LoadSettings()
         {
-            if (File.Exists(CrashEnvironment.SettingsFile))
+            if (!File.Exists(CrashEnvironment.SettingsFile))
+                return;
+
+            using (StreamReader sr = new StreamReader(CrashEnvironment.SettingsFile))
             {
-                StreamReader sr = new StreamReader(CrashEnvironment.SettingsFile);
                 XmlSerializer x = new XmlSerializer(settings.GetType());
                 settings = x.Deserialize(sr) as CrashSettings;
-                sr.Close();
             }
         }
 
-        private void LoadNuclideLibrary()
+        private bool LoadNuclideLibrary()
         {
-            if (File.Exists(CrashEnvironment.NuclideLibraryFile))
+            if (!File.Exists(CrashEnvironment.NuclideLibraryFile))
+                return false;
+
+            using (TextReader reader = File.OpenText(CrashEnvironment.NuclideLibraryFile))
             {
-                TextReader reader = File.OpenText(CrashEnvironment.NuclideLibraryFile);
+                NuclideLibrary.Clear();
                 char[] itemDelims = new char[] { ' ', '\t' };
                 char[] energyDelims = new char[] { ':' };
                 string line;
-                while((line = reader.ReadLine()) != null)
+                while ((line = reader.ReadLine()) != null)
                 {
                     line = line.Trim();
                     if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
@@ -103,9 +108,9 @@ namespace crash
                     double halfLife = Convert.ToDouble(items[1], CultureInfo.InvariantCulture);
                     string halfLifeUnit = items[2];
 
-                    NuclideInfo ni = new NuclideInfo(name, halfLife, halfLifeUnit);                    
+                    NuclideInfo ni = new NuclideInfo(name, halfLife, halfLifeUnit);
 
-                    for(int i=3; i<items.Length; i++)
+                    for (int i = 3; i < items.Length; i++)
                     {
                         string[] energy = items[i].Split(energyDelims, StringSplitOptions.RemoveEmptyEntries);
                         double e = Convert.ToDouble(energy[0], CultureInfo.InvariantCulture);
@@ -114,9 +119,9 @@ namespace crash
                     }
 
                     NuclideLibrary.Add(ni);
-                }
-                reader.Close();
+                }             
             }
+            return true;
         }
 
         private void sendMsg(burn.Message msg)
@@ -295,9 +300,10 @@ namespace crash
                             Directory.CreateDirectory(jsonPath);
 
                         string json = JsonConvert.SerializeObject(msg, Newtonsoft.Json.Formatting.Indented);
-                        TextWriter writer = new StreamWriter(jsonPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".json");
-                        writer.Write(json);
-                        writer.Close();                        
+                        using (TextWriter writer = new StreamWriter(jsonPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".json"))
+                        {
+                            writer.Write(json);
+                        }
 
                         session.Add(spec);
 
@@ -324,9 +330,10 @@ namespace crash
         {
             string sessionSettingsFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + s.Name + Path.DirectorySeparatorChar + "session.json";
             string jSessionInfo = JsonConvert.SerializeObject(s, Newtonsoft.Json.Formatting.Indented);
-            TextWriter writer = new StreamWriter(sessionSettingsFile);
-            writer.Write(jSessionInfo);
-            writer.Close();  
+            using (TextWriter writer = new StreamWriter(sessionSettingsFile))
+            {
+                writer.Write(jSessionInfo);
+            }            
         }
 
         void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)

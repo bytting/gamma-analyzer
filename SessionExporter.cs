@@ -42,20 +42,18 @@ namespace crash
             MonthMap["DEC"] = "12";
 
             foreach(Spectrum s in session.Spectrums)
-            {
-                BinaryWriter writer = null;
-                try
-                {
-                    string sessionPath = path + Path.DirectorySeparatorChar + session.Name + "_CHN";
-                    if (!Directory.Exists(sessionPath))
-                        Directory.CreateDirectory(sessionPath);
+            {                
+                string sessionPath = path + Path.DirectorySeparatorChar + session.Name + "_CHN";
+                if (!Directory.Exists(sessionPath))
+                    Directory.CreateDirectory(sessionPath);
 
-                    string filename = sessionPath + Path.DirectorySeparatorChar + s.SessionIndex.ToString() + ".chn";
-                    writer = new BinaryWriter(File.Create(filename));
+                string filename = sessionPath + Path.DirectorySeparatorChar + s.SessionIndex.ToString() + ".chn";
+                using (BinaryWriter writer = new BinaryWriter(File.Create(filename)))
+                {
                     writer.Write(Convert.ToInt16(-1)); // signature
                     writer.Write(Convert.ToInt16(s.SpectralInput)); // detector id
                     writer.Write(Convert.ToInt16(0)); // segment
-                    writer.Write(new char[] {'0', '1'}); // seconds start (TODO)
+                    writer.Write(new char[] { '0', '1' }); // seconds start (TODO)
                     Int32 rt = s.Realtime / 1000; // ms                    
                     rt = rt / 20; // increments of 20 ms
                     writer.Write(rt); // realtime
@@ -63,18 +61,13 @@ namespace crash
                     lt = lt / 20; // increments of 20 ms
                     writer.Write(lt); // livetime
                     // FIXME
-                    writer.Write(new char[] {'0', '1', 'J', 'A', 'N', '1', '6', '1'}); // date
-                    writer.Write(new char[] {'1', '2', '0', '0'}); // time
+                    writer.Write(new char[] { '0', '1', 'J', 'A', 'N', '1', '6', '1' }); // date
+                    writer.Write(new char[] { '1', '2', '0', '0' }); // time
                     writer.Write(Convert.ToInt16(0)); // channel offset
                     writer.Write(Convert.ToInt16(s.NumChannels)); // number of channels
-                    
-                    foreach(float ch in s.Channels)            
-                        writer.Write(Convert.ToInt32(ch));            
-                }
-                finally
-                {
-                    if(writer != null)
-                        writer.Close();
+
+                    foreach (float ch in s.Channels)
+                        writer.Write(Convert.ToInt32(ch));
                 }
             }            
         }

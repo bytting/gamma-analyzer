@@ -540,10 +540,12 @@
             this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnBack,
             this.toolStripSeparator2,
+            this.btnSelectLayout,
             this.btnShowLog,
             this.toolStripSeparator8,
             this.btnConnect,
             this.btnDisconnect,
+            this.menuItemRemoteCommands,
             this.toolStripSeparator6,
             this.btnStartNewSession,
             this.btnStopSession,
@@ -558,9 +560,7 @@
             this.lblConnectionStatus,
             this.btnShowROITable,
             this.btnShowROIHist,
-            this.btnShowROIChart,
-            this.menuItemRemoteCommands,
-            this.btnSelectLayout});
+            this.btnShowROIChart});
             this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
             this.tools.Size = new System.Drawing.Size(1349, 40);
@@ -902,7 +902,7 @@
             this.panelSetupGraph.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSetupGraph.Location = new System.Drawing.Point(0, 143);
             this.panelSetupGraph.Name = "panelSetupGraph";
-            this.panelSetupGraph.Size = new System.Drawing.Size(1341, 413);
+            this.panelSetupGraph.Size = new System.Drawing.Size(1341, 397);
             this.panelSetupGraph.TabIndex = 26;
             // 
             // graphSetup
@@ -919,7 +919,7 @@
             this.graphSetup.ScrollMinX = 0D;
             this.graphSetup.ScrollMinY = 0D;
             this.graphSetup.ScrollMinY2 = 0D;
-            this.graphSetup.Size = new System.Drawing.Size(1341, 388);
+            this.graphSetup.Size = new System.Drawing.Size(1341, 372);
             this.graphSetup.TabIndex = 24;
             this.graphSetup.UseExtendedPrintDialog = true;
             this.graphSetup.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.graphSetup_MouseDoubleClick);
@@ -1327,9 +1327,9 @@
             this.panelSetupSession.Controls.Add(this.lblSetupEnergy);
             this.panelSetupSession.Controls.Add(this.lblSetupChannel);
             this.panelSetupSession.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelSetupSession.Location = new System.Drawing.Point(0, 556);
+            this.panelSetupSession.Location = new System.Drawing.Point(0, 540);
             this.panelSetupSession.Name = "panelSetupSession";
-            this.panelSetupSession.Size = new System.Drawing.Size(1341, 60);
+            this.panelSetupSession.Size = new System.Drawing.Size(1341, 76);
             this.panelSetupSession.TabIndex = 22;
             // 
             // lblSetupEnergy
@@ -1357,10 +1357,10 @@
             // 
             this.btnSetupBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSetupBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupBack.Location = new System.Drawing.Point(495, 3);
+            this.btnSetupBack.Location = new System.Drawing.Point(373, 3);
             this.btnSetupBack.Name = "btnSetupBack";
-            this.tableLayoutSetupSession.SetRowSpan(this.btnSetupBack, 2);
-            this.btnSetupBack.Size = new System.Drawing.Size(117, 54);
+            this.tableLayoutSetupSession.SetRowSpan(this.btnSetupBack, 3);
+            this.btnSetupBack.Size = new System.Drawing.Size(179, 70);
             this.btnSetupBack.TabIndex = 3;
             this.btnSetupBack.Text = "Back";
             this.btnSetupBack.UseVisualStyleBackColor = true;
@@ -1370,10 +1370,10 @@
             // 
             this.btnSetupNext.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSetupNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupNext.Location = new System.Drawing.Point(618, 3);
+            this.btnSetupNext.Location = new System.Drawing.Point(558, 3);
             this.btnSetupNext.Name = "btnSetupNext";
-            this.tableLayoutSetupSession.SetRowSpan(this.btnSetupNext, 2);
-            this.btnSetupNext.Size = new System.Drawing.Size(121, 54);
+            this.tableLayoutSetupSession.SetRowSpan(this.btnSetupNext, 3);
+            this.btnSetupNext.Size = new System.Drawing.Size(181, 70);
             this.btnSetupNext.TabIndex = 2;
             this.btnSetupNext.Text = "Start session";
             this.btnSetupNext.UseVisualStyleBackColor = true;
@@ -2139,28 +2139,29 @@
             // 
             // tableLayoutSetupSession
             // 
-            this.tableLayoutSetupSession.ColumnCount = 6;
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutSetupSession.Controls.Add(this.btnSetupNext, 5, 0);
-            this.tableLayoutSetupSession.Controls.Add(this.btnSetupBack, 4, 0);
+            this.tableLayoutSetupSession.ColumnCount = 4;
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutSetupSession.Controls.Add(this.btnSetupNext, 3, 0);
+            this.tableLayoutSetupSession.Controls.Add(this.btnSetupBack, 2, 0);
             this.tableLayoutSetupSession.Controls.Add(this.label5, 0, 0);
             this.tableLayoutSetupSession.Controls.Add(this.label11, 0, 1);
-            this.tableLayoutSetupSession.Controls.Add(this.label13, 2, 0);
             this.tableLayoutSetupSession.Controls.Add(this.tbSetupLivetime, 1, 0);
             this.tableLayoutSetupSession.Controls.Add(this.tbSetupSpectrumCount, 1, 1);
-            this.tableLayoutSetupSession.Controls.Add(this.tbSetupDelay, 3, 0);
+            this.tableLayoutSetupSession.Controls.Add(this.label13, 0, 2);
+            this.tableLayoutSetupSession.Controls.Add(this.tbSetupDelay, 1, 2);
             this.tableLayoutSetupSession.Dock = System.Windows.Forms.DockStyle.Right;
             this.tableLayoutSetupSession.Location = new System.Drawing.Point(599, 0);
             this.tableLayoutSetupSession.Name = "tableLayoutSetupSession";
-            this.tableLayoutSetupSession.RowCount = 2;
-            this.tableLayoutSetupSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutSetupSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutSetupSession.Size = new System.Drawing.Size(742, 60);
+            this.tableLayoutSetupSession.RowCount = 3;
+            this.tableLayoutSetupSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutSetupSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutSetupSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutSetupSession.Size = new System.Drawing.Size(742, 76);
             this.tableLayoutSetupSession.TabIndex = 6;
             // 
             // label5
@@ -2170,7 +2171,7 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(3, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(117, 30);
+            this.label5.Size = new System.Drawing.Size(179, 25);
             this.label5.TabIndex = 4;
             this.label5.Text = "Livetime";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2180,9 +2181,9 @@
             this.label11.AutoSize = true;
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(3, 30);
+            this.label11.Location = new System.Drawing.Point(3, 25);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(117, 30);
+            this.label11.Size = new System.Drawing.Size(179, 25);
             this.label11.TabIndex = 5;
             this.label11.Text = "Spectrum count";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2192,9 +2193,9 @@
             this.label13.AutoSize = true;
             this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(249, 0);
+            this.label13.Location = new System.Drawing.Point(3, 50);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(117, 30);
+            this.label13.Size = new System.Drawing.Size(179, 26);
             this.label13.TabIndex = 6;
             this.label13.Text = "Delay";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2202,25 +2203,25 @@
             // tbSetupLivetime
             // 
             this.tbSetupLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupLivetime.Location = new System.Drawing.Point(126, 3);
+            this.tbSetupLivetime.Location = new System.Drawing.Point(188, 3);
             this.tbSetupLivetime.Name = "tbSetupLivetime";
-            this.tbSetupLivetime.Size = new System.Drawing.Size(117, 21);
+            this.tbSetupLivetime.Size = new System.Drawing.Size(179, 21);
             this.tbSetupLivetime.TabIndex = 7;
             // 
             // tbSetupSpectrumCount
             // 
             this.tbSetupSpectrumCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupSpectrumCount.Location = new System.Drawing.Point(126, 33);
+            this.tbSetupSpectrumCount.Location = new System.Drawing.Point(188, 28);
             this.tbSetupSpectrumCount.Name = "tbSetupSpectrumCount";
-            this.tbSetupSpectrumCount.Size = new System.Drawing.Size(117, 21);
+            this.tbSetupSpectrumCount.Size = new System.Drawing.Size(179, 21);
             this.tbSetupSpectrumCount.TabIndex = 8;
             // 
             // tbSetupDelay
             // 
             this.tbSetupDelay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupDelay.Location = new System.Drawing.Point(372, 3);
+            this.tbSetupDelay.Location = new System.Drawing.Point(188, 53);
             this.tbSetupDelay.Name = "tbSetupDelay";
-            this.tbSetupDelay.Size = new System.Drawing.Size(117, 21);
+            this.tbSetupDelay.Size = new System.Drawing.Size(179, 21);
             this.tbSetupDelay.TabIndex = 9;
             // 
             // FormMain
