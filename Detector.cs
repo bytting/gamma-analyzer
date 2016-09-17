@@ -32,6 +32,22 @@ namespace crash
             EnergyCurveCoefficients = new List<double>();        
         }
 
+        public Detector Clone()
+        {
+            Detector clone = new Detector();
+            clone.TypeName = TypeName;
+            clone.CurrentHV = CurrentHV;
+            clone.CurrentNumChannels = CurrentNumChannels;
+            clone.Serialnumber = Serialnumber;
+            clone.CurrentCoarseGain = CurrentCoarseGain;
+            clone.CurrentFineGain = CurrentFineGain;
+            clone.CurrentLivetime = CurrentLivetime;
+            clone.CurrentLLD = CurrentLLD;
+            clone.CurrentULD = CurrentULD;            
+            clone.EnergyCurveCoefficients.AddRange(EnergyCurveCoefficients);
+            return clone;
+        }
+
         public string TypeName { get; set; }
         public int CurrentHV { get; set; }
         public int CurrentNumChannels { get; set; }
@@ -43,7 +59,7 @@ namespace crash
         public int CurrentULD { get; set; }
         [XmlArray("EnergyCurveCoefficients")]
         [XmlArrayItem("Value")]
-        public List<double> EnergyCurveCoefficients { get; set; }        
+        public List<double> EnergyCurveCoefficients { get; set; }
 
         public override string ToString()
         {

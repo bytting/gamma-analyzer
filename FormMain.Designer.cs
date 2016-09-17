@@ -63,7 +63,6 @@
             this.menuItemShowROIChart = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemVersion = new System.Windows.Forms.ToolStripMenuItem();
             this.status = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblLogMessages = new System.Windows.Forms.ToolStripStatusLabel();
@@ -497,8 +496,7 @@
             // menuItemHelp
             // 
             this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemAbout,
-            this.menuItemVersion});
+            this.menuItemAbout});
             this.menuItemHelp.Name = "menuItemHelp";
             this.menuItemHelp.Size = new System.Drawing.Size(44, 20);
             this.menuItemHelp.Text = "&Help";
@@ -509,13 +507,6 @@
             this.menuItemAbout.Size = new System.Drawing.Size(113, 22);
             this.menuItemAbout.Text = "&About";
             this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
-            // 
-            // menuItemVersion
-            // 
-            this.menuItemVersion.Name = "menuItemVersion";
-            this.menuItemVersion.Size = new System.Drawing.Size(113, 22);
-            this.menuItemVersion.Text = "&Version";
-            this.menuItemVersion.Click += new System.EventHandler(this.menuItemVersion_Click);
             // 
             // status
             // 
@@ -2448,7 +2439,6 @@
         private System.Windows.Forms.ToolStripDropDownButton btnOptions;
         private System.Windows.Forms.ToolStripMenuItem subtractBackgroundToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuItemLayoutSession2;
-        private System.Windows.Forms.ToolStripMenuItem menuItemVersion;
         private System.Windows.Forms.ToolStripMenuItem menuItemLayoutSession3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button btnEditDetectorType;

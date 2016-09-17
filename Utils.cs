@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-// Authors: Dag robole,
+// Authors: Dag Robole,
 
 using System;
 using System.Drawing;
@@ -24,7 +24,7 @@ namespace crash
 {
     public static class Utils
     {        
-        public static FormLog Log = new FormLog();        
+        public static FormLog Log = new FormLog(); 
 
         public static int ToArgb(Color color)
         {

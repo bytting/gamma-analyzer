@@ -63,7 +63,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 214);
+            this.panel1.Location = new System.Drawing.Point(0, 207);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(451, 30);
             this.panel1.TabIndex = 0;
@@ -118,7 +118,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(451, 214);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(451, 207);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // label1
@@ -170,9 +170,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(3, 140);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 13);
+            this.label5.Size = new System.Drawing.Size(52, 13);
             this.label5.TabIndex = 8;
-            this.label5.Text = "GE script";
+            this.label5.Text = "GE Script";
             // 
             // cboxMaxChannels
             // 
@@ -285,7 +285,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(451, 244);
+            this.ClientSize = new System.Drawing.Size(451, 237);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

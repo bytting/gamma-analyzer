@@ -19,8 +19,7 @@ namespace crash
         {
             InitializeComponent();
             CoeffList = coeffList;
-            Det = new Detector();
-            Det = detector;
+            Det = detector.Clone();            
         }
 
         private void FormEnergyCurve_Load(object sender, EventArgs e)
@@ -36,7 +35,8 @@ namespace crash
                 counter++;
             }
             curveName = curveName.Substring(0, curveName.Length - 3);
-            
+
+            Det.EnergyCurveCoefficients.Clear();
             Det.EnergyCurveCoefficients.AddRange(CoeffList);
 
             GraphPane pane = graph.GraphPane;

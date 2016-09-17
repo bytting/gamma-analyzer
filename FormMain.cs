@@ -1070,13 +1070,7 @@ namespace crash
             formWaterfallLive.Left = 0;
             formWaterfallLive.Top = screenHeightThird * 2;
             formWaterfallLive.Width = screenWidthThird * 2;
-            formWaterfallLive.Height = screenHeightThird;            
-        }
-
-        private void menuItemVersion_Click(object sender, EventArgs e)
-        {
-            string version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            MessageBox.Show(version);
+            formWaterfallLive.Height = screenHeightThird;
         }
 
         private void btnEditDetectorType_Click(object sender, EventArgs e)

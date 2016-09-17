@@ -21,6 +21,11 @@ namespace crash
             DetType = detType;
         }
 
+        private void FormEditDetectorType_Load(object sender, EventArgs e)
+        {
+            tbName.Text = DetType.Name;
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -41,6 +46,6 @@ namespace crash
             dialog.InitialDirectory = CrashEnvironment.GEScriptPath;
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 tbGEScript.Text = dialog.SafeFileName;
-        }
+        }        
     }
 }

@@ -99,6 +99,7 @@
             this.status.Location = new System.Drawing.Point(0, 324);
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(563, 22);
+            this.status.SizingGrip = false;
             this.status.TabIndex = 1;
             this.status.Text = "statusStrip1";
             // 

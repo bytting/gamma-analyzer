@@ -171,22 +171,20 @@
             this.label2.Location = new System.Drawing.Point(3, 168);
             this.label2.Name = "label2";
             this.label2.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
-            this.label2.Size = new System.Drawing.Size(104, 193);
+            this.label2.Size = new System.Drawing.Size(104, 28);
             this.label2.TabIndex = 8;
-            this.label2.Text = "GE Factor code";
+            this.label2.Text = "GE Script";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // tbGEFactorCode
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.tbGEFactorCode, 3);
             this.tbGEFactorCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbGEFactorCode.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbGEFactorCode.Location = new System.Drawing.Point(113, 171);
             this.tbGEFactorCode.Multiline = true;
             this.tbGEFactorCode.Name = "tbGEFactorCode";
             this.tbGEFactorCode.ReadOnly = true;
-            this.tbGEFactorCode.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbGEFactorCode.Size = new System.Drawing.Size(622, 187);
+            this.tbGEFactorCode.Size = new System.Drawing.Size(252, 22);
             this.tbGEFactorCode.TabIndex = 9;
             this.tbGEFactorCode.WordWrap = false;
             // 
@@ -197,7 +195,6 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel1.Controls.Add(this.tbGEFactorCode, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.tbComment, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
@@ -217,17 +214,18 @@
             this.tableLayoutPanel1.Controls.Add(this.lblFineGain, 3, 4);
             this.tableLayoutPanel1.Controls.Add(this.label9, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.lblLLDULD, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.tbGEFactorCode, 1, 6);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 7;
+            this.tableLayoutPanel1.RowCount = 8;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(738, 361);
             this.tableLayoutPanel1.TabIndex = 10;
