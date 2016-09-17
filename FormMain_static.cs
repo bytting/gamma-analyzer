@@ -292,7 +292,8 @@ namespace crash
 
                         // Make sure session is allocated in case spectrums are ticking in
 
-                        string jsonPath = session.SessionPath + Path.DirectorySeparatorChar + "json";
+                        string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + session.Name;
+                        string jsonPath = sessionPath + Path.DirectorySeparatorChar + "json";
                         if (!Directory.Exists(jsonPath))
                             Directory.CreateDirectory(jsonPath);
 
@@ -324,7 +325,7 @@ namespace crash
 
         public void SaveSession(Session s)
         {
-            string sessionSettingsFile = s.SessionPath + Path.DirectorySeparatorChar + "session.json";
+            string sessionSettingsFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + s.Name + Path.DirectorySeparatorChar + "session.json";
             string jSessionInfo = JsonConvert.SerializeObject(s, Newtonsoft.Json.Formatting.Indented);
             TextWriter writer = new StreamWriter(sessionSettingsFile);
             writer.Write(jSessionInfo);

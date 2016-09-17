@@ -34,8 +34,7 @@ namespace crash
         public int Iterations { get; set; }        
         public float NumChannels { get; private set; }
         public float MaxChannelCount { get; private set; }
-        public float MinChannelCount { get; private set; }                
-        public string SessionPath { get; private set; }
+        public float MinChannelCount { get; private set; }                        
         public Detector Detector { get; set; }
         public DetectorType DetectorType { get; set; }
         [JsonIgnore]
@@ -63,14 +62,13 @@ namespace crash
             Name = name;
             Comment = comment;
             Livetime = livetime;
-            Iterations = iterations;
-            SessionPath = sessionPath + Path.DirectorySeparatorChar + Name;
+            Iterations = iterations;            
             Detector = det;
             DetectorType = detType;
-            LoadGEFactor();            
+            LoadGEFactor();
 
-            if (!Directory.Exists(SessionPath))
-                Directory.CreateDirectory(SessionPath);
+            if (!Directory.Exists(sessionPath + Path.DirectorySeparatorChar + Name))
+                Directory.CreateDirectory(sessionPath + Path.DirectorySeparatorChar + Name);
         }
 
         public void Add(Spectrum spec)
