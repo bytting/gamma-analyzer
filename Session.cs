@@ -21,11 +21,18 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using IronPython.Hosting;
+using IronPython.Runtime;
+using Microsoft.Scripting;
+using Microsoft.Scripting.Hosting;
 
 namespace crash
 {
     public class Session
     {
+        [JsonIgnore]
+        private static dynamic PyEngine = Python.CreateEngine();
+
         public string Name { get; set; }
         public string Comment { get; set; }
         public float Livetime { get; set; }
@@ -107,8 +114,8 @@ namespace crash
                 return false;
 
             string script = File.ReadAllText(CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + DetectorType.GEScript);
-            dynamic scope = Utils.PyEngine.CreateScope();
-            Utils.PyEngine.Execute(script, scope);
+            dynamic scope = PyEngine.CreateScope();
+            PyEngine.Execute(script, scope);
             GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");
             return GEFactor != null;
         }

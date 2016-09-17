@@ -19,17 +19,12 @@
 
 using System;
 using System.Drawing;
-using IronPython.Hosting;
-using IronPython.Runtime;
-using Microsoft.Scripting;
-using Microsoft.Scripting.Hosting;
 
 namespace crash
 {
     public static class Utils
     {        
-        public static FormLog Log = new FormLog();
-        public static dynamic PyEngine = Python.CreateEngine();    
+        public static FormLog Log = new FormLog();        
 
         public static int ToArgb(Color color)
         {

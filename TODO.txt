@@ -8,11 +8,14 @@ Separate detector communication and analysis tools, and make proper APIs
 
 Documentation for detector communication protocol
 
-
-
+Proper log
 
 log messages on status
+
 open/close session buttons
-deaktivere flere buttons
-aktivitetsindikator
-tooltips
+
+deactivate more buttons when necessary
+
+activity indicator
+
+more tooltips
