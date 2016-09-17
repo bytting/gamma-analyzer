@@ -786,10 +786,12 @@ namespace crash
         private void btnSetupNext_Click(object sender, EventArgs e)
         {
             Detector det = (Detector)cboxSetupDetector.SelectedItem;
-            float livetime = (float)det.CurrentLivetime;
-            if (!String.IsNullOrEmpty(tbSetupLivetime.Text.Trim()))
-                livetime = Convert.ToSingle(tbSetupLivetime.Text);
-            int count = String.IsNullOrEmpty(tbSetupSpectrumCount.Text.Trim()) ? -1 : Convert.ToInt32(tbSetupSpectrumCount.Text.Trim());
+            
+            if(!String.IsNullOrEmpty(tbSetupLivetime.Text.Trim()))
+                det.CurrentLivetime = Convert.ToInt32(tbSetupLivetime.Text.Trim());            
+            
+            int iterations = String.IsNullOrEmpty(tbSetupSpectrumCount.Text.Trim()) ? -1 : Convert.ToInt32(tbSetupSpectrumCount.Text.Trim());
+
             float delay = 0f;
             if (!String.IsNullOrEmpty(tbSetupDelay.Text.Trim()))
                 delay = Convert.ToSingle(tbSetupDelay.Text.Trim());
@@ -799,8 +801,8 @@ namespace crash
             burn.Message msg = new burn.Message("new_session", null);
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
             msg.AddParameter("preview", 0);
-            msg.AddParameter("iterations", count);
-            msg.AddParameter("livetime", livetime);
+            msg.AddParameter("iterations", iterations);
+            msg.AddParameter("livetime", det.CurrentLivetime);
             msg.AddParameter("delay", delay);
             sendMsg(msg);
 

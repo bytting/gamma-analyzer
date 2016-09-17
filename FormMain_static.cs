@@ -54,10 +54,7 @@ namespace crash
 
         PointPairList setupGraphList = new PointPairList();
         PointPairList sessionGraphList = new PointPairList();
-        PointPairList bkgGraphList = new PointPairList();
-
-        //Detector selectedDetector = null;
-        //DetectorType selectedDetectorType = null;
+        PointPairList bkgGraphList = new PointPairList();        
 
         float bkgScale = 1f;
         bool selectionRun = false;        

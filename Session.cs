@@ -30,11 +30,14 @@ namespace crash
         public string Comment { get; set; }
         public float Livetime { get; set; }
         public int Iterations { get; set; }        
-        public float NumChannels { get; private set; }
-        public float MaxChannelCount { get; private set; }
-        public float MinChannelCount { get; private set; }                        
         public Detector Detector { get; set; }
         public DetectorType DetectorType { get; set; }
+        [JsonIgnore]
+        public float NumChannels { get; private set; }
+        [JsonIgnore]
+        public float MaxChannelCount { get; private set; }
+        [JsonIgnore]
+        public float MinChannelCount { get; private set; }
         [JsonIgnore]
         public dynamic GEFactor { get; set; }
         [JsonIgnore]
