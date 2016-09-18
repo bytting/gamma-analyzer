@@ -27,6 +27,19 @@ namespace crash
     [Serializable()]
     public class Detector
     {
+        public string TypeName { get; set; }
+        public int CurrentHV { get; set; }
+        public int CurrentNumChannels { get; set; }
+        public string Serialnumber { get; set; }
+        public double CurrentCoarseGain { get; set; }
+        public double CurrentFineGain { get; set; }
+        public int CurrentLivetime { get; set; }
+        public int CurrentLLD { get; set; }
+        public int CurrentULD { get; set; }
+        [XmlArray("EnergyCurveCoefficients")]
+        [XmlArrayItem("Value")]
+        public List<double> EnergyCurveCoefficients { get; set; }
+
         public Detector()
         {
             EnergyCurveCoefficients = new List<double>();        
@@ -46,20 +59,7 @@ namespace crash
             clone.CurrentULD = CurrentULD;            
             clone.EnergyCurveCoefficients.AddRange(EnergyCurveCoefficients);
             return clone;
-        }
-
-        public string TypeName { get; set; }
-        public int CurrentHV { get; set; }
-        public int CurrentNumChannels { get; set; }
-        public string Serialnumber { get; set; }
-        public double CurrentCoarseGain { get; set; }
-        public double CurrentFineGain { get; set; }                        
-        public int CurrentLivetime { get; set; }
-        public int CurrentLLD { get; set; }
-        public int CurrentULD { get; set; }
-        [XmlArray("EnergyCurveCoefficients")]
-        [XmlArrayItem("Value")]
-        public List<double> EnergyCurveCoefficients { get; set; }
+        }        
 
         public override string ToString()
         {
