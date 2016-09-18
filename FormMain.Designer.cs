@@ -69,10 +69,17 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSelectLayout = new System.Windows.Forms.ToolStripDropDownButton();
+            this.menuItemLayoutSetup1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutSession1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutSession2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutSession3 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnShowLog = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
             this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
+            this.menuItemRemoteCommands = new System.Windows.Forms.ToolStripDropDownButton();
+            this.menuItemShutdownRemoteServer = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.btnStartNewSession = new System.Windows.Forms.ToolStripButton();
             this.btnStopSession = new System.Windows.Forms.ToolStripButton();
@@ -88,13 +95,6 @@
             this.btnShowROITable = new System.Windows.Forms.ToolStripButton();
             this.btnShowROIHist = new System.Windows.Forms.ToolStripButton();
             this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
-            this.menuItemRemoteCommands = new System.Windows.Forms.ToolStripDropDownButton();
-            this.menuItemShutdownRemoteServer = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSelectLayout = new System.Windows.Forms.ToolStripDropDownButton();
-            this.menuItemLayoutSetup1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemLayoutSession1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemLayoutSession2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemLayoutSession3 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemSessionUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSourceActivity = new System.Windows.Forms.ToolStripMenuItem();
@@ -137,10 +137,17 @@
             this.lblSetupFineGain = new System.Windows.Forms.Label();
             this.btnSetupSetParams = new System.Windows.Forms.Button();
             this.panelSetupSession = new System.Windows.Forms.Panel();
-            this.lblSetupEnergy = new System.Windows.Forms.Label();
-            this.lblSetupChannel = new System.Windows.Forms.Label();
+            this.tableLayoutSetupSession = new System.Windows.Forms.TableLayoutPanel();
             this.btnSetupBack = new System.Windows.Forms.Button();
             this.btnSetupNext = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tbSetupLivetime = new System.Windows.Forms.TextBox();
+            this.tbSetupSpectrumCount = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tbSetupDelay = new System.Windows.Forms.TextBox();
+            this.lblSetupEnergy = new System.Windows.Forms.Label();
+            this.lblSetupChannel = new System.Windows.Forms.Label();
             this.pageMenu = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnMenuSession = new System.Windows.Forms.Button();
@@ -201,22 +208,17 @@
             this.columnHeaderMaxCH = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderMinHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderMaxHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderGEScript = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
-            this.btnAddDetector = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnEditDetectorType = new System.Windows.Forms.Button();
             this.btnAddDetectorType = new System.Windows.Forms.Button();
-            this.tableLayoutSetupSession = new System.Windows.Forms.TableLayoutPanel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.tbSetupLivetime = new System.Windows.Forms.TextBox();
-            this.tbSetupSpectrumCount = new System.Windows.Forms.TextBox();
-            this.tbSetupDelay = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnEditDetector = new System.Windows.Forms.Button();
-            this.columnHeaderGEScript = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnAddDetector = new System.Windows.Forms.Button();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.lblSessionETOL = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -237,6 +239,7 @@
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupFineGain)).BeginInit();
             this.panelSetupSession.SuspendLayout();
+            this.tableLayoutSetupSession.SuspendLayout();
             this.pageMenu.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.pageSessions.SuspendLayout();
@@ -256,8 +259,8 @@
             this.pagePreferences.SuspendLayout();
             this.tableLayoutPref.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.tableLayoutSetupSession.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -509,7 +512,7 @@
             // menuItemAbout
             // 
             this.menuItemAbout.Name = "menuItemAbout";
-            this.menuItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.menuItemAbout.Size = new System.Drawing.Size(107, 22);
             this.menuItemAbout.Text = "&About";
             this.menuItemAbout.Click += new System.EventHandler(this.menuItemAbout_Click);
             // 
@@ -588,6 +591,54 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 40);
             // 
+            // btnSelectLayout
+            // 
+            this.btnSelectLayout.AutoSize = false;
+            this.btnSelectLayout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSelectLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemLayoutSetup1,
+            this.menuItemLayoutSession1,
+            this.menuItemLayoutSession2,
+            this.menuItemLayoutSession3});
+            this.btnSelectLayout.Image = global::crash.Properties.Resources.layouts_32;
+            this.btnSelectLayout.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnSelectLayout.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSelectLayout.Name = "btnSelectLayout";
+            this.btnSelectLayout.Size = new System.Drawing.Size(38, 38);
+            this.btnSelectLayout.Text = "toolStripDropDownButton1";
+            this.btnSelectLayout.ToolTipText = "Select pre-defined layout";
+            // 
+            // menuItemLayoutSetup1
+            // 
+            this.menuItemLayoutSetup1.Image = global::crash.Properties.Resources.layout_2;
+            this.menuItemLayoutSetup1.Name = "menuItemLayoutSetup1";
+            this.menuItemLayoutSetup1.Size = new System.Drawing.Size(161, 22);
+            this.menuItemLayoutSetup1.Text = "Layout Setup";
+            this.menuItemLayoutSetup1.Click += new System.EventHandler(this.menuItemLayoutSetup1_Click);
+            // 
+            // menuItemLayoutSession1
+            // 
+            this.menuItemLayoutSession1.Image = global::crash.Properties.Resources.layout_3;
+            this.menuItemLayoutSession1.Name = "menuItemLayoutSession1";
+            this.menuItemLayoutSession1.Size = new System.Drawing.Size(161, 22);
+            this.menuItemLayoutSession1.Text = "Layout Session";
+            this.menuItemLayoutSession1.Click += new System.EventHandler(this.menuItemLayoutSession1_Click);
+            // 
+            // menuItemLayoutSession2
+            // 
+            this.menuItemLayoutSession2.Image = global::crash.Properties.Resources.layout_1;
+            this.menuItemLayoutSession2.Name = "menuItemLayoutSession2";
+            this.menuItemLayoutSession2.Size = new System.Drawing.Size(161, 22);
+            this.menuItemLayoutSession2.Text = "Layout Session 2";
+            this.menuItemLayoutSession2.Click += new System.EventHandler(this.menuItemLayoutSession2_Click);
+            // 
+            // menuItemLayoutSession3
+            // 
+            this.menuItemLayoutSession3.Name = "menuItemLayoutSession3";
+            this.menuItemLayoutSession3.Size = new System.Drawing.Size(161, 22);
+            this.menuItemLayoutSession3.Text = "Layout Session 3";
+            this.menuItemLayoutSession3.Click += new System.EventHandler(this.menuItemLayoutSession3_Click);
+            // 
             // btnShowLog
             // 
             this.btnShowLog.AutoSize = false;
@@ -631,6 +682,27 @@
             this.btnDisconnect.Text = "toolStripButton1";
             this.btnDisconnect.ToolTipText = "Disconnect from remote device";
             this.btnDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
+            // 
+            // menuItemRemoteCommands
+            // 
+            this.menuItemRemoteCommands.AutoSize = false;
+            this.menuItemRemoteCommands.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.menuItemRemoteCommands.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemShutdownRemoteServer});
+            this.menuItemRemoteCommands.Image = global::crash.Properties.Resources.remote_control_32;
+            this.menuItemRemoteCommands.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.menuItemRemoteCommands.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.menuItemRemoteCommands.Name = "menuItemRemoteCommands";
+            this.menuItemRemoteCommands.Size = new System.Drawing.Size(38, 38);
+            this.menuItemRemoteCommands.Text = "toolStripDropDownButton1";
+            this.menuItemRemoteCommands.ToolTipText = "Remote commands";
+            // 
+            // menuItemShutdownRemoteServer
+            // 
+            this.menuItemShutdownRemoteServer.Name = "menuItemShutdownRemoteServer";
+            this.menuItemShutdownRemoteServer.Size = new System.Drawing.Size(203, 22);
+            this.menuItemShutdownRemoteServer.Text = "&Shutdown remote server";
+            this.menuItemShutdownRemoteServer.Click += new System.EventHandler(this.menuItemShutdownRemoteServer_Click);
             // 
             // toolStripSeparator6
             // 
@@ -779,75 +851,6 @@
             this.btnShowROIChart.Text = "toolStripButton1";
             this.btnShowROIChart.ToolTipText = "Show ROI live";
             this.btnShowROIChart.Click += new System.EventHandler(this.menuItemShowROIChart_Click);
-            // 
-            // menuItemRemoteCommands
-            // 
-            this.menuItemRemoteCommands.AutoSize = false;
-            this.menuItemRemoteCommands.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.menuItemRemoteCommands.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemShutdownRemoteServer});
-            this.menuItemRemoteCommands.Image = global::crash.Properties.Resources.remote_control_32;
-            this.menuItemRemoteCommands.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.menuItemRemoteCommands.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.menuItemRemoteCommands.Name = "menuItemRemoteCommands";
-            this.menuItemRemoteCommands.Size = new System.Drawing.Size(38, 38);
-            this.menuItemRemoteCommands.Text = "toolStripDropDownButton1";
-            this.menuItemRemoteCommands.ToolTipText = "Remote commands";
-            // 
-            // menuItemShutdownRemoteServer
-            // 
-            this.menuItemShutdownRemoteServer.Name = "menuItemShutdownRemoteServer";
-            this.menuItemShutdownRemoteServer.Size = new System.Drawing.Size(203, 22);
-            this.menuItemShutdownRemoteServer.Text = "&Shutdown remote server";
-            this.menuItemShutdownRemoteServer.Click += new System.EventHandler(this.menuItemShutdownRemoteServer_Click);
-            // 
-            // btnSelectLayout
-            // 
-            this.btnSelectLayout.AutoSize = false;
-            this.btnSelectLayout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSelectLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemLayoutSetup1,
-            this.menuItemLayoutSession1,
-            this.menuItemLayoutSession2,
-            this.menuItemLayoutSession3});
-            this.btnSelectLayout.Image = global::crash.Properties.Resources.layouts_32;
-            this.btnSelectLayout.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSelectLayout.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSelectLayout.Name = "btnSelectLayout";
-            this.btnSelectLayout.Size = new System.Drawing.Size(38, 38);
-            this.btnSelectLayout.Text = "toolStripDropDownButton1";
-            this.btnSelectLayout.ToolTipText = "Select pre-defined layout";
-            // 
-            // menuItemLayoutSetup1
-            // 
-            this.menuItemLayoutSetup1.Image = global::crash.Properties.Resources.layout_2;
-            this.menuItemLayoutSetup1.Name = "menuItemLayoutSetup1";
-            this.menuItemLayoutSetup1.Size = new System.Drawing.Size(161, 22);
-            this.menuItemLayoutSetup1.Text = "Layout Setup";
-            this.menuItemLayoutSetup1.Click += new System.EventHandler(this.menuItemLayoutSetup1_Click);
-            // 
-            // menuItemLayoutSession1
-            // 
-            this.menuItemLayoutSession1.Image = global::crash.Properties.Resources.layout_3;
-            this.menuItemLayoutSession1.Name = "menuItemLayoutSession1";
-            this.menuItemLayoutSession1.Size = new System.Drawing.Size(161, 22);
-            this.menuItemLayoutSession1.Text = "Layout Session";
-            this.menuItemLayoutSession1.Click += new System.EventHandler(this.menuItemLayoutSession1_Click);
-            // 
-            // menuItemLayoutSession2
-            // 
-            this.menuItemLayoutSession2.Image = global::crash.Properties.Resources.layout_1;
-            this.menuItemLayoutSession2.Name = "menuItemLayoutSession2";
-            this.menuItemLayoutSession2.Size = new System.Drawing.Size(161, 22);
-            this.menuItemLayoutSession2.Text = "Layout Session 2";
-            this.menuItemLayoutSession2.Click += new System.EventHandler(this.menuItemLayoutSession2_Click);
-            // 
-            // menuItemLayoutSession3
-            // 
-            this.menuItemLayoutSession3.Name = "menuItemLayoutSession3";
-            this.menuItemLayoutSession3.Size = new System.Drawing.Size(161, 22);
-            this.menuItemLayoutSession3.Text = "Layout Session 3";
-            this.menuItemLayoutSession3.Click += new System.EventHandler(this.menuItemLayoutSession3_Click);
             // 
             // contextMenuSession
             // 
@@ -1334,26 +1337,32 @@
             this.panelSetupSession.Size = new System.Drawing.Size(1341, 76);
             this.panelSetupSession.TabIndex = 22;
             // 
-            // lblSetupEnergy
+            // tableLayoutSetupSession
             // 
-            this.lblSetupEnergy.AutoSize = true;
-            this.lblSetupEnergy.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSetupEnergy.Location = new System.Drawing.Point(112, 0);
-            this.lblSetupEnergy.Name = "lblSetupEnergy";
-            this.lblSetupEnergy.Size = new System.Drawing.Size(104, 15);
-            this.lblSetupEnergy.TabIndex = 5;
-            this.lblSetupEnergy.Text = "<lblSetupEnergy>";
-            // 
-            // lblSetupChannel
-            // 
-            this.lblSetupChannel.AutoSize = true;
-            this.lblSetupChannel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSetupChannel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSetupChannel.Location = new System.Drawing.Point(0, 0);
-            this.lblSetupChannel.Name = "lblSetupChannel";
-            this.lblSetupChannel.Size = new System.Drawing.Size(112, 15);
-            this.lblSetupChannel.TabIndex = 4;
-            this.lblSetupChannel.Text = "<lblSetupChannel>";
+            this.tableLayoutSetupSession.ColumnCount = 4;
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutSetupSession.Controls.Add(this.btnSetupNext, 3, 0);
+            this.tableLayoutSetupSession.Controls.Add(this.btnSetupBack, 2, 0);
+            this.tableLayoutSetupSession.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutSetupSession.Controls.Add(this.label11, 0, 1);
+            this.tableLayoutSetupSession.Controls.Add(this.tbSetupLivetime, 1, 0);
+            this.tableLayoutSetupSession.Controls.Add(this.tbSetupSpectrumCount, 1, 1);
+            this.tableLayoutSetupSession.Controls.Add(this.label13, 0, 2);
+            this.tableLayoutSetupSession.Controls.Add(this.tbSetupDelay, 1, 2);
+            this.tableLayoutSetupSession.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tableLayoutSetupSession.Location = new System.Drawing.Point(599, 0);
+            this.tableLayoutSetupSession.Name = "tableLayoutSetupSession";
+            this.tableLayoutSetupSession.RowCount = 3;
+            this.tableLayoutSetupSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutSetupSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutSetupSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutSetupSession.Size = new System.Drawing.Size(742, 76);
+            this.tableLayoutSetupSession.TabIndex = 6;
             // 
             // btnSetupBack
             // 
@@ -1380,6 +1389,87 @@
             this.btnSetupNext.Text = "Start session";
             this.btnSetupNext.UseVisualStyleBackColor = true;
             this.btnSetupNext.Click += new System.EventHandler(this.btnSetupNext_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(3, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(179, 25);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Livetime";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(3, 25);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(179, 25);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "Spectrum count";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbSetupLivetime
+            // 
+            this.tbSetupLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupLivetime.Location = new System.Drawing.Point(188, 3);
+            this.tbSetupLivetime.Name = "tbSetupLivetime";
+            this.tbSetupLivetime.Size = new System.Drawing.Size(179, 21);
+            this.tbSetupLivetime.TabIndex = 7;
+            // 
+            // tbSetupSpectrumCount
+            // 
+            this.tbSetupSpectrumCount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupSpectrumCount.Location = new System.Drawing.Point(188, 28);
+            this.tbSetupSpectrumCount.Name = "tbSetupSpectrumCount";
+            this.tbSetupSpectrumCount.Size = new System.Drawing.Size(179, 21);
+            this.tbSetupSpectrumCount.TabIndex = 8;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(3, 50);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(179, 26);
+            this.label13.TabIndex = 6;
+            this.label13.Text = "Delay";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbSetupDelay
+            // 
+            this.tbSetupDelay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupDelay.Location = new System.Drawing.Point(188, 53);
+            this.tbSetupDelay.Name = "tbSetupDelay";
+            this.tbSetupDelay.Size = new System.Drawing.Size(179, 21);
+            this.tbSetupDelay.TabIndex = 9;
+            // 
+            // lblSetupEnergy
+            // 
+            this.lblSetupEnergy.AutoSize = true;
+            this.lblSetupEnergy.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSetupEnergy.Location = new System.Drawing.Point(112, 0);
+            this.lblSetupEnergy.Name = "lblSetupEnergy";
+            this.lblSetupEnergy.Size = new System.Drawing.Size(104, 15);
+            this.lblSetupEnergy.TabIndex = 5;
+            this.lblSetupEnergy.Text = "<lblSetupEnergy>";
+            // 
+            // lblSetupChannel
+            // 
+            this.lblSetupChannel.AutoSize = true;
+            this.lblSetupChannel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSetupChannel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSetupChannel.Location = new System.Drawing.Point(0, 0);
+            this.lblSetupChannel.Name = "lblSetupChannel";
+            this.lblSetupChannel.Size = new System.Drawing.Size(112, 15);
+            this.lblSetupChannel.TabIndex = 4;
+            this.lblSetupChannel.Text = "<lblSetupChannel>";
             // 
             // pageMenu
             // 
@@ -1509,7 +1599,7 @@
             // 
             this.panelNuclides.Controls.Add(this.lbNuclides);
             this.panelNuclides.Controls.Add(this.label12);
-            this.panelNuclides.Controls.Add(this.tbarNuclides);
+            this.panelNuclides.Controls.Add(this.panel8);
             this.panelNuclides.Controls.Add(this.label19);
             this.panelNuclides.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelNuclides.Location = new System.Drawing.Point(0, 0);
@@ -1524,17 +1614,18 @@
             this.lbNuclides.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbNuclides.FormattingEnabled = true;
             this.lbNuclides.ItemHeight = 15;
-            this.lbNuclides.Location = new System.Drawing.Point(0, 62);
+            this.lbNuclides.Location = new System.Drawing.Point(0, 63);
             this.lbNuclides.Name = "lbNuclides";
-            this.lbNuclides.Size = new System.Drawing.Size(183, 185);
+            this.lbNuclides.Size = new System.Drawing.Size(183, 184);
             this.lbNuclides.TabIndex = 2;
+            this.lbNuclides.SelectedIndexChanged += new System.EventHandler(this.lbNuclides_SelectedIndexChanged);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
             this.label12.Dock = System.Windows.Forms.DockStyle.Top;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(0, 47);
+            this.label12.Location = new System.Drawing.Point(0, 48);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(137, 15);
             this.label12.TabIndex = 3;
@@ -1543,13 +1634,16 @@
             // tbarNuclides
             // 
             this.tbarNuclides.AutoSize = false;
-            this.tbarNuclides.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tbarNuclides.Location = new System.Drawing.Point(0, 21);
+            this.tbarNuclides.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbarNuclides.Location = new System.Drawing.Point(0, 0);
+            this.tbarNuclides.Maximum = 1000;
+            this.tbarNuclides.Minimum = 1;
             this.tbarNuclides.Name = "tbarNuclides";
-            this.tbarNuclides.Size = new System.Drawing.Size(183, 26);
+            this.tbarNuclides.Size = new System.Drawing.Size(162, 27);
             this.tbarNuclides.TabIndex = 1;
             this.tbarNuclides.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbarNuclides.Value = 5;
+            this.tbarNuclides.Value = 30;
+            this.tbarNuclides.ValueChanged += new System.EventHandler(this.tbarNuclides_ValueChanged);
             // 
             // label19
             // 
@@ -2074,6 +2168,11 @@
             this.columnHeaderMaxHV.Text = "Max HV";
             this.columnHeaderMaxHV.Width = 100;
             // 
+            // columnHeaderGEScript
+            // 
+            this.columnHeaderGEScript.Text = "GE Script";
+            this.columnHeaderGEScript.Width = 114;
+            // 
             // label17
             // 
             this.label17.AutoSize = true;
@@ -2091,17 +2190,6 @@
             this.label18.Size = new System.Drawing.Size(59, 15);
             this.label18.TabIndex = 6;
             this.label18.Text = "Detectors";
-            // 
-            // btnAddDetector
-            // 
-            this.btnAddDetector.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnAddDetector.Location = new System.Drawing.Point(0, 0);
-            this.btnAddDetector.Name = "btnAddDetector";
-            this.btnAddDetector.Size = new System.Drawing.Size(129, 23);
-            this.btnAddDetector.TabIndex = 7;
-            this.btnAddDetector.Text = "Add";
-            this.btnAddDetector.UseVisualStyleBackColor = true;
-            this.btnAddDetector.Click += new System.EventHandler(this.btnAddDetector_Click);
             // 
             // panel4
             // 
@@ -2135,93 +2223,6 @@
             this.btnAddDetectorType.UseVisualStyleBackColor = true;
             this.btnAddDetectorType.Click += new System.EventHandler(this.btnAddDetectorType_Click);
             // 
-            // tableLayoutSetupSession
-            // 
-            this.tableLayoutSetupSession.ColumnCount = 4;
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutSetupSession.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutSetupSession.Controls.Add(this.btnSetupNext, 3, 0);
-            this.tableLayoutSetupSession.Controls.Add(this.btnSetupBack, 2, 0);
-            this.tableLayoutSetupSession.Controls.Add(this.label5, 0, 0);
-            this.tableLayoutSetupSession.Controls.Add(this.label11, 0, 1);
-            this.tableLayoutSetupSession.Controls.Add(this.tbSetupLivetime, 1, 0);
-            this.tableLayoutSetupSession.Controls.Add(this.tbSetupSpectrumCount, 1, 1);
-            this.tableLayoutSetupSession.Controls.Add(this.label13, 0, 2);
-            this.tableLayoutSetupSession.Controls.Add(this.tbSetupDelay, 1, 2);
-            this.tableLayoutSetupSession.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tableLayoutSetupSession.Location = new System.Drawing.Point(599, 0);
-            this.tableLayoutSetupSession.Name = "tableLayoutSetupSession";
-            this.tableLayoutSetupSession.RowCount = 3;
-            this.tableLayoutSetupSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutSetupSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutSetupSession.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutSetupSession.Size = new System.Drawing.Size(742, 76);
-            this.tableLayoutSetupSession.TabIndex = 6;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(3, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(179, 25);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Livetime";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(3, 25);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(179, 25);
-            this.label11.TabIndex = 5;
-            this.label11.Text = "Spectrum count";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(3, 50);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(179, 26);
-            this.label13.TabIndex = 6;
-            this.label13.Text = "Delay";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbSetupLivetime
-            // 
-            this.tbSetupLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupLivetime.Location = new System.Drawing.Point(188, 3);
-            this.tbSetupLivetime.Name = "tbSetupLivetime";
-            this.tbSetupLivetime.Size = new System.Drawing.Size(179, 21);
-            this.tbSetupLivetime.TabIndex = 7;
-            // 
-            // tbSetupSpectrumCount
-            // 
-            this.tbSetupSpectrumCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupSpectrumCount.Location = new System.Drawing.Point(188, 28);
-            this.tbSetupSpectrumCount.Name = "tbSetupSpectrumCount";
-            this.tbSetupSpectrumCount.Size = new System.Drawing.Size(179, 21);
-            this.tbSetupSpectrumCount.TabIndex = 8;
-            // 
-            // tbSetupDelay
-            // 
-            this.tbSetupDelay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupDelay.Location = new System.Drawing.Point(188, 53);
-            this.tbSetupDelay.Name = "tbSetupDelay";
-            this.tbSetupDelay.Size = new System.Drawing.Size(179, 21);
-            this.tbSetupDelay.TabIndex = 9;
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.btnEditDetector);
@@ -2243,10 +2244,36 @@
             this.btnEditDetector.UseVisualStyleBackColor = true;
             this.btnEditDetector.Click += new System.EventHandler(this.btnEditDetector_Click);
             // 
-            // columnHeaderGEScript
+            // btnAddDetector
             // 
-            this.columnHeaderGEScript.Text = "GE Script";
-            this.columnHeaderGEScript.Width = 114;
+            this.btnAddDetector.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnAddDetector.Location = new System.Drawing.Point(0, 0);
+            this.btnAddDetector.Name = "btnAddDetector";
+            this.btnAddDetector.Size = new System.Drawing.Size(129, 23);
+            this.btnAddDetector.TabIndex = 7;
+            this.btnAddDetector.Text = "Add";
+            this.btnAddDetector.UseVisualStyleBackColor = true;
+            this.btnAddDetector.Click += new System.EventHandler(this.btnAddDetector_Click);
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.tbarNuclides);
+            this.panel8.Controls.Add(this.lblSessionETOL);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel8.Location = new System.Drawing.Point(0, 21);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(183, 27);
+            this.panel8.TabIndex = 4;
+            // 
+            // lblSessionETOL
+            // 
+            this.lblSessionETOL.AutoSize = true;
+            this.lblSessionETOL.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblSessionETOL.Location = new System.Drawing.Point(162, 0);
+            this.lblSessionETOL.Name = "lblSessionETOL";
+            this.lblSessionETOL.Size = new System.Drawing.Size(21, 15);
+            this.lblSessionETOL.TabIndex = 0;
+            this.lblSessionETOL.Text = "30";
             // 
             // FormMain
             // 
@@ -2298,6 +2325,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupFineGain)).EndInit();
             this.panelSetupSession.ResumeLayout(false);
             this.panelSetupSession.PerformLayout();
+            this.tableLayoutSetupSession.ResumeLayout(false);
+            this.tableLayoutSetupSession.PerformLayout();
             this.pageMenu.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.pageSessions.ResumeLayout(false);
@@ -2323,9 +2352,9 @@
             this.tableLayoutPref.ResumeLayout(false);
             this.tableLayoutPref.PerformLayout();
             this.panel4.ResumeLayout(false);
-            this.tableLayoutSetupSession.ResumeLayout(false);
-            this.tableLayoutSetupSession.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2520,6 +2549,8 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnEditDetector;
         private System.Windows.Forms.ColumnHeader columnHeaderGEScript;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Label lblSessionETOL;
     }
 }
 

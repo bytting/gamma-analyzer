@@ -820,25 +820,36 @@ namespace crash
 
         private void graphSession_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            // TODO            
+            if (session == null || !session.IsLoaded)
+                return;
+
             int x, y;
             GetGraphPointFromMousePos(e.X, e.Y, graphSession, out x, out y);
+
+            double E = session.Detector.GetEnergy(x);
 
             GraphPane pane = graphSession.GraphPane;
             pane.GraphObjList.Clear();
 
-            LineObj greenLine = new LineObj(Color.Green, (double)x, pane.YAxis.Scale.Min, (double)x, pane.YAxis.Scale.Max);
-            pane.GraphObjList.Add(greenLine);
+            LineObj line = new LineObj(Color.ForestGreen, (double)x, pane.YAxis.Scale.Min, (double)x, pane.YAxis.Scale.Max);
+            pane.GraphObjList.Add(line);
 
             graphSession.RestoreScale(pane);
             graphSession.AxisChange();
             graphSession.Refresh();
 
-            // List nuclides
+            // List nuclides            
             lbNuclides.Items.Clear();
             foreach(NuclideInfo ni in NuclideLibrary)
-            {
-                lbNuclides.Items.Add(ni);
+            {            
+                foreach(NuclideEnergy ne in ni.Energies)
+                {
+                    if (ne.Energy > E - (double)tbarNuclides.Value && ne.Energy < E + (double)tbarNuclides.Value)
+                    {
+                        lbNuclides.Items.Add(ni);
+                        break;
+                    }
+                }
             }
         }
 
@@ -868,8 +879,8 @@ namespace crash
             }
 
             GraphPane pane = graphSetup.GraphPane;            
-            LineObj orangeLine = new LineObj(Color.Orange, (double)x, pane.YAxis.Scale.Min, (double)x, pane.YAxis.Scale.Max);
-            pane.GraphObjList.Add(orangeLine);
+            LineObj line = new LineObj(Color.DarkBlue, (double)x, pane.YAxis.Scale.Min, (double)x, pane.YAxis.Scale.Max);
+            pane.GraphObjList.Add(line);
 
             graphSetup.RestoreScale(pane);
             graphSetup.AxisChange();
@@ -1109,6 +1120,40 @@ namespace crash
 
             PopulateDetectorList();
             PopulateDetectors();
-        }                
+        }
+
+        private void tbarNuclides_ValueChanged(object sender, EventArgs e)
+        {
+            lblSessionETOL.Text = tbarNuclides.Value.ToString();
+        }
+
+        private void lbNuclides_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (session == null || !session.IsLoaded)
+                return;
+
+            GraphPane pane = graphSession.GraphPane;
+            pane.GraphObjList.Clear();
+
+            if (lbNuclides.SelectedItems.Count > 0)
+            {
+                NuclideInfo ni = (NuclideInfo)lbNuclides.SelectedItems[0];
+                foreach(NuclideEnergy ne in ni.Energies)
+                {
+                    int ch = GetChannelFromEnergy(session.Detector, ne.Energy, 0, (int)session.NumChannels);
+                    if(ch == -1)
+                    {
+                        Utils.Log.Add("No channel found for energy: " + ni.Name + " " + ne.Energy.ToString());
+                        continue;
+                    }
+                    LineObj line = new LineObj(Color.DodgerBlue, (double)ch, pane.YAxis.Scale.Min, (double)ch, pane.YAxis.Scale.Max);
+                    pane.GraphObjList.Add(line);
+                }                
+            }
+
+            graphSession.RestoreScale(pane);
+            graphSession.AxisChange();
+            graphSession.Refresh();
+        }        
     }
 }

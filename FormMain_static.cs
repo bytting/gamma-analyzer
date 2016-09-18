@@ -528,5 +528,17 @@ namespace crash
                 lvDetectors.Items.Add(item);
             }
         }
+
+        int GetChannelFromEnergy(Detector det, double E, int startX, int endX)
+        {
+            double epsilon = 2d;
+            for (int x = startX; x < endX; x++)
+            {
+                double e = det.GetEnergy(x);
+                if (Math.Abs(E - e) < epsilon)
+                    return x;
+            }
+            return -1;
+        }
     }
 }
