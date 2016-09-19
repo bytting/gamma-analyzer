@@ -524,6 +524,12 @@ namespace crash
         private void menuItemSessionUnselect_Click(object sender, EventArgs e)
         {
             lbSession.ClearSelected();
+            graphSession.GraphPane.GraphObjList.Clear();
+            graphSession.GraphPane.CurveList.Clear();
+
+            graphSession.RestoreScale(graphSession.GraphPane);
+            graphSession.AxisChange();
+            graphSession.Refresh();
         }        
 
         private void cboxSetupDetector_SelectedIndexChanged(object sender, EventArgs e)
@@ -831,14 +837,14 @@ namespace crash
             GraphPane pane = graphSession.GraphPane;
             pane.GraphObjList.Clear();
 
-            LineObj line = new LineObj(Color.ForestGreen, (double)x, pane.YAxis.Scale.Min, (double)x, pane.YAxis.Scale.Max);
-            pane.GraphObjList.Add(line);
+            //LineObj line = new LineObj(Color.ForestGreen, (double)x, pane.YAxis.Scale.Min, (double)x, pane.YAxis.Scale.Max);
+            //pane.GraphObjList.Add(line);
 
-            LineObj line1 = new LineObj(Color.ForestGreen, (double)x - tbarNuclides.Value, pane.YAxis.Scale.Min, (double)x - tbarNuclides.Value, pane.YAxis.Scale.Max);
+            LineObj line1 = new LineObj(Color.Black, (double)x - tbarNuclides.Value, pane.YAxis.Scale.Min, (double)x - tbarNuclides.Value, pane.YAxis.Scale.Max);
             line1.Line.Style = System.Drawing.Drawing2D.DashStyle.Dot;
             pane.GraphObjList.Add(line1);
 
-            LineObj line2 = new LineObj(Color.ForestGreen, (double)x + tbarNuclides.Value, pane.YAxis.Scale.Min, (double)x + tbarNuclides.Value, pane.YAxis.Scale.Max);
+            LineObj line2 = new LineObj(Color.Black, (double)x + tbarNuclides.Value, pane.YAxis.Scale.Min, (double)x + tbarNuclides.Value, pane.YAxis.Scale.Max);
             line2.Line.Style = System.Drawing.Drawing2D.DashStyle.Dot;
             pane.GraphObjList.Add(line2);
 
@@ -1114,8 +1120,8 @@ namespace crash
             if (session == null || !session.IsLoaded)
                 return;            
 
-            GraphPane pane = graphSession.GraphPane;            
-            pane.GraphObjList.Clear();            
+            GraphPane pane = graphSession.GraphPane;
+            pane.GraphObjList.RemoveAll(o => o.Tag != null && (Int32)o.Tag == 2);
 
             if (lbNuclides.SelectedItems.Count > 0)
             {
@@ -1129,11 +1135,15 @@ namespace crash
                         continue;
                     }
                     LineObj line = new LineObj(Color.DodgerBlue, (double)ch, pane.YAxis.Scale.Min, (double)ch, pane.YAxis.Scale.Max);
+                    line.Tag = new Int32();
+                    line.Tag = 2;
                     pane.GraphObjList.Add(line);
-                    
-                    TextObj label = new TextObj(ne.Probability.ToString(), (double)ch, pane.YAxis.Scale.Max);
+                                        
+                    TextObj label = new TextObj(ne.Probability.ToString(), (double)ch,  pane.YAxis.Scale.Max, CoordType.AxisXY2Scale, AlignH.Left, AlignV.Top);
+                    label.Tag = new Int32();
+                    label.Tag = 2;
                     label.FontSpec.Border.IsVisible = false;
-                    label.FontSpec.Size = 8f;
+                    label.FontSpec.Size = 6f;
                     label.FontSpec.Fill.Color = SystemColors.ButtonFace;
                     label.ZOrder = ZOrder.D_BehindAxis;
                     pane.GraphObjList.Add(label);
@@ -1171,6 +1181,18 @@ namespace crash
                     }
                 }
             }
+        }
+
+        private void menuItemNuclidesUnselect_Click(object sender, EventArgs e)
+        {
+            lbNuclides.ClearSelected();
+
+            GraphPane pane = graphSession.GraphPane;
+            pane.GraphObjList.RemoveAll(o => o.Tag != null && (Int32)o.Tag == 2);   
+         
+            graphSession.RestoreScale(pane);
+            graphSession.AxisChange();
+            graphSession.Refresh();
         }        
     }
 }

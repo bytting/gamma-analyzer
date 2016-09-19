@@ -531,6 +531,8 @@ namespace crash
 
         int GetChannelFromEnergy(Detector det, double E, int startX, int endX)
         {
+            // FIXME: O(log n)
+
             double epsilon = 2d;
             for (int x = startX; x < endX; x++)
             {
