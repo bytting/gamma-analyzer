@@ -53,7 +53,7 @@
             this.menuItemSaveAsCHN = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSaveAsIRIX = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSaveAsKMZ = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemSaveAsCVS = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSaveAsCSV = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemView = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowLog = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowMap = new System.Windows.Forms.ToolStripMenuItem();
@@ -138,8 +138,8 @@
             this.btnSetupSetParams = new System.Windows.Forms.Button();
             this.panelSetupSession = new System.Windows.Forms.Panel();
             this.tableLayoutSetupSession = new System.Windows.Forms.TableLayoutPanel();
-            this.btnSetupBack = new System.Windows.Forms.Button();
             this.btnSetupNext = new System.Windows.Forms.Button();
+            this.btnSetupBack = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.tbSetupLivetime = new System.Windows.Forms.TextBox();
@@ -159,7 +159,9 @@
             this.panelNuclides = new System.Windows.Forms.Panel();
             this.lbNuclides = new System.Windows.Forms.ListBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
             this.tbarNuclides = new System.Windows.Forms.TrackBar();
+            this.lblSessionETOL = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.graphSession = new ZedGraph.ZedGraphControl();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -217,8 +219,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnEditDetector = new System.Windows.Forms.Button();
             this.btnAddDetector = new System.Windows.Forms.Button();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.lblSessionETOL = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -252,6 +252,7 @@
             this.splitContainerSessionLeft.Panel2.SuspendLayout();
             this.splitContainerSessionLeft.SuspendLayout();
             this.panelNuclides.SuspendLayout();
+            this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarNuclides)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolsSession.SuspendLayout();
@@ -260,7 +261,6 @@
             this.tableLayoutPref.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -416,7 +416,7 @@
             this.menuItemSaveAsCHN,
             this.menuItemSaveAsIRIX,
             this.menuItemSaveAsKMZ,
-            this.menuItemSaveAsCVS});
+            this.menuItemSaveAsCSV});
             this.menuItemExport.Name = "menuItemExport";
             this.menuItemExport.Size = new System.Drawing.Size(209, 22);
             this.menuItemExport.Text = "E&xport session as ...";
@@ -440,12 +440,12 @@
             this.menuItemSaveAsKMZ.Size = new System.Drawing.Size(180, 22);
             this.menuItemSaveAsKMZ.Text = "KM&Z";
             // 
-            // menuItemSaveAsCVS
+            // menuItemSaveAsCSV
             // 
-            this.menuItemSaveAsCVS.Name = "menuItemSaveAsCVS";
-            this.menuItemSaveAsCVS.Size = new System.Drawing.Size(180, 22);
-            this.menuItemSaveAsCVS.Text = "CVS (simple log file)";
-            this.menuItemSaveAsCVS.Click += new System.EventHandler(this.menuItemSaveAsCVS_Click);
+            this.menuItemSaveAsCSV.Name = "menuItemSaveAsCSV";
+            this.menuItemSaveAsCSV.Size = new System.Drawing.Size(180, 22);
+            this.menuItemSaveAsCSV.Text = "CSV (simple log file)";
+            this.menuItemSaveAsCSV.Click += new System.EventHandler(this.menuItemSaveAsCSV_Click);
             // 
             // menuItemView
             // 
@@ -1364,19 +1364,6 @@
             this.tableLayoutSetupSession.Size = new System.Drawing.Size(742, 76);
             this.tableLayoutSetupSession.TabIndex = 6;
             // 
-            // btnSetupBack
-            // 
-            this.btnSetupBack.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetupBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupBack.Location = new System.Drawing.Point(373, 3);
-            this.btnSetupBack.Name = "btnSetupBack";
-            this.tableLayoutSetupSession.SetRowSpan(this.btnSetupBack, 3);
-            this.btnSetupBack.Size = new System.Drawing.Size(179, 70);
-            this.btnSetupBack.TabIndex = 3;
-            this.btnSetupBack.Text = "Cancel";
-            this.btnSetupBack.UseVisualStyleBackColor = true;
-            this.btnSetupBack.Click += new System.EventHandler(this.btnSetupBack_Click);
-            // 
             // btnSetupNext
             // 
             this.btnSetupNext.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1389,6 +1376,19 @@
             this.btnSetupNext.Text = "Start session";
             this.btnSetupNext.UseVisualStyleBackColor = true;
             this.btnSetupNext.Click += new System.EventHandler(this.btnSetupNext_Click);
+            // 
+            // btnSetupBack
+            // 
+            this.btnSetupBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSetupBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetupBack.Location = new System.Drawing.Point(373, 3);
+            this.btnSetupBack.Name = "btnSetupBack";
+            this.tableLayoutSetupSession.SetRowSpan(this.btnSetupBack, 3);
+            this.btnSetupBack.Size = new System.Drawing.Size(179, 70);
+            this.btnSetupBack.TabIndex = 3;
+            this.btnSetupBack.Text = "Cancel";
+            this.btnSetupBack.UseVisualStyleBackColor = true;
+            this.btnSetupBack.Click += new System.EventHandler(this.btnSetupBack_Click);
             // 
             // label5
             // 
@@ -1631,19 +1631,39 @@
             this.label12.TabIndex = 3;
             this.label12.Text = "Nuclide suggestions";
             // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.tbarNuclides);
+            this.panel8.Controls.Add(this.lblSessionETOL);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel8.Location = new System.Drawing.Point(0, 21);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(183, 27);
+            this.panel8.TabIndex = 4;
+            // 
             // tbarNuclides
             // 
             this.tbarNuclides.AutoSize = false;
             this.tbarNuclides.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbarNuclides.Location = new System.Drawing.Point(0, 0);
-            this.tbarNuclides.Maximum = 1000;
+            this.tbarNuclides.Maximum = 200;
             this.tbarNuclides.Minimum = 1;
             this.tbarNuclides.Name = "tbarNuclides";
             this.tbarNuclides.Size = new System.Drawing.Size(162, 27);
             this.tbarNuclides.TabIndex = 1;
             this.tbarNuclides.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbarNuclides.Value = 30;
+            this.tbarNuclides.Value = 20;
             this.tbarNuclides.ValueChanged += new System.EventHandler(this.tbarNuclides_ValueChanged);
+            // 
+            // lblSessionETOL
+            // 
+            this.lblSessionETOL.AutoSize = true;
+            this.lblSessionETOL.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblSessionETOL.Location = new System.Drawing.Point(162, 0);
+            this.lblSessionETOL.Name = "lblSessionETOL";
+            this.lblSessionETOL.Size = new System.Drawing.Size(21, 15);
+            this.lblSessionETOL.TabIndex = 0;
+            this.lblSessionETOL.Text = "20";
             // 
             // label19
             // 
@@ -2255,26 +2275,6 @@
             this.btnAddDetector.UseVisualStyleBackColor = true;
             this.btnAddDetector.Click += new System.EventHandler(this.btnAddDetector_Click);
             // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.tbarNuclides);
-            this.panel8.Controls.Add(this.lblSessionETOL);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel8.Location = new System.Drawing.Point(0, 21);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(183, 27);
-            this.panel8.TabIndex = 4;
-            // 
-            // lblSessionETOL
-            // 
-            this.lblSessionETOL.AutoSize = true;
-            this.lblSessionETOL.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblSessionETOL.Location = new System.Drawing.Point(162, 0);
-            this.lblSessionETOL.Name = "lblSessionETOL";
-            this.lblSessionETOL.Size = new System.Drawing.Size(21, 15);
-            this.lblSessionETOL.TabIndex = 0;
-            this.lblSessionETOL.Text = "30";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2341,6 +2341,8 @@
             this.splitContainerSessionLeft.ResumeLayout(false);
             this.panelNuclides.ResumeLayout(false);
             this.panelNuclides.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarNuclides)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -2353,8 +2355,6 @@
             this.tableLayoutPref.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.panel8.ResumeLayout(false);
-            this.panel8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2526,7 +2526,7 @@
         private System.Windows.Forms.ToolStripButton btnSetupStartTest;
         private System.Windows.Forms.ToolStripButton btnSetupStopTest;
         private System.Windows.Forms.ToolStripStatusLabel lblLogMessages;
-        private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsCVS;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsCSV;
         private System.Windows.Forms.ToolStripButton btnSetupResetCoefficients;
         private System.Windows.Forms.ToolStripButton btnSetupStoreCoefficients;
         private System.Windows.Forms.ToolStripDropDownButton btnSelectLayout;

@@ -834,6 +834,14 @@ namespace crash
             LineObj line = new LineObj(Color.ForestGreen, (double)x, pane.YAxis.Scale.Min, (double)x, pane.YAxis.Scale.Max);
             pane.GraphObjList.Add(line);
 
+            LineObj line1 = new LineObj(Color.ForestGreen, (double)x - tbarNuclides.Value, pane.YAxis.Scale.Min, (double)x - tbarNuclides.Value, pane.YAxis.Scale.Max);
+            line1.Line.Style = System.Drawing.Drawing2D.DashStyle.Dot;
+            pane.GraphObjList.Add(line1);
+
+            LineObj line2 = new LineObj(Color.ForestGreen, (double)x + tbarNuclides.Value, pane.YAxis.Scale.Min, (double)x + tbarNuclides.Value, pane.YAxis.Scale.Max);
+            line2.Line.Style = System.Drawing.Drawing2D.DashStyle.Dot;
+            pane.GraphObjList.Add(line2);
+
             graphSession.RestoreScale(pane);
             graphSession.AxisChange();
             graphSession.Refresh();
@@ -912,33 +920,7 @@ namespace crash
         private void btnSetupStopTest_Click(object sender, EventArgs e)
         {
             sendMsg(new burn.Message("stop_session", null));
-            Utils.Log.Add("SEND: stop_session for preview");            
-        }
-
-        private void menuItemSaveAsCVS_Click(object sender, EventArgs e)
-        {
-            if (!session.IsLoaded)
-                return;
-            
-            SaveFileDialog dialog = new SaveFileDialog();            
-            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                using (StreamWriter writer = new StreamWriter(dialog.FileName, false, Encoding.UTF8))
-                {
-                    foreach (Spectrum s in session.Spectrums)
-                    {
-                        writer.WriteLine(
-                            s.SessionName + "|"
-                            + s.SessionIndex.ToString() + "|"
-                            + s.GpsTimeStart.ToString("yyyy-MM-ddTHH:mm:ss") + "|"
-                            + s.LatitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                            + s.LongitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                            + s.AltitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                            + s.Doserate.ToString(CultureInfo.InvariantCulture)
-                            + "|mSv/h");
-                    }
-                }                
-            }
+            Utils.Log.Add("SEND: stop_session for preview");
         }
 
         private void menuItemResetCoefficients_Click(object sender, EventArgs e)
@@ -1130,10 +1112,10 @@ namespace crash
         private void lbNuclides_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (session == null || !session.IsLoaded)
-                return;
+                return;            
 
-            GraphPane pane = graphSession.GraphPane;
-            pane.GraphObjList.Clear();
+            GraphPane pane = graphSession.GraphPane;            
+            pane.GraphObjList.Clear();            
 
             if (lbNuclides.SelectedItems.Count > 0)
             {
@@ -1148,12 +1130,47 @@ namespace crash
                     }
                     LineObj line = new LineObj(Color.DodgerBlue, (double)ch, pane.YAxis.Scale.Min, (double)ch, pane.YAxis.Scale.Max);
                     pane.GraphObjList.Add(line);
+                    
+                    TextObj label = new TextObj(ne.Probability.ToString(), (double)ch, pane.YAxis.Scale.Max);
+                    label.FontSpec.Border.IsVisible = false;
+                    label.FontSpec.Size = 8f;
+                    label.FontSpec.Fill.Color = SystemColors.ButtonFace;
+                    label.ZOrder = ZOrder.D_BehindAxis;
+                    pane.GraphObjList.Add(label);
                 }                
             }
 
             graphSession.RestoreScale(pane);
             graphSession.AxisChange();
             graphSession.Refresh();
+        }
+
+        private void menuItemSaveAsCSV_Click(object sender, EventArgs e)
+        {
+            if (!session.IsLoaded)
+                return;
+
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "Log File (*.csv)|*.csv|All Files (*.*)|*.*";
+            dialog.DefaultExt = "csv";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                using (StreamWriter writer = new StreamWriter(dialog.FileName, false, Encoding.UTF8))
+                {
+                    foreach (Spectrum s in session.Spectrums)
+                    {
+                        writer.WriteLine(
+                            s.SessionName + "|"
+                            + s.SessionIndex.ToString() + "|"
+                            + s.GpsTimeStart.ToString("yyyy-MM-ddTHH:mm:ss") + "|"
+                            + s.LatitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                            + s.LongitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                            + s.AltitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                            + s.Doserate.ToString(CultureInfo.InvariantCulture)
+                            + "|mSv/h");
+                    }
+                }
+            }
         }        
     }
 }
