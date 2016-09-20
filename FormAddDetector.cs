@@ -65,7 +65,7 @@ namespace crash
         
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
             Close();
         }
 
@@ -102,7 +102,7 @@ namespace crash
                 return;
             }
 
-            DialogResult = System.Windows.Forms.DialogResult.OK;
+            DialogResult = DialogResult.OK;
             Close();
         }
 

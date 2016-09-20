@@ -157,7 +157,7 @@ namespace crash
         {
             // Show connection form
             FormConnect form = new FormConnect(settings);
-            if (form.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            if (form.ShowDialog() != DialogResult.OK)
                 return;
 
             // Send a connect message to networking thread
@@ -422,7 +422,7 @@ namespace crash
             dialog.SelectedPath = settings.SessionRootDirectory;            
             dialog.Description = "Select session directory";
             dialog.ShowNewFolderButton = false;
-            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if(dialog.ShowDialog() == DialogResult.OK)
             {
                 ClearSession();
 
@@ -485,7 +485,7 @@ namespace crash
             dialog.SelectedPath = settings.SessionRootDirectory;
             dialog.Description = "Select background session directory";
             dialog.ShowNewFolderButton = false;
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
                 ClearBackground();
                 Session bkgSess = new Session();
@@ -617,7 +617,7 @@ namespace crash
             }
 
             FormSessionInfo form = new FormSessionInfo(session, "Session Info");
-            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if(form.ShowDialog() == DialogResult.OK)
             {
                 SaveSession(session);
                 lblComment.Text = session.Comment;
@@ -681,7 +681,7 @@ namespace crash
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.ShowNewFolderButton = true;
             dialog.Description = "Select folder to store CHN files";
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
@@ -743,7 +743,7 @@ namespace crash
         private void btnAddDetectorType_Click(object sender, EventArgs e)
         {
             FormAddDetectorType form = new FormAddDetectorType(null);
-            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (form.ShowDialog() == DialogResult.OK)
             {
                 settings.DetectorTypes.Add(new DetectorType(form.TypeName, form.MaxChannels, form.MinHV, form.MaxHV, form.GEScript));
                 PopulateDetectorTypeList();
@@ -753,7 +753,7 @@ namespace crash
         private void btnAddDetector_Click(object sender, EventArgs e)
         {
             FormAddDetector form = new FormAddDetector(null, settings.DetectorTypes);
-            if (form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
             Detector det = new Detector();
@@ -917,7 +917,7 @@ namespace crash
             GetGraphPointFromMousePos(e.X, e.Y, graphSetup, out x, out y);
 
             FormAskDecimal form = new FormAskDecimal("Enter expected energy for channel " + x);
-            if(form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            if(form.ShowDialog() == DialogResult.Cancel)
                 return;
             
             energyLines.Add(new EnergyComp((double)x, form.Value));
@@ -986,7 +986,7 @@ namespace crash
             // Show current energy curve
             Detector det = (Detector)cboxSetupDetector.SelectedItem;
             FormEnergyCurve form = new FormEnergyCurve(det, coefficients);
-            if (form.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            if (form.ShowDialog() != DialogResult.OK)
                 return;
 
             // Update selected detector with current energy curve coefficients
@@ -1124,7 +1124,7 @@ namespace crash
             // Show edit detector type form
             DetectorType detType = (DetectorType)lvDetectorTypes.SelectedItems[0].Tag;
             FormAddDetectorType form = new FormAddDetectorType(detType);
-            if (form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            if (form.ShowDialog() == DialogResult.Cancel)
                 return;
             
             // Update selected detector type
@@ -1142,7 +1142,7 @@ namespace crash
 
             // Show edit detector form
             FormAddDetector form = new FormAddDetector((Detector)lvDetectors.SelectedItems[0].Tag, settings.DetectorTypes);
-            if (form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
             // Update selected detector
@@ -1223,7 +1223,7 @@ namespace crash
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "Log File (*.csv)|*.csv|All Files (*.*)|*.*";
             dialog.DefaultExt = "csv";
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
                 // Write info for each spectrum to csv file
                 using (StreamWriter writer = new StreamWriter(dialog.FileName, false, Encoding.UTF8))

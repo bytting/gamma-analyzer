@@ -191,7 +191,7 @@ namespace crash
         private void btnGoToLatLon_Click(object sender, EventArgs e)
         {
             FormAskCoordinates form = new FormAskCoordinates();
-            if (form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            if (form.ShowDialog() == DialogResult.Cancel)
                 return;            
 
             gmnMap.Position = new GMap.NET.PointLatLng(form.Latitude, form.Longitude);

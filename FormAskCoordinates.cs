@@ -28,7 +28,7 @@ namespace crash
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            DialogResult = DialogResult.Cancel;
             Close();
         }
 
@@ -37,7 +37,7 @@ namespace crash
             // FIXME: conversion and sanity checks
             Latitude = Convert.ToDouble(tbLatitude.Text.Trim());
             Longitude = Convert.ToDouble(tbLongitude.Text.Trim());
-            DialogResult = System.Windows.Forms.DialogResult.OK;
+            DialogResult = DialogResult.OK;
             Close();
         }        
     }
