@@ -18,6 +18,7 @@
 // Authors: Dag robole,
 
 using System;
+using System.Text;
 using System.IO;
 using System.Collections.Generic;
 
@@ -27,20 +28,6 @@ namespace crash
     {
         public static void ExportAsCHN(Session session, string path)
         {
-            Dictionary<string, string> MonthMap = new Dictionary<string, string>();
-            MonthMap["JAN"] = "01";
-            MonthMap["FEB"] = "02";
-            MonthMap["MAR"] = "03";
-            MonthMap["APR"] = "04";
-            MonthMap["MAY"] = "05";
-            MonthMap["JUN"] = "06";
-            MonthMap["JUL"] = "07";
-            MonthMap["AUG"] = "08";
-            MonthMap["SEP"] = "09";
-            MonthMap["OCT"] = "10";
-            MonthMap["NOV"] = "11";
-            MonthMap["DEC"] = "12";
-
             foreach(Spectrum s in session.Spectrums)
             {                
                 string sessionPath = path + Path.DirectorySeparatorChar + session.Name + "_CHN";
@@ -50,19 +37,24 @@ namespace crash
                 string filename = sessionPath + Path.DirectorySeparatorChar + s.SessionIndex.ToString() + ".chn";
                 using (BinaryWriter writer = new BinaryWriter(File.Create(filename)))
                 {
+                    string dateStr = s.GpsTimeStart.ToString("ddMMMyy") + "1";
+                    dateStr = dateStr.ToUpper();
+                    string timeStr = s.GpsTimeStart.ToString("HHmm");
+
+                    string secStr = s.GpsTimeStart.ToString("ss");
+
                     writer.Write(Convert.ToInt16(-1)); // signature
                     writer.Write(Convert.ToInt16(s.SpectralInput)); // detector id
                     writer.Write(Convert.ToInt16(0)); // segment
-                    writer.Write(new char[] { '0', '1' }); // seconds start (TODO)
+                    writer.Write(Encoding.ASCII.GetBytes(secStr)); // seconds start
                     Int32 rt = s.Realtime / 1000; // ms                    
                     rt = rt / 20; // increments of 20 ms
                     writer.Write(rt); // realtime
                     Int32 lt = s.Livetime / 1000; // ms                    
                     lt = lt / 20; // increments of 20 ms
-                    writer.Write(lt); // livetime
-                    // FIXME
-                    writer.Write(new char[] { '0', '1', 'J', 'A', 'N', '1', '6', '1' }); // date
-                    writer.Write(new char[] { '1', '2', '0', '0' }); // time
+                    writer.Write(lt); // livetime                    
+                    writer.Write(Encoding.ASCII.GetBytes(dateStr)); // date
+                    writer.Write(Encoding.ASCII.GetBytes(timeStr)); // time
                     writer.Write(Convert.ToInt16(0)); // channel offset
                     writer.Write(Convert.ToInt16(s.NumChannels)); // number of channels
 
