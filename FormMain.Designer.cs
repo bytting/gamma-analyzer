@@ -158,6 +158,8 @@
             this.lbSession = new System.Windows.Forms.ListBox();
             this.panelNuclides = new System.Windows.Forms.Panel();
             this.lbNuclides = new System.Windows.Forms.ListBox();
+            this.contextMenuNuclides = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemNuclidesUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.label12 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.tbarNuclides = new System.Windows.Forms.TrackBar();
@@ -219,8 +221,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnEditDetector = new System.Windows.Forms.Button();
             this.btnAddDetector = new System.Windows.Forms.Button();
-            this.contextMenuNuclides = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuItemNuclidesUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -254,6 +254,7 @@
             this.splitContainerSessionLeft.Panel2.SuspendLayout();
             this.splitContainerSessionLeft.SuspendLayout();
             this.panelNuclides.SuspendLayout();
+            this.contextMenuNuclides.SuspendLayout();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarNuclides)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -263,7 +264,6 @@
             this.tableLayoutPref.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.contextMenuNuclides.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -549,7 +549,6 @@
             this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnBack,
             this.toolStripSeparator2,
-            this.btnSelectLayout,
             this.btnShowLog,
             this.toolStripSeparator8,
             this.btnConnect,
@@ -560,6 +559,7 @@
             this.btnStopSession,
             this.btnSessionInfo,
             this.toolStripSeparator5,
+            this.btnSelectLayout,
             this.btnShowMap,
             this.btnShowWaterfallLive,
             this.lblInterface,
@@ -1624,6 +1624,20 @@
             this.lbNuclides.TabIndex = 2;
             this.lbNuclides.SelectedIndexChanged += new System.EventHandler(this.lbNuclides_SelectedIndexChanged);
             // 
+            // contextMenuNuclides
+            // 
+            this.contextMenuNuclides.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemNuclidesUnselect});
+            this.contextMenuNuclides.Name = "contextMenuNuclides";
+            this.contextMenuNuclides.Size = new System.Drawing.Size(120, 26);
+            // 
+            // menuItemNuclidesUnselect
+            // 
+            this.menuItemNuclidesUnselect.Name = "menuItemNuclidesUnselect";
+            this.menuItemNuclidesUnselect.Size = new System.Drawing.Size(119, 22);
+            this.menuItemNuclidesUnselect.Text = "&Unselect";
+            this.menuItemNuclidesUnselect.Click += new System.EventHandler(this.menuItemNuclidesUnselect_Click);
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -2279,20 +2293,6 @@
             this.btnAddDetector.UseVisualStyleBackColor = true;
             this.btnAddDetector.Click += new System.EventHandler(this.btnAddDetector_Click);
             // 
-            // contextMenuNuclides
-            // 
-            this.contextMenuNuclides.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemNuclidesUnselect});
-            this.contextMenuNuclides.Name = "contextMenuNuclides";
-            this.contextMenuNuclides.Size = new System.Drawing.Size(120, 26);
-            // 
-            // menuItemNuclidesUnselect
-            // 
-            this.menuItemNuclidesUnselect.Name = "menuItemNuclidesUnselect";
-            this.menuItemNuclidesUnselect.Size = new System.Drawing.Size(152, 22);
-            this.menuItemNuclidesUnselect.Text = "&Unselect";
-            this.menuItemNuclidesUnselect.Click += new System.EventHandler(this.menuItemNuclidesUnselect_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2359,6 +2359,7 @@
             this.splitContainerSessionLeft.ResumeLayout(false);
             this.panelNuclides.ResumeLayout(false);
             this.panelNuclides.PerformLayout();
+            this.contextMenuNuclides.ResumeLayout(false);
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarNuclides)).EndInit();
@@ -2373,7 +2374,6 @@
             this.tableLayoutPref.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.contextMenuNuclides.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

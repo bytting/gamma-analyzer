@@ -246,7 +246,6 @@ namespace crash
                     break;
 
                 case "spectrum":
-
                     Spectrum spec = new Spectrum(msg);
                     spec.CalculateDoserate(session.Detector, session.GEFactor);
 
@@ -399,6 +398,13 @@ namespace crash
             lblDoserate.Text = "";
             lblSessionChannel.Text = "";
             lblSessionEnergy.Text = "";
+        }
+
+        private void ClearSetup()
+        {            
+            graphSetup.GraphPane.CurveList.Clear();
+            graphSetup.GraphPane.GraphObjList.Clear();            
+            graphSetup.Invalidate();
         }
 
         private void ClearSession()
