@@ -33,10 +33,16 @@ namespace crash
         }
 
         private void btnOk_Click(object sender, EventArgs e)
-        {
-            // FIXME: conversion and sanity checks
+        {            
+            if (String.IsNullOrEmpty(tbLatitude.Text.Trim()) || String.IsNullOrEmpty(tbLongitude.Text.Trim()))
+            {
+                MessageBox.Show("One or more required fields are empty");
+                return;
+            }
+
             Latitude = Convert.ToDouble(tbLatitude.Text.Trim());
             Longitude = Convert.ToDouble(tbLongitude.Text.Trim());
+
             DialogResult = DialogResult.OK;
             Close();
         }        

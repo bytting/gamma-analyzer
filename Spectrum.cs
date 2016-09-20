@@ -157,14 +157,42 @@ namespace crash
             return Doserate;
         }
 
+        public Spectrum Clone()
+        {
+            Spectrum res = new Spectrum();                        
+            res.mChannels.AddRange(mChannels.ToArray());
+            res.SessionName = SessionName;
+            res.SessionIndex = SessionIndex;
+            res.Label = Label;
+            res.NumChannels = NumChannels;
+            res.MaxCount = MaxCount;
+            res.MinCount = MinCount;
+            res.TotalCount = TotalCount;
+            res.IsPreview = IsPreview;
+            res.LatitudeStart = LatitudeStart;
+            res.LongitudeStart = LongitudeStart;
+            res.AltitudeStart = AltitudeStart;
+            res.LatitudeEnd = LatitudeEnd;
+            res.LongitudeEnd = LongitudeEnd;
+            res.AltitudeEnd = AltitudeEnd;
+            res.GpsTimeStart = GpsTimeStart;
+            res.GpsTimeEnd = GpsTimeEnd;
+            res.GpsSpeedStart = GpsSpeedStart;
+            res.GpsSpeedEnd = GpsSpeedEnd;
+            res.Realtime = Realtime;
+            res.Livetime = Livetime;
+            res.SpectralInput = SpectralInput;
+            res.Doserate = Doserate;
+            return res;
+        }
+
         public Spectrum Merge(Spectrum s)
         {
-            Spectrum res = s;
+            Spectrum res = s.Clone();
             res.Livetime += Livetime;
             res.Realtime += Realtime;
             for(int i=0; i<res.Channels.Count; i++)            
-                res.Channels[i] += Channels[i];            
-            // FIXME: more fields
+                res.Channels[i] += Channels[i];
             return res;
         }
     }
