@@ -325,6 +325,9 @@
     <None Include="images\layout-2.png" />
     <None Include="images\layout-3.png" />
     <None Include="images\layout-1.png" />
+    <Resource Include="images\donut.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="template_nuclides.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

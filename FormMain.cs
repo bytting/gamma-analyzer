@@ -1257,6 +1257,24 @@ namespace crash
             graphSession.RestoreScale(pane);
             graphSession.AxisChange();
             graphSession.Refresh();
+        }
+
+        private void menuItemSaveAsKMZ_Click(object sender, EventArgs e)
+        {
+            if (session.IsEmpty)
+            {
+                MessageBox.Show("No session active");
+                return;
+            }
+
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "Kmz File (*.kmz)|*.kmz";
+            dialog.DefaultExt = "kmz";
+            dialog.FileName = session.Name;
+            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                return;
+
+            SessionExporter.ExportAsKMZ(session, dialog.FileName);
         }        
     }
 }

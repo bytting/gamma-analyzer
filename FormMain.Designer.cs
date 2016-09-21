@@ -69,11 +69,6 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSelectLayout = new System.Windows.Forms.ToolStripDropDownButton();
-            this.menuItemLayoutSetup1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemLayoutSession1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemLayoutSession2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemLayoutSession3 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnShowLog = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
@@ -85,6 +80,11 @@
             this.btnStopSession = new System.Windows.Forms.ToolStripButton();
             this.btnSessionInfo = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSelectLayout = new System.Windows.Forms.ToolStripDropDownButton();
+            this.menuItemLayoutSetup1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutSession1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutSession2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutSession3 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnShowMap = new System.Windows.Forms.ToolStripButton();
             this.btnShowWaterfallLive = new System.Windows.Forms.ToolStripButton();
             this.lblInterface = new System.Windows.Forms.ToolStripLabel();
@@ -442,6 +442,7 @@
             this.menuItemSaveAsKMZ.Name = "menuItemSaveAsKMZ";
             this.menuItemSaveAsKMZ.Size = new System.Drawing.Size(180, 22);
             this.menuItemSaveAsKMZ.Text = "KM&Z";
+            this.menuItemSaveAsKMZ.Click += new System.EventHandler(this.menuItemSaveAsKMZ_Click);
             // 
             // menuItemSaveAsCSV
             // 
@@ -594,54 +595,6 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 40);
             // 
-            // btnSelectLayout
-            // 
-            this.btnSelectLayout.AutoSize = false;
-            this.btnSelectLayout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSelectLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemLayoutSetup1,
-            this.menuItemLayoutSession1,
-            this.menuItemLayoutSession2,
-            this.menuItemLayoutSession3});
-            this.btnSelectLayout.Image = global::crash.Properties.Resources.layouts_32;
-            this.btnSelectLayout.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSelectLayout.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSelectLayout.Name = "btnSelectLayout";
-            this.btnSelectLayout.Size = new System.Drawing.Size(38, 38);
-            this.btnSelectLayout.Text = "toolStripDropDownButton1";
-            this.btnSelectLayout.ToolTipText = "Select pre-defined layout";
-            // 
-            // menuItemLayoutSetup1
-            // 
-            this.menuItemLayoutSetup1.Image = global::crash.Properties.Resources.layout_2;
-            this.menuItemLayoutSetup1.Name = "menuItemLayoutSetup1";
-            this.menuItemLayoutSetup1.Size = new System.Drawing.Size(161, 22);
-            this.menuItemLayoutSetup1.Text = "Layout Setup";
-            this.menuItemLayoutSetup1.Click += new System.EventHandler(this.menuItemLayoutSetup1_Click);
-            // 
-            // menuItemLayoutSession1
-            // 
-            this.menuItemLayoutSession1.Image = global::crash.Properties.Resources.layout_3;
-            this.menuItemLayoutSession1.Name = "menuItemLayoutSession1";
-            this.menuItemLayoutSession1.Size = new System.Drawing.Size(161, 22);
-            this.menuItemLayoutSession1.Text = "Layout Session";
-            this.menuItemLayoutSession1.Click += new System.EventHandler(this.menuItemLayoutSession1_Click);
-            // 
-            // menuItemLayoutSession2
-            // 
-            this.menuItemLayoutSession2.Image = global::crash.Properties.Resources.layout_1;
-            this.menuItemLayoutSession2.Name = "menuItemLayoutSession2";
-            this.menuItemLayoutSession2.Size = new System.Drawing.Size(161, 22);
-            this.menuItemLayoutSession2.Text = "Layout Session 2";
-            this.menuItemLayoutSession2.Click += new System.EventHandler(this.menuItemLayoutSession2_Click);
-            // 
-            // menuItemLayoutSession3
-            // 
-            this.menuItemLayoutSession3.Name = "menuItemLayoutSession3";
-            this.menuItemLayoutSession3.Size = new System.Drawing.Size(161, 22);
-            this.menuItemLayoutSession3.Text = "Layout Session 3";
-            this.menuItemLayoutSession3.Click += new System.EventHandler(this.menuItemLayoutSession3_Click);
-            // 
             // btnShowLog
             // 
             this.btnShowLog.AutoSize = false;
@@ -755,6 +708,54 @@
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 40);
+            // 
+            // btnSelectLayout
+            // 
+            this.btnSelectLayout.AutoSize = false;
+            this.btnSelectLayout.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSelectLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemLayoutSetup1,
+            this.menuItemLayoutSession1,
+            this.menuItemLayoutSession2,
+            this.menuItemLayoutSession3});
+            this.btnSelectLayout.Image = global::crash.Properties.Resources.layouts_32;
+            this.btnSelectLayout.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnSelectLayout.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSelectLayout.Name = "btnSelectLayout";
+            this.btnSelectLayout.Size = new System.Drawing.Size(38, 38);
+            this.btnSelectLayout.Text = "toolStripDropDownButton1";
+            this.btnSelectLayout.ToolTipText = "Select pre-defined layout";
+            // 
+            // menuItemLayoutSetup1
+            // 
+            this.menuItemLayoutSetup1.Image = global::crash.Properties.Resources.layout_2;
+            this.menuItemLayoutSetup1.Name = "menuItemLayoutSetup1";
+            this.menuItemLayoutSetup1.Size = new System.Drawing.Size(161, 22);
+            this.menuItemLayoutSetup1.Text = "Layout Setup";
+            this.menuItemLayoutSetup1.Click += new System.EventHandler(this.menuItemLayoutSetup1_Click);
+            // 
+            // menuItemLayoutSession1
+            // 
+            this.menuItemLayoutSession1.Image = global::crash.Properties.Resources.layout_3;
+            this.menuItemLayoutSession1.Name = "menuItemLayoutSession1";
+            this.menuItemLayoutSession1.Size = new System.Drawing.Size(161, 22);
+            this.menuItemLayoutSession1.Text = "Layout Session";
+            this.menuItemLayoutSession1.Click += new System.EventHandler(this.menuItemLayoutSession1_Click);
+            // 
+            // menuItemLayoutSession2
+            // 
+            this.menuItemLayoutSession2.Image = global::crash.Properties.Resources.layout_1;
+            this.menuItemLayoutSession2.Name = "menuItemLayoutSession2";
+            this.menuItemLayoutSession2.Size = new System.Drawing.Size(161, 22);
+            this.menuItemLayoutSession2.Text = "Layout Session 2";
+            this.menuItemLayoutSession2.Click += new System.EventHandler(this.menuItemLayoutSession2_Click);
+            // 
+            // menuItemLayoutSession3
+            // 
+            this.menuItemLayoutSession3.Name = "menuItemLayoutSession3";
+            this.menuItemLayoutSession3.Size = new System.Drawing.Size(161, 22);
+            this.menuItemLayoutSession3.Text = "Layout Session 3";
+            this.menuItemLayoutSession3.Click += new System.EventHandler(this.menuItemLayoutSession3_Click);
             // 
             // btnShowMap
             // 

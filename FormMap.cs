@@ -42,7 +42,7 @@ namespace crash
         public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
         public event SetSessionIndexEventHandler SetSessionIndexEvent;
 
-        private Bitmap bmpBlue = new Bitmap(crash.Properties.Resources.marker_blue_10);        
+        private Bitmap bmpBlue = new Bitmap(crash.Properties.Resources.marker_blue_10);
         private Bitmap bmpGreen = new Bitmap(crash.Properties.Resources.marker_green_10);
         private Bitmap bmpYellow = new Bitmap(crash.Properties.Resources.marker_yellow_10);
         private Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);

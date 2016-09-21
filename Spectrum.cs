@@ -186,14 +186,12 @@ namespace crash
             return res;
         }
 
-        public Spectrum Merge(Spectrum s)
-        {
-            Spectrum res = s.Clone();
-            res.Livetime += Livetime;
-            res.Realtime += Realtime;
-            for(int i=0; i<res.Channels.Count; i++)            
-                res.Channels[i] += Channels[i];
-            return res;
+        public void Merge(Spectrum s)
+        {            
+            Livetime += s.Livetime;
+            Realtime += s.Realtime;
+            for(int i=0; i<mChannels.Count; i++)            
+                mChannels[i] += s.mChannels[i];        
         }
     }
 

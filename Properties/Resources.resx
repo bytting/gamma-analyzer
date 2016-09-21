@@ -118,8 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="options1-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\options1-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="drone2-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\drone2-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="right-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\right-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="map-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\map-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -157,9 +160,6 @@
   <data name="waterfall-history-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\waterfall-history-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="drone7-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\drone7-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="log-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\log-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -193,9 +193,6 @@
   <data name="doserate-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\doserate-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="setup-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\setup-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="stop-session-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\stop-session-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -207,6 +204,9 @@
   </data>
   <data name="connection-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\connection-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marker-red-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\marker-red-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="background-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\background-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -241,8 +241,11 @@
   <data name="marker-green-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\marker-green-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="right-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\right-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="layout-1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\layout-1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="drone7-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\drone7-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="delete-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\delete-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -259,11 +262,11 @@
   <data name="drone5-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\drone5-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="marker-red-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\marker-red-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="setup-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\setup-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="drone2-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\drone2-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="options1-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\options1-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="layouts-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\layouts-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -271,7 +274,7 @@
   <data name="marker-cyan-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\marker-cyan-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="layout-1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\layout-1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="donut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\donut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

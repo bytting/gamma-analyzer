@@ -255,7 +255,7 @@ namespace crash
 
                         if (previewSpec == null)
                             previewSpec = spec;
-                        else previewSpec = previewSpec.Merge(spec);                        
+                        else previewSpec.Merge(spec);
 
                         GraphPane pane = graphSetup.GraphPane;
                         pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
