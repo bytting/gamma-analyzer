@@ -21,6 +21,7 @@ using System;
 using System.Text;
 using System.IO;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
@@ -69,7 +70,7 @@ namespace crash
             }            
         }
 
-        // Style Structure representing a kml icon
+        // Structure representing a kml icon
         [Serializable]
         public class KmlIcon
         {
@@ -93,7 +94,7 @@ namespace crash
 		    public string Color { get; set; }
 	    }
 
-        // Style Structure representing a kml label
+        // Structure representing a kml label
         [Serializable]
         public class KmlLabelStyle 
         {
@@ -101,7 +102,7 @@ namespace crash
 		    public string Scale { get; set; }
 	    }
 
-        // Style Structure representing a kml style
+        // Structure representing a kml style
         [XmlRoot(ElementName = "Style")]
         public class KmlStyle
         {
@@ -121,7 +122,7 @@ namespace crash
             public KmlLabelStyle LabelStyle { get; set; }
         }
 
-        // Placemark Structure representing a kml timestamp
+        // Structure representing a kml timestamp
         [Serializable]
         public class KmlTimeStamp 
         {
@@ -129,7 +130,7 @@ namespace crash
 		    public string When { get; set; }
 	    }
 
-        // Placemark Structure representing a kml point
+        // Structure representing a kml point
         [Serializable]
         public class KmlPoint 
         {
@@ -137,11 +138,11 @@ namespace crash
 		    public string Coordinates { get; set; }
 	    }
 
-        // Placemark Structure representing a kml placemark
-        [Serializable]
-        public class Placemark 
+        // Structure representing a kml placemark
+        [XmlRoot(ElementName = "Placemark")]
+        public class KmlPlacemark
         {
-            public Placemark()
+            public KmlPlacemark()
             {
                 TimeStamp = new KmlTimeStamp();
                 Point = new KmlPoint();
@@ -165,8 +166,9 @@ namespace crash
 
         public static void ExportAsKMZ(Session session, string filename)
         {
-            string kmlFile = Path.GetDirectoryName(filename) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(filename) + ".kml";
             string kmzFile = filename;
+            string kmlFile = Path.GetDirectoryName(filename) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(filename) + ".kml";
+            string donutFile = CrashEnvironment.SettingsPath + Path.DirectorySeparatorChar + "donut.png";
 
             using (XmlWriter writer = XmlWriter.Create(kmlFile))
             {
@@ -177,7 +179,6 @@ namespace crash
                 writer.WriteString("\n");
 
                 KmlStyle s = new KmlStyle();
-
                 string[] colors = { "FFF0B414", "FF00D214", "FF78FFF0", "FF1478FF", "FF1400FF" };
                 XmlSerializer serializer = new XmlSerializer(typeof(KmlStyle));
                 XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
@@ -194,12 +195,12 @@ namespace crash
                     writer.WriteString("\n");
 	            }
 
-                serializer = new XmlSerializer(typeof(Placemark));                
+                serializer = new XmlSerializer(typeof(KmlPlacemark));
+                KmlPlacemark p = new KmlPlacemark();
+                int styleID = 0;
+
                 foreach (Spectrum spec in session.Spectrums)
                 {
-                    Placemark p = new Placemark();
-	                int styleID = 0;
-
                     double dose = spec.Doserate / 1000d;
 
 	                // Calculate the style id for this sample
@@ -211,18 +212,17 @@ namespace crash
 		                styleID = 2;
                     else if (dose <= 20)                    
 		                styleID = 3;	                
-                    else                     
-		                styleID = 4;
+                    else styleID = 4;
 
-                    p.Name = ""; // dose.ToString("f") + " mSv/h";
+                    p.Name = "";
                     p.StyleURL = "#" + styleID.ToString();
 	                p.TimeStamp.When = spec.GpsTimeStart.ToString("yyyy-MM-ddTHH:mm:ss");
                     p.Point.Coordinates = spec.LongitudeStart.ToString(CultureInfo.InvariantCulture) + "," + spec.LatitudeStart.ToString(CultureInfo.InvariantCulture);
-                    p.Description = "Value: " + spec.Doserate.ToString("e", CultureInfo.InvariantCulture) + " mSv/h" +
+                    p.Description = "Value: " + dose.ToString("e", CultureInfo.InvariantCulture) + " μSv/h" +
                         "\nLatitude: " + spec.LatitudeStart.ToString(CultureInfo.InvariantCulture) +
                         "\nLongitude: " + spec.LongitudeStart.ToString(CultureInfo.InvariantCulture) +
                         "\nAltitude: " + spec.AltitudeStart.ToString(CultureInfo.InvariantCulture) +
-                        "\nTime: " + spec.GpsTimeStart.ToShortDateString() + " " + spec.GpsTimeStart.ToShortTimeString();
+                        "\nTime: " + spec.GpsTimeStart.ToString("yyyy-MM-dd HH:mm:ss") + " UTC";
 
                     serializer.Serialize(writer, p, ns);
                     writer.WriteString("\n");                    
@@ -235,14 +235,17 @@ namespace crash
             }
 
             Bitmap bmpDonut = new Bitmap(crash.Properties.Resources.donut);
-            bmpDonut.Save(CrashEnvironment.SettingsPath + Path.DirectorySeparatorChar + "donut.png", System.Drawing.Imaging.ImageFormat.Png);
+            bmpDonut.Save(donutFile, ImageFormat.Png);
 
             using (ZipFile zip = new ZipFile())
             {
                 zip.AddFile(kmlFile, "");
-                zip.AddFile(CrashEnvironment.SettingsPath + Path.DirectorySeparatorChar + "donut.png", "files");                
+                zip.AddFile(donutFile, "files");                
                 zip.Save(kmzFile);
             }
+
+            if (File.Exists(donutFile))
+                File.Delete(donutFile);
 
             if(File.Exists(kmlFile))
                 File.Delete(kmlFile);
