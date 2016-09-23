@@ -672,7 +672,7 @@ namespace crash
 
         private void menuItemSaveAsCHN_Click(object sender, EventArgs e)
         {
-            if (session.IsEmpty)
+            if (session == null || session.IsEmpty)
             {
                 MessageBox.Show("No session active");
                 return;
@@ -1223,25 +1223,11 @@ namespace crash
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "Log File (*.csv)|*.csv|All Files (*.*)|*.*";
             dialog.DefaultExt = "csv";
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                // Write info for each spectrum to csv file
-                using (StreamWriter writer = new StreamWriter(dialog.FileName, false, Encoding.UTF8))
-                {
-                    foreach (Spectrum s in session.Spectrums)
-                    {
-                        writer.WriteLine(
-                            s.SessionName + "|"
-                            + s.SessionIndex.ToString() + "|"
-                            + s.GpsTimeStart.ToString("yyyy-MM-ddTHH:mm:ss") + "|"
-                            + s.LatitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                            + s.LongitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                            + s.AltitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                            + s.Doserate.ToString(CultureInfo.InvariantCulture)
-                            + "|mSv/h");
-                    }
-                }
-            }
+            dialog.FileName = session.Name;
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            SessionExporter.ExportAsCSV(session, dialog.FileName);            
         }
 
         private void menuItemNuclidesUnselect_Click(object sender, EventArgs e)
@@ -1261,7 +1247,7 @@ namespace crash
 
         private void menuItemSaveAsKMZ_Click(object sender, EventArgs e)
         {
-            if (session.IsEmpty)
+            if (session == null || session.IsEmpty)
             {
                 MessageBox.Show("No session active");
                 return;
@@ -1271,7 +1257,7 @@ namespace crash
             dialog.Filter = "Kmz File (*.kmz)|*.kmz";
             dialog.DefaultExt = "kmz";
             dialog.FileName = session.Name;
-            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
             SessionExporter.ExportAsKMZ(session, dialog.FileName);

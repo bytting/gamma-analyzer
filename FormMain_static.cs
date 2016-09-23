@@ -35,39 +35,62 @@ namespace crash
 {
     public partial class FormMain
     {
+        // Structure with application settings stored on disk
         CrashSettings settings = new CrashSettings();
-
+        
+        // Concurrent queue used to pass messages to networking thread
         static ConcurrentQueue<burn.Message> sendq = null;
+        // Concurrent queue used to receive messages from network thread
         static ConcurrentQueue<burn.Message> recvq = null;
+        // FIXME: Create a proper API for communication with network thread
 
+        // Networking thread
         static burn.NetService netService = new burn.NetService(ref sendq, ref recvq);
         static Thread netThread = new Thread(netService.DoWork);
 
+        // Timer used to poll for network messages
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
+        // Network connection state
         bool connected = false;
+
+        // Structire for currently loaded session
         Session session = new Session();
         
+        // External forms
         FormWaterfallLive formWaterfallLive = null;
         FormROILive formROILive = null;
         FormMap frmMap = null;
 
+        // Point lists with graph data
         PointPairList setupGraphList = new PointPairList();
         PointPairList sessionGraphList = new PointPairList();
         PointPairList bkgGraphList = new PointPairList();        
 
+        // Livetime scale factor for currently loaded background
         float bkgScale = 1f;
+
+        // Flag used for tracking multi selection of spectrums
         bool selectionRun = false;        
+
+        // Running session state
         bool sessionRunning = false;
 
+        // Structure containing loaded nuclide library
         List<NuclideInfo> NuclideLibrary = new List<NuclideInfo>();
 
+        // Spectrum used to accumulate counts for setup UI
         Spectrum previewSpec = null;
+
+        // Array containing currently selected energies/channels
         List<EnergyComp> energyLines = new List<EnergyComp>();
+
+        // Array containing curve fitting coefficients
         List<double> coefficients = new List<double>();
 
         private void SaveSettings()
         {
+            // Serialize settings to file
             using (StreamWriter sw = new StreamWriter(CrashEnvironment.SettingsFile))
             {
                 XmlSerializer x = new XmlSerializer(settings.GetType());
@@ -80,6 +103,7 @@ namespace crash
             if (!File.Exists(CrashEnvironment.SettingsFile))
                 return;
 
+            // Deserialize settings from file
             using (StreamReader sr = new StreamReader(CrashEnvironment.SettingsFile))
             {
                 XmlSerializer x = new XmlSerializer(settings.GetType());
@@ -92,6 +116,7 @@ namespace crash
             if (!File.Exists(CrashEnvironment.NuclideLibraryFile))
                 return false;
 
+            // Load nuclide library from file
             using (TextReader reader = File.OpenText(CrashEnvironment.NuclideLibraryFile))
             {
                 NuclideLibrary.Clear();
@@ -101,15 +126,17 @@ namespace crash
                 while ((line = reader.ReadLine()) != null)
                 {
                     line = line.Trim();
-                    if (String.IsNullOrEmpty(line) || line.StartsWith("#"))
+                    if (String.IsNullOrEmpty(line) || line.StartsWith("#")) // Skip comments
                         continue;
                     string[] items = line.Split(itemDelims, StringSplitOptions.RemoveEmptyEntries);
                     string name = items[0];
                     double halfLife = Convert.ToDouble(items[1], CultureInfo.InvariantCulture);
                     string halfLifeUnit = items[2];
 
+                    // Parse nuclide
                     NuclideInfo ni = new NuclideInfo(name, halfLife, halfLifeUnit);
 
+                    // Parse energies
                     for (int i = 3; i < items.Length; i++)
                     {
                         string[] energy = items[i].Split(energyDelims, StringSplitOptions.RemoveEmptyEntries);
@@ -118,6 +145,7 @@ namespace crash
                         ni.Energies.Add(new NuclideEnergy(e, p));
                     }
 
+                    // Store nuclide
                     NuclideLibrary.Add(ni);
                 }             
             }
@@ -126,11 +154,13 @@ namespace crash
 
         private void sendMsg(burn.Message msg)
         {
+            // Put a message on the network queue
             sendq.Enqueue(msg);
         }
 
         private bool dispatchRecvMsg(burn.Message msg)
         {
+            // Handle messages received from network
             Detector det = null;
             DetectorType detType = null;
 
@@ -328,11 +358,9 @@ namespace crash
         public void SaveSession(Session s)
         {
             string sessionSettingsFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + s.Name + Path.DirectorySeparatorChar + "session.json";
-            string jSessionInfo = JsonConvert.SerializeObject(s, Newtonsoft.Json.Formatting.Indented);
-            using (TextWriter writer = new StreamWriter(sessionSettingsFile))
-            {
+            string jSessionInfo = JsonConvert.SerializeObject(s, Newtonsoft.Json.Formatting.Indented);            
+            using (TextWriter writer = new StreamWriter(sessionSettingsFile))            
                 writer.Write(jSessionInfo);
-            }            
         }
 
         void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)

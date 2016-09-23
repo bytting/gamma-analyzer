@@ -32,6 +32,33 @@ namespace crash
 {
     public static class SessionExporter
     {
+        public static void ExportAsCSV(Session session, string filename)
+        {
+            // Write info for each spectrum to csv file
+            using (StreamWriter writer = new StreamWriter(filename, false, Encoding.UTF8))
+            {
+                writer.WriteLine("Session name|Session index|Time start|Time end|Latitude start|Latitude end|Longitude start|Longitude end|Altitude start|Altitude end|Doserate|Doserate unit");
+
+                foreach (Spectrum s in session.Spectrums)
+                {
+                    double dose = s.Doserate / 1000d;
+                    
+                    writer.WriteLine(
+                        s.SessionName + "|"
+                        + s.SessionIndex.ToString() + "|"
+                        + s.GpsTimeStart.ToString("yyyy-MM-ddTHH:mm:ss") + "|"
+                        + s.GpsTimeEnd.ToString("yyyy-MM-ddTHH:mm:ss") + "|"
+                        + s.LatitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.LatitudeEnd.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.LongitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.LongitudeEnd.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.AltitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.AltitudeEnd.ToString(CultureInfo.InvariantCulture) + "|"
+                        + dose.ToString(CultureInfo.InvariantCulture) + "|μSv/h");
+                }
+            }
+        }
+
         public static void ExportAsCHN(Session session, string path)
         {
             foreach(Spectrum s in session.Spectrums)

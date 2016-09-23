@@ -51,7 +51,6 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemExport = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSaveAsCHN = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemSaveAsIRIX = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSaveAsKMZ = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSaveAsCSV = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemView = new System.Windows.Forms.ToolStripMenuItem();
@@ -417,7 +416,6 @@
             // 
             this.menuItemExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemSaveAsCHN,
-            this.menuItemSaveAsIRIX,
             this.menuItemSaveAsKMZ,
             this.menuItemSaveAsCSV});
             this.menuItemExport.Name = "menuItemExport";
@@ -429,19 +427,15 @@
             this.menuItemSaveAsCHN.Name = "menuItemSaveAsCHN";
             this.menuItemSaveAsCHN.Size = new System.Drawing.Size(180, 22);
             this.menuItemSaveAsCHN.Text = "&CHN";
+            this.menuItemSaveAsCHN.ToolTipText = "Save session as multiple CHN files";
             this.menuItemSaveAsCHN.Click += new System.EventHandler(this.menuItemSaveAsCHN_Click);
-            // 
-            // menuItemSaveAsIRIX
-            // 
-            this.menuItemSaveAsIRIX.Name = "menuItemSaveAsIRIX";
-            this.menuItemSaveAsIRIX.Size = new System.Drawing.Size(180, 22);
-            this.menuItemSaveAsIRIX.Text = "&IRIX";
             // 
             // menuItemSaveAsKMZ
             // 
             this.menuItemSaveAsKMZ.Name = "menuItemSaveAsKMZ";
             this.menuItemSaveAsKMZ.Size = new System.Drawing.Size(180, 22);
             this.menuItemSaveAsKMZ.Text = "KM&Z";
+            this.menuItemSaveAsKMZ.ToolTipText = "Save session as a KMZ file";
             this.menuItemSaveAsKMZ.Click += new System.EventHandler(this.menuItemSaveAsKMZ_Click);
             // 
             // menuItemSaveAsCSV
@@ -449,6 +443,7 @@
             this.menuItemSaveAsCSV.Name = "menuItemSaveAsCSV";
             this.menuItemSaveAsCSV.Size = new System.Drawing.Size(180, 22);
             this.menuItemSaveAsCSV.Text = "CSV (simple log file)";
+            this.menuItemSaveAsCSV.ToolTipText = "Save session as a CSV file";
             this.menuItemSaveAsCSV.Click += new System.EventHandler(this.menuItemSaveAsCSV_Click);
             // 
             // menuItemView
@@ -2428,7 +2423,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemShowLog;
         private System.Windows.Forms.ToolStripMenuItem menuItemExport;
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsCHN;
-        private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsIRIX;
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsKMZ;
         private System.Windows.Forms.ToolStripMenuItem menuItemSourceActivity;
         private System.Windows.Forms.TabControl tabs;
