@@ -22,6 +22,7 @@ using System.Collections.Generic;
 
 namespace crash
 {
+    // Helper class to store a nuclide library entry
     public class NuclideInfo
     {
         public NuclideInfo()
@@ -48,6 +49,7 @@ namespace crash
         }
     }
 
+    // Helper class to store the energies of a nuclide entry
     public class NuclideEnergy
     {
         public NuclideEnergy() {}

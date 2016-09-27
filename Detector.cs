@@ -27,15 +27,34 @@ namespace crash
     [Serializable()]
     public class Detector
     {
+        // Name of detector type
         public string TypeName { get; set; }
+
+        // Current high voltage for detector
         public int CurrentHV { get; set; }
+
+        // Current number of channels
         public int CurrentNumChannels { get; set; }
+
+        // Detector serialnumber
         public string Serialnumber { get; set; }
+
+        // Current coarse gain for detector
         public double CurrentCoarseGain { get; set; }
+
+        // Current fine gain for detector
         public double CurrentFineGain { get; set; }
+
+        // Current livetime for detector
         public int CurrentLivetime { get; set; }
+
+        // Current lower level discriminator for detector
         public int CurrentLLD { get; set; }
+
+        // Current upper level discriminator for detector
         public int CurrentULD { get; set; }
+
+        // List of energy curve coefficients
         [XmlArray("EnergyCurveCoefficients")]
         [XmlArrayItem("Value")]
         public List<double> EnergyCurveCoefficients { get; set; }
@@ -47,6 +66,7 @@ namespace crash
 
         public Detector Clone()
         {
+            // Clone this detector
             Detector clone = new Detector();
             clone.TypeName = TypeName;
             clone.CurrentHV = CurrentHV;
@@ -71,6 +91,7 @@ namespace crash
             if (EnergyCurveCoefficients.Count < 2 || EnergyCurveCoefficients.Count > 5)
                 return 0.0;
 
+            // Calculate energy for a given channel
             double dx = (double)x;
             double E = 0.0;
             for(int i=0; i<EnergyCurveCoefficients.Count; i++)            

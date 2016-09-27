@@ -383,7 +383,7 @@ namespace crash
                 lblTotalCount.Text = "Total count: " + totCnt;
                 lblDoserate.Text = "";
 
-                // Inform other forms of new spectrum selection
+                // Notify external forms about new spectrum selection
                 if (formWaterfallLive.Visible)
                     formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 if (frmMap.Visible)
@@ -392,13 +392,14 @@ namespace crash
                     formROILive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
             }
 
-            // Update session graph
+            // Update session graph            
             GraphPane pane = graphSession.GraphPane;
             pane.GraphObjList.Clear();
             graphSession.RestoreScale(pane);
             graphSession.AxisChange();
-            graphSession.Refresh();
+            graphSession.Refresh();            
 
+            // Reset nuclide UI
             lbNuclides.Items.Clear();
         }
 
@@ -885,10 +886,12 @@ namespace crash
             //pane.GraphObjList.Add(line);
 
             LineObj line1 = new LineObj(Color.Black, (double)x - tbarNuclides.Value, pane.YAxis.Scale.Min, (double)x - tbarNuclides.Value, pane.YAxis.Scale.Max);
+            makeGraphObjectType(ref line1.Tag, GraphObjectType.EnergyTolerance);
             line1.Line.Style = System.Drawing.Drawing2D.DashStyle.Dot;
             pane.GraphObjList.Add(line1);
 
             LineObj line2 = new LineObj(Color.Black, (double)x + tbarNuclides.Value, pane.YAxis.Scale.Min, (double)x + tbarNuclides.Value, pane.YAxis.Scale.Max);
+            makeGraphObjectType(ref line2.Tag, GraphObjectType.EnergyTolerance);
             line2.Line.Style = System.Drawing.Drawing2D.DashStyle.Dot;
             pane.GraphObjList.Add(line2);
 
@@ -919,14 +922,14 @@ namespace crash
             FormAskDecimal form = new FormAskDecimal("Enter expected energy for channel " + x);
             if(form.ShowDialog() == DialogResult.Cancel)
                 return;
-            
-            energyLines.Add(new EnergyComp((double)x, form.Value));
+
+            energyLines.Add(new ChannelEnergy((double)x, form.Value));
 
             if (energyLines.Count > 1)
             {                
                 List<double> xList = new List<double>();
                 List<double> yList = new List<double>();
-                foreach (EnergyComp ec in energyLines)
+                foreach (ChannelEnergy ec in energyLines)
                 {
                     xList.Add((double)ec.Channel);
                     yList.Add((double)ec.Energy);
@@ -938,6 +941,7 @@ namespace crash
 
             GraphPane pane = graphSetup.GraphPane;            
             LineObj line = new LineObj(Color.DarkBlue, (double)x, pane.YAxis.Scale.Min, (double)x, pane.YAxis.Scale.Max);
+            makeGraphObjectType(ref line.Tag, GraphObjectType.EnergyCalibration);
             pane.GraphObjList.Add(line);
 
             graphSetup.RestoreScale(pane);
@@ -974,8 +978,8 @@ namespace crash
 
         private void menuItemResetCoefficients_Click(object sender, EventArgs e)
         {
-            energyLines.Clear();                        
-            graphSetup.GraphPane.GraphObjList.Clear();
+            energyLines.Clear();
+            graphSetup.GraphPane.GraphObjList.RemoveAll(o => isGraphObjectType(o.Tag, GraphObjectType.EnergyCalibration));            
             //graphSetup.RestoreScale(pane);
             graphSetup.AxisChange();
             graphSetup.Refresh();
@@ -1174,7 +1178,7 @@ namespace crash
 
             // Remove current nuclide lines from graph
             GraphPane pane = graphSession.GraphPane;
-            pane.GraphObjList.RemoveAll(o => o.Tag != null && (Int32)o.Tag == 2);
+            pane.GraphObjList.RemoveAll(o => isGraphObjectType(o.Tag, GraphObjectType.Energy));
 
             if (lbNuclides.SelectedItems.Count > 0)
             {
@@ -1191,15 +1195,13 @@ namespace crash
                     }
 
                     // Add energy line
-                    LineObj line = new LineObj(Color.DodgerBlue, (double)ch, pane.YAxis.Scale.Min, (double)ch, pane.YAxis.Scale.Max);
-                    line.Tag = new Int32();
-                    line.Tag = 2;
+                    LineObj line = new LineObj(Color.DarkGoldenrod, (double)ch, pane.YAxis.Scale.Min, (double)ch, pane.YAxis.Scale.Max);
+                    makeGraphObjectType(ref line.Tag, GraphObjectType.Energy);
                     pane.GraphObjList.Add(line);
                                
                     // Add probability text
                     TextObj label = new TextObj(ne.Probability.ToString(), (double)ch,  pane.YAxis.Scale.Max, CoordType.AxisXY2Scale, AlignH.Left, AlignV.Top);
-                    label.Tag = new Int32();
-                    label.Tag = 2;
+                    makeGraphObjectType(ref label.Tag, GraphObjectType.Energy);                    
                     label.FontSpec.Border.IsVisible = false;
                     label.FontSpec.Size = 6f;
                     label.FontSpec.Fill.Color = SystemColors.ButtonFace;

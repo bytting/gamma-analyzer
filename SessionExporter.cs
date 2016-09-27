@@ -35,14 +35,17 @@ namespace crash
         public static void ExportAsCSV(Session session, string filename)
         {
             // Write info for each spectrum to csv file
+
             using (StreamWriter writer = new StreamWriter(filename, false, Encoding.UTF8))
             {
+                // Write header line
                 writer.WriteLine("Session name|Session index|Time start|Time end|Latitude start|Latitude end|Longitude start|Longitude end|Altitude start|Altitude end|Doserate|Doserate unit");
 
                 foreach (Spectrum s in session.Spectrums)
                 {
                     double dose = s.Doserate / 1000d;
                     
+                    // Write spectrum line
                     writer.WriteLine(
                         s.SessionName + "|"
                         + s.SessionIndex.ToString() + "|"
@@ -61,6 +64,8 @@ namespace crash
 
         public static void ExportAsCHN(Session session, string path)
         {
+            // Generate a CHN file for each spectrum
+
             foreach(Spectrum s in session.Spectrums)
             {                
                 string sessionPath = path + Path.DirectorySeparatorChar + session.Name + "_CHN";
@@ -70,10 +75,8 @@ namespace crash
                 string filename = sessionPath + Path.DirectorySeparatorChar + s.SessionIndex.ToString() + ".chn";
                 using (BinaryWriter writer = new BinaryWriter(File.Create(filename)))
                 {
-                    string dateStr = s.GpsTimeStart.ToString("ddMMMyy") + "1";
-                    dateStr = dateStr.ToUpper();
+                    string dateStr = s.GpsTimeStart.ToString("ddMMMyy") + "1";                    
                     string timeStr = s.GpsTimeStart.ToString("HHmm");
-
                     string secStr = s.GpsTimeStart.ToString("ss");
 
                     writer.Write(Convert.ToInt16(-1)); // signature
@@ -86,11 +89,12 @@ namespace crash
                     Int32 lt = s.Livetime / 1000; // ms                    
                     lt = lt / 20; // increments of 20 ms
                     writer.Write(lt); // livetime                    
-                    writer.Write(Encoding.ASCII.GetBytes(dateStr)); // date
+                    writer.Write(Encoding.ASCII.GetBytes(dateStr.ToUpper())); // date
                     writer.Write(Encoding.ASCII.GetBytes(timeStr)); // time
                     writer.Write(Convert.ToInt16(0)); // channel offset
                     writer.Write(Convert.ToInt16(s.NumChannels)); // number of channels
 
+                    // Channel counts
                     foreach (float ch in s.Channels)
                         writer.Write(Convert.ToInt32(ch));
                 }
@@ -105,6 +109,7 @@ namespace crash
 			public string Href { get; set; }
 		}
 
+        // Structure representing a kml icon style
         [Serializable]
         public class KmlIconStyle
         {
@@ -193,24 +198,28 @@ namespace crash
 
         public static void ExportAsKMZ(Session session, string filename)
         {
+            // Save session info as a KMZ file
+
             string kmzFile = filename;
             string kmlFile = Path.GetDirectoryName(filename) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(filename) + ".kml";
             string donutFile = CrashEnvironment.SettingsPath + Path.DirectorySeparatorChar + "donut.png";
 
             using (XmlWriter writer = XmlWriter.Create(kmlFile))
             {
+                // Initialize KML document
                 writer.WriteStartDocument();                
                 writer.WriteStartElement("kml");
                 writer.WriteString("\n");
                 writer.WriteStartElement("Document");
                 writer.WriteString("\n");
 
+                // Store KML styles
                 KmlStyle s = new KmlStyle();
-                string[] colors = { "FFF0B414", "FF00D214", "FF78FFF0", "FF1478FF", "FF1400FF" };
+                string[] colors = { "FFF0B414", "FF00D214", "FF78FFF0", "FF1478FF", "FF1400FF" }; // IAEA color codes
                 XmlSerializer serializer = new XmlSerializer(typeof(KmlStyle));
                 XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
                 ns.Add("", "");
-
+                
 	            for(int i = 0; i < 5; i++) 
                 {     
 		            s.ID = i.ToString();
@@ -222,13 +231,14 @@ namespace crash
                     writer.WriteString("\n");
 	            }
 
+                // Store a KML placemark for each spectrum
                 serializer = new XmlSerializer(typeof(KmlPlacemark));
                 KmlPlacemark p = new KmlPlacemark();
                 int styleID = 0;
-
+                
                 foreach (Spectrum spec in session.Spectrums)
                 {
-                    double dose = spec.Doserate / 1000d;
+                    double dose = spec.Doserate / 1000d; // Convert Doserate to micro
 
 	                // Calculate the style id for this sample
 	                if(dose <= 1d)                    
@@ -255,15 +265,18 @@ namespace crash
                     writer.WriteString("\n");                    
                 }
                 
+                // Finish KML document
                 writer.WriteEndElement();
                 writer.WriteString("\n");
                 writer.WriteEndElement();                
                 writer.WriteEndDocument();                
             }
 
+            // Create a icon file to use for placemarks
             Bitmap bmpDonut = new Bitmap(crash.Properties.Resources.donut);
             bmpDonut.Save(donutFile, ImageFormat.Png);
 
+            // Zip the KML and icon files to create a KMZ file
             using (ZipFile zip = new ZipFile())
             {
                 zip.AddFile(kmlFile, "");
@@ -271,6 +284,7 @@ namespace crash
                 zip.Save(kmzFile);
             }
 
+            // Delete temporary files
             if (File.Exists(donutFile))
                 File.Delete(donutFile);
 

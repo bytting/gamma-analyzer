@@ -83,10 +83,33 @@ namespace crash
         Spectrum previewSpec = null;
 
         // Array containing currently selected energies/channels
-        List<EnergyComp> energyLines = new List<EnergyComp>();
+        List<ChannelEnergy> energyLines = new List<ChannelEnergy>();
 
         // Array containing curve fitting coefficients
         List<double> coefficients = new List<double>();
+
+        // Enumeration used to keep track of graph object types
+        public enum GraphObjectType
+        {
+            Spectrum,
+            Background,
+            Energy,
+            EnergyTolerance,
+            EnergyCalibration
+        };
+
+        public void makeGraphObjectType(ref object tag, GraphObjectType got)
+        {
+            // Create a graph object type
+            tag = new GraphObjectType();
+            tag = got;
+        }
+
+        public bool isGraphObjectType(object tag, GraphObjectType got)
+        {
+            // Check graph object type
+            return tag != null && (GraphObjectType)tag == got;
+        }
 
         private void SaveSettings()
         {
@@ -167,29 +190,35 @@ namespace crash
             switch (msg.Command)
             {
                 case "connect_ok":                    
+                    // Connection successful
                     Utils.Log.Add("RECV: Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
 
+                    // Send a ping command to ensure a healthy connection
                     burn.Message msgPing = new burn.Message("ping", null);
                     sendMsg(msgPing);
                     Utils.Log.Add("SEND: Sending ping message");
                     break;
 
                 case "connect_failed":
+                    // Connection failed
                     connected = false;                    
                     Utils.Log.Add("RECV: Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);                    
                     break;
 
                 case "disconnect_ok":
+                    // Disconnect successful
                     connected = false;
                     lblConnectionStatus.ForeColor = Color.Red;
                     lblConnectionStatus.Text = "Not connected";
                     Utils.Log.Add("RECV: Disconnected from peer");
 
+                    // Change to session tab
                     if (tabs.SelectedTab == pageSetup)
                         tabs.SelectedTab = pageSessions;
                     break;
 
                 case "ping_ok":                    
+                    // Ping command received, update state
                     connected = true;
                     lblConnectionStatus.ForeColor = Color.Green;
                     lblConnectionStatus.Text = "Connected to " + settings.LastIP + ":" + settings.LastPort;                    
@@ -197,6 +226,7 @@ namespace crash
                     break;
 
                 case "close_ok":
+                    // Remove service closed, close down network thread and update state
                     netService.RequestStop();
                     netThread.Join();
                     connected = false;
@@ -206,23 +236,31 @@ namespace crash
                     break;
 
                 case "new_session_ok":
+                    // New session created successfully
                     bool prev = msg.Arguments["preview"].ToString() == "1";
                     if (prev)
+                    {
+                        // New session is a preview session, update log
                         Utils.Log.Add("RECV: Preview session started");
+                    }
                     else
                     {
+                        // New session is a normal session
                         string sessionName = msg.Arguments["session_name"].ToString();
                         Utils.Log.Add("RECV: New session started: " + sessionName);
 
+                        // Create a session object and update state
                         float livetime = Convert.ToSingle(msg.Arguments["livetime"]);
                         int iterations = Convert.ToInt32(msg.Arguments["iterations"]);
 
                         det = (Detector)cboxSetupDetector.SelectedItem;
-                        detType = settings.DetectorTypes.Find(dt => dt.Name == det.TypeName);                        
+                        detType = settings.DetectorTypes.Find(dt => dt.Name == det.TypeName);
                         session = new Session(settings.SessionRootDirectory, sessionName, "", livetime, iterations, det, detType);
 
-                        SaveSession(session);                        
+                        // Create session files and directories
+                        SaveSession(session);
 
+                        // Notify external forms about new session
                         formWaterfallLive.SetSession(session);
                         formROILive.SetSession(session);
                         frmMap.SetSession(session);
@@ -234,10 +272,12 @@ namespace crash
                     break;
 
                 case "new_session_failed":
+                    // Creation of new session failed, log error message
                     Utils.Log.Add("RECV: New session failed: " + msg.Arguments["message"]);
                     break;
 
                 case "stop_session_ok":
+                    // Stop session successful, update state
                     Utils.Log.Add("RECV: Session stopped");
                     sessionRunning = false;
                     btnSetupStartTest.Enabled = true;
@@ -245,48 +285,57 @@ namespace crash
                     break;
 
                 case "session_finished":
+                    // Session finished successfully
                     Utils.Log.Add("RECV: Session " + msg.Arguments["session_name"] + " finished");
                     sessionRunning = false;
                     break;
 
                 case "error":
+                    // An error occurred, log error message
                     Utils.Log.Add("RECV: Error: " + msg.Arguments["message"]);
                     break;
 
                 case "error_socket":
+                    // An socket error occurred, log error message
                     Utils.Log.Add("RECV: Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
                     break;
 
                 case "set_gain_ok":
+                    // Set gain command executed successfully
                     Utils.Log.Add("RECV: set_gain ok: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " "
                         + msg.Arguments["fine_gain"] + " " + msg.Arguments["num_channels"] + " " + msg.Arguments["lld"] + " "
                         + msg.Arguments["uld"]);
 
+                    // Update selected detector parameters
                     det = (Detector)cboxSetupDetector.SelectedItem;
-
                     det.CurrentHV = Convert.ToInt32(msg.Arguments["voltage"]);
                     det.CurrentCoarseGain = Convert.ToDouble(msg.Arguments["coarse_gain"]);
                     det.CurrentFineGain = Convert.ToDouble(msg.Arguments["fine_gain"]);
                     det.CurrentNumChannels = Convert.ToInt32(msg.Arguments["num_channels"]);
                     det.CurrentLLD = Convert.ToInt32(msg.Arguments["lld"]);
                     det.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);
-
+                    
+                    // Update state
                     btnSetupNext.Enabled = true;
                     panelSetupGraph.Enabled = true;
                     break;
 
                 case "spectrum":
+                    // Session spectrum received successfully
                     Spectrum spec = new Spectrum(msg);
                     spec.CalculateDoserate(session.Detector, session.GEFactor);
 
                     if (spec.IsPreview)
                     {
+                        // Spectrum is a preview spectrum
                         Utils.Log.Add("RECV: " + spec.Label + " preview spectrum received");
 
+                        // Merge spectrum with our preview spectrum
                         if (previewSpec == null)
                             previewSpec = spec;
                         else previewSpec.Merge(spec);
 
+                        // Reset and prepare setup graph
                         GraphPane pane = graphSetup.GraphPane;
                         pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
                         pane.Fill = new Fill(SystemColors.ButtonFace);
@@ -295,6 +344,7 @@ namespace crash
                         pane.XAxis.Title.Text = "Channel";
                         pane.YAxis.Title.Text = "Counts";
 
+                        // Update setup graph
                         setupGraphList.Clear();
                         for (int i = 0; i < previewSpec.Channels.Count; i++)
                             setupGraphList.Add((double)i, (double)previewSpec.Channels[i]);
@@ -319,10 +369,12 @@ namespace crash
                     }
                     else
                     {
+                        // Normal session spectrum received successfully
                         Utils.Log.Add("RECV: " + spec.Label + " session spectrum received");
 
-                        // Make sure session is allocated in case spectrums are ticking in
+                        // FIXME: Make sure session is allocated in case spectrums are ticking in
 
+                        // Store spectrum to disk
                         string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + session.Name;
                         string jsonPath = sessionPath + Path.DirectorySeparatorChar + "json";
                         if (!Directory.Exists(jsonPath))
@@ -334,11 +386,13 @@ namespace crash
                             writer.Write(json);
                         }
 
+                        // Add spectrum to session
                         session.Add(spec);
 
-                        // Add list node
+                        // Add spectrum to UI list
                         lbSession.Items.Insert(0, spec);
 
+                        // Notify external forms about new spectrum
                         frmMap.AddMarker(spec);
                         formWaterfallLive.UpdatePane();
                         formROILive.UpdatePane();
@@ -346,17 +400,20 @@ namespace crash
                     break;
 
                 default:
+                    // Unhandled message received, update log
                     string info = msg.Command + " -> ";
                     foreach (KeyValuePair<string, object> item in msg.Arguments)
                         info += item.Key + ":" + item.Value.ToString() + ", ";
                     Utils.Log.Add("RECV: Unhandeled command: " + info);
                     break;
             }
+
             return true;
         }        
 
         public void SaveSession(Session s)
         {
+            // Save session info to disk
             string sessionSettingsFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + s.Name + Path.DirectorySeparatorChar + "session.json";
             string jSessionInfo = JsonConvert.SerializeObject(s, Newtonsoft.Json.Formatting.Indented);            
             using (TextWriter writer = new StreamWriter(sessionSettingsFile))            
@@ -365,6 +422,7 @@ namespace crash
 
         void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
         {
+            // An external form has changed the spectrum selection, update UI
             if (e.StartIndex == -1 && e.EndIndex == -1)
             {
                 lbSession.ClearSelected();
@@ -408,6 +466,7 @@ namespace crash
 
         private void ClearSpectrumInfo()
         {
+            // Clear info about currently selected spectrum
             lblSession.Text = "";
             lblRealtime.Text = "";
             lblLivetime.Text = "";
@@ -429,7 +488,8 @@ namespace crash
         }
 
         private void ClearSetup()
-        {            
+        {   
+            // Clear info about current setup
             graphSetup.GraphPane.CurveList.Clear();
             graphSetup.GraphPane.GraphObjList.Clear();            
             graphSetup.Invalidate();
@@ -437,6 +497,7 @@ namespace crash
 
         private void ClearSession()
         {
+            // Clear currently loaded session
             lbSession.Items.Clear();
             lblSessionDetector.Text = "";
             graphSession.GraphPane.CurveList.Clear();
@@ -444,6 +505,7 @@ namespace crash
             graphSession.Invalidate();
             ClearSpectrumInfo();            
 
+            // Notify external forms about clearing session
             formWaterfallLive.ClearSession();
             formROILive.ClearSession();
             frmMap.ClearSession();
@@ -452,7 +514,11 @@ namespace crash
         }
 
         private void ClearBackground()
-        {
+        {            
+            if (session == null)
+                return;
+
+            // Clear currently selected background and update state
             session.SetBackground(null);
 
             lblBackground.Text = "";
@@ -461,6 +527,10 @@ namespace crash
 
         public void ShowSpectrum(string title, float[] channels, float maxCount, float minCount)
         {
+            if (session == null)
+                return;
+
+            // Reset spectrum graphpane
             GraphPane pane = graphSession.GraphPane;
             pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
             pane.Fill = new Fill(SystemColors.ButtonFace);
@@ -477,6 +547,7 @@ namespace crash
 
             pane.CurveList.Clear();
 
+            // Update background graph
             if (session.Background != null)
             {
                 bkgGraphList.Clear();
@@ -488,6 +559,7 @@ namespace crash
                 bkgCurve.Line.SmoothTension = 0.5f;
             }
 
+            // Update spectrum graph
             sessionGraphList.Clear();
             for (int i = 0; i < channels.Length; i++)
                 sessionGraphList.Add((double)i, (double)channels[i]);
@@ -496,17 +568,15 @@ namespace crash
             curve.Line.IsSmooth = true;
             curve.Line.SmoothTension = 0.5f;
 
+            // Update state
             pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
             pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
             pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
-
-            graphSession.RestoreScale(pane);
-            graphSession.AxisChange();
-            graphSession.Refresh();
         }        
 
         private void GetGraphPointFromMousePos(int posX, int posY, ZedGraphControl graph, out int x, out int y)
-        {            
+        {
+            // Convert mouse position to graph position
             int index = 0;
             object nearestobject = null;
             PointF clickedPoint = new PointF(posX, posY);
@@ -519,6 +589,7 @@ namespace crash
 
         private void PopulateDetectorTypeList()
         {
+            // Update preferences detector type UI
             lvDetectorTypes.Items.Clear();
             foreach (DetectorType dt in settings.DetectorTypes)
             {
@@ -535,15 +606,9 @@ namespace crash
             }
         }
 
-        private void PopulateDetectors()
-        {
-            cboxSetupDetector.Items.Clear();
-            foreach (Detector d in settings.Detectors)
-                cboxSetupDetector.Items.Add(d);
-        }
-
         private void PopulateDetectorList()
         {
+            // Update preferences detector UI
             lvDetectors.Items.Clear();
             foreach (Detector d in settings.Detectors)
             {
@@ -563,10 +628,19 @@ namespace crash
             }
         }
 
+        private void PopulateDetectors()
+        {
+            // Update setup detector UI
+            cboxSetupDetector.Items.Clear();
+            foreach (Detector d in settings.Detectors)
+                cboxSetupDetector.Items.Add(d);
+        }
+
         int GetChannelFromEnergy(Detector det, double E, int startX, int endX)
         {
-            // FIXME: O(log n)
+            // Locate a suitable channel for a given energy, return -1 if none is found
 
+            // FIXME: O(log n) ?
             double epsilon = 2d;
             for (int x = startX; x < endX; x++)
             {

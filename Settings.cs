@@ -24,20 +24,34 @@ using System.Xml.Serialization;
 
 namespace crash
 {
+    // Class used to store application settings
     [Serializable()]
     public class CrashSettings
     {
         public CrashSettings() {}
 
+        // List of detector type definitions
         [XmlArray("DetectorTypes")]
         public List<DetectorType> DetectorTypes = new List<DetectorType>();
+
+        // List of detector definitions
         [XmlArray("Detectors")]
         public List<Detector> Detectors = new List<Detector>();
+
+        // List of ROI definitions
         [XmlArray("ROIList")]
         public List<ROIData> ROIList = new List<ROIData>();
+
+        // Directory used to store sessions
         public string SessionRootDirectory;        
+
+        // Last IP address used
         public string LastIP;
+
+        // Last IP port used
         public string LastPort;
+
+        // Last Google API key used
         public string LastApiKey;
     }
 }

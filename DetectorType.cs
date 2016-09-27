@@ -25,10 +25,19 @@ namespace crash
     [Serializable()]
     public class DetectorType
     {
+        // Detector type name
         public string Name { get; set; }
+
+        // Max number of channels allowed for this detector type
         public int MaxNumChannels { get; set; }
+
+        // Min allowed high voltage for this detector type
         public int MinHV { get; set; }
+
+        // Max allowed high voltage for this detector type
         public int MaxHV { get; set; }
+
+        // Filename of python GE script used for this detector type
         public string GEScript { get; set; }
 
         public DetectorType() { }

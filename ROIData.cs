@@ -21,9 +21,25 @@ using System;
 
 namespace crash
 {
+    // Class to store info about a region of interest
     [Serializable()]
     public class ROIData
     {
+        // Name of ROI
+        public string Name { get; set; }
+
+        // Start channel for ROI
+        public float StartChannel { get; set; }
+
+        // End channel for ROI
+        public float EndChannel { get; set; }
+
+        // Active state for ROI
+        public bool Active { get; set; }
+
+        // Color to use for this ROI
+        public string ColorName { get; set; }
+
         public ROIData() {}
 
         public ROIData(string name, int startChannel, int endChannel, bool active, string colorName)
@@ -33,12 +49,6 @@ namespace crash
             EndChannel = (float)endChannel;
             Active = active;
             ColorName = colorName;
-        }
-
-        public string Name { get; set; }
-        public float StartChannel { get; set; }
-        public float EndChannel { get; set; }
-        public bool Active { get; set; }
-        public string ColorName { get; set; }
+        }        
     }
 }

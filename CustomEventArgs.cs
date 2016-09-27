@@ -21,6 +21,7 @@ using System;
 
 namespace crash
 {
+    // Custom event args for notifying other forms about spectrum selection
     public class SetSessionIndexEventArgs : EventArgs
     {
         public int StartIndex { get; set; }

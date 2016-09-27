@@ -28,31 +28,60 @@ using Microsoft.Scripting.Hosting;
 
 namespace crash
 {
+    // Class to store a session
     public class Session
     {
+        // Global IronPython object. Ignore this when serializing
         [JsonIgnore]
         private static dynamic PyEngine = Python.CreateEngine();
 
+        // Name of session
         public string Name { get; set; }
+
+        // Comment for this session
         public string Comment { get; set; }
+
+        // Livetime used for this session
         public float Livetime { get; set; }
+
+        // Number of spectrums requested for this session, -1 for infinite
         public int Iterations { get; set; }        
+
+        // Detector definition used with this session
         public Detector Detector { get; set; }
+
+        // Detector type definition used with this session
         public DetectorType DetectorType { get; set; }
+
+        // Number of channels used with this session. Ignore this when serializing
         [JsonIgnore]
         public float NumChannels { get; private set; }
+
+        // Max number of channel counts found for this session. Ignore this when serializing
         [JsonIgnore]
         public float MaxChannelCount { get; private set; }
+
+        // Min number of channel counts found for this session. Ignore this when serializing
         [JsonIgnore]
         public float MinChannelCount { get; private set; }
+
+        // Function used to calculate GE factor. Ignore this when serializing
         [JsonIgnore]
         public dynamic GEFactor { get; set; }
+
+        // List of spectrums stored in this session. Ignore this when serializing
         [JsonIgnore]
         public List<Spectrum> Spectrums { get; private set; }
+
+        // Background counts to use with this session. Ignore this when serializing
         [JsonIgnore]
         public float[] Background = null;
+
+        // Loaded state for this session. Ignore this when serializing
         [JsonIgnore]
         public bool IsLoaded { get { return !String.IsNullOrEmpty(Name); } }
+
+        // Empty state for this session. Ignore this when serializing
         [JsonIgnore]
         public bool IsEmpty { get { return Spectrums.Count == 0; } }
 
@@ -81,8 +110,12 @@ namespace crash
 
         public void Add(Spectrum spec)
         {
+            // Add a new spectrum to the list of spectrums
+
             Spectrums.Add(spec);
             NumChannels = spec.NumChannels;
+
+            // Update state
 
             if (spec.MaxCount > MaxChannelCount)
                 MaxChannelCount = spec.MaxCount;
@@ -92,6 +125,8 @@ namespace crash
 
         public void Clear()
         {
+            // Clear this session
+
             Name = String.Empty;
             Comment = String.Empty;
             Livetime = 0;
@@ -108,8 +143,11 @@ namespace crash
 
         public bool LoadGEFactor()
         {
+            // Initialize GE factor function if GE script exists
+
             if (DetectorType == null)
                 return false;
+
             if (!File.Exists(CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + DetectorType.GEScript))
                 return false;
 
@@ -122,6 +160,8 @@ namespace crash
 
         public bool LoadSpectrums(string path)
         {
+            // Load spectrums from a given path
+
             string jsonDir = path + Path.DirectorySeparatorChar + "json";
             if (!Directory.Exists(jsonDir))
                 return false;
@@ -142,6 +182,8 @@ namespace crash
      
         public bool SetBackground(Session bkg)
         {
+            // Set background counts for this session and adjust for livetime
+
             if (bkg == null)
             {
                 Background = null;
@@ -158,6 +200,8 @@ namespace crash
 
         private float[] GetAdjustedCounts(float livetime)
         {
+            // Adjust counts for a given livetime
+
             if (Spectrums.Count < 1)
                 return null;
 
@@ -180,6 +224,8 @@ namespace crash
 
         public float GetCountInBkg(int start, int end)
         {
+            // Accumulate counts for a given region
+
             if (Background == null)
                 return 0f;
 
@@ -193,6 +239,8 @@ namespace crash
 
         public float GetMaxCountInROI(int start, int end)
         {
+            // Find highest count for a given region
+
             float max = 0f;
 
             foreach (Spectrum s in Spectrums)

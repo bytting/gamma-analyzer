@@ -24,9 +24,16 @@ namespace crash
 {
     public static class CrashEnvironment
     {
+        // Settings path
         public static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + Path.DirectorySeparatorChar + "Crash";
+
+        // GE scripts path
         public static string GEScriptPath = SettingsPath + Path.DirectorySeparatorChar + "GEScripts";        
-        public static string SettingsFile = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";        
+
+        // Settings filename
+        public static string SettingsFile = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";
+
+        // Nuclide library filename
         public static string NuclideLibraryFile = SettingsPath + Path.DirectorySeparatorChar + "nuclides.lib";
     }    
 }

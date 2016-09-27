@@ -25,31 +25,79 @@ using Newtonsoft.Json;
 
 namespace crash
 {
+    // Class used to store a spectrum
     public class Spectrum
     {
+        // List of channels
         private List<float> mChannels;
+
+        // Name of parent session
         public string SessionName { get; private set; }
+
+        // This spectrums session index
         public int SessionIndex { get; private set; }
+
+        // Label to use for this spectrum
         public string Label { get; private set; }
+
+        // Property to access channels
         public List<float> Channels { get { return mChannels; } }
+
+        // Number of channels used for this spectrum
         public float NumChannels { get; private set; }
+
+        // Max count found in this spectrum
         public float MaxCount { get; private set; }
+
+        // Min count found in this spectrum
         public float MinCount { get; private set; }
+
+        // Total counts stored in this spectrum
         public float TotalCount { get; private set; }
+
+        // Preview state
         public bool IsPreview { get; private set; }
+
+        // Latitude when this spectrum was started
         public double LatitudeStart { get; private set; }
+
+        // Longitude when this spectrum was started
         public double LongitudeStart { get; private set; }
+
+        // Altitude when this spectrum was started
         public double AltitudeStart { get; private set; }
+
+        // Latitude when this spectrum was stopped
         public double LatitudeEnd { get; private set; }
+
+        // Longitude when this spectrum was stopped
         public double LongitudeEnd { get; private set; }
+
+        // Altitude when this spectrum was stopped
         public double AltitudeEnd { get; private set; }
+
+        // Date and time when this spectrum was started
         public DateTime GpsTimeStart { get; private set; }
+
+        // Date and time when this spectrum was stopped
         public DateTime GpsTimeEnd { get; private set; }
+
+        // Speed when this spectrum was started
         public float GpsSpeedStart { get; private set; }
+
+        // Speed when this spectrum was stopped
         public float GpsSpeedEnd { get; private set; }
+
+        // Realtime for this spectrum
         public int Realtime { get; private set; }
+
+        // Livetime for this spectrum
         public int Livetime { get; private set; }
+
+        // Osprey detector ID used with this spectrum (FIXME: remove this)
         public int SpectralInput { get; private set; }
+
+        // Doserate for this spectrum in nanosievert per hour
         public double Doserate { get; private set; }        
 
         public Spectrum()
@@ -80,6 +128,7 @@ namespace crash
             SpectralInput = Convert.ToInt32(msg.Arguments["spectral_input"]);            
             mChannels = new List<float>();
             TotalCount = 0f;
+            // Split channel string and store each count in channel array
             string[] items = msg.Arguments["channels"].ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string item in items)
             {
@@ -99,6 +148,8 @@ namespace crash
 
         public float GetCountInROI(int start, int end)
         {
+            // Get count for a given ROI
+
             if (start < 0 || start >= mChannels.Count || end < 0 || end >= mChannels.Count)
                 return 0f;
 
@@ -109,7 +160,9 @@ namespace crash
         }
 
         public double GetElevation(string apiKey)
-        {            
+        {
+            // Request approximate altitude for this spectrum
+
             using (System.Net.WebClient wc = new System.Net.WebClient())
             {
                 string query = "https://maps.googleapis.com/maps/api/elevation/json?locations=" 
@@ -132,22 +185,26 @@ namespace crash
 
         public double CalculateDoserate(Detector det, dynamic GEFactorFunc)
         {
+            // Calculate doserate for this spectrum
+
             if (det == null || GEFactorFunc == null)
                 return 0d;                        
             
             Doserate = 0.0;
 
+            // Trim off discriminators
             int startChan = (int)((double)det.CurrentNumChannels * ((double)det.CurrentLLD / 100.0));
             int endChan = (int)((double)det.CurrentNumChannels * ((double)det.CurrentULD / 100.0));
             if(endChan > det.CurrentNumChannels) // FIXME: Can not exceed 100% atm
                 endChan = det.CurrentNumChannels;
 
+            // Accumulte dose rates for each channel
             for (int i = startChan; i < endChan; i++)
             {
                 float sec = (float)Livetime / 1000000f;                
                 float cps = Channels[i] / sec;
                 double E = det.GetEnergy(i);
-                if (E < 0.05)
+                if (E < 0.05) // Energies below 0.05 are invalid
                     continue;
                 double GE = GEFactorFunc(E / 1000.0);
                 double chanDose = GE * (cps * 60.0);
@@ -159,6 +216,8 @@ namespace crash
 
         public Spectrum Clone()
         {
+            // Create a clone of this spectrum
+
             Spectrum res = new Spectrum();                        
             res.mChannels.AddRange(mChannels.ToArray());
             res.SessionName = SessionName;
@@ -187,7 +246,9 @@ namespace crash
         }
 
         public void Merge(Spectrum s)
-        {            
+        {   
+            // Merge a given spectrum
+
             Livetime += s.Livetime;
             Realtime += s.Realtime;
             for(int i=0; i<mChannels.Count; i++)            
@@ -195,6 +256,7 @@ namespace crash
         }
     }
 
+    // Helper class for requiesting elevation
     public class ElevationResult
     {
         [JsonProperty(PropertyName = "elevation")]
@@ -207,6 +269,7 @@ namespace crash
         public double Resolution { get; set; }
     }
 
+    // Helper class for requiesting elevation
     public class ElevationData
     {
         [JsonProperty(PropertyName = "results")]

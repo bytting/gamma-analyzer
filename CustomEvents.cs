@@ -27,22 +27,29 @@ namespace crash
     {
         public static void Integer_KeyPress(object sender, KeyPressEventArgs e)
         {
+            // Only allow numbers
             if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar))
                 e.Handled = true;
         }
 
         public static void Numeric_KeyPress(object sender, KeyPressEventArgs e)
         {
+            // Only allow decimals
             char sep = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
 
             TextBox tb = (TextBox)sender;
-            if (e.KeyChar == sep)            
-                foreach(char c in tb.Text)                
-                    if(c == sep)
+            if (e.KeyChar == sep)
+            {
+                // Only allow one separator
+                foreach (char c in tb.Text)
+                {
+                    if (c == sep)
                     {
                         e.Handled = true;
                         return;
-                    }                                        
+                    }
+                }
+            }
 
             if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar != sep)
                 e.Handled = true;

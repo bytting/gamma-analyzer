@@ -21,10 +21,11 @@ using System;
 
 namespace crash
 {
-    class EnergyComp
+    // Helper class to store a channel and energy combination
+    class ChannelEnergy
     {
-        public EnergyComp() {}
-        public EnergyComp(double ch, double en) 
+        public ChannelEnergy() {}
+        public ChannelEnergy(double ch, double en) 
         {
             Channel = ch;
             Energy = en;

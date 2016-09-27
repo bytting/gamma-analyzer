@@ -22,10 +22,13 @@ using System.Drawing;
 
 namespace crash
 {
+    // Class with global helper functions and objects
     public static class Utils
     {        
-        public static FormLog Log = new FormLog(); 
+        // Global log object (FIXME: replace this with a proper log)
+        public static FormLog Log = new FormLog();
 
+        // Convert a color to an integer
         public static int ToArgb(Color color)
         {
             int a = color.A;
@@ -35,6 +38,7 @@ namespace crash
             return a << 24 | r << 16 | g << 8 | b;
         }
 
+        // Convert an integer to a color
         public static Color ToColor(int argb)
         {
             byte[] b = BitConverter.GetBytes(argb);
