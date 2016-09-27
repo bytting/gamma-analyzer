@@ -1195,7 +1195,7 @@ namespace crash
                     }
 
                     // Add energy line
-                    LineObj line = new LineObj(Color.DarkGoldenrod, (double)ch, pane.YAxis.Scale.Min, (double)ch, pane.YAxis.Scale.Max);
+                    LineObj line = new LineObj(Color.Orange, (double)ch, pane.YAxis.Scale.Min, (double)ch, pane.YAxis.Scale.Max);
                     makeGraphObjectType(ref line.Tag, GraphObjectType.Energy);
                     pane.GraphObjList.Add(line);
                                

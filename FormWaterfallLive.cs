@@ -107,34 +107,29 @@ namespace crash
             float max = tbColorCeil.Value;
             float sectorSize = max / 4f;
             float scale = 255f / sectorSize;
+            int sectorSkip, adjustment;            
             int y = 0;
 
             for (int i = session.Spectrums.Count - 1 - topY; i >= 0; i--)
             {
                 if (y >= bmpPane.Height)
-                    break;
-
-                if (i >= session.Spectrums.Count) // FIXME
-                    continue;
+                    break;                
 
                 Spectrum s = session.Spectrums[i];
-                int w = s.Channels.Count > bmpPane.Width ? bmpPane.Width : s.Channels.Count; // FIXME
-
-                if (y < 0 || y >= bmpPane.Height) // FIXME
-                    continue;
+                int w = s.Channels.Count > bmpPane.Width ? bmpPane.Width : s.Channels.Count;                
 
                 bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
 
                 for (int x = 1; x < w; x++)
                 {
-                    if (leftX + x >= s.Channels.Count) // FIXME
+                    if (leftX + x >= s.Channels.Count)
                         break;
 
                     int a = 255, r = 0, g = 0, b = 255;
                     float cps = s.Channels[leftX + x];
                     if (btnSubtractBackground.Checked && session.Background != null)
                     {
-                        if (leftX + x < session.Background.Length) // FIXME
+                        if (leftX + x < session.Background.Length)
                         {
                             cps -= session.Background[leftX + x];
                             if (cps < 0)
@@ -142,39 +137,11 @@ namespace crash
                         }
                     }
 
-                    int sectorSkip = CalcSectorSkip(cps, sectorSize);
+                    sectorSkip = CalculateSectorSkip(cps, sectorSize);
 
-                    float adj = (cps - (float)sectorSkip * sectorSize) * scale;
-                    if (adj < 0)
-                        adj = 0;
-                    if (adj > 255)
-                        adj = 255;
+                    adjustment = CalculateColorAdjustment(cps, sectorSkip, sectorSize, scale);
 
-                    if (sectorSkip == 0)
-                    {
-                        g += (int)adj;
-                    }
-                    else if (sectorSkip == 1)
-                    {
-                        g = 255;
-                        b -= (int)adj;
-                    }
-                    else if (sectorSkip == 2)
-                    {
-                        g = 255;
-                        b = 0;
-                        r += (int)adj;
-                    }
-                    else
-                    {
-                        g = 255;
-                        b = 0;
-                        r = 255;
-                        g -= (int)adj;
-                    }
-
-                    if (x < 0 || x >= bmpPane.Width || y < 0 || y >= bmpPane.Height) // FIXME
-                        continue;
+                    AdjustColorComponents(sectorSkip, adjustment, ref r, ref g, ref b);                                        
 
                     bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
 
@@ -219,6 +186,53 @@ namespace crash
             pane.Refresh();
         }
 
+        private int CalculateSectorSkip(float cps, float sectorSize)
+        {
+            if (cps < sectorSize)
+                return 0;
+            else if (cps < sectorSize * 2f)
+                return 1;
+            else if (cps < sectorSize * 3f)
+                return 2;
+            else return 3;
+        }
+
+        private int CalculateColorAdjustment(float cps, int sectorSkip, float sectorSize, float scale)
+        {
+            float a = (cps - (float)sectorSkip * sectorSize) * scale;
+            if (a < 0)
+                a = 0;
+            else if (a > 255)
+                a = 255;
+            return (int)a;
+        }
+
+        private void AdjustColorComponents(int sectorSkip, int adjustment, ref int r, ref int g, ref int b)
+        {
+            if (sectorSkip == 0)
+            {
+                g += adjustment;
+            }
+            else if (sectorSkip == 1)
+            {
+                g = 255;
+                b -= adjustment;
+            }
+            else if (sectorSkip == 2)
+            {
+                g = 255;
+                b = 0;
+                r += adjustment;
+            }
+            else
+            {
+                g = 255;
+                b = 0;
+                r = 255;
+                g -= adjustment;
+            }
+        }
+
         private void UpdateStats()
         {
             lblColorCeil.Text = "Color ceiling: " + tbColorCeil.Value + " [" + tbColorCeil.Minimum + ", " + tbColorCeil.Maximum + "]";
@@ -261,18 +275,7 @@ namespace crash
             bmpPane = new Bitmap(pane.Width, pane.Height);
             leftX = 1;
             UpdatePane();
-        }
-
-        private int CalcSectorSkip(float cps, float sectorSize)
-        {
-            if (cps < sectorSize)
-                return 0;
-            else if (cps < sectorSize * 2f)
-                return 1;
-            else if (cps < sectorSize * 3f)
-                return 2;
-            else return 3;
-        }
+        }        
 
         private void tbColorCeil_ValueChanged(object sender, EventArgs e)
         {

@@ -198,7 +198,7 @@ namespace crash
             if(endChan > det.CurrentNumChannels) // FIXME: Can not exceed 100% atm
                 endChan = det.CurrentNumChannels;
 
-            // Accumulte dose rates for each channel
+            // Accumulate doserates of each channel
             for (int i = startChan; i < endChan; i++)
             {
                 float sec = (float)Livetime / 1000000f;                
