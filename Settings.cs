@@ -28,7 +28,10 @@ namespace crash
     [Serializable()]
     public class CrashSettings
     {
-        public CrashSettings() {}
+        public CrashSettings() 
+        {
+            DisplayLocalTime = true;
+        }
 
         // List of detector type definitions
         [XmlArray("DetectorTypes")]
@@ -53,5 +56,8 @@ namespace crash
 
         // Last Google API key used
         public string LastApiKey;
+
+        // Display dates using local time
+        public bool DisplayLocalTime;
     }
 }

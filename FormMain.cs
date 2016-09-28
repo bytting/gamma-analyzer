@@ -71,6 +71,8 @@ namespace crash
 
                 // Load settings
                 LoadSettings();
+                menuItemConvertToLocalTime.Checked = settings.DisplayLocalTime;
+
                 LoadNuclideLibrary();
 
                 // Create forms
@@ -310,8 +312,8 @@ namespace crash
                 lblLatitudeEnd.Text = "Lat. end: " + s.LatitudeEnd;
                 lblLongitudeEnd.Text = "Lon. end: " + s.LongitudeEnd;
                 lblAltitudeEnd.Text = "Alt. end: " + s.AltitudeEnd;
-                lblGpsTimeStart.Text = "Time start: " + s.GpsTimeStart;
-                lblGpsTimeEnd.Text = "Time end: " + s.GpsTimeEnd;
+                lblGpsTimeStart.Text = "Time start: " + (menuItemConvertToLocalTime.Checked ? s.GpsTimeStart.ToLocalTime() : s.GpsTimeStart);
+                lblGpsTimeEnd.Text = "Time end: " + (menuItemConvertToLocalTime.Checked ? s.GpsTimeEnd.ToLocalTime() : s.GpsTimeEnd);
                 lblMaxCount.Text = "Max count: " + s.MaxCount;
                 lblMinCount.Text = "Min count: " + s.MinCount;
                 lblTotalCount.Text = "Total count: " + s.TotalCount;                
@@ -376,8 +378,8 @@ namespace crash
                 lblLatitudeEnd.Text = "Lat. end: " + s2.LatitudeEnd;
                 lblLongitudeEnd.Text = "Lon. end: " + s2.LongitudeEnd;
                 lblAltitudeEnd.Text = "Alt. end: " + s2.AltitudeEnd;
-                lblGpsTimeStart.Text = "Time start: " + s1.GpsTimeStart;
-                lblGpsTimeEnd.Text = "Time end: " + s2.GpsTimeEnd;
+                lblGpsTimeStart.Text = "Time start: " + (menuItemConvertToLocalTime.Checked ? s1.GpsTimeStart.ToLocalTime() : s1.GpsTimeStart);
+                lblGpsTimeEnd.Text = "Time end: " + (menuItemConvertToLocalTime.Checked ? s2.GpsTimeStart.ToLocalTime() : s2.GpsTimeStart);
                 lblMaxCount.Text = "Max count: " + maxCnt;
                 lblMinCount.Text = "Min count: " + minCnt;
                 lblTotalCount.Text = "Total count: " + totCnt;
@@ -1263,6 +1265,11 @@ namespace crash
                 return;
 
             SessionExporter.ExportAsKMZ(session, dialog.FileName);
+        }
+
+        private void menuItemConvertToLocalTime_CheckedChanged(object sender, EventArgs e)
+        {
+            settings.DisplayLocalTime = menuItemConvertToLocalTime.Checked;
         }        
     }
 }

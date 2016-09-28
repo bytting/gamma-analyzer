@@ -39,7 +39,7 @@ namespace crash
             using (StreamWriter writer = new StreamWriter(filename, false, Encoding.UTF8))
             {
                 // Write header line
-                writer.WriteLine("Session name|Session index|Time start|Time end|Latitude start|Latitude end|Longitude start|Longitude end|Altitude start|Altitude end|Doserate|Doserate unit");
+                writer.WriteLine("Session name|Session index|Time start (UTC)|Time end (UTC)|Latitude start|Latitude end|Longitude start|Longitude end|Altitude start|Altitude end|Doserate|Doserate unit");
 
                 foreach (Spectrum s in session.Spectrums)
                 {
