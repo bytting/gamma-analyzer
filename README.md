@@ -1,6 +1,6 @@
-# crash
+# Gamma Analyzer
 
-Controller application for Burn
+Controller and Analyzer for Gamma Collector
 
 Status: 
 
