@@ -56,7 +56,7 @@ namespace crash
         private void FormMap_Load(object sender, EventArgs e)
         {
             gmnMap.Overlays.Add(overlay);
-            gmnMap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);
+            gmnMap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);            
         }
 
         private void cboxMapMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -75,7 +75,7 @@ namespace crash
                         GMaps.Instance.Mode = AccessMode.ServerAndCache;
                         break;
                 }
-            }
+            }            
         }
 
         private void cboxMapProvider_SelectedIndexChanged(object sender, EventArgs e)

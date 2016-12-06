@@ -188,6 +188,7 @@
             this.toolsSession = new System.Windows.Forms.ToolStrip();
             this.btnOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.menuItemSubtractBackground = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemConvertToLocalTime = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblSessionEnergy = new System.Windows.Forms.Label();
             this.lblSessionChannel = new System.Windows.Forms.Label();
@@ -220,7 +221,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnEditDetector = new System.Windows.Forms.Button();
             this.btnAddDetector = new System.Windows.Forms.Button();
-            this.menuItemConvertToLocalTime = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -2009,6 +2009,17 @@
             this.menuItemSubtractBackground.Size = new System.Drawing.Size(185, 22);
             this.menuItemSubtractBackground.Text = "Subtract background";
             // 
+            // menuItemConvertToLocalTime
+            // 
+            this.menuItemConvertToLocalTime.Checked = true;
+            this.menuItemConvertToLocalTime.CheckOnClick = true;
+            this.menuItemConvertToLocalTime.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuItemConvertToLocalTime.Name = "menuItemConvertToLocalTime";
+            this.menuItemConvertToLocalTime.Size = new System.Drawing.Size(185, 22);
+            this.menuItemConvertToLocalTime.Text = "Show local time";
+            this.menuItemConvertToLocalTime.ToolTipText = "Show dates using local time";
+            this.menuItemConvertToLocalTime.CheckedChanged += new System.EventHandler(this.menuItemConvertToLocalTime_CheckedChanged);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.lblSessionEnergy);
@@ -2291,17 +2302,6 @@
             this.btnAddDetector.UseVisualStyleBackColor = true;
             this.btnAddDetector.Click += new System.EventHandler(this.btnAddDetector_Click);
             // 
-            // menuItemConvertToLocalTime
-            // 
-            this.menuItemConvertToLocalTime.Checked = true;
-            this.menuItemConvertToLocalTime.CheckOnClick = true;
-            this.menuItemConvertToLocalTime.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.menuItemConvertToLocalTime.Name = "menuItemConvertToLocalTime";
-            this.menuItemConvertToLocalTime.Size = new System.Drawing.Size(185, 22);
-            this.menuItemConvertToLocalTime.Text = "Show local time";
-            this.menuItemConvertToLocalTime.ToolTipText = "Show dates using local time";
-            this.menuItemConvertToLocalTime.CheckedChanged += new System.EventHandler(this.menuItemConvertToLocalTime_CheckedChanged);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2318,7 +2318,7 @@
             this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Crash";
+            this.Text = "Gamma Analyzer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.menu.ResumeLayout(false);

@@ -15,20 +15,26 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_09247F771F16C347F9A17B3B1D65983C"
+        "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_219B2984E0F746DDB145056C166E44B5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3071BDE31BDF90E0B19BECFDDC17F601"
-        "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
+        "MsmKey" = "8:_4762D52CD0794690901D9B489D4DDE77"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4762D52CD0794690901D9B489D4DDE77"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_5352A21E84729AD39FCC44238C9BF9C3"
+        "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -41,6 +47,12 @@
         {
         "MsmKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6D77B94B0893EA100D9D9B622452CD64"
+        "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -81,13 +93,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_757092FCEDAAFD6A5503A18D19EC5679"
+        "MsmKey" = "8:_7E0DF65CDEFD5A936FA4D3971BFDA949"
         "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7E0DF65CDEFD5A936FA4D3971BFDA949"
+        "MsmKey" = "8:_7E95569727694DBD59B6BD6D7C087890"
         "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -153,26 +165,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A89478F74EE3881276E86F23A455F83E"
-        "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_C8F85802ED784815B32FF866802869F2"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D2DEDE8AC53ACD5930F3EA4B9D454BDB"
-        "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D2DEDE8AC53ACD5930F3EA4B9D454BDB"
-        "OwnerKey" = "8:_A89478F74EE3881276E86F23A455F83E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -213,32 +207,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E749AE5385BF8546D4AE48AFCF15981B"
-        "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_E87CB15C1DF3088B9F38F4A20050F126"
         "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_FD1A0E6CA64AA47CB22095AE8AF3FBFA"
         "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E749AE5385BF8546D4AE48AFCF15981B"
+        "MsmKey" = "8:_FD1A0E6CA64AA47CB22095AE8AF3FBFA"
+        "OwnerKey" = "8:_7E95569727694DBD59B6BD6D7C087890"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_757092FCEDAAFD6A5503A18D19EC5679"
+        "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -250,7 +238,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3071BDE31BDF90E0B19BECFDDC17F601"
+        "OwnerKey" = "8:_09247F771F16C347F9A17B3B1D65983C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5352A21E84729AD39FCC44238C9BF9C3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -304,13 +298,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A89478F74EE3881276E86F23A455F83E"
+        "OwnerKey" = "8:_7E95569727694DBD59B6BD6D7C087890"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D2DEDE8AC53ACD5930F3EA4B9D454BDB"
+        "OwnerKey" = "8:_FD1A0E6CA64AA47CB22095AE8AF3FBFA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6D77B94B0893EA100D9D9B622452CD64"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -321,7 +321,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\VSSetup.msi"
+        "OutputFilename" = "8:Debug\\GammaAnalyzerSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -338,6 +338,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
         "Release"
@@ -345,7 +353,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\VSSetup.msi"
+        "OutputFilename" = "8:Release\\GammaAnalyzerSetup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -362,6 +370,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
     }
@@ -392,34 +408,14 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_219B2984E0F746DDB145056C166E44B5"
-            {
-            "SourcePath" = "8:..\\template_NaI-2tom.py"
-            "TargetName" = "8:template_NaI-2tom.py"
-            "Tag" = "8:"
-            "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3071BDE31BDF90E0B19BECFDDC17F601"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_09247F771F16C347F9A17B3B1D65983C"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_3071BDE31BDF90E0B19BECFDDC17F601"
+                    "_09247F771F16C347F9A17B3B1D65983C"
                     {
                     "Name" = "8:Newtonsoft.Json.dll"
                     "Attributes" = "3:512"
@@ -443,6 +439,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_219B2984E0F746DDB145056C166E44B5"
+            {
+            "SourcePath" = "8:..\\template_NaI-2tom.py"
+            "TargetName" = "8:template_NaI-2tom.py"
+            "Tag" = "8:"
+            "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4762D52CD0794690901D9B489D4DDE77"
             {
             "SourcePath" = "8:..\\template_settings.xml"
@@ -463,6 +479,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5352A21E84729AD39FCC44238C9BF9C3"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MathNet.Numerics, Version=3.13.1.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5352A21E84729AD39FCC44238C9BF9C3"
+                    {
+                    "Name" = "8:MathNet.Numerics.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MathNet.Numerics.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5877F9043662B36B263045C089852369"
             {
             "AssemblyRegister" = "3:1"
@@ -477,6 +524,37 @@
                     }
                 }
             "SourcePath" = "8:ZedGraph.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6D77B94B0893EA100D9D9B622452CD64"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_6D77B94B0893EA100D9D9B622452CD64"
+                    {
+                    "Name" = "8:DotNetZip.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:DotNetZip.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
@@ -525,20 +603,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_757092FCEDAAFD6A5503A18D19EC5679"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7E0DF65CDEFD5A936FA4D3971BFDA949"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GraphLib, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:IronPython.Wpf, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_757092FCEDAAFD6A5503A18D19EC5679"
+                    "_7E0DF65CDEFD5A936FA4D3971BFDA949"
                     {
-                    "Name" = "8:GraphLib.dll"
+                    "Name" = "8:IronPython.Wpf.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:GraphLib.dll"
+            "SourcePath" = "8:IronPython.Wpf.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
@@ -556,20 +634,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7E0DF65CDEFD5A936FA4D3971BFDA949"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7E95569727694DBD59B6BD6D7C087890"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:IronPython.Wpf, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:GMap.NET.WindowsForms, Version=1.7.0.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_7E0DF65CDEFD5A936FA4D3971BFDA949"
+                    "_7E95569727694DBD59B6BD6D7C087890"
                     {
-                    "Name" = "8:IronPython.Wpf.dll"
+                    "Name" = "8:GMap.NET.WindowsForms.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:IronPython.Wpf.dll"
+            "SourcePath" = "8:GMap.NET.WindowsForms.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
@@ -700,37 +778,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A89478F74EE3881276E86F23A455F83E"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GMap.NET.WindowsForms, Version=1.7.0.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A89478F74EE3881276E86F23A455F83E"
-                    {
-                    "Name" = "8:GMap.NET.WindowsForms.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:GMap.NET.WindowsForms.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C8F85802ED784815B32FF866802869F2"
             {
             "SourcePath" = "8:..\\images\\crash.ico"
@@ -749,37 +796,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D2DEDE8AC53ACD5930F3EA4B9D454BDB"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GMap.NET.Core, Version=1.7.0.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_D2DEDE8AC53ACD5930F3EA4B9D454BDB"
-                    {
-                    "Name" = "8:GMap.NET.Core.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:GMap.NET.Core.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D915BA0F460B319A992EF69F193BDB3B"
@@ -844,20 +860,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E749AE5385BF8546D4AE48AFCF15981B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E87CB15C1DF3088B9F38F4A20050F126"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:TabControlWizard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8870950e8cccab7c, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:IronPython.Modules, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E749AE5385BF8546D4AE48AFCF15981B"
+                    "_E87CB15C1DF3088B9F38F4A20050F126"
                     {
-                    "Name" = "8:TabControlWizard.dll"
+                    "Name" = "8:IronPython.Modules.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:TabControlWizard.dll"
+            "SourcePath" = "8:IronPython.Modules.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
@@ -875,20 +891,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E87CB15C1DF3088B9F38F4A20050F126"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FD1A0E6CA64AA47CB22095AE8AF3FBFA"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:IronPython.Modules, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:GMap.NET.Core, Version=1.7.0.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E87CB15C1DF3088B9F38F4A20050F126"
+                    "_FD1A0E6CA64AA47CB22095AE8AF3FBFA"
                     {
-                    "Name" = "8:IronPython.Modules.dll"
+                    "Name" = "8:GMap.NET.Core.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:IronPython.Modules.dll"
+            "SourcePath" = "8:GMap.NET.Core.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
@@ -961,7 +977,7 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Crash"
+        "ProductName" = "8:Gamma Analyzer"
         "ProductCode" = "8:{35706059-EB5E-4A61-9DEC-CCA443F9B1B5}"
         "PackageCode" = "8:{D2072D2D-691A-4C2E-A94B-F7D2D6F36EEC}"
         "UpgradeCode" = "8:{1C952C92-7F4C-425E-9E4D-77075E58C466}"
@@ -974,7 +990,7 @@
         "Manufacturer" = "8:NRPA"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Crash Setup"
+        "Title" = "8:Gamma Analyzer Setup"
         "Subject" = "8:"
         "ARPCONTACT" = "8:NRPA"
         "Keywords" = "8:"

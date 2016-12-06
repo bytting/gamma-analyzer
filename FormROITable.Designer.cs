@@ -622,7 +622,7 @@
             this.MinimizeBox = false;
             this.Name = "FormROITable";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Crash - ROI List";
+            this.Text = "Gamma Analyzer - ROI List";
             this.Load += new System.EventHandler(this.FormROITable_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridROI)).EndInit();
             this.panel1.ResumeLayout(false);

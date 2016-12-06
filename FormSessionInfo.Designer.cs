@@ -387,7 +387,7 @@
             this.MinimizeBox = false;
             this.Name = "FormSessionInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Crash - Session Info";
+            this.Text = "Gamma Analyzer - Session Info";
             this.Load += new System.EventHandler(this.FormSessionInfo_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);

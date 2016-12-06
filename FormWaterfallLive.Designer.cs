@@ -346,7 +346,7 @@
             this.MinimumSize = new System.Drawing.Size(500, 320);
             this.Name = "FormWaterfallLive";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Crash - Waterfall Live";
+            this.Text = "Gamma Analyzer - Waterfall Live";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormWaterfall_FormClosing);
             this.Load += new System.EventHandler(this.FormWaterfall_Load);
             this.ResizeBegin += new System.EventHandler(this.FormWaterfallLive_ResizeBegin);

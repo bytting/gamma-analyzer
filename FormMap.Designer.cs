@@ -209,7 +209,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(320, 200);
             this.Name = "FormMap";
-            this.Text = "Crash - Map";
+            this.Text = "Gamma Analyzer - Map";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMap_FormClosing);
             this.Load += new System.EventHandler(this.FormMap_Load);
             this.toolsMap.ResumeLayout(false);

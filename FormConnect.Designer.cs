@@ -119,7 +119,7 @@
             this.MinimizeBox = false;
             this.Name = "FormConnect";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Crash - Connect";
+            this.Text = "Gamma Analyzer - Connect";
             this.Load += new System.EventHandler(this.FormConnect_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

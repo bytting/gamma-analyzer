@@ -32,16 +32,16 @@
             this.status = new System.Windows.Forms.StatusStrip();
             this.tools = new System.Windows.Forms.ToolStrip();
             this.layoutMain = new System.Windows.Forms.TableLayoutPanel();
-            this.btnGetElevation = new System.Windows.Forms.Button();
             this.tbApiKey = new System.Windows.Forms.TextBox();
+            this.btnGetElevation = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbElevation = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.lblSessionSpectrum = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOk = new System.Windows.Forms.Button();
             this.layoutMain.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -89,6 +89,15 @@
             this.layoutMain.Size = new System.Drawing.Size(562, 182);
             this.layoutMain.TabIndex = 2;
             // 
+            // tbApiKey
+            // 
+            this.layoutMain.SetColumnSpan(this.tbApiKey, 2);
+            this.tbApiKey.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbApiKey.Location = new System.Drawing.Point(190, 31);
+            this.tbApiKey.Name = "tbApiKey";
+            this.tbApiKey.Size = new System.Drawing.Size(369, 20);
+            this.tbApiKey.TabIndex = 2;
+            // 
             // btnGetElevation
             // 
             this.btnGetElevation.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -99,15 +108,6 @@
             this.btnGetElevation.Text = "Get elevation";
             this.btnGetElevation.UseVisualStyleBackColor = true;
             this.btnGetElevation.Click += new System.EventHandler(this.btnGetElevation_Click);
-            // 
-            // tbApiKey
-            // 
-            this.layoutMain.SetColumnSpan(this.tbApiKey, 2);
-            this.tbApiKey.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbApiKey.Location = new System.Drawing.Point(190, 31);
-            this.tbApiKey.Name = "tbApiKey";
-            this.tbApiKey.Size = new System.Drawing.Size(369, 20);
-            this.tbApiKey.TabIndex = 2;
             // 
             // label1
             // 
@@ -140,38 +140,6 @@
             this.label2.Text = "Elevation (requires internett)";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btnCancel);
-            this.panel1.Controls.Add(this.btnOk);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 207);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(562, 28);
-            this.panel1.TabIndex = 3;
-            // 
-            // btnOk
-            // 
-            this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(487, 0);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 28);
-            this.btnOk.TabIndex = 0;
-            this.btnOk.Text = "Ok";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(412, 0);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 28);
-            this.btnCancel.TabIndex = 1;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -195,6 +163,38 @@
             this.lblSessionSpectrum.Text = "<lblSessionSpectrum>";
             this.lblSessionSpectrum.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnCancel);
+            this.panel1.Controls.Add(this.btnOk);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 207);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(562, 28);
+            this.panel1.TabIndex = 3;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnCancel.Location = new System.Drawing.Point(412, 0);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 28);
+            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnOk
+            // 
+            this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOk.Location = new System.Drawing.Point(487, 0);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(75, 28);
+            this.btnOk.TabIndex = 0;
+            this.btnOk.Text = "Ok";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            // 
             // FormSourceActivity
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -207,7 +207,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormSourceActivity";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Crash - Source Activity";
+            this.Text = "Gamma Analyzer - Source Activity";
             this.Load += new System.EventHandler(this.FormSourceActivity_Load);
             this.layoutMain.ResumeLayout(false);
             this.layoutMain.PerformLayout();

@@ -328,7 +328,7 @@
             this.MinimizeBox = false;
             this.Name = "FormAddDetector";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Crash - Add Detector";
+            this.Text = "Gamma Analyzer - Add Detector";
             this.Load += new System.EventHandler(this.FormAddDetector_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);

@@ -80,7 +80,7 @@
             this.MinimizeBox = false;
             this.Name = "FormROIHist";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Crash - ROI History";
+            this.Text = "Gamma Analyzer - ROI History";
             this.Load += new System.EventHandler(this.FormROIHist_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

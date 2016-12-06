@@ -100,7 +100,7 @@
             this.MinimizeBox = false;
             this.Name = "FormAskDecimal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Crash - Get decimal";
+            this.Text = "Gamma Analyzer - Get decimal";
             this.Load += new System.EventHandler(this.FormAskDecimal_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

@@ -31,8 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEnergyCurve));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnStore = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.btnStore = new System.Windows.Forms.Button();
             this.graph = new ZedGraph.ZedGraphControl();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -47,17 +47,6 @@
             this.panel1.Size = new System.Drawing.Size(860, 31);
             this.panel1.TabIndex = 0;
             // 
-            // btnStore
-            // 
-            this.btnStore.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnStore.Location = new System.Drawing.Point(760, 0);
-            this.btnStore.Name = "btnStore";
-            this.btnStore.Size = new System.Drawing.Size(100, 31);
-            this.btnStore.TabIndex = 0;
-            this.btnStore.Text = "Store";
-            this.btnStore.UseVisualStyleBackColor = true;
-            this.btnStore.Click += new System.EventHandler(this.btnStore_Click);
-            // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
@@ -68,6 +57,17 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnStore
+            // 
+            this.btnStore.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnStore.Location = new System.Drawing.Point(760, 0);
+            this.btnStore.Name = "btnStore";
+            this.btnStore.Size = new System.Drawing.Size(100, 31);
+            this.btnStore.TabIndex = 0;
+            this.btnStore.Text = "Store";
+            this.btnStore.UseVisualStyleBackColor = true;
+            this.btnStore.Click += new System.EventHandler(this.btnStore_Click);
             // 
             // graph
             // 
@@ -94,7 +94,7 @@
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormEnergyCurve";
-            this.Text = "Crash - Energy Curve";
+            this.Text = "Gamma Analyzer - Energy Curve";
             this.Load += new System.EventHandler(this.FormEnergyCurve_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

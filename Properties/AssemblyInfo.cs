@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Crash")]
-[assembly: AssemblyDescription("Controller application for Burn\r\n\r\nDevelopers:\r\nDag Robole\r\nJon Drefvelin\r\nKasra Tazmini\r\n\r\nIcons by Freepik")]
+[assembly: AssemblyTitle("Gamma Analyzer")]
+[assembly: AssemblyDescription("Controller application for Gamma Collector\r\n\r\nDevelopers:\r\nDag Robole\r\nJon Drefvelin\r\nKasra Tazmini\r\n\r\nIcons by Freepik")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("NRPA")]
-[assembly: AssemblyProduct("crash")]
+[assembly: AssemblyProduct("Gamma Analyzer")]
 [assembly: AssemblyCopyright("Copyright © NRPA 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

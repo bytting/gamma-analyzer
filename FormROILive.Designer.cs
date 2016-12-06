@@ -200,7 +200,7 @@
             this.MinimumSize = new System.Drawing.Size(320, 320);
             this.Name = "FormROILive";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Crash - ROI Live";
+            this.Text = "Gamma Analyzer - ROI Live";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormROITableLive_FormClosing);
             this.Load += new System.EventHandler(this.FormROITableLive_Load);
             this.paneMenu.ResumeLayout(false);
