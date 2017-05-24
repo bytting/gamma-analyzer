@@ -107,7 +107,7 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(825, 401);
+            this.pane.Size = new System.Drawing.Size(825, 434);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
@@ -134,7 +134,7 @@
             this.tbColorCeil.Location = new System.Drawing.Point(0, 0);
             this.tbColorCeil.Name = "tbColorCeil";
             this.tbColorCeil.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.tbColorCeil.Size = new System.Drawing.Size(28, 261);
+            this.tbColorCeil.Size = new System.Drawing.Size(28, 282);
             this.tbColorCeil.TabIndex = 3;
             this.tbColorCeil.Scroll += new System.EventHandler(this.tbColorCeil_Scroll);
             this.tbColorCeil.ValueChanged += new System.EventHandler(this.tbColorCeil_ValueChanged);
@@ -150,9 +150,9 @@
             this.panel1.Controls.Add(this.lblSessionId);
             this.panel1.Controls.Add(this.lblColorCeil);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 426);
+            this.panel1.Location = new System.Drawing.Point(0, 459);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(825, 26);
+            this.panel1.Size = new System.Drawing.Size(825, 28);
             this.panel1.TabIndex = 4;
             // 
             // lblEnergy
@@ -188,7 +188,7 @@
             this.btnLeftAll.Image = global::crash.Properties.Resources.left_all_16;
             this.btnLeftAll.Location = new System.Drawing.Point(665, 0);
             this.btnLeftAll.Name = "btnLeftAll";
-            this.btnLeftAll.Size = new System.Drawing.Size(40, 26);
+            this.btnLeftAll.Size = new System.Drawing.Size(40, 28);
             this.btnLeftAll.TabIndex = 0;
             this.btnLeftAll.UseVisualStyleBackColor = true;
             this.btnLeftAll.Click += new System.EventHandler(this.btnLeftAll_Click);
@@ -202,7 +202,7 @@
             this.btnLeft.Image = global::crash.Properties.Resources.left_16;
             this.btnLeft.Location = new System.Drawing.Point(705, 0);
             this.btnLeft.Name = "btnLeft";
-            this.btnLeft.Size = new System.Drawing.Size(40, 26);
+            this.btnLeft.Size = new System.Drawing.Size(40, 28);
             this.btnLeft.TabIndex = 1;
             this.btnLeft.UseVisualStyleBackColor = true;
             this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
@@ -216,7 +216,7 @@
             this.btnRight.Image = global::crash.Properties.Resources.right_16;
             this.btnRight.Location = new System.Drawing.Point(745, 0);
             this.btnRight.Name = "btnRight";
-            this.btnRight.Size = new System.Drawing.Size(40, 26);
+            this.btnRight.Size = new System.Drawing.Size(40, 28);
             this.btnRight.TabIndex = 2;
             this.btnRight.UseVisualStyleBackColor = true;
             this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
@@ -230,7 +230,7 @@
             this.btnRightAll.Image = global::crash.Properties.Resources.right_all_16;
             this.btnRightAll.Location = new System.Drawing.Point(785, 0);
             this.btnRightAll.Name = "btnRightAll";
-            this.btnRightAll.Size = new System.Drawing.Size(40, 26);
+            this.btnRightAll.Size = new System.Drawing.Size(40, 28);
             this.btnRightAll.TabIndex = 3;
             this.btnRightAll.UseVisualStyleBackColor = true;
             this.btnRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
@@ -270,7 +270,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(825, 25);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(28, 427);
+            this.panel2.Size = new System.Drawing.Size(28, 462);
             this.panel2.TabIndex = 5;
             // 
             // btnUpAll
@@ -279,9 +279,9 @@
             this.btnUpAll.FlatAppearance.BorderSize = 0;
             this.btnUpAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpAll.Image = global::crash.Properties.Resources.up_all_16;
-            this.btnUpAll.Location = new System.Drawing.Point(0, 261);
+            this.btnUpAll.Location = new System.Drawing.Point(0, 282);
             this.btnUpAll.Name = "btnUpAll";
-            this.btnUpAll.Size = new System.Drawing.Size(28, 35);
+            this.btnUpAll.Size = new System.Drawing.Size(28, 38);
             this.btnUpAll.TabIndex = 7;
             this.btnUpAll.UseVisualStyleBackColor = true;
             this.btnUpAll.Click += new System.EventHandler(this.btnUpAll_Click);
@@ -292,9 +292,9 @@
             this.btnUp.FlatAppearance.BorderSize = 0;
             this.btnUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUp.Image = global::crash.Properties.Resources.up_16;
-            this.btnUp.Location = new System.Drawing.Point(0, 296);
+            this.btnUp.Location = new System.Drawing.Point(0, 320);
             this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(28, 35);
+            this.btnUp.Size = new System.Drawing.Size(28, 38);
             this.btnUp.TabIndex = 6;
             this.btnUp.UseVisualStyleBackColor = true;
             this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
@@ -305,9 +305,9 @@
             this.btnDown.FlatAppearance.BorderSize = 0;
             this.btnDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDown.Image = global::crash.Properties.Resources.down_16;
-            this.btnDown.Location = new System.Drawing.Point(0, 331);
+            this.btnDown.Location = new System.Drawing.Point(0, 358);
             this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(28, 35);
+            this.btnDown.Size = new System.Drawing.Size(28, 38);
             this.btnDown.TabIndex = 5;
             this.btnDown.UseVisualStyleBackColor = true;
             this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
@@ -318,9 +318,9 @@
             this.btnDownAll.FlatAppearance.BorderSize = 0;
             this.btnDownAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDownAll.Image = global::crash.Properties.Resources.down_all_16;
-            this.btnDownAll.Location = new System.Drawing.Point(0, 366);
+            this.btnDownAll.Location = new System.Drawing.Point(0, 396);
             this.btnDownAll.Name = "btnDownAll";
-            this.btnDownAll.Size = new System.Drawing.Size(28, 35);
+            this.btnDownAll.Size = new System.Drawing.Size(28, 38);
             this.btnDownAll.TabIndex = 4;
             this.btnDownAll.UseVisualStyleBackColor = true;
             this.btnDownAll.Click += new System.EventHandler(this.btnDownAll_Click);
@@ -328,22 +328,22 @@
             // panel3
             // 
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 401);
+            this.panel3.Location = new System.Drawing.Point(0, 434);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(28, 26);
+            this.panel3.Size = new System.Drawing.Size(28, 28);
             this.panel3.TabIndex = 5;
             // 
             // FormWaterfallLive
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(853, 452);
+            this.ClientSize = new System.Drawing.Size(853, 487);
             this.Controls.Add(this.pane);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.tools);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(500, 320);
+            this.MinimumSize = new System.Drawing.Size(500, 342);
             this.Name = "FormWaterfallLive";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Gamma Analyzer - Waterfall Live";

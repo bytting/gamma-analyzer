@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "crash", "crash.csproj", "{1A3FE239-8392-4278-8F73-52D52993B22F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamma Analyzer", "Gamma Analyzer.csproj", "{1A3FE239-8392-4278-8F73-52D52993B22F}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "VSSetup", "VSSetup\VSSetup.vdproj", "{556FF1A5-C3C4-42AF-821C-A0C10ED0AFCF}"
 EndProject

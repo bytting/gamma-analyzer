@@ -126,7 +126,8 @@ namespace crash
                         break;
 
                     int a = 255, r = 0, g = 0, b = 255;
-                    float cps = s.Channels[leftX + x];
+                    float cps = s.Channels[leftX + x];                    
+
                     if (btnSubtractBackground.Checked && session.Background != null)
                     {
                         if (leftX + x < session.Background.Length)

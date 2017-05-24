@@ -109,23 +109,23 @@ namespace crash
         {
             // FIXME: sanity checks
             SessionName = msg.Arguments["session_name"].ToString();
-            SessionIndex = Convert.ToInt32(msg.Arguments["session_index"]);
+            SessionIndex = GetInt32(msg.Arguments["session_index"]);
             Label = "Spectrum " + SessionIndex.ToString();
-            NumChannels = Convert.ToInt32(msg.Arguments["num_channels"]);
+            NumChannels = GetInt32(msg.Arguments["num_channels"]);
             IsPreview = msg.Arguments["preview"].ToString() == "1";
-            LatitudeStart = Convert.ToDouble(msg.Arguments["latitude_start"], CultureInfo.InvariantCulture);
-            LongitudeStart = Convert.ToDouble(msg.Arguments["longitude_start"], CultureInfo.InvariantCulture);
-            AltitudeStart = Convert.ToDouble(msg.Arguments["altitude_start"], CultureInfo.InvariantCulture);
-            LatitudeEnd = Convert.ToDouble(msg.Arguments["latitude_end"], CultureInfo.InvariantCulture);
-            LongitudeEnd = Convert.ToDouble(msg.Arguments["longitude_end"], CultureInfo.InvariantCulture);
-            AltitudeEnd = Convert.ToDouble(msg.Arguments["altitude_end"], CultureInfo.InvariantCulture);
-            GpsTimeStart = Convert.ToDateTime(msg.Arguments["gps_time_start"], CultureInfo.InvariantCulture);
-            GpsTimeEnd = Convert.ToDateTime(msg.Arguments["gps_time_end"], CultureInfo.InvariantCulture);
-            GpsSpeedStart = Convert.ToSingle(msg.Arguments["gps_speed_start"], CultureInfo.InvariantCulture);
-            GpsSpeedEnd = Convert.ToSingle(msg.Arguments["gps_speed_end"], CultureInfo.InvariantCulture);
-            Realtime = Convert.ToInt32(msg.Arguments["realtime"]);
-            Livetime = Convert.ToInt32(msg.Arguments["livetime"]);
-            SpectralInput = Convert.ToInt32(msg.Arguments["spectral_input"]);            
+            LatitudeStart = GetDouble(msg.Arguments["latitude_start"]);
+            LongitudeStart = GetDouble(msg.Arguments["longitude_start"]);
+            AltitudeStart = GetDouble(msg.Arguments["altitude_start"]);
+            LatitudeEnd = GetDouble(msg.Arguments["latitude_end"]);
+            LongitudeEnd = GetDouble(msg.Arguments["longitude_end"]);
+            AltitudeEnd = GetDouble(msg.Arguments["altitude_end"]);
+            GpsTimeStart = GetDateTime(msg.Arguments["gps_time_start"]);
+            GpsTimeEnd = GetDateTime(msg.Arguments["gps_time_end"]);                        
+            GpsSpeedStart = GetSingle(msg.Arguments["gps_speed_start"]);
+            GpsSpeedEnd = GetSingle(msg.Arguments["gps_speed_end"]);
+            Realtime = GetInt32(msg.Arguments["realtime"]);
+            Livetime = GetInt32(msg.Arguments["livetime"]);
+            SpectralInput = GetInt32(msg.Arguments["spectral_input"]);            
             mChannels = new List<float>();
             TotalCount = 0f;
             // Split channel string and store each count in channel array
@@ -144,6 +144,66 @@ namespace crash
             }
 
             Doserate = 0.0;                        
+        }
+
+        private Int32 GetInt32(object o)
+        {
+            Int32 i;
+            try
+            {
+                i = Convert.ToInt32(o);
+            }
+            catch
+            {
+                i = 0;
+            }
+
+            return i;
+        }
+
+        private Single GetSingle(object o)
+        {
+            Single s;
+            try
+            {
+                s = Convert.ToSingle(o, CultureInfo.InvariantCulture);                
+            }
+            catch
+            {
+                s = 0f;
+            }
+
+            return s;
+        }
+
+        private Double GetDouble(object o)
+        {
+            Double d;
+            try
+            {
+                d = Convert.ToDouble(o, CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                d = 0f;
+            }
+
+            return d;
+        }
+
+        private DateTime GetDateTime(object o)
+        {
+            DateTime dt;
+            try
+            {
+                dt = Convert.ToDateTime(o, CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                dt = DateTime.Now;
+            }
+
+            return dt;
         }
 
         public float GetCountInROI(int start, int end)

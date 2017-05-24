@@ -882,10 +882,7 @@ namespace crash
             double E = session.Detector.GetEnergy(x);
 
             GraphPane pane = graphSession.GraphPane;
-            pane.GraphObjList.Clear();
-
-            //LineObj line = new LineObj(Color.ForestGreen, (double)x, pane.YAxis.Scale.Min, (double)x, pane.YAxis.Scale.Max);
-            //pane.GraphObjList.Add(line);
+            pane.GraphObjList.Clear();            
 
             LineObj line1 = new LineObj(Color.Black, (double)x - tbarNuclides.Value, pane.YAxis.Scale.Min, (double)x - tbarNuclides.Value, pane.YAxis.Scale.Max);
             makeGraphObjectType(ref line1.Tag, GraphObjectType.EnergyTolerance);
@@ -1184,6 +1181,8 @@ namespace crash
 
             if (lbNuclides.SelectedItems.Count > 0)
             {
+                double offset_y = 0d;
+
                 // Display lines for currently selected nuclide
                 NuclideInfo ni = (NuclideInfo)lbNuclides.SelectedItems[0];
                 foreach(NuclideEnergy ne in ni.Energies)
@@ -1197,18 +1196,19 @@ namespace crash
                     }
 
                     // Add energy line
-                    LineObj line = new LineObj(Color.Orange, (double)ch, pane.YAxis.Scale.Min, (double)ch, pane.YAxis.Scale.Max);
+                    LineObj line = new LineObj(Color.ForestGreen, (double)ch, pane.YAxis.Scale.Min, (double)ch, pane.YAxis.Scale.Max);
                     makeGraphObjectType(ref line.Tag, GraphObjectType.Energy);
                     pane.GraphObjList.Add(line);
                                
                     // Add probability text
-                    TextObj label = new TextObj(ne.Probability.ToString(), (double)ch,  pane.YAxis.Scale.Max, CoordType.AxisXY2Scale, AlignH.Left, AlignV.Top);
+                    TextObj label = new TextObj(ne.Probability.ToString() + " %", (double)ch, pane.YAxis.Scale.Max - offset_y, CoordType.AxisXY2Scale, AlignH.Left, AlignV.Top);
                     makeGraphObjectType(ref label.Tag, GraphObjectType.Energy);                    
                     label.FontSpec.Border.IsVisible = false;
-                    label.FontSpec.Size = 6f;
+                    label.FontSpec.Size = 9f;
                     label.FontSpec.Fill.Color = SystemColors.ButtonFace;
                     label.ZOrder = ZOrder.D_BehindAxis;
                     pane.GraphObjList.Add(label);
+                    offset_y += pane.YAxis.Scale.Max / 25d;
                 }                
             }
 
