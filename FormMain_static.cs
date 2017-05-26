@@ -390,7 +390,17 @@ namespace crash
                         session.Add(spec);
 
                         // Add spectrum to UI list
+                        bool updateSelectedIndex = false;
+                        if (lbSession.SelectedIndex == 0)
+                            updateSelectedIndex = true;
+
                         lbSession.Items.Insert(0, spec);
+
+                        if (updateSelectedIndex)
+                        {
+                            lbSession.ClearSelected();
+                            lbSession.SetSelected(0, true);
+                        }
 
                         // Notify external forms about new spectrum
                         frmMap.AddMarker(spec);

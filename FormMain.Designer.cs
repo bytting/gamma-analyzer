@@ -486,6 +486,7 @@
             this.menuItemROITable.Name = "menuItemROITable";
             this.menuItemROITable.Size = new System.Drawing.Size(164, 22);
             this.menuItemROITable.Text = "Show ROI Table";
+            this.menuItemROITable.Click += new System.EventHandler(this.menuItemROITable_Click);
             // 
             // menuItemShowROIHistory
             // 

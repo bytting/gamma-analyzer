@@ -319,7 +319,7 @@ namespace crash
                 lblTotalCount.Text = "Total count: " + s.TotalCount;                
                 if(s.Doserate == 0.0)
                     lblDoserate.Text = "";
-                else lblDoserate.Text = "Doserate: " + String.Format("{0:###0.0##}", s.Doserate);
+                else lblDoserate.Text = "Doserate (μSv/h): " + String.Format("{0:###0.0##}", s.Doserate / 1000.0);
 
                 // Inform other forms of new spectrum selection
                 if (formWaterfallLive.Visible)
@@ -1270,6 +1270,6 @@ namespace crash
         private void menuItemConvertToLocalTime_CheckedChanged(object sender, EventArgs e)
         {
             settings.DisplayLocalTime = menuItemConvertToLocalTime.Checked;
-        }        
+        }
     }
 }
