@@ -192,11 +192,6 @@ namespace crash
                 case "connect_ok":                    
                     // Connection successful
                     Utils.Log.Add("RECV: Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
-
-                    // Send a ping command to ensure a healthy connection
-                    burn.Message msgPing = new burn.Message("ping", null);
-                    sendMsg(msgPing);
-                    Utils.Log.Add("SEND: Sending ping message");
                     break;
 
                 case "connect_failed":
@@ -293,6 +288,10 @@ namespace crash
                 case "error":
                     // An error occurred, log error message
                     Utils.Log.Add("RECV: Error: " + msg.Arguments["message"]);
+                    break;
+
+                case "success":                    
+                    Utils.Log.Add("RECV: Success: " + msg.Arguments["message"]);
                     break;
 
                 case "error_socket":

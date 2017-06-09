@@ -240,7 +240,8 @@ namespace crash
             }
             
             // Create and send network message
-            burn.Message msg = new burn.Message("set_gain", null);
+            burn.Message msg = new burn.Message("detector_config", null);
+            msg.AddParameter("detector_type", "osprey");
             msg.AddParameter("voltage", voltage);
             msg.AddParameter("coarse_gain", coarse);
             msg.AddParameter("fine_gain", fine);
@@ -249,7 +250,7 @@ namespace crash
             msg.AddParameter("uld", uld);
             sendMsg(msg);
 
-            Utils.Log.Add("SEND: set_gain");
+            Utils.Log.Add("SEND: detector_config");
         }        
         
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
@@ -787,12 +788,6 @@ namespace crash
 
         private void menuItemStartNewSession_Click(object sender, EventArgs e)
         {
-            if (!connected)
-            {
-                MessageBox.Show("You must connect first");
-                return;
-            }
-
             if (sessionRunning)
             {
                 MessageBox.Show("A session is already running");
