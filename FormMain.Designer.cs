@@ -35,7 +35,6 @@
             this.menuItemBack = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemDisconnect = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSession = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,9 +70,6 @@
             this.btnShowLog = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
-            this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
-            this.menuItemRemoteCommands = new System.Windows.Forms.ToolStripDropDownButton();
-            this.menuItemShutdownRemoteServer = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.btnStartNewSession = new System.Windows.Forms.ToolStripButton();
             this.btnStopSession = new System.Windows.Forms.ToolStripButton();
@@ -286,7 +282,6 @@
             this.menuItemBack,
             this.toolStripSeparator10,
             this.menuItemConnect,
-            this.menuItemDisconnect,
             this.toolStripSeparator1,
             this.menuItemExit});
             this.menuItemFile.Name = "menuItemFile";
@@ -311,13 +306,6 @@
             this.menuItemConnect.Size = new System.Drawing.Size(133, 22);
             this.menuItemConnect.Text = "&Connect";
             this.menuItemConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
-            // 
-            // menuItemDisconnect
-            // 
-            this.menuItemDisconnect.Name = "menuItemDisconnect";
-            this.menuItemDisconnect.Size = new System.Drawing.Size(133, 22);
-            this.menuItemDisconnect.Text = "&Disconnect";
-            this.menuItemDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
             // 
             // toolStripSeparator1
             // 
@@ -550,8 +538,6 @@
             this.btnShowLog,
             this.toolStripSeparator8,
             this.btnConnect,
-            this.btnDisconnect,
-            this.menuItemRemoteCommands,
             this.toolStripSeparator6,
             this.btnStartNewSession,
             this.btnStopSession,
@@ -622,40 +608,6 @@
             this.btnConnect.Text = "toolStripButton1";
             this.btnConnect.ToolTipText = "Connect to remote device";
             this.btnConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
-            // 
-            // btnDisconnect
-            // 
-            this.btnDisconnect.AutoSize = false;
-            this.btnDisconnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnDisconnect.Image = global::crash.Properties.Resources.disconnect_32;
-            this.btnDisconnect.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnDisconnect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(38, 38);
-            this.btnDisconnect.Text = "toolStripButton1";
-            this.btnDisconnect.ToolTipText = "Disconnect from remote device";
-            this.btnDisconnect.Click += new System.EventHandler(this.menuItemDisconnect_Click);
-            // 
-            // menuItemRemoteCommands
-            // 
-            this.menuItemRemoteCommands.AutoSize = false;
-            this.menuItemRemoteCommands.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.menuItemRemoteCommands.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemShutdownRemoteServer});
-            this.menuItemRemoteCommands.Image = global::crash.Properties.Resources.remote_control_32;
-            this.menuItemRemoteCommands.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.menuItemRemoteCommands.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.menuItemRemoteCommands.Name = "menuItemRemoteCommands";
-            this.menuItemRemoteCommands.Size = new System.Drawing.Size(38, 38);
-            this.menuItemRemoteCommands.Text = "toolStripDropDownButton1";
-            this.menuItemRemoteCommands.ToolTipText = "Remote commands";
-            // 
-            // menuItemShutdownRemoteServer
-            // 
-            this.menuItemShutdownRemoteServer.Name = "menuItemShutdownRemoteServer";
-            this.menuItemShutdownRemoteServer.Size = new System.Drawing.Size(203, 22);
-            this.menuItemShutdownRemoteServer.Text = "&Shutdown remote server";
-            this.menuItemShutdownRemoteServer.Click += new System.EventHandler(this.menuItemShutdownRemoteServer_Click);
             // 
             // toolStripSeparator6
             // 
@@ -2397,7 +2349,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemFile;
         private System.Windows.Forms.ToolStripMenuItem menuItemExit;
         private System.Windows.Forms.ToolStripMenuItem menuItemConnect;
-        private System.Windows.Forms.ToolStripMenuItem menuItemDisconnect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripLabel lblConnectionStatus;
@@ -2523,8 +2474,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemStartNewSession;
         private System.Windows.Forms.ToolStripMenuItem menuItemStopSession;
         private System.Windows.Forms.ToolStripButton btnStopSession;
-        private System.Windows.Forms.ToolStripDropDownButton menuItemRemoteCommands;
-        private System.Windows.Forms.ToolStripMenuItem menuItemShutdownRemoteServer;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem menuItemROITable;
         private System.Windows.Forms.Panel panelNuclides;
@@ -2532,7 +2481,6 @@
         private System.Windows.Forms.TrackBar tbarNuclides;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ToolStripButton btnConnect;
-        private System.Windows.Forms.ToolStripButton btnDisconnect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.TableLayoutPanel layoutConfigureDetector;

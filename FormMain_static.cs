@@ -49,10 +49,7 @@ namespace crash
         static Thread netThread = new Thread(netService.DoWork);
 
         // Timer used to poll for network messages
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-
-        // Network connection state
-        bool connected = false;
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();        
 
         // Structire for currently loaded session
         Session session = new Session();
@@ -79,6 +76,7 @@ namespace crash
         // Structure containing loaded nuclide library
         List<NuclideInfo> NuclideLibrary = new List<NuclideInfo>();
 
+        bool previewSession = false;
         // Spectrum used to accumulate counts for setup UI
         Spectrum previewSpec = null;
 
@@ -189,60 +187,18 @@ namespace crash
 
             switch (msg.Command)
             {
-                case "connect_ok":                    
-                    // Connection successful
-                    Utils.Log.Add("RECV: Connected to " + msg.Arguments["host"] + ":" + msg.Arguments["port"]);
-                    break;
-
-                case "connect_failed":
-                    // Connection failed
-                    connected = false;                    
-                    Utils.Log.Add("RECV: Connection failed for " + msg.Arguments["host"] + ":" + msg.Arguments["port"] + " " + msg.Arguments["message"]);                    
-                    break;
-
-                case "disconnect_ok":
-                    // Disconnect successful
-                    connected = false;
-                    lblConnectionStatus.ForeColor = Color.Red;
-                    lblConnectionStatus.Text = "Not connected";
-                    Utils.Log.Add("RECV: Disconnected from peer");
-
-                    // Change to session tab
-                    if (tabs.SelectedTab == pageSetup)
-                        tabs.SelectedTab = pageSessions;
-                    break;
-
-                case "ping_ok":                    
-                    // Ping command received, update state
-                    connected = true;
-                    lblConnectionStatus.ForeColor = Color.Green;
-                    lblConnectionStatus.Text = "Connected to " + settings.LastIP + ":" + settings.LastPort;                    
-                    Utils.Log.Add("RECV: Received ping_ok from peer");
-                    break;
-
-                case "close_ok":
-                    // Remove service closed, close down network thread and update state
-                    netService.RequestStop();
-                    netThread.Join();
-                    connected = false;
-                    lblConnectionStatus.ForeColor = Color.Red;
-                    lblConnectionStatus.Text = "Not connected";
-                    Utils.Log.Add("RECV: Disconnected from peer, peer closed");
-                    break;
-
-                case "new_session_ok":
-                    // New session created successfully
-                    bool prev = msg.Arguments["preview"].ToString() == "1";
-                    if (prev)
+                case "start_session_success":
+                    // New session created successfully                    
+                    if (previewSession)
                     {
                         // New session is a preview session, update log
-                        Utils.Log.Add("RECV: Preview session started");
+                        Utils.Log.Add("Session started: " + msg.Arguments["session_name"]);
                     }
                     else
                     {
                         // New session is a normal session
                         string sessionName = msg.Arguments["session_name"].ToString();
-                        Utils.Log.Add("RECV: New session started: " + sessionName);
+                        Utils.Log.Add("Session started: " + msg.Arguments["session_name"]);
 
                         // Create a session object and update state
                         float livetime = Convert.ToSingle(msg.Arguments["livetime"]);
@@ -266,44 +222,40 @@ namespace crash
                     btnSetupStopTest.Enabled = true;
                     break;
 
-                case "new_session_failed":
+                case "start_session_error":
                     // Creation of new session failed, log error message
-                    Utils.Log.Add("RECV: New session failed: " + msg.Arguments["message"]);
+                    Utils.Log.Add(msg.Arguments["message"].ToString());
                     break;
 
-                case "stop_session_ok":
+                case "stop_session_success":
                     // Stop session successful, update state
-                    Utils.Log.Add("RECV: Session stopped");
+                    Utils.Log.Add(msg.Arguments["message"].ToString());
                     sessionRunning = false;
                     btnSetupStartTest.Enabled = true;
                     btnSetupStopTest.Enabled = false;
                     break;
 
-                case "session_finished":
-                    // Session finished successfully
-                    Utils.Log.Add("RECV: Session " + msg.Arguments["session_name"] + " finished");
+                case "stop_session_error":
+                    // Session stopped successfully
+                    Utils.Log.Add(msg.Arguments["message"].ToString());
                     sessionRunning = false;
                     break;
 
                 case "error":
                     // An error occurred, log error message
-                    Utils.Log.Add("RECV: Error: " + msg.Arguments["message"]);
-                    break;
-
-                case "success":                    
-                    Utils.Log.Add("RECV: Success: " + msg.Arguments["message"]);
-                    break;
+                    Utils.Log.Add(msg.Arguments["message"].ToString());
+                    break;                
 
                 case "error_socket":
                     // An socket error occurred, log error message
-                    Utils.Log.Add("RECV: Socket error: " + msg.Arguments["error_code"] + " " + msg.Arguments["message"]);
+                    Utils.Log.Add("Socket error: " + msg.Arguments["message"]);
                     break;
 
-                case "set_gain_ok":
+                case "detector_config_success":
                     // Set gain command executed successfully
-                    Utils.Log.Add("RECV: set_gain ok: " + msg.Arguments["voltage"] + " " + msg.Arguments["coarse_gain"] + " "
-                        + msg.Arguments["fine_gain"] + " " + msg.Arguments["num_channels"] + " " + msg.Arguments["lld"] + " "
-                        + msg.Arguments["uld"]);
+                    Utils.Log.Add("detector_config_success: " + msg.Arguments["detector_type"] + " " + msg.Arguments["voltage"] + " " 
+                        + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"] + " " + msg.Arguments["num_channels"] + " " 
+                        + msg.Arguments["lld"] + " " + msg.Arguments["uld"]);
 
                     // Update selected detector parameters
                     det = (Detector)cboxSetupDetector.SelectedItem;
@@ -324,10 +276,10 @@ namespace crash
                     Spectrum spec = new Spectrum(msg);
                     spec.CalculateDoserate(session.Detector, session.GEFactor);
 
-                    if (spec.IsPreview)
+                    if (previewSession)
                     {
                         // Spectrum is a preview spectrum
-                        Utils.Log.Add("RECV: " + spec.Label + " preview spectrum received");
+                        Utils.Log.Add(spec.Label + " received");
 
                         // Merge spectrum with our preview spectrum
                         if (previewSpec == null)
@@ -369,7 +321,7 @@ namespace crash
                     else
                     {
                         // Normal session spectrum received successfully
-                        Utils.Log.Add("RECV: " + spec.Label + " session spectrum received");
+                        Utils.Log.Add(spec.Label + " received");
 
                         // FIXME: Make sure session is allocated in case spectrums are ticking in
 
@@ -410,10 +362,7 @@ namespace crash
 
                 default:
                     // Unhandled message received, update log
-                    string info = msg.Command + " -> ";
-                    foreach (KeyValuePair<string, object> item in msg.Arguments)
-                        info += item.Key + ":" + item.Value.ToString() + ", ";
-                    Utils.Log.Add("RECV: Unhandeled command: " + info);
+                    Utils.Log.Add("Unknown message: " + msg.Arguments["message"].ToString()); // FIXME
                     break;
             }
 

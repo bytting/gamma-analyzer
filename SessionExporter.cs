@@ -39,7 +39,7 @@ namespace crash
             using (StreamWriter writer = new StreamWriter(filename, false, Encoding.UTF8))
             {
                 // Write header line
-                writer.WriteLine("Session name|Session index|Time start (UTC)|Time end (UTC)|Latitude start|Latitude end|Longitude start|Longitude end|Altitude start|Altitude end|Doserate|Doserate unit");
+                writer.WriteLine("Session name|Session index|Time start (UTC)|Latitude|Latitude error|Longitude|Longitude error|Altitude|Altitude error|Doserate|Doserate unit");
 
                 foreach (Spectrum s in session.Spectrums)
                 {
@@ -49,14 +49,13 @@ namespace crash
                     writer.WriteLine(
                         s.SessionName + "|"
                         + s.SessionIndex.ToString() + "|"
-                        + s.GpsTimeStart.ToString("yyyy-MM-ddTHH:mm:ss") + "|"
-                        + s.GpsTimeEnd.ToString("yyyy-MM-ddTHH:mm:ss") + "|"
-                        + s.LatitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                        + s.LatitudeEnd.ToString(CultureInfo.InvariantCulture) + "|"
-                        + s.LongitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                        + s.LongitudeEnd.ToString(CultureInfo.InvariantCulture) + "|"
-                        + s.AltitudeStart.ToString(CultureInfo.InvariantCulture) + "|"
-                        + s.AltitudeEnd.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.GpsTime.ToString("yyyy-MM-ddTHH:mm:ss") + "|"                        
+                        + s.Latitude.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.LatitudeError.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.Longitude.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.LongitudeError.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.Altitude.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.AltitudeError.ToString(CultureInfo.InvariantCulture) + "|"
                         + dose.ToString(CultureInfo.InvariantCulture) + "|μSv/h");
                 }
             }
@@ -75,12 +74,12 @@ namespace crash
                 string filename = sessionPath + Path.DirectorySeparatorChar + s.SessionIndex.ToString() + ".chn";
                 using (BinaryWriter writer = new BinaryWriter(File.Create(filename)))
                 {
-                    string dateStr = s.GpsTimeStart.ToString("ddMMMyy") + "1";                    
-                    string timeStr = s.GpsTimeStart.ToString("HHmm");
-                    string secStr = s.GpsTimeStart.ToString("ss");
+                    string dateStr = s.GpsTime.ToString("ddMMMyy") + "1";                    
+                    string timeStr = s.GpsTime.ToString("HHmm");
+                    string secStr = s.GpsTime.ToString("ss");
 
                     writer.Write(Convert.ToInt16(-1)); // signature
-                    writer.Write(Convert.ToInt16(s.SpectralInput)); // detector id
+                    writer.Write(Convert.ToInt16(1)); // detector id
                     writer.Write(Convert.ToInt16(0)); // segment
                     writer.Write(Encoding.ASCII.GetBytes(secStr)); // seconds start
                     Int32 rt = s.Realtime / 1000; // ms                    
@@ -253,13 +252,13 @@ namespace crash
 
                     p.Name = "";
                     p.StyleURL = "#" + styleID.ToString();
-	                p.TimeStamp.When = spec.GpsTimeStart.ToString("yyyy-MM-ddTHH:mm:ss");
-                    p.Point.Coordinates = spec.LongitudeStart.ToString(CultureInfo.InvariantCulture) + "," + spec.LatitudeStart.ToString(CultureInfo.InvariantCulture);
+	                p.TimeStamp.When = spec.GpsTime.ToString("yyyy-MM-ddTHH:mm:ss");
+                    p.Point.Coordinates = spec.Longitude.ToString(CultureInfo.InvariantCulture) + "," + spec.Latitude.ToString(CultureInfo.InvariantCulture);
                     p.Description = "Value: " + dose.ToString("e", CultureInfo.InvariantCulture) + " μSv/h" +
-                        "\nLatitude: " + spec.LatitudeStart.ToString(CultureInfo.InvariantCulture) +
-                        "\nLongitude: " + spec.LongitudeStart.ToString(CultureInfo.InvariantCulture) +
-                        "\nAltitude: " + spec.AltitudeStart.ToString(CultureInfo.InvariantCulture) +
-                        "\nTime: " + spec.GpsTimeStart.ToString("yyyy-MM-dd HH:mm:ss") + " UTC";
+                        "\nLatitude: " + spec.Latitude.ToString(CultureInfo.InvariantCulture) +
+                        "\nLongitude: " + spec.Longitude.ToString(CultureInfo.InvariantCulture) +
+                        "\nAltitude: " + spec.Altitude.ToString(CultureInfo.InvariantCulture) +
+                        "\nTime: " + spec.GpsTime.ToString("yyyy-MM-dd HH:mm:ss") + " UTC";
 
                     serializer.Serialize(writer, p, ns);
                     writer.WriteString("\n");                    

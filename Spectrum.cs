@@ -53,49 +53,50 @@ namespace crash
         public float MinCount { get; private set; }
 
         // Total counts stored in this spectrum
-        public float TotalCount { get; private set; }
-
-        // Preview state
-        public bool IsPreview { get; private set; }
+        public float TotalCount { get; private set; }        
 
         // Latitude when this spectrum was started
-        public double LatitudeStart { get; private set; }
+        public double Latitude { get; private set; }
+
+        // Latitude error when this spectrum was started
+        public double LatitudeError { get; private set; }
 
         // Longitude when this spectrum was started
-        public double LongitudeStart { get; private set; }
+        public double Longitude { get; private set; }
+
+        // Longitude error when this spectrum was started
+        public double LongitudeError { get; private set; }
 
         // Altitude when this spectrum was started
-        public double AltitudeStart { get; private set; }
+        public double Altitude { get; private set; }
 
-        // Latitude when this spectrum was stopped
-        public double LatitudeEnd { get; private set; }
-
-        // Longitude when this spectrum was stopped
-        public double LongitudeEnd { get; private set; }
-
-        // Altitude when this spectrum was stopped
-        public double AltitudeEnd { get; private set; }
+        // Altitude error when this spectrum was started
+        public double AltitudeError { get; private set; }                
 
         // Date and time when this spectrum was started
-        public DateTime GpsTimeStart { get; private set; }
+        public DateTime GpsTime { get; private set; }
 
-        // Date and time when this spectrum was stopped
-        public DateTime GpsTimeEnd { get; private set; }
+        public float GpsTrack { get; private set; }
+        
+        public float GpsTrackError { get; private set; }
 
         // Speed when this spectrum was started
-        public float GpsSpeedStart { get; private set; }
+        public float GpsSpeed { get; private set; }
 
-        // Speed when this spectrum was stopped
-        public float GpsSpeedEnd { get; private set; }
+        // Speed error when this spectrum was started
+        public float GpsSpeedError { get; private set; }
+
+        // Climb when this spectrum was started
+        public float GpsClimb { get; private set; }
+
+        // Climb error when this spectrum was started
+        public float GpsClimbError { get; private set; }
 
         // Realtime for this spectrum
         public int Realtime { get; private set; }
 
         // Livetime for this spectrum
-        public int Livetime { get; private set; }
-
-        // Osprey detector ID used with this spectrum (FIXME: remove this)
-        public int SpectralInput { get; private set; }
+        public int Livetime { get; private set; }        
 
         // Doserate for this spectrum in nanosievert per hour
         public double Doserate { get; private set; }        
@@ -109,23 +110,24 @@ namespace crash
         {
             // FIXME: sanity checks
             SessionName = msg.Arguments["session_name"].ToString();
-            SessionIndex = GetInt32(msg.Arguments["session_index"]);
-            Label = "Spectrum " + SessionIndex.ToString();
+            SessionIndex = GetInt32(msg.Arguments["index"]);
+            Label = "Spectrum " + SessionIndex;
             NumChannels = GetInt32(msg.Arguments["num_channels"]);
-            IsPreview = msg.Arguments["preview"].ToString() == "1";
-            LatitudeStart = GetDouble(msg.Arguments["latitude_start"]);
-            LongitudeStart = GetDouble(msg.Arguments["longitude_start"]);
-            AltitudeStart = GetDouble(msg.Arguments["altitude_start"]);
-            LatitudeEnd = GetDouble(msg.Arguments["latitude_end"]);
-            LongitudeEnd = GetDouble(msg.Arguments["longitude_end"]);
-            AltitudeEnd = GetDouble(msg.Arguments["altitude_end"]);
-            GpsTimeStart = GetDateTime(msg.Arguments["gps_time_start"]);
-            GpsTimeEnd = GetDateTime(msg.Arguments["gps_time_end"]);                        
-            GpsSpeedStart = GetSingle(msg.Arguments["gps_speed_start"]);
-            GpsSpeedEnd = GetSingle(msg.Arguments["gps_speed_end"]);
+            Latitude = GetDouble(msg.Arguments["latitude"]);
+            LatitudeError = GetDouble(msg.Arguments["latitude_error"]);
+            Longitude = GetDouble(msg.Arguments["longitude"]);
+            LongitudeError = GetDouble(msg.Arguments["longitude_error"]);
+            Altitude = GetDouble(msg.Arguments["altitude"]);
+            AltitudeError = GetDouble(msg.Arguments["altitude_error"]);
+            GpsTime = GetDateTime(msg.Arguments["time"]);
+            GpsTrack = GetSingle(msg.Arguments["track"]);
+            GpsTrackError = GetSingle(msg.Arguments["track_error"]);
+            GpsSpeed = GetSingle(msg.Arguments["speed"]);
+            GpsSpeedError = GetSingle(msg.Arguments["speed_error"]);
+            GpsClimb = GetSingle(msg.Arguments["climb"]);
+            GpsClimbError = GetSingle(msg.Arguments["climb_error"]);
             Realtime = GetInt32(msg.Arguments["realtime"]);
             Livetime = GetInt32(msg.Arguments["livetime"]);
-            SpectralInput = GetInt32(msg.Arguments["spectral_input"]);            
             mChannels = new List<float>();
             TotalCount = 0f;
             // Split channel string and store each count in channel array
@@ -226,7 +228,7 @@ namespace crash
             using (System.Net.WebClient wc = new System.Net.WebClient())
             {
                 string query = "https://maps.googleapis.com/maps/api/elevation/json?locations=" 
-                    + LatitudeStart.ToString(CultureInfo.InvariantCulture) + "," + LongitudeStart.ToString(CultureInfo.InvariantCulture) 
+                    + Latitude.ToString(CultureInfo.InvariantCulture) + "," + Longitude.ToString(CultureInfo.InvariantCulture) 
                     + "&key=" + apiKey;
 
                 var json = wc.DownloadString(query);
@@ -287,20 +289,21 @@ namespace crash
             res.MaxCount = MaxCount;
             res.MinCount = MinCount;
             res.TotalCount = TotalCount;
-            res.IsPreview = IsPreview;
-            res.LatitudeStart = LatitudeStart;
-            res.LongitudeStart = LongitudeStart;
-            res.AltitudeStart = AltitudeStart;
-            res.LatitudeEnd = LatitudeEnd;
-            res.LongitudeEnd = LongitudeEnd;
-            res.AltitudeEnd = AltitudeEnd;
-            res.GpsTimeStart = GpsTimeStart;
-            res.GpsTimeEnd = GpsTimeEnd;
-            res.GpsSpeedStart = GpsSpeedStart;
-            res.GpsSpeedEnd = GpsSpeedEnd;
+            res.Latitude = Latitude;
+            res.LatitudeError = LatitudeError;
+            res.Longitude = Longitude;
+            res.LongitudeError = LongitudeError;
+            res.Altitude = Altitude;                        
+            res.AltitudeError = AltitudeError;
+            res.GpsTime = GpsTime;
+            res.GpsTrack = GpsTrack;
+            res.GpsTrackError = GpsTrackError;
+            res.GpsSpeed = GpsSpeed;
+            res.GpsSpeedError = GpsSpeedError;
+            res.GpsClimb = GpsClimb;
+            res.GpsClimbError = GpsClimbError;
             res.Realtime = Realtime;
             res.Livetime = Livetime;
-            res.SpectralInput = SpectralInput;
             res.Doserate = Doserate;
             return res;
         }

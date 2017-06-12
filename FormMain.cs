@@ -150,8 +150,7 @@ namespace crash
         }
 
         private void menuItemExit_Click(object sender, EventArgs e)
-        {
-            menuItemDisconnect_Click(sender, e);            
+        {            
             Close();
         }
 
@@ -160,36 +159,8 @@ namespace crash
             // Show connection form
             FormConnect form = new FormConnect(settings);
             if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            // Send a connect message to networking thread
-            burn.Message msg = new burn.Message("connect", null);
-            msg.AddParameter("host", settings.LastIP);
-            msg.AddParameter("port", settings.LastPort);
-            sendMsg(msg);
-
-            Utils.Log.Add("Connecting to " + settings.LastIP + ":" + settings.LastPort + "...");
-        }
-
-        private void menuItemDisconnect_Click(object sender, EventArgs e)
-        {
-            if (!connected)            
                 return;            
-
-            if(sessionRunning)
-            {
-                MessageBox.Show("You must stop the running session first");
-                return;
-            }
-                        
-            if (MessageBox.Show("Are you sure you want to disconnect?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
-                return;
-            
-            // Send disconnect message to network thread
-            sendMsg(new burn.Message("disconnect", null));
-            Utils.Log.Add("Disconnecting from " + settings.LastIP + ":" + settings.LastPort);
-            Thread.Sleep(2000); // FIXME: Graceful shutdown
-        }        
+        }                
 
         private void btnStopNetService_Click(object sender, EventArgs e)
         {
@@ -307,14 +278,13 @@ namespace crash
                 lblSession.Text = "Session: " + s.SessionName;
                 lblSessionDetector.Text = "Det." + session.Detector.Serialnumber + " (" + session.Detector.TypeName + ")";
                 lblIndex.Text = "Index: " + s.SessionIndex;
-                lblLatitudeStart.Text = "Lat. start: " + s.LatitudeStart;
-                lblLongitudeStart.Text = "Lon. start: " + s.LongitudeStart;
-                lblAltitudeStart.Text = "Alt. start: " + s.AltitudeStart;
-                lblLatitudeEnd.Text = "Lat. end: " + s.LatitudeEnd;
-                lblLongitudeEnd.Text = "Lon. end: " + s.LongitudeEnd;
-                lblAltitudeEnd.Text = "Alt. end: " + s.AltitudeEnd;
-                lblGpsTimeStart.Text = "Time start: " + (menuItemConvertToLocalTime.Checked ? s.GpsTimeStart.ToLocalTime() : s.GpsTimeStart);
-                lblGpsTimeEnd.Text = "Time end: " + (menuItemConvertToLocalTime.Checked ? s.GpsTimeEnd.ToLocalTime() : s.GpsTimeEnd);
+                lblLatitudeStart.Text = "Latitude: " + s.Latitude;
+                lblLongitudeStart.Text = "Longitude: " + s.Longitude;
+                lblAltitudeStart.Text = "Altitude: " + s.Altitude;
+                lblLatitudeEnd.Text = "Lat.Err: " + s.LatitudeError;
+                lblLongitudeEnd.Text = "Lon.Err: " + s.LongitudeError;
+                lblAltitudeEnd.Text = "Alt.Err: " + s.AltitudeError;
+                lblGpsTimeStart.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s.GpsTime.ToLocalTime() : s.GpsTime);
                 lblMaxCount.Text = "Max count: " + s.MaxCount;
                 lblMinCount.Text = "Min count: " + s.MinCount;
                 lblTotalCount.Text = "Total count: " + s.TotalCount;                
@@ -373,14 +343,13 @@ namespace crash
                 lblLivetime.Text = "Livetime:" + liveTime;
                 lblSession.Text = "Session: " + s1.SessionName;
                 lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;
-                lblLatitudeStart.Text = "Lat. start: " + s1.LatitudeStart;
-                lblLongitudeStart.Text = "Lon. start: " + s1.LongitudeStart;
-                lblAltitudeStart.Text = "Alt. start: " + s1.AltitudeStart;
-                lblLatitudeEnd.Text = "Lat. end: " + s2.LatitudeEnd;
-                lblLongitudeEnd.Text = "Lon. end: " + s2.LongitudeEnd;
-                lblAltitudeEnd.Text = "Alt. end: " + s2.AltitudeEnd;
-                lblGpsTimeStart.Text = "Time start: " + (menuItemConvertToLocalTime.Checked ? s1.GpsTimeStart.ToLocalTime() : s1.GpsTimeStart);
-                lblGpsTimeEnd.Text = "Time end: " + (menuItemConvertToLocalTime.Checked ? s2.GpsTimeStart.ToLocalTime() : s2.GpsTimeStart);
+                lblLatitudeStart.Text = "Latitude: " + s1.Latitude;
+                lblLongitudeStart.Text = "Longitude: " + s1.Longitude;
+                lblAltitudeStart.Text = "Altitude: " + s1.Altitude;
+                lblLatitudeEnd.Text = "Lat.Err: " + s2.LatitudeError;
+                lblLongitudeEnd.Text = "Lon.Err: " + s2.LongitudeError;
+                lblAltitudeEnd.Text = "Alt.Err: " + s2.AltitudeError;
+                lblGpsTimeStart.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s1.GpsTime.ToLocalTime() : s1.GpsTime);                
                 lblMaxCount.Text = "Max count: " + maxCnt;
                 lblMinCount.Text = "Min count: " + minCnt;
                 lblTotalCount.Text = "Total count: " + totCnt;
@@ -816,22 +785,6 @@ namespace crash
             Utils.Log.Add("SEND: stop_session");
         }
 
-        private void menuItemShutdownRemoteServer_Click(object sender, EventArgs e)
-        {
-            if (!connected)
-            {
-                MessageBox.Show("You must be connected before shutting down remote");
-                return;
-            }
-
-            if (MessageBox.Show("Are you sure you want to close the remote server?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.No)
-                return;
-
-            sendMsg(new burn.Message("close", null));
-
-            Utils.Log.Add("SEND: close");
-        }
-
         private void btnSetupBack_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageSessions;
@@ -861,6 +814,7 @@ namespace crash
             msg.AddParameter("livetime", det.CurrentLivetime);
             msg.AddParameter("delay", delay);
             sendMsg(msg);
+            previewSession = false;
 
             Utils.Log.Add("SEND: new_session");
             tabs.SelectedTab = pageSessions;
@@ -949,7 +903,7 @@ namespace crash
             {
                 MessageBox.Show("A session is already running");
                 return;
-            }                                    
+            }
 
             burn.Message msg = new burn.Message("new_session", null);
             msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
@@ -960,6 +914,7 @@ namespace crash
             sendMsg(msg);
 
             ClearSetup();
+            previewSession = true;
             previewSpec = null;
             Utils.Log.Add("SEND: new_session (preview)");            
         }

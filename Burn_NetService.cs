@@ -65,7 +65,7 @@ namespace burn
          */
         public void DoWork()
         {
-            var buffer = new byte[65536];
+            var buffer = new byte[65536]; // FIXME: configurable size
             socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 100);
             ep = (EndPoint)iep;            
 
@@ -84,7 +84,7 @@ namespace burn
                 }
 
                 // Receive messages from collector
-                if (socket.Available > 0)
+                while (socket.Available > 0)
                 {
                     int nbytes = socket.ReceiveFrom(buffer, ref ep);
                     if (nbytes > 0)

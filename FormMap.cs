@@ -171,13 +171,13 @@ namespace crash
             else bmp = bmpRed;
 
             // Add map marker            
-            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.LatitudeStart, s.LongitudeStart), bmp);
+            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.Latitude, s.Longitude), bmp);
             marker.Tag = s;
             marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
             marker.ToolTipText = s.ToString() 
-                + Environment.NewLine + "Lat start: " + s.LatitudeStart 
-                + Environment.NewLine + "Lon start: " + s.LongitudeStart 
-                + Environment.NewLine + "Alt start: " + s.AltitudeStart;
+                + Environment.NewLine + "Latitude: " + s.Latitude
+                + Environment.NewLine + "Longitude: " + s.Longitude
+                + Environment.NewLine + "Altitude: " + s.Altitude;
             overlay.Markers.Add(marker);
         }
 

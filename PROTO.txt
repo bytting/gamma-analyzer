@@ -1,95 +1,22 @@
 
-error ->
-	message
-	
-error_socket ->
-	error_code
-	message
+COMMAND - <PARAMETERS>
 
-close ->
+detector_config - detector_type, voltage, coarse_gain, fine_gain, num_channels, lld, uld
+detector_config_success - detector_type, voltage, coarse_gain, fine_gain, num_channels, lld, uld
+detector_config_error - message
 
-close_ok ->
+start_session - session_name, livetime
+start_session_success - session_name, livetime
+start_session_error - message
 
-close_failed ->
-	message
+stop_session -
+stop_session_success - message
+stop_session_error - message
 
-ping ->
+dump_session -
+dump_session_success - message
+dump_session_error - message
 
-ping_ok ->
+error - message
 
-new_session ->
-	session_name
-	preview
-	iterations
-	livetime
-	
-new_session_ok ->
-	session_name
-	preview
-	iterations
-	livetime
-	
-new_session_failed ->
-	message
-
-stop_session ->
-
-stop_session_ok ->
-
-stop_session_failed ->
-	message
-
-session_finished ->
-	session_name
-	
-set_gain ->
-	voltage
-	coarse_gain
-	fine_gain
-	num_channels
-	lld
-	uld
-	
-set_gain_ok ->
-	voltage
-	coarse_gain
-	fine_gain
-	num_channels
-	lld
-	uld
-	
-set_gain_failed ->
-	message
-
-spectrum ->
-	session_name
-	session_index
-	gps_time_start
-	gps_time_end
-	gps_speed_start
-	gps_speed_start_err
-	gps_speed_end
-	gps_speed_end_err
-	latitude_start
-	latitude_start_err
-	longitude_start
-	longitude_start_err
-	altitude_start
-	altitude_start_err
-	latitude_end
-	latitude_end_err
-	longitude_end
-	longitude_end_err
-	altitude_end
-	altitude_end_err	
-	channels
-	num_channels
-	livetime
-	realtime	
-	total_count
-	computational_limit
-	spectral_input
-	spectral_group	
-	
-spectrum_failed ->
-	message
+spectrum - session_name, channels, num_channels, total_count, livetime, realtime, index, latitude, latitude_error, longitude, longitude_error, altitude, altitude_error, track, track_error, speed, speed_error, climb, climb_error, time
