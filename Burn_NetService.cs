@@ -43,17 +43,17 @@ namespace burn
         private EndPoint ep = null;
 
         //! Queue with messages from GUI client
-        ConcurrentQueue<Message> sendq = new ConcurrentQueue<Message>();
+        ConcurrentQueue<Dictionary<string, object>> sendq = new ConcurrentQueue<Dictionary<string, object>>();
 
         //! Queue with messages from server
-        ConcurrentQueue<Message> recvq = new ConcurrentQueue<Message>();        
+        ConcurrentQueue<Dictionary<string, object>> recvq = new ConcurrentQueue<Dictionary<string, object>>();        
 
         /** 
          * Constructor for the NetService
          * \param sendQueue - Queue with messages from GUI client
          * \param recvQueue - Queue with messages from server
          */
-        public NetService(ref ConcurrentQueue<Message> sendQueue, ref ConcurrentQueue<Message> recvQueue)
+        public NetService(ref ConcurrentQueue<Dictionary<string, object>> sendQueue, ref ConcurrentQueue<Dictionary<string, object>> recvQueue)
         {
             running = true;            
             sendQueue = sendq;
@@ -71,14 +71,14 @@ namespace burn
 
             while (running)
             {
-                Message sendMsg, recvMsg;
+                Dictionary<string, object> sendMsg, recvMsg;
 
                 // Send messages from analyzer
                 while (sendq.Count > 0)
                 {
                     if (sendq.TryDequeue(out sendMsg))
-                    {
-                        Byte[] sendBytes = Encoding.UTF8.GetBytes(sendMsg.ToJson());
+                    {                        
+                        Byte[] sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(sendMsg));
                         socket.SendTo(sendBytes, ep);
                     }                        
                 }
@@ -90,7 +90,7 @@ namespace burn
                     if (nbytes > 0)
                     {
                         string jdata = Encoding.UTF8.GetString(buffer, 0, nbytes);
-                        recvMsg = JsonConvert.DeserializeObject<Message>(jdata);
+                        recvMsg = JsonConvert.DeserializeObject<Dictionary<string, object>>(jdata);
                         recvq.Enqueue(recvMsg);
                     }
                 }

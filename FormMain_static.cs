@@ -39,9 +39,9 @@ namespace crash
         CrashSettings settings = new CrashSettings();
         
         // Concurrent queue used to pass messages to networking thread
-        static ConcurrentQueue<burn.Message> sendq = null;
+        static ConcurrentQueue<Dictionary<string, object>> sendq = null;
         // Concurrent queue used to receive messages from network thread
-        static ConcurrentQueue<burn.Message> recvq = null;
+        static ConcurrentQueue<Dictionary<string, object>> recvq = null;
         // FIXME: Create a proper API for communication with network thread
 
         // Networking thread
@@ -173,40 +173,39 @@ namespace crash
             return true;
         }
 
-        private void sendMsg(burn.Message msg)
+        private void sendMsg(Dictionary<string, object> msg)
         {
             // Put a message on the network queue
             sendq.Enqueue(msg);
         }
 
-        private bool dispatchRecvMsg(burn.Message msg)
+        private bool dispatchRecvMsg(Dictionary<string, object> msg)
         {
             // Handle messages received from network
             Detector det = null;
             DetectorType detType = null;
 
-            switch (msg.Command)
+            switch (msg["command"].ToString())
             {
                 case "start_session_success":
                     // New session created successfully                    
                     if (previewSession)
                     {
                         // New session is a preview session, update log
-                        Utils.Log.Add("Session started: " + msg.Arguments["session_name"]);
+                        Utils.Log.Add("Session started: " + msg["session_name"]);
                     }
                     else
                     {
                         // New session is a normal session
-                        string sessionName = msg.Arguments["session_name"].ToString();
-                        Utils.Log.Add("Session started: " + msg.Arguments["session_name"]);
+                        string sessionName = msg["session_name"].ToString();
+                        Utils.Log.Add("Session started: " + msg["session_name"]);
 
                         // Create a session object and update state
-                        float livetime = Convert.ToSingle(msg.Arguments["livetime"]);
-                        int iterations = Convert.ToInt32(msg.Arguments["iterations"]);
+                        float livetime = Convert.ToSingle(msg["livetime"]);                        
 
                         det = (Detector)cboxSetupDetector.SelectedItem;
                         detType = settings.DetectorTypes.Find(dt => dt.Name == det.TypeName);
-                        session = new Session(settings.SessionRootDirectory, sessionName, "", livetime, iterations, det, detType);
+                        session = new Session(settings.SessionRootDirectory, sessionName, "", livetime, det, detType);
 
                         // Create session files and directories
                         SaveSession(session);
@@ -224,12 +223,12 @@ namespace crash
 
                 case "start_session_error":
                     // Creation of new session failed, log error message
-                    Utils.Log.Add(msg.Arguments["message"].ToString());
+                    Utils.Log.Add(msg["message"].ToString());
                     break;
 
                 case "stop_session_success":
                     // Stop session successful, update state
-                    Utils.Log.Add(msg.Arguments["message"].ToString());
+                    Utils.Log.Add("Session stopped");
                     sessionRunning = false;
                     btnSetupStartTest.Enabled = true;
                     btnSetupStopTest.Enabled = false;
@@ -237,34 +236,34 @@ namespace crash
 
                 case "stop_session_error":
                     // Session stopped successfully
-                    Utils.Log.Add(msg.Arguments["message"].ToString());
+                    Utils.Log.Add(msg["message"].ToString());
                     sessionRunning = false;
                     break;
 
                 case "error":
                     // An error occurred, log error message
-                    Utils.Log.Add(msg.Arguments["message"].ToString());
+                    Utils.Log.Add(msg["message"].ToString());
                     break;                
 
                 case "error_socket":
                     // An socket error occurred, log error message
-                    Utils.Log.Add("Socket error: " + msg.Arguments["message"]);
+                    Utils.Log.Add("Socket error: " + msg["message"]);
                     break;
 
                 case "detector_config_success":
                     // Set gain command executed successfully
-                    Utils.Log.Add("detector_config_success: " + msg.Arguments["detector_type"] + " " + msg.Arguments["voltage"] + " " 
-                        + msg.Arguments["coarse_gain"] + " " + msg.Arguments["fine_gain"] + " " + msg.Arguments["num_channels"] + " " 
-                        + msg.Arguments["lld"] + " " + msg.Arguments["uld"]);
+                    Utils.Log.Add("detector_config_success: " + msg["detector_type"] + " " + msg["voltage"] + " " 
+                        + msg["coarse_gain"] + " " + msg["fine_gain"] + " " + msg["num_channels"] + " " 
+                        + msg["lld"] + " " + msg["uld"]);
 
                     // Update selected detector parameters
                     det = (Detector)cboxSetupDetector.SelectedItem;
-                    det.CurrentHV = Convert.ToInt32(msg.Arguments["voltage"]);
-                    det.CurrentCoarseGain = Convert.ToDouble(msg.Arguments["coarse_gain"]);
-                    det.CurrentFineGain = Convert.ToDouble(msg.Arguments["fine_gain"]);
-                    det.CurrentNumChannels = Convert.ToInt32(msg.Arguments["num_channels"]);
-                    det.CurrentLLD = Convert.ToInt32(msg.Arguments["lld"]);
-                    det.CurrentULD = Convert.ToInt32(msg.Arguments["uld"]);
+                    det.CurrentHV = Convert.ToInt32(msg["voltage"]);
+                    det.CurrentCoarseGain = Convert.ToDouble(msg["coarse_gain"]);
+                    det.CurrentFineGain = Convert.ToDouble(msg["fine_gain"]);
+                    det.CurrentNumChannels = Convert.ToInt32(msg["num_channels"]);
+                    det.CurrentLLD = Convert.ToInt32(msg["lld"]);
+                    det.CurrentULD = Convert.ToInt32(msg["uld"]);
                     
                     // Update state
                     btnSetupNext.Enabled = true;
@@ -362,7 +361,7 @@ namespace crash
 
                 default:
                     // Unhandled message received, update log
-                    Utils.Log.Add("Unknown message: " + msg.Arguments["message"].ToString()); // FIXME
+                    Utils.Log.Add("Unknown message: " + msg["command"].ToString()); // FIXME
                     break;
             }
 

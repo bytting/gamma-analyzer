@@ -42,10 +42,7 @@ namespace crash
         public string Comment { get; set; }
 
         // Livetime used for this session
-        public float Livetime { get; set; }
-
-        // Number of spectrums requested for this session, -1 for infinite
-        public int Iterations { get; set; }        
+        public float Livetime { get; set; }        
 
         // Detector definition used with this session
         public Detector Detector { get; set; }
@@ -91,7 +88,7 @@ namespace crash
             Clear();            
         }
 
-        public Session(string sessionPath, string name, string comment, float livetime, int iterations, Detector det, DetectorType detType)
+        public Session(string sessionPath, string name, string comment, float livetime, Detector det, DetectorType detType)
         {
             Spectrums = new List<Spectrum>();
             Clear();            
@@ -99,7 +96,6 @@ namespace crash
             Name = name;
             Comment = comment;
             Livetime = livetime;
-            Iterations = iterations;            
             Detector = det;
             DetectorType = detType;
             LoadGEFactor();
@@ -129,8 +125,7 @@ namespace crash
 
             Name = String.Empty;
             Comment = String.Empty;
-            Livetime = 0;
-            Iterations = 0;
+            Livetime = 0;            
             Detector = null;
             DetectorType = null;            
             NumChannels = 0;
@@ -170,7 +165,7 @@ namespace crash
             foreach (string filename in files)
             {
                 string json = File.ReadAllText(filename);
-                burn.Message msg = JsonConvert.DeserializeObject<burn.Message>(json);
+                Dictionary<string, object> msg = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
                 Spectrum spec = new Spectrum(msg);                                
                 spec.CalculateDoserate(Detector, GEFactor);
                 Add(spec);

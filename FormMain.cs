@@ -130,7 +130,7 @@ namespace crash
             // Process waiting network messages
             while (!recvq.IsEmpty)
             {
-                burn.Message msg;
+                Dictionary<string, object> msg;
                 if (recvq.TryDequeue(out msg))
                     dispatchRecvMsg(msg);
             }            
@@ -209,19 +209,20 @@ namespace crash
                 MessageBox.Show("LLD can not be bigger than ULD");
                 return;
             }
-            
+
             // Create and send network message
-            burn.Message msg = new burn.Message("detector_config", null);
-            msg.AddParameter("detector_type", "osprey");
-            msg.AddParameter("voltage", voltage);
-            msg.AddParameter("coarse_gain", coarse);
-            msg.AddParameter("fine_gain", fine);
-            msg.AddParameter("num_channels", nchannels);
-            msg.AddParameter("lld", lld);
-            msg.AddParameter("uld", uld);
+            Dictionary<string, object> msg = new Dictionary<string, object>();
+            msg.Add("command", "detector_config");
+            msg.Add("detector_type", "osprey");
+            msg.Add("voltage", voltage);
+            msg.Add("coarse_gain", coarse);
+            msg.Add("fine_gain", fine);
+            msg.Add("num_channels", nchannels);
+            msg.Add("lld", lld);
+            msg.Add("uld", uld);
             sendMsg(msg);
 
-            Utils.Log.Add("SEND: detector_config");
+            Utils.Log.Add("Sending detector_config");
         }        
         
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
@@ -402,7 +403,7 @@ namespace crash
                 string sessionFile = dialog.SelectedPath + Path.DirectorySeparatorChar + "session.json";
                 if (!File.Exists(sessionFile))
                 {
-                    Utils.Log.Add("ERROR: Can not load session. Directory " + dialog.SelectedPath + " has no session.json file");
+                    Utils.Log.Add("Can not load session. Directory " + dialog.SelectedPath + " has no session.json file");
                     return;
                 }                    
 
@@ -411,12 +412,12 @@ namespace crash
 
                 // Load GEFactor script
                 if(!session.LoadGEFactor())                
-                    Utils.Log.Add("WARNING: Loading GEFactor failed for session " + session.Name);
+                    Utils.Log.Add("Loading GEFactor failed for session " + session.Name);
 
                 // Load session spectrums
                 if (!session.LoadSpectrums(dialog.SelectedPath))
                 {
-                    Utils.Log.Add("ERROR: Loading spectrums failed for session " + session.Name);
+                    Utils.Log.Add("Loading spectrums failed for session " + session.Name);
                     return;
                 }
                 
@@ -466,19 +467,19 @@ namespace crash
                 string bkgSessionFile = dialog.SelectedPath + Path.DirectorySeparatorChar + "session.json";
                 if (!File.Exists(bkgSessionFile))
                 {
-                    Utils.Log.Add("ERROR: Can not load background session. Directory " + dialog.SelectedPath + " has no session.json file");
+                    Utils.Log.Add("Can not load background session. Directory " + dialog.SelectedPath + " has no session.json file");
                     return;
                 }
 
                 // Deserialize session object
                 bkgSess = JsonConvert.DeserializeObject<Session>(File.ReadAllText(bkgSessionFile));
                 if (!bkgSess.LoadGEFactor())
-                    Utils.Log.Add("WARNING: Loading GEFactor failed for background session " + bkgSess.Name);
+                    Utils.Log.Add("Loading GEFactor failed for background session " + bkgSess.Name);
 
                 // Load background spectrums
                 if (!bkgSess.LoadSpectrums(dialog.SelectedPath))
                 {
-                    Utils.Log.Add("ERROR: Loading spectrums failed for background session " + bkgSess.Name);
+                    Utils.Log.Add("Loading spectrums failed for background session " + bkgSess.Name);
                     return;
                 }                
 
@@ -780,9 +781,11 @@ namespace crash
                 return;
             }
 
-            sendMsg(new burn.Message("stop_session", null));
+            Dictionary<string, object> msg = new Dictionary<string, object>();
+            msg.Add("command", "stop_session");
+            sendMsg(msg);
 
-            Utils.Log.Add("SEND: stop_session");
+            Utils.Log.Add("Sending stop_session");
         }
 
         private void btnSetupBack_Click(object sender, EventArgs e)
@@ -807,16 +810,14 @@ namespace crash
 
             ClearSession();
 
-            burn.Message msg = new burn.Message("new_session", null);
-            msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
-            msg.AddParameter("preview", 0);
-            msg.AddParameter("iterations", iterations);
-            msg.AddParameter("livetime", det.CurrentLivetime);
-            msg.AddParameter("delay", delay);
+            Dictionary<string, object> msg = new Dictionary<string, object>();
+            msg.Add("command", "start_session");            
+            msg.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
+            msg.Add("livetime", det.CurrentLivetime);
             sendMsg(msg);
             previewSession = false;
 
-            Utils.Log.Add("SEND: new_session");
+            Utils.Log.Add("Sending start_session");
             tabs.SelectedTab = pageSessions;
         }
 
@@ -905,24 +906,24 @@ namespace crash
                 return;
             }
 
-            burn.Message msg = new burn.Message("new_session", null);
-            msg.AddParameter("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
-            msg.AddParameter("preview", 1);
-            msg.AddParameter("iterations", -1);
-            msg.AddParameter("livetime", 1);
-            msg.AddParameter("delay", 0);
+            Dictionary<string, object> msg = new Dictionary<string, object>();
+            msg.Add("command", "start_session");            
+            msg.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
+            msg.Add("livetime", 1);
             sendMsg(msg);
 
             ClearSetup();
             previewSession = true;
             previewSpec = null;
-            Utils.Log.Add("SEND: new_session (preview)");            
+            Utils.Log.Add("Sending start_session (setup)");
         }
 
         private void btnSetupStopTest_Click(object sender, EventArgs e)
         {
-            sendMsg(new burn.Message("stop_session", null));
-            Utils.Log.Add("SEND: stop_session for preview");
+            Dictionary<string, object> msg = new Dictionary<string, object>();
+            msg.Add("command", "stop_session");
+            sendMsg(msg);
+            Utils.Log.Add("Sending stop_session (setup)");
         }
 
         private void menuItemResetCoefficients_Click(object sender, EventArgs e)

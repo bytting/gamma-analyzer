@@ -291,31 +291,31 @@
             // menuItemBack
             // 
             this.menuItemBack.Name = "menuItemBack";
-            this.menuItemBack.Size = new System.Drawing.Size(133, 22);
+            this.menuItemBack.Size = new System.Drawing.Size(119, 22);
             this.menuItemBack.Text = "&Back";
             this.menuItemBack.Click += new System.EventHandler(this.menuItemBack_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(130, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(116, 6);
             // 
             // menuItemConnect
             // 
             this.menuItemConnect.Name = "menuItemConnect";
-            this.menuItemConnect.Size = new System.Drawing.Size(133, 22);
+            this.menuItemConnect.Size = new System.Drawing.Size(119, 22);
             this.menuItemConnect.Text = "&Connect";
             this.menuItemConnect.Click += new System.EventHandler(this.menuItemConnect_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(116, 6);
             // 
             // menuItemExit
             // 
             this.menuItemExit.Name = "menuItemExit";
-            this.menuItemExit.Size = new System.Drawing.Size(133, 22);
+            this.menuItemExit.Size = new System.Drawing.Size(119, 22);
             this.menuItemExit.Text = "E&xit";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
