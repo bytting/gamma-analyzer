@@ -221,21 +221,17 @@ namespace crash
 
             tools.Visible = true;
             menuItemView.Visible = true;
-            menuItemBack.Enabled = false;            
             menuItemSession.Visible = false;
 
             if (tabs.SelectedTab == pagePreferences)
             {
-                menuItemBack.Enabled = true;
             }
             else if (tabs.SelectedTab == pageSessions)
             {
-                menuItemBack.Enabled = true;
                 menuItemSession.Visible = true;
             }
             else if (tabs.SelectedTab == pageSetup)
             {
-                menuItemBack.Enabled = true;
                 btnSetupStopTest.Enabled = false;
                 panelSetupGraph.Enabled = false;
                 ClearSetup();
@@ -570,11 +566,7 @@ namespace crash
         {
             FormROIHist form = new FormROIHist(session, settings.ROIList);
             form.ShowDialog();
-        }
-
-        private void menuItemBack_Click(object sender, EventArgs e)
-        {            
-        }
+        }        
 
         private void menuItemShowLog_Click(object sender, EventArgs e)
         {
@@ -863,6 +855,8 @@ namespace crash
             Utils.Log.Top = screenHeight - (screenHeight / 5);
             Utils.Log.Width = screenWidth;
             Utils.Log.Height = screenHeight / 5;
+
+            Activate();
         }
 
         private void menuItemLayoutSession1_Click(object sender, EventArgs e)
@@ -892,7 +886,9 @@ namespace crash
             frmMap.Left = screenWidth / 2;
             frmMap.Top = (screenHeight / 3) * 2;
             frmMap.Width = screenWidth / 2;
-            frmMap.Height = screenHeight / 3;            
+            frmMap.Height = screenHeight / 3;
+
+            Activate();
         }
 
         private void menuItemLayoutSession2_Click(object sender, EventArgs e)
@@ -917,6 +913,8 @@ namespace crash
             frmMap.Top = 0;
             frmMap.Width = screenWidth / 2;
             frmMap.Height = screenHeight;
+
+            Activate();
         }
 
         private void menuItemLayoutSession3_Click(object sender, EventArgs e)
@@ -961,6 +959,8 @@ namespace crash
             formWaterfallLive.Top = screenHeightThird * 2;
             formWaterfallLive.Width = screenWidthThird * 2;
             formWaterfallLive.Height = screenHeightThird;
+                        
+            Activate();
         }
 
         private void btnEditDetectorType_Click(object sender, EventArgs e)

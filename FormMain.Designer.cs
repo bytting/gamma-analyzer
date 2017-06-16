@@ -32,8 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.menuItemFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemBack = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemStartNewSession = new System.Windows.Forms.ToolStripMenuItem();
@@ -286,24 +284,10 @@
             // menuItemFile
             // 
             this.menuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemBack,
-            this.toolStripSeparator10,
             this.menuItemExit});
             this.menuItemFile.Name = "menuItemFile";
             this.menuItemFile.Size = new System.Drawing.Size(37, 20);
             this.menuItemFile.Text = "&File";
-            // 
-            // menuItemBack
-            // 
-            this.menuItemBack.Name = "menuItemBack";
-            this.menuItemBack.Size = new System.Drawing.Size(135, 22);
-            this.menuItemBack.Text = "&Main Menu";
-            this.menuItemBack.Click += new System.EventHandler(this.menuItemBack_Click);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(132, 6);
             // 
             // menuItemExit
             // 
@@ -825,7 +809,7 @@
             this.tbarSetupVoltage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbarSetupVoltage.Location = new System.Drawing.Point(55, 0);
             this.tbarSetupVoltage.Name = "tbarSetupVoltage";
-            this.tbarSetupVoltage.Size = new System.Drawing.Size(372, 45);
+            this.tbarSetupVoltage.Size = new System.Drawing.Size(372, 26);
             this.tbarSetupVoltage.TabIndex = 1;
             this.tbarSetupVoltage.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbarSetupVoltage.ValueChanged += new System.EventHandler(this.tbarSetupVoltage_ValueChanged);
@@ -908,7 +892,7 @@
             this.tbarSetupFineGain.Maximum = 5000;
             this.tbarSetupFineGain.Minimum = 1000;
             this.tbarSetupFineGain.Name = "tbarSetupFineGain";
-            this.tbarSetupFineGain.Size = new System.Drawing.Size(361, 45);
+            this.tbarSetupFineGain.Size = new System.Drawing.Size(361, 26);
             this.tbarSetupFineGain.TabIndex = 41;
             this.tbarSetupFineGain.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbarSetupFineGain.Value = 1000;
@@ -954,7 +938,7 @@
             this.tbarSetupLLD.Location = new System.Drawing.Point(59, 0);
             this.tbarSetupLLD.Maximum = 100;
             this.tbarSetupLLD.Name = "tbarSetupLLD";
-            this.tbarSetupLLD.Size = new System.Drawing.Size(368, 45);
+            this.tbarSetupLLD.Size = new System.Drawing.Size(368, 27);
             this.tbarSetupLLD.TabIndex = 1;
             this.tbarSetupLLD.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbarSetupLLD.ValueChanged += new System.EventHandler(this.tbarSetupLLD_ValueChanged);
@@ -998,7 +982,7 @@
             this.tbarSetupULD.Location = new System.Drawing.Point(61, 0);
             this.tbarSetupULD.Maximum = 110;
             this.tbarSetupULD.Name = "tbarSetupULD";
-            this.tbarSetupULD.Size = new System.Drawing.Size(366, 45);
+            this.tbarSetupULD.Size = new System.Drawing.Size(366, 27);
             this.tbarSetupULD.TabIndex = 1;
             this.tbarSetupULD.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbarSetupULD.ValueChanged += new System.EventHandler(this.tbarSetupULD_ValueChanged);
@@ -1051,6 +1035,7 @@
             // btnSetupClose
             // 
             this.btnSetupClose.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSetupClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSetupClose.Location = new System.Drawing.Point(1205, 0);
             this.btnSetupClose.Name = "btnSetupClose";
             this.btnSetupClose.Size = new System.Drawing.Size(137, 32);
@@ -1653,7 +1638,7 @@
             this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPref.Size = new System.Drawing.Size(1342, 587);
+            this.tableLayoutPref.Size = new System.Drawing.Size(1342, 586);
             this.tableLayoutPref.TabIndex = 1;
             // 
             // lvDetectors
@@ -1901,7 +1886,7 @@
             this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableNew.Size = new System.Drawing.Size(1336, 581);
+            this.tableNew.Size = new System.Drawing.Size(1336, 580);
             this.tableNew.TabIndex = 0;
             // 
             // textBox1
@@ -1912,7 +1897,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(1330, 465);
+            this.textBox1.Size = new System.Drawing.Size(1330, 464);
             this.textBox1.TabIndex = 12;
             // 
             // panel12
@@ -1949,7 +1934,7 @@
             this.panel9.Controls.Add(this.btnNewCancel);
             this.panel9.Controls.Add(this.btnNewStart);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel9.Location = new System.Drawing.Point(3, 584);
+            this.panel9.Location = new System.Drawing.Point(3, 583);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(1336, 30);
             this.panel9.TabIndex = 1;
@@ -1957,6 +1942,7 @@
             // btnNewCancel
             // 
             this.btnNewCancel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnNewCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNewCancel.Location = new System.Drawing.Point(1089, 0);
             this.btnNewCancel.Name = "btnNewCancel";
             this.btnNewCancel.Size = new System.Drawing.Size(126, 30);
@@ -1968,6 +1954,7 @@
             // btnNewStart
             // 
             this.btnNewStart.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnNewStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNewStart.Location = new System.Drawing.Point(1215, 0);
             this.btnNewStart.Name = "btnNewStart";
             this.btnNewStart.Size = new System.Drawing.Size(121, 30);
@@ -1979,6 +1966,7 @@
             // btnSessionsClose
             // 
             this.btnSessionsClose.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSessionsClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSessionsClose.Location = new System.Drawing.Point(1021, 0);
             this.btnSessionsClose.Name = "btnSessionsClose";
             this.btnSessionsClose.Size = new System.Drawing.Size(129, 30);
@@ -1991,7 +1979,7 @@
             // 
             this.panel6.Controls.Add(this.btnPreferencesClose);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel6.Location = new System.Drawing.Point(0, 587);
+            this.panel6.Location = new System.Drawing.Point(0, 586);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(1342, 30);
             this.panel6.TabIndex = 2;
@@ -1999,6 +1987,7 @@
             // btnPreferencesClose
             // 
             this.btnPreferencesClose.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPreferencesClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPreferencesClose.Location = new System.Drawing.Point(1210, 0);
             this.btnPreferencesClose.Name = "btnPreferencesClose";
             this.btnPreferencesClose.Size = new System.Drawing.Size(132, 30);
@@ -2404,8 +2393,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemShowWaterfall;
         private System.Windows.Forms.ToolStripMenuItem menuItemShowROIChart;
         private System.Windows.Forms.ToolStripMenuItem menuItemShowROIHistory;
-        private System.Windows.Forms.ToolStripMenuItem menuItemBack;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem menuItemShowLog;
         private System.Windows.Forms.ToolStripMenuItem menuItemExport;
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsCHN;
