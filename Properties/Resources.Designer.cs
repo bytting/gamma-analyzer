@@ -93,6 +93,16 @@ namespace crash.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap calibrate128 {
+            get {
+                object obj = ResourceManager.GetObject("calibrate128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap connect_32 {
             get {
                 object obj = ResourceManager.GetObject("connect-32", resourceCulture);
@@ -263,9 +273,9 @@ namespace crash.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layout_1 {
+        internal static System.Drawing.Bitmap layout1 {
             get {
-                object obj = ResourceManager.GetObject("layout-1", resourceCulture);
+                object obj = ResourceManager.GetObject("layout1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -273,9 +283,9 @@ namespace crash.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layout_2 {
+        internal static System.Drawing.Bitmap layout2 {
             get {
-                object obj = ResourceManager.GetObject("layout-2", resourceCulture);
+                object obj = ResourceManager.GetObject("layout2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -283,9 +293,9 @@ namespace crash.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layout_3 {
+        internal static System.Drawing.Bitmap layout3 {
             get {
-                object obj = ResourceManager.GetObject("layout-3", resourceCulture);
+                object obj = ResourceManager.GetObject("layout3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -293,9 +303,9 @@ namespace crash.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layouts_32 {
+        internal static System.Drawing.Bitmap layout4 {
             get {
-                object obj = ResourceManager.GetObject("layouts-32", resourceCulture);
+                object obj = ResourceManager.GetObject("layout4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -526,26 +536,6 @@ namespace crash.Properties {
         internal static System.Drawing.Bitmap setup_32 {
             get {
                 object obj = ResourceManager.GetObject("setup-32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap start_session_32 {
-            get {
-                object obj = ResourceManager.GetObject("start-session-32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap stop_session_32 {
-            get {
-                object obj = ResourceManager.GetObject("stop-session-32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

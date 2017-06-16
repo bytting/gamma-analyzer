@@ -31,6 +31,10 @@ namespace crash
     // Class to store a session
     public class Session
     {
+        // IP Address of peer
+        [JsonIgnore]
+        public string IPAddress { get; set; }
+
         // Global IronPython object. Ignore this when serializing
         [JsonIgnore]
         private static dynamic PyEngine = Python.CreateEngine();
@@ -88,11 +92,12 @@ namespace crash
             Clear();            
         }
 
-        public Session(string sessionPath, string name, string comment, float livetime, Detector det, DetectorType detType)
+        public Session(string ip, string sessionPath, string name, string comment, float livetime, Detector det, DetectorType detType)
         {
             Spectrums = new List<Spectrum>();
-            Clear();            
+            Clear();
 
+            IPAddress = ip;
             Name = name;
             Comment = comment;
             Livetime = livetime;
@@ -165,7 +170,8 @@ namespace crash
             foreach (string filename in files)
             {
                 string json = File.ReadAllText(filename);
-                Dictionary<string, object> msg = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+                burn.ProtocolMessage msg = new burn.ProtocolMessage();
+                msg.Params = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
                 Spectrum spec = new Spectrum(msg);                                
                 spec.CalculateDoserate(Detector, GEFactor);
                 Add(spec);

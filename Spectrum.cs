@@ -106,32 +106,32 @@ namespace crash
             mChannels = new List<float>();
         }
 
-        public Spectrum(Dictionary<string, object> msg)
+        public Spectrum(burn.ProtocolMessage msg)
         {
             // FIXME: sanity checks
-            SessionName = msg["session_name"].ToString();
-            SessionIndex = GetInt32(msg["index"]);
+            SessionName = msg.Params["session_name"].ToString();
+            SessionIndex = GetInt32(msg.Params["index"]);
             Label = "Spectrum " + SessionIndex;
-            NumChannels = GetInt32(msg["num_channels"]);
-            Latitude = GetDouble(msg["latitude"]);
-            LatitudeError = GetDouble(msg["latitude_error"]);
-            Longitude = GetDouble(msg["longitude"]);
-            LongitudeError = GetDouble(msg["longitude_error"]);
-            Altitude = GetDouble(msg["altitude"]);
-            AltitudeError = GetDouble(msg["altitude_error"]);
-            GpsTime = GetDateTime(msg["time"]);
-            GpsTrack = GetSingle(msg["track"]);
-            GpsTrackError = GetSingle(msg["track_error"]);
-            GpsSpeed = GetSingle(msg["speed"]);
-            GpsSpeedError = GetSingle(msg["speed_error"]);
-            GpsClimb = GetSingle(msg["climb"]);
-            GpsClimbError = GetSingle(msg["climb_error"]);
-            Realtime = GetInt32(msg["realtime"]);
-            Livetime = GetInt32(msg["livetime"]);
+            NumChannels = GetInt32(msg.Params["num_channels"]);
+            Latitude = GetDouble(msg.Params["latitude"]);
+            LatitudeError = GetDouble(msg.Params["latitude_error"]);
+            Longitude = GetDouble(msg.Params["longitude"]);
+            LongitudeError = GetDouble(msg.Params["longitude_error"]);
+            Altitude = GetDouble(msg.Params["altitude"]);
+            AltitudeError = GetDouble(msg.Params["altitude_error"]);
+            GpsTime = GetDateTime(msg.Params["time"]);
+            GpsTrack = GetSingle(msg.Params["track"]);
+            GpsTrackError = GetSingle(msg.Params["track_error"]);
+            GpsSpeed = GetSingle(msg.Params["speed"]);
+            GpsSpeedError = GetSingle(msg.Params["speed_error"]);
+            GpsClimb = GetSingle(msg.Params["climb"]);
+            GpsClimbError = GetSingle(msg.Params["climb_error"]);
+            Realtime = GetInt32(msg.Params["realtime"]);
+            Livetime = GetInt32(msg.Params["livetime"]);
             mChannels = new List<float>();
             TotalCount = 0f;
             // Split channel string and store each count in channel array
-            string[] items = msg["channels"].ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] items = msg.Params["channels"].ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string item in items)
             {
                 float ch = Convert.ToSingle(item);

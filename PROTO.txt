@@ -4,18 +4,22 @@ COMMAND - <PARAMETERS>
 detector_config - detector_type, voltage, coarse_gain, fine_gain, num_channels, lld, uld
 detector_config_success - detector_type, voltage, coarse_gain, fine_gain, num_channels, lld, uld
 detector_config_error - message
+detector_config_busy - message
 
-start_session - session_name, livetime
-start_session_success - session_name, livetime
+start_session - session_name, livetime, ip
+start_session_success - session_name, livetime, ip
 start_session_error - message
+start_session_busy - message
 
 stop_session -
 stop_session_success - message
 stop_session_error - message
+stop_session_none - message
 
 dump_session -
 dump_session_success - message
 dump_session_error - message
+dump_session_none - message
 
 error - message
 

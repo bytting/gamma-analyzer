@@ -39,21 +39,20 @@ namespace burn
 
         //! Network utilities        
         private Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);        
-        private IPEndPoint iep = new IPEndPoint(IPAddress.Parse("10.10.10.22"), 9999); // FIXME
-        private EndPoint ep = null;
+        private EndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9999);
 
         //! Queue with messages from GUI client
-        ConcurrentQueue<Dictionary<string, object>> sendq = new ConcurrentQueue<Dictionary<string, object>>();
+        ConcurrentQueue<ProtocolMessage> sendq = new ConcurrentQueue<ProtocolMessage>();
 
         //! Queue with messages from server
-        ConcurrentQueue<Dictionary<string, object>> recvq = new ConcurrentQueue<Dictionary<string, object>>();        
+        ConcurrentQueue<ProtocolMessage> recvq = new ConcurrentQueue<ProtocolMessage>();        
 
         /** 
          * Constructor for the NetService
          * \param sendQueue - Queue with messages from GUI client
          * \param recvQueue - Queue with messages from server
          */
-        public NetService(ref ConcurrentQueue<Dictionary<string, object>> sendQueue, ref ConcurrentQueue<Dictionary<string, object>> recvQueue)
+        public NetService(ref ConcurrentQueue<ProtocolMessage> sendQueue, ref ConcurrentQueue<ProtocolMessage> recvQueue)
         {
             running = true;            
             sendQueue = sendq;
@@ -67,30 +66,31 @@ namespace burn
         {
             var buffer = new byte[65536]; // FIXME: configurable size
             socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 100);
-            ep = (EndPoint)iep;            
 
             while (running)
             {
-                Dictionary<string, object> sendMsg, recvMsg;
-
                 // Send messages from analyzer
                 while (sendq.Count > 0)
                 {
+                    ProtocolMessage sendMsg;
                     if (sendq.TryDequeue(out sendMsg))
                     {                        
-                        Byte[] sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(sendMsg));
-                        socket.SendTo(sendBytes, ep);
+                        IPEndPoint ep = new IPEndPoint(IPAddress.Parse(sendMsg.IPAddress), 9999);                        
+                        Byte[] sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(sendMsg.Params));
+                        socket.SendTo(sendBytes, (EndPoint)ep);
                     }                        
                 }
 
                 // Receive messages from collector
                 while (socket.Available > 0)
-                {
-                    int nbytes = socket.ReceiveFrom(buffer, ref ep);
+                {                    
+                    int nbytes = socket.ReceiveFrom(buffer, ref endPoint);
                     if (nbytes > 0)
                     {
+                        ProtocolMessage recvMsg = new ProtocolMessage();
                         string jdata = Encoding.UTF8.GetString(buffer, 0, nbytes);
-                        recvMsg = JsonConvert.DeserializeObject<Dictionary<string, object>>(jdata);
+                        recvMsg.Params = JsonConvert.DeserializeObject<Dictionary<string, object>>(jdata);                        
+                        recvMsg.IPAddress = ((IPEndPoint)endPoint).Address.ToString();
                         recvq.Enqueue(recvMsg);
                     }
                 }

@@ -39,9 +39,9 @@ namespace crash
         CrashSettings settings = new CrashSettings();
         
         // Concurrent queue used to pass messages to networking thread
-        static ConcurrentQueue<Dictionary<string, object>> sendq = null;
+        static ConcurrentQueue<burn.ProtocolMessage> sendq = null;
         // Concurrent queue used to receive messages from network thread
-        static ConcurrentQueue<Dictionary<string, object>> recvq = null;
+        static ConcurrentQueue<burn.ProtocolMessage> recvq = null;
         // FIXME: Create a proper API for communication with network thread
 
         // Networking thread
@@ -68,17 +68,19 @@ namespace crash
         float bkgScale = 1f;
 
         // Flag used for tracking multi selection of spectrums
-        bool selectionRun = false;        
-
-        // Running session state
-        bool sessionRunning = false;
+        bool selectionRun = false;
 
         // Structure containing loaded nuclide library
         List<NuclideInfo> NuclideLibrary = new List<NuclideInfo>();
 
-        bool previewSession = false;
+        bool previewSession = false;        
+
+        TabPage returnFromSetup = null;
+
         // Spectrum used to accumulate counts for setup UI
         Spectrum previewSpec = null;
+
+        Detector selectedDetector = null;
 
         // Array containing currently selected energies/channels
         List<ChannelEnergy> energyLines = new List<ChannelEnergy>();
@@ -173,39 +175,38 @@ namespace crash
             return true;
         }
 
-        private void sendMsg(Dictionary<string, object> msg)
+        private void sendMsg(burn.ProtocolMessage msg)
         {
             // Put a message on the network queue
             sendq.Enqueue(msg);
         }
 
-        private bool dispatchRecvMsg(Dictionary<string, object> msg)
+        private bool dispatchRecvMsg(burn.ProtocolMessage msg)
         {
             // Handle messages received from network
             Detector det = null;
             DetectorType detType = null;
 
-            switch (msg["command"].ToString())
+            switch (msg.Params["command"].ToString())
             {
                 case "start_session_success":
                     // New session created successfully                    
                     if (previewSession)
                     {
                         // New session is a preview session, update log
-                        Utils.Log.Add("Session started: " + msg["session_name"]);
+                        Utils.Log.Add("Session started: " + msg.Params["session_name"]);
                     }
                     else
                     {
                         // New session is a normal session
-                        string sessionName = msg["session_name"].ToString();
-                        Utils.Log.Add("Session started: " + msg["session_name"]);
+                        string sessionName = msg.Params["session_name"].ToString();
+                        Utils.Log.Add("Session started: " + msg.Params["session_name"]);
 
                         // Create a session object and update state
-                        float livetime = Convert.ToSingle(msg["livetime"]);                        
-
-                        det = (Detector)cboxSetupDetector.SelectedItem;
-                        detType = settings.DetectorTypes.Find(dt => dt.Name == det.TypeName);
-                        session = new Session(settings.SessionRootDirectory, sessionName, "", livetime, det, detType);
+                        float livetime = Convert.ToSingle(msg.Params["livetime"]);                        
+                        
+                        detType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
+                        session = new Session(msg.IPAddress, settings.SessionRootDirectory, sessionName, "", livetime, selectedDetector, detType);
 
                         // Create session files and directories
                         SaveSession(session);
@@ -215,7 +216,7 @@ namespace crash
                         formROILive.SetSession(session);
                         frmMap.SetSession(session);
 
-                        sessionRunning = true;
+                        tabs.SelectedTab = pageSessions;
                     }
                     btnSetupStartTest.Enabled = false;
                     btnSetupStopTest.Enabled = true;
@@ -223,50 +224,49 @@ namespace crash
 
                 case "start_session_error":
                     // Creation of new session failed, log error message
-                    Utils.Log.Add(msg["message"].ToString());
+                    Utils.Log.Add(msg.Params["message"].ToString());
                     break;
 
                 case "stop_session_success":
                     // Stop session successful, update state
                     Utils.Log.Add("Session stopped");
-                    sessionRunning = false;
                     btnSetupStartTest.Enabled = true;
                     btnSetupStopTest.Enabled = false;
                     break;
 
                 case "stop_session_error":
                     // Session stopped successfully
-                    Utils.Log.Add(msg["message"].ToString());
-                    sessionRunning = false;
+                    Utils.Log.Add(msg.Params["message"].ToString());
                     break;
 
                 case "error":
                     // An error occurred, log error message
-                    Utils.Log.Add(msg["message"].ToString());
+                    Utils.Log.Add(msg.Params["message"].ToString());
                     break;                
 
                 case "error_socket":
                     // An socket error occurred, log error message
-                    Utils.Log.Add("Socket error: " + msg["message"]);
+                    Utils.Log.Add("Socket error: " + msg.Params["message"]);
                     break;
 
                 case "detector_config_success":
                     // Set gain command executed successfully
-                    Utils.Log.Add("detector_config_success: " + msg["detector_type"] + " " + msg["voltage"] + " " 
-                        + msg["coarse_gain"] + " " + msg["fine_gain"] + " " + msg["num_channels"] + " " 
-                        + msg["lld"] + " " + msg["uld"]);
+                    Utils.Log.Add("detector_config_success: " + msg.Params["detector_type"] + " " + msg.Params["voltage"] + " " 
+                        + msg.Params["coarse_gain"] + " " + msg.Params["fine_gain"] + " " + msg.Params["num_channels"] + " " 
+                        + msg.Params["lld"] + " " + msg.Params["uld"]);
 
                     // Update selected detector parameters
-                    det = (Detector)cboxSetupDetector.SelectedItem;
-                    det.CurrentHV = Convert.ToInt32(msg["voltage"]);
-                    det.CurrentCoarseGain = Convert.ToDouble(msg["coarse_gain"]);
-                    det.CurrentFineGain = Convert.ToDouble(msg["fine_gain"]);
-                    det.CurrentNumChannels = Convert.ToInt32(msg["num_channels"]);
-                    det.CurrentLLD = Convert.ToInt32(msg["lld"]);
-                    det.CurrentULD = Convert.ToInt32(msg["uld"]);
+                    if(previewSession)
+                        det = selectedDetector;
+                    else det = session.Detector;
+                    det.CurrentHV = Convert.ToInt32(msg.Params["voltage"]);
+                    det.CurrentCoarseGain = Convert.ToDouble(msg.Params["coarse_gain"]);
+                    det.CurrentFineGain = Convert.ToDouble(msg.Params["fine_gain"]);
+                    det.CurrentNumChannels = Convert.ToInt32(msg.Params["num_channels"]);
+                    det.CurrentLLD = Convert.ToInt32(msg.Params["lld"]);
+                    det.CurrentULD = Convert.ToInt32(msg.Params["uld"]);
                     
-                    // Update state
-                    btnSetupNext.Enabled = true;
+                    // Update state                    
                     panelSetupGraph.Enabled = true;
                     break;
 
@@ -330,7 +330,7 @@ namespace crash
                         if (!Directory.Exists(jsonPath))
                             Directory.CreateDirectory(jsonPath);
 
-                        string json = JsonConvert.SerializeObject(msg, Newtonsoft.Json.Formatting.Indented);
+                        string json = JsonConvert.SerializeObject(msg.Params, Newtonsoft.Json.Formatting.Indented);
                         using (TextWriter writer = new StreamWriter(jsonPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".json"))
                         {
                             writer.Write(json);
@@ -361,7 +361,7 @@ namespace crash
 
                 default:
                     // Unhandled message received, update log
-                    Utils.Log.Add("Unknown message: " + msg["command"].ToString()); // FIXME
+                    Utils.Log.Add("Unknown message: " + msg.Params["command"].ToString()); // FIXME
                     break;
             }
 
@@ -428,14 +428,10 @@ namespace crash
             lblRealtime.Text = "";
             lblLivetime.Text = "";
             lblIndex.Text = "";
-            lblLatitudeStart.Text = "";
-            lblLongitudeStart.Text = "";
-            lblAltitudeStart.Text = "";
-            lblLatitudeEnd.Text = "";
-            lblLongitudeEnd.Text = "";
-            lblAltitudeEnd.Text = "";
-            lblGpsTimeStart.Text = "";
-            lblGpsTimeEnd.Text = "";
+            lblLatitude.Text = "";
+            lblLongitude.Text = "";
+            lblAltitude.Text = "";
+            lblGpsTime.Text = "";            
             lblMaxCount.Text = "";
             lblMinCount.Text = "";
             lblTotalCount.Text = "";
@@ -587,10 +583,12 @@ namespace crash
 
         private void PopulateDetectors()
         {
-            // Update setup detector UI
+            // Update setup detector UI            
             cboxSetupDetector.Items.Clear();
             foreach (Detector d in settings.Detectors)
+            {
                 cboxSetupDetector.Items.Add(d);
+            }
         }
 
         int GetChannelFromEnergy(Detector det, double E, int startX, int endX)

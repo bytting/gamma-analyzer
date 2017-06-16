@@ -85,24 +85,19 @@ namespace crash
                 formROILive.SetSessionIndexEvent += SetSessionIndexEvent;
                 frmMap.SetSessionIndexEvent += SetSessionIndexEvent;
 
-                tbSetupLivetime.KeyPress += CustomEvents.Integer_KeyPress;
-                tbSetupSpectrumCount.KeyPress += CustomEvents.Integer_KeyPress;
-                tbSetupDelay.KeyPress += CustomEvents.Integer_KeyPress;
+                tbNewLivetime.KeyPress += CustomEvents.Integer_KeyPress;
 
                 // Populate UI
                 tbSessionDir.Text = settings.SessionRootDirectory;
                 PopulateDetectorTypeList();
                 PopulateDetectorList();
-                PopulateDetectors();                
-
-                lblConnectionStatus.ForeColor = Color.Red;
-                lblConnectionStatus.Text = "Not connected";
+                PopulateDetectors();
+                
+                lblSessionsDatabase.Text = "";
                 lblSetupChannel.Text = "";
                 lblSessionChannel.Text = "";
                 lblSessionEnergy.Text = "";
                 lblSetupEnergy.Text = "";
-                lblDetector.Text = "";
-                separatorDetector.Visible = false;
 
                 lblSessionDetector.Text = "";
                 lblBackground.Text = "";
@@ -130,7 +125,7 @@ namespace crash
             // Process waiting network messages
             while (!recvq.IsEmpty)
             {
-                Dictionary<string, object> msg;
+                burn.ProtocolMessage msg;
                 if (recvq.TryDequeue(out msg))
                     dispatchRecvMsg(msg);
             }            
@@ -154,14 +149,6 @@ namespace crash
             Close();
         }
 
-        private void menuItemConnect_Click(object sender, EventArgs e)
-        {
-            // Show connection form
-            FormConnect form = new FormConnect(settings);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;            
-        }                
-
         private void btnStopNetService_Click(object sender, EventArgs e)
         {
             // Stop networking thread
@@ -178,9 +165,9 @@ namespace crash
         
         private void btnSetupSetParams_Click(object sender, EventArgs e)
         {
-            if(String.IsNullOrEmpty(cboxSetupDetector.Text.Trim()))
+            if (String.IsNullOrEmpty(tbSetupIPAddress.Text.Trim()))
             {
-                MessageBox.Show("No detector selected");
+                MessageBox.Show("No IP address selected");
                 return;
             }
 
@@ -211,50 +198,54 @@ namespace crash
             }
 
             // Create and send network message
-            Dictionary<string, object> msg = new Dictionary<string, object>();
-            msg.Add("command", "detector_config");
-            msg.Add("detector_type", "osprey");
-            msg.Add("voltage", voltage);
-            msg.Add("coarse_gain", coarse);
-            msg.Add("fine_gain", fine);
-            msg.Add("num_channels", nchannels);
-            msg.Add("lld", lld);
-            msg.Add("uld", uld);
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbSetupIPAddress.Text.Trim());
+            msg.Params.Add("command", "detector_config");
+            msg.Params.Add("detector_type", "osprey");
+            msg.Params.Add("voltage", voltage);
+            msg.Params.Add("coarse_gain", coarse);
+            msg.Params.Add("fine_gain", fine);
+            msg.Params.Add("num_channels", nchannels);
+            msg.Params.Add("lld", lld);
+            msg.Params.Add("uld", uld);
             sendMsg(msg);
 
+            previewSession = true;
+
             Utils.Log.Add("Sending detector_config");
-        }        
-        
+        }
+
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Update UI based on selected tab
             lblInterface.Text = tabs.SelectedTab.Text.ToUpper();
 
-            menuItemBack.Enabled = false;
-            btnBack.Enabled = false;
-            menuItemSession.Visible = false;            
+            tools.Visible = true;
+            menuItemView.Visible = true;
+            menuItemBack.Enabled = false;            
+            menuItemSession.Visible = false;
 
             if (tabs.SelectedTab == pagePreferences)
             {
                 menuItemBack.Enabled = true;
-                btnBack.Enabled = true;
-            }            
+            }
             else if (tabs.SelectedTab == pageSessions)
             {
                 menuItemBack.Enabled = true;
-                btnBack.Enabled = true;
                 menuItemSession.Visible = true;
             }
             else if (tabs.SelectedTab == pageSetup)
             {
                 menuItemBack.Enabled = true;
-                btnBack.Enabled = true;
-                btnSetupNext.Enabled = false;
                 btnSetupStopTest.Enabled = false;
                 panelSetupGraph.Enabled = false;
                 ClearSetup();
-            }            
-        }                
+            }
+            else if (tabs.SelectedTab == pageMenu)
+            {
+                menuItemView.Visible = false;
+                tools.Visible = false;
+            }
+        }             
 
         private void lbSession_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -279,13 +270,10 @@ namespace crash
                 lblSession.Text = "Session: " + s.SessionName;
                 lblSessionDetector.Text = "Det." + session.Detector.Serialnumber + " (" + session.Detector.TypeName + ")";
                 lblIndex.Text = "Index: " + s.SessionIndex;
-                lblLatitudeStart.Text = "Latitude: " + s.Latitude;
-                lblLongitudeStart.Text = "Longitude: " + s.Longitude;
-                lblAltitudeStart.Text = "Altitude: " + s.Altitude;
-                lblLatitudeEnd.Text = "Lat.Err: " + s.LatitudeError;
-                lblLongitudeEnd.Text = "Lon.Err: " + s.LongitudeError;
-                lblAltitudeEnd.Text = "Alt.Err: " + s.AltitudeError;
-                lblGpsTimeStart.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s.GpsTime.ToLocalTime() : s.GpsTime);
+                lblLatitude.Text = "Latitude: " + s.Latitude + " ±" + s.LatitudeError;
+                lblLongitude.Text = "Longitude: " + s.Longitude + " ±" + s.LongitudeError;
+                lblAltitude.Text = "Altitude: " + s.Altitude + " ±" + s.AltitudeError;                
+                lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s.GpsTime.ToLocalTime() : s.GpsTime);
                 lblMaxCount.Text = "Max count: " + s.MaxCount;
                 lblMinCount.Text = "Min count: " + s.MinCount;
                 lblTotalCount.Text = "Total count: " + s.TotalCount;                
@@ -344,13 +332,10 @@ namespace crash
                 lblLivetime.Text = "Livetime:" + liveTime;
                 lblSession.Text = "Session: " + s1.SessionName;
                 lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;
-                lblLatitudeStart.Text = "Latitude: " + s1.Latitude;
-                lblLongitudeStart.Text = "Longitude: " + s1.Longitude;
-                lblAltitudeStart.Text = "Altitude: " + s1.Altitude;
-                lblLatitudeEnd.Text = "Lat.Err: " + s2.LatitudeError;
-                lblLongitudeEnd.Text = "Lon.Err: " + s2.LongitudeError;
-                lblAltitudeEnd.Text = "Alt.Err: " + s2.AltitudeError;
-                lblGpsTimeStart.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s1.GpsTime.ToLocalTime() : s1.GpsTime);                
+                lblLatitude.Text = "Latitude: " + s1.Latitude + " ±" + s2.LatitudeError;
+                lblLongitude.Text = "Longitude: " + s1.Longitude + " ±" + s2.LongitudeError;
+                lblAltitude.Text = "Altitude: " + s1.Altitude + " ±" + s2.AltitudeError;
+                lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s1.GpsTime.ToLocalTime() : s1.GpsTime);                
                 lblMaxCount.Text = "Max count: " + maxCnt;
                 lblMinCount.Text = "Min count: " + minCnt;
                 lblTotalCount.Text = "Total count: " + totCnt;
@@ -385,13 +370,6 @@ namespace crash
 
         private void menuItemLoadSession_Click(object sender, EventArgs e)
         {
-            // Sanity checks
-            if(sessionRunning)
-            {
-                MessageBox.Show("A session is already running");
-                return;
-            }
-
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.SelectedPath = settings.SessionRootDirectory;            
             dialog.Description = "Select session directory";
@@ -514,15 +492,8 @@ namespace crash
             // Show channel
             lblSetupChannel.Text = "Ch: " + String.Format("{0:####0}", x);
 
-            if(cboxSetupDetector.SelectedItem == null)
-            {
-                lblSetupEnergy.Text = "";
-                return;
-            }
-
-            // Show energy
-            Detector det = (Detector)cboxSetupDetector.SelectedItem;            
-            lblSetupEnergy.Text = "En: " + String.Format("{0:#######0.0###}", det.GetEnergy(x));                        
+            // Show energy                        
+            lblSetupEnergy.Text = "En: " + String.Format("{0:#######0.0###}", selectedDetector.GetEnergy(x));                        
         }
 
         private void graphSession_MouseMove(object sender, MouseEventArgs e)
@@ -549,38 +520,6 @@ namespace crash
             graphSession.AxisChange();
             graphSession.Refresh();
         }        
-
-        private void cboxSetupDetector_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cboxSetupDetector.SelectedItem == null)
-                return;
-
-            Detector det = (Detector)cboxSetupDetector.SelectedItem;
-            DetectorType detType = settings.DetectorTypes.Find(dt => dt.Name == det.TypeName);
-
-            lblDetector.Text = "Detector " + det.Serialnumber;
-            separatorDetector.Visible = true;
-
-            cboxSetupChannels.Text = det.CurrentNumChannels.ToString();
-
-            tbarSetupVoltage.Minimum = detType.MinHV;
-            tbarSetupVoltage.Maximum = detType.MaxHV;
-            tbarSetupVoltage.Value = det.CurrentHV;
-
-            int coarse = Convert.ToInt32(det.CurrentCoarseGain);
-            cboxSetupCoarseGain.SelectedIndex = cboxSetupCoarseGain.FindStringExact(coarse.ToString());
-            tbarSetupFineGain.Value = (int)((double)det.CurrentFineGain * 1000d);
-            tbarSetupLLD.Value = det.CurrentLLD;
-            tbarSetupULD.Value = det.CurrentULD;
-            cboxSetupChannels.Items.Clear();
-            for (int i = 256; i <= detType.MaxNumChannels; i = i * 2)
-                cboxSetupChannels.Items.Add(i.ToString());
-            cboxSetupChannels.Text = det.CurrentNumChannels.ToString();
-
-            tbSetupLivetime.Text = det.CurrentLivetime.ToString();            
-
-            formWaterfallLive.SetDetector(det);
-        }
 
         private void menuItemSessionInfo_Click(object sender, EventArgs e)
         {
@@ -634,8 +573,7 @@ namespace crash
         }
 
         private void menuItemBack_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = pageMenu;
+        {            
         }
 
         private void menuItemShowLog_Click(object sender, EventArgs e)
@@ -758,67 +696,23 @@ namespace crash
 
         private void menuItemStartNewSession_Click(object sender, EventArgs e)
         {
-            if (sessionRunning)
-            {
-                MessageBox.Show("A session is already running");
-                return;
-            }
-
             if (String.IsNullOrEmpty(settings.SessionRootDirectory))
             {
                 MessageBox.Show("You must provide a session directory under preferences");
                 return;
             }
 
+            returnFromSetup = pageNew;
             tabs.SelectedTab = pageSetup;
         }
 
         private void menuItemStopSession_Click(object sender, EventArgs e)
         {
-            if (!sessionRunning)
-            {
-                MessageBox.Show("No session is running");
-                return;
-            }
-
-            Dictionary<string, object> msg = new Dictionary<string, object>();
-            msg.Add("command", "stop_session");
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
+            msg.Params.Add("command", "stop_session");
             sendMsg(msg);
 
             Utils.Log.Add("Sending stop_session");
-        }
-
-        private void btnSetupBack_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = pageSessions;
-        }
-
-        private void btnSetupNext_Click(object sender, EventArgs e)
-        {
-            SaveSettings();
-
-            Detector det = (Detector)cboxSetupDetector.SelectedItem;
-            
-            if(!String.IsNullOrEmpty(tbSetupLivetime.Text.Trim()))
-                det.CurrentLivetime = Convert.ToInt32(tbSetupLivetime.Text.Trim());            
-            
-            int iterations = String.IsNullOrEmpty(tbSetupSpectrumCount.Text.Trim()) ? -1 : Convert.ToInt32(tbSetupSpectrumCount.Text.Trim());
-
-            float delay = 0f;
-            if (!String.IsNullOrEmpty(tbSetupDelay.Text.Trim()))
-                delay = Convert.ToSingle(tbSetupDelay.Text.Trim());
-
-            ClearSession();
-
-            Dictionary<string, object> msg = new Dictionary<string, object>();
-            msg.Add("command", "start_session");            
-            msg.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
-            msg.Add("livetime", det.CurrentLivetime);
-            sendMsg(msg);
-            previewSession = false;
-
-            Utils.Log.Add("Sending start_session");
-            tabs.SelectedTab = pageSessions;
         }
 
         private void graphSession_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -900,16 +794,10 @@ namespace crash
 
         private void btnSetupStartTest_Click(object sender, EventArgs e)
         {
-            if (sessionRunning)
-            {
-                MessageBox.Show("A session is already running");
-                return;
-            }
-
-            Dictionary<string, object> msg = new Dictionary<string, object>();
-            msg.Add("command", "start_session");            
-            msg.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
-            msg.Add("livetime", 1);
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbSetupIPAddress.Text.Trim());
+            msg.Params.Add("command", "start_session");            
+            msg.Params.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
+            msg.Params.Add("livetime", 1);
             sendMsg(msg);
 
             ClearSetup();
@@ -920,8 +808,8 @@ namespace crash
 
         private void btnSetupStopTest_Click(object sender, EventArgs e)
         {
-            Dictionary<string, object> msg = new Dictionary<string, object>();
-            msg.Add("command", "stop_session");
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbSetupIPAddress.Text.Trim());
+            msg.Params.Add("command", "stop_session");
             sendMsg(msg);
             Utils.Log.Add("Sending stop_session (setup)");
         }
@@ -937,15 +825,20 @@ namespace crash
 
         private void menuItemStoreCoefficients_Click(object sender, EventArgs e)
         {   
+            if(coefficients.Count < 2)
+            {
+                MessageBox.Show("Can not store less than 2 coefficients");
+                return;
+            }
+
             // Show current energy curve
-            Detector det = (Detector)cboxSetupDetector.SelectedItem;
-            FormEnergyCurve form = new FormEnergyCurve(det, coefficients);
+            FormEnergyCurve form = new FormEnergyCurve(selectedDetector, coefficients);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
             // Update selected detector with current energy curve coefficients
-            det.EnergyCurveCoefficients.Clear();
-            det.EnergyCurveCoefficients.AddRange(coefficients);            
+            selectedDetector.EnergyCurveCoefficients.Clear();
+            selectedDetector.EnergyCurveCoefficients.AddRange(coefficients);            
         }        
 
         private void menuItemLayoutSetup1_Click(object sender, EventArgs e)
@@ -999,7 +892,7 @@ namespace crash
             frmMap.Left = screenWidth / 2;
             frmMap.Top = (screenHeight / 3) * 2;
             frmMap.Width = screenWidth / 2;
-            frmMap.Height = screenHeight / 3;
+            frmMap.Height = screenHeight / 3;            
         }
 
         private void menuItemLayoutSession2_Click(object sender, EventArgs e)
@@ -1221,6 +1114,83 @@ namespace crash
         private void menuItemConvertToLocalTime_CheckedChanged(object sender, EventArgs e)
         {
             settings.DisplayLocalTime = menuItemConvertToLocalTime.Checked;
+        }
+
+        private void menuItemUpdateCurrentSession_Click(object sender, EventArgs e)
+        {
+            // Update session
+        }
+
+        private void btnNewStart_Click(object sender, EventArgs e)
+        {            
+            if (!String.IsNullOrEmpty(tbNewLivetime.Text.Trim()))
+                selectedDetector.CurrentLivetime = Convert.ToInt32(tbNewLivetime.Text.Trim());
+
+            SaveSettings();            
+
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbSetupIPAddress.Text.Trim());
+            msg.Params.Add("command", "start_session");
+            msg.Params.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));            
+            msg.Params.Add("livetime", selectedDetector.CurrentLivetime);            
+            sendMsg(msg);
+
+            previewSession = false;
+
+            Utils.Log.Add("Sending start_session");            
+        }
+
+        private void btnNewCancel_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageSessions;
+        }
+
+        private void btnSetupClose_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = returnFromSetup;
+        }
+
+        private void cboxSetupDetector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedDetector = cboxSetupDetector.SelectedItem as Detector;
+            DetectorType detType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
+            
+            cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
+
+            tbarSetupVoltage.Minimum = detType.MinHV;
+            tbarSetupVoltage.Maximum = detType.MaxHV;
+            tbarSetupVoltage.Value = selectedDetector.CurrentHV;
+
+            int coarse = Convert.ToInt32(selectedDetector.CurrentCoarseGain);
+            cboxSetupCoarseGain.SelectedIndex = cboxSetupCoarseGain.FindStringExact(coarse.ToString());
+            tbarSetupFineGain.Value = (int)((double)selectedDetector.CurrentFineGain * 1000d);
+            tbarSetupLLD.Value = selectedDetector.CurrentLLD;
+            tbarSetupULD.Value = selectedDetector.CurrentULD;
+            cboxSetupChannels.Items.Clear();
+            for (int i = 256; i <= detType.MaxNumChannels; i = i * 2)
+                cboxSetupChannels.Items.Add(i.ToString());
+            cboxSetupChannels.Text = selectedDetector.CurrentNumChannels.ToString();
+        }
+
+        private void btnMenuCalibration_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(settings.SessionRootDirectory))
+            {
+                MessageBox.Show("You must provide a session directory under preferences");
+                return;
+            }
+
+            returnFromSetup = pageMenu;
+            tabs.SelectedTab = pageSetup;
+        }
+
+        private void btnSessionsClose_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageMenu;
+        }
+
+        private void btnPreferencesClose_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageMenu;
         }
     }
 }
