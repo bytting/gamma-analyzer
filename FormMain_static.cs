@@ -189,6 +189,18 @@ namespace crash
 
             switch (msg.Params["command"].ToString())
             {
+                case "get_status_success":                    
+                    Utils.Log.Add("Get status success");
+                    tbStatusInfo.Text = "";
+                    foreach (KeyValuePair<string, object> p in msg.Params)
+                    {
+                        if (p.Key == "command")
+                            continue;
+                        tbStatusInfo.Text += p.Key + ": " + p.Value.ToString() + Environment.NewLine;
+                    }                    
+                    btnStatusNext.Enabled = true;
+                    break;
+
                 case "start_session_success":
                     // New session created successfully                    
                     if (previewSession)

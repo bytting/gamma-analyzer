@@ -165,7 +165,7 @@ namespace crash
         
         private void btnSetupSetParams_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(tbSetupIPAddress.Text.Trim()))
+            if (String.IsNullOrEmpty(tbStatusIPAddress.Text.Trim()))
             {
                 MessageBox.Show("No IP address selected");
                 return;
@@ -198,7 +198,7 @@ namespace crash
             }
 
             // Create and send network message
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbSetupIPAddress.Text.Trim());
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
             msg.Params.Add("command", "detector_config");
             msg.Params.Add("detector_type", "osprey");
             msg.Params.Add("voltage", voltage);
@@ -695,7 +695,8 @@ namespace crash
             }
 
             returnFromSetup = pageNew;
-            tabs.SelectedTab = pageSetup;
+            btnStatusNext.Enabled = false;
+            tabs.SelectedTab = pageStatus;
         }
 
         private void menuItemStopSession_Click(object sender, EventArgs e)
@@ -786,7 +787,7 @@ namespace crash
 
         private void btnSetupStartTest_Click(object sender, EventArgs e)
         {
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbSetupIPAddress.Text.Trim());
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
             msg.Params.Add("command", "start_session");            
             msg.Params.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
             msg.Params.Add("livetime", 1);
@@ -800,7 +801,7 @@ namespace crash
 
         private void btnSetupStopTest_Click(object sender, EventArgs e)
         {
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbSetupIPAddress.Text.Trim());
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
             msg.Params.Add("command", "stop_session");
             sendMsg(msg);
             Utils.Log.Add("Sending stop_session (setup)");
@@ -1128,7 +1129,7 @@ namespace crash
 
             SaveSettings();            
 
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbSetupIPAddress.Text.Trim());
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
             msg.Params.Add("command", "start_session");
             msg.Params.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));            
             msg.Params.Add("livetime", selectedDetector.CurrentLivetime);            
@@ -1180,7 +1181,8 @@ namespace crash
             }
 
             returnFromSetup = pageMenu;
-            tabs.SelectedTab = pageSetup;
+            btnStatusNext.Enabled = false;
+            tabs.SelectedTab = pageStatus;
         }
 
         private void btnSessionsClose_Click(object sender, EventArgs e)
@@ -1191,6 +1193,28 @@ namespace crash
         private void btnPreferencesClose_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageMenu;
+        }
+
+        private void btnStatusGet_Click(object sender, EventArgs e)
+        {
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
+            msg.Params.Add("command", "get_status");
+            sendMsg(msg);
+        }
+
+        private void btnStatusCancel_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageMenu;
+        }
+
+        private void btnSetupCancel_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = returnFromSetup;
+        }
+
+        private void btnStatusNext_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageSetup;
         }
     }
 }

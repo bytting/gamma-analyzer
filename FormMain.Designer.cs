@@ -62,9 +62,20 @@
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblLogMessages = new System.Windows.Forms.ToolStripStatusLabel();
             this.tools = new System.Windows.Forms.ToolStrip();
+            this.btnShowLog = new System.Windows.Forms.ToolStripButton();
+            this.btnSessionInfo = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnShowMap = new System.Windows.Forms.ToolStripButton();
+            this.btnShowWaterfallLive = new System.Windows.Forms.ToolStripButton();
             this.lblInterface = new System.Windows.Forms.ToolStripLabel();
             this.separatorInterface = new System.Windows.Forms.ToolStripSeparator();
+            this.btnShowROITable = new System.Windows.Forms.ToolStripButton();
+            this.btnShowROIHist = new System.Windows.Forms.ToolStripButton();
+            this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.contextMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemSessionUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSourceActivity = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,10 +87,11 @@
             this.menuItemResetCoefficients = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemStoreCoefficients = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsSetup = new System.Windows.Forms.ToolStrip();
+            this.btnSetupStartTest = new System.Windows.Forms.ToolStripButton();
+            this.btnSetupStopTest = new System.Windows.Forms.ToolStripButton();
+            this.btnSetupResetCoefficients = new System.Windows.Forms.ToolStripButton();
+            this.btnSetupStoreCoefficients = new System.Windows.Forms.ToolStripButton();
             this.layoutConfigureDetector = new System.Windows.Forms.TableLayoutPanel();
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.tbSetupIPAddress = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
             this.cboxSetupDetector = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -112,6 +124,9 @@
             this.lblSetupChannel = new System.Windows.Forms.Label();
             this.pageMenu = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnMenuSessions = new System.Windows.Forms.Button();
+            this.btnMenuDetectors = new System.Windows.Forms.Button();
+            this.btnMenuCalibration = new System.Windows.Forms.Button();
             this.pageSessions = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainerSessionLeft = new System.Windows.Forms.SplitContainer();
@@ -143,7 +158,11 @@
             this.lblTotalCount = new System.Windows.Forms.Label();
             this.lblDoserate = new System.Windows.Forms.Label();
             this.toolsSession = new System.Windows.Forms.ToolStrip();
+            this.btnOptions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.menuItemSubtractBackground = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemConvertToLocalTime = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSessionsClose = new System.Windows.Forms.Button();
             this.lblSessionEnergy = new System.Windows.Forms.Label();
             this.lblSessionChannel = new System.Windows.Forms.Label();
             this.panelSessionsControl = new System.Windows.Forms.Panel();
@@ -181,6 +200,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnEditDetector = new System.Windows.Forms.Button();
             this.btnAddDetector = new System.Windows.Forms.Button();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.btnPreferencesClose = new System.Windows.Forms.Button();
             this.pageNew = new System.Windows.Forms.TabPage();
             this.tableNew = new System.Windows.Forms.TableLayoutPanel();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -190,30 +211,15 @@
             this.panel9 = new System.Windows.Forms.Panel();
             this.btnNewCancel = new System.Windows.Forms.Button();
             this.btnNewStart = new System.Windows.Forms.Button();
-            this.btnSessionsClose = new System.Windows.Forms.Button();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.btnPreferencesClose = new System.Windows.Forms.Button();
-            this.btnSetupStartTest = new System.Windows.Forms.ToolStripButton();
-            this.btnSetupStopTest = new System.Windows.Forms.ToolStripButton();
-            this.btnSetupResetCoefficients = new System.Windows.Forms.ToolStripButton();
-            this.btnSetupStoreCoefficients = new System.Windows.Forms.ToolStripButton();
-            this.btnMenuSessions = new System.Windows.Forms.Button();
-            this.btnMenuDetectors = new System.Windows.Forms.Button();
-            this.btnMenuCalibration = new System.Windows.Forms.Button();
-            this.btnOptions = new System.Windows.Forms.ToolStripDropDownButton();
-            this.menuItemSubtractBackground = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemConvertToLocalTime = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnShowLog = new System.Windows.Forms.ToolStripButton();
-            this.btnSessionInfo = new System.Windows.Forms.ToolStripButton();
-            this.btnShowMap = new System.Windows.Forms.ToolStripButton();
-            this.btnShowWaterfallLive = new System.Windows.Forms.ToolStripButton();
-            this.btnShowROITable = new System.Windows.Forms.ToolStripButton();
-            this.btnShowROIHist = new System.Windows.Forms.ToolStripButton();
-            this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.pageStatus = new System.Windows.Forms.TabPage();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.btnStatusNext = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbStatusIPAddress = new System.Windows.Forms.TextBox();
+            this.tbStatusInfo = new System.Windows.Forms.TextBox();
+            this.btnStatusGet = new System.Windows.Forms.Button();
+            this.btnStatusCancel = new System.Windows.Forms.Button();
+            this.btnSetupCancel = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -224,7 +230,6 @@
             this.contextMenuSetup.SuspendLayout();
             this.toolsSetup.SuspendLayout();
             this.layoutConfigureDetector.SuspendLayout();
-            this.panel13.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel15.SuspendLayout();
             this.panel16.SuspendLayout();
@@ -260,11 +265,13 @@
             this.tableLayoutPref.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.pageNew.SuspendLayout();
             this.tableNew.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel9.SuspendLayout();
-            this.panel6.SuspendLayout();
+            this.pageStatus.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -292,7 +299,7 @@
             // menuItemExit
             // 
             this.menuItemExit.Name = "menuItemExit";
-            this.menuItemExit.Size = new System.Drawing.Size(135, 22);
+            this.menuItemExit.Size = new System.Drawing.Size(92, 22);
             this.menuItemExit.Text = "E&xit";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
@@ -538,10 +545,62 @@
             this.tools.TabIndex = 2;
             this.tools.Text = "toolStrip1";
             // 
+            // btnShowLog
+            // 
+            this.btnShowLog.AutoSize = false;
+            this.btnShowLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowLog.Image = global::crash.Properties.Resources.log_32;
+            this.btnShowLog.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowLog.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowLog.Name = "btnShowLog";
+            this.btnShowLog.Size = new System.Drawing.Size(38, 38);
+            this.btnShowLog.Text = "toolStripButton1";
+            this.btnShowLog.ToolTipText = "Show log";
+            this.btnShowLog.Click += new System.EventHandler(this.menuItemShowLog_Click);
+            // 
+            // btnSessionInfo
+            // 
+            this.btnSessionInfo.AutoSize = false;
+            this.btnSessionInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSessionInfo.Image = global::crash.Properties.Resources.waterfall_history_32;
+            this.btnSessionInfo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnSessionInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSessionInfo.Name = "btnSessionInfo";
+            this.btnSessionInfo.Size = new System.Drawing.Size(38, 38);
+            this.btnSessionInfo.Text = "toolStripButton1";
+            this.btnSessionInfo.ToolTipText = "Show session info";
+            this.btnSessionInfo.Click += new System.EventHandler(this.menuItemSessionInfo_Click);
+            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 40);
+            // 
+            // btnShowMap
+            // 
+            this.btnShowMap.AutoSize = false;
+            this.btnShowMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowMap.Image = global::crash.Properties.Resources.map_32;
+            this.btnShowMap.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowMap.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowMap.Name = "btnShowMap";
+            this.btnShowMap.Size = new System.Drawing.Size(38, 38);
+            this.btnShowMap.Text = "toolStripButton2";
+            this.btnShowMap.ToolTipText = "Show map";
+            this.btnShowMap.Click += new System.EventHandler(this.menuItemShowMap_Click);
+            // 
+            // btnShowWaterfallLive
+            // 
+            this.btnShowWaterfallLive.AutoSize = false;
+            this.btnShowWaterfallLive.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowWaterfallLive.Image = global::crash.Properties.Resources.waterfall_live_32;
+            this.btnShowWaterfallLive.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowWaterfallLive.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowWaterfallLive.Name = "btnShowWaterfallLive";
+            this.btnShowWaterfallLive.Size = new System.Drawing.Size(38, 38);
+            this.btnShowWaterfallLive.Text = "toolStripButton2";
+            this.btnShowWaterfallLive.ToolTipText = "Show waterfall live";
+            this.btnShowWaterfallLive.Click += new System.EventHandler(this.menuItemShowWaterfall_Click);
             // 
             // lblInterface
             // 
@@ -556,6 +615,97 @@
             this.separatorInterface.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.separatorInterface.Name = "separatorInterface";
             this.separatorInterface.Size = new System.Drawing.Size(6, 40);
+            // 
+            // btnShowROITable
+            // 
+            this.btnShowROITable.AutoSize = false;
+            this.btnShowROITable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowROITable.Image = global::crash.Properties.Resources.roi_table_32;
+            this.btnShowROITable.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowROITable.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowROITable.Name = "btnShowROITable";
+            this.btnShowROITable.Size = new System.Drawing.Size(38, 38);
+            this.btnShowROITable.Text = "toolStripButton1";
+            this.btnShowROITable.ToolTipText = "Show ROI Table";
+            this.btnShowROITable.Click += new System.EventHandler(this.menuItemROITable_Click);
+            // 
+            // btnShowROIHist
+            // 
+            this.btnShowROIHist.AutoSize = false;
+            this.btnShowROIHist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowROIHist.Image = global::crash.Properties.Resources.doserate_32;
+            this.btnShowROIHist.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowROIHist.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowROIHist.Name = "btnShowROIHist";
+            this.btnShowROIHist.Size = new System.Drawing.Size(38, 38);
+            this.btnShowROIHist.Text = "toolStripButton1";
+            this.btnShowROIHist.ToolTipText = "Show ROI History";
+            this.btnShowROIHist.Click += new System.EventHandler(this.menuItemShowROIHistory_Click);
+            // 
+            // btnShowROIChart
+            // 
+            this.btnShowROIChart.AutoSize = false;
+            this.btnShowROIChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnShowROIChart.Image = global::crash.Properties.Resources.roitable_history_32;
+            this.btnShowROIChart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnShowROIChart.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnShowROIChart.Name = "btnShowROIChart";
+            this.btnShowROIChart.Size = new System.Drawing.Size(38, 38);
+            this.btnShowROIChart.Text = "toolStripButton1";
+            this.btnShowROIChart.ToolTipText = "Show ROI live";
+            this.btnShowROIChart.Click += new System.EventHandler(this.menuItemShowROIChart_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButton1.AutoSize = false;
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::crash.Properties.Resources.layout4;
+            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(38, 38);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Click += new System.EventHandler(this.menuItemLayoutSession3_Click);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButton2.AutoSize = false;
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = global::crash.Properties.Resources.layout3;
+            this.toolStripButton2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(38, 38);
+            this.toolStripButton2.Text = "toolStripButton2";
+            this.toolStripButton2.Click += new System.EventHandler(this.menuItemLayoutSession2_Click);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButton3.AutoSize = false;
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = global::crash.Properties.Resources.layout2;
+            this.toolStripButton3.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(38, 38);
+            this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.Click += new System.EventHandler(this.menuItemLayoutSession1_Click);
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButton4.AutoSize = false;
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton4.Image = global::crash.Properties.Resources.layout1;
+            this.toolStripButton4.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(38, 38);
+            this.toolStripButton4.Text = "toolStripButton4";
+            this.toolStripButton4.Click += new System.EventHandler(this.menuItemLayoutSetup1_Click);
             // 
             // contextMenuSession
             // 
@@ -587,6 +737,7 @@
             this.tabs.Controls.Add(this.pageSessions);
             this.tabs.Controls.Add(this.pagePreferences);
             this.tabs.Controls.Add(this.pageNew);
+            this.tabs.Controls.Add(this.pageStatus);
             this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabs.Location = new System.Drawing.Point(0, 64);
             this.tabs.Name = "tabs";
@@ -673,21 +824,60 @@
             this.toolsSetup.TabIndex = 0;
             this.toolsSetup.Text = "toolStrip1";
             // 
+            // btnSetupStartTest
+            // 
+            this.btnSetupStartTest.Image = ((System.Drawing.Image)(resources.GetObject("btnSetupStartTest.Image")));
+            this.btnSetupStartTest.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSetupStartTest.Name = "btnSetupStartTest";
+            this.btnSetupStartTest.Size = new System.Drawing.Size(126, 22);
+            this.btnSetupStartTest.Text = "Start test spectrum";
+            this.btnSetupStartTest.Click += new System.EventHandler(this.btnSetupStartTest_Click);
+            // 
+            // btnSetupStopTest
+            // 
+            this.btnSetupStopTest.Image = ((System.Drawing.Image)(resources.GetObject("btnSetupStopTest.Image")));
+            this.btnSetupStopTest.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSetupStopTest.Name = "btnSetupStopTest";
+            this.btnSetupStopTest.Size = new System.Drawing.Size(126, 22);
+            this.btnSetupStopTest.Text = "Stop test spectrum";
+            this.btnSetupStopTest.Click += new System.EventHandler(this.btnSetupStopTest_Click);
+            // 
+            // btnSetupResetCoefficients
+            // 
+            this.btnSetupResetCoefficients.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnSetupResetCoefficients.Image = ((System.Drawing.Image)(resources.GetObject("btnSetupResetCoefficients.Image")));
+            this.btnSetupResetCoefficients.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSetupResetCoefficients.Name = "btnSetupResetCoefficients";
+            this.btnSetupResetCoefficients.Size = new System.Drawing.Size(120, 22);
+            this.btnSetupResetCoefficients.Text = "Clear energy lines";
+            this.btnSetupResetCoefficients.ToolTipText = "Reset the current energy calibration";
+            this.btnSetupResetCoefficients.Click += new System.EventHandler(this.menuItemResetCoefficients_Click);
+            // 
+            // btnSetupStoreCoefficients
+            // 
+            this.btnSetupStoreCoefficients.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnSetupStoreCoefficients.Image = ((System.Drawing.Image)(resources.GetObject("btnSetupStoreCoefficients.Image")));
+            this.btnSetupStoreCoefficients.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSetupStoreCoefficients.Name = "btnSetupStoreCoefficients";
+            this.btnSetupStoreCoefficients.Size = new System.Drawing.Size(152, 22);
+            this.btnSetupStoreCoefficients.Text = "Store energy calibration";
+            this.btnSetupStoreCoefficients.ToolTipText = "Store the current energy calibration";
+            this.btnSetupStoreCoefficients.Click += new System.EventHandler(this.menuItemStoreCoefficients_Click);
+            // 
             // layoutConfigureDetector
             // 
             this.layoutConfigureDetector.ColumnCount = 3;
             this.layoutConfigureDetector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.layoutConfigureDetector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.layoutConfigureDetector.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.layoutConfigureDetector.Controls.Add(this.panel13, 0, 0);
-            this.layoutConfigureDetector.Controls.Add(this.panel14, 1, 0);
-            this.layoutConfigureDetector.Controls.Add(this.panel15, 2, 0);
             this.layoutConfigureDetector.Controls.Add(this.panel16, 0, 1);
             this.layoutConfigureDetector.Controls.Add(this.panel5, 1, 1);
             this.layoutConfigureDetector.Controls.Add(this.panel17, 2, 1);
             this.layoutConfigureDetector.Controls.Add(this.panel3, 0, 2);
             this.layoutConfigureDetector.Controls.Add(this.panel18, 1, 2);
             this.layoutConfigureDetector.Controls.Add(this.btnSetupSetParams, 2, 2);
+            this.layoutConfigureDetector.Controls.Add(this.panel14, 0, 0);
+            this.layoutConfigureDetector.Controls.Add(this.panel15, 1, 0);
             this.layoutConfigureDetector.Dock = System.Windows.Forms.DockStyle.Top;
             this.layoutConfigureDetector.Location = new System.Drawing.Point(0, 0);
             this.layoutConfigureDetector.Name = "layoutConfigureDetector";
@@ -699,41 +889,12 @@
             this.layoutConfigureDetector.Size = new System.Drawing.Size(1342, 97);
             this.layoutConfigureDetector.TabIndex = 23;
             // 
-            // panel13
-            // 
-            this.panel13.Controls.Add(this.tbSetupIPAddress);
-            this.panel13.Controls.Add(this.label5);
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel13.Location = new System.Drawing.Point(3, 3);
-            this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(441, 26);
-            this.panel13.TabIndex = 47;
-            // 
-            // tbSetupIPAddress
-            // 
-            this.tbSetupIPAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupIPAddress.Location = new System.Drawing.Point(75, 0);
-            this.tbSetupIPAddress.Name = "tbSetupIPAddress";
-            this.tbSetupIPAddress.Size = new System.Drawing.Size(366, 21);
-            this.tbSetupIPAddress.TabIndex = 1;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(0, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 15);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "IP Address";
-            // 
             // panel14
             // 
             this.panel14.Controls.Add(this.cboxSetupDetector);
             this.panel14.Controls.Add(this.label2);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel14.Location = new System.Drawing.Point(450, 3);
+            this.panel14.Location = new System.Drawing.Point(3, 3);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(441, 26);
             this.panel14.TabIndex = 48;
@@ -766,9 +927,9 @@
             this.panel15.Controls.Add(this.cboxSetupChannels);
             this.panel15.Controls.Add(this.label4);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel15.Location = new System.Drawing.Point(897, 3);
+            this.panel15.Location = new System.Drawing.Point(450, 3);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(442, 26);
+            this.panel15.Size = new System.Drawing.Size(441, 26);
             this.panel15.TabIndex = 49;
             // 
             // cboxSetupChannels
@@ -778,7 +939,7 @@
             this.cboxSetupChannels.FormattingEnabled = true;
             this.cboxSetupChannels.Location = new System.Drawing.Point(73, 0);
             this.cboxSetupChannels.Name = "cboxSetupChannels";
-            this.cboxSetupChannels.Size = new System.Drawing.Size(369, 23);
+            this.cboxSetupChannels.Size = new System.Drawing.Size(368, 23);
             this.cboxSetupChannels.TabIndex = 20;
             // 
             // label4
@@ -1023,6 +1184,7 @@
             // 
             // panelSetupSession
             // 
+            this.panelSetupSession.Controls.Add(this.btnSetupCancel);
             this.panelSetupSession.Controls.Add(this.btnSetupClose);
             this.panelSetupSession.Controls.Add(this.lblSetupEnergy);
             this.panelSetupSession.Controls.Add(this.lblSetupChannel);
@@ -1036,9 +1198,9 @@
             // 
             this.btnSetupClose.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSetupClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupClose.Location = new System.Drawing.Point(1205, 0);
+            this.btnSetupClose.Location = new System.Drawing.Point(1212, 0);
             this.btnSetupClose.Name = "btnSetupClose";
-            this.btnSetupClose.Size = new System.Drawing.Size(137, 32);
+            this.btnSetupClose.Size = new System.Drawing.Size(130, 32);
             this.btnSetupClose.TabIndex = 6;
             this.btnSetupClose.Text = "Done";
             this.btnSetupClose.UseVisualStyleBackColor = true;
@@ -1086,6 +1248,57 @@
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(44, 47, 44, 47);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1342, 616);
             this.flowLayoutPanel1.TabIndex = 1;
+            // 
+            // btnMenuSessions
+            // 
+            this.btnMenuSessions.FlatAppearance.BorderSize = 0;
+            this.btnMenuSessions.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuSessions.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuSessions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuSessions.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMenuSessions.Image = global::crash.Properties.Resources.map_128;
+            this.btnMenuSessions.Location = new System.Drawing.Point(47, 50);
+            this.btnMenuSessions.Name = "btnMenuSessions";
+            this.btnMenuSessions.Size = new System.Drawing.Size(200, 200);
+            this.btnMenuSessions.TabIndex = 2;
+            this.btnMenuSessions.Text = "Sessions";
+            this.btnMenuSessions.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuSessions.UseVisualStyleBackColor = true;
+            this.btnMenuSessions.Click += new System.EventHandler(this.btnMenuSession_Click);
+            // 
+            // btnMenuDetectors
+            // 
+            this.btnMenuDetectors.FlatAppearance.BorderSize = 0;
+            this.btnMenuDetectors.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuDetectors.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuDetectors.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuDetectors.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMenuDetectors.Image = global::crash.Properties.Resources.setup_128;
+            this.btnMenuDetectors.Location = new System.Drawing.Point(253, 50);
+            this.btnMenuDetectors.Name = "btnMenuDetectors";
+            this.btnMenuDetectors.Size = new System.Drawing.Size(200, 200);
+            this.btnMenuDetectors.TabIndex = 0;
+            this.btnMenuDetectors.Text = "Detector Definitions";
+            this.btnMenuDetectors.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuDetectors.UseVisualStyleBackColor = true;
+            this.btnMenuDetectors.Click += new System.EventHandler(this.btnMenuPreferences_Click);
+            // 
+            // btnMenuCalibration
+            // 
+            this.btnMenuCalibration.FlatAppearance.BorderSize = 0;
+            this.btnMenuCalibration.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuCalibration.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnMenuCalibration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuCalibration.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMenuCalibration.Image = global::crash.Properties.Resources.calibrate128;
+            this.btnMenuCalibration.Location = new System.Drawing.Point(459, 50);
+            this.btnMenuCalibration.Name = "btnMenuCalibration";
+            this.btnMenuCalibration.Size = new System.Drawing.Size(200, 200);
+            this.btnMenuCalibration.TabIndex = 3;
+            this.btnMenuCalibration.Text = "Calibrate Detectors";
+            this.btnMenuCalibration.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuCalibration.UseVisualStyleBackColor = true;
+            this.btnMenuCalibration.Click += new System.EventHandler(this.btnMenuCalibration_Click);
             // 
             // pageSessions
             // 
@@ -1497,6 +1710,36 @@
             this.toolsSession.TabIndex = 7;
             this.toolsSession.Text = "toolStrip1";
             // 
+            // btnOptions
+            // 
+            this.btnOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemSubtractBackground,
+            this.menuItemConvertToLocalTime});
+            this.btnOptions.Image = global::crash.Properties.Resources.options1_16;
+            this.btnOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(78, 22);
+            this.btnOptions.Text = "Options";
+            this.btnOptions.ToolTipText = "Session options";
+            // 
+            // menuItemSubtractBackground
+            // 
+            this.menuItemSubtractBackground.CheckOnClick = true;
+            this.menuItemSubtractBackground.Name = "menuItemSubtractBackground";
+            this.menuItemSubtractBackground.Size = new System.Drawing.Size(185, 22);
+            this.menuItemSubtractBackground.Text = "Subtract background";
+            // 
+            // menuItemConvertToLocalTime
+            // 
+            this.menuItemConvertToLocalTime.Checked = true;
+            this.menuItemConvertToLocalTime.CheckOnClick = true;
+            this.menuItemConvertToLocalTime.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuItemConvertToLocalTime.Name = "menuItemConvertToLocalTime";
+            this.menuItemConvertToLocalTime.Size = new System.Drawing.Size(185, 22);
+            this.menuItemConvertToLocalTime.Text = "Show local time";
+            this.menuItemConvertToLocalTime.ToolTipText = "Show dates using local time";
+            this.menuItemConvertToLocalTime.CheckedChanged += new System.EventHandler(this.menuItemConvertToLocalTime_CheckedChanged);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.btnSessionsClose);
@@ -1507,6 +1750,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1150, 30);
             this.panel1.TabIndex = 6;
+            // 
+            // btnSessionsClose
+            // 
+            this.btnSessionsClose.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSessionsClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSessionsClose.Location = new System.Drawing.Point(1020, 0);
+            this.btnSessionsClose.Name = "btnSessionsClose";
+            this.btnSessionsClose.Size = new System.Drawing.Size(130, 30);
+            this.btnSessionsClose.TabIndex = 2;
+            this.btnSessionsClose.Text = "Close";
+            this.btnSessionsClose.UseVisualStyleBackColor = true;
+            this.btnSessionsClose.Click += new System.EventHandler(this.btnSessionsClose_Click);
             // 
             // lblSessionEnergy
             // 
@@ -1854,6 +2109,27 @@
             this.btnAddDetector.UseVisualStyleBackColor = true;
             this.btnAddDetector.Click += new System.EventHandler(this.btnAddDetector_Click);
             // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.btnPreferencesClose);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel6.Location = new System.Drawing.Point(0, 586);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(1342, 30);
+            this.panel6.TabIndex = 2;
+            // 
+            // btnPreferencesClose
+            // 
+            this.btnPreferencesClose.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPreferencesClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPreferencesClose.Location = new System.Drawing.Point(1212, 0);
+            this.btnPreferencesClose.Name = "btnPreferencesClose";
+            this.btnPreferencesClose.Size = new System.Drawing.Size(130, 30);
+            this.btnPreferencesClose.TabIndex = 0;
+            this.btnPreferencesClose.Text = "Close";
+            this.btnPreferencesClose.UseVisualStyleBackColor = true;
+            this.btnPreferencesClose.Click += new System.EventHandler(this.btnPreferencesClose_Click);
+            // 
             // pageNew
             // 
             this.pageNew.Controls.Add(this.tableNew);
@@ -1943,9 +2219,9 @@
             // 
             this.btnNewCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnNewCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNewCancel.Location = new System.Drawing.Point(1089, 0);
+            this.btnNewCancel.Location = new System.Drawing.Point(1076, 0);
             this.btnNewCancel.Name = "btnNewCancel";
-            this.btnNewCancel.Size = new System.Drawing.Size(126, 30);
+            this.btnNewCancel.Size = new System.Drawing.Size(130, 30);
             this.btnNewCancel.TabIndex = 1;
             this.btnNewCancel.Text = "Cancel";
             this.btnNewCancel.UseVisualStyleBackColor = true;
@@ -1955,310 +2231,108 @@
             // 
             this.btnNewStart.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnNewStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNewStart.Location = new System.Drawing.Point(1215, 0);
+            this.btnNewStart.Location = new System.Drawing.Point(1206, 0);
             this.btnNewStart.Name = "btnNewStart";
-            this.btnNewStart.Size = new System.Drawing.Size(121, 30);
+            this.btnNewStart.Size = new System.Drawing.Size(130, 30);
             this.btnNewStart.TabIndex = 0;
             this.btnNewStart.Text = "Start session";
             this.btnNewStart.UseVisualStyleBackColor = true;
             this.btnNewStart.Click += new System.EventHandler(this.btnNewStart_Click);
             // 
-            // btnSessionsClose
+            // pageStatus
             // 
-            this.btnSessionsClose.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSessionsClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSessionsClose.Location = new System.Drawing.Point(1021, 0);
-            this.btnSessionsClose.Name = "btnSessionsClose";
-            this.btnSessionsClose.Size = new System.Drawing.Size(129, 30);
-            this.btnSessionsClose.TabIndex = 2;
-            this.btnSessionsClose.Text = "Close";
-            this.btnSessionsClose.UseVisualStyleBackColor = true;
-            this.btnSessionsClose.Click += new System.EventHandler(this.btnSessionsClose_Click);
+            this.pageStatus.Controls.Add(this.btnStatusGet);
+            this.pageStatus.Controls.Add(this.tbStatusInfo);
+            this.pageStatus.Controls.Add(this.tbStatusIPAddress);
+            this.pageStatus.Controls.Add(this.label3);
+            this.pageStatus.Controls.Add(this.panel7);
+            this.pageStatus.Location = new System.Drawing.Point(4, 27);
+            this.pageStatus.Name = "pageStatus";
+            this.pageStatus.Padding = new System.Windows.Forms.Padding(3);
+            this.pageStatus.Size = new System.Drawing.Size(1342, 616);
+            this.pageStatus.TabIndex = 7;
+            this.pageStatus.Text = "Status";
+            this.pageStatus.UseVisualStyleBackColor = true;
             // 
-            // panel6
+            // panel7
             // 
-            this.panel6.Controls.Add(this.btnPreferencesClose);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel6.Location = new System.Drawing.Point(0, 586);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1342, 30);
-            this.panel6.TabIndex = 2;
+            this.panel7.Controls.Add(this.btnStatusCancel);
+            this.panel7.Controls.Add(this.btnStatusNext);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel7.Location = new System.Drawing.Point(3, 583);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(1336, 30);
+            this.panel7.TabIndex = 0;
             // 
-            // btnPreferencesClose
+            // btnStatusNext
             // 
-            this.btnPreferencesClose.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPreferencesClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPreferencesClose.Location = new System.Drawing.Point(1210, 0);
-            this.btnPreferencesClose.Name = "btnPreferencesClose";
-            this.btnPreferencesClose.Size = new System.Drawing.Size(132, 30);
-            this.btnPreferencesClose.TabIndex = 0;
-            this.btnPreferencesClose.Text = "Close";
-            this.btnPreferencesClose.UseVisualStyleBackColor = true;
-            this.btnPreferencesClose.Click += new System.EventHandler(this.btnPreferencesClose_Click);
+            this.btnStatusNext.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnStatusNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStatusNext.Location = new System.Drawing.Point(1206, 0);
+            this.btnStatusNext.Name = "btnStatusNext";
+            this.btnStatusNext.Size = new System.Drawing.Size(130, 30);
+            this.btnStatusNext.TabIndex = 0;
+            this.btnStatusNext.Text = "Next";
+            this.btnStatusNext.UseVisualStyleBackColor = true;
+            this.btnStatusNext.Click += new System.EventHandler(this.btnStatusNext_Click);
             // 
-            // btnSetupStartTest
+            // label3
             // 
-            this.btnSetupStartTest.Image = ((System.Drawing.Image)(resources.GetObject("btnSetupStartTest.Image")));
-            this.btnSetupStartTest.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSetupStartTest.Name = "btnSetupStartTest";
-            this.btnSetupStartTest.Size = new System.Drawing.Size(126, 22);
-            this.btnSetupStartTest.Text = "Start test spectrum";
-            this.btnSetupStartTest.Click += new System.EventHandler(this.btnSetupStartTest_Click);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(68, 54);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(18, 15);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "IP";
             // 
-            // btnSetupStopTest
+            // tbStatusIPAddress
             // 
-            this.btnSetupStopTest.Image = ((System.Drawing.Image)(resources.GetObject("btnSetupStopTest.Image")));
-            this.btnSetupStopTest.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSetupStopTest.Name = "btnSetupStopTest";
-            this.btnSetupStopTest.Size = new System.Drawing.Size(126, 22);
-            this.btnSetupStopTest.Text = "Stop test spectrum";
-            this.btnSetupStopTest.Click += new System.EventHandler(this.btnSetupStopTest_Click);
+            this.tbStatusIPAddress.Location = new System.Drawing.Point(92, 51);
+            this.tbStatusIPAddress.Name = "tbStatusIPAddress";
+            this.tbStatusIPAddress.Size = new System.Drawing.Size(172, 21);
+            this.tbStatusIPAddress.TabIndex = 2;
             // 
-            // btnSetupResetCoefficients
+            // tbStatusInfo
             // 
-            this.btnSetupResetCoefficients.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnSetupResetCoefficients.Image = ((System.Drawing.Image)(resources.GetObject("btnSetupResetCoefficients.Image")));
-            this.btnSetupResetCoefficients.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSetupResetCoefficients.Name = "btnSetupResetCoefficients";
-            this.btnSetupResetCoefficients.Size = new System.Drawing.Size(120, 22);
-            this.btnSetupResetCoefficients.Text = "Clear energy lines";
-            this.btnSetupResetCoefficients.ToolTipText = "Reset the current energy calibration";
-            this.btnSetupResetCoefficients.Click += new System.EventHandler(this.menuItemResetCoefficients_Click);
+            this.tbStatusInfo.Location = new System.Drawing.Point(92, 107);
+            this.tbStatusInfo.Multiline = true;
+            this.tbStatusInfo.Name = "tbStatusInfo";
+            this.tbStatusInfo.Size = new System.Drawing.Size(643, 256);
+            this.tbStatusInfo.TabIndex = 3;
             // 
-            // btnSetupStoreCoefficients
+            // btnStatusGet
             // 
-            this.btnSetupStoreCoefficients.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnSetupStoreCoefficients.Image = ((System.Drawing.Image)(resources.GetObject("btnSetupStoreCoefficients.Image")));
-            this.btnSetupStoreCoefficients.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSetupStoreCoefficients.Name = "btnSetupStoreCoefficients";
-            this.btnSetupStoreCoefficients.Size = new System.Drawing.Size(152, 22);
-            this.btnSetupStoreCoefficients.Text = "Store energy calibration";
-            this.btnSetupStoreCoefficients.ToolTipText = "Store the current energy calibration";
-            this.btnSetupStoreCoefficients.Click += new System.EventHandler(this.menuItemStoreCoefficients_Click);
+            this.btnStatusGet.Location = new System.Drawing.Point(270, 51);
+            this.btnStatusGet.Name = "btnStatusGet";
+            this.btnStatusGet.Size = new System.Drawing.Size(166, 23);
+            this.btnStatusGet.TabIndex = 4;
+            this.btnStatusGet.Text = "Check status";
+            this.btnStatusGet.UseVisualStyleBackColor = true;
+            this.btnStatusGet.Click += new System.EventHandler(this.btnStatusGet_Click);
             // 
-            // btnMenuSessions
+            // btnStatusCancel
             // 
-            this.btnMenuSessions.FlatAppearance.BorderSize = 0;
-            this.btnMenuSessions.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuSessions.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuSessions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMenuSessions.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuSessions.Image = global::crash.Properties.Resources.map_128;
-            this.btnMenuSessions.Location = new System.Drawing.Point(47, 50);
-            this.btnMenuSessions.Name = "btnMenuSessions";
-            this.btnMenuSessions.Size = new System.Drawing.Size(200, 200);
-            this.btnMenuSessions.TabIndex = 2;
-            this.btnMenuSessions.Text = "Sessions";
-            this.btnMenuSessions.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuSessions.UseVisualStyleBackColor = true;
-            this.btnMenuSessions.Click += new System.EventHandler(this.btnMenuSession_Click);
+            this.btnStatusCancel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnStatusCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStatusCancel.Location = new System.Drawing.Point(1076, 0);
+            this.btnStatusCancel.Name = "btnStatusCancel";
+            this.btnStatusCancel.Size = new System.Drawing.Size(130, 30);
+            this.btnStatusCancel.TabIndex = 1;
+            this.btnStatusCancel.Text = "Cancel";
+            this.btnStatusCancel.UseVisualStyleBackColor = true;
+            this.btnStatusCancel.Click += new System.EventHandler(this.btnStatusCancel_Click);
             // 
-            // btnMenuDetectors
+            // btnSetupCancel
             // 
-            this.btnMenuDetectors.FlatAppearance.BorderSize = 0;
-            this.btnMenuDetectors.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuDetectors.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuDetectors.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMenuDetectors.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuDetectors.Image = global::crash.Properties.Resources.setup_128;
-            this.btnMenuDetectors.Location = new System.Drawing.Point(253, 50);
-            this.btnMenuDetectors.Name = "btnMenuDetectors";
-            this.btnMenuDetectors.Size = new System.Drawing.Size(200, 200);
-            this.btnMenuDetectors.TabIndex = 0;
-            this.btnMenuDetectors.Text = "Detector Definitions";
-            this.btnMenuDetectors.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuDetectors.UseVisualStyleBackColor = true;
-            this.btnMenuDetectors.Click += new System.EventHandler(this.btnMenuPreferences_Click);
-            // 
-            // btnMenuCalibration
-            // 
-            this.btnMenuCalibration.FlatAppearance.BorderSize = 0;
-            this.btnMenuCalibration.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuCalibration.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMenuCalibration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMenuCalibration.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuCalibration.Image = global::crash.Properties.Resources.calibrate128;
-            this.btnMenuCalibration.Location = new System.Drawing.Point(459, 50);
-            this.btnMenuCalibration.Name = "btnMenuCalibration";
-            this.btnMenuCalibration.Size = new System.Drawing.Size(200, 200);
-            this.btnMenuCalibration.TabIndex = 3;
-            this.btnMenuCalibration.Text = "Calibrate Detectors";
-            this.btnMenuCalibration.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuCalibration.UseVisualStyleBackColor = true;
-            this.btnMenuCalibration.Click += new System.EventHandler(this.btnMenuCalibration_Click);
-            // 
-            // btnOptions
-            // 
-            this.btnOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemSubtractBackground,
-            this.menuItemConvertToLocalTime});
-            this.btnOptions.Image = global::crash.Properties.Resources.options1_16;
-            this.btnOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOptions.Name = "btnOptions";
-            this.btnOptions.Size = new System.Drawing.Size(78, 22);
-            this.btnOptions.Text = "Options";
-            this.btnOptions.ToolTipText = "Session options";
-            // 
-            // menuItemSubtractBackground
-            // 
-            this.menuItemSubtractBackground.CheckOnClick = true;
-            this.menuItemSubtractBackground.Name = "menuItemSubtractBackground";
-            this.menuItemSubtractBackground.Size = new System.Drawing.Size(185, 22);
-            this.menuItemSubtractBackground.Text = "Subtract background";
-            // 
-            // menuItemConvertToLocalTime
-            // 
-            this.menuItemConvertToLocalTime.Checked = true;
-            this.menuItemConvertToLocalTime.CheckOnClick = true;
-            this.menuItemConvertToLocalTime.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.menuItemConvertToLocalTime.Name = "menuItemConvertToLocalTime";
-            this.menuItemConvertToLocalTime.Size = new System.Drawing.Size(185, 22);
-            this.menuItemConvertToLocalTime.Text = "Show local time";
-            this.menuItemConvertToLocalTime.ToolTipText = "Show dates using local time";
-            this.menuItemConvertToLocalTime.CheckedChanged += new System.EventHandler(this.menuItemConvertToLocalTime_CheckedChanged);
-            // 
-            // btnShowLog
-            // 
-            this.btnShowLog.AutoSize = false;
-            this.btnShowLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowLog.Image = global::crash.Properties.Resources.log_32;
-            this.btnShowLog.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowLog.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowLog.Name = "btnShowLog";
-            this.btnShowLog.Size = new System.Drawing.Size(38, 38);
-            this.btnShowLog.Text = "toolStripButton1";
-            this.btnShowLog.ToolTipText = "Show log";
-            this.btnShowLog.Click += new System.EventHandler(this.menuItemShowLog_Click);
-            // 
-            // btnSessionInfo
-            // 
-            this.btnSessionInfo.AutoSize = false;
-            this.btnSessionInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSessionInfo.Image = global::crash.Properties.Resources.waterfall_history_32;
-            this.btnSessionInfo.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSessionInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSessionInfo.Name = "btnSessionInfo";
-            this.btnSessionInfo.Size = new System.Drawing.Size(38, 38);
-            this.btnSessionInfo.Text = "toolStripButton1";
-            this.btnSessionInfo.ToolTipText = "Show session info";
-            this.btnSessionInfo.Click += new System.EventHandler(this.menuItemSessionInfo_Click);
-            // 
-            // btnShowMap
-            // 
-            this.btnShowMap.AutoSize = false;
-            this.btnShowMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowMap.Image = global::crash.Properties.Resources.map_32;
-            this.btnShowMap.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowMap.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowMap.Name = "btnShowMap";
-            this.btnShowMap.Size = new System.Drawing.Size(38, 38);
-            this.btnShowMap.Text = "toolStripButton2";
-            this.btnShowMap.ToolTipText = "Show map";
-            this.btnShowMap.Click += new System.EventHandler(this.menuItemShowMap_Click);
-            // 
-            // btnShowWaterfallLive
-            // 
-            this.btnShowWaterfallLive.AutoSize = false;
-            this.btnShowWaterfallLive.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowWaterfallLive.Image = global::crash.Properties.Resources.waterfall_live_32;
-            this.btnShowWaterfallLive.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowWaterfallLive.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowWaterfallLive.Name = "btnShowWaterfallLive";
-            this.btnShowWaterfallLive.Size = new System.Drawing.Size(38, 38);
-            this.btnShowWaterfallLive.Text = "toolStripButton2";
-            this.btnShowWaterfallLive.ToolTipText = "Show waterfall live";
-            this.btnShowWaterfallLive.Click += new System.EventHandler(this.menuItemShowWaterfall_Click);
-            // 
-            // btnShowROITable
-            // 
-            this.btnShowROITable.AutoSize = false;
-            this.btnShowROITable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowROITable.Image = global::crash.Properties.Resources.roi_table_32;
-            this.btnShowROITable.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowROITable.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowROITable.Name = "btnShowROITable";
-            this.btnShowROITable.Size = new System.Drawing.Size(38, 38);
-            this.btnShowROITable.Text = "toolStripButton1";
-            this.btnShowROITable.ToolTipText = "Show ROI Table";
-            this.btnShowROITable.Click += new System.EventHandler(this.menuItemROITable_Click);
-            // 
-            // btnShowROIHist
-            // 
-            this.btnShowROIHist.AutoSize = false;
-            this.btnShowROIHist.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowROIHist.Image = global::crash.Properties.Resources.doserate_32;
-            this.btnShowROIHist.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowROIHist.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowROIHist.Name = "btnShowROIHist";
-            this.btnShowROIHist.Size = new System.Drawing.Size(38, 38);
-            this.btnShowROIHist.Text = "toolStripButton1";
-            this.btnShowROIHist.ToolTipText = "Show ROI History";
-            this.btnShowROIHist.Click += new System.EventHandler(this.menuItemShowROIHistory_Click);
-            // 
-            // btnShowROIChart
-            // 
-            this.btnShowROIChart.AutoSize = false;
-            this.btnShowROIChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnShowROIChart.Image = global::crash.Properties.Resources.roitable_history_32;
-            this.btnShowROIChart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnShowROIChart.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnShowROIChart.Name = "btnShowROIChart";
-            this.btnShowROIChart.Size = new System.Drawing.Size(38, 38);
-            this.btnShowROIChart.Text = "toolStripButton1";
-            this.btnShowROIChart.ToolTipText = "Show ROI live";
-            this.btnShowROIChart.Click += new System.EventHandler(this.menuItemShowROIChart_Click);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton1.AutoSize = false;
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::crash.Properties.Resources.layout4;
-            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(38, 38);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.Click += new System.EventHandler(this.menuItemLayoutSession3_Click);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton2.AutoSize = false;
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::crash.Properties.Resources.layout3;
-            this.toolStripButton2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(38, 38);
-            this.toolStripButton2.Text = "toolStripButton2";
-            this.toolStripButton2.Click += new System.EventHandler(this.menuItemLayoutSession2_Click);
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton3.AutoSize = false;
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = global::crash.Properties.Resources.layout2;
-            this.toolStripButton3.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(38, 38);
-            this.toolStripButton3.Text = "toolStripButton3";
-            this.toolStripButton3.Click += new System.EventHandler(this.menuItemLayoutSession1_Click);
-            // 
-            // toolStripButton4
-            // 
-            this.toolStripButton4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton4.AutoSize = false;
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = global::crash.Properties.Resources.layout1;
-            this.toolStripButton4.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(38, 38);
-            this.toolStripButton4.Text = "toolStripButton4";
-            this.toolStripButton4.Click += new System.EventHandler(this.menuItemLayoutSetup1_Click);
+            this.btnSetupCancel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSetupCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetupCancel.Location = new System.Drawing.Point(1082, 0);
+            this.btnSetupCancel.Name = "btnSetupCancel";
+            this.btnSetupCancel.Size = new System.Drawing.Size(130, 32);
+            this.btnSetupCancel.TabIndex = 7;
+            this.btnSetupCancel.Text = "Cancel";
+            this.btnSetupCancel.UseVisualStyleBackColor = true;
+            this.btnSetupCancel.Click += new System.EventHandler(this.btnSetupCancel_Click);
             // 
             // FormMain
             // 
@@ -2294,8 +2368,6 @@
             this.toolsSetup.ResumeLayout(false);
             this.toolsSetup.PerformLayout();
             this.layoutConfigureDetector.ResumeLayout(false);
-            this.panel13.ResumeLayout(false);
-            this.panel13.PerformLayout();
             this.panel14.ResumeLayout(false);
             this.panel14.PerformLayout();
             this.panel15.ResumeLayout(false);
@@ -2346,13 +2418,16 @@
             this.tableLayoutPref.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel6.ResumeLayout(false);
             this.pageNew.ResumeLayout(false);
             this.tableNew.ResumeLayout(false);
             this.tableNew.PerformLayout();
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
             this.panel9.ResumeLayout(false);
-            this.panel6.ResumeLayout(false);
+            this.pageStatus.ResumeLayout(false);
+            this.pageStatus.PerformLayout();
+            this.panel7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2525,9 +2600,6 @@
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnSetupClose;
-        private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.TextBox tbSetupIPAddress;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Panel panel15;
         private System.Windows.Forms.Panel panel16;
@@ -2544,6 +2616,15 @@
         private System.Windows.Forms.Button btnSessionsClose;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Button btnPreferencesClose;
+        private System.Windows.Forms.TabPage pageStatus;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Button btnStatusNext;
+        private System.Windows.Forms.TextBox tbStatusIPAddress;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tbStatusInfo;
+        private System.Windows.Forms.Button btnStatusGet;
+        private System.Windows.Forms.Button btnStatusCancel;
+        private System.Windows.Forms.Button btnSetupCancel;
     }
 }
 
