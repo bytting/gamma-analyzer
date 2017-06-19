@@ -55,7 +55,7 @@ namespace crash
                 if (!Directory.Exists(CrashEnvironment.GEScriptPath))
                     Directory.CreateDirectory(CrashEnvironment.GEScriptPath);                
                 
-                string InstallDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]) + Path.DirectorySeparatorChar;                
+                InstallDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]) + Path.DirectorySeparatorChar;                
 
                 if (!File.Exists(CrashEnvironment.SettingsFile))
                     File.Copy(InstallDir + "template_settings.xml", CrashEnvironment.SettingsFile, false);

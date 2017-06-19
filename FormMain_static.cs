@@ -30,6 +30,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using ZedGraph;
 using Newtonsoft.Json;
+using System.Data.SQLite;
 
 namespace crash
 {
@@ -53,7 +54,8 @@ namespace crash
 
         // Structire for currently loaded session
         Session session = new Session();
-        
+        string SessionDBFile;
+
         // External forms
         FormWaterfallLive formWaterfallLive = null;
         FormROILive formROILive = null;
@@ -62,7 +64,9 @@ namespace crash
         // Point lists with graph data
         PointPairList setupGraphList = new PointPairList();
         PointPairList sessionGraphList = new PointPairList();
-        PointPairList bkgGraphList = new PointPairList();        
+        PointPairList bkgGraphList = new PointPairList();
+
+        string InstallDir;     
 
         // Livetime scale factor for currently loaded background
         float bkgScale = 1f;
@@ -210,6 +214,8 @@ namespace crash
                     }
                     else
                     {
+                        ClearSession();
+
                         // New session is a normal session
                         string sessionName = msg.Params["session_name"].ToString();
                         Utils.Log.Add("Session started: " + msg.Params["session_name"]);
@@ -348,6 +354,45 @@ namespace crash
                             writer.Write(json);
                         }
 
+                        // Add spectrum to database
+                        SQLiteConnection connection = new SQLiteConnection("Data Source=" + SessionDBFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
+                        connection.Open();
+                        SQLiteCommand command = new SQLiteCommand(connection);
+                        command.CommandText = "select id from session where name = @name";
+                        command.Parameters.AddWithValue("name", spec.SessionName);
+                        int sessionId = Convert.ToInt32(command.ExecuteScalar());
+
+                        command.Parameters.Clear();
+                        command.CommandText = @"
+insert into spectrums(session_id, session_name, session_index, start_time, latitude, latitude_error, longitude, longitude_error, altitude, altitude_error, track, track_error, speed, speed_error, climb, climb_error, livetime, realtime, total_count, num_channels, channels) 
+values (@session_id, @session_name, @session_index, @start_time, @latitude, @latitude_error, @longitude, @longitude_error, @altitude, @altitude_error, @track, @track_error, @speed, @speed_error, @climb, @climb_error, @livetime, @realtime, @total_count, @num_channels, @channels)";
+
+                        command.Parameters.AddWithValue("@session_id", sessionId);
+                        command.Parameters.AddWithValue("@session_name", spec.SessionName);
+                        command.Parameters.AddWithValue("@session_index", spec.SessionIndex);
+                        command.Parameters.AddWithValue("@start_time", spec.GpsTime.ToString("yyyy-MM-ddTHH:mm:ss"));
+                        command.Parameters.AddWithValue("@latitude", spec.Latitude);
+                        command.Parameters.AddWithValue("@latitude_error", spec.LatitudeError);
+                        command.Parameters.AddWithValue("@longitude", spec.Longitude);
+                        command.Parameters.AddWithValue("@longitude_error", spec.LongitudeError);
+                        command.Parameters.AddWithValue("@altitude", spec.Altitude);
+                        command.Parameters.AddWithValue("@altitude_error", spec.AltitudeError);
+                        command.Parameters.AddWithValue("@track", spec.GpsTrack);
+                        command.Parameters.AddWithValue("@track_error", spec.GpsTrackError);
+                        command.Parameters.AddWithValue("@speed", spec.GpsSpeed);
+                        command.Parameters.AddWithValue("@speed_error", spec.GpsSpeedError);
+                        command.Parameters.AddWithValue("@climb", spec.GpsClimb);
+                        command.Parameters.AddWithValue("@climb_error", spec.GpsClimbError);
+                        command.Parameters.AddWithValue("@livetime", spec.Livetime);
+                        command.Parameters.AddWithValue("@realtime", spec.Realtime);
+                        command.Parameters.AddWithValue("@total_count", spec.TotalCount);
+                        command.Parameters.AddWithValue("@num_channels", spec.NumChannels);
+                        command.Parameters.AddWithValue("@channels", string.Join(" ", spec.Channels.ToArray()));                        
+                        command.ExecuteNonQuery();
+
+                        connection.Close();
+
+
                         // Add spectrum to session
                         session.Add(spec);
 
@@ -382,9 +427,27 @@ namespace crash
 
         public void SaveSession(Session s)
         {
+            SessionDBFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + s.Name + ".db";
+            File.Copy(InstallDir + "template_session.db", SessionDBFile, true);
+            SQLiteConnection connection = new SQLiteConnection("Data Source=" + SessionDBFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
+            connection.Open();
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "insert into session(name, comment, livetime, detector_data, detector_type_data) values (@name, @comment, @livetime, @detector_data, @detector_type_data)";
+
+            string detectorData = JsonConvert.SerializeObject(s.Detector, Newtonsoft.Json.Formatting.None);
+            string detectorTypeData = JsonConvert.SerializeObject(s.DetectorType, Newtonsoft.Json.Formatting.None);
+
+            command.Parameters.AddWithValue("name", s.Name);
+            command.Parameters.AddWithValue("comment", s.Comment);
+            command.Parameters.AddWithValue("livetime", s.Livetime);
+            command.Parameters.AddWithValue("detector_data", detectorData);
+            command.Parameters.AddWithValue("detector_type_data", detectorTypeData);
+            command.ExecuteNonQuery();
+            connection.Close();
+
             // Save session info to disk
             string sessionSettingsFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + s.Name + Path.DirectorySeparatorChar + "session.json";
-            string jSessionInfo = JsonConvert.SerializeObject(s, Newtonsoft.Json.Formatting.Indented);            
+            string jSessionInfo = JsonConvert.SerializeObject(s, Newtonsoft.Json.Formatting.Indented);
             using (TextWriter writer = new StreamWriter(sessionSettingsFile))            
                 writer.Write(jSessionInfo);
         }
