@@ -697,7 +697,7 @@ namespace crash
             returnFromSetup = pageNew;
             btnStatusNext.Enabled = false;
             tbStatusInfo.Text = "";
-            tbStatusIPAddress.Text = settings.LastIP;
+            tbStatusIPAddress.Text = settings.LastIP;            
             tabs.SelectedTab = pageStatus;
         }
 
@@ -1149,6 +1149,9 @@ namespace crash
 
         private void btnSetupClose_Click(object sender, EventArgs e)
         {
+            if(returnFromSetup == pageNew)
+                tbNewLivetime.Text = selectedDetector.CurrentLivetime.ToString();
+
             tabs.SelectedTab = returnFromSetup;
         }
 
