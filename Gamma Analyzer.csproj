@@ -350,6 +350,7 @@
     <None Include="images\layout1.png" />
     <Content Include="images\calibrate128.png" />
     <Content Include="images\calibrate32.png" />
+    <None Include="images\preferences128.png" />
     <Content Include="template_nuclides.lib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

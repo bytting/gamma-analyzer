@@ -88,7 +88,7 @@ namespace crash
                 tbNewLivetime.KeyPress += CustomEvents.Integer_KeyPress;
 
                 // Populate UI
-                tbSessionDir.Text = settings.SessionRootDirectory;
+                tbPreferencesSessionDir.Text = settings.SessionRootDirectory;
                 PopulateDetectorTypeList();
                 PopulateDetectorList();
                 PopulateDetectors();
@@ -223,7 +223,7 @@ namespace crash
             menuItemView.Visible = true;
             menuItemSession.Visible = false;
 
-            if (tabs.SelectedTab == pagePreferences)
+            if (tabs.SelectedTab == pageDetectors)
             {
             }
             else if (tabs.SelectedTab == pageSessions)
@@ -266,9 +266,9 @@ namespace crash
                 lblSession.Text = "Session: " + s.SessionName;
                 lblSessionDetector.Text = "Det." + session.Detector.Serialnumber + " (" + session.Detector.TypeName + ")";
                 lblIndex.Text = "Index: " + s.SessionIndex;
-                lblLatitude.Text = "Latitude: " + s.Latitude + " ±" + s.LatitudeError;
-                lblLongitude.Text = "Longitude: " + s.Longitude + " ±" + s.LongitudeError;
-                lblAltitude.Text = "Altitude: " + s.Altitude + " ±" + s.AltitudeError;                
+                lblLatitude.Text = "Latitude: " + s.Latitude.ToString("00.0000000") + " ±" + s.LatitudeError.ToString("###0.0#");
+                lblLongitude.Text = "Longitude: " + s.Longitude.ToString("00.0000000") + " ±" + s.LongitudeError.ToString("###0.0#");
+                lblAltitude.Text = "Altitude: " + s.Altitude.ToString("#####0.0#") + " ±" + s.AltitudeError.ToString("###0.0#");
                 lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s.GpsTime.ToLocalTime() : s.GpsTime);
                 lblMaxCount.Text = "Max count: " + s.MaxCount;
                 lblMinCount.Text = "Min count: " + s.MinCount;
@@ -328,9 +328,9 @@ namespace crash
                 lblLivetime.Text = "Livetime:" + liveTime;
                 lblSession.Text = "Session: " + s1.SessionName;
                 lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;
-                lblLatitude.Text = "Latitude: " + s1.Latitude + " ±" + s2.LatitudeError;
-                lblLongitude.Text = "Longitude: " + s1.Longitude + " ±" + s2.LongitudeError;
-                lblAltitude.Text = "Altitude: " + s1.Altitude + " ±" + s2.AltitudeError;
+                lblLatitude.Text = "Latitude: " + s1.Latitude.ToString("00.0000000") + " ±" + s2.LatitudeError.ToString("###0.0#");
+                lblLongitude.Text = "Longitude: " + s1.Longitude.ToString("00.0000000") + " ±" + s2.LongitudeError.ToString("###0.0#");
+                lblAltitude.Text = "Altitude: " + s1.Altitude.ToString("#####0.0#") + " ±" + s2.AltitudeError.ToString("###0.0#");
                 lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s1.GpsTime.ToLocalTime() : s1.GpsTime);                
                 lblMaxCount.Text = "Max count: " + maxCnt;
                 lblMinCount.Text = "Min count: " + minCnt;
@@ -641,7 +641,7 @@ namespace crash
 
         private void btnMenuPreferences_Click(object sender, EventArgs e)
         {
-            tabs.SelectedTab = pagePreferences;
+            tabs.SelectedTab = pageDetectors;
         }
 
         private void btnAddDetectorType_Click(object sender, EventArgs e)
@@ -681,8 +681,8 @@ namespace crash
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                tbSessionDir.Text = dialog.SelectedPath;
-                settings.SessionRootDirectory = tbSessionDir.Text;
+                tbPreferencesSessionDir.Text = dialog.SelectedPath;
+                settings.SessionRootDirectory = tbPreferencesSessionDir.Text;
             }
         }
 
@@ -696,6 +696,8 @@ namespace crash
 
             returnFromSetup = pageNew;
             btnStatusNext.Enabled = false;
+            tbStatusInfo.Text = "";
+            tbStatusIPAddress.Text = settings.LastIP;
             tabs.SelectedTab = pageStatus;
         }
 
@@ -1182,6 +1184,8 @@ namespace crash
 
             returnFromSetup = pageMenu;
             btnStatusNext.Enabled = false;
+            tbStatusInfo.Text = "";
+            tbStatusIPAddress.Text = settings.LastIP;
             tabs.SelectedTab = pageStatus;
         }
 
@@ -1209,12 +1213,35 @@ namespace crash
 
         private void btnSetupCancel_Click(object sender, EventArgs e)
         {
-            tabs.SelectedTab = returnFromSetup;
+            if (returnFromSetup == pageNew)
+                tabs.SelectedTab = pageSessions;
+            else tabs.SelectedTab = pageMenu;
         }
 
         private void btnStatusNext_Click(object sender, EventArgs e)
         {
-            tabs.SelectedTab = pageSetup;
+            settings.LastIP = tbStatusIPAddress.Text;
+            SaveSettings();
+
+            lblSetupIPAddress.Text = "IP Address: " + settings.LastIP;
+            tabs.SelectedTab = pageSetup;            
+        }
+
+        private void btnPreferencesCancel_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageMenu;
+        }
+
+        private void btnMenuPreferences_Click_1(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pagePreferences;
+        }
+
+        private void btnPreferencesSave_Click(object sender, EventArgs e)
+        {
+            settings.SessionRootDirectory = tbPreferencesSessionDir.Text;
+            SaveSettings();
+            tabs.SelectedTab = pageMenu;
         }
     }
 }

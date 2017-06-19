@@ -453,6 +453,16 @@ namespace crash.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap preferences128 {
+            get {
+                object obj = ResourceManager.GetObject("preferences128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap regression_points_32 {
             get {
                 object obj = ResourceManager.GetObject("regression-points-32", resourceCulture);
