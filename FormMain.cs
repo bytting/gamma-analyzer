@@ -179,7 +179,7 @@ namespace crash
 
             try
             {
-                coarse = Convert.ToSingle(cboxSetupCoarseGain.Text);
+                coarse = Convert.ToSingle(cboxSetupCoarseGain.Text, CultureInfo.InvariantCulture);
                 fine = Convert.ToDouble((double)tbarSetupFineGain.Value / 1000d);
                 nchannels = Convert.ToInt32(cboxSetupChannels.Text);
             }

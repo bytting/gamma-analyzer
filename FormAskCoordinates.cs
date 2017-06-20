@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace crash
 {
@@ -40,8 +36,8 @@ namespace crash
                 return;
             }
 
-            Latitude = Convert.ToDouble(tbLatitude.Text.Trim());
-            Longitude = Convert.ToDouble(tbLongitude.Text.Trim());
+            Latitude = Convert.ToDouble(tbLatitude.Text.Trim(), CultureInfo.InvariantCulture);
+            Longitude = Convert.ToDouble(tbLongitude.Text.Trim(), CultureInfo.InvariantCulture);
 
             DialogResult = DialogResult.OK;
             Close();

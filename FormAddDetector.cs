@@ -90,8 +90,8 @@ namespace crash
                 Serialnumber = tbSerialnumber.Text;
                 NumChannels = Convert.ToInt32(cboxNumChannels.Text);
                 HV = tbarCurrHV.Value;
-                CoarseGain = Convert.ToDouble(tbCoarseGain.Text);
-                FineGain = Convert.ToDouble(tbFineGain.Text);                
+                CoarseGain = Convert.ToDouble(tbCoarseGain.Text, CultureInfo.InvariantCulture);
+                FineGain = Convert.ToDouble(tbFineGain.Text, CultureInfo.InvariantCulture);                
                 Livetime = Convert.ToInt32(tbLivetime.Text);
                 LLD = Convert.ToInt32(tbLLD.Text);
                 ULD = Convert.ToInt32(tbULD.Text);                

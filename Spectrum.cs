@@ -134,7 +134,7 @@ namespace crash
             string[] items = msg.Params["channels"].ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string item in items)
             {
-                float ch = Convert.ToSingle(item);
+                float ch = Convert.ToSingle(item, CultureInfo.InvariantCulture);
                 mChannels.Add(ch);
 
                 if (ch > MaxCount)

@@ -280,8 +280,8 @@ namespace crash
                         det = selectedDetector;
                     else det = session.Detector;
                     det.CurrentHV = Convert.ToInt32(msg.Params["voltage"]);
-                    det.CurrentCoarseGain = Convert.ToDouble(msg.Params["coarse_gain"]);
-                    det.CurrentFineGain = Convert.ToDouble(msg.Params["fine_gain"]);
+                    det.CurrentCoarseGain = Convert.ToDouble(msg.Params["coarse_gain"], CultureInfo.InvariantCulture);
+                    det.CurrentFineGain = Convert.ToDouble(msg.Params["fine_gain"], CultureInfo.InvariantCulture);
                     det.CurrentNumChannels = Convert.ToInt32(msg.Params["num_channels"]);
                     det.CurrentLLD = Convert.ToInt32(msg.Params["lld"]);
                     det.CurrentULD = Convert.ToInt32(msg.Params["uld"]);
@@ -372,7 +372,7 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                         command.Parameters.AddWithValue("@session_id", sessionId);
                         command.Parameters.AddWithValue("@session_name", spec.SessionName);
                         command.Parameters.AddWithValue("@session_index", spec.SessionIndex);
-                        command.Parameters.AddWithValue("@start_time", spec.GpsTime.ToString("yyyy-MM-ddTHH:mm:ss"));
+                        command.Parameters.AddWithValue("@start_time", spec.GpsTime.ToString("yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture));
                         command.Parameters.AddWithValue("@latitude", spec.Latitude);
                         command.Parameters.AddWithValue("@latitude_error", spec.LatitudeError);
                         command.Parameters.AddWithValue("@longitude", spec.Longitude);
