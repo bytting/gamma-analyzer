@@ -1,5 +1,5 @@
 ﻿/*	
-	Crash - Controlling application for Burn
+	Gamma Analyzer - Controlling application for Burn
     Copyright (C) 2016  Norwegian Radiation Protection Authority
 
     This program is free software: you can redistribute it and/or modify
@@ -201,7 +201,7 @@ namespace crash
 
             string kmzFile = filename;
             string kmlFile = Path.GetDirectoryName(filename) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(filename) + ".kml";
-            string donutFile = CrashEnvironment.SettingsPath + Path.DirectorySeparatorChar + "donut.png";
+            string donutFile = GAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "donut.png";
 
             using (XmlWriter writer = XmlWriter.Create(kmlFile))
             {

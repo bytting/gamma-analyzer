@@ -1,5 +1,5 @@
 ﻿/*	
-	Crash - Controlling application for Burn
+	Gamma Analyzer - Controlling application for Burn
     Copyright (C) 2016  Norwegian Radiation Protection Authority
 
     This program is free software: you can redistribute it and/or modify
@@ -22,10 +22,10 @@ using System.IO;
 
 namespace crash
 {
-    public static class CrashEnvironment
+    public static class GAEnvironment
     {
         // Settings path
-        public static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + Path.DirectorySeparatorChar + "Crash";
+        public static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments) + Path.DirectorySeparatorChar + "GammaAnalyzer";
 
         // GE scripts path
         public static string GEScriptPath = SettingsPath + Path.DirectorySeparatorChar + "GEScripts";        

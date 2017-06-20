@@ -17,7 +17,7 @@ namespace crash
         public FormSessionInfo(Session sess, string title)
         {
             InitializeComponent();
-            Text = "Crash - " + title;
+            Text = "Gamma Analyzer - " + title;
             session = sess;
         }
 

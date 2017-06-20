@@ -1,5 +1,5 @@
 ﻿/*	
-	Crash - Controlling application for Burn
+	Gamma Analyzer - Controlling application for Burn
     Copyright (C) 2016  Norwegian Radiation Protection Authority
 
     This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ namespace crash
     public partial class FormMain
     {
         // Structure with application settings stored on disk
-        CrashSettings settings = new CrashSettings();
+        GASettings settings = new GASettings();
         
         // Concurrent queue used to pass messages to networking thread
         static ConcurrentQueue<burn.ProtocolMessage> sendq = null;
@@ -117,7 +117,7 @@ namespace crash
         private void SaveSettings()
         {
             // Serialize settings to file
-            using (StreamWriter sw = new StreamWriter(CrashEnvironment.SettingsFile))
+            using (StreamWriter sw = new StreamWriter(GAEnvironment.SettingsFile))
             {
                 XmlSerializer x = new XmlSerializer(settings.GetType());
                 x.Serialize(sw, settings);
@@ -126,24 +126,24 @@ namespace crash
 
         private void LoadSettings()
         {
-            if (!File.Exists(CrashEnvironment.SettingsFile))
+            if (!File.Exists(GAEnvironment.SettingsFile))
                 return;
 
             // Deserialize settings from file
-            using (StreamReader sr = new StreamReader(CrashEnvironment.SettingsFile))
+            using (StreamReader sr = new StreamReader(GAEnvironment.SettingsFile))
             {
                 XmlSerializer x = new XmlSerializer(settings.GetType());
-                settings = x.Deserialize(sr) as CrashSettings;
+                settings = x.Deserialize(sr) as GASettings;
             }
         }
 
         private bool LoadNuclideLibrary()
         {
-            if (!File.Exists(CrashEnvironment.NuclideLibraryFile))
+            if (!File.Exists(GAEnvironment.NuclideLibraryFile))
                 return false;
 
             // Load nuclide library from file
-            using (TextReader reader = File.OpenText(CrashEnvironment.NuclideLibraryFile))
+            using (TextReader reader = File.OpenText(GAEnvironment.NuclideLibraryFile))
             {
                 NuclideLibrary.Clear();
                 char[] itemDelims = new char[] { ' ', '\t' };
@@ -200,8 +200,14 @@ namespace crash
                         if (p.Key == "command")
                             continue;
                         tbStatusInfo.Text += p.Key + ": " + p.Value.ToString() + Environment.NewLine;
-                    }                    
-                    btnStatusNext.Enabled = true;
+                    }
+
+                    bool sessionRunning = Convert.ToBoolean(msg.Params["session_running"]);
+
+                    if (!sessionRunning)
+                    {
+                        btnStatusNext.Enabled = true;
+                    }
                     break;
 
                 case "start_session_success":
@@ -388,7 +394,7 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                         connection.Close();
 
                         // Add spectrum to session
-                        if (spec.SessionName == session.Name)
+                        if (session != null && session.IsLoaded && session.Name == spec.SessionName)
                         {
                             spec.CalculateDoserate(session.Detector, session.GEFactor);
 

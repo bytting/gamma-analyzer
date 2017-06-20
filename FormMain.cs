@@ -1,5 +1,5 @@
 ﻿/*	
-	Crash - Controlling application for Burn
+	Gamma Analyzer - Controlling application for Burn
     Copyright (C) 2016  Norwegian Radiation Protection Authority
 
     This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,6 @@ using System.IO;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using System.Threading;
 using System.Globalization;
 using Newtonsoft.Json;
 using ZedGraph;
@@ -50,25 +49,25 @@ namespace crash
                 tabs.SelectedTab = pageMenu;
 
                 // Create directories and files
-                if (!Directory.Exists(CrashEnvironment.SettingsPath))
-                    Directory.CreateDirectory(CrashEnvironment.SettingsPath);
+                if (!Directory.Exists(GAEnvironment.SettingsPath))
+                    Directory.CreateDirectory(GAEnvironment.SettingsPath);
 
-                if (!Directory.Exists(CrashEnvironment.GEScriptPath))
-                    Directory.CreateDirectory(CrashEnvironment.GEScriptPath);                
+                if (!Directory.Exists(GAEnvironment.GEScriptPath))
+                    Directory.CreateDirectory(GAEnvironment.GEScriptPath);                
                 
                 InstallDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]) + Path.DirectorySeparatorChar;                
 
-                if (!File.Exists(CrashEnvironment.SettingsFile))
-                    File.Copy(InstallDir + "template_settings.xml", CrashEnvironment.SettingsFile, false);
+                if (!File.Exists(GAEnvironment.SettingsFile))
+                    File.Copy(InstallDir + "template_settings.xml", GAEnvironment.SettingsFile, false);
 
-                if (!File.Exists(CrashEnvironment.NuclideLibraryFile))
-                    File.Copy(InstallDir + "template_nuclides.lib", CrashEnvironment.NuclideLibraryFile, false);
+                if (!File.Exists(GAEnvironment.NuclideLibraryFile))
+                    File.Copy(InstallDir + "template_nuclides.lib", GAEnvironment.NuclideLibraryFile, false);
 
-                if (!File.Exists(CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py"))
-                    File.Copy(InstallDir + "template_Nai-2tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py", true);
+                if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py"))
+                    File.Copy(InstallDir + "template_Nai-2tom.py", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py", true);
 
-                if (!File.Exists(CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py"))
-                    File.Copy(InstallDir + "template_Nai-3tom.py", CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py", true);
+                if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py"))
+                    File.Copy(InstallDir + "template_Nai-3tom.py", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py", true);
 
                 // Load settings
                 LoadSettings();
@@ -520,7 +519,7 @@ namespace crash
             lblSessionChannel.Text = "Ch: " + String.Format("{0:####0}", x);
 
             // Show energy
-            if (session.IsLoaded && session.Detector != null)            
+            if (session != null && session.IsLoaded && session.Detector != null)            
                 lblSessionEnergy.Text = "En: " + String.Format("{0:#######0.0###}", session.Detector.GetEnergy(x));            
             else lblSessionEnergy.Text = "";
         }
@@ -1070,7 +1069,7 @@ namespace crash
 
         private void menuItemSaveAsCSV_Click(object sender, EventArgs e)
         {
-            if (!session.IsLoaded)
+            if (session == null || !session.IsLoaded)
                 return;
 
             // Show dialog for file selection

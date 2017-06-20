@@ -1,5 +1,5 @@
 ﻿/*	
-	Crash - Controlling application for Burn
+	Gamma Analyzer - Controlling application for Burn
     Copyright (C) 2016  Norwegian Radiation Protection Authority
 
     This program is free software: you can redistribute it and/or modify
@@ -139,7 +139,7 @@ namespace crash
             if (DetectorType == null)
                 return false;
 
-            string geScriptFile = CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + DetectorType.GEScript;
+            string geScriptFile = GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + DetectorType.GEScript;
 
             if (!File.Exists(geScriptFile))
                 return false;

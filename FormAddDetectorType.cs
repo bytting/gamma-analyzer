@@ -94,7 +94,7 @@ namespace crash
         private void btnBrowseGEScript_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.InitialDirectory = CrashEnvironment.GEScriptPath;
+            dialog.InitialDirectory = GAEnvironment.GEScriptPath;
             if(dialog.ShowDialog() == DialogResult.OK)
                 tbGEScript.Text = dialog.SafeFileName;
         }                

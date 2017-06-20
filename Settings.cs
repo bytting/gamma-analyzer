@@ -1,5 +1,5 @@
 ﻿/*	
-	Crash - Controlling application for Burn
+	Gamma Analyzer - Controlling application for Burn
     Copyright (C) 2016  Norwegian Radiation Protection Authority
 
     This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,9 @@ namespace crash
 {
     // Class used to store application settings
     [Serializable()]
-    public class CrashSettings
+    public class GASettings
     {
-        public CrashSettings() 
+        public GASettings() 
         {
             DisplayLocalTime = true;
         }
