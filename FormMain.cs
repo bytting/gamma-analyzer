@@ -1128,13 +1128,19 @@ namespace crash
         {            
             if (!String.IsNullOrEmpty(tbNewLivetime.Text.Trim()))
                 selectedDetector.CurrentLivetime = Convert.ToInt32(tbNewLivetime.Text.Trim());
+            DetectorType detType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
 
             SaveSettings();            
 
             burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
             msg.Params.Add("command", "start_session");
             msg.Params.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));            
-            msg.Params.Add("livetime", selectedDetector.CurrentLivetime);            
+            msg.Params.Add("livetime", selectedDetector.CurrentLivetime);
+            msg.Params.Add("comment", tbNewComment.Text.Trim());
+            string jDetectorData = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.None);
+            string jDetectorTypeData = JsonConvert.SerializeObject(detType, Newtonsoft.Json.Formatting.None);
+            msg.Params.Add("detector_data", jDetectorData);
+            msg.Params.Add("detector_type_data", jDetectorTypeData);
             sendMsg(msg);
 
             previewSession = false;
@@ -1149,8 +1155,11 @@ namespace crash
 
         private void btnSetupClose_Click(object sender, EventArgs e)
         {
-            if(returnFromSetup == pageNew)
+            if (returnFromSetup == pageNew)
+            {
                 tbNewLivetime.Text = selectedDetector.CurrentLivetime.ToString();
+                tbNewComment.Text = "";
+            }
 
             tabs.SelectedTab = returnFromSetup;
         }

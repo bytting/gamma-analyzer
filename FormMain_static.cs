@@ -221,10 +221,12 @@ namespace crash
                         Utils.Log.Add("Session started: " + msg.Params["session_name"]);
 
                         // Create a session object and update state
-                        float livetime = Convert.ToSingle(msg.Params["livetime"]);                        
-                        
+                        float livetime = Convert.ToSingle(msg.Params["livetime"]);
+                        string comment = msg.Params["comment"].ToString();
+
+
                         detType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
-                        session = new Session(msg.IPAddress, settings.SessionRootDirectory, sessionName, "", livetime, selectedDetector, detType);
+                        session = new Session(msg.IPAddress, settings.SessionRootDirectory, sessionName, comment, livetime, selectedDetector, detType);
 
                         // Create session files and directories
                         SaveSession(session);

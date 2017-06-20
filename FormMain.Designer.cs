@@ -228,6 +228,9 @@
             this.panel10 = new System.Windows.Forms.Panel();
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbNewComment = new System.Windows.Forms.TextBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -284,6 +287,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel10.SuspendLayout();
+            this.panel13.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -2172,6 +2176,7 @@
             this.tableNew.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableNew.Controls.Add(this.textBox1, 0, 4);
             this.tableNew.Controls.Add(this.panel12, 1, 2);
+            this.tableNew.Controls.Add(this.panel13, 1, 3);
             this.tableNew.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableNew.Location = new System.Drawing.Point(3, 3);
             this.tableNew.Name = "tableNew";
@@ -2452,6 +2457,34 @@
             this.btnPreferencesSave.UseVisualStyleBackColor = true;
             this.btnPreferencesSave.Click += new System.EventHandler(this.btnPreferencesSave_Click);
             // 
+            // panel13
+            // 
+            this.panel13.Controls.Add(this.tbNewComment);
+            this.panel13.Controls.Add(this.label1);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel13.Location = new System.Drawing.Point(448, 83);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(439, 24);
+            this.panel13.TabIndex = 13;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 15);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Comment";
+            // 
+            // tbNewComment
+            // 
+            this.tbNewComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbNewComment.Location = new System.Drawing.Point(61, 0);
+            this.tbNewComment.Name = "tbNewComment";
+            this.tbNewComment.Size = new System.Drawing.Size(378, 21);
+            this.tbNewComment.TabIndex = 1;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2552,6 +2585,8 @@
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
             this.panel10.ResumeLayout(false);
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2757,6 +2792,9 @@
         private System.Windows.Forms.Button btnPreferencesSetSessionDir;
         private System.Windows.Forms.Button btnMenuPreferences;
         private System.Windows.Forms.Label lblSetupIPAddress;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.TextBox tbNewComment;
+        private System.Windows.Forms.Label label1;
     }
 }
 
