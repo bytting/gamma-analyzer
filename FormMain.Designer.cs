@@ -78,7 +78,6 @@
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.contextMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemSessionUnselect = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemSourceActivity = new System.Windows.Forms.ToolStripMenuItem();
             this.tabs = new System.Windows.Forms.TabControl();
             this.pageSetup = new System.Windows.Forms.TabPage();
             this.panelSetupGraph = new System.Windows.Forms.Panel();
@@ -231,6 +230,7 @@
             this.panel13 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.tbNewComment = new System.Windows.Forms.TextBox();
+            this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -726,10 +726,9 @@
             // contextMenuSession
             // 
             this.contextMenuSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemSessionUnselect,
-            this.menuItemSourceActivity});
+            this.menuItemSessionUnselect});
             this.contextMenuSession.Name = "contextMenuSession";
-            this.contextMenuSession.Size = new System.Drawing.Size(152, 48);
+            this.contextMenuSession.Size = new System.Drawing.Size(153, 48);
             // 
             // menuItemSessionUnselect
             // 
@@ -737,13 +736,6 @@
             this.menuItemSessionUnselect.Size = new System.Drawing.Size(151, 22);
             this.menuItemSessionUnselect.Text = "&Unselect";
             this.menuItemSessionUnselect.Click += new System.EventHandler(this.menuItemSessionUnselect_Click);
-            // 
-            // menuItemSourceActivity
-            // 
-            this.menuItemSourceActivity.Name = "menuItemSourceActivity";
-            this.menuItemSourceActivity.Size = new System.Drawing.Size(151, 22);
-            this.menuItemSourceActivity.Text = "&Source activity";
-            this.menuItemSourceActivity.Click += new System.EventHandler(this.menuItemSourceActivity_Click);
             // 
             // tabs
             // 
@@ -2485,6 +2477,10 @@
             this.tbNewComment.Size = new System.Drawing.Size(378, 21);
             this.tbNewComment.TabIndex = 1;
             // 
+            // openSessionDialog
+            // 
+            this.openSessionDialog.DefaultExt = "db";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2631,7 +2627,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemExport;
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsCHN;
         private System.Windows.Forms.ToolStripMenuItem menuItemSaveAsKMZ;
-        private System.Windows.Forms.ToolStripMenuItem menuItemSourceActivity;
         private System.Windows.Forms.TabControl tabs;
         private System.Windows.Forms.TabPage pageSetup;
         private System.Windows.Forms.Panel panelSetupSession;
@@ -2795,6 +2790,7 @@
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.TextBox tbNewComment;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.OpenFileDialog openSessionDialog;
     }
 }
 

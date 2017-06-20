@@ -18,10 +18,8 @@
 // Authors: Dag robole,
 
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Globalization;
-using Newtonsoft.Json;
 
 namespace crash
 {
@@ -32,74 +30,74 @@ namespace crash
         private List<float> mChannels;
 
         // Name of parent session
-        public string SessionName { get; private set; }
+        public string SessionName { get; set; }
 
         // This spectrums session index
-        public int SessionIndex { get; private set; }
+        public int SessionIndex { get; set; }
 
         // Label to use for this spectrum
-        public string Label { get; private set; }
+        public string Label { get; set; }
 
         // Property to access channels
         public List<float> Channels { get { return mChannels; } }
 
         // Number of channels used for this spectrum
-        public float NumChannels { get; private set; }
+        public float NumChannels { get; set; }
 
         // Max count found in this spectrum
-        public float MaxCount { get; private set; }
+        public float MaxCount { get; set; }
 
         // Min count found in this spectrum
-        public float MinCount { get; private set; }
+        public float MinCount { get; set; }
 
         // Total counts stored in this spectrum
-        public float TotalCount { get; private set; }        
+        public float TotalCount { get; set; }        
 
         // Latitude when this spectrum was started
-        public double Latitude { get; private set; }
+        public double Latitude { get; set; }
 
         // Latitude error when this spectrum was started
-        public double LatitudeError { get; private set; }
+        public double LatitudeError { get; set; }
 
         // Longitude when this spectrum was started
-        public double Longitude { get; private set; }
+        public double Longitude { get; set; }
 
         // Longitude error when this spectrum was started
-        public double LongitudeError { get; private set; }
+        public double LongitudeError { get; set; }
 
         // Altitude when this spectrum was started
-        public double Altitude { get; private set; }
+        public double Altitude { get; set; }
 
         // Altitude error when this spectrum was started
-        public double AltitudeError { get; private set; }                
+        public double AltitudeError { get; set; }                
 
         // Date and time when this spectrum was started
-        public DateTime GpsTime { get; private set; }
+        public DateTime GpsTime { get; set; }
 
-        public float GpsTrack { get; private set; }
+        public float GpsTrack { get; set; }
         
-        public float GpsTrackError { get; private set; }
+        public float GpsTrackError { get; set; }
 
         // Speed when this spectrum was started
-        public float GpsSpeed { get; private set; }
+        public float GpsSpeed { get; set; }
 
         // Speed error when this spectrum was started
-        public float GpsSpeedError { get; private set; }
+        public float GpsSpeedError { get; set; }
 
         // Climb when this spectrum was started
-        public float GpsClimb { get; private set; }
+        public float GpsClimb { get; set; }
 
         // Climb error when this spectrum was started
-        public float GpsClimbError { get; private set; }
+        public float GpsClimbError { get; set; }
 
         // Realtime for this spectrum
-        public int Realtime { get; private set; }
+        public int Realtime { get; set; }
 
         // Livetime for this spectrum
-        public int Livetime { get; private set; }        
+        public int Livetime { get; set; }        
 
         // Doserate for this spectrum in nanosievert per hour
-        public double Doserate { get; private set; }        
+        public double Doserate { get; set; }        
 
         public Spectrum()
         {
@@ -107,31 +105,42 @@ namespace crash
         }
 
         public Spectrum(burn.ProtocolMessage msg)
-        {
-            // FIXME: sanity checks
+        {                        
             SessionName = msg.Params["session_name"].ToString();
-            SessionIndex = GetInt32(msg.Params["index"]);
+            SessionIndex = Convert.ToInt32(msg.Params["index"]);
             Label = "Spectrum " + SessionIndex;
-            NumChannels = GetInt32(msg.Params["num_channels"]);
-            Latitude = GetDouble(msg.Params["latitude"]);
-            LatitudeError = GetDouble(msg.Params["latitude_error"]);
-            Longitude = GetDouble(msg.Params["longitude"]);
-            LongitudeError = GetDouble(msg.Params["longitude_error"]);
-            Altitude = GetDouble(msg.Params["altitude"]);
-            AltitudeError = GetDouble(msg.Params["altitude_error"]);
-            GpsTime = GetDateTime(msg.Params["time"]);
-            GpsTrack = GetSingle(msg.Params["track"]);
-            GpsTrackError = GetSingle(msg.Params["track_error"]);
-            GpsSpeed = GetSingle(msg.Params["speed"]);
-            GpsSpeedError = GetSingle(msg.Params["speed_error"]);
-            GpsClimb = GetSingle(msg.Params["climb"]);
-            GpsClimbError = GetSingle(msg.Params["climb_error"]);
-            Realtime = GetInt32(msg.Params["realtime"]);
-            Livetime = GetInt32(msg.Params["livetime"]);
-            mChannels = new List<float>();
+            NumChannels = Convert.ToInt32(msg.Params["num_channels"]);
+            Latitude = Convert.ToDouble(msg.Params["latitude"]);
+            LatitudeError = Convert.ToDouble(msg.Params["latitude_error"]);
+            Longitude = Convert.ToDouble(msg.Params["longitude"]);
+            LongitudeError = Convert.ToDouble(msg.Params["longitude_error"]);
+            Altitude = Convert.ToDouble(msg.Params["altitude"]);
+            AltitudeError = Convert.ToDouble(msg.Params["altitude_error"]);
+            GpsTime = Convert.ToDateTime(msg.Params["time"]);
+            GpsTrack = Convert.ToSingle(msg.Params["track"]);
+            GpsTrackError = Convert.ToSingle(msg.Params["track_error"]);
+            GpsSpeed = Convert.ToSingle(msg.Params["speed"]);
+            GpsSpeedError = Convert.ToSingle(msg.Params["speed_error"]);
+            GpsClimb = Convert.ToSingle(msg.Params["climb"]);
+            GpsClimbError = Convert.ToSingle(msg.Params["climb_error"]);
+            Realtime = Convert.ToInt32(msg.Params["realtime"]);
+            Livetime = Convert.ToInt32(msg.Params["livetime"]);
             TotalCount = 0f;
+            Doserate = 0.0;
+            mChannels = new List<float>();
             // Split channel string and store each count in channel array
-            string[] items = msg.Params["channels"].ToString().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            LoadSpectrumString(msg.Params["channels"].ToString());
+        }
+
+        public override string ToString()
+        {
+            return SessionName + " - " + SessionIndex.ToString();
+        }
+
+        public void LoadSpectrumString(string spectrums)
+        {
+            mChannels.Clear();
+            string[] items = spectrums.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string item in items)
             {
                 float ch = Convert.ToSingle(item, CultureInfo.InvariantCulture);
@@ -142,70 +151,8 @@ namespace crash
                 if (ch < MinCount)
                     MinCount = ch;
 
-                TotalCount += ch;                                          
+                TotalCount += ch;
             }
-
-            Doserate = 0.0;                        
-        }
-
-        private Int32 GetInt32(object o)
-        {
-            Int32 i;
-            try
-            {
-                i = Convert.ToInt32(o);
-            }
-            catch
-            {
-                i = 0;
-            }
-
-            return i;
-        }
-
-        private Single GetSingle(object o)
-        {
-            Single s;
-            try
-            {
-                s = Convert.ToSingle(o, CultureInfo.InvariantCulture);                
-            }
-            catch
-            {
-                s = 0f;
-            }
-
-            return s;
-        }
-
-        private Double GetDouble(object o)
-        {
-            Double d;
-            try
-            {
-                d = Convert.ToDouble(o, CultureInfo.InvariantCulture);
-            }
-            catch
-            {
-                d = 0f;
-            }
-
-            return d;
-        }
-
-        private DateTime GetDateTime(object o)
-        {
-            DateTime dt;
-            try
-            {
-                dt = Convert.ToDateTime(o, CultureInfo.InvariantCulture);
-            }
-            catch
-            {
-                dt = DateTime.Now;
-            }
-
-            return dt;
         }
 
         public float GetCountInROI(int start, int end)
@@ -219,31 +166,7 @@ namespace crash
             for (int i = start; i < end; i++)            
                 max += mChannels[i];            
             return max;
-        }
-
-        public double GetElevation(string apiKey)
-        {
-            // Request approximate altitude for this spectrum
-
-            using (System.Net.WebClient wc = new System.Net.WebClient())
-            {
-                string query = "https://maps.googleapis.com/maps/api/elevation/json?locations=" 
-                    + Latitude.ToString(CultureInfo.InvariantCulture) + "," + Longitude.ToString(CultureInfo.InvariantCulture) 
-                    + "&key=" + apiKey;
-
-                var json = wc.DownloadString(query);
-
-                ElevationData ed = JsonConvert.DeserializeObject<ElevationData>(json);
-                if (ed.Status.ToUpper() == "OK" && ed.Results.Count > 0)
-                    return ed.Results[0].Elevation;
-                else return double.MinValue;
-            }
-        }
-
-        public override string ToString()
-        {
-            return SessionName + " - " + SessionIndex.ToString();
-        }
+        }        
 
         public double CalculateDoserate(Detector det, dynamic GEFactorFunc)
         {
@@ -317,28 +240,5 @@ namespace crash
             for(int i=0; i<mChannels.Count; i++)            
                 mChannels[i] += s.mChannels[i];        
         }
-    }
-
-    // Helper class for requiesting elevation
-    public class ElevationResult
-    {
-        [JsonProperty(PropertyName = "elevation")]
-        public double Elevation { get; set; }
-
-        [JsonProperty(PropertyName = "location")]
-        public Dictionary<string, object> Location { get; set; }   
-
-        [JsonProperty(PropertyName = "resolution")]
-        public double Resolution { get; set; }
-    }
-
-    // Helper class for requiesting elevation
-    public class ElevationData
-    {
-        [JsonProperty(PropertyName = "results")]
-        public List<ElevationResult> Results { get; set; }
-
-        [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
     }
 }

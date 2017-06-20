@@ -52,9 +52,8 @@ namespace crash
         // Timer used to poll for network messages
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();        
 
-        // Structire for currently loaded session
-        Session session = new Session();
-        string SessionDBFile;
+        // Currently loaded sessions
+        Session session = null, bkgSession = null;
 
         // External forms
         FormWaterfallLive formWaterfallLive = null;
@@ -214,22 +213,24 @@ namespace crash
                     }
                     else
                     {
-                        ClearSession();
-
                         // New session is a normal session
                         string sessionName = msg.Params["session_name"].ToString();
-                        Utils.Log.Add("Session started: " + msg.Params["session_name"]);
+                        Utils.Log.Add("Session started: " + sessionName);
 
-                        // Create a session object and update state
+                        ClearSession();                                                
+                        
                         float livetime = Convert.ToSingle(msg.Params["livetime"]);
                         string comment = msg.Params["comment"].ToString();
-
+                        string sessionFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + sessionName + ".db";
 
                         detType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
-                        session = new Session(msg.IPAddress, settings.SessionRootDirectory, sessionName, comment, livetime, selectedDetector, detType);
+                        session = new Session(msg.IPAddress, sessionFile, sessionName, comment, livetime, selectedDetector, detType);
 
-                        // Create session files and directories
-                        SaveSession(session);
+                        // Create session database
+                        CreateSessionFile(session);
+
+                        lblSession.Text = session.Name;
+                        lblComment.Text = session.Comment;
 
                         // Notify external forms about new session
                         formWaterfallLive.SetSession(session);
@@ -292,8 +293,7 @@ namespace crash
 
                 case "spectrum":
                     // Session spectrum received successfully
-                    Spectrum spec = new Spectrum(msg);
-                    spec.CalculateDoserate(session.Detector, session.GEFactor);
+                    Spectrum spec = new Spectrum(msg);                    
 
                     if (previewSession)
                     {
@@ -339,25 +339,18 @@ namespace crash
                     }
                     else
                     {
-                        // Normal session spectrum received successfully
+                        // Normal session spectrum received
                         Utils.Log.Add(spec.Label + " received");
 
-                        // FIXME: Make sure session is allocated in case spectrums are ticking in
-
-                        // Store spectrum to disk
-                        string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + session.Name;
-                        string jsonPath = sessionPath + Path.DirectorySeparatorChar + "json";
-                        if (!Directory.Exists(jsonPath))
-                            Directory.CreateDirectory(jsonPath);
-
-                        string json = JsonConvert.SerializeObject(msg.Params, Newtonsoft.Json.Formatting.Indented);
-                        using (TextWriter writer = new StreamWriter(jsonPath + Path.DirectorySeparatorChar + spec.SessionIndex + ".json"))
+                        // Add spectrum to database
+                        string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + spec.SessionName + ".db";
+                        if(!File.Exists(sessionPath))
                         {
-                            writer.Write(json);
+                            MessageBox.Show("Unable to find session database: " + sessionPath);
+                            return false;
                         }
 
-                        // Add spectrum to database
-                        SQLiteConnection connection = new SQLiteConnection("Data Source=" + SessionDBFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
+                        SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionPath + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
                         connection.Open();
                         SQLiteCommand command = new SQLiteCommand(connection);
                         command.CommandText = "select id from session where name = @name";
@@ -394,27 +387,31 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
 
                         connection.Close();
 
-
                         // Add spectrum to session
-                        session.Add(spec);
-
-                        // Add spectrum to UI list
-                        bool updateSelectedIndex = false;
-                        if (lbSession.SelectedIndex == 0)
-                            updateSelectedIndex = true;
-
-                        lbSession.Items.Insert(0, spec);
-
-                        if (updateSelectedIndex)
+                        if (spec.SessionName == session.Name)
                         {
-                            lbSession.ClearSelected();
-                            lbSession.SetSelected(0, true);
-                        }
+                            spec.CalculateDoserate(session.Detector, session.GEFactor);
 
-                        // Notify external forms about new spectrum
-                        frmMap.AddMarker(spec);
-                        formWaterfallLive.UpdatePane();
-                        formROILive.UpdatePane();
+                            session.Add(spec);
+
+                            // Add spectrum to UI list
+                            bool updateSelectedIndex = false;
+                            if (lbSession.SelectedIndex == 0)
+                                updateSelectedIndex = true;
+
+                            lbSession.Items.Insert(0, spec);
+
+                            if (updateSelectedIndex)
+                            {
+                                lbSession.ClearSelected();
+                                lbSession.SetSelected(0, true);
+                            }
+
+                            // Notify external forms about new spectrum
+                            frmMap.AddMarker(spec);
+                            formWaterfallLive.UpdatePane();
+                            formROILive.UpdatePane();
+                        }                        
                     }
                     break;
 
@@ -427,11 +424,10 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
             return true;
         }        
 
-        public void SaveSession(Session s)
-        {
-            SessionDBFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + s.Name + ".db";
-            File.Copy(InstallDir + "template_session.db", SessionDBFile, true);
-            SQLiteConnection connection = new SQLiteConnection("Data Source=" + SessionDBFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
+        public void CreateSessionFile(Session s)
+        {            
+            File.Copy(InstallDir + "template_session.db", s.SessionFile, true);
+            SQLiteConnection connection = new SQLiteConnection("Data Source=" + s.SessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
             connection.Open();
             SQLiteCommand command = new SQLiteCommand(connection);
             command.CommandText = "insert into session(name, comment, livetime, detector_data, detector_type_data) values (@name, @comment, @livetime, @detector_data, @detector_type_data)";
@@ -446,12 +442,6 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
             command.Parameters.AddWithValue("detector_type_data", detectorTypeData);
             command.ExecuteNonQuery();
             connection.Close();
-
-            // Save session info to disk
-            string sessionSettingsFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + s.Name + Path.DirectorySeparatorChar + "session.json";
-            string jSessionInfo = JsonConvert.SerializeObject(s, Newtonsoft.Json.Formatting.Indented);
-            using (TextWriter writer = new StreamWriter(sessionSettingsFile))            
-                writer.Write(jSessionInfo);
         }
 
         void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
@@ -540,7 +530,8 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
             formROILive.ClearSession();
             frmMap.ClearSession();
 
-            session.Clear();
+            if (session != null)
+                session.Clear();
         }
 
         private void ClearBackground()

@@ -29,6 +29,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using ZedGraph;
 using MathNet.Numerics;
+using System.Data.SQLite;
 
 namespace crash
 {
@@ -364,38 +365,78 @@ namespace crash
             about.ShowDialog();            
         }        
 
+        Session LoadSessionFile(string sessionFile)
+        {
+            Session s = new Session();
+
+            // Deserialize session object            
+            SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
+            connection.Open();
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "select * from session";
+            SQLiteDataReader reader = command.ExecuteReader();
+            if (!reader.HasRows)            
+                throw new Exception("No session was found in database: " + sessionFile);
+
+            reader.Read();
+
+            s.Name = reader["name"].ToString();
+            s.Comment = reader["comment"].ToString();
+            s.Livetime = Convert.ToSingle(reader["livetime"], CultureInfo.InvariantCulture);
+            s.Detector = JsonConvert.DeserializeObject<Detector>(reader["detector_data"].ToString());
+            s.DetectorType = JsonConvert.DeserializeObject<DetectorType>(reader["detector_type_data"].ToString());
+
+            reader.Close();
+            // Load GEFactor script
+            if (!s.LoadGEFactor())
+                Utils.Log.Add("Loading GEFactor failed for session " + s.Name);
+
+            // Load session spectrums
+            command.CommandText = "select * from spectrums";
+            reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Spectrum spec = new Spectrum();
+                spec.SessionName = reader["session_name"].ToString();
+                spec.SessionIndex = Convert.ToInt32(reader["session_index"]);
+                spec.GpsTime = Convert.ToDateTime(reader["start_time"]);
+                spec.Latitude = Convert.ToDouble(reader["latitude"]);
+                spec.LatitudeError = Convert.ToDouble(reader["latitude_error"]);
+                spec.Longitude = Convert.ToDouble(reader["longitude"]);
+                spec.LongitudeError = Convert.ToDouble(reader["longitude_error"]);
+                spec.Altitude = Convert.ToDouble(reader["altitude"]);
+                spec.AltitudeError = Convert.ToDouble(reader["altitude_error"]);
+                spec.GpsTrack = Convert.ToSingle(reader["track"]);
+                spec.GpsTrackError = Convert.ToSingle(reader["track_error"]);
+                spec.GpsSpeed = Convert.ToSingle(reader["speed"]);
+                spec.GpsSpeedError = Convert.ToSingle(reader["speed_error"]);
+                spec.GpsClimb = Convert.ToSingle(reader["climb"]);
+                spec.GpsClimbError = Convert.ToSingle(reader["climb_error"]);
+                spec.Livetime = Convert.ToInt32(reader["livetime"]);
+                spec.Realtime = Convert.ToInt32(reader["realtime"]);
+                spec.TotalCount = Convert.ToInt32(reader["total_count"]);
+                spec.NumChannels = Convert.ToInt32(reader["num_channels"]);
+                spec.LoadSpectrumString(reader["channels"].ToString());
+                spec.CalculateDoserate(s.Detector, s.GEFactor);
+                s.Add(spec);
+            }
+
+            connection.Close();
+            return s;
+        }
+
         private void menuItemLoadSession_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.SelectedPath = settings.SessionRootDirectory;            
-            dialog.Description = "Select session directory";
-            dialog.ShowNewFolderButton = false;
-            if(dialog.ShowDialog() == DialogResult.OK)
+            openSessionDialog.InitialDirectory = settings.SessionRootDirectory;
+            openSessionDialog.Title = "Select session file";
+            if(openSessionDialog.ShowDialog() == DialogResult.OK)
             {
                 ClearSession();
 
-                string sessionFile = dialog.SelectedPath + Path.DirectorySeparatorChar + "session.json";
-                if (!File.Exists(sessionFile))
-                {
-                    Utils.Log.Add("Can not load session. Directory " + dialog.SelectedPath + " has no session.json file");
-                    return;
-                }                    
+                session = LoadSessionFile(openSessionDialog.FileName);
 
-                // Deserialize session object
-                session = JsonConvert.DeserializeObject<Session>(File.ReadAllText(sessionFile));
-
-                // Load GEFactor script
-                if(!session.LoadGEFactor())                
-                    Utils.Log.Add("Loading GEFactor failed for session " + session.Name);
-
-                // Load session spectrums
-                if (!session.LoadSpectrums(dialog.SelectedPath))
-                {
-                    Utils.Log.Add("Loading spectrums failed for session " + session.Name);
-                    return;
-                }
-                
                 // Update UI
+                lblSession.Text = session.Name;
                 lblComment.Text = session.Comment;
 
                 // Inform other forms
@@ -422,54 +463,33 @@ namespace crash
 
         private void menuItemLoadBackgroundSession_Click(object sender, EventArgs e)
         {
-            // Sanity checks
-            if (!session.IsLoaded)
+            if(session == null || !session.IsLoaded)
             {
-                MessageBox.Show("Session is not loaded");
+                MessageBox.Show("You must load a session first");
                 return;
             }
 
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.SelectedPath = settings.SessionRootDirectory;
-            dialog.Description = "Select background session directory";
-            dialog.ShowNewFolderButton = false;
-            if (dialog.ShowDialog() == DialogResult.OK)
+            openSessionDialog.InitialDirectory = settings.SessionRootDirectory;
+            openSessionDialog.Title = "Select background session file";
+            if (openSessionDialog.ShowDialog() == DialogResult.OK)
             {
                 ClearBackground();
-                Session bkgSess = new Session();
 
-                string bkgSessionFile = dialog.SelectedPath + Path.DirectorySeparatorChar + "session.json";
-                if (!File.Exists(bkgSessionFile))
-                {
-                    Utils.Log.Add("Can not load background session. Directory " + dialog.SelectedPath + " has no session.json file");
-                    return;
-                }
-
-                // Deserialize session object
-                bkgSess = JsonConvert.DeserializeObject<Session>(File.ReadAllText(bkgSessionFile));
-                if (!bkgSess.LoadGEFactor())
-                    Utils.Log.Add("Loading GEFactor failed for background session " + bkgSess.Name);
-
-                // Load background spectrums
-                if (!bkgSess.LoadSpectrums(dialog.SelectedPath))
-                {
-                    Utils.Log.Add("Loading spectrums failed for background session " + bkgSess.Name);
-                    return;
-                }                
+                bkgSession = LoadSessionFile(openSessionDialog.FileName);
 
                 // Make sure session and backgrouns has the same number of channels
-                if (bkgSess.NumChannels != session.NumChannels)
+                if (bkgSession.NumChannels != session.NumChannels)
                 {
-                    bkgSess.Clear();
+                    bkgSession.Clear();
                     MessageBox.Show("Cannot load a background with different number of channels than the session");
                     return;
                 }
 
                 // Store background in session
-                session.SetBackground(bkgSess);
+                session.SetBackground(bkgSession);
 
-                lblBackground.Text = "Background: " + bkgSess.Name;
-                Utils.Log.Add("Background " + bkgSess.Name + " loaded for session " + session.Name);
+                lblBackground.Text = "Background: " + bkgSession.Name;
+                Utils.Log.Add("Background " + bkgSession.Name + " loaded for session " + session.Name);
             }
         }
 
@@ -526,11 +546,7 @@ namespace crash
             }
 
             FormSessionInfo form = new FormSessionInfo(session, "Session Info");
-            if(form.ShowDialog() == DialogResult.OK)
-            {
-                SaveSession(session);
-                lblComment.Text = session.Comment;
-            }
+            form.ShowDialog();
         }
 
         private void menuItemClearSession_Click(object sender, EventArgs e)
@@ -598,19 +614,6 @@ namespace crash
                     MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
                 }
             }
-        }
-
-        private void menuItemSourceActivity_Click(object sender, EventArgs e)
-        {
-            if (lbSession.SelectedItems.Count != 1)
-            {
-                MessageBox.Show("You must select a single spectrum");
-                return;
-            }
-
-            Spectrum s = lbSession.SelectedItem as Spectrum;
-            FormSourceActivity form = new FormSourceActivity(settings, s);
-            form.ShowDialog();
         }
 
         private void tbarSetupFineGain_Scroll(object sender, EventArgs e)

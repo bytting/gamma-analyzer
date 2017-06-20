@@ -20,7 +20,6 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using IronPython.Hosting;
 using IronPython.Runtime;
 using Microsoft.Scripting;
@@ -31,16 +30,17 @@ namespace crash
     // Class to store a session
     public class Session
     {
-        // IP Address of peer
-        [JsonIgnore]
+        // IP Address of peer  
         public string IPAddress { get; set; }
 
-        // Global IronPython object. Ignore this when serializing
-        [JsonIgnore]
+        // Global IronPython object. Ignore this when serializing        
         private static dynamic PyEngine = Python.CreateEngine();
 
         // Name of session
         public string Name { get; set; }
+
+        // Session database file
+        public string SessionFile { get; set; }
 
         // Comment for this session
         public string Comment { get; set; }
@@ -54,36 +54,28 @@ namespace crash
         // Detector type definition used with this session
         public DetectorType DetectorType { get; set; }
 
-        // Number of channels used with this session. Ignore this when serializing
-        [JsonIgnore]
+        // Number of channels used with this session. Ignore this when serializing        
         public float NumChannels { get; private set; }
 
-        // Max number of channel counts found for this session. Ignore this when serializing
-        [JsonIgnore]
+        // Max number of channel counts found for this session. Ignore this when serializing        
         public float MaxChannelCount { get; private set; }
 
-        // Min number of channel counts found for this session. Ignore this when serializing
-        [JsonIgnore]
+        // Min number of channel counts found for this session. Ignore this when serializing        
         public float MinChannelCount { get; private set; }
 
-        // Function used to calculate GE factor. Ignore this when serializing
-        [JsonIgnore]
+        // Function used to calculate GE factor. Ignore this when serializing        
         public dynamic GEFactor { get; set; }
 
-        // List of spectrums stored in this session. Ignore this when serializing
-        [JsonIgnore]
+        // List of spectrums stored in this session. Ignore this when serializing        
         public List<Spectrum> Spectrums { get; private set; }
 
-        // Background counts to use with this session. Ignore this when serializing
-        [JsonIgnore]
+        // Background counts to use with this session. Ignore this when serializing        
         public float[] Background = null;
 
-        // Loaded state for this session. Ignore this when serializing
-        [JsonIgnore]
+        // Loaded state for this session. Ignore this when serializing        
         public bool IsLoaded { get { return !String.IsNullOrEmpty(Name); } }
 
-        // Empty state for this session. Ignore this when serializing
-        [JsonIgnore]
+        // Empty state for this session. Ignore this when serializing        
         public bool IsEmpty { get { return Spectrums.Count == 0; } }
 
         public Session()
@@ -92,36 +84,34 @@ namespace crash
             Clear();            
         }
 
-        public Session(string ip, string sessionPath, string name, string comment, float livetime, Detector det, DetectorType detType)
+        public Session(string ip, string sessionFile, string name, string comment, float livetime, Detector det, DetectorType detType)
         {
             Spectrums = new List<Spectrum>();
             Clear();
 
             IPAddress = ip;
             Name = name;
+            SessionFile = sessionFile;
             Comment = comment;
             Livetime = livetime;
             Detector = det;
             DetectorType = detType;
             LoadGEFactor();
-
-            if (!Directory.Exists(sessionPath + Path.DirectorySeparatorChar + Name))
-                Directory.CreateDirectory(sessionPath + Path.DirectorySeparatorChar + Name);
         }
 
-        public void Add(Spectrum spec)
+        public bool Add(Spectrum spec)
         {
             // Add a new spectrum to the list of spectrums
-
             Spectrums.Add(spec);
             NumChannels = spec.NumChannels;
 
             // Update state
-
             if (spec.MaxCount > MaxChannelCount)
                 MaxChannelCount = spec.MaxCount;
             if (spec.MinCount < MinChannelCount)
-                MinChannelCount = spec.MinCount;            
+                MinChannelCount = spec.MinCount;
+
+            return true;
         }        
 
         public void Clear()
@@ -129,6 +119,7 @@ namespace crash
             // Clear this session
 
             Name = String.Empty;
+            SessionFile = String.Empty;
             Comment = String.Empty;
             Livetime = 0;            
             Detector = null;
@@ -148,38 +139,17 @@ namespace crash
             if (DetectorType == null)
                 return false;
 
-            if (!File.Exists(CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + DetectorType.GEScript))
+            string geScriptFile = CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + DetectorType.GEScript;
+
+            if (!File.Exists(geScriptFile))
                 return false;
 
-            string script = File.ReadAllText(CrashEnvironment.GEScriptPath + Path.DirectorySeparatorChar + DetectorType.GEScript);
+            string script = File.ReadAllText(geScriptFile);
             dynamic scope = PyEngine.CreateScope();
             PyEngine.Execute(script, scope);
             GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");
             return GEFactor != null;
-        }
-
-        public bool LoadSpectrums(string path)
-        {
-            // Load spectrums from a given path
-
-            string jsonDir = path + Path.DirectorySeparatorChar + "json";
-            if (!Directory.Exists(jsonDir))
-                return false;
-
-            string[] files = Directory.GetFiles(jsonDir, "*.json", SearchOption.TopDirectoryOnly);
-            foreach (string filename in files)
-            {
-                string json = File.ReadAllText(filename);
-                burn.ProtocolMessage msg = new burn.ProtocolMessage();
-                msg.Params = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-                Spectrum spec = new Spectrum(msg);                                
-                spec.CalculateDoserate(Detector, GEFactor);
-                Add(spec);
-            }
-
-            Spectrums.Sort((a, b) => a.SessionIndex.CompareTo(b.SessionIndex));
-            return true;
-        }   
+        }        
      
         public bool SetBackground(Session bkg)
         {

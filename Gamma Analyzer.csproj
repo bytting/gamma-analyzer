@@ -182,12 +182,6 @@
     <Compile Include="FormAskDecimal.Designer.cs">
       <DependentUpon>FormAskDecimal.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormConnect.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormConnect.Designer.cs">
-      <DependentUpon>FormConnect.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormEnergyCurve.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -239,12 +233,6 @@
     <Compile Include="FormSessionInfo.Designer.cs">
       <DependentUpon>FormSessionInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormSourceActivity.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormSourceActivity.Designer.cs">
-      <DependentUpon>FormSourceActivity.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormWaterfallLive.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -276,9 +264,6 @@
     <EmbeddedResource Include="FormAskDecimal.resx">
       <DependentUpon>FormAskDecimal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormConnect.resx">
-      <DependentUpon>FormConnect.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormEnergyCurve.resx">
       <DependentUpon>FormEnergyCurve.cs</DependentUpon>
     </EmbeddedResource>
@@ -302,9 +287,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSessionInfo.resx">
       <DependentUpon>FormSessionInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormSourceActivity.resx">
-      <DependentUpon>FormSourceActivity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormWaterfallLive.resx">
       <DependentUpon>FormWaterfallLive.cs</DependentUpon>

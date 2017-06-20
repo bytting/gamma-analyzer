@@ -51,12 +51,6 @@ namespace crash
         // Last IP address used
         public string LastIP;
 
-        // Last IP port used
-        public string LastPort;
-
-        // Last Google API key used
-        public string LastApiKey;
-
         // Display dates using local time
         public bool DisplayLocalTime;
     }
