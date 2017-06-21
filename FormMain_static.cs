@@ -36,8 +36,6 @@ namespace crash
 {
     public partial class FormMain
     {
-        bool appInitialized = false;
-
         // Structure with application settings stored on disk
         GASettings settings = new GASettings();
         
@@ -190,10 +188,15 @@ namespace crash
         {
             // Handle messages received from network                        
 
-            switch (msg.Params["command"].ToString())
+            string cmd = msg.Params["command"].ToString();
+
+            if(cmd != "spectrum")
+                lblLogMessages.Text = cmd;
+
+            switch (cmd)
             {
                 case "get_status_success":                    
-                    Utils.Log.Add("Get status success");
+                    Utils.Log.Add("Get status success");                    
 
                     double freeDisk = Convert.ToDouble(msg.Params["free_disk_space"]);
                     freeDisk /= 1000000;
@@ -237,6 +240,8 @@ namespace crash
 
                         // Create session database
                         CreateSessionFile(session);
+
+                        lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
 
                         lblSession.Text = session.Name;
                         lblComment.Text = session.Comment;

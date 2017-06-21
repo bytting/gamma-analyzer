@@ -45,7 +45,8 @@ namespace crash
             {                
                 // Hide tabs on tabcontrol
                 tabs.ItemSize = new Size(0, 1);
-                tabs.SizeMode = TabSizeMode.Fixed;                
+                tabs.SizeMode = TabSizeMode.Fixed;
+                tabs.SelectedTab = pageMenu;
 
                 // Create directories and files
                 if (!Directory.Exists(GAEnvironment.SettingsPath))
@@ -91,7 +92,8 @@ namespace crash
                 PopulateDetectorTypeList();
                 PopulateDetectorList();
                 PopulateDetectors();
-                
+
+                lblLogMessages.Text = "";
                 lblSessionsDatabase.Text = "";
                 lblSetupChannel.Text = "";
                 lblSessionChannel.Text = "";
@@ -240,7 +242,6 @@ namespace crash
             {
                 menuItemView.Visible = false;
                 tools.Visible = false;
-                menuItemLayoutSetup1_Click(sender, e);
             }
         }             
 
@@ -388,6 +389,9 @@ namespace crash
             s.DetectorType = JsonConvert.DeserializeObject<DetectorType>(reader["detector_type_data"].ToString());
 
             reader.Close();
+
+            s.SessionFile = sessionFile;
+
             // Load GEFactor script
             if (!s.LoadGEFactor())
                 Utils.Log.Add("Loading GEFactor failed for session " + s.Name);
@@ -435,6 +439,8 @@ namespace crash
                 ClearSession();
 
                 session = LoadSessionFile(openSessionDialog.FileName);
+
+                lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
 
                 // Update UI
                 lblSession.Text = session.Name;
@@ -1250,15 +1256,6 @@ namespace crash
         private void tbStatusIPAddress_TextChanged(object sender, EventArgs e)
         {
             ClearStatus();
-        }
-
-        private void FormMain_Paint(object sender, PaintEventArgs e)
-        {
-            if(!appInitialized)
-            {
-                appInitialized = true;
-                tabs.SelectedTab = pageMenu;
-            }            
         }
     }
 }
