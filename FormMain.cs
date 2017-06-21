@@ -309,8 +309,18 @@ namespace crash
                 for(int i=0; i<lbSession.SelectedItems.Count; i++)
                 {
                     Spectrum s = (Spectrum)lbSession.SelectedItems[i];
-                    for(int j=0; j<s.NumChannels; j++)
-                        chans[j] += s.Channels[j];
+                    for (int j = 0; j < s.NumChannels; j++)
+                    {
+                        float cnt = s.Channels[j];
+                        if (session.Background != null && menuItemSubtractBackground.Checked)
+                        {
+                            cnt -= session.Background[j];
+                            if (cnt < 0f)
+                                cnt = 0f;
+                        }
+
+                        chans[j] += cnt;
+                    }
 
                     if (s.MaxCount > maxCnt)
                         maxCnt = s.MaxCount;

@@ -623,7 +623,7 @@ CREATE TABLE `spectrums` (
             pane.CurveList.Clear();
 
             // Update background graph
-            if (session.Background != null)
+            if (session.Background != null && !menuItemSubtractBackground.Checked)
             {
                 bkgGraphList.Clear();
                 for (int i = 0; i < session.Background.Length; i++)
@@ -637,7 +637,17 @@ CREATE TABLE `spectrums` (
             // Update spectrum graph
             sessionGraphList.Clear();
             for (int i = 0; i < channels.Length; i++)
-                sessionGraphList.Add((double)i, (double)channels[i]);
+            {
+                double cnt = (double)channels[i];
+                if (session.Background != null && menuItemSubtractBackground.Checked)
+                {
+                    cnt -= session.Background[i];
+                    if (cnt < 0.0)
+                        cnt = 0.0;
+                }
+
+                sessionGraphList.Add((double)i, cnt);
+            }
 
             LineItem curve = pane.AddCurve("Spectrum", sessionGraphList, Color.Red, SymbolType.None);
             curve.Line.IsSmooth = true;
