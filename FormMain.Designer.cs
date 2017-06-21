@@ -1110,9 +1110,9 @@
             // 
             this.btnSetupSetParams.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSetupSetParams.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupSetParams.Location = new System.Drawing.Point(1039, 67);
+            this.btnSetupSetParams.Location = new System.Drawing.Point(1012, 67);
             this.btnSetupSetParams.Name = "btnSetupSetParams";
-            this.btnSetupSetParams.Size = new System.Drawing.Size(300, 27);
+            this.btnSetupSetParams.Size = new System.Drawing.Size(327, 27);
             this.btnSetupSetParams.TabIndex = 16;
             this.btnSetupSetParams.Text = "Set detector params";
             this.btnSetupSetParams.UseVisualStyleBackColor = true;
@@ -1133,9 +1133,9 @@
             this.cboxSetupChannels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSetupChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSetupChannels.FormattingEnabled = true;
-            this.cboxSetupChannels.Location = new System.Drawing.Point(114, 0);
+            this.cboxSetupChannels.Location = new System.Drawing.Point(115, 0);
             this.cboxSetupChannels.Name = "cboxSetupChannels";
-            this.cboxSetupChannels.Size = new System.Drawing.Size(328, 23);
+            this.cboxSetupChannels.Size = new System.Drawing.Size(327, 23);
             this.cboxSetupChannels.TabIndex = 20;
             // 
             // label4
@@ -2179,6 +2179,7 @@
             // 
             this.tbNewLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbNewLivetime.Location = new System.Drawing.Point(448, 33);
+            this.tbNewLivetime.MaxLength = 5;
             this.tbNewLivetime.Name = "tbNewLivetime";
             this.tbNewLivetime.Size = new System.Drawing.Size(439, 21);
             this.tbNewLivetime.TabIndex = 6;
@@ -2198,6 +2199,7 @@
             // 
             this.tbNewComment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbNewComment.Location = new System.Drawing.Point(448, 63);
+            this.tbNewComment.MaxLength = 512;
             this.tbNewComment.Name = "tbNewComment";
             this.tbNewComment.Size = new System.Drawing.Size(439, 21);
             this.tbNewComment.TabIndex = 1;
@@ -2273,6 +2275,7 @@
             // 
             this.tbStatusIPAddress.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbStatusIPAddress.Location = new System.Drawing.Point(448, 33);
+            this.tbStatusIPAddress.MaxLength = 32;
             this.tbStatusIPAddress.Name = "tbStatusIPAddress";
             this.tbStatusIPAddress.Size = new System.Drawing.Size(439, 21);
             this.tbStatusIPAddress.TabIndex = 2;
@@ -2523,7 +2526,7 @@
             this.panel19.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel19.Location = new System.Drawing.Point(0, 0);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(114, 26);
+            this.panel19.Size = new System.Drawing.Size(115, 26);
             this.panel19.TabIndex = 31;
             // 
             // FormMain
