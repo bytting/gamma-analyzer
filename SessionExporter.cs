@@ -39,23 +39,31 @@ namespace crash
             using (StreamWriter writer = new StreamWriter(filename, false, Encoding.UTF8))
             {
                 // Write header line
-                writer.WriteLine("Session name|Session index|Time start (UTC)|Latitude|Latitude error|Longitude|Longitude error|Altitude|Altitude error|Doserate|Doserate unit");
+                writer.WriteLine("Session name|Session index|Time start (UTC)|Livetime|Realtime|Latitude|Latitude error|Longitude|Longitude error|Altitude|Altitude error|Track|Track error|Speed|Speed error|Climb|Climb error|Doserate|Doserate unit");
 
                 foreach (Spectrum s in session.Spectrums)
                 {
-                    double dose = s.Doserate / 1000d;
-                    
+                    double dose = s.Doserate / 1000d;                    
+
                     // Write spectrum line
                     writer.WriteLine(
                         s.SessionName + "|"
-                        + s.SessionIndex.ToString() + "|"
-                        + s.GpsTime.ToString("yyyy-MM-ddTHH:mm:ss") + "|"                        
+                        + s.SessionIndex.ToString() + "|"                        
+                        + s.GpsTime.ToString("yyyy-MM-ddTHH:mm:ss") + "|"
+                        + s.Livetime.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.Realtime.ToString(CultureInfo.InvariantCulture) + "|"
                         + s.Latitude.ToString(CultureInfo.InvariantCulture) + "|"
                         + s.LatitudeError.ToString(CultureInfo.InvariantCulture) + "|"
                         + s.Longitude.ToString(CultureInfo.InvariantCulture) + "|"
                         + s.LongitudeError.ToString(CultureInfo.InvariantCulture) + "|"
                         + s.Altitude.ToString(CultureInfo.InvariantCulture) + "|"
                         + s.AltitudeError.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.GpsTrack.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.GpsTrackError.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.GpsSpeed.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.GpsSpeedError.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.GpsClimb.ToString(CultureInfo.InvariantCulture) + "|"
+                        + s.GpsClimbError.ToString(CultureInfo.InvariantCulture) + "|"
                         + dose.ToString(CultureInfo.InvariantCulture) + "|μSv/h");
                 }
             }
