@@ -96,6 +96,7 @@
             this.lblSetupVoltage = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.cboxSetupCoarseGain = new System.Windows.Forms.ComboBox();
+            this.panel13 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.panel17 = new System.Windows.Forms.Panel();
             this.tbarSetupFineGain = new System.Windows.Forms.TrackBar();
@@ -112,9 +113,11 @@
             this.btnSetupSetParams = new System.Windows.Forms.Button();
             this.panel15 = new System.Windows.Forms.Panel();
             this.cboxSetupChannels = new System.Windows.Forms.ComboBox();
+            this.panel19 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
             this.cboxSetupDetector = new System.Windows.Forms.ComboBox();
+            this.panel12 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.lblSetupIPAddress = new System.Windows.Forms.Label();
             this.panelSetupSession = new System.Windows.Forms.Panel();
@@ -202,17 +205,22 @@
             this.btnPreferencesClose = new System.Windows.Forms.Button();
             this.pageNew = new System.Windows.Forms.TabPage();
             this.tableNew = new System.Windows.Forms.TableLayoutPanel();
-            this.tbNewLivetime = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
             this.tbNewComment = new System.Windows.Forms.TextBox();
+            this.tbNewLivetime = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.btnNewCancel = new System.Windows.Forms.Button();
             this.btnNewStart = new System.Windows.Forms.Button();
             this.pageStatus = new System.Windows.Forms.TabPage();
+            this.tableStatus = new System.Windows.Forms.TableLayoutPanel();
+            this.label3 = new System.Windows.Forms.Label();
             this.btnStatusGet = new System.Windows.Forms.Button();
             this.tbStatusIPAddress = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblStatusDetectorConfigured = new System.Windows.Forms.Label();
+            this.lblStatusSpectrumIndex = new System.Windows.Forms.Label();
+            this.lblStatusSessionRunning = new System.Windows.Forms.Label();
+            this.lblStatusFreeDiskSpace = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.btnStatusCancel = new System.Windows.Forms.Button();
             this.btnStatusNext = new System.Windows.Forms.Button();
@@ -226,14 +234,6 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tableStatus = new System.Windows.Forms.TableLayoutPanel();
-            this.lblStatusFreeDiskSpace = new System.Windows.Forms.Label();
-            this.lblStatusSessionRunning = new System.Windows.Forms.Label();
-            this.lblStatusSpectrumIndex = new System.Windows.Forms.Label();
-            this.lblStatusDetectorConfigured = new System.Windows.Forms.Label();
-            this.panel12 = new System.Windows.Forms.Panel();
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.panel19 = new System.Windows.Forms.Panel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -247,6 +247,7 @@
             this.panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupVoltage)).BeginInit();
             this.panel5.SuspendLayout();
+            this.panel13.SuspendLayout();
             this.panel17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupFineGain)).BeginInit();
             this.panel3.SuspendLayout();
@@ -254,7 +255,9 @@
             this.panel18.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupULD)).BeginInit();
             this.panel15.SuspendLayout();
+            this.panel19.SuspendLayout();
             this.panel14.SuspendLayout();
+            this.panel12.SuspendLayout();
             this.panelSetupSession.SuspendLayout();
             this.pageMenu.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -284,15 +287,12 @@
             this.tableNew.SuspendLayout();
             this.panel9.SuspendLayout();
             this.pageStatus.SuspendLayout();
+            this.tableStatus.SuspendLayout();
             this.panel7.SuspendLayout();
             this.pagePreferences.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel10.SuspendLayout();
-            this.tableStatus.SuspendLayout();
-            this.panel12.SuspendLayout();
-            this.panel13.SuspendLayout();
-            this.panel19.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -958,6 +958,15 @@
             this.cboxSetupCoarseGain.Size = new System.Drawing.Size(327, 23);
             this.cboxSetupCoarseGain.TabIndex = 40;
             // 
+            // panel13
+            // 
+            this.panel13.Controls.Add(this.label7);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel13.Location = new System.Drawing.Point(0, 0);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(114, 26);
+            this.panel13.TabIndex = 41;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -1138,6 +1147,15 @@
             this.cboxSetupChannels.Size = new System.Drawing.Size(327, 23);
             this.cboxSetupChannels.TabIndex = 20;
             // 
+            // panel19
+            // 
+            this.panel19.Controls.Add(this.label4);
+            this.panel19.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel19.Location = new System.Drawing.Point(0, 0);
+            this.panel19.Name = "panel19";
+            this.panel19.Size = new System.Drawing.Size(115, 26);
+            this.panel19.TabIndex = 31;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -1170,6 +1188,15 @@
             this.cboxSetupDetector.Size = new System.Drawing.Size(327, 23);
             this.cboxSetupDetector.TabIndex = 19;
             this.cboxSetupDetector.SelectedIndexChanged += new System.EventHandler(this.cboxSetupDetector_SelectedIndexChanged);
+            // 
+            // panel12
+            // 
+            this.panel12.Controls.Add(this.label2);
+            this.panel12.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel12.Location = new System.Drawing.Point(0, 0);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(114, 26);
+            this.panel12.TabIndex = 20;
             // 
             // label2
             // 
@@ -2175,6 +2202,15 @@
             this.tableNew.Size = new System.Drawing.Size(1336, 580);
             this.tableNew.TabIndex = 0;
             // 
+            // tbNewComment
+            // 
+            this.tbNewComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbNewComment.Location = new System.Drawing.Point(448, 63);
+            this.tbNewComment.MaxLength = 512;
+            this.tbNewComment.Name = "tbNewComment";
+            this.tbNewComment.Size = new System.Drawing.Size(439, 21);
+            this.tbNewComment.TabIndex = 1;
+            // 
             // tbNewLivetime
             // 
             this.tbNewLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2183,6 +2219,16 @@
             this.tbNewLivetime.Name = "tbNewLivetime";
             this.tbNewLivetime.Size = new System.Drawing.Size(439, 21);
             this.tbNewLivetime.TabIndex = 6;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label1.Location = new System.Drawing.Point(381, 60);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 30);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Comment";
             // 
             // label16
             // 
@@ -2194,25 +2240,6 @@
             this.label16.Size = new System.Drawing.Size(53, 30);
             this.label16.TabIndex = 7;
             this.label16.Text = "Livetime";
-            // 
-            // tbNewComment
-            // 
-            this.tbNewComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbNewComment.Location = new System.Drawing.Point(448, 63);
-            this.tbNewComment.MaxLength = 512;
-            this.tbNewComment.Name = "tbNewComment";
-            this.tbNewComment.Size = new System.Drawing.Size(439, 21);
-            this.tbNewComment.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label1.Location = new System.Drawing.Point(381, 60);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 30);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Comment";
             // 
             // panel9
             // 
@@ -2260,6 +2287,45 @@
             this.pageStatus.Text = "Status";
             this.pageStatus.UseVisualStyleBackColor = true;
             // 
+            // tableStatus
+            // 
+            this.tableStatus.ColumnCount = 3;
+            this.tableStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableStatus.Controls.Add(this.label3, 0, 1);
+            this.tableStatus.Controls.Add(this.btnStatusGet, 2, 1);
+            this.tableStatus.Controls.Add(this.tbStatusIPAddress, 1, 1);
+            this.tableStatus.Controls.Add(this.lblStatusDetectorConfigured, 1, 6);
+            this.tableStatus.Controls.Add(this.lblStatusSpectrumIndex, 1, 5);
+            this.tableStatus.Controls.Add(this.lblStatusSessionRunning, 1, 4);
+            this.tableStatus.Controls.Add(this.lblStatusFreeDiskSpace, 1, 3);
+            this.tableStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableStatus.Location = new System.Drawing.Point(3, 3);
+            this.tableStatus.Name = "tableStatus";
+            this.tableStatus.RowCount = 8;
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableStatus.Size = new System.Drawing.Size(1336, 580);
+            this.tableStatus.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label3.Location = new System.Drawing.Point(377, 30);
+            this.label3.Name = "label3";
+            this.label3.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label3.Size = new System.Drawing.Size(65, 30);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "IP Address";
+            // 
             // btnStatusGet
             // 
             this.btnStatusGet.Dock = System.Windows.Forms.DockStyle.Left;
@@ -2281,16 +2347,41 @@
             this.tbStatusIPAddress.TabIndex = 2;
             this.tbStatusIPAddress.TextChanged += new System.EventHandler(this.tbStatusIPAddress_TextChanged);
             // 
-            // label3
+            // lblStatusDetectorConfigured
             // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label3.Location = new System.Drawing.Point(377, 30);
-            this.label3.Name = "label3";
-            this.label3.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label3.Size = new System.Drawing.Size(65, 30);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "IP Address";
+            this.lblStatusDetectorConfigured.AutoSize = true;
+            this.lblStatusDetectorConfigured.Location = new System.Drawing.Point(448, 180);
+            this.lblStatusDetectorConfigured.Name = "lblStatusDetectorConfigured";
+            this.lblStatusDetectorConfigured.Size = new System.Drawing.Size(174, 15);
+            this.lblStatusDetectorConfigured.TabIndex = 8;
+            this.lblStatusDetectorConfigured.Text = "<lblStatusDetectorConfigured>";
+            // 
+            // lblStatusSpectrumIndex
+            // 
+            this.lblStatusSpectrumIndex.AutoSize = true;
+            this.lblStatusSpectrumIndex.Location = new System.Drawing.Point(448, 150);
+            this.lblStatusSpectrumIndex.Name = "lblStatusSpectrumIndex";
+            this.lblStatusSpectrumIndex.Size = new System.Drawing.Size(151, 15);
+            this.lblStatusSpectrumIndex.TabIndex = 7;
+            this.lblStatusSpectrumIndex.Text = "<lblStatusSpectrumIndex>";
+            // 
+            // lblStatusSessionRunning
+            // 
+            this.lblStatusSessionRunning.AutoSize = true;
+            this.lblStatusSessionRunning.Location = new System.Drawing.Point(448, 120);
+            this.lblStatusSessionRunning.Name = "lblStatusSessionRunning";
+            this.lblStatusSessionRunning.Size = new System.Drawing.Size(159, 15);
+            this.lblStatusSessionRunning.TabIndex = 6;
+            this.lblStatusSessionRunning.Text = "<lblStatusSessionRunning>";
+            // 
+            // lblStatusFreeDiskSpace
+            // 
+            this.lblStatusFreeDiskSpace.AutoSize = true;
+            this.lblStatusFreeDiskSpace.Location = new System.Drawing.Point(448, 90);
+            this.lblStatusFreeDiskSpace.Name = "lblStatusFreeDiskSpace";
+            this.lblStatusFreeDiskSpace.Size = new System.Drawing.Size(152, 15);
+            this.lblStatusFreeDiskSpace.TabIndex = 5;
+            this.lblStatusFreeDiskSpace.Text = "<lblStatusFreeDiskSpace>";
             // 
             // panel7
             // 
@@ -2438,97 +2529,6 @@
             // 
             this.openSessionDialog.DefaultExt = "db";
             // 
-            // tableStatus
-            // 
-            this.tableStatus.ColumnCount = 3;
-            this.tableStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableStatus.Controls.Add(this.label3, 0, 1);
-            this.tableStatus.Controls.Add(this.btnStatusGet, 2, 1);
-            this.tableStatus.Controls.Add(this.tbStatusIPAddress, 1, 1);
-            this.tableStatus.Controls.Add(this.lblStatusDetectorConfigured, 1, 6);
-            this.tableStatus.Controls.Add(this.lblStatusSpectrumIndex, 1, 5);
-            this.tableStatus.Controls.Add(this.lblStatusSessionRunning, 1, 4);
-            this.tableStatus.Controls.Add(this.lblStatusFreeDiskSpace, 1, 3);
-            this.tableStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableStatus.Location = new System.Drawing.Point(3, 3);
-            this.tableStatus.Name = "tableStatus";
-            this.tableStatus.RowCount = 8;
-            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableStatus.Size = new System.Drawing.Size(1336, 580);
-            this.tableStatus.TabIndex = 5;
-            // 
-            // lblStatusFreeDiskSpace
-            // 
-            this.lblStatusFreeDiskSpace.AutoSize = true;
-            this.lblStatusFreeDiskSpace.Location = new System.Drawing.Point(448, 90);
-            this.lblStatusFreeDiskSpace.Name = "lblStatusFreeDiskSpace";
-            this.lblStatusFreeDiskSpace.Size = new System.Drawing.Size(152, 15);
-            this.lblStatusFreeDiskSpace.TabIndex = 5;
-            this.lblStatusFreeDiskSpace.Text = "<lblStatusFreeDiskSpace>";
-            // 
-            // lblStatusSessionRunning
-            // 
-            this.lblStatusSessionRunning.AutoSize = true;
-            this.lblStatusSessionRunning.Location = new System.Drawing.Point(448, 120);
-            this.lblStatusSessionRunning.Name = "lblStatusSessionRunning";
-            this.lblStatusSessionRunning.Size = new System.Drawing.Size(159, 15);
-            this.lblStatusSessionRunning.TabIndex = 6;
-            this.lblStatusSessionRunning.Text = "<lblStatusSessionRunning>";
-            // 
-            // lblStatusSpectrumIndex
-            // 
-            this.lblStatusSpectrumIndex.AutoSize = true;
-            this.lblStatusSpectrumIndex.Location = new System.Drawing.Point(448, 150);
-            this.lblStatusSpectrumIndex.Name = "lblStatusSpectrumIndex";
-            this.lblStatusSpectrumIndex.Size = new System.Drawing.Size(151, 15);
-            this.lblStatusSpectrumIndex.TabIndex = 7;
-            this.lblStatusSpectrumIndex.Text = "<lblStatusSpectrumIndex>";
-            // 
-            // lblStatusDetectorConfigured
-            // 
-            this.lblStatusDetectorConfigured.AutoSize = true;
-            this.lblStatusDetectorConfigured.Location = new System.Drawing.Point(448, 180);
-            this.lblStatusDetectorConfigured.Name = "lblStatusDetectorConfigured";
-            this.lblStatusDetectorConfigured.Size = new System.Drawing.Size(174, 15);
-            this.lblStatusDetectorConfigured.TabIndex = 8;
-            this.lblStatusDetectorConfigured.Text = "<lblStatusDetectorConfigured>";
-            // 
-            // panel12
-            // 
-            this.panel12.Controls.Add(this.label2);
-            this.panel12.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel12.Location = new System.Drawing.Point(0, 0);
-            this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(114, 26);
-            this.panel12.TabIndex = 20;
-            // 
-            // panel13
-            // 
-            this.panel13.Controls.Add(this.label7);
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel13.Location = new System.Drawing.Point(0, 0);
-            this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(114, 26);
-            this.panel13.TabIndex = 41;
-            // 
-            // panel19
-            // 
-            this.panel19.Controls.Add(this.label4);
-            this.panel19.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel19.Location = new System.Drawing.Point(0, 0);
-            this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(115, 26);
-            this.panel19.TabIndex = 31;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2568,6 +2568,8 @@
             this.panel16.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupVoltage)).EndInit();
             this.panel5.ResumeLayout(false);
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
             this.panel17.ResumeLayout(false);
             this.panel17.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupFineGain)).EndInit();
@@ -2578,7 +2580,11 @@
             this.panel18.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupULD)).EndInit();
             this.panel15.ResumeLayout(false);
+            this.panel19.ResumeLayout(false);
+            this.panel19.PerformLayout();
             this.panel14.ResumeLayout(false);
+            this.panel12.ResumeLayout(false);
+            this.panel12.PerformLayout();
             this.panelSetupSession.ResumeLayout(false);
             this.panelSetupSession.PerformLayout();
             this.pageMenu.ResumeLayout(false);
@@ -2617,20 +2623,14 @@
             this.tableNew.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.pageStatus.ResumeLayout(false);
+            this.tableStatus.ResumeLayout(false);
+            this.tableStatus.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.pagePreferences.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
             this.panel10.ResumeLayout(false);
-            this.tableStatus.ResumeLayout(false);
-            this.tableStatus.PerformLayout();
-            this.panel12.ResumeLayout(false);
-            this.panel12.PerformLayout();
-            this.panel13.ResumeLayout(false);
-            this.panel13.PerformLayout();
-            this.panel19.ResumeLayout(false);
-            this.panel19.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
