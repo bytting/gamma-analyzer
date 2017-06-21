@@ -6,8 +6,8 @@ detector_config_success - detector_type, voltage, coarse_gain, fine_gain, num_ch
 detector_config_error - message
 detector_config_busy - message
 
-start_session - session_name, livetime, comment, detector_data, detector_type_data
-start_session_success - session_name, livetime, comment, detector_data, detector_type_data
+start_session - session_name, ip, livetime, comment, detector_data, detector_type_data
+start_session_success - session_name, ip, livetime, comment, detector_data, detector_type_data
 start_session_error - message
 start_session_busy - message
 

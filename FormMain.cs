@@ -45,8 +45,7 @@ namespace crash
             {                
                 // Hide tabs on tabcontrol
                 tabs.ItemSize = new Size(0, 1);
-                tabs.SizeMode = TabSizeMode.Fixed;
-                tabs.SelectedTab = pageMenu;
+                tabs.SizeMode = TabSizeMode.Fixed;                
 
                 // Create directories and files
                 if (!Directory.Exists(GAEnvironment.SettingsPath))
@@ -102,7 +101,8 @@ namespace crash
                 lblSessionDetector.Text = "";
                 lblBackground.Text = "";
                 lblComment.Text = "";
-                ClearSpectrumInfo();                                               
+                ClearSpectrumInfo();
+                ClearStatus();
 
                 // Start networking thread
                 netThread.Start();
@@ -199,7 +199,7 @@ namespace crash
 
             // Create and send network message
             burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
-            msg.Params.Add("command", "detector_config");
+            msg.Params.Add("command", "detector_config");            
             msg.Params.Add("detector_type", "osprey");
             msg.Params.Add("voltage", voltage);
             msg.Params.Add("coarse_gain", coarse);
@@ -240,6 +240,7 @@ namespace crash
             {
                 menuItemView.Visible = false;
                 tools.Visible = false;
+                menuItemLayoutSetup1_Click(sender, e);
             }
         }             
 
@@ -368,7 +369,7 @@ namespace crash
         {
             Session s = new Session();
 
-            // Deserialize session object            
+            // Deserialize session object
             SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
             connection.Open();
             SQLiteCommand command = new SQLiteCommand(connection);
@@ -378,8 +379,9 @@ namespace crash
                 throw new Exception("No session was found in database: " + sessionFile);
 
             reader.Read();
-
+            
             s.Name = reader["name"].ToString();
+            s.IPAddress = reader["ip"].ToString();
             s.Comment = reader["comment"].ToString();
             s.Livetime = Convert.ToSingle(reader["livetime"], CultureInfo.InvariantCulture);
             s.Detector = JsonConvert.DeserializeObject<Detector>(reader["detector_data"].ToString());
@@ -507,8 +509,9 @@ namespace crash
             // Show channel
             lblSetupChannel.Text = "Ch: " + String.Format("{0:####0}", x);
 
-            // Show energy                        
-            lblSetupEnergy.Text = "En: " + String.Format("{0:#######0.0###}", selectedDetector.GetEnergy(x));                        
+            // Show energy       
+            if(selectedDetector != null)                 
+                lblSetupEnergy.Text = "En: " + String.Format("{0:#######0.0###}", selectedDetector.GetEnergy(x));                        
         }
 
         private void graphSession_MouseMove(object sender, MouseEventArgs e)
@@ -698,7 +701,7 @@ namespace crash
 
             returnFromSetup = pageNew;
             btnStatusNext.Enabled = false;
-            tbStatusInfo.Text = "";
+            ClearStatus();
             tbStatusIPAddress.Text = settings.LastIP;            
             tabs.SelectedTab = pageStatus;
         }
@@ -835,7 +838,9 @@ namespace crash
 
             // Update selected detector with current energy curve coefficients
             selectedDetector.EnergyCurveCoefficients.Clear();
-            selectedDetector.EnergyCurveCoefficients.AddRange(coefficients);            
+            selectedDetector.EnergyCurveCoefficients.AddRange(coefficients);
+
+            SaveSettings();
         }        
 
         private void menuItemLayoutSetup1_Click(object sender, EventArgs e)
@@ -901,32 +906,6 @@ namespace crash
             // Predefined layout: Organize windows
             int screenWidth = Screen.PrimaryScreen.Bounds.Width;
             int screenHeight = Screen.PrimaryScreen.Bounds.Height;
-                        
-            formWaterfallLive.Hide();
-            formROILive.Hide();
-            Utils.Log.Hide();
-
-            WindowState = FormWindowState.Normal;
-            Left = 0;
-            Top = 0;
-            Width = screenWidth / 2;
-            Height = screenHeight;
-
-            frmMap.Show();
-            frmMap.WindowState = FormWindowState.Normal;
-            frmMap.Left = screenWidth / 2;
-            frmMap.Top = 0;
-            frmMap.Width = screenWidth / 2;
-            frmMap.Height = screenHeight;
-
-            Activate();
-        }
-
-        private void menuItemLayoutSession3_Click(object sender, EventArgs e)
-        {
-            // Predefined layout: Organize windows
-            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
-            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
             int screenWidthThird = screenWidth / 3;
             int screenHeightThird = screenHeight / 3;
             int screenHeightHalfThird = screenHeightThird / 2;
@@ -964,7 +943,7 @@ namespace crash
             formWaterfallLive.Top = screenHeightThird * 2;
             formWaterfallLive.Width = screenWidthThird * 2;
             formWaterfallLive.Height = screenHeightThird;
-                        
+
             Activate();
         }
 
@@ -1136,7 +1115,8 @@ namespace crash
 
             burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
             msg.Params.Add("command", "start_session");
-            msg.Params.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));            
+            msg.Params.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
+            msg.Params.Add("ip", tbStatusIPAddress.Text.Trim());
             msg.Params.Add("livetime", selectedDetector.CurrentLivetime);
             msg.Params.Add("comment", tbNewComment.Text.Trim());
             string jDetectorData = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.None);
@@ -1198,7 +1178,7 @@ namespace crash
 
             returnFromSetup = pageMenu;
             btnStatusNext.Enabled = false;
-            tbStatusInfo.Text = "";
+            ClearStatus();
             tbStatusIPAddress.Text = settings.LastIP;
             tabs.SelectedTab = pageStatus;
         }
@@ -1256,6 +1236,29 @@ namespace crash
             settings.SessionRootDirectory = tbPreferencesSessionDir.Text;
             SaveSettings();
             tabs.SelectedTab = pageMenu;
+        }
+
+        void ClearStatus()
+        {
+            lblStatusFreeDiskSpace.Text = "";
+            lblStatusSessionRunning.Text = "";
+            lblStatusSpectrumIndex.Text = "";
+            lblStatusDetectorConfigured.Text = "";
+            btnStatusNext.Enabled = false;
+        }
+
+        private void tbStatusIPAddress_TextChanged(object sender, EventArgs e)
+        {
+            ClearStatus();
+        }
+
+        private void FormMain_Paint(object sender, PaintEventArgs e)
+        {
+            if(!appInitialized)
+            {
+                appInitialized = true;
+                tabs.SelectedTab = pageMenu;
+            }            
         }
     }
 }

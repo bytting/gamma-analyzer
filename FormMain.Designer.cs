@@ -72,10 +72,9 @@
             this.btnShowROITable = new System.Windows.Forms.ToolStripButton();
             this.btnShowROIHist = new System.Windows.Forms.ToolStripButton();
             this.btnShowROIChart = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.btnLayout3 = new System.Windows.Forms.ToolStripButton();
+            this.btnLayout2 = new System.Windows.Forms.ToolStripButton();
+            this.btnLayout1 = new System.Windows.Forms.ToolStripButton();
             this.contextMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemSessionUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.tabs = new System.Windows.Forms.TabControl();
@@ -203,16 +202,15 @@
             this.btnPreferencesClose = new System.Windows.Forms.Button();
             this.pageNew = new System.Windows.Forms.TabPage();
             this.tableNew = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.panel12 = new System.Windows.Forms.Panel();
             this.tbNewLivetime = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
+            this.tbNewComment = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.btnNewCancel = new System.Windows.Forms.Button();
             this.btnNewStart = new System.Windows.Forms.Button();
             this.pageStatus = new System.Windows.Forms.TabPage();
             this.btnStatusGet = new System.Windows.Forms.Button();
-            this.tbStatusInfo = new System.Windows.Forms.TextBox();
             this.tbStatusIPAddress = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -227,10 +225,12 @@
             this.panel10 = new System.Windows.Forms.Panel();
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbNewComment = new System.Windows.Forms.TextBox();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
+            this.tableStatus = new System.Windows.Forms.TableLayoutPanel();
+            this.lblStatusFreeDiskSpace = new System.Windows.Forms.Label();
+            this.lblStatusSessionRunning = new System.Windows.Forms.Label();
+            this.lblStatusSpectrumIndex = new System.Windows.Forms.Label();
+            this.lblStatusDetectorConfigured = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -279,7 +279,6 @@
             this.panel6.SuspendLayout();
             this.pageNew.SuspendLayout();
             this.tableNew.SuspendLayout();
-            this.panel12.SuspendLayout();
             this.panel9.SuspendLayout();
             this.pageStatus.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -287,7 +286,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel10.SuspendLayout();
-            this.panel13.SuspendLayout();
+            this.tableStatus.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -551,10 +550,9 @@
             this.btnShowROITable,
             this.btnShowROIHist,
             this.btnShowROIChart,
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton3,
-            this.toolStripButton4});
+            this.btnLayout3,
+            this.btnLayout2,
+            this.btnLayout1});
             this.tools.Location = new System.Drawing.Point(0, 24);
             this.tools.Name = "tools";
             this.tools.Size = new System.Drawing.Size(1350, 40);
@@ -671,69 +669,56 @@
             this.btnShowROIChart.ToolTipText = "Show ROI live";
             this.btnShowROIChart.Click += new System.EventHandler(this.menuItemShowROIChart_Click);
             // 
-            // toolStripButton1
+            // btnLayout3
             // 
-            this.toolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton1.AutoSize = false;
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::crash.Properties.Resources.layout4;
-            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(38, 38);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.Click += new System.EventHandler(this.menuItemLayoutSession3_Click);
+            this.btnLayout3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnLayout3.AutoSize = false;
+            this.btnLayout3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLayout3.Image = global::crash.Properties.Resources.layout3;
+            this.btnLayout3.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnLayout3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLayout3.Name = "btnLayout3";
+            this.btnLayout3.Size = new System.Drawing.Size(38, 38);
+            this.btnLayout3.Text = "toolStripButton2";
+            this.btnLayout3.Click += new System.EventHandler(this.menuItemLayoutSession2_Click);
             // 
-            // toolStripButton2
+            // btnLayout2
             // 
-            this.toolStripButton2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton2.AutoSize = false;
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::crash.Properties.Resources.layout3;
-            this.toolStripButton2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(38, 38);
-            this.toolStripButton2.Text = "toolStripButton2";
-            this.toolStripButton2.Click += new System.EventHandler(this.menuItemLayoutSession2_Click);
+            this.btnLayout2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnLayout2.AutoSize = false;
+            this.btnLayout2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLayout2.Image = global::crash.Properties.Resources.layout2;
+            this.btnLayout2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnLayout2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLayout2.Name = "btnLayout2";
+            this.btnLayout2.Size = new System.Drawing.Size(38, 38);
+            this.btnLayout2.Text = "toolStripButton3";
+            this.btnLayout2.Click += new System.EventHandler(this.menuItemLayoutSession1_Click);
             // 
-            // toolStripButton3
+            // btnLayout1
             // 
-            this.toolStripButton3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton3.AutoSize = false;
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = global::crash.Properties.Resources.layout2;
-            this.toolStripButton3.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(38, 38);
-            this.toolStripButton3.Text = "toolStripButton3";
-            this.toolStripButton3.Click += new System.EventHandler(this.menuItemLayoutSession1_Click);
-            // 
-            // toolStripButton4
-            // 
-            this.toolStripButton4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton4.AutoSize = false;
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = global::crash.Properties.Resources.layout1;
-            this.toolStripButton4.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(38, 38);
-            this.toolStripButton4.Text = "toolStripButton4";
-            this.toolStripButton4.Click += new System.EventHandler(this.menuItemLayoutSetup1_Click);
+            this.btnLayout1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnLayout1.AutoSize = false;
+            this.btnLayout1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLayout1.Image = global::crash.Properties.Resources.layout1;
+            this.btnLayout1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnLayout1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLayout1.Name = "btnLayout1";
+            this.btnLayout1.Size = new System.Drawing.Size(38, 38);
+            this.btnLayout1.Text = "toolStripButton4";
+            this.btnLayout1.Click += new System.EventHandler(this.menuItemLayoutSetup1_Click);
             // 
             // contextMenuSession
             // 
             this.contextMenuSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemSessionUnselect});
             this.contextMenuSession.Name = "contextMenuSession";
-            this.contextMenuSession.Size = new System.Drawing.Size(153, 48);
+            this.contextMenuSession.Size = new System.Drawing.Size(120, 26);
             // 
             // menuItemSessionUnselect
             // 
             this.menuItemSessionUnselect.Name = "menuItemSessionUnselect";
-            this.menuItemSessionUnselect.Size = new System.Drawing.Size(151, 22);
+            this.menuItemSessionUnselect.Size = new System.Drawing.Size(119, 22);
             this.menuItemSessionUnselect.Text = "&Unselect";
             this.menuItemSessionUnselect.Click += new System.EventHandler(this.menuItemSessionUnselect_Click);
             // 
@@ -2166,63 +2151,58 @@
             this.tableNew.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableNew.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableNew.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableNew.Controls.Add(this.textBox1, 0, 4);
-            this.tableNew.Controls.Add(this.panel12, 1, 2);
-            this.tableNew.Controls.Add(this.panel13, 1, 3);
+            this.tableNew.Controls.Add(this.tbNewComment, 1, 2);
+            this.tableNew.Controls.Add(this.tbNewLivetime, 1, 1);
+            this.tableNew.Controls.Add(this.label1, 0, 2);
+            this.tableNew.Controls.Add(this.label16, 0, 1);
             this.tableNew.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableNew.Location = new System.Drawing.Point(3, 3);
             this.tableNew.Name = "tableNew";
             this.tableNew.RowCount = 5;
-            this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableNew.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableNew.Size = new System.Drawing.Size(1336, 580);
             this.tableNew.TabIndex = 0;
-            // 
-            // textBox1
-            // 
-            this.tableNew.SetColumnSpan(this.textBox1, 3);
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(3, 113);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(1330, 464);
-            this.textBox1.TabIndex = 12;
-            // 
-            // panel12
-            // 
-            this.panel12.Controls.Add(this.tbNewLivetime);
-            this.panel12.Controls.Add(this.label16);
-            this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel12.Location = new System.Drawing.Point(448, 53);
-            this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(439, 24);
-            this.panel12.TabIndex = 11;
             // 
             // tbNewLivetime
             // 
             this.tbNewLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbNewLivetime.Location = new System.Drawing.Point(53, 0);
+            this.tbNewLivetime.Location = new System.Drawing.Point(448, 33);
             this.tbNewLivetime.Name = "tbNewLivetime";
-            this.tbNewLivetime.Size = new System.Drawing.Size(386, 21);
+            this.tbNewLivetime.Size = new System.Drawing.Size(439, 21);
             this.tbNewLivetime.TabIndex = 6;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label16.Location = new System.Drawing.Point(0, 0);
+            this.label16.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label16.Location = new System.Drawing.Point(389, 30);
             this.label16.Name = "label16";
             this.label16.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.label16.Size = new System.Drawing.Size(53, 17);
+            this.label16.Size = new System.Drawing.Size(53, 30);
             this.label16.TabIndex = 7;
             this.label16.Text = "Livetime";
+            // 
+            // tbNewComment
+            // 
+            this.tbNewComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbNewComment.Location = new System.Drawing.Point(448, 63);
+            this.tbNewComment.Name = "tbNewComment";
+            this.tbNewComment.Size = new System.Drawing.Size(439, 21);
+            this.tbNewComment.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label1.Location = new System.Drawing.Point(381, 60);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(61, 30);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Comment";
             // 
             // panel9
             // 
@@ -2260,10 +2240,7 @@
             // 
             // pageStatus
             // 
-            this.pageStatus.Controls.Add(this.btnStatusGet);
-            this.pageStatus.Controls.Add(this.tbStatusInfo);
-            this.pageStatus.Controls.Add(this.tbStatusIPAddress);
-            this.pageStatus.Controls.Add(this.label3);
+            this.pageStatus.Controls.Add(this.tableStatus);
             this.pageStatus.Controls.Add(this.panel7);
             this.pageStatus.Location = new System.Drawing.Point(4, 27);
             this.pageStatus.Name = "pageStatus";
@@ -2275,37 +2252,34 @@
             // 
             // btnStatusGet
             // 
-            this.btnStatusGet.Location = new System.Drawing.Point(270, 51);
+            this.btnStatusGet.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnStatusGet.Location = new System.Drawing.Point(893, 33);
             this.btnStatusGet.Name = "btnStatusGet";
-            this.btnStatusGet.Size = new System.Drawing.Size(166, 23);
+            this.btnStatusGet.Size = new System.Drawing.Size(166, 24);
             this.btnStatusGet.TabIndex = 4;
             this.btnStatusGet.Text = "Check status";
             this.btnStatusGet.UseVisualStyleBackColor = true;
             this.btnStatusGet.Click += new System.EventHandler(this.btnStatusGet_Click);
             // 
-            // tbStatusInfo
-            // 
-            this.tbStatusInfo.Location = new System.Drawing.Point(92, 107);
-            this.tbStatusInfo.Multiline = true;
-            this.tbStatusInfo.Name = "tbStatusInfo";
-            this.tbStatusInfo.Size = new System.Drawing.Size(643, 256);
-            this.tbStatusInfo.TabIndex = 3;
-            // 
             // tbStatusIPAddress
             // 
-            this.tbStatusIPAddress.Location = new System.Drawing.Point(92, 51);
+            this.tbStatusIPAddress.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbStatusIPAddress.Location = new System.Drawing.Point(448, 33);
             this.tbStatusIPAddress.Name = "tbStatusIPAddress";
-            this.tbStatusIPAddress.Size = new System.Drawing.Size(172, 21);
+            this.tbStatusIPAddress.Size = new System.Drawing.Size(439, 21);
             this.tbStatusIPAddress.TabIndex = 2;
+            this.tbStatusIPAddress.TextChanged += new System.EventHandler(this.tbStatusIPAddress_TextChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(68, 54);
+            this.label3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label3.Location = new System.Drawing.Point(377, 30);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(18, 15);
+            this.label3.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.label3.Size = new System.Drawing.Size(65, 30);
             this.label3.TabIndex = 1;
-            this.label3.Text = "IP";
+            this.label3.Text = "IP Address";
             // 
             // panel7
             // 
@@ -2449,37 +2423,73 @@
             this.btnPreferencesSave.UseVisualStyleBackColor = true;
             this.btnPreferencesSave.Click += new System.EventHandler(this.btnPreferencesSave_Click);
             // 
-            // panel13
-            // 
-            this.panel13.Controls.Add(this.tbNewComment);
-            this.panel13.Controls.Add(this.label1);
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel13.Location = new System.Drawing.Point(448, 83);
-            this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(439, 24);
-            this.panel13.TabIndex = 13;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Comment";
-            // 
-            // tbNewComment
-            // 
-            this.tbNewComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbNewComment.Location = new System.Drawing.Point(61, 0);
-            this.tbNewComment.Name = "tbNewComment";
-            this.tbNewComment.Size = new System.Drawing.Size(378, 21);
-            this.tbNewComment.TabIndex = 1;
-            // 
             // openSessionDialog
             // 
             this.openSessionDialog.DefaultExt = "db";
+            // 
+            // tableStatus
+            // 
+            this.tableStatus.ColumnCount = 3;
+            this.tableStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableStatus.Controls.Add(this.label3, 0, 1);
+            this.tableStatus.Controls.Add(this.btnStatusGet, 2, 1);
+            this.tableStatus.Controls.Add(this.tbStatusIPAddress, 1, 1);
+            this.tableStatus.Controls.Add(this.lblStatusDetectorConfigured, 1, 6);
+            this.tableStatus.Controls.Add(this.lblStatusSpectrumIndex, 1, 5);
+            this.tableStatus.Controls.Add(this.lblStatusSessionRunning, 1, 4);
+            this.tableStatus.Controls.Add(this.lblStatusFreeDiskSpace, 1, 3);
+            this.tableStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableStatus.Location = new System.Drawing.Point(3, 3);
+            this.tableStatus.Name = "tableStatus";
+            this.tableStatus.RowCount = 8;
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableStatus.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableStatus.Size = new System.Drawing.Size(1336, 580);
+            this.tableStatus.TabIndex = 5;
+            // 
+            // lblStatusFreeDiskSpace
+            // 
+            this.lblStatusFreeDiskSpace.AutoSize = true;
+            this.lblStatusFreeDiskSpace.Location = new System.Drawing.Point(448, 90);
+            this.lblStatusFreeDiskSpace.Name = "lblStatusFreeDiskSpace";
+            this.lblStatusFreeDiskSpace.Size = new System.Drawing.Size(152, 15);
+            this.lblStatusFreeDiskSpace.TabIndex = 5;
+            this.lblStatusFreeDiskSpace.Text = "<lblStatusFreeDiskSpace>";
+            // 
+            // lblStatusSessionRunning
+            // 
+            this.lblStatusSessionRunning.AutoSize = true;
+            this.lblStatusSessionRunning.Location = new System.Drawing.Point(448, 120);
+            this.lblStatusSessionRunning.Name = "lblStatusSessionRunning";
+            this.lblStatusSessionRunning.Size = new System.Drawing.Size(159, 15);
+            this.lblStatusSessionRunning.TabIndex = 6;
+            this.lblStatusSessionRunning.Text = "<lblStatusSessionRunning>";
+            // 
+            // lblStatusSpectrumIndex
+            // 
+            this.lblStatusSpectrumIndex.AutoSize = true;
+            this.lblStatusSpectrumIndex.Location = new System.Drawing.Point(448, 150);
+            this.lblStatusSpectrumIndex.Name = "lblStatusSpectrumIndex";
+            this.lblStatusSpectrumIndex.Size = new System.Drawing.Size(151, 15);
+            this.lblStatusSpectrumIndex.TabIndex = 7;
+            this.lblStatusSpectrumIndex.Text = "<lblStatusSpectrumIndex>";
+            // 
+            // lblStatusDetectorConfigured
+            // 
+            this.lblStatusDetectorConfigured.AutoSize = true;
+            this.lblStatusDetectorConfigured.Location = new System.Drawing.Point(448, 180);
+            this.lblStatusDetectorConfigured.Name = "lblStatusDetectorConfigured";
+            this.lblStatusDetectorConfigured.Size = new System.Drawing.Size(174, 15);
+            this.lblStatusDetectorConfigured.TabIndex = 8;
+            this.lblStatusDetectorConfigured.Text = "<lblStatusDetectorConfigured>";
             // 
             // FormMain
             // 
@@ -2500,6 +2510,7 @@
             this.Text = "Gamma Analyzer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.FormMain_Paint);
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
             this.status.ResumeLayout(false);
@@ -2570,19 +2581,16 @@
             this.pageNew.ResumeLayout(false);
             this.tableNew.ResumeLayout(false);
             this.tableNew.PerformLayout();
-            this.panel12.ResumeLayout(false);
-            this.panel12.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.pageStatus.ResumeLayout(false);
-            this.pageStatus.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.pagePreferences.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
             this.panel10.ResumeLayout(false);
-            this.panel13.ResumeLayout(false);
-            this.panel13.PerformLayout();
+            this.tableStatus.ResumeLayout(false);
+            this.tableStatus.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2748,8 +2756,6 @@
         private System.Windows.Forms.Button btnNewStart;
         private System.Windows.Forms.TextBox tbNewLivetime;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnSetupClose;
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Panel panel15;
@@ -2758,10 +2764,9 @@
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton btnLayout3;
+        private System.Windows.Forms.ToolStripButton btnLayout2;
+        private System.Windows.Forms.ToolStripButton btnLayout1;
         private System.Windows.Forms.ComboBox cboxSetupDetector;
         private System.Windows.Forms.Button btnMenuCalibration;
         private System.Windows.Forms.Button btnSessionsClose;
@@ -2772,7 +2777,6 @@
         private System.Windows.Forms.Button btnStatusNext;
         private System.Windows.Forms.TextBox tbStatusIPAddress;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbStatusInfo;
         private System.Windows.Forms.Button btnStatusGet;
         private System.Windows.Forms.Button btnStatusCancel;
         private System.Windows.Forms.Button btnSetupCancel;
@@ -2787,10 +2791,14 @@
         private System.Windows.Forms.Button btnPreferencesSetSessionDir;
         private System.Windows.Forms.Button btnMenuPreferences;
         private System.Windows.Forms.Label lblSetupIPAddress;
-        private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.TextBox tbNewComment;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.OpenFileDialog openSessionDialog;
+        private System.Windows.Forms.TableLayoutPanel tableStatus;
+        private System.Windows.Forms.Label lblStatusFreeDiskSpace;
+        private System.Windows.Forms.Label lblStatusSessionRunning;
+        private System.Windows.Forms.Label lblStatusSpectrumIndex;
+        private System.Windows.Forms.Label lblStatusDetectorConfigured;
     }
 }
 

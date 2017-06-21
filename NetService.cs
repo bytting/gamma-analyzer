@@ -87,10 +87,9 @@ namespace burn
                     int nbytes = socket.ReceiveFrom(buffer, ref endPoint);
                     if (nbytes > 0)
                     {
-                        ProtocolMessage recvMsg = new ProtocolMessage();
+                        ProtocolMessage recvMsg = new ProtocolMessage(((IPEndPoint)endPoint).Address.ToString());
                         string jdata = Encoding.UTF8.GetString(buffer, 0, nbytes);
-                        recvMsg.Params = JsonConvert.DeserializeObject<Dictionary<string, object>>(jdata);                        
-                        recvMsg.IPAddress = ((IPEndPoint)endPoint).Address.ToString();
+                        recvMsg.Params = JsonConvert.DeserializeObject<Dictionary<string, object>>(jdata);
                         recvq.Enqueue(recvMsg);
                     }
                 }

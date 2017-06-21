@@ -1,6 +1,7 @@
 CREATE TABLE `session` (
 	`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	`name` TEXT NOT NULL UNIQUE,
+	`ip` TEXT NOT NULL,
 	`comment` TEXT,
 	`livetime` REAL NOT NULL,
 	`detector_data` TEXT NOT NULL,

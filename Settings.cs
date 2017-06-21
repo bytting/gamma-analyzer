@@ -18,6 +18,7 @@
 // Authors: Dag robole,
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
@@ -30,6 +31,8 @@ namespace crash
     {
         public GASettings() 
         {
+            SessionRootDirectory = Path.GetPathRoot(Environment.SystemDirectory);
+            LastIP = "";
             DisplayLocalTime = true;
         }
 

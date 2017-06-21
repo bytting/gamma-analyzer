@@ -36,6 +36,8 @@ namespace crash
 {
     public partial class FormMain
     {
+        bool appInitialized = false;
+
         // Structure with application settings stored on disk
         GASettings settings = new GASettings();
         
@@ -127,7 +129,7 @@ namespace crash
         private void LoadSettings()
         {
             if (!File.Exists(GAEnvironment.SettingsFile))
-                return;
+                SaveSettings();
 
             // Deserialize settings from file
             using (StreamReader sr = new StreamReader(GAEnvironment.SettingsFile))
@@ -186,28 +188,28 @@ namespace crash
 
         private bool dispatchRecvMsg(burn.ProtocolMessage msg)
         {
-            // Handle messages received from network
-            Detector det = null;
-            DetectorType detType = null;
+            // Handle messages received from network                        
 
             switch (msg.Params["command"].ToString())
             {
                 case "get_status_success":                    
                     Utils.Log.Add("Get status success");
-                    tbStatusInfo.Text = "";
-                    foreach (KeyValuePair<string, object> p in msg.Params)
-                    {
-                        if (p.Key == "command")
-                            continue;
-                        tbStatusInfo.Text += p.Key + ": " + p.Value.ToString() + Environment.NewLine;
-                    }
+
+                    double freeDisk = Convert.ToDouble(msg.Params["free_disk_space"]);
+                    freeDisk /= 1000000;
+                    lblStatusFreeDiskSpace.Text = "Free disk space: " + freeDisk.ToString("#########0.0#") + " MB";
 
                     bool sessionRunning = Convert.ToBoolean(msg.Params["session_running"]);
-
+                    lblStatusSessionRunning.Text = "Session running: " + sessionRunning;
                     if (!sessionRunning)
-                    {
                         btnStatusNext.Enabled = true;
-                    }
+
+                    int spectrumIndex = Convert.ToInt32(msg.Params["spectrum_index"]);
+                    lblStatusSpectrumIndex.Text = "Spectrum index: " + spectrumIndex;
+
+                    bool detectorConfigured = Convert.ToBoolean(msg.Params["detector_configured"]);
+                    lblStatusDetectorConfigured.Text = "Detector configured: " + detectorConfigured;
+
                     break;
 
                 case "start_session_success":
@@ -223,14 +225,15 @@ namespace crash
                         string sessionName = msg.Params["session_name"].ToString();
                         Utils.Log.Add("Session started: " + sessionName);
 
-                        ClearSession();                                                
-                        
+                        ClearSession();
+
+                        string ip = msg.Params["ip"].ToString();
                         float livetime = Convert.ToSingle(msg.Params["livetime"]);
                         string comment = msg.Params["comment"].ToString();
                         string sessionFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + sessionName + ".db";
 
-                        detType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
-                        session = new Session(msg.IPAddress, sessionFile, sessionName, comment, livetime, selectedDetector, detType);
+                        DetectorType selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
+                        session = new Session(ip, sessionFile, sessionName, comment, livetime, selectedDetector, selectedDetectorType);
 
                         // Create session database
                         CreateSessionFile(session);
@@ -283,16 +286,15 @@ namespace crash
                         + msg.Params["lld"] + " " + msg.Params["uld"]);
 
                     // Update selected detector parameters
-                    if(previewSession)
-                        det = selectedDetector;
-                    else det = session.Detector;
-                    det.CurrentHV = Convert.ToInt32(msg.Params["voltage"]);
-                    det.CurrentCoarseGain = Convert.ToDouble(msg.Params["coarse_gain"], CultureInfo.InvariantCulture);
-                    det.CurrentFineGain = Convert.ToDouble(msg.Params["fine_gain"], CultureInfo.InvariantCulture);
-                    det.CurrentNumChannels = Convert.ToInt32(msg.Params["num_channels"]);
-                    det.CurrentLLD = Convert.ToInt32(msg.Params["lld"]);
-                    det.CurrentULD = Convert.ToInt32(msg.Params["uld"]);
-                    
+                    selectedDetector.CurrentHV = Convert.ToInt32(msg.Params["voltage"]);
+                    selectedDetector.CurrentCoarseGain = Convert.ToDouble(msg.Params["coarse_gain"], CultureInfo.InvariantCulture);
+                    selectedDetector.CurrentFineGain = Convert.ToDouble(msg.Params["fine_gain"], CultureInfo.InvariantCulture);
+                    selectedDetector.CurrentNumChannels = Convert.ToInt32(msg.Params["num_channels"]);
+                    selectedDetector.CurrentLLD = Convert.ToInt32(msg.Params["lld"]);
+                    selectedDetector.CurrentULD = Convert.ToInt32(msg.Params["uld"]);
+
+                    SaveSettings();
+
                     // Update state                    
                     panelSetupGraph.Enabled = true;
                     break;
@@ -306,7 +308,7 @@ namespace crash
                         // Spectrum is a preview spectrum
                         Utils.Log.Add(spec.Label + " received");
 
-                        // Merge spectrum with our preview spectrum
+                        // Merge spectrum with the preview spectrum
                         if (previewSpec == null)
                             previewSpec = spec;
                         else previewSpec.Merge(spec);
@@ -360,7 +362,7 @@ namespace crash
                         connection.Open();
                         SQLiteCommand command = new SQLiteCommand(connection);
                         command.CommandText = "select id from session where name = @name";
-                        command.Parameters.AddWithValue("name", spec.SessionName);
+                        command.Parameters.AddWithValue("@name", spec.SessionName);
                         int sessionId = Convert.ToInt32(command.ExecuteScalar());
 
                         command.Parameters.Clear();
@@ -431,21 +433,62 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
         }        
 
         public void CreateSessionFile(Session s)
-        {            
-            File.Copy(InstallDir + "template_session.db", s.SessionFile, true);
+        {
+            SQLiteConnection.CreateFile(s.SessionFile);
             SQLiteConnection connection = new SQLiteConnection("Data Source=" + s.SessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
             connection.Open();
             SQLiteCommand command = new SQLiteCommand(connection);
-            command.CommandText = "insert into session(name, comment, livetime, detector_data, detector_type_data) values (@name, @comment, @livetime, @detector_data, @detector_type_data)";
+
+            command.CommandText = @"
+CREATE TABLE `session` (
+	`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`name` TEXT NOT NULL UNIQUE,
+	`ip` TEXT NOT NULL,
+	`comment` TEXT,
+	`livetime` REAL NOT NULL,
+	`detector_data` TEXT NOT NULL,
+	`detector_type_data` TEXT NOT NULL
+);
+
+CREATE TABLE `spectrums` (
+	`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	`session_id` INTEGER NOT NULL,
+	`session_name` TEXT NOT NULL,
+	`session_index` INTEGER NOT NULL UNIQUE,
+	`start_time` TEXT NOT NULL,
+	`latitude` REAL NOT NULL,
+	`latitude_error` REAL NOT NULL,
+	`longitude` REAL NOT NULL,
+	`longitude_error` REAL NOT NULL,
+	`altitude` REAL NOT NULL,
+	`altitude_error` REAL NOT NULL,
+	`track` REAL NOT NULL,
+	`track_error` REAL NOT NULL,
+	`speed` REAL NOT NULL,
+	`speed_error` REAL NOT NULL,
+	`climb` REAL NOT NULL,
+	`climb_error` REAL NOT NULL,
+	`livetime` REAL NOT NULL,
+	`realtime` REAL NOT NULL,
+	`total_count` INTEGER NOT NULL,
+	`num_channels` INTEGER NOT NULL,
+	`channels` TEXT NOT NULL
+);
+";
+            command.ExecuteNonQuery();
+
+            command.CommandText = "insert into session(name, ip, comment, livetime, detector_data, detector_type_data) values (@name, @ip, @comment, @livetime, @detector_data, @detector_type_data)";
 
             string detectorData = JsonConvert.SerializeObject(s.Detector, Newtonsoft.Json.Formatting.None);
             string detectorTypeData = JsonConvert.SerializeObject(s.DetectorType, Newtonsoft.Json.Formatting.None);
 
-            command.Parameters.AddWithValue("name", s.Name);
-            command.Parameters.AddWithValue("comment", s.Comment);
-            command.Parameters.AddWithValue("livetime", s.Livetime);
-            command.Parameters.AddWithValue("detector_data", detectorData);
-            command.Parameters.AddWithValue("detector_type_data", detectorTypeData);
+            command.Parameters.Clear();
+            command.Parameters.AddWithValue("@name", s.Name);
+            command.Parameters.AddWithValue("@ip", s.IPAddress);
+            command.Parameters.AddWithValue("@comment", s.Comment);
+            command.Parameters.AddWithValue("@livetime", s.Livetime);
+            command.Parameters.AddWithValue("@detector_data", detectorData);
+            command.Parameters.AddWithValue("@detector_type_data", detectorTypeData);
             command.ExecuteNonQuery();
             connection.Close();
         }
