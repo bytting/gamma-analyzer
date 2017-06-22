@@ -302,6 +302,7 @@ namespace crash
 
                     // Update state                    
                     panelSetupGraph.Enabled = true;
+                    btnSetupClose.Enabled = true;
                     break;
 
                 case "spectrum":
@@ -372,7 +373,7 @@ namespace crash
 
                         command.Parameters.Clear();
                         command.CommandText = @"
-insert into spectrums(session_id, session_name, session_index, start_time, latitude, latitude_error, longitude, longitude_error, altitude, altitude_error, track, track_error, speed, speed_error, climb, climb_error, livetime, realtime, total_count, num_channels, channels) 
+insert into spectrum(session_id, session_name, session_index, start_time, latitude, latitude_error, longitude, longitude_error, altitude, altitude_error, track, track_error, speed, speed_error, climb, climb_error, livetime, realtime, total_count, num_channels, channels) 
 values (@session_id, @session_name, @session_index, @start_time, @latitude, @latitude_error, @longitude, @longitude_error, @altitude, @altitude_error, @track, @track_error, @speed, @speed_error, @climb, @climb_error, @livetime, @realtime, @total_count, @num_channels, @channels)";
 
                         command.Parameters.AddWithValue("@session_id", sessionId);
@@ -455,7 +456,7 @@ CREATE TABLE `session` (
 	`detector_type_data` TEXT NOT NULL
 );
 
-CREATE TABLE `spectrums` (
+CREATE TABLE `spectrum` (
 	`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	`session_id` INTEGER NOT NULL,
 	`session_name` TEXT NOT NULL,

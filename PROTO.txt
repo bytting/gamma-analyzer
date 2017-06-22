@@ -11,10 +11,17 @@ start_session_success - session_name, ip, livetime, comment, detector_data, dete
 start_session_error - message
 start_session_busy - message
 
-stop_session -
-stop_session_success - message
-stop_session_error - message
-stop_session_none - message
+stop_session - session_name
+stop_session_success - session_name
+stop_session_error - session_name, message
+stop_session_noexist - session_name, message
+stop_session_wrongname - session_name, message
+
+sync_session - session_name, indices_list
+sync_session_success - session_name
+sync_session_error - session_name, message
+sync_session_noexist - session_name, message
+sync_session_wrongname - session_name, message
 
 dump_session -
 dump_session_success - message

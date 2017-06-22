@@ -8,7 +8,7 @@ CREATE TABLE `session` (
 	`detector_type_data` TEXT NOT NULL
 );
 
-CREATE TABLE `spectrums` (
+CREATE TABLE `spectrum` (
 	`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	`session_id` INTEGER NOT NULL,
 	`session_name` TEXT NOT NULL,

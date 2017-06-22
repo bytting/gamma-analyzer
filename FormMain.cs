@@ -407,7 +407,7 @@ namespace crash
                 Utils.Log.Add("Loading GEFactor failed for session " + s.Name);
 
             // Load session spectrums
-            command.CommandText = "select * from spectrums";
+            command.CommandText = "select * from spectrum order by session_index asc";
             reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -726,6 +726,7 @@ namespace crash
         {
             burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
             msg.Params.Add("command", "stop_session");
+            msg.Params.Add("session_name", session.Name);
             sendMsg(msg);
 
             Utils.Log.Add("Sending stop_session");
@@ -1123,8 +1124,21 @@ namespace crash
 
         private void btnNewStart_Click(object sender, EventArgs e)
         {            
-            if (!String.IsNullOrEmpty(tbNewLivetime.Text.Trim()))
-                selectedDetector.CurrentLivetime = Convert.ToInt32(tbNewLivetime.Text.Trim());
+            if (String.IsNullOrEmpty(tbNewLivetime.Text.Trim()))
+            {
+                MessageBox.Show("Livetime can not be empty");
+                return;
+            }
+
+            int ltime = Convert.ToInt32(tbNewLivetime.Text.Trim());
+
+            if (ltime <= 0)
+            {
+                MessageBox.Show("Livetime must be a positive number");
+                return;
+            }
+
+            selectedDetector.CurrentLivetime = ltime;
             DetectorType detType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
 
             SaveSettings();            
@@ -1234,6 +1248,7 @@ namespace crash
             SaveSettings();
 
             lblSetupIPAddress.Text = "IP Address: " + settings.LastIP;
+            btnSetupClose.Enabled = false;
             tabs.SelectedTab = pageSetup;            
         }
 
