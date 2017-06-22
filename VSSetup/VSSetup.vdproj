@@ -15,6 +15,18 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_033CCF557E1C40A30F3B94DFC2CD7B1D"
+        "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_033CCF557E1C40A30F3B94DFC2CD7B1D"
+        "OwnerKey" = "8:_95A4C6110626F48EBA605692A79E3EAA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_06B7FB067E0202E6C02CAB6A0AA5ABB9"
         "OwnerKey" = "8:_8A8D6E630D10386340154A14A242EAD1"
         "MsmSig" = "8:_UNDEFINED"
@@ -22,12 +34,6 @@
         "Entry"
         {
         "MsmKey" = "8:_06B7FB067E0202E6C02CAB6A0AA5ABB9"
-        "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_16FBF70AC78A078F2E80ED8B35229E76"
         "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -124,7 +130,7 @@
         "Entry"
         {
         "MsmKey" = "8:_6B048BF316C8301E266BC3EB6751314C"
-        "OwnerKey" = "8:_96C11C2C98BA1FD4CF72FCFE0E321861"
+        "OwnerKey" = "8:_033CCF557E1C40A30F3B94DFC2CD7B1D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -189,14 +195,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_96C11C2C98BA1FD4CF72FCFE0E321861"
+        "MsmKey" = "8:_95A4C6110626F48EBA605692A79E3EAA"
         "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_96C11C2C98BA1FD4CF72FCFE0E321861"
-        "OwnerKey" = "8:_16FBF70AC78A078F2E80ED8B35229E76"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -221,6 +221,12 @@
         {
         "MsmKey" = "8:_DE5498419AE8D9DDEF5C330490A382A4"
         "OwnerKey" = "8:_662E129EDC6A4BE7A2FBEB31DACB3511"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ED2BBADF9C12427EB3F2328E61E8A41C"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -304,13 +310,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_16FBF70AC78A078F2E80ED8B35229E76"
+        "OwnerKey" = "8:_95A4C6110626F48EBA605692A79E3EAA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_96C11C2C98BA1FD4CF72FCFE0E321861"
+        "OwnerKey" = "8:_033CCF557E1C40A30F3B94DFC2CD7B1D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -420,20 +426,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_06B7FB067E0202E6C02CAB6A0AA5ABB9"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_033CCF557E1C40A30F3B94DFC2CD7B1D"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:GMap.NET.Core, Version=1.7.0.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_06B7FB067E0202E6C02CAB6A0AA5ABB9"
+                    "_033CCF557E1C40A30F3B94DFC2CD7B1D"
                     {
-                    "Name" = "8:Microsoft.Scripting.Metadata.dll"
+                    "Name" = "8:GMap.NET.Core.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Microsoft.Scripting.Metadata.dll"
+            "SourcePath" = "8:GMap.NET.Core.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
@@ -451,20 +457,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_16FBF70AC78A078F2E80ED8B35229E76"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_06B7FB067E0202E6C02CAB6A0AA5ABB9"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GMap.NET.WindowsForms, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_16FBF70AC78A078F2E80ED8B35229E76"
+                    "_06B7FB067E0202E6C02CAB6A0AA5ABB9"
                     {
-                    "Name" = "8:GMap.NET.WindowsForms.dll"
+                    "Name" = "8:Microsoft.Scripting.Metadata.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:GMap.NET.WindowsForms.dll"
+            "SourcePath" = "8:Microsoft.Scripting.Metadata.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
@@ -770,20 +776,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_96C11C2C98BA1FD4CF72FCFE0E321861"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_95A4C6110626F48EBA605692A79E3EAA"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GMap.NET.Core, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:GMap.NET.WindowsForms, Version=1.7.0.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_96C11C2C98BA1FD4CF72FCFE0E321861"
+                    "_95A4C6110626F48EBA605692A79E3EAA"
                     {
-                    "Name" = "8:GMap.NET.Core.dll"
+                    "Name" = "8:GMap.NET.WindowsForms.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:GMap.NET.Core.dll"
+            "SourcePath" = "8:GMap.NET.WindowsForms.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
@@ -914,6 +920,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ED2BBADF9C12427EB3F2328E61E8A41C"
+            {
+            "SourcePath" = "8:..\\packages\\System.Data.SQLite.Core.1.0.105.2\\build\\net45\\x64\\SQLite.Interop.dll"
+            "TargetName" = "8:SQLite.Interop.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F6EDFC8552613D5568399F0A6B98BE14"
             {
             "AssemblyRegister" = "3:1"
@@ -1002,7 +1028,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Gamma Analyzer"
         "ProductCode" = "8:{35706059-EB5E-4A61-9DEC-CCA443F9B1B5}"
-        "PackageCode" = "8:{D2072D2D-691A-4C2E-A94B-F7D2D6F36EEC}"
+        "PackageCode" = "8:{06F3858C-AAC6-4386-9C45-C1F6B31DD539}"
         "UpgradeCode" = "8:{1C952C92-7F4C-425E-9E4D-77075E58C466}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1579,7 +1605,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_662E129EDC6A4BE7A2FBEB31DACB3511"
             {
-            "SourcePath" = "8:..\\obj\\Release\\gamma_analyzer.exe"
+            "SourcePath" = "8:..\\obj\\Debug\\gamma_analyzer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_83F66B7A2D474DDBA05DBC7A536E7F77"
