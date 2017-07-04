@@ -139,7 +139,7 @@ namespace crash
 
         private bool LoadNuclideLibrary()
         {
-            if (!File.Exists(GAEnvironment.NuclideLibraryFile))
+            if (!File.Exists(GAEnvironment.NuclideLibraryFile))            
                 return false;
 
             // Load nuclide library from file

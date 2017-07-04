@@ -55,19 +55,16 @@ namespace crash
                 if (!Directory.Exists(GAEnvironment.GEScriptPath))
                     Directory.CreateDirectory(GAEnvironment.GEScriptPath);                
                 
-                InstallDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]) + Path.DirectorySeparatorChar;                
-
-                if (!File.Exists(GAEnvironment.SettingsFile))
-                    File.Copy(InstallDir + "template_settings.xml", GAEnvironment.SettingsFile, false);
+                InstallDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]) + Path.DirectorySeparatorChar;
 
                 if (!File.Exists(GAEnvironment.NuclideLibraryFile))
-                    File.Copy(InstallDir + "template_nuclides.lib", GAEnvironment.NuclideLibraryFile, false);
+                    File.Copy(InstallDir + "template_nuclides.lib", GAEnvironment.NuclideLibraryFile);
 
                 if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py"))
-                    File.Copy(InstallDir + "template_Nai-2tom.py", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py", true);
+                    File.Copy(InstallDir + "template_Nai-2tom.py", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py");
 
                 if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py"))
-                    File.Copy(InstallDir + "template_Nai-3tom.py", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py", true);
+                    File.Copy(InstallDir + "template_Nai-3tom.py", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py");
 
                 // Load settings
                 LoadSettings();
