@@ -94,7 +94,7 @@ namespace burn
                     }
                 }
 
-                Thread.Sleep(20);
+                Thread.Sleep(50);
             }
         }
 

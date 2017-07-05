@@ -151,6 +151,12 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAskIP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAskIP.Designer.cs">
+      <DependentUpon>FormAskIP.cs</DependentUpon>
+    </Compile>
     <Compile Include="NetService.cs" />
     <Compile Include="CustomEventArgs.cs" />
     <Compile Include="CustomEvents.cs" />
@@ -263,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAskDecimal.resx">
       <DependentUpon>FormAskDecimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAskIP.resx">
+      <DependentUpon>FormAskIP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormEnergyCurve.resx">
       <DependentUpon>FormEnergyCurve.cs</DependentUpon>

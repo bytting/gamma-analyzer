@@ -35,7 +35,7 @@
             this.menuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemStartNewSession = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemUpdateCurrentSession = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSyncCurrentSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemStopSession = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemLoadSession = new System.Windows.Forms.ToolStripMenuItem();
@@ -234,6 +234,7 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
+            this.menuItemChangeIPAddress = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -328,7 +329,7 @@
             // 
             this.menuItemSession.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemStartNewSession,
-            this.menuItemUpdateCurrentSession,
+            this.menuItemSyncCurrentSession,
             this.menuItemStopSession,
             this.toolStripSeparator3,
             this.menuItemLoadSession,
@@ -338,7 +339,8 @@
             this.menuItemLoadBackgroundSession,
             this.menuItemClearBackground,
             this.toolStripSeparator7,
-            this.menuItemExport});
+            this.menuItemExport,
+            this.menuItemChangeIPAddress});
             this.menuItemSession.Name = "menuItemSession";
             this.menuItemSession.Size = new System.Drawing.Size(58, 20);
             this.menuItemSession.Text = "&Session";
@@ -350,12 +352,12 @@
             this.menuItemStartNewSession.Text = "Start new session";
             this.menuItemStartNewSession.Click += new System.EventHandler(this.menuItemStartNewSession_Click);
             // 
-            // menuItemUpdateCurrentSession
+            // menuItemSyncCurrentSession
             // 
-            this.menuItemUpdateCurrentSession.Name = "menuItemUpdateCurrentSession";
-            this.menuItemUpdateCurrentSession.Size = new System.Drawing.Size(209, 22);
-            this.menuItemUpdateCurrentSession.Text = "Update current session";
-            this.menuItemUpdateCurrentSession.Click += new System.EventHandler(this.menuItemUpdateCurrentSession_Click);
+            this.menuItemSyncCurrentSession.Name = "menuItemSyncCurrentSession";
+            this.menuItemSyncCurrentSession.Size = new System.Drawing.Size(209, 22);
+            this.menuItemSyncCurrentSession.Text = "Sync current session";
+            this.menuItemSyncCurrentSession.Click += new System.EventHandler(this.menuItemSyncCurrentSession_Click);
             // 
             // menuItemStopSession
             // 
@@ -1901,7 +1903,7 @@
             this.btnSessionsSync.TabIndex = 2;
             this.btnSessionsSync.Text = "Sync session";
             this.btnSessionsSync.UseVisualStyleBackColor = true;
-            this.btnSessionsSync.Click += new System.EventHandler(this.menuItemUpdateCurrentSession_Click);
+            this.btnSessionsSync.Click += new System.EventHandler(this.menuItemSyncCurrentSession_Click);
             // 
             // btnSessionsStop
             // 
@@ -2529,6 +2531,13 @@
             // 
             this.openSessionDialog.DefaultExt = "db";
             // 
+            // menuItemChangeIPAddress
+            // 
+            this.menuItemChangeIPAddress.Name = "menuItemChangeIPAddress";
+            this.menuItemChangeIPAddress.Size = new System.Drawing.Size(209, 22);
+            this.menuItemChangeIPAddress.Text = "Change IP address";
+            this.menuItemChangeIPAddress.Click += new System.EventHandler(this.menuItemChangeIPAddress_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2788,7 +2797,7 @@
         private System.Windows.Forms.Button btnSessionsStop;
         private System.Windows.Forms.Button btnSessionsNew;
         private System.Windows.Forms.Label lblSessionsDatabase;
-        private System.Windows.Forms.ToolStripMenuItem menuItemUpdateCurrentSession;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSyncCurrentSession;
         private System.Windows.Forms.TabPage pageNew;
         private System.Windows.Forms.TableLayoutPanel tableNew;
         private System.Windows.Forms.Panel panel9;
@@ -2842,6 +2851,7 @@
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Panel panel19;
+        private System.Windows.Forms.ToolStripMenuItem menuItemChangeIPAddress;
     }
 }
 

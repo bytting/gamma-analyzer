@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Drawing;
 using System.Text;
+using System.Linq;
 using System.Windows.Forms;
 using System.Globalization;
 using Newtonsoft.Json;
@@ -1114,11 +1115,6 @@ namespace crash
             settings.DisplayLocalTime = menuItemConvertToLocalTime.Checked;
         }
 
-        private void menuItemUpdateCurrentSession_Click(object sender, EventArgs e)
-        {
-            // Update session
-        }
-
         private void btnNewStart_Click(object sender, EventArgs e)
         {            
             if (String.IsNullOrEmpty(tbNewLivetime.Text.Trim()))
@@ -1278,6 +1274,51 @@ namespace crash
         private void tbStatusIPAddress_TextChanged(object sender, EventArgs e)
         {
             ClearStatus();
+        }
+
+        private void menuItemSyncCurrentSession_Click(object sender, EventArgs e)
+        {
+            // Sync session
+            int maxIndex = session.Spectrums.Max(s => s.SessionIndex);
+
+            var existingIndices = new List<int>();
+            foreach(Spectrum s in session.Spectrums)
+                existingIndices.Add(s.SessionIndex);
+
+            var missingIndices = Enumerable.Range(0, maxIndex).Except(existingIndices);
+                                    
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
+            msg.Params.Add("command", "sync_session");
+            msg.Params.Add("session_name", session.Name);
+            msg.Params.Add("indices_list", missingIndices.ToArray());
+            sendMsg(msg);
+
+            Utils.Log.Add("Sending sync_session");
+        }
+
+        private void menuItemChangeIPAddress_Click(object sender, EventArgs e)
+        {
+            if(session == null || !session.IsLoaded)
+            {
+                MessageBox.Show("You must load a session first");
+                return;
+            }
+
+            FormAskIP form = new FormAskIP();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            session.IPAddress = form.IPAddress;
+
+            SQLiteConnection connection = new SQLiteConnection("Data Source=" + session.SessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
+            connection.Open();
+            SQLiteCommand command = new SQLiteCommand(connection);
+            command.CommandText = "update session set ip=@IP"; // FIXME: Updates all sessions
+            command.Parameters.AddWithValue("@ip", session.IPAddress);
+            command.ExecuteScalar();
+            connection.Close();
+
+            lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
         }
     }
 }
