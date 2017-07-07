@@ -49,6 +49,7 @@
             this.menuItemSaveAsCHN = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSaveAsKMZ = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSaveAsCSV = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemChangeIPAddress = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemView = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowLog = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowMap = new System.Windows.Forms.ToolStripMenuItem();
@@ -234,7 +235,6 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
-            this.menuItemChangeIPAddress = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -449,6 +449,13 @@
             this.menuItemSaveAsCSV.Text = "CSV (simple log file)";
             this.menuItemSaveAsCSV.ToolTipText = "Save session as a CSV file";
             this.menuItemSaveAsCSV.Click += new System.EventHandler(this.menuItemSaveAsCSV_Click);
+            // 
+            // menuItemChangeIPAddress
+            // 
+            this.menuItemChangeIPAddress.Name = "menuItemChangeIPAddress";
+            this.menuItemChangeIPAddress.Size = new System.Drawing.Size(209, 22);
+            this.menuItemChangeIPAddress.Text = "Change IP address";
+            this.menuItemChangeIPAddress.Click += new System.EventHandler(this.menuItemChangeIPAddress_Click);
             // 
             // menuItemView
             // 
@@ -2530,13 +2537,6 @@
             // openSessionDialog
             // 
             this.openSessionDialog.DefaultExt = "db";
-            // 
-            // menuItemChangeIPAddress
-            // 
-            this.menuItemChangeIPAddress.Name = "menuItemChangeIPAddress";
-            this.menuItemChangeIPAddress.Size = new System.Drawing.Size(209, 22);
-            this.menuItemChangeIPAddress.Text = "Change IP address";
-            this.menuItemChangeIPAddress.Click += new System.EventHandler(this.menuItemChangeIPAddress_Click);
             // 
             // FormMain
             // 

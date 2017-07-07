@@ -17,7 +17,7 @@ stop_session_error - session_name, message
 stop_session_noexist - session_name, message
 stop_session_wrongname - session_name, message
 
-sync_session - session_name, indices_list
+sync_session - session_name, last_index, indices_list
 sync_session_success - session_name
 sync_session_error - session_name, message
 sync_session_noexist - session_name, message

@@ -101,8 +101,9 @@ namespace crash
 
         public bool Add(Spectrum spec)
         {
-            // Add a new spectrum to the list of spectrums
-            Spectrums.Add(spec);
+            // Add a new spectrum to the list of spectrums            
+            Spectrums.Add(spec);                
+            
             NumChannels = spec.NumChannels;
 
             // Update state
