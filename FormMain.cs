@@ -1461,6 +1461,12 @@ CREATE TABLE `spectrum` (
 
         private void menuItemStopSession_Click(object sender, EventArgs e)
         {
+            if(session == null)
+            {
+                MessageBox.Show("No session is active");
+                return;
+            }
+
             burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
             msg.Params.Add("command", "stop_session");
             msg.Params.Add("session_name", session.Name);
@@ -2017,6 +2023,12 @@ CREATE TABLE `spectrum` (
 
         private void menuItemSyncCurrentSession_Click(object sender, EventArgs e)
         {
+            if (session == null)
+            {
+                MessageBox.Show("No session is active");
+                return;
+            }
+
             // Sync session
             int maxIndex = session.Spectrums.Max(s => s.SessionIndex);
 

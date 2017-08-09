@@ -14,9 +14,10 @@ namespace crash
     {
         public string IPAddress;
 
-        public FormAskIP()
+        public FormAskIP(string defaultIP="")
         {
             InitializeComponent();
+            tbIP.Text = defaultIP.Trim();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
