@@ -481,7 +481,23 @@ namespace crash
                         SQLiteCommand command = new SQLiteCommand(connection);
                         command.CommandText = "select id from session where name = @name";
                         command.Parameters.AddWithValue("@name", spec.SessionName);
-                        int sessionId = Convert.ToInt32(command.ExecuteScalar());
+                        object o = command.ExecuteScalar();
+                        if(o == null || o == DBNull.Value)
+                        {
+                            Utils.Log.Add("Unable to find session name " + spec.SessionName + " in database");
+                            return false;
+                        }
+                        int sessionId = Convert.ToInt32(o);
+
+                        command.CommandText = "select count(*) from spectrum where session_index = @session_index";
+                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@session_index", spec.SessionIndex);
+                        int cnt = Convert.ToInt32(command.ExecuteScalar());
+                        if (cnt > 0)
+                        {
+                            Utils.Log.Add("Spectrum " + spec.SessionIndex + " already exists in database " + spec.SessionName);
+                            return false;
+                        }
 
                         command.Parameters.Clear();
                         command.CommandText = @"
@@ -524,8 +540,24 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                             bool updateSelectedIndex = false;
                             if (lbSession.SelectedIndex == 0)
                                 updateSelectedIndex = true;
-                                                        
-                            lbSession.Items.Insert(0, spec);
+
+                            int index = 0, last_index = 0;
+
+                            for (int i = 0; i < lbSession.Items.Count; i++)
+                            {
+                                Spectrum s = lbSession.Items[i] as Spectrum;
+                                last_index = s.SessionIndex;
+                                if (last_index < spec.SessionIndex)
+                                {
+                                    index = i;
+                                    break;
+                                }
+                            }
+
+                            if (last_index > spec.SessionIndex)
+                                lbSession.Items.Add(spec);
+                            else
+                                lbSession.Items.Insert(index, spec);
 
                             if (updateSelectedIndex)
                             {
