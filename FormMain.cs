@@ -2030,18 +2030,18 @@ CREATE TABLE `spectrum` (
             }
 
             // Sync session
-            int maxIndex = session.Spectrums.Max(s => s.SessionIndex);
+            int lastKnownIndex = session.Spectrums.Max(s => s.SessionIndex);
 
             var existingIndices = new List<int>();
             foreach(Spectrum s in session.Spectrums)
                 existingIndices.Add(s.SessionIndex);
 
-            var missingIndices = Enumerable.Range(0, maxIndex).Except(existingIndices);
+            var missingIndices = Enumerable.Range(0, lastKnownIndex).Except(existingIndices);
                                     
             burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
             msg.Params.Add("command", "sync_session");            
             msg.Params.Add("session_name", session.Name);
-            msg.Params.Add("last_index", maxIndex);
+            msg.Params.Add("last_index", lastKnownIndex);
             msg.Params.Add("indices_list", missingIndices.ToArray());
             sendMsg(msg);
 
