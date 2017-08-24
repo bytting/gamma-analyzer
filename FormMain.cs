@@ -80,6 +80,7 @@ namespace crash
         List<NuclideInfo> NuclideLibrary = new List<NuclideInfo>();
 
         bool previewSession = false;
+        string previewSessionName = String.Empty;
 
         TabPage returnFromSetup = null;
 
@@ -339,31 +340,6 @@ namespace crash
                         // New session is a normal session
                         string sessionName = msg.Params["session_name"].ToString();
                         Utils.Log.Add("Session started: " + sessionName);
-
-                        ClearSession();
-
-                        string ip = msg.Params["ip"].ToString();
-                        float livetime = Convert.ToSingle(msg.Params["livetime"]);
-                        string comment = msg.Params["comment"].ToString();
-                        string sessionFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + sessionName + ".db";
-
-                        DetectorType selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
-                        session = new Session(ip, sessionFile, sessionName, comment, livetime, selectedDetector, selectedDetectorType);
-
-                        // Create session database
-                        CreateSessionFile(session);
-
-                        lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
-
-                        lblSession.Text = session.Name;
-                        lblComment.Text = session.Comment;
-
-                        // Notify external forms about new session
-                        formWaterfallLive.SetSession(session);
-                        formROILive.SetSession(session);
-                        frmMap.SetSession(session);
-
-                        tabs.SelectedTab = pageSessions;
                     }
                     btnSetupStartTest.Enabled = false;
                     btnSetupStopTest.Enabled = true;
@@ -472,7 +448,7 @@ namespace crash
                         string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + spec.SessionName + ".db";
                         if (!File.Exists(sessionPath))
                         {
-                            MessageBox.Show("Unable to find session database: " + sessionPath);
+                            Utils.Log.Add("Unable to find session database: " + sessionPath);
                             return false;
                         }
 
@@ -1554,10 +1530,27 @@ CREATE TABLE `spectrum` (
 
         private void btnSetupStartTest_Click(object sender, EventArgs e)
         {
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
+            if (!settings.DetectorTypes.Exists(dt => dt.Name == selectedDetector.TypeName))
+            {
+                MessageBox.Show("Detector type " + selectedDetector.TypeName + " not found");
+                return;
+            }
+
+            DetectorType selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
+
+            string ip = tbStatusIPAddress.Text.Trim();
+            previewSessionName = String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now) + "-setup";
+
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(ip);
             msg.Params.Add("command", "start_session");            
-            msg.Params.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
+            msg.Params.Add("session_name", previewSessionName);
+            msg.Params.Add("ip", ip);
             msg.Params.Add("livetime", 1);
+            msg.Params.Add("comment", "Setup session");
+            string jDetectorData = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.None);
+            string jDetectorTypeData = JsonConvert.SerializeObject(selectedDetectorType, Newtonsoft.Json.Formatting.None);
+            msg.Params.Add("detector_data", jDetectorData);
+            msg.Params.Add("detector_type_data", jDetectorTypeData);
             sendMsg(msg);
 
             ClearSetup();
@@ -1568,8 +1561,15 @@ CREATE TABLE `spectrum` (
 
         private void btnSetupStopTest_Click(object sender, EventArgs e)
         {
+            if(String.IsNullOrEmpty(previewSessionName))
+            {
+                MessageBox.Show("No setup session name found");
+                return;
+            }
+
             burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
             msg.Params.Add("command", "stop_session");
+            msg.Params.Add("session_name", previewSessionName);
             sendMsg(msg);
             Utils.Log.Add("Sending stop_session (setup)");
         }
@@ -1861,7 +1861,13 @@ CREATE TABLE `spectrum` (
         }
 
         private void btnNewStart_Click(object sender, EventArgs e)
-        {            
+        {   
+            if(selectedDetector == null)
+            {
+                MessageBox.Show("No detector selected");
+                return;
+            }
+
             if (String.IsNullOrEmpty(tbNewLivetime.Text.Trim()))
             {
                 MessageBox.Show("Livetime can not be empty");
@@ -1877,25 +1883,56 @@ CREATE TABLE `spectrum` (
             }
 
             selectedDetector.CurrentLivetime = ltime;
-            DetectorType detType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
 
-            SaveSettings();            
+            if (!settings.DetectorTypes.Exists(dt => dt.Name == selectedDetector.TypeName))
+            {
+                MessageBox.Show("Detector type " + selectedDetector.TypeName + " not found");
+                return;
+            }            
 
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
+            DetectorType selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
+
+            SaveSettings();
+
+            string ip = tbStatusIPAddress.Text.Trim();
+            float livetime = selectedDetector.CurrentLivetime;
+            string comment = tbNewComment.Text.Trim();
+            string sessionName = String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now);
+
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(ip);
             msg.Params.Add("command", "start_session");
-            msg.Params.Add("session_name", String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now));
-            msg.Params.Add("ip", tbStatusIPAddress.Text.Trim());
-            msg.Params.Add("livetime", selectedDetector.CurrentLivetime);
-            msg.Params.Add("comment", tbNewComment.Text.Trim());
+            msg.Params.Add("session_name", sessionName);
+            msg.Params.Add("ip", ip);
+            msg.Params.Add("livetime", livetime);
+            msg.Params.Add("comment", comment);
             string jDetectorData = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.None);
-            string jDetectorTypeData = JsonConvert.SerializeObject(detType, Newtonsoft.Json.Formatting.None);
+            string jDetectorTypeData = JsonConvert.SerializeObject(selectedDetectorType, Newtonsoft.Json.Formatting.None);
             msg.Params.Add("detector_data", jDetectorData);
             msg.Params.Add("detector_type_data", jDetectorTypeData);
             sendMsg(msg);
 
             previewSession = false;
+            Utils.Log.Add("Sending start_session");
 
-            Utils.Log.Add("Sending start_session");            
+            ClearSession();
+            
+            string sessionFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + sessionName + ".db";            
+            session = new Session(ip, sessionFile, sessionName, comment, livetime, selectedDetector, selectedDetectorType);
+
+            // Create session database
+            CreateSessionFile(session);
+
+            lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
+
+            lblSession.Text = session.Name;
+            lblComment.Text = session.Comment;
+
+            // Notify external forms about new session
+            formWaterfallLive.SetSession(session);
+            formROILive.SetSession(session);
+            frmMap.SetSession(session);
+
+            tabs.SelectedTab = pageSessions;
         }
 
         private void btnNewCancel_Click(object sender, EventArgs e)
