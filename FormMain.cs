@@ -345,8 +345,33 @@ namespace crash
                     btnSetupStopTest.Enabled = true;
                     break;
 
+                case "start_session_busy":
+                    // Session already started
+                    Utils.Log.Add(msg.Params["message"].ToString());
+                    break;
+
                 case "start_session_error":
                     // Creation of new session failed, log error message
+                    Utils.Log.Add(msg.Params["message"].ToString());
+                    break;
+
+                case "sync_session_success":
+                    // Session sync successful
+                    Utils.Log.Add(msg.Params["message"].ToString());
+                    break;
+
+                case "sync_session_noexist":
+                    // Session sync failed, does not exist
+                    Utils.Log.Add(msg.Params["message"].ToString());
+                    break;
+
+                case "sync_session_wrongname":
+                    // Session sync failed, wrong name
+                    Utils.Log.Add(msg.Params["message"].ToString());
+                    break;
+
+                case "sync_session_error":
+                    // Session sync failed
                     Utils.Log.Add(msg.Params["message"].ToString());
                     break;
 
@@ -355,6 +380,16 @@ namespace crash
                     Utils.Log.Add("Session stopped");
                     btnSetupStartTest.Enabled = true;
                     btnSetupStopTest.Enabled = false;
+                    break;
+
+                case "stop_session_noexist":
+                    // Stopping a session that does not exist
+                    Utils.Log.Add(msg.Params["message"].ToString());
+                    break;
+
+                case "stop_session_wrongname":
+                    // Stopping a session that is not running
+                    Utils.Log.Add(msg.Params["message"].ToString());
                     break;
 
                 case "stop_session_error":
@@ -1405,6 +1440,7 @@ CREATE TABLE `spectrum` (
             det.CurrentLLD = form.LLD;
             det.CurrentULD = form.ULD;
             settings.Detectors.Add(det);
+            SaveSettings();
 
             PopulateDetectorList();
             PopulateDetectors();
@@ -1747,6 +1783,7 @@ CREATE TABLE `spectrum` (
             det.CurrentLivetime = form.Livetime;
             det.CurrentLLD = form.LLD;
             det.CurrentULD = form.ULD;
+            SaveSettings();
 
             PopulateDetectorList();
             PopulateDetectors();

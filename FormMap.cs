@@ -53,7 +53,14 @@ namespace crash
         private void FormMap_Load(object sender, EventArgs e)
         {
             gmnMap.Overlays.Add(overlay);
-            gmnMap.Position = new GMap.NET.PointLatLng(59.946534, 10.598574);            
+            gmnMap.Position = new PointLatLng(59.946534, 10.598574);
+
+            gmnMap.MapProvider = ArcGIS_World_Topo_MapProvider.Instance;
+            int idx = cboxMapProvider.FindString("ArcGIS World Topo");
+            if(idx >= 0)
+            {
+                cboxMapProvider.SelectedIndex = idx;
+            }            
         }
 
         private void cboxMapMode_SelectedIndexChanged(object sender, EventArgs e)
