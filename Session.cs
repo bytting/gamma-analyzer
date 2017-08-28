@@ -102,7 +102,8 @@ namespace crash
         public bool Add(Spectrum spec)
         {
             // Add a new spectrum to the list of spectrums            
-            Spectrums.Add(spec);                
+            int idx = Array.FindLastIndex(Spectrums.ToArray(), x => x.SessionIndex < spec.SessionIndex);
+            Spectrums.Insert(idx + 1, spec);
             
             NumChannels = spec.NumChannels;
 
