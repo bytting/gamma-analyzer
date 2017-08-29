@@ -178,10 +178,10 @@ namespace crash
             Doserate = 0.0;
 
             // Trim off discriminators
-            int startChan = (int)((double)det.CurrentNumChannels * ((double)det.CurrentLLD / 100.0));
-            int endChan = (int)((double)det.CurrentNumChannels * ((double)det.CurrentULD / 100.0));
-            if(endChan > det.CurrentNumChannels) // FIXME: Can not exceed 100% atm
-                endChan = det.CurrentNumChannels;
+            int startChan = (int)((double)det.NumChannels * ((double)det.LLD / 100.0));
+            int endChan = (int)((double)det.NumChannels * ((double)det.ULD / 100.0));
+            if(endChan > det.NumChannels) // FIXME: Can not exceed 100% atm
+                endChan = det.NumChannels;
 
             // Accumulate doserates of each channel
             for (int i = startChan; i < endChan; i++)

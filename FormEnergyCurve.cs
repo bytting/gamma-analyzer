@@ -41,7 +41,7 @@ namespace crash
 
             GraphPane pane = graph.GraphPane;
             PointPairList list = new PointPairList();
-            for (int i = 0; i < Det.CurrentNumChannels; i++)
+            for (int i = 0; i < Det.NumChannels; i++)
                 list.Add((double)i, Det.GetEnergy(i));            
 
             LineItem energyCurve = pane.AddCurve(curveName, list, Color.Green, SymbolType.None);

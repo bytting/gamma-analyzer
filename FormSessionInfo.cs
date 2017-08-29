@@ -27,10 +27,10 @@ namespace crash
             lblDetector.Text = session.Detector.Serialnumber;
             lblLivetime.Text = session.Livetime.ToString();
             lblNumChannels.Text = session.NumChannels.ToString();
-            lblHV.Text = session.Detector.CurrentHV.ToString();
-            lblCoarseGain.Text = session.Detector.CurrentCoarseGain.ToString();
-            lblFineGain.Text = session.Detector.CurrentFineGain.ToString();
-            lblLLDULD.Text = session.Detector.CurrentLLD.ToString() + ", " + session.Detector.CurrentULD.ToString();            
+            lblHV.Text = session.Detector.HV.ToString();
+            lblCoarseGain.Text = session.Detector.CoarseGain.ToString();
+            lblFineGain.Text = session.Detector.FineGain.ToString();
+            lblLLDULD.Text = session.Detector.LLD.ToString() + ", " + session.Detector.ULD.ToString();            
             tbComment.Text = session.Comment;
             tbGEFactorCode.Text = session.DetectorType.GEScript;
         }

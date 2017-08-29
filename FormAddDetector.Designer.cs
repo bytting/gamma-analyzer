@@ -53,6 +53,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.tbarCurrHV = new System.Windows.Forms.TrackBar();
             this.lblCurrHV = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbPluginName = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -64,16 +66,16 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 376);
+            this.panel1.Location = new System.Drawing.Point(0, 450);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(405, 29);
+            this.panel1.Size = new System.Drawing.Size(421, 29);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(255, 0);
+            this.btnCancel.Location = new System.Drawing.Point(271, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 29);
             this.btnCancel.TabIndex = 1;
@@ -85,7 +87,7 @@
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(330, 0);
+            this.btnOk.Location = new System.Drawing.Point(346, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 29);
             this.btnOk.TabIndex = 0;
@@ -116,10 +118,12 @@
             this.tableLayoutPanel1.Controls.Add(this.tbLLD, 1, 8);
             this.tableLayoutPanel1.Controls.Add(this.tbULD, 1, 9);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.tbPluginName, 1, 10);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 11;
+            this.tableLayoutPanel1.RowCount = 12;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
@@ -131,8 +135,8 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(405, 376);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(421, 450);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // label1
@@ -158,9 +162,9 @@
             this.cboxDetectorTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxDetectorTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxDetectorTypes.FormattingEnabled = true;
-            this.cboxDetectorTypes.Location = new System.Drawing.Point(165, 37);
+            this.cboxDetectorTypes.Location = new System.Drawing.Point(171, 37);
             this.cboxDetectorTypes.Name = "cboxDetectorTypes";
-            this.cboxDetectorTypes.Size = new System.Drawing.Size(237, 22);
+            this.cboxDetectorTypes.Size = new System.Drawing.Size(247, 22);
             this.cboxDetectorTypes.TabIndex = 2;
             this.cboxDetectorTypes.SelectedIndexChanged += new System.EventHandler(this.cboxDetectorTypes_SelectedIndexChanged);
             // 
@@ -232,57 +236,57 @@
             this.cboxNumChannels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxNumChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxNumChannels.FormattingEnabled = true;
-            this.cboxNumChannels.Location = new System.Drawing.Point(165, 105);
+            this.cboxNumChannels.Location = new System.Drawing.Point(171, 105);
             this.cboxNumChannels.Name = "cboxNumChannels";
-            this.cboxNumChannels.Size = new System.Drawing.Size(237, 22);
+            this.cboxNumChannels.Size = new System.Drawing.Size(247, 22);
             this.cboxNumChannels.TabIndex = 11;
             // 
             // tbSerialnumber
             // 
             this.tbSerialnumber.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSerialnumber.Location = new System.Drawing.Point(165, 71);
+            this.tbSerialnumber.Location = new System.Drawing.Point(171, 71);
             this.tbSerialnumber.Name = "tbSerialnumber";
-            this.tbSerialnumber.Size = new System.Drawing.Size(237, 20);
+            this.tbSerialnumber.Size = new System.Drawing.Size(247, 20);
             this.tbSerialnumber.TabIndex = 12;
             // 
             // tbCoarseGain
             // 
             this.tbCoarseGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbCoarseGain.Location = new System.Drawing.Point(165, 173);
+            this.tbCoarseGain.Location = new System.Drawing.Point(171, 173);
             this.tbCoarseGain.Name = "tbCoarseGain";
-            this.tbCoarseGain.Size = new System.Drawing.Size(237, 20);
+            this.tbCoarseGain.Size = new System.Drawing.Size(247, 20);
             this.tbCoarseGain.TabIndex = 14;
             // 
             // tbFineGain
             // 
             this.tbFineGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbFineGain.Location = new System.Drawing.Point(165, 207);
+            this.tbFineGain.Location = new System.Drawing.Point(171, 207);
             this.tbFineGain.Name = "tbFineGain";
-            this.tbFineGain.Size = new System.Drawing.Size(237, 20);
+            this.tbFineGain.Size = new System.Drawing.Size(247, 20);
             this.tbFineGain.TabIndex = 15;
             // 
             // tbLivetime
             // 
             this.tbLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLivetime.Location = new System.Drawing.Point(165, 241);
+            this.tbLivetime.Location = new System.Drawing.Point(171, 241);
             this.tbLivetime.Name = "tbLivetime";
-            this.tbLivetime.Size = new System.Drawing.Size(237, 20);
+            this.tbLivetime.Size = new System.Drawing.Size(247, 20);
             this.tbLivetime.TabIndex = 17;
             // 
             // tbLLD
             // 
             this.tbLLD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLLD.Location = new System.Drawing.Point(165, 275);
+            this.tbLLD.Location = new System.Drawing.Point(171, 275);
             this.tbLLD.Name = "tbLLD";
-            this.tbLLD.Size = new System.Drawing.Size(237, 20);
+            this.tbLLD.Size = new System.Drawing.Size(247, 20);
             this.tbLLD.TabIndex = 18;
             // 
             // tbULD
             // 
             this.tbULD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbULD.Location = new System.Drawing.Point(165, 309);
+            this.tbULD.Location = new System.Drawing.Point(171, 309);
             this.tbULD.Name = "tbULD";
-            this.tbULD.Size = new System.Drawing.Size(237, 20);
+            this.tbULD.Size = new System.Drawing.Size(247, 20);
             this.tbULD.TabIndex = 19;
             // 
             // panel2
@@ -290,9 +294,9 @@
             this.panel2.Controls.Add(this.tbarCurrHV);
             this.panel2.Controls.Add(this.lblCurrHV);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(165, 139);
+            this.panel2.Location = new System.Drawing.Point(171, 139);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(237, 28);
+            this.panel2.Size = new System.Drawing.Size(247, 28);
             this.panel2.TabIndex = 20;
             // 
             // tbarCurrHV
@@ -300,7 +304,7 @@
             this.tbarCurrHV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbarCurrHV.Location = new System.Drawing.Point(0, 0);
             this.tbarCurrHV.Name = "tbarCurrHV";
-            this.tbarCurrHV.Size = new System.Drawing.Size(224, 28);
+            this.tbarCurrHV.Size = new System.Drawing.Size(234, 28);
             this.tbarCurrHV.TabIndex = 1;
             this.tbarCurrHV.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbarCurrHV.ValueChanged += new System.EventHandler(this.tbarCurrHV_ValueChanged);
@@ -309,17 +313,34 @@
             // 
             this.lblCurrHV.AutoSize = true;
             this.lblCurrHV.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblCurrHV.Location = new System.Drawing.Point(224, 0);
+            this.lblCurrHV.Location = new System.Drawing.Point(234, 0);
             this.lblCurrHV.Name = "lblCurrHV";
             this.lblCurrHV.Size = new System.Drawing.Size(13, 14);
             this.lblCurrHV.TabIndex = 0;
             this.lblCurrHV.Text = "1";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 340);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(64, 14);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Plugin name";
+            // 
+            // tbPluginName
+            // 
+            this.tbPluginName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPluginName.Location = new System.Drawing.Point(171, 343);
+            this.tbPluginName.Name = "tbPluginName";
+            this.tbPluginName.Size = new System.Drawing.Size(247, 20);
+            this.tbPluginName.TabIndex = 22;
+            // 
             // FormAddDetector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(405, 405);
+            this.ClientSize = new System.Drawing.Size(421, 479);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -366,5 +387,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TrackBar tbarCurrHV;
         private System.Windows.Forms.Label lblCurrHV;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tbPluginName;
     }
 }

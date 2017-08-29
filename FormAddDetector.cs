@@ -24,7 +24,8 @@ namespace crash
         public double FineGain { get; set; }        
         public int Livetime { get; set; }
         public int LLD { get; set; }
-        public int ULD { get; set; }        
+        public int ULD { get; set; }
+        public string PluginName { get; set; }
 
         public FormAddDetector(Detector detector, List<DetectorType> detectorTypes)
         {
@@ -39,10 +40,9 @@ namespace crash
             tbFineGain.KeyPress += CustomEvents.Numeric_KeyPress;
             tbLivetime.KeyPress += CustomEvents.Integer_KeyPress;
             tbLLD.KeyPress += CustomEvents.Integer_KeyPress;
-            tbULD.KeyPress += CustomEvents.Integer_KeyPress;            
+            tbULD.KeyPress += CustomEvents.Integer_KeyPress;
 
-            foreach (DetectorType dt in DetectorTypes)
-                cboxDetectorTypes.Items.Add(dt);
+            cboxDetectorTypes.Items.AddRange(DetectorTypes.ToArray());
 
             if(Det != null)
             {
@@ -51,15 +51,16 @@ namespace crash
                     cboxDetectorTypes.SelectedItem = cboxDetectorTypes.Items[idx];
                 tbSerialnumber.Text = Det.Serialnumber;
                 tbSerialnumber.ReadOnly = true;
-                idx = cboxNumChannels.FindStringExact(Det.CurrentNumChannels.ToString());
+                idx = cboxNumChannels.FindStringExact(Det.NumChannels.ToString());
                 if (idx != -1)
                     cboxNumChannels.SelectedItem = cboxNumChannels.Items[idx];
-                tbarCurrHV.Value = Det.CurrentHV;
-                tbCoarseGain.Text = Det.CurrentCoarseGain.ToString();
-                tbFineGain.Text = Det.CurrentFineGain.ToString();
-                tbLivetime.Text = Det.CurrentLivetime.ToString();
-                tbLLD.Text = Det.CurrentLLD.ToString();
-                tbULD.Text = Det.CurrentULD.ToString();
+                tbarCurrHV.Value = (Det.HV == 0) ? 1 : Det.HV;
+                tbCoarseGain.Text = Det.CoarseGain.ToString();
+                tbFineGain.Text = Det.FineGain.ToString();
+                tbLivetime.Text = Det.Livetime.ToString();
+                tbLLD.Text = Det.LLD.ToString();
+                tbULD.Text = Det.ULD.ToString();
+                tbPluginName.Text = Det.PluginName;
             }
         }
         
@@ -71,14 +72,15 @@ namespace crash
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(cboxDetectorTypes.Text) 
-                || String.IsNullOrEmpty(tbSerialnumber.Text)
-                || String.IsNullOrEmpty(cboxNumChannels.Text)                
-                || String.IsNullOrEmpty(tbCoarseGain.Text)
-                || String.IsNullOrEmpty(tbFineGain.Text)                
-                || String.IsNullOrEmpty(tbLivetime.Text)
-                || String.IsNullOrEmpty(tbLLD.Text)
-                || String.IsNullOrEmpty(tbULD.Text))
+            if (String.IsNullOrEmpty(cboxDetectorTypes.Text.Trim()) 
+                || String.IsNullOrEmpty(tbSerialnumber.Text.Trim())
+                || String.IsNullOrEmpty(cboxNumChannels.Text.Trim())                
+                || String.IsNullOrEmpty(tbCoarseGain.Text.Trim())
+                || String.IsNullOrEmpty(tbFineGain.Text.Trim())                
+                || String.IsNullOrEmpty(tbLivetime.Text.Trim())
+                || String.IsNullOrEmpty(tbLLD.Text.Trim())
+                || String.IsNullOrEmpty(tbULD.Text.Trim())
+                || String.IsNullOrEmpty(tbPluginName.Text.Trim()))
             {
                 MessageBox.Show("One or more required fields missing");
                 return;
@@ -86,15 +88,16 @@ namespace crash
 
             try
             {
-                DetectorType = cboxDetectorTypes.Text;
-                Serialnumber = tbSerialnumber.Text;
-                NumChannels = Convert.ToInt32(cboxNumChannels.Text);
+                DetectorType = cboxDetectorTypes.Text.Trim();
+                Serialnumber = tbSerialnumber.Text.Trim();
+                NumChannels = Convert.ToInt32(cboxNumChannels.Text.Trim());
                 HV = tbarCurrHV.Value;
-                CoarseGain = Convert.ToDouble(tbCoarseGain.Text);
-                FineGain = Convert.ToDouble(tbFineGain.Text);
-                Livetime = Convert.ToInt32(tbLivetime.Text);
-                LLD = Convert.ToInt32(tbLLD.Text);
-                ULD = Convert.ToInt32(tbULD.Text);                
+                CoarseGain = Convert.ToDouble(tbCoarseGain.Text.Trim());
+                FineGain = Convert.ToDouble(tbFineGain.Text.Trim());
+                Livetime = Convert.ToInt32(tbLivetime.Text.Trim());
+                LLD = Convert.ToInt32(tbLLD.Text.Trim());
+                ULD = Convert.ToInt32(tbULD.Text.Trim());
+                PluginName = tbPluginName.Text.Trim();
             }
             catch
             {

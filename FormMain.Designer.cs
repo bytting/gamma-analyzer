@@ -235,6 +235,7 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
+            this.columnHeaderPluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -1983,7 +1984,8 @@
             this.columnHeaderFineGain,
             this.columnHeaderLivetime,
             this.columnHeaderLLD,
-            this.columnHeaderULD});
+            this.columnHeaderULD,
+            this.columnHeaderPluginName});
             this.lvDetectors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvDetectors.FullRowSelect = true;
             this.lvDetectors.Location = new System.Drawing.Point(137, 231);
@@ -2538,6 +2540,10 @@
             // 
             this.openSessionDialog.DefaultExt = "db";
             // 
+            // columnHeaderPluginName
+            // 
+            this.columnHeaderPluginName.Text = "Plugin";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2852,6 +2858,7 @@
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.ToolStripMenuItem menuItemChangeIPAddress;
+        private System.Windows.Forms.ColumnHeader columnHeaderPluginName;
     }
 }
 

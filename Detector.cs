@@ -31,33 +31,35 @@ namespace crash
         public string TypeName { get; set; }
 
         // Current high voltage for detector
-        public int CurrentHV { get; set; }
+        public int HV { get; set; }
 
         // Current number of channels
-        public int CurrentNumChannels { get; set; }
+        public int NumChannels { get; set; }
 
         // Detector serialnumber
         public string Serialnumber { get; set; }
 
         // Current coarse gain for detector
-        public double CurrentCoarseGain { get; set; }
+        public double CoarseGain { get; set; }
 
         // Current fine gain for detector
-        public double CurrentFineGain { get; set; }
+        public double FineGain { get; set; }
 
         // Current livetime for detector
-        public int CurrentLivetime { get; set; }
+        public int Livetime { get; set; }
 
         // Current lower level discriminator for detector
-        public int CurrentLLD { get; set; }
+        public int LLD { get; set; }
 
         // Current upper level discriminator for detector
-        public int CurrentULD { get; set; }
+        public int ULD { get; set; }
 
         // List of energy curve coefficients
         [XmlArray("EnergyCurveCoefficients")]
         [XmlArrayItem("Value")]
         public List<double> EnergyCurveCoefficients { get; set; }
+
+        public string PluginName { get; set; }
 
         public Detector()
         {
@@ -69,14 +71,15 @@ namespace crash
             // Clone this detector
             Detector clone = new Detector();
             clone.TypeName = TypeName;
-            clone.CurrentHV = CurrentHV;
-            clone.CurrentNumChannels = CurrentNumChannels;
+            clone.HV = HV;
+            clone.NumChannels = NumChannels;
             clone.Serialnumber = Serialnumber;
-            clone.CurrentCoarseGain = CurrentCoarseGain;
-            clone.CurrentFineGain = CurrentFineGain;
-            clone.CurrentLivetime = CurrentLivetime;
-            clone.CurrentLLD = CurrentLLD;
-            clone.CurrentULD = CurrentULD;            
+            clone.CoarseGain = CoarseGain;
+            clone.FineGain = FineGain;
+            clone.Livetime = Livetime;
+            clone.LLD = LLD;
+            clone.ULD = ULD;
+            clone.PluginName = PluginName;
             clone.EnergyCurveCoefficients.AddRange(EnergyCurveCoefficients);
             return clone;
         }        
