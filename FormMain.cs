@@ -2116,7 +2116,7 @@ CREATE TABLE `spectrum` (
             msg.Params.Add("command", "sync_session");            
             msg.Params.Add("session_name", session.Name);
             msg.Params.Add("last_index", lastKnownIndex);
-            msg.Params.Add("indices_list", missingIndices.ToArray());
+            msg.Params.Add("indices_list", missingIndices.Take(50).ToArray()); // Max 50 indices at a time
             sendMsg(msg);
 
             Utils.Log.Add("Sending sync_session");
@@ -2139,7 +2139,7 @@ CREATE TABLE `spectrum` (
             SQLiteConnection connection = new SQLiteConnection("Data Source=" + session.SessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
             connection.Open();
             SQLiteCommand command = new SQLiteCommand(connection);
-            command.CommandText = "update session set ip=@ip"; // FIXME: Updates all sessions
+            command.CommandText = "update session set ip=@ip"; // FIXME: Updates all sessions in db
             command.Parameters.AddWithValue("@ip", session.IPAddress);
             command.ExecuteScalar();
             connection.Close();

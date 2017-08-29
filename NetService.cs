@@ -37,9 +37,14 @@ namespace burn
         //! Running state for this service
         private volatile bool running;
 
+        //! UDP configuration
+        const int servicePort = 9999;
+        const int recvTimeout = 100;
+        const int recvBufferSize = 65536;
+
         //! Network utilities        
         private Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);        
-        private EndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9999);
+        private EndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), servicePort);
 
         //! Queue with messages from GUI client
         ConcurrentQueue<ProtocolMessage> sendq = new ConcurrentQueue<ProtocolMessage>();
@@ -64,8 +69,8 @@ namespace burn
          */
         public void DoWork()
         {
-            var buffer = new byte[65536]; // FIXME: configurable size
-            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 100);
+            var buffer = new byte[recvBufferSize]; // FIXME: configurable size
+            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, recvTimeout);
 
             while (running)
             {
@@ -75,7 +80,7 @@ namespace burn
                     ProtocolMessage sendMsg;
                     if (sendq.TryDequeue(out sendMsg))
                     {                        
-                        IPEndPoint ep = new IPEndPoint(IPAddress.Parse(sendMsg.IPAddress), 9999);                        
+                        IPEndPoint ep = new IPEndPoint(IPAddress.Parse(sendMsg.IPAddress), servicePort);
                         Byte[] sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(sendMsg.Params));
                         socket.SendTo(sendBytes, (EndPoint)ep);
                     }                        
