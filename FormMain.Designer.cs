@@ -179,26 +179,17 @@
             this.pageDetectors = new System.Windows.Forms.TabPage();
             this.tableLayoutPref = new System.Windows.Forms.TableLayoutPanel();
             this.lvDetectors = new System.Windows.Forms.ListView();
-            this.columnHeaderSerialnumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderNumChannels = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderCoarseGain = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderFineGain = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderLivetime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderLLD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderULD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lvDetectorTypes = new System.Windows.Forms.ListView();
-            this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderMaxCH = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderMinHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderMaxHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderGEScript = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label17 = new System.Windows.Forms.Label();
+            this.colSerialnumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colNumChannels = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colCoarseGain = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colFineGain = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colLivetime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colLLD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colULD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colPluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label18 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.btnEditDetectorType = new System.Windows.Forms.Button();
-            this.btnAddDetectorType = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnEditDetector = new System.Windows.Forms.Button();
             this.btnAddDetector = new System.Windows.Forms.Button();
@@ -235,7 +226,10 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
-            this.columnHeaderPluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colGEScript = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colMinHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colMaxHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colMaxNumChannels = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -282,7 +276,6 @@
             this.panelSessionsControl.SuspendLayout();
             this.pageDetectors.SuspendLayout();
             this.tableLayoutPref.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
             this.pageNew.SuspendLayout();
@@ -1950,198 +1943,120 @@
             // 
             // tableLayoutPref
             // 
-            this.tableLayoutPref.ColumnCount = 3;
-            this.tableLayoutPref.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPref.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPref.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPref.Controls.Add(this.lvDetectors, 1, 2);
-            this.tableLayoutPref.Controls.Add(this.lvDetectorTypes, 1, 1);
-            this.tableLayoutPref.Controls.Add(this.label17, 0, 1);
-            this.tableLayoutPref.Controls.Add(this.label18, 0, 2);
-            this.tableLayoutPref.Controls.Add(this.panel4, 2, 1);
-            this.tableLayoutPref.Controls.Add(this.panel2, 2, 2);
+            this.tableLayoutPref.ColumnCount = 2;
+            this.tableLayoutPref.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 88.88889F));
+            this.tableLayoutPref.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111F));
+            this.tableLayoutPref.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPref.Controls.Add(this.lvDetectors, 0, 1);
+            this.tableLayoutPref.Controls.Add(this.panel2, 1, 1);
+            this.tableLayoutPref.Controls.Add(this.label18, 0, 0);
             this.tableLayoutPref.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPref.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPref.Name = "tableLayoutPref";
-            this.tableLayoutPref.RowCount = 4;
+            this.tableLayoutPref.RowCount = 2;
             this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPref.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPref.Size = new System.Drawing.Size(1342, 586);
             this.tableLayoutPref.TabIndex = 1;
             // 
             // lvDetectors
             // 
             this.lvDetectors.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderSerialnumber,
-            this.columnHeaderType,
-            this.columnHeaderNumChannels,
-            this.columnHeaderHV,
-            this.columnHeaderCoarseGain,
-            this.columnHeaderFineGain,
-            this.columnHeaderLivetime,
-            this.columnHeaderLLD,
-            this.columnHeaderULD,
-            this.columnHeaderPluginName});
+            this.colSerialnumber,
+            this.colType,
+            this.colNumChannels,
+            this.colMaxNumChannels,
+            this.colHV,
+            this.colMinHV,
+            this.colMaxHV,
+            this.colCoarseGain,
+            this.colFineGain,
+            this.colLivetime,
+            this.colLLD,
+            this.colULD,
+            this.colPluginName,
+            this.colGEScript});
             this.lvDetectors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvDetectors.FullRowSelect = true;
-            this.lvDetectors.Location = new System.Drawing.Point(137, 231);
+            this.lvDetectors.Location = new System.Drawing.Point(3, 31);
             this.lvDetectors.MultiSelect = false;
             this.lvDetectors.Name = "lvDetectors";
-            this.lvDetectors.Size = new System.Drawing.Size(1067, 194);
+            this.lvDetectors.Size = new System.Drawing.Size(1186, 552);
             this.lvDetectors.TabIndex = 8;
             this.lvDetectors.UseCompatibleStateImageBehavior = false;
             this.lvDetectors.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeaderSerialnumber
+            // colSerialnumber
             // 
-            this.columnHeaderSerialnumber.Text = "Serialnumber";
+            this.colSerialnumber.Text = "Serialnumber";
+            this.colSerialnumber.Width = 106;
             // 
-            // columnHeaderType
+            // colType
             // 
-            this.columnHeaderType.Text = "Type";
+            this.colType.Text = "Type";
+            this.colType.Width = 63;
             // 
-            // columnHeaderNumChannels
+            // colNumChannels
             // 
-            this.columnHeaderNumChannels.Text = "Num. Channels";
+            this.colNumChannels.Text = "Num. Channels";
+            this.colNumChannels.Width = 108;
             // 
-            // columnHeaderHV
+            // colHV
             // 
-            this.columnHeaderHV.Text = "Voltage";
+            this.colHV.Text = "Voltage";
+            this.colHV.Width = 69;
             // 
-            // columnHeaderCoarseGain
+            // colCoarseGain
             // 
-            this.columnHeaderCoarseGain.Text = "Coarse gain";
+            this.colCoarseGain.Text = "Coarse gain";
+            this.colCoarseGain.Width = 96;
             // 
-            // columnHeaderFineGain
+            // colFineGain
             // 
-            this.columnHeaderFineGain.Text = "Fine gain";
+            this.colFineGain.Text = "Fine gain";
+            this.colFineGain.Width = 87;
             // 
-            // columnHeaderLivetime
+            // colLivetime
             // 
-            this.columnHeaderLivetime.Text = "Livetime";
+            this.colLivetime.Text = "Livetime";
             // 
-            // columnHeaderLLD
+            // colLLD
             // 
-            this.columnHeaderLLD.Text = "LLD";
+            this.colLLD.Text = "LLD";
             // 
-            // columnHeaderULD
+            // colULD
             // 
-            this.columnHeaderULD.Text = "ULD";
+            this.colULD.Text = "ULD";
             // 
-            // lvDetectorTypes
+            // colPluginName
             // 
-            this.lvDetectorTypes.BackColor = System.Drawing.SystemColors.Window;
-            this.lvDetectorTypes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderName,
-            this.columnHeaderMaxCH,
-            this.columnHeaderMinHV,
-            this.columnHeaderMaxHV,
-            this.columnHeaderGEScript});
-            this.lvDetectorTypes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvDetectorTypes.FullRowSelect = true;
-            this.lvDetectorTypes.Location = new System.Drawing.Point(137, 31);
-            this.lvDetectorTypes.MultiSelect = false;
-            this.lvDetectorTypes.Name = "lvDetectorTypes";
-            this.lvDetectorTypes.Size = new System.Drawing.Size(1067, 194);
-            this.lvDetectorTypes.TabIndex = 3;
-            this.lvDetectorTypes.UseCompatibleStateImageBehavior = false;
-            this.lvDetectorTypes.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeaderName
-            // 
-            this.columnHeaderName.Text = "Name";
-            this.columnHeaderName.Width = 100;
-            // 
-            // columnHeaderMaxCH
-            // 
-            this.columnHeaderMaxCH.Text = "Max channels";
-            this.columnHeaderMaxCH.Width = 100;
-            // 
-            // columnHeaderMinHV
-            // 
-            this.columnHeaderMinHV.Text = "Min HV";
-            this.columnHeaderMinHV.Width = 100;
-            // 
-            // columnHeaderMaxHV
-            // 
-            this.columnHeaderMaxHV.Text = "Max HV";
-            this.columnHeaderMaxHV.Width = 100;
-            // 
-            // columnHeaderGEScript
-            // 
-            this.columnHeaderGEScript.Text = "GE Script";
-            this.columnHeaderGEScript.Width = 114;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(3, 28);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(84, 15);
-            this.label17.TabIndex = 5;
-            this.label17.Text = "Detector types";
+            this.colPluginName.Text = "Plugin";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(3, 228);
+            this.label18.Location = new System.Drawing.Point(3, 0);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(59, 15);
             this.label18.TabIndex = 6;
             this.label18.Text = "Detectors";
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.btnEditDetectorType);
-            this.panel4.Controls.Add(this.btnAddDetectorType);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(1210, 31);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(129, 194);
-            this.panel4.TabIndex = 9;
-            // 
-            // btnEditDetectorType
-            // 
-            this.btnEditDetectorType.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnEditDetectorType.Location = new System.Drawing.Point(0, 23);
-            this.btnEditDetectorType.Name = "btnEditDetectorType";
-            this.btnEditDetectorType.Size = new System.Drawing.Size(129, 23);
-            this.btnEditDetectorType.TabIndex = 5;
-            this.btnEditDetectorType.Text = "Edit";
-            this.btnEditDetectorType.UseVisualStyleBackColor = true;
-            this.btnEditDetectorType.Click += new System.EventHandler(this.btnEditDetectorType_Click);
-            // 
-            // btnAddDetectorType
-            // 
-            this.btnAddDetectorType.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnAddDetectorType.Location = new System.Drawing.Point(0, 0);
-            this.btnAddDetectorType.Name = "btnAddDetectorType";
-            this.btnAddDetectorType.Size = new System.Drawing.Size(129, 23);
-            this.btnAddDetectorType.TabIndex = 4;
-            this.btnAddDetectorType.Text = "Add";
-            this.btnAddDetectorType.UseVisualStyleBackColor = true;
-            this.btnAddDetectorType.Click += new System.EventHandler(this.btnAddDetectorType_Click);
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.btnEditDetector);
             this.panel2.Controls.Add(this.btnAddDetector);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(1210, 231);
+            this.panel2.Location = new System.Drawing.Point(1195, 31);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(129, 194);
+            this.panel2.Size = new System.Drawing.Size(144, 552);
             this.panel2.TabIndex = 10;
             // 
             // btnEditDetector
             // 
             this.btnEditDetector.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnEditDetector.Location = new System.Drawing.Point(0, 23);
+            this.btnEditDetector.Location = new System.Drawing.Point(0, 26);
             this.btnEditDetector.Name = "btnEditDetector";
-            this.btnEditDetector.Size = new System.Drawing.Size(129, 23);
+            this.btnEditDetector.Size = new System.Drawing.Size(144, 26);
             this.btnEditDetector.TabIndex = 8;
             this.btnEditDetector.Text = "Edit";
             this.btnEditDetector.UseVisualStyleBackColor = true;
@@ -2152,7 +2067,7 @@
             this.btnAddDetector.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnAddDetector.Location = new System.Drawing.Point(0, 0);
             this.btnAddDetector.Name = "btnAddDetector";
-            this.btnAddDetector.Size = new System.Drawing.Size(129, 23);
+            this.btnAddDetector.Size = new System.Drawing.Size(144, 26);
             this.btnAddDetector.TabIndex = 7;
             this.btnAddDetector.Text = "Add";
             this.btnAddDetector.UseVisualStyleBackColor = true;
@@ -2540,9 +2455,22 @@
             // 
             this.openSessionDialog.DefaultExt = "db";
             // 
-            // columnHeaderPluginName
+            // colGEScript
             // 
-            this.columnHeaderPluginName.Text = "Plugin";
+            this.colGEScript.Text = "GE Script";
+            // 
+            // colMinHV
+            // 
+            this.colMinHV.Text = "Min HV";
+            // 
+            // colMaxHV
+            // 
+            this.colMaxHV.Text = "Max HV";
+            // 
+            // colMaxNumChannels
+            // 
+            this.colMaxNumChannels.Text = "Max Num. Channels";
+            this.colMaxNumChannels.Width = 108;
             // 
             // FormMain
             // 
@@ -2630,7 +2558,6 @@
             this.pageDetectors.ResumeLayout(false);
             this.tableLayoutPref.ResumeLayout(false);
             this.tableLayoutPref.PerformLayout();
-            this.panel4.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.pageNew.ResumeLayout(false);
@@ -2739,22 +2666,15 @@
         private System.Windows.Forms.TabPage pageDetectors;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPref;
         private System.Windows.Forms.ListView lvDetectors;
-        private System.Windows.Forms.ColumnHeader columnHeaderSerialnumber;
-        private System.Windows.Forms.ColumnHeader columnHeaderType;
-        private System.Windows.Forms.ColumnHeader columnHeaderNumChannels;
-        private System.Windows.Forms.ColumnHeader columnHeaderHV;
-        private System.Windows.Forms.ColumnHeader columnHeaderCoarseGain;
-        private System.Windows.Forms.ColumnHeader columnHeaderFineGain;
-        private System.Windows.Forms.ColumnHeader columnHeaderLivetime;
-        private System.Windows.Forms.ColumnHeader columnHeaderLLD;
-        private System.Windows.Forms.ColumnHeader columnHeaderULD;
-        private System.Windows.Forms.ListView lvDetectorTypes;
-        private System.Windows.Forms.ColumnHeader columnHeaderName;
-        private System.Windows.Forms.ColumnHeader columnHeaderMaxCH;
-        private System.Windows.Forms.ColumnHeader columnHeaderMinHV;
-        private System.Windows.Forms.ColumnHeader columnHeaderMaxHV;
-        private System.Windows.Forms.Button btnAddDetectorType;
-        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ColumnHeader colSerialnumber;
+        private System.Windows.Forms.ColumnHeader colType;
+        private System.Windows.Forms.ColumnHeader colNumChannels;
+        private System.Windows.Forms.ColumnHeader colHV;
+        private System.Windows.Forms.ColumnHeader colCoarseGain;
+        private System.Windows.Forms.ColumnHeader colFineGain;
+        private System.Windows.Forms.ColumnHeader colLivetime;
+        private System.Windows.Forms.ColumnHeader colLLD;
+        private System.Windows.Forms.ColumnHeader colULD;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button btnAddDetector;
         private System.Windows.Forms.ToolStripMenuItem menuItemStartNewSession;
@@ -2787,11 +2707,8 @@
         private System.Windows.Forms.ToolStrip toolsSession;
         private System.Windows.Forms.ToolStripDropDownButton btnOptions;
         private System.Windows.Forms.ToolStripMenuItem menuItemSubtractBackground;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Button btnEditDetectorType;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnEditDetector;
-        private System.Windows.Forms.ColumnHeader columnHeaderGEScript;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label lblSessionETOL;
         private System.Windows.Forms.ContextMenuStrip contextMenuNuclides;
@@ -2858,7 +2775,11 @@
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.ToolStripMenuItem menuItemChangeIPAddress;
-        private System.Windows.Forms.ColumnHeader columnHeaderPluginName;
+        private System.Windows.Forms.ColumnHeader colPluginName;
+        private System.Windows.Forms.ColumnHeader colGEScript;
+        private System.Windows.Forms.ColumnHeader colMinHV;
+        private System.Windows.Forms.ColumnHeader colMaxHV;
+        private System.Windows.Forms.ColumnHeader colMaxNumChannels;
     }
 }
 

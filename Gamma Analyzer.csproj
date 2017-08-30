@@ -161,7 +161,6 @@
     <Compile Include="CustomEventArgs.cs" />
     <Compile Include="CustomEvents.cs" />
     <Compile Include="Detector.cs" />
-    <Compile Include="DetectorType.cs" />
     <Compile Include="EnergyComp.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="FormAddDetector.cs">
@@ -169,12 +168,6 @@
     </Compile>
     <Compile Include="FormAddDetector.Designer.cs">
       <DependentUpon>FormAddDetector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormAddDetectorType.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormAddDetectorType.Designer.cs">
-      <DependentUpon>FormAddDetectorType.cs</DependentUpon>
     </Compile>
     <Compile Include="FormAskCoordinates.cs">
       <SubType>Form</SubType>
@@ -257,9 +250,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAddDetector.resx">
       <DependentUpon>FormAddDetector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormAddDetectorType.resx">
-      <DependentUpon>FormAddDetectorType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAskCoordinates.resx">
       <DependentUpon>FormAskCoordinates.cs</DependentUpon>

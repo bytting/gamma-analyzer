@@ -31,14 +31,13 @@ namespace crash
     {
         public GASettings() 
         {
-            SessionRootDirectory = Path.GetPathRoot(Environment.SystemDirectory);
+            SessionRootDirectory = GAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "Sessions";
+            if (!Directory.Exists(SessionRootDirectory))
+                Directory.CreateDirectory(SessionRootDirectory);
+
             LastIP = "";
             DisplayLocalTime = true;
         }
-
-        // List of detector type definitions
-        [XmlArray("DetectorTypes")]
-        public List<DetectorType> DetectorTypes = new List<DetectorType>();
 
         // List of detector definitions
         [XmlArray("Detectors")]

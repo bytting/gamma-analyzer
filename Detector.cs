@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace crash
 {    
@@ -28,38 +29,66 @@ namespace crash
     public class Detector
     {
         // Name of detector type
+        [JsonProperty("type_name")]
         public string TypeName { get; set; }
 
-        // Current high voltage for detector
-        public int HV { get; set; }
+        // Filename of python GE script used for this detector
+        [JsonProperty("ge_script")]
+        public string GEScript { get; set; }
 
-        // Current number of channels
+        // High voltage for detector
+        [JsonProperty("voltage")]
+        public int Voltage { get; set; }
+
+        // Min allowed high voltage for this detector
+        [JsonProperty("min_voltage")]
+        public int MinVoltage { get; set; }
+
+        // Max allowed high voltage for this detector
+        [JsonProperty("max_voltage")]
+        public int MaxVoltage { get; set; }
+
+        // Number of channels
+        [JsonProperty("num_channels")]
         public int NumChannels { get; set; }
 
+        // Max number of channels allowed for this detector
+        [JsonProperty("max_num_channels")]
+        public int MaxNumChannels { get; set; }
+
         // Detector serialnumber
+        [JsonProperty("serialnumber")]
         public string Serialnumber { get; set; }
 
-        // Current coarse gain for detector
+        // Coarse gain for detector
+        [JsonProperty("course_gain")]
         public double CoarseGain { get; set; }
 
-        // Current fine gain for detector
+        // Fine gain for detector
+        [JsonProperty("fine_gain")]
         public double FineGain { get; set; }
 
-        // Current livetime for detector
+        // Livetime for detector
+        [JsonProperty("livetime")]
         public int Livetime { get; set; }
 
-        // Current lower level discriminator for detector
+        // Lower level discriminator for detector
+        [JsonProperty("lld")]
         public int LLD { get; set; }
 
-        // Current upper level discriminator for detector
+        // Upper level discriminator for detector
+        [JsonProperty("uld")]
         public int ULD { get; set; }
+
+        // Name of plugin to use on gamma-collector
+        [JsonProperty("plugin_name")]
+        public string PluginName { get; set; }
 
         // List of energy curve coefficients
         [XmlArray("EnergyCurveCoefficients")]
         [XmlArrayItem("Value")]
-        public List<double> EnergyCurveCoefficients { get; set; }
-
-        public string PluginName { get; set; }
+        [JsonProperty("energy_curve_coefficients")]
+        public List<double> EnergyCurveCoefficients { get; set; }        
 
         public Detector()
         {
@@ -71,8 +100,12 @@ namespace crash
             // Clone this detector
             Detector clone = new Detector();
             clone.TypeName = TypeName;
-            clone.HV = HV;
+            clone.GEScript = GEScript;
+            clone.Voltage = Voltage;
+            clone.MinVoltage = MinVoltage;
+            clone.MaxVoltage = MaxVoltage;
             clone.NumChannels = NumChannels;
+            clone.MaxNumChannels = MaxNumChannels;
             clone.Serialnumber = Serialnumber;
             clone.CoarseGain = CoarseGain;
             clone.FineGain = FineGain;

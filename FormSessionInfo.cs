@@ -27,19 +27,19 @@ namespace crash
             lblDetector.Text = session.Detector.Serialnumber;
             lblLivetime.Text = session.Livetime.ToString();
             lblNumChannels.Text = session.NumChannels.ToString();
-            lblHV.Text = session.Detector.HV.ToString();
+            lblHV.Text = session.Detector.Voltage.ToString();
             lblCoarseGain.Text = session.Detector.CoarseGain.ToString();
             lblFineGain.Text = session.Detector.FineGain.ToString();
             lblLLDULD.Text = session.Detector.LLD.ToString() + ", " + session.Detector.ULD.ToString();            
             tbComment.Text = session.Comment;
-            tbGEFactorCode.Text = session.DetectorType.GEScript;
+            tbGEFactorCode.Text = session.Detector.GEScript;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
+
         {
             Close();
         }
-
         private void btnOk_Click(object sender, EventArgs e)
         {
             session.Comment = tbComment.Text;

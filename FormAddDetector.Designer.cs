@@ -32,32 +32,40 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableParameters = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.cboxDetectorTypes = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cboxNumChannels = new System.Windows.Forms.ComboBox();
             this.tbSerialnumber = new System.Windows.Forms.TextBox();
-            this.tbCoarseGain = new System.Windows.Forms.TextBox();
-            this.tbFineGain = new System.Windows.Forms.TextBox();
-            this.tbLivetime = new System.Windows.Forms.TextBox();
-            this.tbLLD = new System.Windows.Forms.TextBox();
-            this.tbULD = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cboxNumChannels = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panelVoltage = new System.Windows.Forms.Panel();
             this.tbarCurrHV = new System.Windows.Forms.TrackBar();
             this.lblCurrHV = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbCoarseGain = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tbFineGain = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tbLivetime = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tbLLD = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tbULD = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tbPluginName = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tbMinHV = new System.Windows.Forms.TextBox();
+            this.tbMaxHV = new System.Windows.Forms.TextBox();
+            this.tbGEScript = new System.Windows.Forms.TextBox();
+            this.tbTypeName = new System.Windows.Forms.TextBox();
+            this.cboxMaxNumChannels = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.tableParameters.SuspendLayout();
+            this.panelVoltage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarCurrHV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,18 +74,18 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 405);
+            this.panel1.Location = new System.Drawing.Point(0, 508);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(421, 29);
+            this.panel1.Size = new System.Drawing.Size(610, 30);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(271, 0);
+            this.btnCancel.Location = new System.Drawing.Point(376, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 29);
+            this.btnCancel.Size = new System.Drawing.Size(117, 30);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -87,224 +95,167 @@
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(346, 0);
+            this.btnOk.Location = new System.Drawing.Point(493, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 29);
+            this.btnOk.Size = new System.Drawing.Size(117, 30);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
-            // tableLayoutPanel1
+            // tableParameters
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.cboxDetectorTypes, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.label9, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.cboxNumChannels, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.tbSerialnumber, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.tbCoarseGain, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.tbFineGain, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.tbLivetime, 1, 7);
-            this.tableLayoutPanel1.Controls.Add(this.tbLLD, 1, 8);
-            this.tableLayoutPanel1.Controls.Add(this.tbULD, 1, 9);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 10);
-            this.tableLayoutPanel1.Controls.Add(this.tbPluginName, 1, 10);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 12;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(421, 405);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.tableParameters.ColumnCount = 2;
+            this.tableParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 170F));
+            this.tableParameters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableParameters.Controls.Add(this.label1, 0, 2);
+            this.tableParameters.Controls.Add(this.label2, 0, 1);
+            this.tableParameters.Controls.Add(this.tbSerialnumber, 1, 2);
+            this.tableParameters.Controls.Add(this.label3, 0, 4);
+            this.tableParameters.Controls.Add(this.cboxNumChannels, 1, 4);
+            this.tableParameters.Controls.Add(this.label11, 0, 3);
+            this.tableParameters.Controls.Add(this.label12, 0, 5);
+            this.tableParameters.Controls.Add(this.label13, 0, 6);
+            this.tableParameters.Controls.Add(this.label4, 0, 7);
+            this.tableParameters.Controls.Add(this.panelVoltage, 1, 7);
+            this.tableParameters.Controls.Add(this.label5, 0, 8);
+            this.tableParameters.Controls.Add(this.tbCoarseGain, 1, 8);
+            this.tableParameters.Controls.Add(this.label6, 0, 9);
+            this.tableParameters.Controls.Add(this.tbFineGain, 1, 9);
+            this.tableParameters.Controls.Add(this.label8, 0, 10);
+            this.tableParameters.Controls.Add(this.tbLivetime, 1, 10);
+            this.tableParameters.Controls.Add(this.label9, 0, 11);
+            this.tableParameters.Controls.Add(this.tbLLD, 1, 11);
+            this.tableParameters.Controls.Add(this.label10, 0, 12);
+            this.tableParameters.Controls.Add(this.tbULD, 1, 12);
+            this.tableParameters.Controls.Add(this.label7, 0, 13);
+            this.tableParameters.Controls.Add(this.tbPluginName, 1, 13);
+            this.tableParameters.Controls.Add(this.label14, 0, 14);
+            this.tableParameters.Controls.Add(this.tbMinHV, 1, 5);
+            this.tableParameters.Controls.Add(this.tbMaxHV, 1, 6);
+            this.tableParameters.Controls.Add(this.tbGEScript, 1, 14);
+            this.tableParameters.Controls.Add(this.tbTypeName, 1, 1);
+            this.tableParameters.Controls.Add(this.cboxMaxNumChannels, 1, 3);
+            this.tableParameters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableParameters.Location = new System.Drawing.Point(0, 0);
+            this.tableParameters.Name = "tableParameters";
+            this.tableParameters.RowCount = 16;
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableParameters.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableParameters.Size = new System.Drawing.Size(610, 508);
+            this.tableParameters.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 68);
+            this.label1.Location = new System.Drawing.Point(3, 58);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 14);
+            this.label1.Size = new System.Drawing.Size(82, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "Serialnumber";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 34);
+            this.label2.Location = new System.Drawing.Point(3, 26);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 14);
+            this.label2.Size = new System.Drawing.Size(78, 15);
             this.label2.TabIndex = 1;
             this.label2.Text = "Detector type";
             // 
-            // cboxDetectorTypes
+            // tbSerialnumber
             // 
-            this.cboxDetectorTypes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxDetectorTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxDetectorTypes.FormattingEnabled = true;
-            this.cboxDetectorTypes.Location = new System.Drawing.Point(171, 37);
-            this.cboxDetectorTypes.Name = "cboxDetectorTypes";
-            this.cboxDetectorTypes.Size = new System.Drawing.Size(247, 22);
-            this.cboxDetectorTypes.TabIndex = 2;
-            this.cboxDetectorTypes.SelectedIndexChanged += new System.EventHandler(this.cboxDetectorTypes_SelectedIndexChanged);
+            this.tbSerialnumber.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSerialnumber.Location = new System.Drawing.Point(173, 61);
+            this.tbSerialnumber.Name = "tbSerialnumber";
+            this.tbSerialnumber.Size = new System.Drawing.Size(434, 21);
+            this.tbSerialnumber.TabIndex = 12;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 102);
+            this.label3.Location = new System.Drawing.Point(3, 122);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(142, 14);
+            this.label3.Size = new System.Drawing.Size(91, 15);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Current number of channels";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 136);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 14);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Current HV";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 170);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(103, 14);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Current coarse gain";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 204);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(87, 14);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Current fine gain";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 238);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(113, 14);
-            this.label8.TabIndex = 8;
-            this.label8.Text = "Current livetime (sec.)";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 272);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(65, 14);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Current LLD";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 306);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(66, 14);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "Current ULD";
+            this.label3.Text = "Num. channels";
             // 
             // cboxNumChannels
             // 
             this.cboxNumChannels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxNumChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxNumChannels.FormattingEnabled = true;
-            this.cboxNumChannels.Location = new System.Drawing.Point(171, 105);
+            this.cboxNumChannels.Location = new System.Drawing.Point(173, 125);
             this.cboxNumChannels.Name = "cboxNumChannels";
-            this.cboxNumChannels.Size = new System.Drawing.Size(247, 22);
+            this.cboxNumChannels.Size = new System.Drawing.Size(434, 23);
             this.cboxNumChannels.TabIndex = 11;
             // 
-            // tbSerialnumber
+            // label11
             // 
-            this.tbSerialnumber.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSerialnumber.Location = new System.Drawing.Point(171, 71);
-            this.tbSerialnumber.Name = "tbSerialnumber";
-            this.tbSerialnumber.Size = new System.Drawing.Size(247, 20);
-            this.tbSerialnumber.TabIndex = 12;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(3, 90);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(113, 15);
+            this.label11.TabIndex = 23;
+            this.label11.Text = "Max num. channels";
             // 
-            // tbCoarseGain
+            // label12
             // 
-            this.tbCoarseGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbCoarseGain.Location = new System.Drawing.Point(171, 173);
-            this.tbCoarseGain.Name = "tbCoarseGain";
-            this.tbCoarseGain.Size = new System.Drawing.Size(247, 20);
-            this.tbCoarseGain.TabIndex = 14;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(3, 154);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(68, 15);
+            this.label12.TabIndex = 24;
+            this.label12.Text = "Min voltage";
             // 
-            // tbFineGain
+            // label13
             // 
-            this.tbFineGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbFineGain.Location = new System.Drawing.Point(171, 207);
-            this.tbFineGain.Name = "tbFineGain";
-            this.tbFineGain.Size = new System.Drawing.Size(247, 20);
-            this.tbFineGain.TabIndex = 15;
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(3, 186);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(70, 15);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "Max voltage";
             // 
-            // tbLivetime
+            // label4
             // 
-            this.tbLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLivetime.Location = new System.Drawing.Point(171, 241);
-            this.tbLivetime.Name = "tbLivetime";
-            this.tbLivetime.Size = new System.Drawing.Size(247, 20);
-            this.tbLivetime.TabIndex = 17;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 218);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 15);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Voltage";
             // 
-            // tbLLD
+            // panelVoltage
             // 
-            this.tbLLD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLLD.Location = new System.Drawing.Point(171, 275);
-            this.tbLLD.Name = "tbLLD";
-            this.tbLLD.Size = new System.Drawing.Size(247, 20);
-            this.tbLLD.TabIndex = 18;
-            // 
-            // tbULD
-            // 
-            this.tbULD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbULD.Location = new System.Drawing.Point(171, 309);
-            this.tbULD.Name = "tbULD";
-            this.tbULD.Size = new System.Drawing.Size(247, 20);
-            this.tbULD.TabIndex = 19;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.tbarCurrHV);
-            this.panel2.Controls.Add(this.lblCurrHV);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(171, 139);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(247, 28);
-            this.panel2.TabIndex = 20;
+            this.panelVoltage.Controls.Add(this.tbarCurrHV);
+            this.panelVoltage.Controls.Add(this.lblCurrHV);
+            this.panelVoltage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelVoltage.Location = new System.Drawing.Point(173, 221);
+            this.panelVoltage.Name = "panelVoltage";
+            this.panelVoltage.Size = new System.Drawing.Size(434, 26);
+            this.panelVoltage.TabIndex = 20;
             // 
             // tbarCurrHV
             // 
             this.tbarCurrHV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbarCurrHV.Location = new System.Drawing.Point(0, 0);
             this.tbarCurrHV.Name = "tbarCurrHV";
-            this.tbarCurrHV.Size = new System.Drawing.Size(234, 28);
+            this.tbarCurrHV.Size = new System.Drawing.Size(420, 26);
             this.tbarCurrHV.TabIndex = 1;
             this.tbarCurrHV.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbarCurrHV.ValueChanged += new System.EventHandler(this.tbarCurrHV_ValueChanged);
@@ -313,36 +264,176 @@
             // 
             this.lblCurrHV.AutoSize = true;
             this.lblCurrHV.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblCurrHV.Location = new System.Drawing.Point(234, 0);
+            this.lblCurrHV.Location = new System.Drawing.Point(420, 0);
             this.lblCurrHV.Name = "lblCurrHV";
-            this.lblCurrHV.Size = new System.Drawing.Size(13, 14);
+            this.lblCurrHV.Size = new System.Drawing.Size(14, 15);
             this.lblCurrHV.TabIndex = 0;
             this.lblCurrHV.Text = "1";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 250);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(75, 15);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Coarse gain";
+            // 
+            // tbCoarseGain
+            // 
+            this.tbCoarseGain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbCoarseGain.Location = new System.Drawing.Point(173, 253);
+            this.tbCoarseGain.Name = "tbCoarseGain";
+            this.tbCoarseGain.Size = new System.Drawing.Size(434, 21);
+            this.tbCoarseGain.TabIndex = 14;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 282);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(58, 15);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Fine gain";
+            // 
+            // tbFineGain
+            // 
+            this.tbFineGain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbFineGain.Location = new System.Drawing.Point(173, 285);
+            this.tbFineGain.Name = "tbFineGain";
+            this.tbFineGain.Size = new System.Drawing.Size(434, 21);
+            this.tbFineGain.TabIndex = 15;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 314);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(87, 15);
+            this.label8.TabIndex = 8;
+            this.label8.Text = "Livetime (sec.)";
+            // 
+            // tbLivetime
+            // 
+            this.tbLivetime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbLivetime.Location = new System.Drawing.Point(173, 317);
+            this.tbLivetime.Name = "tbLivetime";
+            this.tbLivetime.Size = new System.Drawing.Size(434, 21);
+            this.tbLivetime.TabIndex = 17;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 346);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(30, 15);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "LLD";
+            // 
+            // tbLLD
+            // 
+            this.tbLLD.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbLLD.Location = new System.Drawing.Point(173, 349);
+            this.tbLLD.Name = "tbLLD";
+            this.tbLLD.Size = new System.Drawing.Size(434, 21);
+            this.tbLLD.TabIndex = 18;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(3, 378);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(32, 15);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "ULD";
+            // 
+            // tbULD
+            // 
+            this.tbULD.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbULD.Location = new System.Drawing.Point(173, 381);
+            this.tbULD.Name = "tbULD";
+            this.tbULD.Size = new System.Drawing.Size(434, 21);
+            this.tbULD.TabIndex = 19;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 340);
+            this.label7.Location = new System.Drawing.Point(3, 410);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 14);
+            this.label7.Size = new System.Drawing.Size(77, 15);
             this.label7.TabIndex = 21;
             this.label7.Text = "Plugin name";
             // 
             // tbPluginName
             // 
             this.tbPluginName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPluginName.Location = new System.Drawing.Point(171, 343);
+            this.tbPluginName.Location = new System.Drawing.Point(173, 413);
             this.tbPluginName.Name = "tbPluginName";
-            this.tbPluginName.Size = new System.Drawing.Size(247, 20);
+            this.tbPluginName.Size = new System.Drawing.Size(434, 21);
             this.tbPluginName.TabIndex = 22;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 442);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(58, 15);
+            this.label14.TabIndex = 26;
+            this.label14.Text = "GE Script";
+            // 
+            // tbMinHV
+            // 
+            this.tbMinHV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbMinHV.Location = new System.Drawing.Point(173, 157);
+            this.tbMinHV.Name = "tbMinHV";
+            this.tbMinHV.Size = new System.Drawing.Size(434, 21);
+            this.tbMinHV.TabIndex = 29;
+            // 
+            // tbMaxHV
+            // 
+            this.tbMaxHV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbMaxHV.Location = new System.Drawing.Point(173, 189);
+            this.tbMaxHV.Name = "tbMaxHV";
+            this.tbMaxHV.Size = new System.Drawing.Size(434, 21);
+            this.tbMaxHV.TabIndex = 30;
+            // 
+            // tbGEScript
+            // 
+            this.tbGEScript.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbGEScript.Location = new System.Drawing.Point(173, 445);
+            this.tbGEScript.Name = "tbGEScript";
+            this.tbGEScript.Size = new System.Drawing.Size(434, 21);
+            this.tbGEScript.TabIndex = 31;
+            // 
+            // tbTypeName
+            // 
+            this.tbTypeName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbTypeName.Location = new System.Drawing.Point(173, 29);
+            this.tbTypeName.Name = "tbTypeName";
+            this.tbTypeName.Size = new System.Drawing.Size(434, 21);
+            this.tbTypeName.TabIndex = 32;
+            // 
+            // cboxMaxNumChannels
+            // 
+            this.cboxMaxNumChannels.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxMaxNumChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxMaxNumChannels.FormattingEnabled = true;
+            this.cboxMaxNumChannels.Items.AddRange(new object[] {
+            ""});
+            this.cboxMaxNumChannels.Location = new System.Drawing.Point(173, 93);
+            this.cboxMaxNumChannels.Name = "cboxMaxNumChannels";
+            this.cboxMaxNumChannels.Size = new System.Drawing.Size(434, 23);
+            this.cboxMaxNumChannels.TabIndex = 33;
+            this.cboxMaxNumChannels.SelectedIndexChanged += new System.EventHandler(this.cboxMaxNumChannels_SelectedIndexChanged);
             // 
             // FormAddDetector
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(421, 434);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.ClientSize = new System.Drawing.Size(610, 538);
+            this.Controls.Add(this.tableParameters);
             this.Controls.Add(this.panel1);
+            this.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -352,10 +443,10 @@
             this.Text = "Gamma Analyzer - Add Detector";
             this.Load += new System.EventHandler(this.FormAddDetector_Load);
             this.panel1.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.tableParameters.ResumeLayout(false);
+            this.tableParameters.PerformLayout();
+            this.panelVoltage.ResumeLayout(false);
+            this.panelVoltage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarCurrHV)).EndInit();
             this.ResumeLayout(false);
 
@@ -364,12 +455,11 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableParameters;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cboxDetectorTypes;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -384,10 +474,19 @@
         private System.Windows.Forms.TextBox tbLivetime;
         private System.Windows.Forms.TextBox tbLLD;
         private System.Windows.Forms.TextBox tbULD;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panelVoltage;
         private System.Windows.Forms.TrackBar tbarCurrHV;
         private System.Windows.Forms.Label lblCurrHV;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tbPluginName;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox tbMinHV;
+        private System.Windows.Forms.TextBox tbMaxHV;
+        private System.Windows.Forms.TextBox tbGEScript;
+        private System.Windows.Forms.TextBox tbTypeName;
+        private System.Windows.Forms.ComboBox cboxMaxNumChannels;
     }
 }

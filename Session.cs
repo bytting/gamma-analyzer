@@ -51,9 +51,6 @@ namespace crash
         // Detector definition used with this session
         public Detector Detector { get; set; }
 
-        // Detector type definition used with this session
-        public DetectorType DetectorType { get; set; }
-
         // Number of channels used with this session. Ignore this when serializing        
         public float NumChannels { get; private set; }
 
@@ -84,7 +81,7 @@ namespace crash
             Clear();            
         }
 
-        public Session(string ip, string sessionFile, string name, string comment, float livetime, Detector det, DetectorType detType)
+        public Session(string ip, string sessionFile, string name, string comment, float livetime, Detector det)
         {
             Spectrums = new List<Spectrum>();
             Clear();
@@ -95,7 +92,6 @@ namespace crash
             Comment = comment;
             Livetime = livetime;
             Detector = det;
-            DetectorType = detType;
             LoadGEFactor();
         }
 
@@ -125,7 +121,6 @@ namespace crash
             Comment = String.Empty;
             Livetime = 0;            
             Detector = null;
-            DetectorType = null;            
             NumChannels = 0;
             MaxChannelCount = 0;
             MinChannelCount = 0;
@@ -138,10 +133,7 @@ namespace crash
         {
             // Initialize GE factor function if GE script exists
 
-            if (DetectorType == null)
-                return false;
-
-            string geScriptFile = GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + DetectorType.GEScript;
+            string geScriptFile = GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + Detector.GEScript;
 
             if (!File.Exists(geScriptFile))
                 return false;

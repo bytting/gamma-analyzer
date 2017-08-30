@@ -157,7 +157,6 @@ namespace crash
 
                 // Populate UI
                 tbPreferencesSessionDir.Text = settings.SessionRootDirectory;
-                PopulateDetectorTypeList();
                 PopulateDetectorList();
                 PopulateDetectors();
 
@@ -411,10 +410,10 @@ namespace crash
                     // Set gain command executed successfully
                     Utils.Log.Add("detector_config_success: " + msg.Params["detector_type"] + " " + msg.Params["voltage"] + " "
                         + msg.Params["coarse_gain"] + " " + msg.Params["fine_gain"] + " " + msg.Params["num_channels"] + " "
-                        + msg.Params["lld"] + " " + msg.Params["uld"]);
+                        + msg.Params["lld"] + " " + msg.Params["uld"] + " " + msg.Params["plugin_name"]);
 
                     // Update selected detector parameters
-                    selectedDetector.HV = Convert.ToInt32(msg.Params["voltage"]);
+                    selectedDetector.Voltage = Convert.ToInt32(msg.Params["voltage"]);
                     selectedDetector.CoarseGain = Convert.ToDouble(msg.Params["coarse_gain"], CultureInfo.InvariantCulture);
                     selectedDetector.FineGain = Convert.ToDouble(msg.Params["fine_gain"], CultureInfo.InvariantCulture);
                     selectedDetector.NumChannels = Convert.ToInt32(msg.Params["num_channels"]);
@@ -607,8 +606,7 @@ CREATE TABLE `session` (
 	`ip` TEXT NOT NULL,
 	`comment` TEXT,
 	`livetime` REAL NOT NULL,
-	`detector_data` TEXT NOT NULL,
-	`detector_type_data` TEXT NOT NULL
+	`detector_data` TEXT NOT NULL	
 );
 
 CREATE TABLE `spectrum` (
@@ -638,10 +636,9 @@ CREATE TABLE `spectrum` (
 ";
             command.ExecuteNonQuery();
 
-            command.CommandText = "insert into session(name, ip, comment, livetime, detector_data, detector_type_data) values (@name, @ip, @comment, @livetime, @detector_data, @detector_type_data)";
+            command.CommandText = "insert into session(name, ip, comment, livetime, detector_data) values (@name, @ip, @comment, @livetime, @detector_data)";
 
             string detectorData = JsonConvert.SerializeObject(s.Detector, Newtonsoft.Json.Formatting.None);
-            string detectorTypeData = JsonConvert.SerializeObject(s.DetectorType, Newtonsoft.Json.Formatting.None);
 
             command.Parameters.Clear();
             command.Parameters.AddWithValue("@name", s.Name);
@@ -649,7 +646,6 @@ CREATE TABLE `spectrum` (
             command.Parameters.AddWithValue("@comment", s.Comment);
             command.Parameters.AddWithValue("@livetime", s.Livetime);
             command.Parameters.AddWithValue("@detector_data", detectorData);
-            command.Parameters.AddWithValue("@detector_type_data", detectorTypeData);
             command.ExecuteNonQuery();
             connection.Close();
         }
@@ -826,26 +822,7 @@ CREATE TABLE `spectrum` (
             graph.GraphPane.ReverseTransform(clickedPoint, out dx, out dy);
             x = (int)dx;
             y = (int)dy;
-        }
-
-        private void PopulateDetectorTypeList()
-        {
-            // Update preferences detector type UI
-            lvDetectorTypes.Items.Clear();
-            foreach (DetectorType dt in settings.DetectorTypes)
-            {
-                ListViewItem item = new ListViewItem(
-                    new string[] {
-                        dt.Name,
-                        dt.MaxNumChannels.ToString(),
-                        dt.MinHV.ToString(),
-                        dt.MaxHV.ToString(),
-                        dt.GEScript
-                });
-                item.Tag = dt;
-                lvDetectorTypes.Items.Add(item);
-            }
-        }
+        }        
 
         private void PopulateDetectorList()
         {
@@ -855,15 +832,19 @@ CREATE TABLE `spectrum` (
             {
                 ListViewItem item = new ListViewItem(new string[] {
                     d.Serialnumber,
-                    d.TypeName,
+                    d.TypeName,                    
                     d.NumChannels.ToString(),
-                    d.HV.ToString(),
+                    d.MaxNumChannels.ToString(),                    
+                    d.Voltage.ToString(),
+                    d.MinVoltage.ToString(),
+                    d.MaxVoltage.ToString(),
                     d.CoarseGain.ToString(),
                     d.FineGain.ToString(),
                     d.Livetime.ToString(),
                     d.LLD.ToString(),
                     d.ULD.ToString(),
-                    d.PluginName
+                    d.PluginName,
+                    d.GEScript
                 });
                 item.Tag = d;
                 lvDetectors.Items.Add(item);
@@ -925,14 +906,6 @@ CREATE TABLE `spectrum` (
                 return;
             }
 
-            if(!settings.DetectorTypes.Exists(dt => dt.Name == selectedDetector.TypeName))
-            {
-                MessageBox.Show("No detector type found for " + selectedDetector.Serialnumber);
-                return;
-            }
-
-            DetectorType selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
-
             // Convert parameters
             int voltage = tbarSetupVoltage.Value;
             double coarse = 0f;
@@ -962,13 +935,14 @@ CREATE TABLE `spectrum` (
             // Create and send network message
             burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
             msg.Params.Add("command", "detector_config");            
-            msg.Params.Add("detector_type", selectedDetector.PluginName); // FIXME: detector_type should be named plugin_name
+            msg.Params.Add("detector_type", selectedDetector.TypeName);
             msg.Params.Add("voltage", voltage);
             msg.Params.Add("coarse_gain", coarse);
             msg.Params.Add("fine_gain", fine);
             msg.Params.Add("num_channels", nchannels);
             msg.Params.Add("lld", lld);
             msg.Params.Add("uld", uld);
+            msg.Params.Add("plugin_name", selectedDetector.PluginName);
             sendMsg(msg);
 
             previewSession = true;
@@ -1156,7 +1130,6 @@ CREATE TABLE `spectrum` (
             s.Comment = reader["comment"].ToString();
             s.Livetime = Convert.ToSingle(reader["livetime"], CultureInfo.InvariantCulture);
             s.Detector = JsonConvert.DeserializeObject<Detector>(reader["detector_data"].ToString());
-            s.DetectorType = JsonConvert.DeserializeObject<DetectorType>(reader["detector_type_data"].ToString());
 
             reader.Close();
 
@@ -1425,34 +1398,29 @@ CREATE TABLE `spectrum` (
             tabs.SelectedTab = pageDetectors;
         }
 
-        private void btnAddDetectorType_Click(object sender, EventArgs e)
-        {
-            FormAddDetectorType form = new FormAddDetectorType(null);
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                settings.DetectorTypes.Add(new DetectorType(form.TypeName, form.MaxChannels, form.MinHV, form.MaxHV, form.GEScript));
-                PopulateDetectorTypeList();
-            }
-        }
-
         private void btnAddDetector_Click(object sender, EventArgs e)
         {
-            FormAddDetector form = new FormAddDetector(null, settings.DetectorTypes);
+            FormAddDetector form = new FormAddDetector(null);
             if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
             Detector det = new Detector();
             det.TypeName = form.DetectorType;
             det.Serialnumber = form.Serialnumber;
+            det.MaxNumChannels = form.MaxNumChannels;
             det.NumChannels = form.NumChannels;
-            det.HV = form.HV;
+            det.MinVoltage = form.MinHV;
+            det.MaxVoltage = form.MaxHV;
+            det.Voltage = form.HV;
             det.CoarseGain = form.CoarseGain;
             det.FineGain = form.FineGain;
             det.Livetime = form.Livetime;
             det.LLD = form.LLD;
             det.ULD = form.ULD;
             det.PluginName = form.PluginName;
+            det.GEScript = form.GEScript;
             settings.Detectors.Add(det);
+
             SaveSettings();
 
             PopulateDetectorList();
@@ -1579,14 +1547,6 @@ CREATE TABLE `spectrum` (
 
         private void btnSetupStartTest_Click(object sender, EventArgs e)
         {
-            if (!settings.DetectorTypes.Exists(dt => dt.Name == selectedDetector.TypeName))
-            {
-                MessageBox.Show("Detector type " + selectedDetector.TypeName + " not found");
-                return;
-            }
-
-            DetectorType selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
-
             string ip = tbStatusIPAddress.Text.Trim();
             previewSessionName = String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now) + "-setup";
 
@@ -1597,9 +1557,7 @@ CREATE TABLE `spectrum` (
             msg.Params.Add("livetime", 1);
             msg.Params.Add("comment", "Setup session");
             string jDetectorData = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.None);
-            string jDetectorTypeData = JsonConvert.SerializeObject(selectedDetectorType, Newtonsoft.Json.Formatting.None);
             msg.Params.Add("detector_data", jDetectorData);
-            msg.Params.Add("detector_type_data", jDetectorTypeData);
             sendMsg(msg);
 
             ClearSetup();
@@ -1756,32 +1714,13 @@ CREATE TABLE `spectrum` (
             Activate();
         }
 
-        private void btnEditDetectorType_Click(object sender, EventArgs e)
-        {
-            if(lvDetectorTypes.SelectedItems.Count == 0)
-                return;
-
-            // Show edit detector type form
-            DetectorType detType = (DetectorType)lvDetectorTypes.SelectedItems[0].Tag;
-            FormAddDetectorType form = new FormAddDetectorType(detType);
-            if (form.ShowDialog() == DialogResult.Cancel)
-                return;
-            
-            // Update selected detector type
-            detType.MaxNumChannels = form.MaxChannels;
-            detType.MinHV = form.MinHV;
-            detType.MaxHV = form.MaxHV;
-            detType.GEScript = form.GEScript;
-            PopulateDetectorTypeList();
-        }
-
         private void btnEditDetector_Click(object sender, EventArgs e)
         {
             if (lvDetectors.SelectedItems.Count == 0)
                 return;
 
             // Show edit detector form
-            FormAddDetector form = new FormAddDetector((Detector)lvDetectors.SelectedItems[0].Tag, settings.DetectorTypes);
+            FormAddDetector form = new FormAddDetector((Detector)lvDetectors.SelectedItems[0].Tag);
             if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
@@ -1789,14 +1728,19 @@ CREATE TABLE `spectrum` (
             Detector det = (Detector)lvDetectors.SelectedItems[0].Tag;
             det.TypeName = form.DetectorType;
             det.Serialnumber = form.Serialnumber;
+            det.MaxNumChannels = form.MaxNumChannels;
             det.NumChannels = form.NumChannels;
-            det.HV = form.HV;
+            det.MinVoltage = form.MinHV;
+            det.MaxVoltage = form.MaxHV;
+            det.Voltage = form.HV;
             det.CoarseGain = form.CoarseGain;
             det.FineGain = form.FineGain;
             det.Livetime = form.Livetime;
             det.LLD = form.LLD;
             det.ULD = form.ULD;
             det.PluginName = form.PluginName;
+            det.GEScript = form.GEScript;
+
             SaveSettings();
 
             PopulateDetectorList();
@@ -1935,14 +1879,6 @@ CREATE TABLE `spectrum` (
 
             selectedDetector.Livetime = ltime;
 
-            if (!settings.DetectorTypes.Exists(dt => dt.Name == selectedDetector.TypeName))
-            {
-                MessageBox.Show("Detector type " + selectedDetector.TypeName + " not found");
-                return;
-            }            
-
-            DetectorType selectedDetectorType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
-
             SaveSettings();
 
             string ip = tbStatusIPAddress.Text.Trim();
@@ -1957,9 +1893,7 @@ CREATE TABLE `spectrum` (
             msg.Params.Add("livetime", livetime);
             msg.Params.Add("comment", comment);
             string jDetectorData = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.None);
-            string jDetectorTypeData = JsonConvert.SerializeObject(selectedDetectorType, Newtonsoft.Json.Formatting.None);
             msg.Params.Add("detector_data", jDetectorData);
-            msg.Params.Add("detector_type_data", jDetectorTypeData);
             sendMsg(msg);
 
             previewSession = false;
@@ -1968,7 +1902,7 @@ CREATE TABLE `spectrum` (
             ClearSession();
             
             string sessionFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + sessionName + ".db";            
-            session = new Session(ip, sessionFile, sessionName, comment, livetime, selectedDetector, selectedDetectorType);
+            session = new Session(ip, sessionFile, sessionName, comment, livetime, selectedDetector);
 
             // Create session database
             CreateSessionFile(session);
@@ -2005,20 +1939,12 @@ CREATE TABLE `spectrum` (
         private void cboxSetupDetector_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedDetector = cboxSetupDetector.SelectedItem as Detector;
-
-            if (!settings.DetectorTypes.Exists(dt => dt.Name == selectedDetector.TypeName))
-            {
-                MessageBox.Show("No detector type found for " + selectedDetector.Serialnumber);
-                return;
-            }
-
-            DetectorType detType = settings.DetectorTypes.Find(dt => dt.Name == selectedDetector.TypeName);
             
             cboxSetupChannels.Text = selectedDetector.NumChannels.ToString();
 
-            tbarSetupVoltage.Minimum = detType.MinHV;
-            tbarSetupVoltage.Maximum = detType.MaxHV;
-            tbarSetupVoltage.Value = selectedDetector.HV;
+            tbarSetupVoltage.Minimum = selectedDetector.MinVoltage;
+            tbarSetupVoltage.Maximum = selectedDetector.MaxVoltage;
+            tbarSetupVoltage.Value = selectedDetector.Voltage;
 
             int coarse = Convert.ToInt32(selectedDetector.CoarseGain);
             cboxSetupCoarseGain.SelectedIndex = cboxSetupCoarseGain.FindStringExact(coarse.ToString());
@@ -2038,7 +1964,7 @@ CREATE TABLE `spectrum` (
                 selectedDetector.ULD = 0;
             tbarSetupULD.Value = selectedDetector.ULD;
             cboxSetupChannels.Items.Clear();
-            for (int i = 256; i <= detType.MaxNumChannels; i = i * 2)
+            for (int i = 32; i <= selectedDetector.MaxNumChannels; i *= 2)
                 cboxSetupChannels.Items.Add(i.ToString());
             cboxSetupChannels.Text = selectedDetector.NumChannels.ToString();
         }
