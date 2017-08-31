@@ -4,8 +4,7 @@ CREATE TABLE `session` (
 	`ip` TEXT NOT NULL,
 	`comment` TEXT,
 	`livetime` REAL NOT NULL,
-	`detector_data` TEXT NOT NULL,
-	`detector_type_data` TEXT NOT NULL
+	`detector_data` TEXT NOT NULL	
 );
 
 CREATE TABLE `spectrum` (
