@@ -1,13 +1,13 @@
 
 COMMAND - <PARAMETERS>
 
-detector_config - detector_type, voltage, coarse_gain, fine_gain, num_channels, lld, uld, plugin_name
-detector_config_success - detector_type, voltage, coarse_gain, fine_gain, num_channels, lld, uld, plugin_name
+detector_config - detector_data
+detector_config_success - detector_data
 detector_config_error - message
 detector_config_busy - message
 
-start_session - session_name, ip, livetime, comment, detector_data
-start_session_success - session_name, ip, livetime, comment, detector_data
+start_session - session_name, ip, livetime, comment
+start_session_success - session_name, ip, livetime, comment
 start_session_error - message
 start_session_busy - message
 

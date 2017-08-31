@@ -182,17 +182,21 @@
             this.colSerialnumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colNumChannels = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colMaxNumChannels = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colMinHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colMaxHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colCoarseGain = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colFineGain = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colLivetime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colLLD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colULD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colPluginName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label18 = new System.Windows.Forms.Label();
+            this.colGEScript = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnEditDetector = new System.Windows.Forms.Button();
             this.btnAddDetector = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.btnPreferencesClose = new System.Windows.Forms.Button();
             this.pageNew = new System.Windows.Forms.TabPage();
@@ -226,10 +230,6 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
-            this.colGEScript = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colMinHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colMaxHV = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colMaxNumChannels = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -2001,10 +2001,23 @@
             this.colNumChannels.Text = "Num. Channels";
             this.colNumChannels.Width = 108;
             // 
+            // colMaxNumChannels
+            // 
+            this.colMaxNumChannels.Text = "Max Num. Channels";
+            this.colMaxNumChannels.Width = 108;
+            // 
             // colHV
             // 
             this.colHV.Text = "Voltage";
             this.colHV.Width = 69;
+            // 
+            // colMinHV
+            // 
+            this.colMinHV.Text = "Min HV";
+            // 
+            // colMaxHV
+            // 
+            this.colMaxHV.Text = "Max HV";
             // 
             // colCoarseGain
             // 
@@ -2032,14 +2045,9 @@
             // 
             this.colPluginName.Text = "Plugin";
             // 
-            // label18
+            // colGEScript
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(3, 0);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(59, 15);
-            this.label18.TabIndex = 6;
-            this.label18.Text = "Detectors";
+            this.colGEScript.Text = "GE Script";
             // 
             // panel2
             // 
@@ -2072,6 +2080,15 @@
             this.btnAddDetector.Text = "Add";
             this.btnAddDetector.UseVisualStyleBackColor = true;
             this.btnAddDetector.Click += new System.EventHandler(this.btnAddDetector_Click);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(3, 0);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(59, 15);
+            this.label18.TabIndex = 6;
+            this.label18.Text = "Detectors";
             // 
             // panel6
             // 
@@ -2454,23 +2471,6 @@
             // openSessionDialog
             // 
             this.openSessionDialog.DefaultExt = "db";
-            // 
-            // colGEScript
-            // 
-            this.colGEScript.Text = "GE Script";
-            // 
-            // colMinHV
-            // 
-            this.colMinHV.Text = "Min HV";
-            // 
-            // colMaxHV
-            // 
-            this.colMaxHV.Text = "Max HV";
-            // 
-            // colMaxNumChannels
-            // 
-            this.colMaxNumChannels.Text = "Max Num. Channels";
-            this.colMaxNumChannels.Width = 108;
             // 
             // FormMain
             // 

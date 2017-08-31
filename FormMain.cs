@@ -408,19 +408,7 @@ namespace crash
 
                 case "detector_config_success":
                     // Set gain command executed successfully
-                    Utils.Log.Add("detector_config_success: " + msg.Params["detector_type"] + " " + msg.Params["voltage"] + " "
-                        + msg.Params["coarse_gain"] + " " + msg.Params["fine_gain"] + " " + msg.Params["num_channels"] + " "
-                        + msg.Params["lld"] + " " + msg.Params["uld"] + " " + msg.Params["plugin_name"]);
-
-                    // Update selected detector parameters
-                    selectedDetector.Voltage = Convert.ToInt32(msg.Params["voltage"]);
-                    selectedDetector.CoarseGain = Convert.ToDouble(msg.Params["coarse_gain"], CultureInfo.InvariantCulture);
-                    selectedDetector.FineGain = Convert.ToDouble(msg.Params["fine_gain"], CultureInfo.InvariantCulture);
-                    selectedDetector.NumChannels = Convert.ToInt32(msg.Params["num_channels"]);
-                    selectedDetector.LLD = Convert.ToInt32(msg.Params["lld"]);
-                    selectedDetector.ULD = Convert.ToInt32(msg.Params["uld"]);
-
-                    SaveSettings();
+                    Utils.Log.Add(msg.Params["command"].ToString());
 
                     // Update state                    
                     panelSetupGraph.Enabled = true;
@@ -906,8 +894,7 @@ CREATE TABLE `spectrum` (
                 return;
             }
 
-            // Convert parameters
-            int voltage = tbarSetupVoltage.Value;
+            // Convert parameters            
             double coarse = 0f;
             double fine = 0f;
             int nchannels = 0;
@@ -932,22 +919,25 @@ CREATE TABLE `spectrum` (
                 return;
             }
 
+            // Update selected detector parameters
+            selectedDetector.Voltage = tbarSetupVoltage.Value;
+            selectedDetector.CoarseGain = coarse;
+            selectedDetector.FineGain = fine;
+            selectedDetector.NumChannels = nchannels;
+            selectedDetector.LLD = lld;
+            selectedDetector.ULD = uld;
+
+            SaveSettings();
+
             // Create and send network message
             burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
-            msg.Params.Add("command", "detector_config");            
-            msg.Params.Add("detector_type", selectedDetector.TypeName);
-            msg.Params.Add("voltage", voltage);
-            msg.Params.Add("coarse_gain", coarse);
-            msg.Params.Add("fine_gain", fine);
-            msg.Params.Add("num_channels", nchannels);
-            msg.Params.Add("lld", lld);
-            msg.Params.Add("uld", uld);
-            msg.Params.Add("plugin_name", selectedDetector.PluginName);
+            msg.Params.Add("command", "detector_config");
+            msg.Params.Add("detector_data", selectedDetector);
             sendMsg(msg);
 
-            previewSession = true;
-
             Utils.Log.Add("Sending detector_config");
+
+            previewSession = true;
         }
 
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
@@ -1556,8 +1546,6 @@ CREATE TABLE `spectrum` (
             msg.Params.Add("ip", ip);
             msg.Params.Add("livetime", 1);
             msg.Params.Add("comment", "Setup session");
-            string jDetectorData = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.None);
-            msg.Params.Add("detector_data", jDetectorData);
             sendMsg(msg);
 
             ClearSetup();
@@ -1891,9 +1879,7 @@ CREATE TABLE `spectrum` (
             msg.Params.Add("session_name", sessionName);
             msg.Params.Add("ip", ip);
             msg.Params.Add("livetime", livetime);
-            msg.Params.Add("comment", comment);
-            string jDetectorData = JsonConvert.SerializeObject(selectedDetector, Newtonsoft.Json.Formatting.None);
-            msg.Params.Add("detector_data", jDetectorData);
+            msg.Params.Add("comment", comment);            
             sendMsg(msg);
 
             previewSession = false;

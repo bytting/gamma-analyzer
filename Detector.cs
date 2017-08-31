@@ -61,7 +61,7 @@ namespace crash
         public string Serialnumber { get; set; }
 
         // Coarse gain for detector
-        [JsonProperty("course_gain")]
+        [JsonProperty("coarse_gain")]
         public double CoarseGain { get; set; }
 
         // Fine gain for detector
