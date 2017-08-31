@@ -734,7 +734,7 @@ CREATE TABLE `spectrum` (
                 return;
 
             // Clear currently selected background and update state
-            session.SetBackground(null);
+            session.SetBackgroundSession(null);
 
             lblBackground.Text = "";
             graphSession.Invalidate();
@@ -1226,7 +1226,7 @@ CREATE TABLE `spectrum` (
                 }
 
                 // Store background in session
-                session.SetBackground(bkgSession);
+                session.SetBackgroundSession(bkgSession);
 
                 lblBackground.Text = "Background: " + bkgSession.Name;
                 Utils.Log.Add("Background " + bkgSession.Name + " loaded for session " + session.Name);
@@ -2065,6 +2065,50 @@ CREATE TABLE `spectrum` (
             sendMsg(msg);
 
             Utils.Log.Add("Sending sync_session");
+        }
+
+        private void menuItemLoadBackgroundSelection_Click(object sender, EventArgs e)
+        {
+            if (session == null || !session.IsLoaded)
+            {
+                MessageBox.Show("You must load a session first");
+                return;
+            }
+
+            if(lbSession.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("No spectrums selected");
+                return;
+            }
+
+            ClearBackground();
+
+            int minIndex = -1, maxIndex = -1;
+            List<Spectrum> spectrumSelection = new List<Spectrum>();
+            foreach(object o in lbSession.SelectedItems)
+            {
+                Spectrum spec = o as Spectrum;
+                spectrumSelection.Add(spec);
+
+                if(minIndex == -1 && maxIndex == -1)
+                {
+                    minIndex = spec.SessionIndex;
+                    maxIndex = spec.SessionIndex;
+                }
+                else
+                {
+                    if (spec.SessionIndex < minIndex)
+                        minIndex = spec.SessionIndex;
+                    if (spec.SessionIndex > maxIndex)
+                        maxIndex = spec.SessionIndex;
+                }
+            }
+
+            // Store background in session
+            session.SetBackground(spectrumSelection);
+
+            lblBackground.Text = "Background: " + minIndex + " -> " + maxIndex;
+            Utils.Log.Add("Background selection " + minIndex + " -> " + maxIndex + " loaded for session " + session.Name);            
         }
 
         private void menuItemChangeIPAddress_Click(object sender, EventArgs e)

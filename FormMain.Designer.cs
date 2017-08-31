@@ -230,6 +230,8 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
+            this.menuItemLoadBackgroundSelection = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSetAsBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -330,6 +332,7 @@
             this.menuItemClearSession,
             this.menuItemSessionInfo,
             this.toolStripSeparator4,
+            this.menuItemLoadBackgroundSelection,
             this.menuItemLoadBackgroundSession,
             this.menuItemClearBackground,
             this.toolStripSeparator7,
@@ -342,73 +345,73 @@
             // menuItemStartNewSession
             // 
             this.menuItemStartNewSession.Name = "menuItemStartNewSession";
-            this.menuItemStartNewSession.Size = new System.Drawing.Size(209, 22);
+            this.menuItemStartNewSession.Size = new System.Drawing.Size(217, 22);
             this.menuItemStartNewSession.Text = "Start new session";
             this.menuItemStartNewSession.Click += new System.EventHandler(this.menuItemStartNewSession_Click);
             // 
             // menuItemSyncCurrentSession
             // 
             this.menuItemSyncCurrentSession.Name = "menuItemSyncCurrentSession";
-            this.menuItemSyncCurrentSession.Size = new System.Drawing.Size(209, 22);
+            this.menuItemSyncCurrentSession.Size = new System.Drawing.Size(217, 22);
             this.menuItemSyncCurrentSession.Text = "Sync current session";
             this.menuItemSyncCurrentSession.Click += new System.EventHandler(this.menuItemSyncCurrentSession_Click);
             // 
             // menuItemStopSession
             // 
             this.menuItemStopSession.Name = "menuItemStopSession";
-            this.menuItemStopSession.Size = new System.Drawing.Size(209, 22);
+            this.menuItemStopSession.Size = new System.Drawing.Size(217, 22);
             this.menuItemStopSession.Text = "Stop current session";
             this.menuItemStopSession.Click += new System.EventHandler(this.menuItemStopSession_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(206, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(214, 6);
             // 
             // menuItemLoadSession
             // 
             this.menuItemLoadSession.Name = "menuItemLoadSession";
-            this.menuItemLoadSession.Size = new System.Drawing.Size(209, 22);
+            this.menuItemLoadSession.Size = new System.Drawing.Size(217, 22);
             this.menuItemLoadSession.Text = "Load &existing session";
             this.menuItemLoadSession.Click += new System.EventHandler(this.menuItemLoadSession_Click);
             // 
             // menuItemClearSession
             // 
             this.menuItemClearSession.Name = "menuItemClearSession";
-            this.menuItemClearSession.Size = new System.Drawing.Size(209, 22);
+            this.menuItemClearSession.Size = new System.Drawing.Size(217, 22);
             this.menuItemClearSession.Text = "C&lear session";
             this.menuItemClearSession.Click += new System.EventHandler(this.menuItemClearSession_Click);
             // 
             // menuItemSessionInfo
             // 
             this.menuItemSessionInfo.Name = "menuItemSessionInfo";
-            this.menuItemSessionInfo.Size = new System.Drawing.Size(209, 22);
+            this.menuItemSessionInfo.Size = new System.Drawing.Size(217, 22);
             this.menuItemSessionInfo.Text = "Edit &session info";
             this.menuItemSessionInfo.Click += new System.EventHandler(this.menuItemSessionInfo_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(206, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(214, 6);
             // 
             // menuItemLoadBackgroundSession
             // 
             this.menuItemLoadBackgroundSession.Name = "menuItemLoadBackgroundSession";
-            this.menuItemLoadBackgroundSession.Size = new System.Drawing.Size(209, 22);
+            this.menuItemLoadBackgroundSession.Size = new System.Drawing.Size(217, 22);
             this.menuItemLoadBackgroundSession.Text = "Load &background session";
             this.menuItemLoadBackgroundSession.Click += new System.EventHandler(this.menuItemLoadBackgroundSession_Click);
             // 
             // menuItemClearBackground
             // 
             this.menuItemClearBackground.Name = "menuItemClearBackground";
-            this.menuItemClearBackground.Size = new System.Drawing.Size(209, 22);
+            this.menuItemClearBackground.Size = new System.Drawing.Size(217, 22);
             this.menuItemClearBackground.Text = "Clear back&ground session";
             this.menuItemClearBackground.Click += new System.EventHandler(this.menuItemClearBackground_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(206, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(214, 6);
             // 
             // menuItemExport
             // 
@@ -417,7 +420,7 @@
             this.menuItemSaveAsKMZ,
             this.menuItemSaveAsCSV});
             this.menuItemExport.Name = "menuItemExport";
-            this.menuItemExport.Size = new System.Drawing.Size(209, 22);
+            this.menuItemExport.Size = new System.Drawing.Size(217, 22);
             this.menuItemExport.Text = "E&xport session as ...";
             // 
             // menuItemSaveAsCHN
@@ -447,7 +450,7 @@
             // menuItemChangeIPAddress
             // 
             this.menuItemChangeIPAddress.Name = "menuItemChangeIPAddress";
-            this.menuItemChangeIPAddress.Size = new System.Drawing.Size(209, 22);
+            this.menuItemChangeIPAddress.Size = new System.Drawing.Size(217, 22);
             this.menuItemChangeIPAddress.Text = "Change IP address";
             this.menuItemChangeIPAddress.Click += new System.EventHandler(this.menuItemChangeIPAddress_Click);
             // 
@@ -720,14 +723,15 @@
             // contextMenuSession
             // 
             this.contextMenuSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemSessionUnselect});
+            this.menuItemSessionUnselect,
+            this.menuItemSetAsBackground});
             this.contextMenuSession.Name = "contextMenuSession";
-            this.contextMenuSession.Size = new System.Drawing.Size(120, 26);
+            this.contextMenuSession.Size = new System.Drawing.Size(172, 70);
             // 
             // menuItemSessionUnselect
             // 
             this.menuItemSessionUnselect.Name = "menuItemSessionUnselect";
-            this.menuItemSessionUnselect.Size = new System.Drawing.Size(119, 22);
+            this.menuItemSessionUnselect.Size = new System.Drawing.Size(171, 22);
             this.menuItemSessionUnselect.Text = "&Unselect";
             this.menuItemSessionUnselect.Click += new System.EventHandler(this.menuItemSessionUnselect_Click);
             // 
@@ -2472,6 +2476,20 @@
             // 
             this.openSessionDialog.DefaultExt = "db";
             // 
+            // menuItemLoadBackgroundSelection
+            // 
+            this.menuItemLoadBackgroundSelection.Name = "menuItemLoadBackgroundSelection";
+            this.menuItemLoadBackgroundSelection.Size = new System.Drawing.Size(217, 22);
+            this.menuItemLoadBackgroundSelection.Text = "Load background selection";
+            this.menuItemLoadBackgroundSelection.Click += new System.EventHandler(this.menuItemLoadBackgroundSelection_Click);
+            // 
+            // menuItemSetAsBackground
+            // 
+            this.menuItemSetAsBackground.Name = "menuItemSetAsBackground";
+            this.menuItemSetAsBackground.Size = new System.Drawing.Size(171, 22);
+            this.menuItemSetAsBackground.Text = "Set as background";
+            this.menuItemSetAsBackground.Click += new System.EventHandler(this.menuItemLoadBackgroundSelection_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2780,6 +2798,8 @@
         private System.Windows.Forms.ColumnHeader colMinHV;
         private System.Windows.Forms.ColumnHeader colMaxHV;
         private System.Windows.Forms.ColumnHeader colMaxNumChannels;
+        private System.Windows.Forms.ToolStripMenuItem menuItemLoadBackgroundSelection;
+        private System.Windows.Forms.ToolStripMenuItem menuItemSetAsBackground;
     }
 }
 

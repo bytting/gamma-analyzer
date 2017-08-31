@@ -143,9 +143,24 @@ namespace crash
             PyEngine.Execute(script, scope);
             GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");
             return GEFactor != null;
-        }        
-     
-        public bool SetBackground(Session bkg)
+        }
+
+        public bool SetBackground(List<Spectrum> specs)
+        {
+            // Set background counts for this session and adjust for livetime
+
+            if (specs.Count < 1)
+            {
+                Background = null;
+                return true;
+            }
+
+            Background = GetAdjustedCounts(specs, Livetime);
+
+            return true;
+        }
+
+        public bool SetBackgroundSession(Session bkg)
         {
             // Set background counts for this session and adjust for livetime
 
@@ -155,36 +170,41 @@ namespace crash
                 return true;
             }                
 
-            if (IsEmpty || !IsLoaded)
+            if (IsEmpty || !IsLoaded || bkg.IsEmpty || !bkg.IsLoaded)
                 return false;
             
             Background = bkg.GetAdjustedCounts(Livetime);
 
             return true;
-        }        
+        }
 
-        private float[] GetAdjustedCounts(float livetime)
+        private float[] GetAdjustedCounts(List<Spectrum> specs, float targetLivetime)
         {
             // Adjust counts for a given livetime
 
-            if (Spectrums.Count < 1)
+            if (specs.Count < 1)
                 return null;
 
             float[] spec = new float[(int)NumChannels];
 
-            foreach(Spectrum s in Spectrums)            
-                for (int i = 0; i < s.Channels.Count; i++)                
-                    spec[i] += s.Channels[i];                                     
-            
-            float scale = livetime / Livetime;
+            foreach (Spectrum s in specs)
+                for (int i = 0; i < s.Channels.Count; i++)
+                    spec[i] += s.Channels[i];
+
+            float scale = targetLivetime / Livetime;
 
             for (int i = 0; i < spec.Length; i++)
             {
-                spec[i] /= (float)Spectrums.Count;
-                spec[i] *= scale;                
+                spec[i] /= (float)specs.Count;
+                spec[i] *= scale;
             }
 
             return spec;
+        }
+
+        private float[] GetAdjustedCounts(float targetLivetime)
+        {
+            return GetAdjustedCounts(Spectrums, targetLivetime);
         }
 
         public float GetCountInBkg(int start, int end)

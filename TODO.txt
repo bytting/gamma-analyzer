@@ -1,6 +1,4 @@
 
-Add ability to select a background from spectrum list
-
 Move detector config into separate, detector specific modules
 
 Proper log
