@@ -1,17 +1,6 @@
-Add comments to spectrums
 
-Add ability to select a following background (one collection behind the selected spectrum, and optionally one in front)
+Add ability to select a background from spectrum list
 
-Separate detector communication and analysis tools, and make proper APIs
-
-Documentation for detector communication protocol
+Move detector config into separate, detector specific modules
 
 Proper log
-
-log messages on status
-
-open/close session buttons
-
-deactivate more buttons when necessary
-
-activity indicator

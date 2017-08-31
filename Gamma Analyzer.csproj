@@ -245,6 +245,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Spectrum.cs" />
     <Compile Include="Utils.cs" />
+    <Content Include="TODO.txt" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
