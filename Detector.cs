@@ -119,7 +119,7 @@ namespace crash
 
         public override string ToString()
         {
- 	         return Serialnumber;
+ 	         return String.IsNullOrEmpty(Serialnumber) ? "<None>" : Serialnumber;
         }
 
         public double GetEnergy(int x)

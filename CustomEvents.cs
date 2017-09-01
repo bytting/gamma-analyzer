@@ -35,7 +35,8 @@ namespace crash
         public static void Numeric_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Only allow decimals
-            char sep = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            //char sep = Convert.ToChar(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            char sep = Convert.ToChar(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
 
             TextBox tb = (TextBox)sender;
             if (e.KeyChar == sep)

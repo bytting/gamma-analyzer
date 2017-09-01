@@ -26,8 +26,8 @@ using System.Drawing;
 using System.Text;
 using System.Linq;
 using System.Windows.Forms;
-using System.Globalization;
 using System.Threading;
+using System.Globalization;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -108,6 +108,9 @@ namespace crash
         public FormMain()
         {
             InitializeComponent();
+
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -118,6 +121,8 @@ namespace crash
                 tabs.ItemSize = new Size(0, 1);
                 tabs.SizeMode = TabSizeMode.Fixed;
                 tabs.SelectedTab = pageMenu;
+
+                tbSetupFineGain.KeyPress += CustomEvents.Numeric_KeyPress;
 
                 // Create directories and files
                 if (!Directory.Exists(GAEnvironment.SettingsPath))
@@ -310,7 +315,7 @@ namespace crash
                 case "get_status_success":
                     Utils.Log.Add("Get status success");
 
-                    double freeDisk = Convert.ToDouble(msg.Params["free_disk_space"]);
+                    double freeDisk = Convert.ToDouble(msg.Params["free_disk_space"], CultureInfo.InvariantCulture);
                     freeDisk /= 1000000;
                     lblStatusFreeDiskSpace.Text = "Free disk space: " + freeDisk.ToString("#########0.0#") + " MB";
 
@@ -843,7 +848,8 @@ CREATE TABLE `spectrum` (
         {
             // Update setup detector UI            
             cboxSetupDetector.Items.Clear();
-            cboxSetupDetector.Items.AddRange(settings.Detectors.ToArray());
+            foreach(Detector det in settings.Detectors)
+                cboxSetupDetector.Items.Add(det);
         }
 
         int GetChannelFromEnergy(Detector det, double E, int startX, int endX)
@@ -901,8 +907,8 @@ CREATE TABLE `spectrum` (
 
             try
             {
-                coarse = Convert.ToSingle(cboxSetupCoarseGain.Text, CultureInfo.InvariantCulture);
-                fine = Convert.ToDouble((double)tbarSetupFineGain.Value / 1000d);
+                coarse = Convert.ToDouble(cboxSetupCoarseGain.Text, CultureInfo.InvariantCulture);
+                fine = Convert.ToDouble(tbSetupFineGain.Text, CultureInfo.InvariantCulture);
                 nchannels = Convert.ToInt32(cboxSetupChannels.Text);
             }
             catch
@@ -992,10 +998,10 @@ CREATE TABLE `spectrum` (
                 lblSession.Text = "Session: " + s.SessionName;
                 lblSessionDetector.Text = "Det." + session.Detector.Serialnumber + " (" + session.Detector.TypeName + ")";
                 lblIndex.Text = "Index: " + s.SessionIndex;
-                lblLatitude.Text = "Latitude: " + s.Latitude.ToString("00.0000000") + " ±" + s.LatitudeError.ToString("###0.0#");
-                lblLongitude.Text = "Longitude: " + s.Longitude.ToString("00.0000000") + " ±" + s.LongitudeError.ToString("###0.0#");
+                lblLatitude.Text = "Latitude: " + s.Latitude.ToString("#00.0000000") + " ±" + s.LatitudeError.ToString("###0.0#");
+                lblLongitude.Text = "Longitude: " + s.Longitude.ToString("#00.0000000") + " ±" + s.LongitudeError.ToString("###0.0#");
                 lblAltitude.Text = "Altitude: " + s.Altitude.ToString("#####0.0#") + " ±" + s.AltitudeError.ToString("###0.0#");
-                lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s.GpsTime.ToLocalTime() : s.GpsTime);
+                lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s.GpsTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") : s.GpsTime.ToString("yyyy-MM-dd HH:mm:ss"));
                 lblMaxCount.Text = "Max count: " + s.MaxCount;
                 lblMinCount.Text = "Min count: " + s.MinCount;
                 lblTotalCount.Text = "Total count: " + s.TotalCount;                
@@ -1064,10 +1070,10 @@ CREATE TABLE `spectrum` (
                 lblLivetime.Text = "Livetime:" + liveTime;
                 lblSession.Text = "Session: " + s1.SessionName;
                 lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;
-                lblLatitude.Text = "Latitude: " + s1.Latitude.ToString("00.0000000") + " ±" + s2.LatitudeError.ToString("###0.0#");
-                lblLongitude.Text = "Longitude: " + s1.Longitude.ToString("00.0000000") + " ±" + s2.LongitudeError.ToString("###0.0#");
+                lblLatitude.Text = "Latitude: " + s1.Latitude.ToString("#00.0000000") + " ±" + s2.LatitudeError.ToString("###0.0#");
+                lblLongitude.Text = "Longitude: " + s1.Longitude.ToString("#00.0000000") + " ±" + s2.LongitudeError.ToString("###0.0#");
                 lblAltitude.Text = "Altitude: " + s1.Altitude.ToString("#####0.0#") + " ±" + s2.AltitudeError.ToString("###0.0#");
-                lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s1.GpsTime.ToLocalTime() : s1.GpsTime);                
+                lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s1.GpsTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") : s1.GpsTime.ToString("yyyy-MM-dd HH:mm:ss"));
                 lblMaxCount.Text = "Max count: " + maxCnt;
                 lblMinCount.Text = "Min count: " + minCnt;
                 lblTotalCount.Text = "Total count: " + totCnt;
@@ -1138,18 +1144,18 @@ CREATE TABLE `spectrum` (
                 spec.SessionName = reader["session_name"].ToString();
                 spec.SessionIndex = Convert.ToInt32(reader["session_index"]);
                 spec.GpsTime = Convert.ToDateTime(reader["start_time"]);
-                spec.Latitude = Convert.ToDouble(reader["latitude"]);
-                spec.LatitudeError = Convert.ToDouble(reader["latitude_error"]);
-                spec.Longitude = Convert.ToDouble(reader["longitude"]);
-                spec.LongitudeError = Convert.ToDouble(reader["longitude_error"]);
-                spec.Altitude = Convert.ToDouble(reader["altitude"]);
-                spec.AltitudeError = Convert.ToDouble(reader["altitude_error"]);
-                spec.GpsTrack = Convert.ToSingle(reader["track"]);
-                spec.GpsTrackError = Convert.ToSingle(reader["track_error"]);
-                spec.GpsSpeed = Convert.ToSingle(reader["speed"]);
-                spec.GpsSpeedError = Convert.ToSingle(reader["speed_error"]);
-                spec.GpsClimb = Convert.ToSingle(reader["climb"]);
-                spec.GpsClimbError = Convert.ToSingle(reader["climb_error"]);
+                spec.Latitude = Convert.ToDouble(reader["latitude"], CultureInfo.InvariantCulture);
+                spec.LatitudeError = Convert.ToDouble(reader["latitude_error"], CultureInfo.InvariantCulture);
+                spec.Longitude = Convert.ToDouble(reader["longitude"], CultureInfo.InvariantCulture);
+                spec.LongitudeError = Convert.ToDouble(reader["longitude_error"], CultureInfo.InvariantCulture);
+                spec.Altitude = Convert.ToDouble(reader["altitude"], CultureInfo.InvariantCulture);
+                spec.AltitudeError = Convert.ToDouble(reader["altitude_error"], CultureInfo.InvariantCulture);
+                spec.GpsTrack = Convert.ToSingle(reader["track"], CultureInfo.InvariantCulture);
+                spec.GpsTrackError = Convert.ToSingle(reader["track_error"], CultureInfo.InvariantCulture);
+                spec.GpsSpeed = Convert.ToSingle(reader["speed"], CultureInfo.InvariantCulture);
+                spec.GpsSpeedError = Convert.ToSingle(reader["speed_error"], CultureInfo.InvariantCulture);
+                spec.GpsClimb = Convert.ToSingle(reader["climb"], CultureInfo.InvariantCulture);
+                spec.GpsClimbError = Convert.ToSingle(reader["climb_error"], CultureInfo.InvariantCulture);
                 spec.Livetime = Convert.ToInt32(reader["livetime"]);
                 spec.Realtime = Convert.ToInt32(reader["realtime"]);
                 spec.TotalCount = Convert.ToInt32(reader["total_count"]);
@@ -1355,17 +1361,6 @@ CREATE TABLE `spectrum` (
                     MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
                 }
             }
-        }
-
-        private void tbarSetupFineGain_Scroll(object sender, EventArgs e)
-        {
-            tbarSetupFineGain_ValueChanged(sender, e);
-        }
-
-        private void tbarSetupFineGain_ValueChanged(object sender, EventArgs e)
-        {            
-            double fVal = (double)tbarSetupFineGain.Value / 1000d;
-            lblSetupFineGain.Text = fVal.ToString("F3");
         }
 
         private void tbarSetupVoltage_ValueChanged(object sender, EventArgs e)
@@ -1930,25 +1925,15 @@ CREATE TABLE `spectrum` (
 
             tbarSetupVoltage.Minimum = selectedDetector.MinVoltage;
             tbarSetupVoltage.Maximum = selectedDetector.MaxVoltage;
-            tbarSetupVoltage.Value = selectedDetector.Voltage;
+            tbarSetupVoltage.Value = Utils.Clamp(selectedDetector.Voltage, tbarSetupVoltage.Minimum, tbarSetupVoltage.Maximum);
 
             int coarse = Convert.ToInt32(selectedDetector.CoarseGain);
             cboxSetupCoarseGain.SelectedIndex = cboxSetupCoarseGain.FindStringExact(coarse.ToString());
-            tbarSetupFineGain.Value = (int)((double)selectedDetector.FineGain * 1000d);
-            tbarSetupLLD.Minimum = 0;
-            tbarSetupLLD.Maximum = 100;
-            if (selectedDetector.LLD > 100)
-                selectedDetector.LLD = 100;
-            if (selectedDetector.LLD < 0)
-                selectedDetector.LLD = 0;
-            tbarSetupLLD.Value = selectedDetector.LLD;
-            tbarSetupULD.Minimum = 0;
-            tbarSetupULD.Maximum = 100;
-            if (selectedDetector.ULD > 100)
-                selectedDetector.ULD = 100;
-            if (selectedDetector.ULD < 0)
-                selectedDetector.ULD = 0;
-            tbarSetupULD.Value = selectedDetector.ULD;
+
+            tbSetupFineGain.Text = selectedDetector.FineGain.ToString();
+            tbarSetupLLD.Value = Utils.Clamp(selectedDetector.LLD, tbarSetupLLD.Minimum, tbarSetupLLD.Maximum);
+            tbarSetupULD.Value = Utils.Clamp(selectedDetector.ULD, tbarSetupULD.Minimum, tbarSetupULD.Maximum);
+
             cboxSetupChannels.Items.Clear();
             for (int i = 32; i <= selectedDetector.MaxNumChannels; i *= 2)
                 cboxSetupChannels.Items.Add(i.ToString());

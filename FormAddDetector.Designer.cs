@@ -388,6 +388,7 @@
             this.tbMinHV.Name = "tbMinHV";
             this.tbMinHV.Size = new System.Drawing.Size(434, 21);
             this.tbMinHV.TabIndex = 29;
+            this.tbMinHV.TextChanged += new System.EventHandler(this.tbMinHV_TextChanged);
             // 
             // tbMaxHV
             // 
@@ -396,6 +397,7 @@
             this.tbMaxHV.Name = "tbMaxHV";
             this.tbMaxHV.Size = new System.Drawing.Size(434, 21);
             this.tbMaxHV.TabIndex = 30;
+            this.tbMaxHV.TextChanged += new System.EventHandler(this.tbMaxHV_TextChanged);
             // 
             // tbGEScript
             // 

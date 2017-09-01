@@ -28,6 +28,16 @@ namespace crash
         // Global log object (FIXME: replace this with a proper log)
         public static FormLog Log = new FormLog();
 
+        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+        {
+            if (val.CompareTo(min) < 0)
+                return min;
+            else if (val.CompareTo(max) > 0)
+                return max;
+            else
+                return val;
+        }
+
         // Convert a color to an integer
         public static int ToArgb(Color color)
         {

@@ -42,6 +42,7 @@
             this.menuItemClearSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSessionInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.menuItemLoadBackgroundSelection = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemLoadBackgroundSession = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemClearBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -78,6 +79,7 @@
             this.btnLayout1 = new System.Windows.Forms.ToolStripButton();
             this.contextMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemSessionUnselect = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemSetAsBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.tabs = new System.Windows.Forms.TabControl();
             this.pageSetup = new System.Windows.Forms.TabPage();
             this.panelSetupGraph = new System.Windows.Forms.Panel();
@@ -100,9 +102,7 @@
             this.panel13 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.panel17 = new System.Windows.Forms.Panel();
-            this.tbarSetupFineGain = new System.Windows.Forms.TrackBar();
             this.label8 = new System.Windows.Forms.Label();
-            this.lblSetupFineGain = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tbarSetupLLD = new System.Windows.Forms.TrackBar();
             this.label9 = new System.Windows.Forms.Label();
@@ -230,8 +230,8 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
-            this.menuItemLoadBackgroundSelection = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemSetAsBackground = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.tbSetupFineGain = new System.Windows.Forms.TextBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -247,7 +247,6 @@
             this.panel5.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel17.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupFineGain)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupLLD)).BeginInit();
             this.panel18.SuspendLayout();
@@ -290,6 +289,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel10.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -393,6 +393,13 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(214, 6);
+            // 
+            // menuItemLoadBackgroundSelection
+            // 
+            this.menuItemLoadBackgroundSelection.Name = "menuItemLoadBackgroundSelection";
+            this.menuItemLoadBackgroundSelection.Size = new System.Drawing.Size(217, 22);
+            this.menuItemLoadBackgroundSelection.Text = "Load background selection";
+            this.menuItemLoadBackgroundSelection.Click += new System.EventHandler(this.menuItemLoadBackgroundSelection_Click);
             // 
             // menuItemLoadBackgroundSession
             // 
@@ -726,7 +733,7 @@
             this.menuItemSessionUnselect,
             this.menuItemSetAsBackground});
             this.contextMenuSession.Name = "contextMenuSession";
-            this.contextMenuSession.Size = new System.Drawing.Size(172, 70);
+            this.contextMenuSession.Size = new System.Drawing.Size(172, 48);
             // 
             // menuItemSessionUnselect
             // 
@@ -734,6 +741,13 @@
             this.menuItemSessionUnselect.Size = new System.Drawing.Size(171, 22);
             this.menuItemSessionUnselect.Text = "&Unselect";
             this.menuItemSessionUnselect.Click += new System.EventHandler(this.menuItemSessionUnselect_Click);
+            // 
+            // menuItemSetAsBackground
+            // 
+            this.menuItemSetAsBackground.Name = "menuItemSetAsBackground";
+            this.menuItemSetAsBackground.Size = new System.Drawing.Size(171, 22);
+            this.menuItemSetAsBackground.Text = "Set as background";
+            this.menuItemSetAsBackground.Click += new System.EventHandler(this.menuItemLoadBackgroundSelection_Click);
             // 
             // tabs
             // 
@@ -988,29 +1002,13 @@
             // 
             // panel17
             // 
-            this.panel17.Controls.Add(this.tbarSetupFineGain);
-            this.panel17.Controls.Add(this.label8);
-            this.panel17.Controls.Add(this.lblSetupFineGain);
+            this.panel17.Controls.Add(this.tbSetupFineGain);
+            this.panel17.Controls.Add(this.panel4);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel17.Location = new System.Drawing.Point(897, 35);
             this.panel17.Name = "panel17";
             this.panel17.Size = new System.Drawing.Size(442, 26);
             this.panel17.TabIndex = 52;
-            // 
-            // tbarSetupFineGain
-            // 
-            this.tbarSetupFineGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbarSetupFineGain.LargeChange = 10;
-            this.tbarSetupFineGain.Location = new System.Drawing.Point(67, 0);
-            this.tbarSetupFineGain.Maximum = 5000;
-            this.tbarSetupFineGain.Minimum = 1000;
-            this.tbarSetupFineGain.Name = "tbarSetupFineGain";
-            this.tbarSetupFineGain.Size = new System.Drawing.Size(361, 26);
-            this.tbarSetupFineGain.TabIndex = 41;
-            this.tbarSetupFineGain.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbarSetupFineGain.Value = 1000;
-            this.tbarSetupFineGain.Scroll += new System.EventHandler(this.tbarSetupFineGain_Scroll);
-            this.tbarSetupFineGain.ValueChanged += new System.EventHandler(this.tbarSetupFineGain_ValueChanged);
             // 
             // label8
             // 
@@ -1023,16 +1021,6 @@
             this.label8.TabIndex = 33;
             this.label8.Text = "Fine gain";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblSetupFineGain
-            // 
-            this.lblSetupFineGain.AutoSize = true;
-            this.lblSetupFineGain.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblSetupFineGain.Location = new System.Drawing.Point(428, 0);
-            this.lblSetupFineGain.Name = "lblSetupFineGain";
-            this.lblSetupFineGain.Size = new System.Drawing.Size(14, 15);
-            this.lblSetupFineGain.TabIndex = 42;
-            this.lblSetupFineGain.Text = "1";
             // 
             // panel3
             // 
@@ -2476,19 +2464,22 @@
             // 
             this.openSessionDialog.DefaultExt = "db";
             // 
-            // menuItemLoadBackgroundSelection
+            // panel4
             // 
-            this.menuItemLoadBackgroundSelection.Name = "menuItemLoadBackgroundSelection";
-            this.menuItemLoadBackgroundSelection.Size = new System.Drawing.Size(217, 22);
-            this.menuItemLoadBackgroundSelection.Text = "Load background selection";
-            this.menuItemLoadBackgroundSelection.Click += new System.EventHandler(this.menuItemLoadBackgroundSelection_Click);
+            this.panel4.Controls.Add(this.label8);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(115, 26);
+            this.panel4.TabIndex = 34;
             // 
-            // menuItemSetAsBackground
+            // tbSetupFineGain
             // 
-            this.menuItemSetAsBackground.Name = "menuItemSetAsBackground";
-            this.menuItemSetAsBackground.Size = new System.Drawing.Size(171, 22);
-            this.menuItemSetAsBackground.Text = "Set as background";
-            this.menuItemSetAsBackground.Click += new System.EventHandler(this.menuItemLoadBackgroundSelection_Click);
+            this.tbSetupFineGain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupFineGain.Location = new System.Drawing.Point(115, 0);
+            this.tbSetupFineGain.Name = "tbSetupFineGain";
+            this.tbSetupFineGain.Size = new System.Drawing.Size(327, 21);
+            this.tbSetupFineGain.TabIndex = 35;
             // 
             // FormMain
             // 
@@ -2533,7 +2524,6 @@
             this.panel13.PerformLayout();
             this.panel17.ResumeLayout(false);
             this.panel17.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupFineGain)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbarSetupLLD)).EndInit();
@@ -2591,6 +2581,8 @@
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
             this.panel10.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2647,8 +2639,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cboxSetupCoarseGain;
-        private System.Windows.Forms.TrackBar tbarSetupFineGain;
-        private System.Windows.Forms.Label lblSetupFineGain;
         private System.Windows.Forms.Button btnSetupSetParams;
         private System.Windows.Forms.TrackBar tbarSetupLLD;
         private System.Windows.Forms.Label lblSetupLLD;
@@ -2800,6 +2790,8 @@
         private System.Windows.Forms.ColumnHeader colMaxNumChannels;
         private System.Windows.Forms.ToolStripMenuItem menuItemLoadBackgroundSelection;
         private System.Windows.Forms.ToolStripMenuItem menuItemSetAsBackground;
+        private System.Windows.Forms.TextBox tbSetupFineGain;
+        private System.Windows.Forms.Panel panel4;
     }
 }
 

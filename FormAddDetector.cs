@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
-
+using System.Globalization;
 namespace crash
 {
     public partial class FormAddDetector : Form
@@ -56,9 +56,7 @@ namespace crash
                 tbMaxHV.Text = Det.MaxVoltage.ToString();
                 tbarCurrHV.Minimum = Convert.ToInt32(tbMinHV.Text);
                 tbarCurrHV.Maximum = Convert.ToInt32(tbMaxHV.Text);
-                if(Det.Voltage > tbarCurrHV.Maximum)
-                    tbarCurrHV.Value = tbarCurrHV.Maximum;
-                else tbarCurrHV.Value = (Det.Voltage == 0) ? 1 : Det.Voltage;
+                tbarCurrHV.Value = Utils.Clamp(Det.Voltage, tbarCurrHV.Minimum, tbarCurrHV.Maximum);
                 tbCoarseGain.Text = Det.CoarseGain.ToString();
                 tbFineGain.Text = Det.FineGain.ToString();
                 tbLivetime.Text = Det.Livetime.ToString();
@@ -104,8 +102,8 @@ namespace crash
                 MinHV = Convert.ToInt32(tbMinHV.Text.Trim());
                 MaxHV = Convert.ToInt32(tbMaxHV.Text.Trim());
                 HV = tbarCurrHV.Value;
-                CoarseGain = Convert.ToDouble(tbCoarseGain.Text.Trim());
-                FineGain = Convert.ToDouble(tbFineGain.Text.Trim());
+                CoarseGain = Convert.ToDouble(tbCoarseGain.Text.Trim(), CultureInfo.InvariantCulture);
+                FineGain = Convert.ToDouble(tbFineGain.Text.Trim(), CultureInfo.InvariantCulture);
                 Livetime = Convert.ToInt32(tbLivetime.Text.Trim());
                 LLD = Convert.ToInt32(tbLLD.Text.Trim());
                 ULD = Convert.ToInt32(tbULD.Text.Trim());
@@ -143,6 +141,38 @@ namespace crash
                 else
                     cboxNumChannels.SelectedItem = cboxNumChannels.Items[0];
             }
+        }
+
+        private void tbMaxHV_TextChanged(object sender, EventArgs e)
+        {
+            int val;
+
+            try
+            {
+                val = Convert.ToInt32(tbMaxHV.Text);
+            }
+            catch
+            {
+                return;
+            }
+
+            tbarCurrHV.Maximum = val;
+        }
+
+        private void tbMinHV_TextChanged(object sender, EventArgs e)
+        {
+            int val;
+
+            try
+            {
+                val = Convert.ToInt32(tbMinHV.Text);
+            }
+            catch
+            {
+                return;
+            }
+
+            tbarCurrHV.Minimum = val;
         }
     }
 }
