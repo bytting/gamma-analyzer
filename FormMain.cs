@@ -88,6 +88,7 @@ namespace crash
         Spectrum previewSpec = null;
 
         Detector selectedDetector = null;
+        int selectedChannel = 0;
 
         // Array containing currently selected energies/channels
         List<ChannelEnergy> energyLines = new List<ChannelEnergy>();
@@ -954,6 +955,7 @@ CREATE TABLE `spectrum` (
             tools.Visible = true;
             menuItemView.Visible = true;
             menuItemSession.Visible = false;
+            menuItemCalibration.Visible = false;
 
             if (tabs.SelectedTab == pageDetectors)
             {
@@ -961,6 +963,7 @@ CREATE TABLE `spectrum` (
             else if (tabs.SelectedTab == pageSessions)
             {
                 menuItemSession.Visible = true;
+                menuItemCalibration.Visible = true;
             }
             else if (tabs.SelectedTab == pageSetup)
             {
@@ -971,6 +974,7 @@ CREATE TABLE `spectrum` (
             else if (tabs.SelectedTab == pageMenu)
             {
                 menuItemView.Visible = false;
+                menuItemCalibration.Visible = false;
                 tools.Visible = false;
             }
         }             
@@ -1500,7 +1504,7 @@ CREATE TABLE `spectrum` (
             int x, y;
             GetGraphPointFromMousePos(e.X, e.Y, graphSetup, out x, out y);
 
-            FormAskDecimal form = new FormAskDecimal("Enter expected energy for channel " + x);
+            FormAskDecimal form = new FormAskDecimal("Enter expected energy for channel " + x, null);
             if(form.ShowDialog() == DialogResult.Cancel)
                 return;
 
@@ -2094,6 +2098,80 @@ CREATE TABLE `spectrum` (
 
             lblBackground.Text = "Background: " + minIndex + " -> " + maxIndex;
             Utils.Log.Add("Background selection " + minIndex + " -> " + maxIndex + " loaded for session " + session.Name);            
+        }
+
+        private void menuItemAdjustZero_Click(object sender, EventArgs e)
+        {
+            if (selectedChannel == 0)
+            {
+                MessageBox.Show("No channel selected");
+                return;
+            }
+
+            if (session.Detector.EnergyCurveCoefficients.Count < 1)
+            {
+                MessageBox.Show("Detector has no energy curve coefficients");
+                return;
+            }
+
+            bool canUpdateSettingsDetector = settings.Detectors.Exists(x => x.Serialnumber == session.Detector.Serialnumber);
+
+            FormAskZeroPolynomial form = new FormAskZeroPolynomial(session.Detector, selectedChannel, canUpdateSettingsDetector);
+            if(form.ShowDialog() == DialogResult.OK)
+            {
+                session.Detector.EnergyCurveCoefficients[0] = form.ZeroPolynomial;
+                // FIXME: Save session.Detector to database
+
+                string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + session.Name + ".db";
+                if (!File.Exists(sessionPath))
+                {
+                    MessageBox.Show("Unable to find session database: " + sessionPath);
+                    return;
+                }
+
+                SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionPath + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(connection);
+                command.CommandText = "select id from session where name = @name";
+                command.Parameters.AddWithValue("@name", session.Name);
+                object o = command.ExecuteScalar();
+                if (o == null || o == DBNull.Value)
+                {
+                    Utils.Log.Add("Unable to find session name " + session.Name + " in database");
+                    return;
+                }
+                int sessionId = Convert.ToInt32(o);
+
+                string detectorData = JsonConvert.SerializeObject(session.Detector, Newtonsoft.Json.Formatting.None);
+
+                command.Parameters.Clear();
+                command.CommandText = "update session set detector_data=@detector_data where id=@id";
+                command.Parameters.AddWithValue("@detector_data", detectorData);
+                command.Parameters.AddWithValue("@id", sessionId);
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                if (form.SaveToSettings)
+                {
+                    Detector settingsDetector = settings.Detectors.Find(x => x.Serialnumber == session.Detector.Serialnumber);
+                    if(settingsDetector == null)
+                    {
+                        MessageBox.Show("Detector " + session.Detector.Serialnumber + " was not found in settings");
+                        return;
+                    }
+                    settingsDetector.EnergyCurveCoefficients = session.Detector.EnergyCurveCoefficients;
+                    SaveSettings();
+                }
+            }
+        }
+
+        private void graphSession_MouseClick(object sender, MouseEventArgs e)
+        {
+            int x, y;
+            GetGraphPointFromMousePos(e.X, e.Y, graphSession, out x, out y);
+
+            selectedChannel = x;
+            lblSessionSelChannel.Text = "Sel. Ch: " + String.Format("{0:####0}", selectedChannel);
         }
 
         private void menuItemChangeIPAddress_Click(object sender, EventArgs e)

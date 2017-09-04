@@ -52,7 +52,7 @@ namespace crash
                 }
             }
 
-            if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar != sep)
+            if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar != sep && e.KeyChar != '-')
                 e.Handled = true;
         }
     }    

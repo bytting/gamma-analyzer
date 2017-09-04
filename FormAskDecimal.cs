@@ -34,10 +34,12 @@ namespace crash
         private string Description;
         public double Value;
 
-        public FormAskDecimal(string description)
+        public FormAskDecimal(string description, double? defaultValue)
         {
             InitializeComponent();
             Description = description;
+            if(defaultValue != null)
+                tbValue.Text = defaultValue.ToString();
             tbValue.KeyPress += CustomEvents.Numeric_KeyPress;
         }
 
