@@ -167,6 +167,7 @@ namespace crash
                 PopulateDetectors();
 
                 lblLogMessages.Text = "";
+                lblSessionSelChannel.Text = "";
                 lblSessionsDatabase.Text = "";
                 lblSetupChannel.Text = "";
                 lblSessionChannel.Text = "";
@@ -2171,7 +2172,7 @@ CREATE TABLE `spectrum` (
             GetGraphPointFromMousePos(e.X, e.Y, graphSession, out x, out y);
 
             selectedChannel = x;
-            lblSessionSelChannel.Text = "Sel. Ch: " + String.Format("{0:####0}", selectedChannel);
+            lblSessionSelChannel.Text = "[" + String.Format("{0:####0}", selectedChannel) + "]";
         }
 
         private void menuItemChangeIPAddress_Click(object sender, EventArgs e)

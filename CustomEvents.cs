@@ -52,6 +52,25 @@ namespace crash
                 }
             }
 
+            if (e.KeyChar == '-')
+            {
+                // Only allow one minus
+                foreach (char c in tb.Text)
+                {
+                    if (c == '-')
+                    {
+                        e.Handled = true;
+                        return;
+                    }
+                }
+
+                if(tb.SelectionStart != 0)
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+
             if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar != sep && e.KeyChar != '-')
                 e.Handled = true;
         }
