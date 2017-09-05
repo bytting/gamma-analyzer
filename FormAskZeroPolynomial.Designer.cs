@@ -30,16 +30,16 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAskZeroPolynomial));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.cbSaveSettings = new System.Windows.Forms.CheckBox();
+            this.btnOk = new System.Windows.Forms.Button();
             this.lblInfo = new System.Windows.Forms.Label();
             this.lblEnergyInfo = new System.Windows.Forms.Label();
             this.lblEnergy = new System.Windows.Forms.Label();
             this.lblZeroPolynomialInfo = new System.Windows.Forms.Label();
             this.tbZeroPolynomial = new System.Windows.Forms.TextBox();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.cbSaveSettings = new System.Windows.Forms.CheckBox();
             this.lblChannelInfo = new System.Windows.Forms.Label();
             this.lblChannel = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +53,40 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(440, 32);
             this.panel1.TabIndex = 0;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnCancel.Location = new System.Drawing.Point(260, 0);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(90, 32);
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // cbSaveSettings
+            // 
+            this.cbSaveSettings.AutoSize = true;
+            this.cbSaveSettings.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbSaveSettings.Location = new System.Drawing.Point(13, 2);
+            this.cbSaveSettings.Name = "cbSaveSettings";
+            this.cbSaveSettings.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            this.cbSaveSettings.Size = new System.Drawing.Size(154, 22);
+            this.cbSaveSettings.TabIndex = 1;
+            this.cbSaveSettings.Text = "Adjust settings detector";
+            this.cbSaveSettings.UseVisualStyleBackColor = true;
+            // 
+            // btnOk
+            // 
+            this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOk.Location = new System.Drawing.Point(350, 0);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(90, 32);
+            this.btnOk.TabIndex = 0;
+            this.btnOk.Text = "Ok";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // lblInfo
             // 
@@ -99,29 +133,6 @@
             this.tbZeroPolynomial.TabIndex = 5;
             this.tbZeroPolynomial.TextChanged += new System.EventHandler(this.tbZeroPolynomial_TextChanged);
             // 
-            // btnOk
-            // 
-            this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(350, 0);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(90, 32);
-            this.btnOk.TabIndex = 0;
-            this.btnOk.Text = "Ok";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-            // 
-            // cbSaveSettings
-            // 
-            this.cbSaveSettings.AutoSize = true;
-            this.cbSaveSettings.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbSaveSettings.Location = new System.Drawing.Point(13, 2);
-            this.cbSaveSettings.Name = "cbSaveSettings";
-            this.cbSaveSettings.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            this.cbSaveSettings.Size = new System.Drawing.Size(171, 22);
-            this.cbSaveSettings.TabIndex = 1;
-            this.cbSaveSettings.Text = "Save detector permanently";
-            this.cbSaveSettings.UseVisualStyleBackColor = true;
-            // 
             // lblChannelInfo
             // 
             this.lblChannelInfo.AutoSize = true;
@@ -139,17 +150,6 @@
             this.lblChannel.Size = new System.Drawing.Size(68, 15);
             this.lblChannel.TabIndex = 7;
             this.lblChannel.Text = "<Channel>";
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(260, 0);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(90, 32);
-            this.btnCancel.TabIndex = 2;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // FormAskZeroPolynomial
             // 

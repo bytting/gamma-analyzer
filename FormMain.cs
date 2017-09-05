@@ -64,8 +64,8 @@ namespace crash
         FormMap frmMap = null;
 
         // Point lists with graph data
-        PointPairList setupGraphList = new PointPairList();
-        PointPairList sessionGraphList = new PointPairList();
+        PointPairList setupGraphList = new PointPairList();        
+        PointPairList sessionGraphList = new PointPairList();        
         PointPairList bkgGraphList = new PointPairList();
 
         string InstallDir;
@@ -103,7 +103,7 @@ namespace crash
             Background,
             Energy,
             EnergyTolerance,
-            EnergyCalibration
+            EnergyCalibration            
         };
 
         public FormMain()
@@ -460,6 +460,7 @@ namespace crash
 
                         LineItem curve = pane.AddCurve("Spectrum", setupGraphList, Color.Red, SymbolType.None);
                         curve.Line.Fill = new Fill(SystemColors.ButtonFace, Color.Red, 45F);
+
                         pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
                         pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
                         pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
@@ -1571,8 +1572,8 @@ CREATE TABLE `spectrum` (
 
         private void menuItemResetCoefficients_Click(object sender, EventArgs e)
         {
-            energyLines.Clear();
-            graphSetup.GraphPane.GraphObjList.RemoveAll(o => isGraphObjectType(o.Tag, GraphObjectType.EnergyCalibration));            
+            energyLines.Clear();            
+            graphSetup.GraphPane.GraphObjList.RemoveAll(o => isGraphObjectType(o.Tag, GraphObjectType.EnergyCalibration));
             //graphSetup.RestoreScale(pane);
             graphSetup.AxisChange();
             graphSetup.Refresh();

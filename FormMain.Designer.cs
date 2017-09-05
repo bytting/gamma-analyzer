@@ -51,6 +51,8 @@
             this.menuItemSaveAsKMZ = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSaveAsCSV = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemChangeIPAddress = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemCalibration = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemAdjustZero = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemView = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowLog = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowMap = new System.Windows.Forms.ToolStripMenuItem();
@@ -148,8 +150,9 @@
             this.lblDoserate = new System.Windows.Forms.Label();
             this.toolsSession = new System.Windows.Forms.ToolStrip();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSessionsClose = new System.Windows.Forms.Button();
             this.lblSessionEnergy = new System.Windows.Forms.Label();
+            this.lblSessionSelChannel = new System.Windows.Forms.Label();
+            this.btnSessionsClose = new System.Windows.Forms.Button();
             this.lblSessionChannel = new System.Windows.Forms.Label();
             this.panelSessionsControl = new System.Windows.Forms.Panel();
             this.lblSessionsDatabase = new System.Windows.Forms.Label();
@@ -211,8 +214,6 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
-            this.menuItemCalibration = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemAdjustZero = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSetupStartTest = new System.Windows.Forms.ToolStripButton();
             this.btnSetupStopTest = new System.Windows.Forms.ToolStripButton();
             this.btnSetupResetCoefficients = new System.Windows.Forms.ToolStripButton();
@@ -224,6 +225,7 @@
             this.btnOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.menuItemSubtractBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemConvertToLocalTime = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAdjustZeroPolynomial = new System.Windows.Forms.ToolStripButton();
             this.btnShowLog = new System.Windows.Forms.ToolStripButton();
             this.btnSessionInfo = new System.Windows.Forms.ToolStripButton();
             this.btnShowMap = new System.Windows.Forms.ToolStripButton();
@@ -234,7 +236,6 @@
             this.btnLayout3 = new System.Windows.Forms.ToolStripButton();
             this.btnLayout2 = new System.Windows.Forms.ToolStripButton();
             this.btnLayout1 = new System.Windows.Forms.ToolStripButton();
-            this.lblSessionSelChannel = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -464,6 +465,21 @@
             this.menuItemChangeIPAddress.Size = new System.Drawing.Size(217, 22);
             this.menuItemChangeIPAddress.Text = "Change IP address";
             this.menuItemChangeIPAddress.Click += new System.EventHandler(this.menuItemChangeIPAddress_Click);
+            // 
+            // menuItemCalibration
+            // 
+            this.menuItemCalibration.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemAdjustZero});
+            this.menuItemCalibration.Name = "menuItemCalibration";
+            this.menuItemCalibration.Size = new System.Drawing.Size(77, 20);
+            this.menuItemCalibration.Text = "Calibration";
+            // 
+            // menuItemAdjustZero
+            // 
+            this.menuItemAdjustZero.Name = "menuItemAdjustZero";
+            this.menuItemAdjustZero.Size = new System.Drawing.Size(196, 22);
+            this.menuItemAdjustZero.Text = "Adjust zero polynomial";
+            this.menuItemAdjustZero.Click += new System.EventHandler(this.menuItemAdjustZero_Click);
             // 
             // menuItemView
             // 
@@ -761,7 +777,7 @@
             this.tbarSetupVoltage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbarSetupVoltage.Location = new System.Drawing.Point(55, 0);
             this.tbarSetupVoltage.Name = "tbarSetupVoltage";
-            this.tbarSetupVoltage.Size = new System.Drawing.Size(372, 45);
+            this.tbarSetupVoltage.Size = new System.Drawing.Size(372, 26);
             this.tbarSetupVoltage.TabIndex = 1;
             this.tbarSetupVoltage.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbarSetupVoltage.ValueChanged += new System.EventHandler(this.tbarSetupVoltage_ValueChanged);
@@ -890,7 +906,7 @@
             this.tbarSetupLLD.Location = new System.Drawing.Point(59, 0);
             this.tbarSetupLLD.Maximum = 100;
             this.tbarSetupLLD.Name = "tbarSetupLLD";
-            this.tbarSetupLLD.Size = new System.Drawing.Size(368, 45);
+            this.tbarSetupLLD.Size = new System.Drawing.Size(368, 27);
             this.tbarSetupLLD.TabIndex = 1;
             this.tbarSetupLLD.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbarSetupLLD.ValueChanged += new System.EventHandler(this.tbarSetupLLD_ValueChanged);
@@ -934,7 +950,7 @@
             this.tbarSetupULD.Location = new System.Drawing.Point(61, 0);
             this.tbarSetupULD.Maximum = 110;
             this.tbarSetupULD.Name = "tbarSetupULD";
-            this.tbarSetupULD.Size = new System.Drawing.Size(366, 45);
+            this.tbarSetupULD.Size = new System.Drawing.Size(366, 27);
             this.tbarSetupULD.TabIndex = 1;
             this.tbarSetupULD.TickStyle = System.Windows.Forms.TickStyle.None;
             this.tbarSetupULD.ValueChanged += new System.EventHandler(this.tbarSetupULD_ValueChanged);
@@ -1552,7 +1568,8 @@
             // 
             this.toolsSession.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolsSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOptions});
+            this.btnOptions,
+            this.btnAdjustZeroPolynomial});
             this.toolsSession.Location = new System.Drawing.Point(0, 0);
             this.toolsSession.Name = "toolsSession";
             this.toolsSession.Size = new System.Drawing.Size(1150, 25);
@@ -1571,6 +1588,27 @@
             this.panel1.Size = new System.Drawing.Size(1150, 30);
             this.panel1.TabIndex = 6;
             // 
+            // lblSessionEnergy
+            // 
+            this.lblSessionEnergy.AutoSize = true;
+            this.lblSessionEnergy.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSessionEnergy.Location = new System.Drawing.Point(266, 0);
+            this.lblSessionEnergy.Name = "lblSessionEnergy";
+            this.lblSessionEnergy.Size = new System.Drawing.Size(116, 15);
+            this.lblSessionEnergy.TabIndex = 1;
+            this.lblSessionEnergy.Text = "<lblSessionEnergy>";
+            // 
+            // lblSessionSelChannel
+            // 
+            this.lblSessionSelChannel.AutoSize = true;
+            this.lblSessionSelChannel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSessionSelChannel.ForeColor = System.Drawing.Color.Crimson;
+            this.lblSessionSelChannel.Location = new System.Drawing.Point(124, 0);
+            this.lblSessionSelChannel.Name = "lblSessionSelChannel";
+            this.lblSessionSelChannel.Size = new System.Drawing.Size(142, 15);
+            this.lblSessionSelChannel.TabIndex = 3;
+            this.lblSessionSelChannel.Text = "<lblSessionSelChannel>";
+            // 
             // btnSessionsClose
             // 
             this.btnSessionsClose.Dock = System.Windows.Forms.DockStyle.Right;
@@ -1582,16 +1620,6 @@
             this.btnSessionsClose.Text = "Close";
             this.btnSessionsClose.UseVisualStyleBackColor = true;
             this.btnSessionsClose.Click += new System.EventHandler(this.btnSessionsClose_Click);
-            // 
-            // lblSessionEnergy
-            // 
-            this.lblSessionEnergy.AutoSize = true;
-            this.lblSessionEnergy.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSessionEnergy.Location = new System.Drawing.Point(266, 0);
-            this.lblSessionEnergy.Name = "lblSessionEnergy";
-            this.lblSessionEnergy.Size = new System.Drawing.Size(116, 15);
-            this.lblSessionEnergy.TabIndex = 1;
-            this.lblSessionEnergy.Text = "<lblSessionEnergy>";
             // 
             // lblSessionChannel
             // 
@@ -2219,21 +2247,6 @@
             // 
             this.openSessionDialog.DefaultExt = "db";
             // 
-            // menuItemCalibration
-            // 
-            this.menuItemCalibration.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemAdjustZero});
-            this.menuItemCalibration.Name = "menuItemCalibration";
-            this.menuItemCalibration.Size = new System.Drawing.Size(77, 20);
-            this.menuItemCalibration.Text = "Calibration";
-            // 
-            // menuItemAdjustZero
-            // 
-            this.menuItemAdjustZero.Name = "menuItemAdjustZero";
-            this.menuItemAdjustZero.Size = new System.Drawing.Size(196, 22);
-            this.menuItemAdjustZero.Text = "Adjust zero polynomial";
-            this.menuItemAdjustZero.Click += new System.EventHandler(this.menuItemAdjustZero_Click);
-            // 
             // btnSetupStartTest
             // 
             this.btnSetupStartTest.Image = ((System.Drawing.Image)(resources.GetObject("btnSetupStartTest.Image")));
@@ -2372,6 +2385,17 @@
             this.menuItemConvertToLocalTime.ToolTipText = "Show dates using local time";
             this.menuItemConvertToLocalTime.CheckedChanged += new System.EventHandler(this.menuItemConvertToLocalTime_CheckedChanged);
             // 
+            // btnAdjustZeroPolynomial
+            // 
+            this.btnAdjustZeroPolynomial.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAdjustZeroPolynomial.Image = global::crash.Properties.Resources.adjust32;
+            this.btnAdjustZeroPolynomial.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAdjustZeroPolynomial.Name = "btnAdjustZeroPolynomial";
+            this.btnAdjustZeroPolynomial.Size = new System.Drawing.Size(23, 22);
+            this.btnAdjustZeroPolynomial.Text = "toolStripButton1";
+            this.btnAdjustZeroPolynomial.ToolTipText = "Adjust zero polynomial for energy curve";
+            this.btnAdjustZeroPolynomial.Click += new System.EventHandler(this.menuItemAdjustZero_Click);
+            // 
             // btnShowLog
             // 
             this.btnShowLog.AutoSize = false;
@@ -2501,16 +2525,6 @@
             this.btnLayout1.Size = new System.Drawing.Size(38, 38);
             this.btnLayout1.Text = "toolStripButton4";
             this.btnLayout1.Click += new System.EventHandler(this.menuItemLayoutSetup1_Click);
-            // 
-            // lblSessionSelChannel
-            // 
-            this.lblSessionSelChannel.AutoSize = true;
-            this.lblSessionSelChannel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSessionSelChannel.Location = new System.Drawing.Point(124, 0);
-            this.lblSessionSelChannel.Name = "lblSessionSelChannel";
-            this.lblSessionSelChannel.Size = new System.Drawing.Size(142, 15);
-            this.lblSessionSelChannel.TabIndex = 3;
-            this.lblSessionSelChannel.Text = "<lblSessionSelChannel>";
             // 
             // FormMain
             // 
@@ -2826,6 +2840,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemCalibration;
         private System.Windows.Forms.ToolStripMenuItem menuItemAdjustZero;
         private System.Windows.Forms.Label lblSessionSelChannel;
+        private System.Windows.Forms.ToolStripButton btnAdjustZeroPolynomial;
     }
 }
 
