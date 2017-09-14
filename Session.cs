@@ -20,21 +20,21 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using IronPython.Hosting;
-using IronPython.Runtime;
-using Microsoft.Scripting;
-using Microsoft.Scripting.Hosting;
+using NLua;
 
 namespace crash
 {
     // Class to store a session
     public class Session
     {
-        // IP Address of peer  
-        public string IPAddress { get; set; }
+        // Global Lua object
+        private static Lua LuaEngine = new Lua();
 
-        // Global IronPython object. Ignore this when serializing        
-        private static dynamic PyEngine = Python.CreateEngine();
+        // Function used to calculate GE factor
+        public LuaFunction GEScriptFunc = null;
+
+        // IP Address of peer  
+        public string IPAddress { get; set; }        
 
         // Name of session
         public string Name { get; set; }
@@ -59,9 +59,6 @@ namespace crash
 
         // Min number of channel counts found for this session. Ignore this when serializing        
         public float MinChannelCount { get; private set; }
-
-        // Function used to calculate GE factor. Ignore this when serializing        
-        public dynamic GEFactor { get; set; }
 
         // List of spectrums stored in this session. Ignore this when serializing        
         public List<Spectrum> Spectrums { get; private set; }
@@ -123,9 +120,9 @@ namespace crash
             Detector = null;
             NumChannels = 0;
             MaxChannelCount = 0;
-            MinChannelCount = 0;
-            GEFactor = null;
-            Spectrums.Clear();            
+            MinChannelCount = 0;            
+            Spectrums.Clear();
+            GEScriptFunc = null;           
             Background = null;
         }
 
@@ -138,11 +135,20 @@ namespace crash
             if (!File.Exists(geScriptFile))
                 return false;
 
-            string script = File.ReadAllText(geScriptFile);
-            dynamic scope = PyEngine.CreateScope();
-            PyEngine.Execute(script, scope);
-            GEFactor = scope.GetVariable<Func<double, double>>("GEFactor");
-            return GEFactor != null;
+            GEScriptFunc = null;
+
+            try
+            {
+                string script = File.ReadAllText(geScriptFile);
+                LuaEngine.DoString(script);
+                GEScriptFunc = LuaEngine["gevalue"] as LuaFunction;
+            }
+            catch
+            {
+                Utils.Log.Add("LoadGEFactor: Loading GE script failed");
+            }
+            
+            return GEScriptFunc != null;
         }
 
         public bool SetBackground(List<Spectrum> specs)

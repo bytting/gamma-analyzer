@@ -61,7 +61,7 @@ namespace crash
         // External forms
         FormWaterfallLive formWaterfallLive = null;
         FormROILive formROILive = null;
-        FormMap frmMap = null;
+        FormMap formMap = null;
 
         // Point lists with graph data
         PointPairList setupGraphList = new PointPairList();        
@@ -137,11 +137,11 @@ namespace crash
                 if (!File.Exists(GAEnvironment.NuclideLibraryFile))
                     File.Copy(InstallDir + "template_nuclides.lib", GAEnvironment.NuclideLibraryFile);
 
-                if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py"))
-                    File.Copy(InstallDir + "template_Nai-2tom.py", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.py");
+                if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.lua"))
+                    File.Copy(InstallDir + "template_Nai-2tom.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-2tom.lua");
 
-                if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py"))
-                    File.Copy(InstallDir + "template_Nai-3tom.py", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.py");
+                if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.lua"))
+                    File.Copy(InstallDir + "template_Nai-3tom.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "Nai-3tom.lua");
 
                 // Load settings
                 LoadSettings();
@@ -152,12 +152,12 @@ namespace crash
                 // Create forms
                 formWaterfallLive = new FormWaterfallLive(settings.ROIList);                
                 formROILive = new FormROILive(settings.ROIList);                
-                frmMap = new FormMap();                
+                formMap = new FormMap();                
 
                 // Set up custom events
                 formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
                 formROILive.SetSessionIndexEvent += SetSessionIndexEvent;
-                frmMap.SetSessionIndexEvent += SetSessionIndexEvent;
+                formMap.SetSessionIndexEvent += SetSessionIndexEvent;
 
                 tbNewLivetime.KeyPress += CustomEvents.Integer_KeyPress;
 
@@ -538,7 +538,7 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                         // Add spectrum to session
                         if (session != null && session.IsLoaded && session.Name == spec.SessionName)
                         {
-                            spec.CalculateDoserate(session.Detector, session.GEFactor);
+                            spec.CalculateDoserate(session.Detector, session.GEScriptFunc);
                             
                             session.Add(spec);
 
@@ -572,7 +572,7 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                             }
 
                             // Notify external forms about new spectrum
-                            frmMap.AddMarker(spec);
+                            formMap.AddMarker(spec);
                             formWaterfallLive.UpdatePane();
                             formROILive.UpdatePane();
                         }
@@ -730,7 +730,7 @@ CREATE TABLE `spectrum` (
             // Notify external forms about clearing session
             formWaterfallLive.ClearSession();
             formROILive.ClearSession();
-            frmMap.ClearSession();
+            formMap.ClearSession();
 
             if (session != null)
                 session.Clear();
@@ -989,7 +989,7 @@ CREATE TABLE `spectrum` (
             {
                 // Clear UI
                 formWaterfallLive.SetSelectedSessionIndex(-1);
-                frmMap.SetSelectedSessionIndex(-1);
+                formMap.SetSelectedSessionIndex(-1);
                 formROILive.SetSelectedSessionIndex(-1);
                 return;
             }                
@@ -1018,8 +1018,8 @@ CREATE TABLE `spectrum` (
                 // Inform other forms of new spectrum selection
                 if (formWaterfallLive.Visible)
                     formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
-                if (frmMap.Visible)
-                    frmMap.SetSelectedSessionIndex(s.SessionIndex);
+                if (formMap.Visible)
+                    formMap.SetSelectedSessionIndex(s.SessionIndex);
                 if (formROILive.Visible)
                     formROILive.SetSelectedSessionIndex(s.SessionIndex);
             }
@@ -1088,8 +1088,8 @@ CREATE TABLE `spectrum` (
                 // Notify external forms about new spectrum selection
                 if (formWaterfallLive.Visible)
                     formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
-                if (frmMap.Visible)
-                    frmMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
+                if (formMap.Visible)
+                    formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
                 if (formROILive.Visible)
                     formROILive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
             }
@@ -1167,7 +1167,7 @@ CREATE TABLE `spectrum` (
                 spec.TotalCount = Convert.ToInt32(reader["total_count"]);
                 spec.NumChannels = Convert.ToInt32(reader["num_channels"]);
                 spec.LoadSpectrumString(reader["channels"].ToString());
-                spec.CalculateDoserate(s.Detector, s.GEFactor);
+                spec.CalculateDoserate(s.Detector, s.GEScriptFunc);
                 s.Add(spec);
             }
 
@@ -1195,13 +1195,13 @@ CREATE TABLE `spectrum` (
                 formWaterfallLive.SetSession(session);
                 formWaterfallLive.SetDetector(session.Detector);
                 formROILive.SetSession(session);
-                frmMap.SetSession(session);
+                formMap.SetSession(session);
 
                 // Add spectrums to map
                 foreach(Spectrum s in session.Spectrums)
                 {
                     lbSession.Items.Insert(0, s);
-                    frmMap.AddMarker(s);
+                    formMap.AddMarker(s);
                 }
 
                 // Update plots
@@ -1314,8 +1314,8 @@ CREATE TABLE `spectrum` (
 
         private void menuItemShowMap_Click(object sender, EventArgs e)
         {
-            frmMap.Show();
-            frmMap.BringToFront();
+            formMap.Show();
+            formMap.BringToFront();
         }
 
         private void menuItemShowWaterfall_Click(object sender, EventArgs e)
@@ -1605,7 +1605,7 @@ CREATE TABLE `spectrum` (
             int screenWidth = Screen.PrimaryScreen.Bounds.Width;
             int screenHeight = Screen.PrimaryScreen.Bounds.Height;
 
-            frmMap.Hide();
+            formMap.Hide();
             formWaterfallLive.Hide();
             formROILive.Hide();            
 
@@ -1647,12 +1647,12 @@ CREATE TABLE `spectrum` (
             formWaterfallLive.Width = screenWidth / 2;
             formWaterfallLive.Height = screenHeight / 3;
 
-            frmMap.Show();
-            frmMap.WindowState = FormWindowState.Normal;
-            frmMap.Left = screenWidth / 2;
-            frmMap.Top = (screenHeight / 3) * 2;
-            frmMap.Width = screenWidth / 2;
-            frmMap.Height = screenHeight / 3;
+            formMap.Show();
+            formMap.WindowState = FormWindowState.Normal;
+            formMap.Left = screenWidth / 2;
+            formMap.Top = (screenHeight / 3) * 2;
+            formMap.Width = screenWidth / 2;
+            formMap.Height = screenHeight / 3;
 
             Activate();
         }
@@ -1672,12 +1672,12 @@ CREATE TABLE `spectrum` (
             Width = screenWidthThird * 2;
             Height = screenHeightThird * 2;
 
-            frmMap.Show();
-            frmMap.WindowState = FormWindowState.Normal;
-            frmMap.Left = screenWidthThird * 2;
-            frmMap.Top = 0;
-            frmMap.Width = screenWidthThird;
-            frmMap.Height = screenHeightThird + screenHeightHalfThird;
+            formMap.Show();
+            formMap.WindowState = FormWindowState.Normal;
+            formMap.Left = screenWidthThird * 2;
+            formMap.Top = 0;
+            formMap.Width = screenWidthThird;
+            formMap.Height = screenHeightThird + screenHeightHalfThird;
 
             formROILive.Show();
             formROILive.WindowState = FormWindowState.Normal;
@@ -1902,7 +1902,7 @@ CREATE TABLE `spectrum` (
             // Notify external forms about new session
             formWaterfallLive.SetSession(session);
             formROILive.SetSession(session);
-            frmMap.SetSession(session);
+            formMap.SetSession(session);
 
             tabs.SelectedTab = pageSessions;
         }
@@ -1963,6 +1963,11 @@ CREATE TABLE `spectrum` (
 
         private void btnSessionsClose_Click(object sender, EventArgs e)
         {
+            formMap.Hide();
+            formROILive.Hide();            
+            formWaterfallLive.Hide();
+            Utils.Log.Hide();
+
             tabs.SelectedTab = pageMenu;
         }
 

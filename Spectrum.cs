@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using NLua;
 
 namespace crash
 {
@@ -168,7 +169,7 @@ namespace crash
             return max;
         }        
 
-        public double CalculateDoserate(Detector det, dynamic GEFactorFunc)
+        public double CalculateDoserate(Detector det, LuaFunction GEFactorFunc)
         {
             // Calculate doserate for this spectrum
 
@@ -191,7 +192,8 @@ namespace crash
                 double E = det.GetEnergy(i);
                 if (E < 0.05) // Energies below 0.05 are invalid
                     continue;
-                double GE = GEFactorFunc(E / 1000.0);
+                //double GE = GEFactorFunc(E / 1000.0);
+                double GE = (double)GEFactorFunc.Call(E / 1000.0).GetValue(0);
                 double chanDose = GE * (cps * 60.0);
                 Doserate += chanDose;                
             }
