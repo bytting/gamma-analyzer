@@ -40,7 +40,7 @@ namespace burn
         //! UDP configuration
         const int servicePort = 9999;
         const int recvTimeout = 100;
-        const int recvBufferSize = 65536;
+        const int recvBufferSize = 1048576;
 
         //! Network utilities        
         private Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);        

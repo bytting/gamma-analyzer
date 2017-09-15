@@ -147,17 +147,18 @@ namespace crash
                 if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua"))
                     File.Copy(InstallDir + "template_osprey-nai3.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua");
 
+                formLog = new FormLog();
+
                 // Load settings
                 LoadSettings();
                 menuItemConvertToLocalTime.Checked = settings.DisplayLocalTime;
 
                 LoadNuclideLibrary();
 
-                // Create forms
-                formLog = new FormLog();
-                formWaterfallLive = new FormWaterfallLive(settings.ROIList);                
-                formROILive = new FormROILive(settings.ROIList);                
-                formMap = new FormMap();                
+                // Create forms                
+                formWaterfallLive = new FormWaterfallLive(settings.ROIList);
+                formROILive = new FormROILive(settings.ROIList);
+                formMap = new FormMap();
 
                 // Set up custom events
                 formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
