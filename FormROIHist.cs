@@ -49,7 +49,7 @@ namespace crash
 
                 if(rd.StartChannel < 0 || rd.StartChannel >= session.NumChannels || rd.EndChannel < 0 || rd.EndChannel >= session.NumChannels)
                 {
-                    Utils.Log.Add("Warning: ROI entry " + rd.Name + " is outside spectrum");
+                    Utils.Log.Warn("ROI entry " + rd.Name + " is outside spectrum");
                     continue;
                 }
 

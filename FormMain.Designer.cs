@@ -1418,7 +1418,7 @@
             this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 30);
+            this.splitContainer2.Location = new System.Drawing.Point(0, 28);
             this.splitContainer2.Name = "splitContainer2";
             // 
             // splitContainer2.Panel1
@@ -1431,7 +1431,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.tableLayoutPanel2);
             this.splitContainer2.Panel2.Controls.Add(this.toolsSession);
             this.splitContainer2.Panel2.Controls.Add(this.panel1);
-            this.splitContainer2.Size = new System.Drawing.Size(1342, 586);
+            this.splitContainer2.Size = new System.Drawing.Size(1342, 588);
             this.splitContainer2.SplitterDistance = 185;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 6;
@@ -1450,8 +1450,8 @@
             // splitContainerSessionLeft.Panel2
             // 
             this.splitContainerSessionLeft.Panel2.Controls.Add(this.panelNuclides);
-            this.splitContainerSessionLeft.Size = new System.Drawing.Size(183, 584);
-            this.splitContainerSessionLeft.SplitterDistance = 345;
+            this.splitContainerSessionLeft.Size = new System.Drawing.Size(183, 586);
+            this.splitContainerSessionLeft.SplitterDistance = 346;
             this.splitContainerSessionLeft.TabIndex = 9;
             // 
             // lbSession
@@ -1466,7 +1466,7 @@
             this.lbSession.Location = new System.Drawing.Point(0, 0);
             this.lbSession.Name = "lbSession";
             this.lbSession.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSession.Size = new System.Drawing.Size(183, 345);
+            this.lbSession.Size = new System.Drawing.Size(183, 346);
             this.lbSession.TabIndex = 7;
             this.lbSession.SelectedIndexChanged += new System.EventHandler(this.lbSession_SelectedIndexChanged);
             // 
@@ -1479,7 +1479,7 @@
             this.panelNuclides.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelNuclides.Location = new System.Drawing.Point(0, 0);
             this.panelNuclides.Name = "panelNuclides";
-            this.panelNuclides.Size = new System.Drawing.Size(183, 235);
+            this.panelNuclides.Size = new System.Drawing.Size(183, 236);
             this.panelNuclides.TabIndex = 8;
             // 
             // lbNuclides
@@ -1492,7 +1492,7 @@
             this.lbNuclides.ItemHeight = 15;
             this.lbNuclides.Location = new System.Drawing.Point(0, 63);
             this.lbNuclides.Name = "lbNuclides";
-            this.lbNuclides.Size = new System.Drawing.Size(183, 172);
+            this.lbNuclides.Size = new System.Drawing.Size(183, 173);
             this.lbNuclides.TabIndex = 2;
             this.lbNuclides.SelectedIndexChanged += new System.EventHandler(this.lbNuclides_SelectedIndexChanged);
             // 
@@ -1580,7 +1580,7 @@
             this.graphSession.ScrollMinX = 0D;
             this.graphSession.ScrollMinY = 0D;
             this.graphSession.ScrollMinY2 = 0D;
-            this.graphSession.Size = new System.Drawing.Size(1150, 444);
+            this.graphSession.Size = new System.Drawing.Size(1150, 448);
             this.graphSession.TabIndex = 5;
             this.graphSession.UseExtendedPrintDialog = true;
             this.graphSession.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphSession_MouseClick);
@@ -1862,9 +1862,9 @@
             this.panel1.Controls.Add(this.btnSessionsClose);
             this.panel1.Controls.Add(this.lblSessionChannel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 554);
+            this.panel1.Location = new System.Drawing.Point(0, 558);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1150, 30);
+            this.panel1.Size = new System.Drawing.Size(1150, 28);
             this.panel1.TabIndex = 6;
             // 
             // lblSessionEnergy
@@ -1894,7 +1894,7 @@
             this.btnSessionsClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSessionsClose.Location = new System.Drawing.Point(1020, 0);
             this.btnSessionsClose.Name = "btnSessionsClose";
-            this.btnSessionsClose.Size = new System.Drawing.Size(130, 30);
+            this.btnSessionsClose.Size = new System.Drawing.Size(130, 28);
             this.btnSessionsClose.TabIndex = 2;
             this.btnSessionsClose.Text = "Close";
             this.btnSessionsClose.UseVisualStyleBackColor = true;
@@ -1921,17 +1921,17 @@
             this.panelSessionsControl.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSessionsControl.Location = new System.Drawing.Point(0, 0);
             this.panelSessionsControl.Name = "panelSessionsControl";
-            this.panelSessionsControl.Size = new System.Drawing.Size(1342, 30);
+            this.panelSessionsControl.Size = new System.Drawing.Size(1342, 28);
             this.panelSessionsControl.TabIndex = 7;
             // 
             // lblSessionsDatabase
             // 
             this.lblSessionsDatabase.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSessionsDatabase.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSessionsDatabase.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSessionsDatabase.Location = new System.Drawing.Point(260, 0);
             this.lblSessionsDatabase.Name = "lblSessionsDatabase";
             this.lblSessionsDatabase.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
-            this.lblSessionsDatabase.Size = new System.Drawing.Size(822, 30);
+            this.lblSessionsDatabase.Size = new System.Drawing.Size(822, 28);
             this.lblSessionsDatabase.TabIndex = 4;
             this.lblSessionsDatabase.Text = "<lblSessionsDatabase>";
             this.lblSessionsDatabase.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -1942,7 +1942,7 @@
             this.btnSessionsBrowse.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSessionsBrowse.Location = new System.Drawing.Point(130, 0);
             this.btnSessionsBrowse.Name = "btnSessionsBrowse";
-            this.btnSessionsBrowse.Size = new System.Drawing.Size(130, 30);
+            this.btnSessionsBrowse.Size = new System.Drawing.Size(130, 28);
             this.btnSessionsBrowse.TabIndex = 3;
             this.btnSessionsBrowse.Text = "Open session";
             this.btnSessionsBrowse.UseVisualStyleBackColor = true;
@@ -1954,7 +1954,7 @@
             this.btnSessionsSync.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSessionsSync.Location = new System.Drawing.Point(1082, 0);
             this.btnSessionsSync.Name = "btnSessionsSync";
-            this.btnSessionsSync.Size = new System.Drawing.Size(130, 30);
+            this.btnSessionsSync.Size = new System.Drawing.Size(130, 28);
             this.btnSessionsSync.TabIndex = 2;
             this.btnSessionsSync.Text = "Sync session";
             this.btnSessionsSync.UseVisualStyleBackColor = true;
@@ -1966,7 +1966,7 @@
             this.btnSessionsStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSessionsStop.Location = new System.Drawing.Point(1212, 0);
             this.btnSessionsStop.Name = "btnSessionsStop";
-            this.btnSessionsStop.Size = new System.Drawing.Size(130, 30);
+            this.btnSessionsStop.Size = new System.Drawing.Size(130, 28);
             this.btnSessionsStop.TabIndex = 1;
             this.btnSessionsStop.Text = "Stop session";
             this.btnSessionsStop.UseVisualStyleBackColor = true;
@@ -1978,7 +1978,7 @@
             this.btnSessionsNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSessionsNew.Location = new System.Drawing.Point(0, 0);
             this.btnSessionsNew.Name = "btnSessionsNew";
-            this.btnSessionsNew.Size = new System.Drawing.Size(130, 30);
+            this.btnSessionsNew.Size = new System.Drawing.Size(130, 28);
             this.btnSessionsNew.TabIndex = 0;
             this.btnSessionsNew.Text = "New session";
             this.btnSessionsNew.UseVisualStyleBackColor = true;

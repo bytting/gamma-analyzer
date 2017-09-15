@@ -38,7 +38,7 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 151);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 164);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(730, 22);
             this.statusStrip1.TabIndex = 0;
@@ -70,25 +70,27 @@
             this.lbLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lbLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbLog.FormattingEnabled = true;
+            this.lbLog.ItemHeight = 14;
             this.lbLog.Location = new System.Drawing.Point(0, 25);
             this.lbLog.Name = "lbLog";
             this.lbLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbLog.Size = new System.Drawing.Size(730, 126);
+            this.lbLog.Size = new System.Drawing.Size(730, 139);
             this.lbLog.TabIndex = 7;
             // 
             // FormLog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(730, 173);
+            this.ClientSize = new System.Drawing.Size(730, 186);
             this.Controls.Add(this.lbLog);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(320, 200);
+            this.MinimumSize = new System.Drawing.Size(320, 212);
             this.Name = "FormLog";
             this.Text = "Gamma Analyzer - Log";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLog_FormClosing);
+            this.Load += new System.EventHandler(this.FormLog_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);

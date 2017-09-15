@@ -46,30 +46,36 @@ namespace crash
         public string Comment { get; set; }
 
         // Livetime used for this session
-        public float Livetime { get; set; }        
+        public float Livetime { get; set; }
 
         // Detector definition used with this session
-        public Detector Detector { get; set; }
+        private Detector mDetector;
 
-        // Number of channels used with this session. Ignore this when serializing        
+        public Detector Detector
+        {
+            get { return mDetector; }
+            set { mDetector = value; LoadGEScriptFunc(); }
+        }
+
+        // Number of channels used with this session
         public float NumChannels { get; private set; }
 
-        // Max number of channel counts found for this session. Ignore this when serializing        
+        // Max number of channel counts found for this session
         public float MaxChannelCount { get; private set; }
 
-        // Min number of channel counts found for this session. Ignore this when serializing        
+        // Min number of channel counts found for this session
         public float MinChannelCount { get; private set; }
 
-        // List of spectrums stored in this session. Ignore this when serializing        
+        // List of spectrums stored in this session
         public List<Spectrum> Spectrums { get; private set; }
 
-        // Background counts to use with this session. Ignore this when serializing        
+        // Background counts to use with this session
         public float[] Background = null;
 
-        // Loaded state for this session. Ignore this when serializing        
+        // Loaded state for this session
         public bool IsLoaded { get { return !String.IsNullOrEmpty(Name); } }
 
-        // Empty state for this session. Ignore this when serializing        
+        // Empty state for this session
         public bool IsEmpty { get { return Spectrums.Count == 0; } }
 
         public Session()
@@ -89,7 +95,6 @@ namespace crash
             Comment = comment;
             Livetime = livetime;
             Detector = det;
-            LoadGEFactor();
         }
 
         public bool Add(Spectrum spec)
@@ -117,7 +122,7 @@ namespace crash
             SessionFile = String.Empty;
             Comment = String.Empty;
             Livetime = 0;            
-            Detector = null;
+            mDetector = null;
             NumChannels = 0;
             MaxChannelCount = 0;
             MinChannelCount = 0;            
@@ -126,11 +131,11 @@ namespace crash
             Background = null;
         }
 
-        public bool LoadGEFactor()
+        private bool LoadGEScriptFunc()
         {
             // Initialize GE factor function if GE script exists
 
-            string geScriptFile = GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + Detector.GEScript;
+            string geScriptFile = GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + mDetector.GEScript;
 
             if (!File.Exists(geScriptFile))
                 return false;
@@ -143,9 +148,9 @@ namespace crash
                 LuaEngine.DoString(script);
                 GEScriptFunc = LuaEngine["gevalue"] as LuaFunction;
             }
-            catch
+            catch(Exception ex)
             {
-                Utils.Log.Add("LoadGEFactor: Loading GE script failed");
+                Utils.Log.Error("LoadGEScriptFunc: Loading GE script failed", ex);
             }
             
             return GEScriptFunc != null;

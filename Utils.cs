@@ -19,14 +19,14 @@
 
 using System;
 using System.Drawing;
+using log4net;
 
 namespace crash
 {
     // Class with global helper functions and objects
     public static class Utils
-    {        
-        // Global log object (FIXME: replace this with a proper log)
-        public static FormLog Log = new FormLog();
+    {
+        public static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
         {
