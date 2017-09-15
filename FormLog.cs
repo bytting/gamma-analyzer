@@ -32,7 +32,6 @@ namespace crash
     public partial class FormLog : Form
     {
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        private string LogFileName;
         StreamReader LogReader = null;
         long LogFileOffset = 0;
 
@@ -46,15 +45,18 @@ namespace crash
             var rootAppender = ((Hierarchy)LogManager.GetRepository())
                 .Root.Appenders.OfType<FileAppender>().FirstOrDefault();
 
-            string LogFileName = rootAppender != null ? rootAppender.File : string.Empty;
+            string LogFileName = rootAppender != null ? rootAppender.File : String.Empty;
 
-            // Fixme: exceptions
-            LogReader = new StreamReader(new FileStream(LogFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-            LogFileOffset = LogReader.BaseStream.Length;
-            
-            timer.Interval = 100;
-            timer.Tick += timer_Tick;
-            timer.Start();
+            try
+            {                
+                LogReader = new StreamReader(new FileStream(LogFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                LogFileOffset = LogReader.BaseStream.Length;
+
+                timer.Interval = 100;
+                timer.Tick += timer_Tick;
+                timer.Start();
+            }
+            catch {}
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -83,8 +85,12 @@ namespace crash
         }
 
         public void Exiting()
-        {            
-            LogReader.Close();
+        {
+            if(timer.Enabled)
+                timer.Stop();
+
+            if(LogReader != null)
+                LogReader.Close();
         }
     }
 }
