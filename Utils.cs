@@ -18,6 +18,7 @@
 // Authors: Dag Robole,
 
 using System;
+using System.IO;
 using System.Drawing;
 using log4net;
 
@@ -26,7 +27,20 @@ namespace crash
     // Class with global helper functions and objects
     public static class Utils
     {
-        public static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static bool LogInitialized = false;
+        private static ILog Log = null;
+
+        public static ILog GetLog()
+        {
+            if(!LogInitialized)
+            {
+                LogInitialized = true;
+                log4net.GlobalContext.Properties["LogPath"] = GAEnvironment.SettingsPath;
+                log4net.Config.XmlConfigurator.Configure();
+                Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            }
+            return Log;
+        }
 
         public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
         {

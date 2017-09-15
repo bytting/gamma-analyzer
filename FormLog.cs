@@ -31,6 +31,7 @@ namespace crash
 {
     public partial class FormLog : Form
     {
+        ILog Log = Utils.GetLog();
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         StreamReader LogReader = null;
         long LogFileOffset = 0;
@@ -56,7 +57,10 @@ namespace crash
                 timer.Tick += timer_Tick;
                 timer.Start();
             }
-            catch {}
+            catch(Exception ex)
+            {
+                Log.Error("Loading log form failed", ex);
+            }
         }
 
         void timer_Tick(object sender, EventArgs e)

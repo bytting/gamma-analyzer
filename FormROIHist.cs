@@ -5,14 +5,15 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZedGraph;
+using log4net;
 
 namespace crash
 {
     public partial class FormROIHist : Form
     {
+        ILog Log = Utils.GetLog();
         Session session = null;
         List<ROIData> ROIList = null;        
         List<PointPairList> pointLists = new List<PointPairList>();
@@ -49,7 +50,7 @@ namespace crash
 
                 if(rd.StartChannel < 0 || rd.StartChannel >= session.NumChannels || rd.EndChannel < 0 || rd.EndChannel >= session.NumChannels)
                 {
-                    Utils.Log.Warn("ROI entry " + rd.Name + " is outside spectrum");
+                    Log.Warn("ROI entry " + rd.Name + " is outside spectrum");
                     continue;
                 }
 

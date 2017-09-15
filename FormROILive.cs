@@ -26,11 +26,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 
 namespace crash
 {
     public partial class FormROILive : Form
     {
+        ILog Log = Utils.GetLog();
         private List<ROIData> ROIList = null;
         private Session session = null;        
         private Bitmap bmpPane = null;        
@@ -99,7 +101,7 @@ namespace crash
 
                 if (rd.StartChannel < 0 || rd.StartChannel >= session.NumChannels || rd.EndChannel < 0 || rd.EndChannel >= session.NumChannels)
                 {
-                    Utils.Log.Warn("ROI entry " + rd.Name + " is outside spectrum");
+                    Log.Warn("ROI entry " + rd.Name + " is outside spectrum");
                     continue;
                 }
 

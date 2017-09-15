@@ -20,6 +20,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using log4net;
 using NLua;
 
 namespace crash
@@ -27,6 +28,8 @@ namespace crash
     // Class to store a session
     public class Session
     {
+        ILog Log = Utils.GetLog();
+
         // Global Lua object
         private static Lua LuaEngine = new Lua();
 
@@ -150,7 +153,7 @@ namespace crash
             }
             catch(Exception ex)
             {
-                Utils.Log.Error("LoadGEScriptFunc: Loading GE script failed", ex);
+                Log.Error("LoadGEScriptFunc: Loading GE script failed", ex);
             }
             
             return GEScriptFunc != null;

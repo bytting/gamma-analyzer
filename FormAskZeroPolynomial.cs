@@ -7,11 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 
 namespace crash
 {
     public partial class FormAskZeroPolynomial : Form
     {
+        ILog Log = Utils.GetLog();
+
         public double ZeroPolynomial;
         private int Channel;
         public bool SaveToSettings;
@@ -40,8 +43,9 @@ namespace crash
             {
                 ZeroPolynomial = Convert.ToDouble(tbZeroPolynomial.Text.Trim());
             }
-            catch
+            catch(Exception ex)
             {
+                Log.Error("Zero Polynomial: Invalid number format", ex);
                 MessageBox.Show("Invalid number format");
                 return;
             }

@@ -4,10 +4,14 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
+using log4net;
+
 namespace crash
 {
     public partial class FormAddDetector : Form
     {
+        ILog Log = Utils.GetLog();
+
         private Detector Det = null;
 
         public string DetectorType { get; set; }
@@ -110,9 +114,10 @@ namespace crash
                 PluginName = tbPluginName.Text.Trim();
                 GEScript = tbGEScript.Text.Trim();
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("Invalid format found");
+                Log.Error("Add detector: Invalid number format", ex);
+                MessageBox.Show("Invalid number format");
                 return;
             }
 
