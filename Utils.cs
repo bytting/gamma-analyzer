@@ -59,7 +59,7 @@ namespace crash
                 hierarchy.Root.AddAppender(roller);
 
                 TextBoxAppender textBoxAppender = new TextBoxAppender(tb);
-                textBoxAppender.Threshold = log4net.Core.Level.All;
+                textBoxAppender.Threshold = Level.All;
                 textBoxAppender.Layout = patternLayout;
                 textBoxAppender.ActivateOptions();
                 hierarchy.Root.AddAppender(textBoxAppender);                
@@ -67,7 +67,7 @@ namespace crash
                 hierarchy.Root.Level = Level.All;
                 hierarchy.Configured = true;                
                                 
-                Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+                Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             }
 
             return Log;

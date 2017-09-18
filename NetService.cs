@@ -62,7 +62,7 @@ namespace burn
         public NetService(ILog log, ref ConcurrentQueue<ProtocolMessage> sendQueue, ref ConcurrentQueue<ProtocolMessage> recvQueue)
         {            
             Log = log;
-            Log.Info("Starting netService");
+            Log.Info("Creating Net Service");
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), servicePort);
             running = true;
@@ -77,7 +77,7 @@ namespace burn
         {
             try
             {
-                Log.Info("Initializing netService");
+                Log.Info("Initializing Net Service");
                 var buffer = new byte[recvBufferSize]; // FIXME: configurable size
                 socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, recvTimeout);
 
@@ -88,8 +88,7 @@ namespace burn
                     {
                         ProtocolMessage sendMsg;
                         if (sendq.TryDequeue(out sendMsg))
-                        {
-                            Log.Info("Sending UDP packet");
+                        {                            
                             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(sendMsg.IPAddress), servicePort);
                             Byte[] sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(sendMsg.Params));
                             socket.SendTo(sendBytes, (EndPoint)ep);
@@ -99,7 +98,6 @@ namespace burn
                     // Receive messages from collector
                     while (socket.Available > 0)
                     {
-                        Log.Info("Receiving UDP packet");
                         int nbytes = socket.ReceiveFrom(buffer, ref endPoint);
                         if (nbytes > 0)
                         {
