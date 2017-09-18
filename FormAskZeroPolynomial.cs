@@ -13,16 +13,17 @@ namespace crash
 {
     public partial class FormAskZeroPolynomial : Form
     {
-        ILog Log = Utils.GetLog();
+        ILog Log = null;
 
         public double ZeroPolynomial;
         private int Channel;
         public bool SaveToSettings;
         private Detector Det;
 
-        public FormAskZeroPolynomial(Detector det, int chan, bool canUpdateSettingsDetector)
+        public FormAskZeroPolynomial(ILog log, Detector det, int chan, bool canUpdateSettingsDetector)
         {
             InitializeComponent();
+            Log = log;
             Det = det.Clone();            
             Channel = chan;
             lblChannel.Text = Channel.ToString();

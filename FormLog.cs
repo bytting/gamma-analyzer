@@ -18,68 +18,22 @@
 // Authors: Dag robole,
 
 using System;
-using System.IO;
 using System.ComponentModel;
 using System.Text;
-using System.Linq;
 using System.Windows.Forms;
-using log4net;
-using log4net.Appender;
-using log4net.Repository.Hierarchy;
 
 namespace crash
 {
     public partial class FormLog : Form
     {
-        ILog Log = Utils.GetLog();
-        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        StreamReader LogReader = null;
-        long LogFileOffset = 0;
-
         public FormLog()
         {
             InitializeComponent();
         }
-
-        private void FormLog_Load(object sender, EventArgs e)
-        {
-            var rootAppender = ((Hierarchy)LogManager.GetRepository())
-                .Root.Appenders.OfType<FileAppender>().FirstOrDefault();
-
-            string LogFileName = rootAppender != null ? rootAppender.File : String.Empty;
-
-            try
-            {                
-                LogReader = new StreamReader(new FileStream(LogFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
-                LogFileOffset = LogReader.BaseStream.Length;
-
-                timer.Interval = 100;
-                timer.Tick += timer_Tick;
-                timer.Start();
-            }
-            catch(Exception ex)
-            {
-                Log.Error("Loading log form failed", ex);
-            }
-        }
-
-        void timer_Tick(object sender, EventArgs e)
-        {
-            if (LogReader.BaseStream.Length == LogFileOffset)
-                return;
-            
-            LogReader.BaseStream.Seek(LogFileOffset, SeekOrigin.Begin);
-
-            string line = "";
-            while ((line = LogReader.ReadLine()) != null)
-                lbLog.Items.Insert(0, line);
-
-            LogFileOffset = LogReader.BaseStream.Position;
-        }
-
+        
         private void btnClear_Click(object sender, EventArgs e)
         {
-            lbLog.Items.Clear();
+            tbLog.Clear();
         }
 
         private void FormLog_FormClosing(object sender, FormClosingEventArgs e)
@@ -88,13 +42,9 @@ namespace crash
             Hide();
         }
 
-        public void Exiting()
+        public RichTextBox GetTextBox()
         {
-            if(timer.Enabled)
-                timer.Stop();
-
-            if(LogReader != null)
-                LogReader.Close();
+            return tbLog;
         }
     }
 }

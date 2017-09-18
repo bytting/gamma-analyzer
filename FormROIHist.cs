@@ -13,15 +13,16 @@ namespace crash
 {
     public partial class FormROIHist : Form
     {
-        ILog Log = Utils.GetLog();
+        ILog Log = null;
         Session session = null;
         List<ROIData> ROIList = null;        
         List<PointPairList> pointLists = new List<PointPairList>();
         GraphPane pane = null;        
 
-        public FormROIHist(Session sess, List<ROIData> roiList)
+        public FormROIHist(ILog log, Session sess, List<ROIData> roiList)
         {
             InitializeComponent();
+            Log = log;
             session = sess;
             ROIList = roiList;            
         }

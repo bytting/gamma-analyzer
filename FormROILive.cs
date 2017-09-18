@@ -32,7 +32,7 @@ namespace crash
 {
     public partial class FormROILive : Form
     {
-        ILog Log = Utils.GetLog();
+        ILog Log = null;
         private List<ROIData> ROIList = null;
         private Session session = null;        
         private Bitmap bmpPane = null;        
@@ -44,9 +44,10 @@ namespace crash
         
         private int firstSpectrum = 0;
 
-        public FormROILive(List<ROIData> roiList)
+        public FormROILive(ILog log, List<ROIData> roiList)
         {
             InitializeComponent();
+            Log = log;
             DoubleBuffered = true;
             ROIList = roiList;
         }        

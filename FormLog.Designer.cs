@@ -32,7 +32,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnClear = new System.Windows.Forms.ToolStripButton();
-            this.lbLog = new System.Windows.Forms.ListBox();
+            this.tbLog = new System.Windows.Forms.RichTextBox();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,25 +64,24 @@
             this.btnClear.Text = "toolStripButton1";
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
-            // lbLog
+            // tbLog
             // 
-            this.lbLog.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbLog.FormattingEnabled = true;
-            this.lbLog.ItemHeight = 14;
-            this.lbLog.Location = new System.Drawing.Point(0, 25);
-            this.lbLog.Name = "lbLog";
-            this.lbLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbLog.Size = new System.Drawing.Size(730, 139);
-            this.lbLog.TabIndex = 7;
+            this.tbLog.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tbLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbLog.Location = new System.Drawing.Point(0, 25);
+            this.tbLog.Name = "tbLog";
+            this.tbLog.ReadOnly = true;
+            this.tbLog.Size = new System.Drawing.Size(730, 139);
+            this.tbLog.TabIndex = 2;
+            this.tbLog.Text = "";
             // 
             // FormLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(730, 186);
-            this.Controls.Add(this.lbLog);
+            this.Controls.Add(this.tbLog);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -90,7 +89,6 @@
             this.Name = "FormLog";
             this.Text = "Gamma Analyzer - Log";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLog_FormClosing);
-            this.Load += new System.EventHandler(this.FormLog_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -102,7 +100,7 @@
 
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ListBox lbLog;
         private System.Windows.Forms.ToolStripButton btnClear;
+        private System.Windows.Forms.RichTextBox tbLog;
     }
 }

@@ -43,7 +43,7 @@ namespace crash
         // Structure with application settings stored on disk
         GASettings settings = new GASettings();
 
-        ILog Log = Utils.GetLog();
+        static ILog Log = null;
 
         // Concurrent queue used to pass messages to networking thread
         static ConcurrentQueue<burn.ProtocolMessage> sendq = null;
@@ -51,9 +51,9 @@ namespace crash
         static ConcurrentQueue<burn.ProtocolMessage> recvq = null;
         // FIXME: Create a proper API for communication with network thread
 
-        // Networking thread
-        static burn.NetService netService = new burn.NetService(ref sendq, ref recvq);
-        static Thread netThread = new Thread(netService.DoWork);
+        // Networking thread        
+        static burn.NetService netService = null;
+        static Thread netThread = null;
 
         // Timer used to poll for network messages
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
@@ -122,6 +122,13 @@ namespace crash
         {
             try
             {
+                formLog = new FormLog();
+                IntPtr iptr = formLog.Handle; // Force window handle creation
+                Log = Utils.GetLog(formLog.GetTextBox());
+
+                netService = new burn.NetService(Log, ref sendq, ref recvq);
+                netThread = new Thread(netService.DoWork);                
+
                 // Hide tabs on tabcontrol
                 tabs.ItemSize = new Size(0, 1);
                 tabs.SizeMode = TabSizeMode.Fixed;
@@ -145,9 +152,7 @@ namespace crash
                     File.Copy(InstallDir + "template_osprey-nai2.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai2.lua");
 
                 if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua"))
-                    File.Copy(InstallDir + "template_osprey-nai3.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua");
-
-                formLog = new FormLog();
+                    File.Copy(InstallDir + "template_osprey-nai3.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua");                
 
                 // Load settings
                 LoadSettings();
@@ -157,7 +162,7 @@ namespace crash
 
                 // Create forms                
                 formWaterfallLive = new FormWaterfallLive(settings.ROIList);
-                formROILive = new FormROILive(settings.ROIList);
+                formROILive = new FormROILive(Log, settings.ROIList);
                 formMap = new FormMap();
 
                 // Set up custom events
@@ -197,7 +202,7 @@ namespace crash
             }
             catch(Exception ex)
             {
-                Log.Error("Unable to load application", ex);
+                Log.Fatal("Unable to load application", ex);
                 MessageBox.Show("Unable to load application. See log for details", "Error");
                 Environment.Exit(1);
             }
@@ -879,7 +884,6 @@ CREATE TABLE `spectrum` (
 
         private void menuItemExit_Click(object sender, EventArgs e)
         {
-            formLog.Exiting();         
             Close();
         }
 
@@ -1123,7 +1127,7 @@ CREATE TABLE `spectrum` (
 
         Session LoadSessionFile(string sessionFile)
         {
-            Session s = new Session();
+            Session s = new Session(Log);
 
             // Deserialize session object
             SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
@@ -1215,6 +1219,10 @@ CREATE TABLE `spectrum` (
 
                 lblSession.Text = "Session: " + session.Name;
                 Log.Info("session " + session.Name + " loaded");
+
+                burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
+                msg.Params.Add("command", "dump_session");
+                sendMsg(msg);
             }
         }        
 
@@ -1338,7 +1346,7 @@ CREATE TABLE `spectrum` (
 
         private void menuItemShowROIHistory_Click(object sender, EventArgs e)
         {
-            FormROIHist form = new FormROIHist(session, settings.ROIList);
+            FormROIHist form = new FormROIHist(Log, session, settings.ROIList);
             form.ShowDialog();
         }        
 
@@ -1396,7 +1404,7 @@ CREATE TABLE `spectrum` (
 
         private void btnAddDetector_Click(object sender, EventArgs e)
         {
-            FormAddDetector form = new FormAddDetector(null);
+            FormAddDetector form = new FormAddDetector(Log, null);
             if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
@@ -1713,7 +1721,7 @@ CREATE TABLE `spectrum` (
                 return;
 
             // Show edit detector form
-            FormAddDetector form = new FormAddDetector((Detector)lvDetectors.SelectedItems[0].Tag);
+            FormAddDetector form = new FormAddDetector(Log, (Detector)lvDetectors.SelectedItems[0].Tag);
             if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
@@ -1893,7 +1901,7 @@ CREATE TABLE `spectrum` (
             ClearSession();
             
             string sessionFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + sessionName + ".db";            
-            session = new Session(ip, sessionFile, sessionName, comment, livetime, selectedDetector);
+            session = new Session(Log, ip, sessionFile, sessionName, comment, livetime, selectedDetector);
 
             // Create session database
             CreateSessionFile(session);
@@ -2127,7 +2135,7 @@ CREATE TABLE `spectrum` (
 
             bool canUpdateSettingsDetector = settings.Detectors.Exists(x => x.Serialnumber == session.Detector.Serialnumber);
 
-            FormAskZeroPolynomial form = new FormAskZeroPolynomial(session.Detector, selectedChannel, canUpdateSettingsDetector);
+            FormAskZeroPolynomial form = new FormAskZeroPolynomial(Log, session.Detector, selectedChannel, canUpdateSettingsDetector);
             if(form.ShowDialog() == DialogResult.OK)
             {
                 session.Detector.EnergyCurveCoefficients[0] = form.ZeroPolynomial;

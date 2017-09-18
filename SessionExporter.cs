@@ -73,12 +73,12 @@ namespace crash
         {
             // Generate a CHN file for each spectrum
 
-            foreach(Spectrum s in session.Spectrums)
-            {                
-                string sessionPath = path + Path.DirectorySeparatorChar + session.Name + "_CHN";
-                if (!Directory.Exists(sessionPath))
-                    Directory.CreateDirectory(sessionPath);
+            string sessionPath = path + Path.DirectorySeparatorChar + session.Name + "_CHN";
+            if (!Directory.Exists(sessionPath))
+                Directory.CreateDirectory(sessionPath);
 
+            foreach (Spectrum s in session.Spectrums)
+            {
                 string filename = sessionPath + Path.DirectorySeparatorChar + s.SessionIndex.ToString() + ".chn";
                 using (BinaryWriter writer = new BinaryWriter(File.Create(filename)))
                 {

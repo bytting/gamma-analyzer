@@ -28,7 +28,7 @@ namespace crash
     // Class to store a session
     public class Session
     {
-        ILog Log = Utils.GetLog();
+        ILog Log = null;
 
         // Global Lua object
         private static Lua LuaEngine = new Lua();
@@ -81,14 +81,16 @@ namespace crash
         // Empty state for this session
         public bool IsEmpty { get { return Spectrums.Count == 0; } }
 
-        public Session()
+        public Session(ILog log)
         {
+            Log = log;
             Spectrums = new List<Spectrum>();
             Clear();            
         }
 
-        public Session(string ip, string sessionFile, string name, string comment, float livetime, Detector det)
+        public Session(ILog log, string ip, string sessionFile, string name, string comment, float livetime, Detector det)
         {
+            Log = log;
             Spectrums = new List<Spectrum>();
             Clear();
 

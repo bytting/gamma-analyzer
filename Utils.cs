@@ -20,7 +20,12 @@
 using System;
 using System.IO;
 using System.Drawing;
+using System.Windows.Forms;
 using log4net;
+using log4net.Core;
+using log4net.Appender;
+using log4net.Layout;
+using log4net.Repository.Hierarchy;
 
 namespace crash
 {
@@ -30,15 +35,41 @@ namespace crash
         private static bool LogInitialized = false;
         private static ILog Log = null;
 
-        public static ILog GetLog()
+        public static ILog GetLog(RichTextBox tb)
         {
             if(!LogInitialized)
             {
                 LogInitialized = true;
-                log4net.GlobalContext.Properties["LogPath"] = GAEnvironment.SettingsPath;
-                log4net.Config.XmlConfigurator.Configure();
+
+                Hierarchy hierarchy = (Hierarchy)LogManager.GetRepository();
+
+                PatternLayout patternLayout = new PatternLayout();
+                patternLayout.ConversionPattern = "%date [%thread] - %message%newline";
+                patternLayout.ActivateOptions();
+
+                RollingFileAppender roller = new RollingFileAppender();
+                roller.AppendToFile = false;
+                roller.File = GAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "gamma-analyzer.log";
+                roller.Layout = patternLayout;
+                roller.MaxSizeRollBackups = 3;
+                roller.MaximumFileSize = "10MB";
+                roller.RollingStyle = RollingFileAppender.RollingMode.Size;
+                roller.StaticLogFileName = true;
+                roller.ActivateOptions();
+                hierarchy.Root.AddAppender(roller);
+
+                TextBoxAppender textBoxAppender = new TextBoxAppender(tb);
+                textBoxAppender.Threshold = log4net.Core.Level.All;
+                textBoxAppender.Layout = patternLayout;
+                textBoxAppender.ActivateOptions();
+                hierarchy.Root.AddAppender(textBoxAppender);                
+
+                hierarchy.Root.Level = Level.All;
+                hierarchy.Configured = true;                
+                                
                 Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             }
+
             return Log;
         }
 
@@ -68,5 +99,24 @@ namespace crash
             byte[] b = BitConverter.GetBytes(argb);
             return Color.FromArgb(b[3], b[2], b[1], b[0]);
         }        
+    }
+
+    public class TextBoxAppender : AppenderSkeleton
+    {
+        private RichTextBox mTextBox;
+
+        public TextBoxAppender(RichTextBox tb)
+        {
+            mTextBox = tb;
+        }
+
+        protected override void Append(LoggingEvent loggingEvent)
+        {
+            mTextBox.BeginInvoke((MethodInvoker)delegate
+            {
+                mTextBox.Text = RenderLoggingEvent(loggingEvent) + mTextBox.Text;
+                //_textBox.AppendText(RenderLoggingEvent(loggingEvent));
+            });
+        }
     }
 }

@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading;
 using System.Net.Sockets;
 using Newtonsoft.Json;
+using log4net;
 
 namespace burn
 {        
@@ -34,6 +35,7 @@ namespace burn
      */
     public partial class NetService
     {
+        ILog Log = null;
         //! Running state for this service
         private volatile bool running;
 
@@ -43,8 +45,8 @@ namespace burn
         const int recvBufferSize = 1048576;
 
         //! Network utilities        
-        private Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);        
-        private EndPoint endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), servicePort);
+        private Socket socket = null;
+        private EndPoint endPoint = null;
 
         //! Queue with messages from GUI client
         ConcurrentQueue<ProtocolMessage> sendq = new ConcurrentQueue<ProtocolMessage>();
@@ -57,11 +59,15 @@ namespace burn
          * \param sendQueue - Queue with messages from GUI client
          * \param recvQueue - Queue with messages from server
          */
-        public NetService(ref ConcurrentQueue<ProtocolMessage> sendQueue, ref ConcurrentQueue<ProtocolMessage> recvQueue)
-        {
-            running = true;            
+        public NetService(ILog log, ref ConcurrentQueue<ProtocolMessage> sendQueue, ref ConcurrentQueue<ProtocolMessage> recvQueue)
+        {            
+            Log = log;
+            Log.Info("Starting netService");
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), servicePort);
+            running = true;
             sendQueue = sendq;
-            recvQueue = recvq;            
+            recvQueue = recvq;        
         }
 
         /**
@@ -69,37 +75,47 @@ namespace burn
          */
         public void DoWork()
         {
-            var buffer = new byte[recvBufferSize]; // FIXME: configurable size
-            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, recvTimeout);
-
-            while (running)
+            try
             {
-                // Send messages from analyzer
-                while (sendq.Count > 0)
+                Log.Info("Initializing netService");
+                var buffer = new byte[recvBufferSize]; // FIXME: configurable size
+                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, recvTimeout);
+
+                while (running)
                 {
-                    ProtocolMessage sendMsg;
-                    if (sendq.TryDequeue(out sendMsg))
-                    {                        
-                        IPEndPoint ep = new IPEndPoint(IPAddress.Parse(sendMsg.IPAddress), servicePort);
-                        Byte[] sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(sendMsg.Params));
-                        socket.SendTo(sendBytes, (EndPoint)ep);
-                    }                        
-                }
-
-                // Receive messages from collector
-                while (socket.Available > 0)
-                {                    
-                    int nbytes = socket.ReceiveFrom(buffer, ref endPoint);
-                    if (nbytes > 0)
+                    // Send messages from analyzer
+                    while (sendq.Count > 0)
                     {
-                        ProtocolMessage recvMsg = new ProtocolMessage(((IPEndPoint)endPoint).Address.ToString());
-                        string jdata = Encoding.UTF8.GetString(buffer, 0, nbytes);
-                        recvMsg.Params = JsonConvert.DeserializeObject<Dictionary<string, object>>(jdata);
-                        recvq.Enqueue(recvMsg);
-                    }
-                }
+                        ProtocolMessage sendMsg;
+                        if (sendq.TryDequeue(out sendMsg))
+                        {
+                            Log.Info("Sending UDP packet");
+                            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(sendMsg.IPAddress), servicePort);
+                            Byte[] sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(sendMsg.Params));
+                            socket.SendTo(sendBytes, (EndPoint)ep);
+                        }
+                    }                    
 
-                Thread.Sleep(50);
+                    // Receive messages from collector
+                    while (socket.Available > 0)
+                    {
+                        Log.Info("Receiving UDP packet");
+                        int nbytes = socket.ReceiveFrom(buffer, ref endPoint);
+                        if (nbytes > 0)
+                        {
+                            ProtocolMessage recvMsg = new ProtocolMessage(((IPEndPoint)endPoint).Address.ToString());
+                            string jdata = Encoding.UTF8.GetString(buffer, 0, nbytes);
+                            recvMsg.Params = JsonConvert.DeserializeObject<Dictionary<string, object>>(jdata);
+                            recvq.Enqueue(recvMsg);
+                        }
+                    }
+
+                    Thread.Sleep(50);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Network failure", ex);
             }
         }
 

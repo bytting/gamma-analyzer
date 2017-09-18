@@ -10,7 +10,7 @@ namespace crash
 {
     public partial class FormAddDetector : Form
     {
-        ILog Log = Utils.GetLog();
+        ILog Log = null;
 
         private Detector Det = null;
 
@@ -29,9 +29,10 @@ namespace crash
         public string PluginName { get; set; }
         public string GEScript { get; set; }
 
-        public FormAddDetector(Detector detector)
+        public FormAddDetector(ILog log, Detector detector)
         {
             InitializeComponent();
+            Log = log;
             Det = detector;            
         }
 
