@@ -134,7 +134,10 @@ namespace crash
                 tabs.SizeMode = TabSizeMode.Fixed;
                 tabs.SelectedTab = pageMenu;
 
+                tbSetupVoltage.KeyPress += CustomEvents.Numeric_KeyPress;
                 tbSetupFineGain.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbSetupLLD.KeyPress += CustomEvents.Integer_KeyPress;
+                tbSetupULD.KeyPress += CustomEvents.Integer_KeyPress;
 
                 // Create directories and files
                 if (!Directory.Exists(GAEnvironment.SettingsPath))
@@ -916,35 +919,59 @@ CREATE TABLE `spectrum` (
             }
 
             // Convert parameters            
-            double coarse = 0f;
-            double fine = 0f;
-            int nchannels = 0;
+            double coarseGain = 0d, fineGain = 0d;
+            int voltage = 0, lld = 0, uld = 0, nchannels = 0;
 
             try
             {
-                coarse = Convert.ToDouble(cboxSetupCoarseGain.Text, CultureInfo.InvariantCulture);
-                fine = Convert.ToDouble(tbSetupFineGain.Text, CultureInfo.InvariantCulture);
+                coarseGain = Convert.ToDouble(cboxSetupCoarseGain.Text, CultureInfo.InvariantCulture);
+                fineGain = Convert.ToDouble(tbSetupFineGain.Text, CultureInfo.InvariantCulture);
+                voltage = Convert.ToInt32(tbSetupVoltage.Text);
+                lld = Convert.ToInt32(tbSetupLLD.Text);
+                uld = Convert.ToInt32(tbSetupULD.Text);
                 nchannels = Convert.ToInt32(cboxSetupChannels.Text);
             }
             catch(Exception ex)
             {
-                Log.Error("Setup: Invalid number format (fine gain, coarse gain, channels)", ex);
-                MessageBox.Show("Setup: Invalid number format (fine gain, coarse gain, channels)");
+                Log.Error("Setup: Invalid number format", ex);
+                MessageBox.Show("Setup: Invalid number format");
                 return;
             }
             
-            int lld = tbarSetupLLD.Value;
-            int uld = tbarSetupULD.Value;
-            if(lld > uld)
+            if(voltage < selectedDetector.MinVoltage || voltage > selectedDetector.MaxVoltage)
+            {
+                MessageBox.Show("Voltage out of range");
+                return;
+            }
+
+            if(fineGain < 1.0 || fineGain > 5.0)
+            {
+                MessageBox.Show("Fine gain out of range");
+                return;
+            }
+
+            if(lld < 0)
+            {
+                MessageBox.Show("LLD can not be less than zero");
+                return;
+            }
+
+            if (uld > 130)
+            {
+                MessageBox.Show("ULD can not be bigger than 130%");
+                return;
+            }
+
+            if (lld > uld)
             {
                 MessageBox.Show("LLD can not be bigger than ULD");
                 return;
             }
 
             // Update selected detector parameters
-            selectedDetector.Voltage = tbarSetupVoltage.Value;
-            selectedDetector.CoarseGain = coarse;
-            selectedDetector.FineGain = fine;
+            selectedDetector.Voltage = voltage;
+            selectedDetector.CoarseGain = coarseGain;
+            selectedDetector.FineGain = fineGain;
             selectedDetector.NumChannels = nchannels;
             selectedDetector.LLD = lld;
             selectedDetector.ULD = uld;
@@ -1380,21 +1407,6 @@ CREATE TABLE `spectrum` (
                     MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
                 }
             }
-        }
-
-        private void tbarSetupVoltage_ValueChanged(object sender, EventArgs e)
-        {            
-            lblSetupVoltage.Text = tbarSetupVoltage.Value.ToString();
-        }
-
-        private void tbarSetupLLD_ValueChanged(object sender, EventArgs e)
-        {        
-            lblSetupLLD.Text = tbarSetupLLD.Value.ToString();
-        }
-
-        private void tbarSetupULD_ValueChanged(object sender, EventArgs e)
-        {        
-            lblSetupULD.Text = tbarSetupULD.Value.ToString();
         }
 
         private void btnMenuPreferences_Click(object sender, EventArgs e)
@@ -1938,19 +1950,13 @@ CREATE TABLE `spectrum` (
         private void cboxSetupDetector_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedDetector = cboxSetupDetector.SelectedItem as Detector;
-            
             cboxSetupChannels.Text = selectedDetector.NumChannels.ToString();
-
-            tbarSetupVoltage.Minimum = selectedDetector.MinVoltage;
-            tbarSetupVoltage.Maximum = selectedDetector.MaxVoltage;
-            tbarSetupVoltage.Value = Utils.Clamp(selectedDetector.Voltage, tbarSetupVoltage.Minimum, tbarSetupVoltage.Maximum);
-
+            tbSetupVoltage.Text = selectedDetector.Voltage.ToString();
             int coarse = Convert.ToInt32(selectedDetector.CoarseGain);
             cboxSetupCoarseGain.SelectedIndex = cboxSetupCoarseGain.FindStringExact(coarse.ToString());
-
             tbSetupFineGain.Text = selectedDetector.FineGain.ToString();
-            tbarSetupLLD.Value = Utils.Clamp(selectedDetector.LLD, tbarSetupLLD.Minimum, tbarSetupLLD.Maximum);
-            tbarSetupULD.Value = Utils.Clamp(selectedDetector.ULD, tbarSetupULD.Minimum, tbarSetupULD.Maximum);
+            tbSetupLLD.Text = selectedDetector.LLD.ToString();
+            tbSetupULD.Text = selectedDetector.ULD.ToString();
 
             cboxSetupChannels.Items.Clear();
             for (int i = 32; i <= selectedDetector.MaxNumChannels; i *= 2)

@@ -42,11 +42,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.panelVoltage = new System.Windows.Forms.Panel();
-            this.tbarCurrHV = new System.Windows.Forms.TrackBar();
-            this.lblCurrHV = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.tbCoarseGain = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tbFineGain = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -63,10 +59,10 @@
             this.tbGEScript = new System.Windows.Forms.TextBox();
             this.tbTypeName = new System.Windows.Forms.TextBox();
             this.cboxMaxNumChannels = new System.Windows.Forms.ComboBox();
+            this.tbHV = new System.Windows.Forms.TextBox();
+            this.cboxCoarseGain = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.tableParameters.SuspendLayout();
-            this.panelVoltage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarCurrHV)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -117,9 +113,7 @@
             this.tableParameters.Controls.Add(this.label12, 0, 5);
             this.tableParameters.Controls.Add(this.label13, 0, 6);
             this.tableParameters.Controls.Add(this.label4, 0, 7);
-            this.tableParameters.Controls.Add(this.panelVoltage, 1, 7);
             this.tableParameters.Controls.Add(this.label5, 0, 8);
-            this.tableParameters.Controls.Add(this.tbCoarseGain, 1, 8);
             this.tableParameters.Controls.Add(this.label6, 0, 9);
             this.tableParameters.Controls.Add(this.tbFineGain, 1, 9);
             this.tableParameters.Controls.Add(this.label8, 0, 10);
@@ -136,6 +130,8 @@
             this.tableParameters.Controls.Add(this.tbGEScript, 1, 14);
             this.tableParameters.Controls.Add(this.tbTypeName, 1, 1);
             this.tableParameters.Controls.Add(this.cboxMaxNumChannels, 1, 3);
+            this.tableParameters.Controls.Add(this.tbHV, 1, 7);
+            this.tableParameters.Controls.Add(this.cboxCoarseGain, 1, 8);
             this.tableParameters.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableParameters.Location = new System.Drawing.Point(0, 0);
             this.tableParameters.Name = "tableParameters";
@@ -240,36 +236,6 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "Voltage";
             // 
-            // panelVoltage
-            // 
-            this.panelVoltage.Controls.Add(this.tbarCurrHV);
-            this.panelVoltage.Controls.Add(this.lblCurrHV);
-            this.panelVoltage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelVoltage.Location = new System.Drawing.Point(173, 221);
-            this.panelVoltage.Name = "panelVoltage";
-            this.panelVoltage.Size = new System.Drawing.Size(434, 26);
-            this.panelVoltage.TabIndex = 20;
-            // 
-            // tbarCurrHV
-            // 
-            this.tbarCurrHV.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbarCurrHV.Location = new System.Drawing.Point(0, 0);
-            this.tbarCurrHV.Name = "tbarCurrHV";
-            this.tbarCurrHV.Size = new System.Drawing.Size(420, 26);
-            this.tbarCurrHV.TabIndex = 1;
-            this.tbarCurrHV.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbarCurrHV.ValueChanged += new System.EventHandler(this.tbarCurrHV_ValueChanged);
-            // 
-            // lblCurrHV
-            // 
-            this.lblCurrHV.AutoSize = true;
-            this.lblCurrHV.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblCurrHV.Location = new System.Drawing.Point(420, 0);
-            this.lblCurrHV.Name = "lblCurrHV";
-            this.lblCurrHV.Size = new System.Drawing.Size(14, 15);
-            this.lblCurrHV.TabIndex = 0;
-            this.lblCurrHV.Text = "1";
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -278,14 +244,6 @@
             this.label5.Size = new System.Drawing.Size(75, 15);
             this.label5.TabIndex = 5;
             this.label5.Text = "Coarse gain";
-            // 
-            // tbCoarseGain
-            // 
-            this.tbCoarseGain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbCoarseGain.Location = new System.Drawing.Point(173, 253);
-            this.tbCoarseGain.Name = "tbCoarseGain";
-            this.tbCoarseGain.Size = new System.Drawing.Size(434, 21);
-            this.tbCoarseGain.TabIndex = 14;
             // 
             // label6
             // 
@@ -388,7 +346,6 @@
             this.tbMinHV.Name = "tbMinHV";
             this.tbMinHV.Size = new System.Drawing.Size(434, 21);
             this.tbMinHV.TabIndex = 29;
-            this.tbMinHV.TextChanged += new System.EventHandler(this.tbMinHV_TextChanged);
             // 
             // tbMaxHV
             // 
@@ -397,7 +354,6 @@
             this.tbMaxHV.Name = "tbMaxHV";
             this.tbMaxHV.Size = new System.Drawing.Size(434, 21);
             this.tbMaxHV.TabIndex = 30;
-            this.tbMaxHV.TextChanged += new System.EventHandler(this.tbMaxHV_TextChanged);
             // 
             // tbGEScript
             // 
@@ -428,6 +384,29 @@
             this.cboxMaxNumChannels.TabIndex = 33;
             this.cboxMaxNumChannels.SelectedIndexChanged += new System.EventHandler(this.cboxMaxNumChannels_SelectedIndexChanged);
             // 
+            // tbHV
+            // 
+            this.tbHV.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbHV.Location = new System.Drawing.Point(173, 221);
+            this.tbHV.Name = "tbHV";
+            this.tbHV.Size = new System.Drawing.Size(434, 21);
+            this.tbHV.TabIndex = 34;
+            // 
+            // cboxCoarseGain
+            // 
+            this.cboxCoarseGain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxCoarseGain.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxCoarseGain.FormattingEnabled = true;
+            this.cboxCoarseGain.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "4",
+            "8"});
+            this.cboxCoarseGain.Location = new System.Drawing.Point(173, 253);
+            this.cboxCoarseGain.Name = "cboxCoarseGain";
+            this.cboxCoarseGain.Size = new System.Drawing.Size(434, 23);
+            this.cboxCoarseGain.TabIndex = 35;
+            // 
             // FormAddDetector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -447,9 +426,6 @@
             this.panel1.ResumeLayout(false);
             this.tableParameters.ResumeLayout(false);
             this.tableParameters.PerformLayout();
-            this.panelVoltage.ResumeLayout(false);
-            this.panelVoltage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarCurrHV)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -471,14 +447,10 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cboxNumChannels;
         private System.Windows.Forms.TextBox tbSerialnumber;
-        private System.Windows.Forms.TextBox tbCoarseGain;
         private System.Windows.Forms.TextBox tbFineGain;
         private System.Windows.Forms.TextBox tbLivetime;
         private System.Windows.Forms.TextBox tbLLD;
         private System.Windows.Forms.TextBox tbULD;
-        private System.Windows.Forms.Panel panelVoltage;
-        private System.Windows.Forms.TrackBar tbarCurrHV;
-        private System.Windows.Forms.Label lblCurrHV;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tbPluginName;
         private System.Windows.Forms.Label label11;
@@ -490,5 +462,7 @@
         private System.Windows.Forms.TextBox tbGEScript;
         private System.Windows.Forms.TextBox tbTypeName;
         private System.Windows.Forms.ComboBox cboxMaxNumChannels;
+        private System.Windows.Forms.TextBox tbHV;
+        private System.Windows.Forms.ComboBox cboxCoarseGain;
     }
 }

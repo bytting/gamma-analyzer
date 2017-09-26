@@ -96,9 +96,7 @@
             this.btnSetupStoreCoefficients = new System.Windows.Forms.ToolStripButton();
             this.layoutConfigureDetector = new System.Windows.Forms.TableLayoutPanel();
             this.panel16 = new System.Windows.Forms.Panel();
-            this.tbarSetupVoltage = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
-            this.lblSetupVoltage = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.cboxSetupCoarseGain = new System.Windows.Forms.ComboBox();
             this.panel13 = new System.Windows.Forms.Panel();
@@ -108,13 +106,9 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.tbarSetupLLD = new System.Windows.Forms.TrackBar();
             this.label9 = new System.Windows.Forms.Label();
-            this.lblSetupLLD = new System.Windows.Forms.Label();
             this.panel18 = new System.Windows.Forms.Panel();
-            this.tbarSetupULD = new System.Windows.Forms.TrackBar();
             this.label10 = new System.Windows.Forms.Label();
-            this.lblSetupULD = new System.Windows.Forms.Label();
             this.btnSetupSetParams = new System.Windows.Forms.Button();
             this.panel15 = new System.Windows.Forms.Panel();
             this.cboxSetupChannels = new System.Windows.Forms.ComboBox();
@@ -236,6 +230,12 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
+            this.tbSetupVoltage = new System.Windows.Forms.TextBox();
+            this.tbSetupLLD = new System.Windows.Forms.TextBox();
+            this.tbSetupULD = new System.Windows.Forms.TextBox();
+            this.panel20 = new System.Windows.Forms.Panel();
+            this.panel21 = new System.Windows.Forms.Panel();
+            this.panel22 = new System.Windows.Forms.Panel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -247,15 +247,12 @@
             this.toolsSetup.SuspendLayout();
             this.layoutConfigureDetector.SuspendLayout();
             this.panel16.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupVoltage)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupLLD)).BeginInit();
             this.panel18.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupULD)).BeginInit();
             this.panel15.SuspendLayout();
             this.panel19.SuspendLayout();
             this.panel14.SuspendLayout();
@@ -294,6 +291,9 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel10.SuspendLayout();
+            this.panel20.SuspendLayout();
+            this.panel21.SuspendLayout();
+            this.panel22.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -933,24 +933,13 @@
             // 
             // panel16
             // 
-            this.panel16.Controls.Add(this.tbarSetupVoltage);
-            this.panel16.Controls.Add(this.label6);
-            this.panel16.Controls.Add(this.lblSetupVoltage);
+            this.panel16.Controls.Add(this.tbSetupVoltage);
+            this.panel16.Controls.Add(this.panel22);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel16.Location = new System.Drawing.Point(3, 35);
             this.panel16.Name = "panel16";
             this.panel16.Size = new System.Drawing.Size(441, 26);
             this.panel16.TabIndex = 50;
-            // 
-            // tbarSetupVoltage
-            // 
-            this.tbarSetupVoltage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbarSetupVoltage.Location = new System.Drawing.Point(55, 0);
-            this.tbarSetupVoltage.Name = "tbarSetupVoltage";
-            this.tbarSetupVoltage.Size = new System.Drawing.Size(372, 26);
-            this.tbarSetupVoltage.TabIndex = 1;
-            this.tbarSetupVoltage.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbarSetupVoltage.ValueChanged += new System.EventHandler(this.tbarSetupVoltage_ValueChanged);
             // 
             // label6
             // 
@@ -963,16 +952,6 @@
             this.label6.TabIndex = 31;
             this.label6.Text = "Voltage";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblSetupVoltage
-            // 
-            this.lblSetupVoltage.AutoSize = true;
-            this.lblSetupVoltage.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblSetupVoltage.Location = new System.Drawing.Point(427, 0);
-            this.lblSetupVoltage.Name = "lblSetupVoltage";
-            this.lblSetupVoltage.Size = new System.Drawing.Size(14, 15);
-            this.lblSetupVoltage.TabIndex = 0;
-            this.lblSetupVoltage.Text = "1";
             // 
             // panel5
             // 
@@ -1061,25 +1040,13 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.tbarSetupLLD);
-            this.panel3.Controls.Add(this.label9);
-            this.panel3.Controls.Add(this.lblSetupLLD);
+            this.panel3.Controls.Add(this.tbSetupLLD);
+            this.panel3.Controls.Add(this.panel21);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 67);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(441, 27);
             this.panel3.TabIndex = 53;
-            // 
-            // tbarSetupLLD
-            // 
-            this.tbarSetupLLD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbarSetupLLD.Location = new System.Drawing.Point(59, 0);
-            this.tbarSetupLLD.Maximum = 100;
-            this.tbarSetupLLD.Name = "tbarSetupLLD";
-            this.tbarSetupLLD.Size = new System.Drawing.Size(368, 27);
-            this.tbarSetupLLD.TabIndex = 1;
-            this.tbarSetupLLD.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbarSetupLLD.ValueChanged += new System.EventHandler(this.tbarSetupLLD_ValueChanged);
             // 
             // label9
             // 
@@ -1093,37 +1060,15 @@
             this.label9.Text = "LLD (%)";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // lblSetupLLD
-            // 
-            this.lblSetupLLD.AutoSize = true;
-            this.lblSetupLLD.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblSetupLLD.Location = new System.Drawing.Point(427, 0);
-            this.lblSetupLLD.Name = "lblSetupLLD";
-            this.lblSetupLLD.Size = new System.Drawing.Size(14, 15);
-            this.lblSetupLLD.TabIndex = 0;
-            this.lblSetupLLD.Text = "0";
-            // 
             // panel18
             // 
-            this.panel18.Controls.Add(this.tbarSetupULD);
-            this.panel18.Controls.Add(this.label10);
-            this.panel18.Controls.Add(this.lblSetupULD);
+            this.panel18.Controls.Add(this.tbSetupULD);
+            this.panel18.Controls.Add(this.panel20);
             this.panel18.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel18.Location = new System.Drawing.Point(450, 67);
             this.panel18.Name = "panel18";
             this.panel18.Size = new System.Drawing.Size(441, 27);
             this.panel18.TabIndex = 54;
-            // 
-            // tbarSetupULD
-            // 
-            this.tbarSetupULD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbarSetupULD.Location = new System.Drawing.Point(61, 0);
-            this.tbarSetupULD.Maximum = 110;
-            this.tbarSetupULD.Name = "tbarSetupULD";
-            this.tbarSetupULD.Size = new System.Drawing.Size(366, 27);
-            this.tbarSetupULD.TabIndex = 1;
-            this.tbarSetupULD.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbarSetupULD.ValueChanged += new System.EventHandler(this.tbarSetupULD_ValueChanged);
             // 
             // label10
             // 
@@ -1136,16 +1081,6 @@
             this.label10.TabIndex = 35;
             this.label10.Text = "ULD (%)";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblSetupULD
-            // 
-            this.lblSetupULD.AutoSize = true;
-            this.lblSetupULD.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblSetupULD.Location = new System.Drawing.Point(427, 0);
-            this.lblSetupULD.Name = "lblSetupULD";
-            this.lblSetupULD.Size = new System.Drawing.Size(14, 15);
-            this.lblSetupULD.TabIndex = 0;
-            this.lblSetupULD.Text = "0";
             // 
             // btnSetupSetParams
             // 
@@ -2526,6 +2461,57 @@
             // 
             this.openSessionDialog.DefaultExt = "db";
             // 
+            // tbSetupVoltage
+            // 
+            this.tbSetupVoltage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupVoltage.Location = new System.Drawing.Point(114, 0);
+            this.tbSetupVoltage.Name = "tbSetupVoltage";
+            this.tbSetupVoltage.Size = new System.Drawing.Size(327, 21);
+            this.tbSetupVoltage.TabIndex = 32;
+            // 
+            // tbSetupLLD
+            // 
+            this.tbSetupLLD.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupLLD.Location = new System.Drawing.Point(114, 0);
+            this.tbSetupLLD.Name = "tbSetupLLD";
+            this.tbSetupLLD.Size = new System.Drawing.Size(327, 21);
+            this.tbSetupLLD.TabIndex = 35;
+            // 
+            // tbSetupULD
+            // 
+            this.tbSetupULD.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupULD.Location = new System.Drawing.Point(114, 0);
+            this.tbSetupULD.Name = "tbSetupULD";
+            this.tbSetupULD.Size = new System.Drawing.Size(327, 21);
+            this.tbSetupULD.TabIndex = 36;
+            // 
+            // panel20
+            // 
+            this.panel20.Controls.Add(this.label10);
+            this.panel20.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel20.Location = new System.Drawing.Point(0, 0);
+            this.panel20.Name = "panel20";
+            this.panel20.Size = new System.Drawing.Size(114, 27);
+            this.panel20.TabIndex = 37;
+            // 
+            // panel21
+            // 
+            this.panel21.Controls.Add(this.label9);
+            this.panel21.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel21.Location = new System.Drawing.Point(0, 0);
+            this.panel21.Name = "panel21";
+            this.panel21.Size = new System.Drawing.Size(114, 27);
+            this.panel21.TabIndex = 36;
+            // 
+            // panel22
+            // 
+            this.panel22.Controls.Add(this.label6);
+            this.panel22.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel22.Location = new System.Drawing.Point(0, 0);
+            this.panel22.Name = "panel22";
+            this.panel22.Size = new System.Drawing.Size(114, 26);
+            this.panel22.TabIndex = 33;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2563,7 +2549,6 @@
             this.layoutConfigureDetector.PerformLayout();
             this.panel16.ResumeLayout(false);
             this.panel16.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupVoltage)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
@@ -2573,10 +2558,8 @@
             this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupLLD)).EndInit();
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbarSetupULD)).EndInit();
             this.panel15.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             this.panel19.PerformLayout();
@@ -2628,6 +2611,12 @@
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
             this.panel10.ResumeLayout(false);
+            this.panel20.ResumeLayout(false);
+            this.panel20.PerformLayout();
+            this.panel21.ResumeLayout(false);
+            this.panel21.PerformLayout();
+            this.panel22.ResumeLayout(false);
+            this.panel22.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2685,10 +2674,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cboxSetupCoarseGain;
         private System.Windows.Forms.Button btnSetupSetParams;
-        private System.Windows.Forms.TrackBar tbarSetupLLD;
-        private System.Windows.Forms.Label lblSetupLLD;
-        private System.Windows.Forms.TrackBar tbarSetupULD;
-        private System.Windows.Forms.Label lblSetupULD;
         private System.Windows.Forms.TabPage pageMenu;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button btnMenuDetectors;
@@ -2739,8 +2724,6 @@
         private System.Windows.Forms.TrackBar tbarNuclides;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TableLayoutPanel layoutConfigureDetector;
-        private System.Windows.Forms.TrackBar tbarSetupVoltage;
-        private System.Windows.Forms.Label lblSetupVoltage;
         private ZedGraph.ZedGraphControl graphSetup;
         private System.Windows.Forms.Label lblSetupEnergy;
         private System.Windows.Forms.Label lblSetupChannel;
@@ -2841,6 +2824,12 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemAdjustZero;
         private System.Windows.Forms.Label lblSessionSelChannel;
         private System.Windows.Forms.ToolStripButton btnAdjustZeroPolynomial;
+        private System.Windows.Forms.TextBox tbSetupVoltage;
+        private System.Windows.Forms.TextBox tbSetupLLD;
+        private System.Windows.Forms.TextBox tbSetupULD;
+        private System.Windows.Forms.Panel panel20;
+        private System.Windows.Forms.Panel panel21;
+        private System.Windows.Forms.Panel panel22;
     }
 }
 

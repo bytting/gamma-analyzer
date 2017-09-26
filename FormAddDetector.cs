@@ -40,7 +40,7 @@ namespace crash
         {            
             tbMinHV.KeyPress += CustomEvents.Integer_KeyPress;
             tbMaxHV.KeyPress += CustomEvents.Integer_KeyPress;
-            tbCoarseGain.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbHV.KeyPress += CustomEvents.Integer_KeyPress;
             tbFineGain.KeyPress += CustomEvents.Numeric_KeyPress;
             tbLivetime.KeyPress += CustomEvents.Integer_KeyPress;
             tbLLD.KeyPress += CustomEvents.Integer_KeyPress;
@@ -59,10 +59,8 @@ namespace crash
                     cboxMaxNumChannels.SelectedItem = cboxMaxNumChannels.Items[idx];
                 tbMinHV.Text = Det.MinVoltage.ToString();
                 tbMaxHV.Text = Det.MaxVoltage.ToString();
-                tbarCurrHV.Minimum = Convert.ToInt32(tbMinHV.Text);
-                tbarCurrHV.Maximum = Convert.ToInt32(tbMaxHV.Text);
-                tbarCurrHV.Value = Utils.Clamp(Det.Voltage, tbarCurrHV.Minimum, tbarCurrHV.Maximum);
-                tbCoarseGain.Text = Det.CoarseGain.ToString();
+                tbHV.Text = Det.Voltage.ToString();
+                cboxCoarseGain.SelectedIndex = cboxCoarseGain.FindStringExact(Det.CoarseGain.ToString());
                 tbFineGain.Text = Det.FineGain.ToString();
                 tbLivetime.Text = Det.Livetime.ToString();
                 tbLLD.Text = Det.LLD.ToString();
@@ -86,7 +84,7 @@ namespace crash
                 || String.IsNullOrEmpty(cboxNumChannels.Text.Trim())
                 || String.IsNullOrEmpty(tbMinHV.Text.Trim())
                 || String.IsNullOrEmpty(tbMaxHV.Text.Trim())
-                || String.IsNullOrEmpty(tbCoarseGain.Text.Trim())
+                || String.IsNullOrEmpty(tbHV.Text.Trim())
                 || String.IsNullOrEmpty(tbFineGain.Text.Trim())                
                 || String.IsNullOrEmpty(tbLivetime.Text.Trim())
                 || String.IsNullOrEmpty(tbLLD.Text.Trim())
@@ -106,8 +104,8 @@ namespace crash
                 NumChannels = Convert.ToInt32(cboxNumChannels.SelectedItem);
                 MinHV = Convert.ToInt32(tbMinHV.Text.Trim());
                 MaxHV = Convert.ToInt32(tbMaxHV.Text.Trim());
-                HV = tbarCurrHV.Value;
-                CoarseGain = Convert.ToDouble(tbCoarseGain.Text.Trim(), CultureInfo.InvariantCulture);
+                HV = Convert.ToInt32(tbHV.Text.Trim());
+                CoarseGain = Convert.ToDouble(cboxCoarseGain.Text, CultureInfo.InvariantCulture);
                 FineGain = Convert.ToDouble(tbFineGain.Text.Trim(), CultureInfo.InvariantCulture);
                 Livetime = Convert.ToInt32(tbLivetime.Text.Trim());
                 LLD = Convert.ToInt32(tbLLD.Text.Trim());
@@ -122,13 +120,15 @@ namespace crash
                 return;
             }
 
+            if(HV < MinHV || HV > MaxHV)
+            {
+                Log.Error("Add detector: Voltage out of range");
+                MessageBox.Show("Voltage out of range");
+                return;
+            }
+
             DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private void tbarCurrHV_ValueChanged(object sender, EventArgs e)
-        {
-            lblCurrHV.Text = tbarCurrHV.Value.ToString();
         }
 
         private void cboxMaxNumChannels_SelectedIndexChanged(object sender, EventArgs e)
@@ -147,38 +147,6 @@ namespace crash
                 else
                     cboxNumChannels.SelectedItem = cboxNumChannels.Items[0];
             }
-        }
-
-        private void tbMaxHV_TextChanged(object sender, EventArgs e)
-        {
-            int val;
-
-            try
-            {
-                val = Convert.ToInt32(tbMaxHV.Text);
-            }
-            catch
-            {
-                return;
-            }
-
-            tbarCurrHV.Maximum = val;
-        }
-
-        private void tbMinHV_TextChanged(object sender, EventArgs e)
-        {
-            int val;
-
-            try
-            {
-                val = Convert.ToInt32(tbMinHV.Text);
-            }
-            catch
-            {
-                return;
-            }
-
-            tbarCurrHV.Minimum = val;
-        }
+        }        
     }
 }
