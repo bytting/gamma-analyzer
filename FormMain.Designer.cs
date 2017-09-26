@@ -236,6 +236,8 @@
             this.panel20 = new System.Windows.Forms.Panel();
             this.panel21 = new System.Windows.Forms.Panel();
             this.panel22 = new System.Windows.Forms.Panel();
+            this.panel23 = new System.Windows.Forms.Panel();
+            this.panel24 = new System.Windows.Forms.Panel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -294,6 +296,7 @@
             this.panel20.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panel22.SuspendLayout();
+            this.panel23.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -916,10 +919,10 @@
             this.layoutConfigureDetector.Controls.Add(this.panel17, 2, 1);
             this.layoutConfigureDetector.Controls.Add(this.panel3, 0, 2);
             this.layoutConfigureDetector.Controls.Add(this.panel18, 1, 2);
-            this.layoutConfigureDetector.Controls.Add(this.btnSetupSetParams, 2, 2);
             this.layoutConfigureDetector.Controls.Add(this.panel15, 2, 0);
             this.layoutConfigureDetector.Controls.Add(this.panel14, 1, 0);
             this.layoutConfigureDetector.Controls.Add(this.lblSetupIPAddress, 0, 0);
+            this.layoutConfigureDetector.Controls.Add(this.panel23, 2, 2);
             this.layoutConfigureDetector.Dock = System.Windows.Forms.DockStyle.Top;
             this.layoutConfigureDetector.Location = new System.Drawing.Point(0, 0);
             this.layoutConfigureDetector.Name = "layoutConfigureDetector";
@@ -1084,11 +1087,11 @@
             // 
             // btnSetupSetParams
             // 
-            this.btnSetupSetParams.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSetupSetParams.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSetupSetParams.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupSetParams.Location = new System.Drawing.Point(1012, 67);
+            this.btnSetupSetParams.Location = new System.Drawing.Point(114, 0);
             this.btnSetupSetParams.Name = "btnSetupSetParams";
-            this.btnSetupSetParams.Size = new System.Drawing.Size(327, 27);
+            this.btnSetupSetParams.Size = new System.Drawing.Size(328, 27);
             this.btnSetupSetParams.TabIndex = 16;
             this.btnSetupSetParams.Text = "Set detector params";
             this.btnSetupSetParams.UseVisualStyleBackColor = true;
@@ -1180,11 +1183,10 @@
             // lblSetupIPAddress
             // 
             this.lblSetupIPAddress.AutoSize = true;
-            this.lblSetupIPAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSetupIPAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSetupIPAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSetupIPAddress.Location = new System.Drawing.Point(3, 0);
             this.lblSetupIPAddress.Name = "lblSetupIPAddress";
-            this.lblSetupIPAddress.Size = new System.Drawing.Size(441, 32);
+            this.lblSetupIPAddress.Size = new System.Drawing.Size(158, 17);
             this.lblSetupIPAddress.TabIndex = 55;
             this.lblSetupIPAddress.Text = "<lblSetupIPAddress>";
             this.lblSetupIPAddress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2512,6 +2514,24 @@
             this.panel22.Size = new System.Drawing.Size(114, 26);
             this.panel22.TabIndex = 33;
             // 
+            // panel23
+            // 
+            this.panel23.Controls.Add(this.btnSetupSetParams);
+            this.panel23.Controls.Add(this.panel24);
+            this.panel23.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel23.Location = new System.Drawing.Point(897, 67);
+            this.panel23.Name = "panel23";
+            this.panel23.Size = new System.Drawing.Size(442, 27);
+            this.panel23.TabIndex = 56;
+            // 
+            // panel24
+            // 
+            this.panel24.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel24.Location = new System.Drawing.Point(0, 0);
+            this.panel24.Name = "panel24";
+            this.panel24.Size = new System.Drawing.Size(114, 27);
+            this.panel24.TabIndex = 17;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2617,6 +2637,7 @@
             this.panel21.PerformLayout();
             this.panel22.ResumeLayout(false);
             this.panel22.PerformLayout();
+            this.panel23.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2830,6 +2851,8 @@
         private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.Panel panel21;
         private System.Windows.Forms.Panel panel22;
+        private System.Windows.Forms.Panel panel23;
+        private System.Windows.Forms.Panel panel24;
     }
 }
 
