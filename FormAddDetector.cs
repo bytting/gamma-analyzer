@@ -120,9 +120,37 @@ namespace crash
                 return;
             }
 
-            if(HV < MinHV || HV > MaxHV)
+            if (FineGain < 1.0 || FineGain > 5.0)
             {
-                Log.Error("Add detector: Voltage out of range");
+                Log.Error("Fine gain out of range");
+                MessageBox.Show("Fine gain out of range");
+                return;
+            }
+
+            if (LLD < 0)
+            {
+                Log.Error("LLD can not be less than zero");
+                MessageBox.Show("LLD can not be less than zero");
+                return;
+            }
+
+            if (ULD > 130)
+            {
+                Log.Error("ULD can not be bigger than 130%");
+                MessageBox.Show("ULD can not be bigger than 130%");
+                return;
+            }
+
+            if (LLD > ULD)
+            {
+                Log.Error("LLD can not be bigger than ULD");
+                MessageBox.Show("LLD can not be bigger than ULD");
+                return;
+            }
+
+            if (HV < MinHV || HV > MaxHV)
+            {
+                Log.Error("Voltage out of range");
                 MessageBox.Show("Voltage out of range");
                 return;
             }

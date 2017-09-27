@@ -96,6 +96,8 @@
             this.btnSetupStoreCoefficients = new System.Windows.Forms.ToolStripButton();
             this.layoutConfigureDetector = new System.Windows.Forms.TableLayoutPanel();
             this.panel16 = new System.Windows.Forms.Panel();
+            this.tbSetupVoltage = new System.Windows.Forms.TextBox();
+            this.panel22 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.cboxSetupCoarseGain = new System.Windows.Forms.ComboBox();
@@ -106,10 +108,13 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.tbSetupLLD = new System.Windows.Forms.TextBox();
+            this.panel21 = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
             this.panel18 = new System.Windows.Forms.Panel();
+            this.tbSetupULD = new System.Windows.Forms.TextBox();
+            this.panel20 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
-            this.btnSetupSetParams = new System.Windows.Forms.Button();
             this.panel15 = new System.Windows.Forms.Panel();
             this.cboxSetupChannels = new System.Windows.Forms.ComboBox();
             this.panel19 = new System.Windows.Forms.Panel();
@@ -119,6 +124,9 @@
             this.panel12 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.lblSetupIPAddress = new System.Windows.Forms.Label();
+            this.panel23 = new System.Windows.Forms.Panel();
+            this.btnSetupSetParams = new System.Windows.Forms.Button();
+            this.panel24 = new System.Windows.Forms.Panel();
             this.panelSetupSession = new System.Windows.Forms.Panel();
             this.btnSetupCancel = new System.Windows.Forms.Button();
             this.btnSetupClose = new System.Windows.Forms.Button();
@@ -230,14 +238,6 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
-            this.tbSetupVoltage = new System.Windows.Forms.TextBox();
-            this.tbSetupLLD = new System.Windows.Forms.TextBox();
-            this.tbSetupULD = new System.Windows.Forms.TextBox();
-            this.panel20 = new System.Windows.Forms.Panel();
-            this.panel21 = new System.Windows.Forms.Panel();
-            this.panel22 = new System.Windows.Forms.Panel();
-            this.panel23 = new System.Windows.Forms.Panel();
-            this.panel24 = new System.Windows.Forms.Panel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -249,16 +249,20 @@
             this.toolsSetup.SuspendLayout();
             this.layoutConfigureDetector.SuspendLayout();
             this.panel16.SuspendLayout();
+            this.panel22.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel21.SuspendLayout();
             this.panel18.SuspendLayout();
+            this.panel20.SuspendLayout();
             this.panel15.SuspendLayout();
             this.panel19.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel12.SuspendLayout();
+            this.panel23.SuspendLayout();
             this.panelSetupSession.SuspendLayout();
             this.pageMenu.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -293,10 +297,6 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel10.SuspendLayout();
-            this.panel20.SuspendLayout();
-            this.panel21.SuspendLayout();
-            this.panel22.SuspendLayout();
-            this.panel23.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -944,6 +944,23 @@
             this.panel16.Size = new System.Drawing.Size(441, 26);
             this.panel16.TabIndex = 50;
             // 
+            // tbSetupVoltage
+            // 
+            this.tbSetupVoltage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupVoltage.Location = new System.Drawing.Point(114, 0);
+            this.tbSetupVoltage.Name = "tbSetupVoltage";
+            this.tbSetupVoltage.Size = new System.Drawing.Size(327, 21);
+            this.tbSetupVoltage.TabIndex = 32;
+            // 
+            // panel22
+            // 
+            this.panel22.Controls.Add(this.label6);
+            this.panel22.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel22.Location = new System.Drawing.Point(0, 0);
+            this.panel22.Name = "panel22";
+            this.panel22.Size = new System.Drawing.Size(114, 26);
+            this.panel22.TabIndex = 33;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -1051,6 +1068,23 @@
             this.panel3.Size = new System.Drawing.Size(441, 27);
             this.panel3.TabIndex = 53;
             // 
+            // tbSetupLLD
+            // 
+            this.tbSetupLLD.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupLLD.Location = new System.Drawing.Point(114, 0);
+            this.tbSetupLLD.Name = "tbSetupLLD";
+            this.tbSetupLLD.Size = new System.Drawing.Size(327, 21);
+            this.tbSetupLLD.TabIndex = 35;
+            // 
+            // panel21
+            // 
+            this.panel21.Controls.Add(this.label9);
+            this.panel21.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel21.Location = new System.Drawing.Point(0, 0);
+            this.panel21.Name = "panel21";
+            this.panel21.Size = new System.Drawing.Size(114, 27);
+            this.panel21.TabIndex = 36;
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -1073,6 +1107,23 @@
             this.panel18.Size = new System.Drawing.Size(441, 27);
             this.panel18.TabIndex = 54;
             // 
+            // tbSetupULD
+            // 
+            this.tbSetupULD.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSetupULD.Location = new System.Drawing.Point(114, 0);
+            this.tbSetupULD.Name = "tbSetupULD";
+            this.tbSetupULD.Size = new System.Drawing.Size(327, 21);
+            this.tbSetupULD.TabIndex = 36;
+            // 
+            // panel20
+            // 
+            this.panel20.Controls.Add(this.label10);
+            this.panel20.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel20.Location = new System.Drawing.Point(0, 0);
+            this.panel20.Name = "panel20";
+            this.panel20.Size = new System.Drawing.Size(114, 27);
+            this.panel20.TabIndex = 37;
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -1084,18 +1135,6 @@
             this.label10.TabIndex = 35;
             this.label10.Text = "ULD (%)";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // btnSetupSetParams
-            // 
-            this.btnSetupSetParams.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSetupSetParams.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetupSetParams.Location = new System.Drawing.Point(114, 0);
-            this.btnSetupSetParams.Name = "btnSetupSetParams";
-            this.btnSetupSetParams.Size = new System.Drawing.Size(328, 27);
-            this.btnSetupSetParams.TabIndex = 16;
-            this.btnSetupSetParams.Text = "Set detector params";
-            this.btnSetupSetParams.UseVisualStyleBackColor = true;
-            this.btnSetupSetParams.Click += new System.EventHandler(this.btnSetupSetParams_Click);
             // 
             // panel15
             // 
@@ -1190,6 +1229,36 @@
             this.lblSetupIPAddress.TabIndex = 55;
             this.lblSetupIPAddress.Text = "<lblSetupIPAddress>";
             this.lblSetupIPAddress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel23
+            // 
+            this.panel23.Controls.Add(this.btnSetupSetParams);
+            this.panel23.Controls.Add(this.panel24);
+            this.panel23.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel23.Location = new System.Drawing.Point(897, 67);
+            this.panel23.Name = "panel23";
+            this.panel23.Size = new System.Drawing.Size(442, 27);
+            this.panel23.TabIndex = 56;
+            // 
+            // btnSetupSetParams
+            // 
+            this.btnSetupSetParams.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSetupSetParams.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSetupSetParams.Location = new System.Drawing.Point(114, 0);
+            this.btnSetupSetParams.Name = "btnSetupSetParams";
+            this.btnSetupSetParams.Size = new System.Drawing.Size(328, 27);
+            this.btnSetupSetParams.TabIndex = 16;
+            this.btnSetupSetParams.Text = "Set detector params";
+            this.btnSetupSetParams.UseVisualStyleBackColor = true;
+            this.btnSetupSetParams.Click += new System.EventHandler(this.btnSetupSetParams_Click);
+            // 
+            // panel24
+            // 
+            this.panel24.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel24.Location = new System.Drawing.Point(0, 0);
+            this.panel24.Name = "panel24";
+            this.panel24.Size = new System.Drawing.Size(114, 27);
+            this.panel24.TabIndex = 17;
             // 
             // panelSetupSession
             // 
@@ -2463,75 +2532,6 @@
             // 
             this.openSessionDialog.DefaultExt = "db";
             // 
-            // tbSetupVoltage
-            // 
-            this.tbSetupVoltage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupVoltage.Location = new System.Drawing.Point(114, 0);
-            this.tbSetupVoltage.Name = "tbSetupVoltage";
-            this.tbSetupVoltage.Size = new System.Drawing.Size(327, 21);
-            this.tbSetupVoltage.TabIndex = 32;
-            // 
-            // tbSetupLLD
-            // 
-            this.tbSetupLLD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupLLD.Location = new System.Drawing.Point(114, 0);
-            this.tbSetupLLD.Name = "tbSetupLLD";
-            this.tbSetupLLD.Size = new System.Drawing.Size(327, 21);
-            this.tbSetupLLD.TabIndex = 35;
-            // 
-            // tbSetupULD
-            // 
-            this.tbSetupULD.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSetupULD.Location = new System.Drawing.Point(114, 0);
-            this.tbSetupULD.Name = "tbSetupULD";
-            this.tbSetupULD.Size = new System.Drawing.Size(327, 21);
-            this.tbSetupULD.TabIndex = 36;
-            // 
-            // panel20
-            // 
-            this.panel20.Controls.Add(this.label10);
-            this.panel20.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel20.Location = new System.Drawing.Point(0, 0);
-            this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(114, 27);
-            this.panel20.TabIndex = 37;
-            // 
-            // panel21
-            // 
-            this.panel21.Controls.Add(this.label9);
-            this.panel21.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel21.Location = new System.Drawing.Point(0, 0);
-            this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(114, 27);
-            this.panel21.TabIndex = 36;
-            // 
-            // panel22
-            // 
-            this.panel22.Controls.Add(this.label6);
-            this.panel22.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel22.Location = new System.Drawing.Point(0, 0);
-            this.panel22.Name = "panel22";
-            this.panel22.Size = new System.Drawing.Size(114, 26);
-            this.panel22.TabIndex = 33;
-            // 
-            // panel23
-            // 
-            this.panel23.Controls.Add(this.btnSetupSetParams);
-            this.panel23.Controls.Add(this.panel24);
-            this.panel23.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel23.Location = new System.Drawing.Point(897, 67);
-            this.panel23.Name = "panel23";
-            this.panel23.Size = new System.Drawing.Size(442, 27);
-            this.panel23.TabIndex = 56;
-            // 
-            // panel24
-            // 
-            this.panel24.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel24.Location = new System.Drawing.Point(0, 0);
-            this.panel24.Name = "panel24";
-            this.panel24.Size = new System.Drawing.Size(114, 27);
-            this.panel24.TabIndex = 17;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2569,6 +2569,8 @@
             this.layoutConfigureDetector.PerformLayout();
             this.panel16.ResumeLayout(false);
             this.panel16.PerformLayout();
+            this.panel22.ResumeLayout(false);
+            this.panel22.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
@@ -2578,14 +2580,19 @@
             this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel21.ResumeLayout(false);
+            this.panel21.PerformLayout();
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
+            this.panel20.ResumeLayout(false);
+            this.panel20.PerformLayout();
             this.panel15.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             this.panel19.PerformLayout();
             this.panel14.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
+            this.panel23.ResumeLayout(false);
             this.panelSetupSession.ResumeLayout(false);
             this.panelSetupSession.PerformLayout();
             this.pageMenu.ResumeLayout(false);
@@ -2631,13 +2638,6 @@
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
             this.panel10.ResumeLayout(false);
-            this.panel20.ResumeLayout(false);
-            this.panel20.PerformLayout();
-            this.panel21.ResumeLayout(false);
-            this.panel21.PerformLayout();
-            this.panel22.ResumeLayout(false);
-            this.panel22.PerformLayout();
-            this.panel23.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

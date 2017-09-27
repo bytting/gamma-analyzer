@@ -804,7 +804,7 @@ CREATE TABLE `spectrum` (
                 double cnt = (double)channels[i];
                 if (session.Background != null && menuItemSubtractBackground.Checked)
                 {
-                    cnt -= session.Background[i];
+                    cnt -= session.Background[i] * bkgScale;
                     if (cnt < 0.0)
                         cnt = 0.0;
                 }
@@ -1086,17 +1086,7 @@ CREATE TABLE `spectrum` (
                 {
                     Spectrum s = (Spectrum)lbSession.SelectedItems[i];
                     for (int j = 0; j < s.NumChannels; j++)
-                    {
-                        float cnt = s.Channels[j];
-                        if (session.Background != null && menuItemSubtractBackground.Checked)
-                        {
-                            cnt -= session.Background[j];
-                            if (cnt < 0f)
-                                cnt = 0f;
-                        }
-
-                        chans[j] += cnt;
-                    }
+                        chans[j] += s.Channels[j];
 
                     if (s.MaxCount > maxCnt)
                         maxCnt = s.MaxCount;
