@@ -805,8 +805,9 @@ CREATE TABLE `spectrum` (
                 if (session.Background != null && menuItemSubtractBackground.Checked)
                 {
                     cnt -= session.Background[i] * bkgScale;
-                    if (cnt < 0.0)
-                        cnt = 0.0;
+                    if(menuItemLockBackgroundToZero.Checked)
+                        if (cnt < 0.0)
+                            cnt = 0.0;
                 }
 
                 sessionGraphList.Add((double)i, cnt);
