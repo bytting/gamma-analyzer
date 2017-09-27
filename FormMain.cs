@@ -1360,6 +1360,7 @@ CREATE TABLE `spectrum` (
         {
             formROILive.Show();
             formROILive.BringToFront();
+            formROILive.UpdatePane();
         }
 
         private void menuItemShowROIHistory_Click(object sender, EventArgs e)

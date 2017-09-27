@@ -55,7 +55,7 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(858, 423);
+            this.pane.Size = new System.Drawing.Size(858, 457);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pane_MouseClick);
@@ -85,9 +85,9 @@
             this.panel3.Controls.Add(this.btnRight);
             this.panel3.Controls.Add(this.btnRightAll);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 448);
+            this.panel3.Location = new System.Drawing.Point(0, 482);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(858, 26);
+            this.panel3.Size = new System.Drawing.Size(858, 28);
             this.panel3.TabIndex = 4;
             // 
             // lblSpectrum
@@ -123,7 +123,7 @@
             this.btnLeftAll.Image = global::crash.Properties.Resources.left_all_16;
             this.btnLeftAll.Location = new System.Drawing.Point(698, 0);
             this.btnLeftAll.Name = "btnLeftAll";
-            this.btnLeftAll.Size = new System.Drawing.Size(40, 26);
+            this.btnLeftAll.Size = new System.Drawing.Size(40, 28);
             this.btnLeftAll.TabIndex = 0;
             this.btnLeftAll.UseVisualStyleBackColor = true;
             this.btnLeftAll.Click += new System.EventHandler(this.btnLeftAll_Click);
@@ -137,7 +137,7 @@
             this.btnLeft.Image = global::crash.Properties.Resources.left_16;
             this.btnLeft.Location = new System.Drawing.Point(738, 0);
             this.btnLeft.Name = "btnLeft";
-            this.btnLeft.Size = new System.Drawing.Size(40, 26);
+            this.btnLeft.Size = new System.Drawing.Size(40, 28);
             this.btnLeft.TabIndex = 1;
             this.btnLeft.UseVisualStyleBackColor = true;
             this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
@@ -151,7 +151,7 @@
             this.btnRight.Image = global::crash.Properties.Resources.right_16;
             this.btnRight.Location = new System.Drawing.Point(778, 0);
             this.btnRight.Name = "btnRight";
-            this.btnRight.Size = new System.Drawing.Size(40, 26);
+            this.btnRight.Size = new System.Drawing.Size(40, 28);
             this.btnRight.TabIndex = 2;
             this.btnRight.UseVisualStyleBackColor = true;
             this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
@@ -165,7 +165,7 @@
             this.btnRightAll.Image = global::crash.Properties.Resources.right_all_16;
             this.btnRightAll.Location = new System.Drawing.Point(818, 0);
             this.btnRightAll.Name = "btnRightAll";
-            this.btnRightAll.Size = new System.Drawing.Size(40, 26);
+            this.btnRightAll.Size = new System.Drawing.Size(40, 28);
             this.btnRightAll.TabIndex = 3;
             this.btnRightAll.UseVisualStyleBackColor = true;
             this.btnRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
@@ -190,14 +190,14 @@
             // 
             // FormROILive
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(858, 474);
+            this.ClientSize = new System.Drawing.Size(858, 510);
             this.Controls.Add(this.pane);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.tools);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(320, 320);
+            this.MinimumSize = new System.Drawing.Size(320, 342);
             this.Name = "FormROILive";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Gamma Analyzer - ROI Live";
