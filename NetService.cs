@@ -93,7 +93,7 @@ namespace burn
                             Byte[] sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(sendMsg.Params));
                             socket.SendTo(sendBytes, (EndPoint)ep);
                         }
-                    }                    
+                    }
 
                     // Receive messages from collector
                     while (socket.Available > 0)
@@ -102,7 +102,7 @@ namespace burn
                         if (nbytes > 0)
                         {
                             ProtocolMessage recvMsg = new ProtocolMessage(((IPEndPoint)endPoint).Address.ToString());
-                            string jdata = Encoding.UTF8.GetString(buffer, 0, nbytes);
+                            string jdata = Encoding.UTF8.GetString(buffer, 0, nbytes);                            
                             recvMsg.Params = JsonConvert.DeserializeObject<Dictionary<string, object>>(jdata);
                             recvq.Enqueue(recvMsg);
                         }

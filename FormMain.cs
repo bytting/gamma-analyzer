@@ -57,6 +57,10 @@ namespace crash
 
         // Timer used to poll for network messages
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        static NetUpload netUpload = null;
+        static Thread netUploadThread = null;
+
+        static ConcurrentQueue<Spectrum> sendUploadQ = null;
 
         // Currently loaded sessions
         Session session = null, bkgSession = null;
@@ -66,6 +70,7 @@ namespace crash
         FormWaterfallLive formWaterfallLive = null;
         FormROILive formROILive = null;
         FormMap formMap = null;
+        FormUpload formUpload = null;
 
         // Point lists with graph data
         PointPairList setupGraphList = new PointPairList();        
@@ -127,7 +132,10 @@ namespace crash
                 Log = Utils.GetLog(formLog.GetTextBox());
 
                 netService = new burn.NetService(Log, ref sendq, ref recvq);
-                netThread = new Thread(netService.DoWork);                
+                netThread = new Thread(netService.DoWork);
+
+                netUpload = new NetUpload(Log, ref sendUploadQ);
+                netUploadThread = new Thread(netUpload.DoWork);
 
                 // Hide tabs on tabcontrol
                 tabs.ItemSize = new Size(0, 1);
@@ -167,6 +175,8 @@ namespace crash
                 formWaterfallLive = new FormWaterfallLive(settings.ROIList);
                 formROILive = new FormROILive(Log, settings.ROIList);
                 formMap = new FormMap();
+
+                formUpload = new FormUpload(Log);
 
                 // Set up custom events
                 formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
@@ -487,7 +497,7 @@ namespace crash
                     else
                     {
                         // Normal session spectrum received
-                        Log.Info(spec.Label + " received");
+                        Log.Info(spec.Label + " received");                        
 
                         // Add spectrum to database
                         string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + spec.SessionName + ".db";
@@ -1885,6 +1895,8 @@ CREATE TABLE `spectrum` (
             selectedDetector.Livetime = ltime;
 
             SaveSettings();
+
+            netUpload.SetHostname(formUpload.GetHostname());
 
             string ip = tbStatusIPAddress.Text.Trim();
             float livetime = selectedDetector.Livetime;
