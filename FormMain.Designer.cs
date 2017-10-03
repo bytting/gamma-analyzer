@@ -60,6 +60,7 @@
             this.menuItemROITable = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowROIHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemShowROIChart = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemShowUploadInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.status = new System.Windows.Forms.StatusStrip();
@@ -226,6 +227,7 @@
             this.lblStatusSpectrumIndex = new System.Windows.Forms.Label();
             this.lblStatusSessionRunning = new System.Windows.Forms.Label();
             this.lblStatusFreeDiskSpace = new System.Windows.Forms.Label();
+            this.btnStatusUploadSettings = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.btnStatusCancel = new System.Windows.Forms.Button();
             this.btnStatusNext = new System.Windows.Forms.Button();
@@ -239,7 +241,6 @@
             this.btnPreferencesCancel = new System.Windows.Forms.Button();
             this.btnPreferencesSave = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
-            this.menuItemShowUploadInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tools.SuspendLayout();
@@ -327,7 +328,7 @@
             // menuItemExit
             // 
             this.menuItemExit.Name = "menuItemExit";
-            this.menuItemExit.Size = new System.Drawing.Size(152, 22);
+            this.menuItemExit.Size = new System.Drawing.Size(92, 22);
             this.menuItemExit.Text = "E&xit";
             this.menuItemExit.Click += new System.EventHandler(this.menuItemExit_Click);
             // 
@@ -541,6 +542,13 @@
             this.menuItemShowROIChart.Size = new System.Drawing.Size(168, 22);
             this.menuItemShowROIChart.Text = "Show ROI l&ive";
             this.menuItemShowROIChart.Click += new System.EventHandler(this.menuItemShowROIChart_Click);
+            // 
+            // menuItemShowUploadInfo
+            // 
+            this.menuItemShowUploadInfo.Name = "menuItemShowUploadInfo";
+            this.menuItemShowUploadInfo.Size = new System.Drawing.Size(168, 22);
+            this.menuItemShowUploadInfo.Text = "Show Upload Info";
+            this.menuItemShowUploadInfo.Click += new System.EventHandler(this.menuItemShowUploadInfo_Click);
             // 
             // menuItemHelp
             // 
@@ -2314,6 +2322,7 @@
             this.tableStatus.Controls.Add(this.lblStatusSpectrumIndex, 1, 5);
             this.tableStatus.Controls.Add(this.lblStatusSessionRunning, 1, 4);
             this.tableStatus.Controls.Add(this.lblStatusFreeDiskSpace, 1, 3);
+            this.tableStatus.Controls.Add(this.btnStatusUploadSettings, 2, 3);
             this.tableStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableStatus.Location = new System.Drawing.Point(3, 3);
             this.tableStatus.Name = "tableStatus";
@@ -2396,6 +2405,17 @@
             this.lblStatusFreeDiskSpace.Size = new System.Drawing.Size(152, 15);
             this.lblStatusFreeDiskSpace.TabIndex = 5;
             this.lblStatusFreeDiskSpace.Text = "<lblStatusFreeDiskSpace>";
+            // 
+            // btnStatusUploadSettings
+            // 
+            this.btnStatusUploadSettings.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnStatusUploadSettings.Location = new System.Drawing.Point(893, 93);
+            this.btnStatusUploadSettings.Name = "btnStatusUploadSettings";
+            this.btnStatusUploadSettings.Size = new System.Drawing.Size(166, 24);
+            this.btnStatusUploadSettings.TabIndex = 9;
+            this.btnStatusUploadSettings.Text = "Show upload settings";
+            this.btnStatusUploadSettings.UseVisualStyleBackColor = true;
+            this.btnStatusUploadSettings.Click += new System.EventHandler(this.menuItemShowUploadInfo_Click);
             // 
             // panel7
             // 
@@ -2542,13 +2562,6 @@
             // openSessionDialog
             // 
             this.openSessionDialog.DefaultExt = "db";
-            // 
-            // menuItemShowUploadInfo
-            // 
-            this.menuItemShowUploadInfo.Name = "menuItemShowUploadInfo";
-            this.menuItemShowUploadInfo.Size = new System.Drawing.Size(168, 22);
-            this.menuItemShowUploadInfo.Text = "Show Upload Info";
-            this.menuItemShowUploadInfo.Click += new System.EventHandler(this.menuItemShowUploadInfo_Click);
             // 
             // FormMain
             // 
@@ -2873,6 +2886,7 @@
         private System.Windows.Forms.Panel panel24;
         private System.Windows.Forms.ToolStripMenuItem menuItemLockBackgroundToZero;
         private System.Windows.Forms.ToolStripMenuItem menuItemShowUploadInfo;
+        private System.Windows.Forms.Button btnStatusUploadSettings;
     }
 }
 

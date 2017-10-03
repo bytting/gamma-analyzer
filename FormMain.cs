@@ -614,6 +614,9 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                             formWaterfallLive.UpdatePane();
                             formROILive.UpdatePane();
                         }
+
+                        // Send spectrum to gamma-store
+                        sendUploadQ.Enqueue(spec);
                     }
                     break;
 
@@ -1847,7 +1850,7 @@ CREATE TABLE `spectrum` (
             string ip = tbStatusIPAddress.Text.Trim();
             float livetime = selectedDetector.Livetime;
             string comment = tbNewComment.Text.Trim();
-            string sessionName = String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now);
+            string sessionName = String.Format("{0:yyyyMMdd_HHmmss}", DateTime.Now);
 
             burn.ProtocolMessage msg = new burn.ProtocolMessage(ip);
             msg.Params.Add("command", "start_session");
