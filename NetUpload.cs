@@ -46,6 +46,7 @@ namespace crash
                         request.Accept = "application/json";
 
                         SimpleSpectrum simpleSpec = new SimpleSpectrum(spec);
+                        Log.Info("Sending " + simpleSpec.SessionName + ":" + simpleSpec.SessionIndex);
 
                         var jsonRequest = JsonConvert.SerializeObject(simpleSpec);
                         var data = Encoding.UTF8.GetBytes(jsonRequest);
@@ -84,68 +85,15 @@ namespace crash
         {
             hostname = hname;
         }
-    }
 
-    public class SimpleSpectrum
-    {
-        public SimpleSpectrum(Spectrum spec)
+        public void RequestStop()
         {
-            SessionName = spec.SessionName;
-            SessionIndex = spec.SessionIndex;
-            StartTime = spec.GpsTime.ToString("yyyy-MM-ddThh:mm:ss.fffZ");
-            Latitude = spec.Latitude;
-            Longitude = spec.Longitude;
-            Altitude = spec.Altitude;
-            Track = spec.GpsTrack;
-            Speed = spec.GpsSpeed;
-            Climb = spec.GpsClimb;
-            Livetime = spec.Livetime;
-            Realtime = spec.Realtime;
-            NumChannels = (int)spec.NumChannels;
-            Channels = string.Join(" ", spec.Channels);
-            Doserate = spec.Doserate;
+            running = false;
         }
-
-        [JsonProperty("session_name")]
-        public string SessionName { get; set; }
-
-        [JsonProperty("session_id")]
-        public int SessionIndex { get; set; }
-
-        [JsonProperty("start_time")]
-        public string StartTime { get; set; }
-
-        [JsonProperty("latitude")]
-        public double Latitude { get; set; }
-
-        [JsonProperty("longitude")]
-        public double Longitude { get; set; }
-
-        [JsonProperty("altitude")]
-        public double Altitude { get; set; }
-
-        [JsonProperty("track")]
-        public double Track { get; set; }
-
-        [JsonProperty("speed")]
-        public double Speed { get; set; }
-
-        [JsonProperty("climb")]
-        public double Climb { get; set; }
-
-        [JsonProperty("livetime")]
-        public double Livetime { get; set; }
-
-        [JsonProperty("realtime")]
-        public double Realtime { get; set; }
-
-        [JsonProperty("num_channels")]
-        public int NumChannels { get; set; }
-
-        [JsonProperty("channels")]
-        public string Channels { get; set; }
-
-        [JsonProperty("doserate")]
-        public double Doserate { get; set; }
+        
+        public bool IsRunning()
+        {
+            return running;
+        }
     }
 }

@@ -35,8 +35,8 @@
             this.tbHostname = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbAutoUpload = new System.Windows.Forms.CheckBox();
-            this.btnUploadSession = new System.Windows.Forms.Button();
             this.tbLog = new System.Windows.Forms.TextBox();
+            this.btnUploadSession = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -59,6 +59,7 @@
             this.btnClose.TabIndex = 0;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -111,16 +112,6 @@
             this.cbAutoUpload.Text = "Auto upload spectrums";
             this.cbAutoUpload.UseVisualStyleBackColor = true;
             // 
-            // btnUploadSession
-            // 
-            this.btnUploadSession.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnUploadSession.Location = new System.Drawing.Point(663, 63);
-            this.btnUploadSession.Name = "btnUploadSession";
-            this.btnUploadSession.Size = new System.Drawing.Size(215, 24);
-            this.btnUploadSession.TabIndex = 3;
-            this.btnUploadSession.Text = "Upload existing session";
-            this.btnUploadSession.UseVisualStyleBackColor = true;
-            // 
             // tbLog
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.tbLog, 3);
@@ -132,6 +123,17 @@
             this.tbLog.Size = new System.Drawing.Size(875, 302);
             this.tbLog.TabIndex = 4;
             // 
+            // btnUploadSession
+            // 
+            this.btnUploadSession.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnUploadSession.Location = new System.Drawing.Point(663, 63);
+            this.btnUploadSession.Name = "btnUploadSession";
+            this.btnUploadSession.Size = new System.Drawing.Size(215, 24);
+            this.btnUploadSession.TabIndex = 3;
+            this.btnUploadSession.Text = "Upload existing session";
+            this.btnUploadSession.UseVisualStyleBackColor = true;
+            this.btnUploadSession.Click += new System.EventHandler(this.btnUploadSession_Click);
+            // 
             // FormUpload
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -142,6 +144,7 @@
             this.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormUpload";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Gamma Analyzer - Upload";
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);

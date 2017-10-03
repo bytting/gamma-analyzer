@@ -176,7 +176,7 @@ namespace crash
                 formROILive = new FormROILive(Log, settings.ROIList);
                 formMap = new FormMap();
 
-                formUpload = new FormUpload(Log);
+                formUpload = new FormUpload(Log, sendUploadQ);
 
                 // Set up custom events
                 formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
@@ -204,9 +204,12 @@ namespace crash
                 ClearSpectrumInfo();
                 ClearStatus();
 
-                // Start networking thread
+                // Start threads
                 netThread.Start();
                 while (!netThread.IsAlive) ;
+
+                netUploadThread.Start();
+                while (!netUploadThread.IsAlive) ;
 
                 // Start timer listening for network messages
                 timer.Interval = 10;
@@ -233,10 +236,20 @@ namespace crash
         }        
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // Stop networking thread
+        {            
+            if (netUpload.IsRunning())
+            {
+                netUpload.RequestStop();
+                netUploadThread.Join();
+                Log.Info("net upload closed");
+            }
+
             if (netService.IsRunning())
-                btnStopNetService_Click(sender, e);
+            {                
+                netService.RequestStop();
+                netThread.Join();
+                Log.Info("net service closed");
+            }
 
             // Stop timer listening for network messages
             timer.Stop();
@@ -901,15 +914,6 @@ CREATE TABLE `spectrum` (
             Close();
         }
 
-        private void btnStopNetService_Click(object sender, EventArgs e)
-        {
-            // Stop networking thread
-            netService.RequestStop();
-            netThread.Join();
-
-            Log.Info("net service closed");
-        }        
-
         private void btnMenuSession_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageSessions;
@@ -1151,107 +1155,49 @@ CREATE TABLE `spectrum` (
             // Show about form
             About about = new About();
             about.ShowDialog();            
-        }        
-
-        Session LoadSessionFile(string sessionFile)
-        {
-            Session s = new Session(Log);
-
-            // Deserialize session object
-            SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
-            connection.Open();
-            SQLiteCommand command = new SQLiteCommand(connection);
-            command.CommandText = "select * from session";
-            SQLiteDataReader reader = command.ExecuteReader();
-            if (!reader.HasRows)            
-                throw new Exception("No session was found in database: " + sessionFile);
-
-            reader.Read();
-            
-            s.Name = reader["name"].ToString();
-            s.IPAddress = reader["ip"].ToString();
-            s.Comment = reader["comment"].ToString();
-            s.Livetime = Convert.ToSingle(reader["livetime"], CultureInfo.InvariantCulture);
-            s.Detector = JsonConvert.DeserializeObject<Detector>(reader["detector_data"].ToString());
-
-            reader.Close();
-
-            s.SessionFile = sessionFile;
-
-            // Load session spectrums
-            command.CommandText = "select * from spectrum order by session_index asc";
-            reader = command.ExecuteReader();
-            while (reader.Read())
-            {
-                Spectrum spec = new Spectrum();
-                spec.SessionName = reader["session_name"].ToString();
-                spec.SessionIndex = Convert.ToInt32(reader["session_index"]);
-                spec.GpsTime = Convert.ToDateTime(reader["start_time"]);
-                spec.Latitude = Convert.ToDouble(reader["latitude"], CultureInfo.InvariantCulture);
-                spec.LatitudeError = Convert.ToDouble(reader["latitude_error"], CultureInfo.InvariantCulture);
-                spec.Longitude = Convert.ToDouble(reader["longitude"], CultureInfo.InvariantCulture);
-                spec.LongitudeError = Convert.ToDouble(reader["longitude_error"], CultureInfo.InvariantCulture);
-                spec.Altitude = Convert.ToDouble(reader["altitude"], CultureInfo.InvariantCulture);
-                spec.AltitudeError = Convert.ToDouble(reader["altitude_error"], CultureInfo.InvariantCulture);
-                spec.GpsTrack = Convert.ToSingle(reader["track"], CultureInfo.InvariantCulture);
-                spec.GpsTrackError = Convert.ToSingle(reader["track_error"], CultureInfo.InvariantCulture);
-                spec.GpsSpeed = Convert.ToSingle(reader["speed"], CultureInfo.InvariantCulture);
-                spec.GpsSpeedError = Convert.ToSingle(reader["speed_error"], CultureInfo.InvariantCulture);
-                spec.GpsClimb = Convert.ToSingle(reader["climb"], CultureInfo.InvariantCulture);
-                spec.GpsClimbError = Convert.ToSingle(reader["climb_error"], CultureInfo.InvariantCulture);
-                spec.Livetime = Convert.ToInt32(reader["livetime"]);
-                spec.Realtime = Convert.ToInt32(reader["realtime"]);
-                spec.TotalCount = Convert.ToInt32(reader["total_count"]);
-                spec.NumChannels = Convert.ToInt32(reader["num_channels"]);
-                spec.LoadSpectrumString(reader["channels"].ToString());
-                spec.CalculateDoserate(s.Detector, s.GEScriptFunc);
-                s.Add(spec);
-            }
-
-            connection.Close();
-            return s;
         }
 
         private void menuItemLoadSession_Click(object sender, EventArgs e)
         {
-            openSessionDialog.InitialDirectory = settings.SessionRootDirectory;
+            if(Directory.Exists(settings.SessionRootDirectory))
+                openSessionDialog.InitialDirectory = settings.SessionRootDirectory;
             openSessionDialog.Title = "Select session file";
-            if(openSessionDialog.ShowDialog() == DialogResult.OK)
+            if (openSessionDialog.ShowDialog() != DialogResult.OK)
+                return;
+            
+            ClearSession();
+
+            session = DB.LoadSessionFile(Log, openSessionDialog.FileName);
+
+            lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
+
+            // Update UI
+            lblSession.Text = session.Name;
+            lblComment.Text = session.Comment;
+
+            // Inform other forms
+            formWaterfallLive.SetSession(session);
+            formWaterfallLive.SetDetector(session.Detector);
+            formROILive.SetSession(session);
+            formMap.SetSession(session);
+
+            // Add spectrums to map
+            foreach(Spectrum s in session.Spectrums)
             {
-                ClearSession();
-
-                session = LoadSessionFile(openSessionDialog.FileName);
-
-                lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
-
-                // Update UI
-                lblSession.Text = session.Name;
-                lblComment.Text = session.Comment;
-
-                // Inform other forms
-                formWaterfallLive.SetSession(session);
-                formWaterfallLive.SetDetector(session.Detector);
-                formROILive.SetSession(session);
-                formMap.SetSession(session);
-
-                // Add spectrums to map
-                foreach(Spectrum s in session.Spectrums)
-                {
-                    lbSession.Items.Insert(0, s);
-                    formMap.AddMarker(s);
-                }
-
-                // Update plots
-                formWaterfallLive.UpdatePane();
-                formROILive.UpdatePane();
-
-                lblSession.Text = "Session: " + session.Name;
-                Log.Info("session " + session.Name + " loaded");
-
-                burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
-                msg.Params.Add("command", "dump_session");
-                sendMsg(msg);
+                lbSession.Items.Insert(0, s);
+                formMap.AddMarker(s);
             }
+
+            // Update plots
+            formWaterfallLive.UpdatePane();
+            formROILive.UpdatePane();
+
+            lblSession.Text = "Session: " + session.Name;
+            Log.Info("session " + session.Name + " loaded");
+
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
+            msg.Params.Add("command", "dump_session");
+            sendMsg(msg);
         }        
 
         private void menuItemLoadBackgroundSession_Click(object sender, EventArgs e)
@@ -1268,7 +1214,7 @@ CREATE TABLE `spectrum` (
             {
                 ClearBackground();
 
-                bkgSession = LoadSessionFile(openSessionDialog.FileName);
+                bkgSession = DB.LoadSessionFile(Log, openSessionDialog.FileName);
 
                 // Make sure session and backgrouns has the same number of channels
                 if (bkgSession.NumChannels != session.NumChannels)
@@ -2201,6 +2147,12 @@ CREATE TABLE `spectrum` (
 
             selectedChannel = x;
             lblSessionSelChannel.Text = "[" + String.Format("{0:####0}", selectedChannel) + "]";
+        }
+
+        private void menuItemShowUploadInfo_Click(object sender, EventArgs e)
+        {
+            formUpload.ShowDialog();
+            netUpload.SetHostname(formUpload.GetHostname());
         }
 
         private void menuItemChangeIPAddress_Click(object sender, EventArgs e)
