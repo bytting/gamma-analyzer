@@ -82,14 +82,14 @@ namespace crash
                         }
                         catch(WebException ex)
                         {
-                            if(ex.Status == WebExceptionStatus.Timeout)
-                            {
-                                Log.Error("Web service timeout");
+                            if (request != null)
                                 request.Abort();
-                                continue;
-                            }
-                            Log.Error("Exception", ex);
-                        }                        
+
+                            if (ex.Status == WebExceptionStatus.Timeout)
+                                Log.Error("Web request timeout");
+                            else
+                                Log.Error(ex.Message);
+                        }
                     }
                 }
 
