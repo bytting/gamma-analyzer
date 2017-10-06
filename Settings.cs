@@ -35,7 +35,10 @@ namespace crash
             if (!Directory.Exists(SessionRootDirectory))
                 Directory.CreateDirectory(SessionRootDirectory);
 
-            LastIP = "";
+            LastHostname = "";
+            LastUploadHostname = "";
+            LastUploadUsername = "";
+            LastUploadPassword = "";
             DisplayLocalTime = true;
         }
 
@@ -51,7 +54,14 @@ namespace crash
         public string SessionRootDirectory;        
 
         // Last IP address used
-        public string LastIP;
+        public string LastHostname;
+
+        // Last upload hostname
+        public string LastUploadHostname;
+
+        // Last upload credentials
+        public string LastUploadUsername;
+        public string LastUploadPassword;
 
         // Display dates using local time
         public bool DisplayLocalTime;

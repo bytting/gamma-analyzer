@@ -1412,7 +1412,7 @@ CREATE TABLE `spectrum` (
             returnFromSetup = pageNew;
             btnStatusNext.Enabled = false;
             ClearStatus();
-            tbStatusIPAddress.Text = settings.LastIP;            
+            tbStatusIPAddress.Text = settings.LastHostname;            
             tabs.SelectedTab = pageStatus;
         }
 
@@ -1923,7 +1923,7 @@ CREATE TABLE `spectrum` (
             returnFromSetup = pageMenu;
             btnStatusNext.Enabled = false;
             ClearStatus();
-            tbStatusIPAddress.Text = settings.LastIP;
+            tbStatusIPAddress.Text = settings.LastHostname;
             tabs.SelectedTab = pageStatus;
         }
 
@@ -1963,12 +1963,12 @@ CREATE TABLE `spectrum` (
 
         private void btnStatusNext_Click(object sender, EventArgs e)
         {
-            settings.LastIP = tbStatusIPAddress.Text;
+            settings.LastHostname = tbStatusIPAddress.Text;
             SaveSettings();
 
             netUpload.SetCredentials(tbStatusIPAddressUpload.Text, tbStatusUploadUser.Text, tbStatusUploadPass.Text);
 
-            lblSetupIPAddress.Text = "IP Address: " + settings.LastIP;
+            lblSetupIPAddress.Text = "IP Address: " + settings.LastHostname;
             btnSetupClose.Enabled = false;
             tabs.SelectedTab = pageSetup;            
         }
@@ -2167,18 +2167,24 @@ CREATE TABLE `spectrum` (
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            netUpload.SetCredentials(tbUploadHostname.Text, tbUploadUsername.Text, tbUploadPassword.Text);
+            settings.LastUploadHostname = tbUploadHostname.Text.Trim();
+            settings.LastUploadUsername = tbUploadUsername.Text.Trim();
+            settings.LastUploadPassword = tbUploadPassword.Text;
+            SaveSettings();
+
+            netUpload.SetCredentials(settings.LastUploadHostname, settings.LastUploadUsername, settings.LastUploadPassword);
 
             Session session = DB.LoadSessionFile(Log, dialog.FileName);
 
             foreach (Spectrum spec in session.Spectrums)
-            {
                 sendUploadQ.Enqueue(spec);
-            }
         }
 
         private void btnMenuUpload_Click(object sender, EventArgs e)
         {
+            tbUploadHostname.Text = settings.LastUploadHostname;
+            tbUploadUsername.Text = settings.LastUploadUsername;
+            tbUploadPassword.Text = settings.LastUploadPassword;
             tbUploadLog.Text = String.Empty;
             tabs.SelectedTab = pageUpload;
         }
