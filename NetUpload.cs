@@ -15,8 +15,8 @@ namespace crash
     {
         ILog Log = null;
 
-        private volatile bool running;
-        private string hostname;
+        private volatile bool Running;
+        private string Hostname, Username, Password;
 
         ConcurrentQueue<Spectrum> sendq = new ConcurrentQueue<Spectrum>();
 
@@ -24,13 +24,13 @@ namespace crash
         {
             Log = log;
             Log.Info("Creating Net Uploader");
-            running = true;
+            Running = true;
             sendQueue = sendq;
         }
 
         public void DoWork()
         {
-            while (running)
+            while (Running)
             {
                 // Upload spectrums to server
                 while (sendq.Count > 0)
@@ -38,14 +38,16 @@ namespace crash
                     Spectrum spec;
                     if (sendq.TryDequeue(out spec))
                     {
-                        if (String.IsNullOrEmpty(hostname))
+                        if (String.IsNullOrEmpty(Hostname))
                             continue;
 
                         HttpWebRequest request = null;
 
                         try
                         {
-                            request = (HttpWebRequest)WebRequest.Create("http://" + hostname + "/add-spectrum");
+                            request = (HttpWebRequest)WebRequest.Create("http://" + Hostname + "/add-spectrum");
+                            string credentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(Username + ":" + Password));
+                            request.Headers.Add("Authorization", "Basic " + credentials);
                             request.Timeout = 2000;
                             request.Method = WebRequestMethods.Http.Post;
                             request.Accept = "application/json";
@@ -97,19 +99,21 @@ namespace crash
             }
         }
 
-        public void SetHostname(string hname)
+        public void SetCredentials(string hostname, string user, string pass)
         {
-            hostname = hname;
+            Hostname = hostname.Trim();
+            Username = user.Trim();
+            Password = pass;
         }
 
         public void RequestStop()
         {
-            running = false;
+            Running = false;
         }
         
         public bool IsRunning()
         {
-            return running;
+            return Running;
         }
     }
 }

@@ -145,12 +145,6 @@
     <Compile Include="FormAskZeroPolynomial.Designer.cs">
       <DependentUpon>FormAskZeroPolynomial.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormUpload.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormUpload.Designer.cs">
-      <DependentUpon>FormUpload.cs</DependentUpon>
-    </Compile>
     <Compile Include="NetService.cs" />
     <Compile Include="CustomEventArgs.cs" />
     <Compile Include="CustomEvents.cs" />
@@ -289,9 +283,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSessionInfo.resx">
       <DependentUpon>FormSessionInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormUpload.resx">
-      <DependentUpon>FormUpload.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormWaterfallLive.resx">
       <DependentUpon>FormWaterfallLive.cs</DependentUpon>

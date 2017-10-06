@@ -70,7 +70,6 @@ namespace crash
         FormWaterfallLive formWaterfallLive = null;
         FormROILive formROILive = null;
         FormMap formMap = null;
-        FormUpload formUpload = null;
 
         // Point lists with graph data
         PointPairList setupGraphList = new PointPairList();        
@@ -175,8 +174,6 @@ namespace crash
                 formWaterfallLive = new FormWaterfallLive(settings.ROIList);
                 formROILive = new FormROILive(Log, settings.ROIList);
                 formMap = new FormMap();
-
-                formUpload = new FormUpload(Log, sendUploadQ);
 
                 // Set up custom events
                 formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
@@ -1845,8 +1842,6 @@ CREATE TABLE `spectrum` (
 
             SaveSettings();
 
-            netUpload.SetHostname(formUpload.GetHostname());
-
             string ip = tbStatusIPAddress.Text.Trim();
             float livetime = selectedDetector.Livetime;
             string comment = tbNewComment.Text.Trim();
@@ -1971,6 +1966,8 @@ CREATE TABLE `spectrum` (
             settings.LastIP = tbStatusIPAddress.Text;
             SaveSettings();
 
+            netUpload.SetCredentials(tbStatusIPAddressUpload.Text, tbStatusUploadUser.Text, tbStatusUploadPass.Text);
+
             lblSetupIPAddress.Text = "IP Address: " + settings.LastIP;
             btnSetupClose.Enabled = false;
             tabs.SelectedTab = pageSetup;            
@@ -2000,6 +1997,8 @@ CREATE TABLE `spectrum` (
             lblStatusSpectrumIndex.Text = "";
             lblStatusDetectorConfigured.Text = "";
             btnStatusNext.Enabled = false;
+
+            lblStatusUpload.Text = "";
         }
 
         private void tbStatusIPAddress_TextChanged(object sender, EventArgs e)
@@ -2152,10 +2151,40 @@ CREATE TABLE `spectrum` (
             lblSessionSelChannel.Text = "[" + String.Format("{0:####0}", selectedChannel) + "]";
         }
 
-        private void menuItemShowUploadInfo_Click(object sender, EventArgs e)
+        private void btnUploadSelectSession_Click(object sender, EventArgs e)
         {
-            formUpload.ShowDialog();
-            netUpload.SetHostname(formUpload.GetHostname());
+            // FIXME: Don't run this while a session is running
+
+            if(String.IsNullOrEmpty(tbUploadHostname.Text.Trim()) 
+                || String.IsNullOrEmpty(tbUploadUsername.Text.Trim()) 
+                || String.IsNullOrEmpty(tbUploadPassword.Text))
+            {
+                MessageBox.Show("You must specify a hostname, username and password");
+                return;
+            }
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            netUpload.SetCredentials(tbUploadHostname.Text, tbUploadUsername.Text, tbUploadPassword.Text);
+
+            Session session = DB.LoadSessionFile(Log, dialog.FileName);
+
+            foreach (Spectrum spec in session.Spectrums)
+            {
+                sendUploadQ.Enqueue(spec);
+            }
+        }
+
+        private void btnMenuUpload_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageUpload;
+        }
+
+        private void btnUploadClose_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = pageMenu;
         }
 
         private void menuItemChangeIPAddress_Click(object sender, EventArgs e)
