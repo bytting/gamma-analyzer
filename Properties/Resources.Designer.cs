@@ -623,6 +623,16 @@ namespace crash.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap upload_128 {
+            get {
+                object obj = ResourceManager.GetObject("upload-128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap waterfall_history_32 {
             get {
                 object obj = ResourceManager.GetObject("waterfall-history-32", resourceCulture);

@@ -121,11 +121,11 @@
   <data name="preferences128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\preferences128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="options1-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\options1-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="drone2-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\drone2-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="adjust32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\adjust32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="right-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\right-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="map-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\map-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -169,9 +169,6 @@
   <data name="waterfall-history-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\waterfall-history-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="drone7-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\drone7-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="log-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\log-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -180,9 +177,6 @@
   </data>
   <data name="drone1-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\drone1-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="setup-store-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\setup-store-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="up-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\up-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -199,8 +193,8 @@
   <data name="right-all-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\right-all-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="map-1281" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\map-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="adjust32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\adjust32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="home-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\home-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -210,9 +204,6 @@
   </data>
   <data name="doserate-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\doserate-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="setup-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\setup-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="marker-orange-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\marker-orange-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -226,8 +217,14 @@
   <data name="connection-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\connection-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="marker-red-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\marker-red-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="layout2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\layout2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="calibrate128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\calibrate128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="down-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\down-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -238,29 +235,35 @@
   <data name="layout3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\layout3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="settings-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\settings-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="map-1281" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\map-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="drone4-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\drone4-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="marker-blue-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\marker-blue-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="settings-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\settings-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="connect-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\connect-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="marker-blue-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\marker-blue-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="marker-yellow-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\marker-yellow-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="calibrate128" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\calibrate128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="setup-store-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\setup-store-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="marker-green-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\marker-green-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="right-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\right-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="setup-clear-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\setup-clear-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="drone7-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\drone7-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="delete-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\delete-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -277,11 +280,11 @@
   <data name="drone5-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\drone5-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="marker-red-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\marker-red-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="setup-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\setup-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="drone2-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\drone2-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="options1-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\options1-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="layout1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\layout1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -289,7 +292,7 @@
   <data name="marker-cyan-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\marker-cyan-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="setup-clear-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\setup-clear-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="upload-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\upload-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

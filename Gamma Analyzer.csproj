@@ -241,6 +241,7 @@
     <None Include="images\setup-stop-32.png" />
     <None Include="images\setup-store-32.png" />
     <None Include="images\setup-clear-32.png" />
+    <None Include="images\upload-128.png" />
     <Content Include="TODO.txt" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>

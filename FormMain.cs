@@ -2179,6 +2179,7 @@ CREATE TABLE `spectrum` (
 
         private void btnMenuUpload_Click(object sender, EventArgs e)
         {
+            tbUploadLog.Text = String.Empty;
             tabs.SelectedTab = pageUpload;
         }
 
