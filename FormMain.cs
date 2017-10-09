@@ -573,8 +573,8 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                         // Add spectrum to session
                         if (session != null && session.IsLoaded && session.Name == spec.SessionName)
                         {
-                            spec.CalculateDoserate(session.Detector, session.GEScriptFunc);
-                            
+                            spec.CalculateDoserate(session.Detector, session.GEScriptFunc);                            
+
                             session.Add(spec);
 
                             // Add spectrum to UI list
@@ -760,6 +760,7 @@ CREATE TABLE `spectrum` (
             // Clear currently loaded session
             lbSession.Items.Clear();
             lblSessionDetector.Text = "";
+            lblBackground.Text = "";
             graphSession.GraphPane.CurveList.Clear();
             graphSession.GraphPane.GraphObjList.Clear();
             graphSession.Invalidate();
@@ -1929,11 +1930,6 @@ CREATE TABLE `spectrum` (
 
         private void btnSessionsClose_Click(object sender, EventArgs e)
         {
-            formMap.Hide();
-            formROILive.Hide();            
-            formWaterfallLive.Hide();
-            //Utils.Log.Hide();
-
             tabs.SelectedTab = pageMenu;
         }
 
