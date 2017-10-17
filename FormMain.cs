@@ -54,13 +54,13 @@ namespace crash
         // Networking thread        
         static burn.NetService netService = null;
         static Thread netThread = null;
-
         // Timer used to poll for network messages
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        static NetUpload netUpload = null;
-        static Thread netUploadThread = null;
 
-        static ConcurrentQueue<Spectrum> sendUploadQ = null;
+        // FIXME: Disable for now
+        //static NetUpload netUpload = null;
+        //static Thread netUploadThread = null;
+        //static ConcurrentQueue<Spectrum> sendUploadQ = null;
 
         // Currently loaded sessions
         Session session = null, bkgSession = null;
@@ -133,8 +133,9 @@ namespace crash
                 netService = new burn.NetService(Log, ref sendq, ref recvq);
                 netThread = new Thread(netService.DoWork);
 
-                netUpload = new NetUpload(Log, ref sendUploadQ);
-                netUploadThread = new Thread(netUpload.DoWork);
+                // FIXME: Disabled for now
+                //netUpload = new NetUpload(Log, ref sendUploadQ);
+                //netUploadThread = new Thread(netUpload.DoWork);
 
                 // Hide tabs on tabcontrol
                 tabs.ItemSize = new Size(0, 1);
@@ -205,8 +206,10 @@ namespace crash
                 netThread.Start();
                 while (!netThread.IsAlive) ;
 
-                netUploadThread.Start();
-                while (!netUploadThread.IsAlive) ;
+                // FIXME: Disabled for now
+                //netUploadThread.Start();
+                //while (!netUploadThread.IsAlive) ;
+                //Log.Info("net upload started");
 
                 // Start timer listening for network messages
                 timer.Interval = 10;
@@ -233,13 +236,14 @@ namespace crash
         }        
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
-        {            
-            if (netUpload.IsRunning())
+        {
+            // FIXME: Disabled for now     
+            /*if (netUpload.IsRunning())
             {
                 netUpload.RequestStop();
                 netUploadThread.Join();
                 Log.Info("net upload closed");
-            }
+            }*/
 
             if (netService.IsRunning())
             {                
@@ -612,8 +616,9 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                             formROILive.UpdatePane();
                         }
 
+                        // FIXME: Disabled for now
                         // Send spectrum to gamma-store
-                        sendUploadQ.Enqueue(spec);
+                        //sendUploadQ.Enqueue(spec);
                     }
                     break;
 
@@ -1874,8 +1879,12 @@ CREATE TABLE `spectrum` (
 
             // Notify external forms about new session
             formWaterfallLive.SetSession(session);
+            formWaterfallLive.SetDetector(session.Detector);
             formROILive.SetSession(session);
             formMap.SetSession(session);
+
+            formWaterfallLive.UpdatePane();
+            formROILive.UpdatePane();
 
             tabs.SelectedTab = pageSessions;
         }
@@ -1943,6 +1952,9 @@ CREATE TABLE `spectrum` (
             burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
             msg.Params.Add("command", "get_status");
             sendMsg(msg);
+
+            btnStatusNext.Enabled = false;
+            ClearStatus();
         }
 
         private void btnStatusCancel_Click(object sender, EventArgs e)
@@ -1962,7 +1974,8 @@ CREATE TABLE `spectrum` (
             settings.LastHostname = tbStatusIPAddress.Text;
             SaveSettings();
 
-            netUpload.SetCredentials(tbStatusIPAddressUpload.Text, tbStatusUploadUser.Text, tbStatusUploadPass.Text);
+            // FIXME: Disabled for now
+            //netUpload.SetCredentials(tbStatusIPAddressUpload.Text, tbStatusUploadUser.Text, tbStatusUploadPass.Text);
 
             lblSetupIPAddress.Text = "IP Address: " + settings.LastHostname;
             btnSetupClose.Enabled = false;
@@ -1992,13 +2005,12 @@ CREATE TABLE `spectrum` (
             lblStatusSessionRunning.Text = "";
             lblStatusSpectrumIndex.Text = "";
             lblStatusDetectorConfigured.Text = "";
-            btnStatusNext.Enabled = false;
-
             lblStatusUpload.Text = "";
         }
 
         private void tbStatusIPAddress_TextChanged(object sender, EventArgs e)
         {
+            btnStatusNext.Enabled = false;
             ClearStatus();
         }
 
@@ -2151,6 +2163,10 @@ CREATE TABLE `spectrum` (
         {
             // FIXME: Don't run this while a session is running
 
+            // FIXME: Temporary guard
+            MessageBox.Show("This function is disabled");
+            return;
+
             if(String.IsNullOrEmpty(tbUploadHostname.Text.Trim()) 
                 || String.IsNullOrEmpty(tbUploadUsername.Text.Trim()) 
                 || String.IsNullOrEmpty(tbUploadPassword.Text))
@@ -2168,12 +2184,11 @@ CREATE TABLE `spectrum` (
             settings.LastUploadPassword = tbUploadPassword.Text;
             SaveSettings();
 
-            netUpload.SetCredentials(settings.LastUploadHostname, settings.LastUploadUsername, settings.LastUploadPassword);
-
+            // FIXME: Disabled for now
+            /*netUpload.SetCredentials(settings.LastUploadHostname, settings.LastUploadUsername, settings.LastUploadPassword);
             Session session = DB.LoadSessionFile(Log, dialog.FileName);
-
             foreach (Spectrum spec in session.Spectrums)
-                sendUploadQ.Enqueue(spec);
+                sendUploadQ.Enqueue(spec);*/
         }
 
         private void btnMenuUpload_Click(object sender, EventArgs e)

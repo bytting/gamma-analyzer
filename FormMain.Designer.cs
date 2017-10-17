@@ -2476,6 +2476,7 @@
             // tbStatusIPAddressUpload
             // 
             this.tbStatusIPAddressUpload.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbStatusIPAddressUpload.Enabled = false;
             this.tbStatusIPAddressUpload.Location = new System.Drawing.Point(537, 63);
             this.tbStatusIPAddressUpload.MaxLength = 256;
             this.tbStatusIPAddressUpload.Name = "tbStatusIPAddressUpload";
@@ -2526,6 +2527,7 @@
             // tbStatusUploadUser
             // 
             this.tbStatusUploadUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbStatusUploadUser.Enabled = false;
             this.tbStatusUploadUser.Location = new System.Drawing.Point(537, 123);
             this.tbStatusUploadUser.MaxLength = 64;
             this.tbStatusUploadUser.Name = "tbStatusUploadUser";
@@ -2535,6 +2537,7 @@
             // tbStatusUploadPass
             // 
             this.tbStatusUploadPass.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbStatusUploadPass.Enabled = false;
             this.tbStatusUploadPass.Location = new System.Drawing.Point(537, 183);
             this.tbStatusUploadPass.MaxLength = 256;
             this.tbStatusUploadPass.Name = "tbStatusUploadPass";
