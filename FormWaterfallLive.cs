@@ -80,8 +80,18 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            tbColorCeil.Maximum = (int)session.MaxChannelCount;
-            tbColorCeil.Minimum = (int)session.MinChannelCount;
+            if (menuItemUseLogarithmicScale.Checked)
+            {
+                tbColorCeil.Maximum = (int)Math.Log(session.MaxChannelCount);
+                tbColorCeil.Minimum = (int)Math.Log(session.MinChannelCount);
+                if (tbColorCeil.Minimum < 0)
+                    tbColorCeil.Minimum = 0;
+            }
+            else
+            {
+                tbColorCeil.Maximum = (int)session.MaxChannelCount;
+                tbColorCeil.Minimum = (int)session.MinChannelCount;
+            }
 
             if (!colorCeilInitialized)
                 tbColorCeil.Value = tbColorCeil.Maximum;
@@ -126,13 +136,37 @@ namespace crash
                         break;
 
                     int a = 255, r = 0, g = 0, b = 255;
-                    float cps = s.Channels[leftX + x];                    
+
+                    float cps = 0f;
+                    if (menuItemUseLogarithmicScale.Checked)
+                    {
+                        cps = (float)Math.Log(s.Channels[leftX + x]);
+                        if (cps < 0f)
+                            cps = 0f;
+                    }
+                    else
+                    {
+                        cps = (float)s.Channels[leftX + x];
+                    }
 
                     if (btnSubtractBackground.Checked && session.Background != null)
                     {
                         if (leftX + x < session.Background.Length)
                         {
-                            cps -= session.Background[leftX + x];
+                            float sub = 0f;
+                            if (menuItemUseLogarithmicScale.Checked)
+                            {
+                                sub = (float)Math.Log(session.Background[leftX + x]);
+                                if (sub < 0f)
+                                    sub = 0f;
+                            }
+                            else
+                            {
+                                sub = (float)session.Background[leftX + x];
+                            }
+
+                            cps -= sub;
+
                             if (cps < 0)
                                 cps = 0;
                         }
@@ -491,6 +525,11 @@ namespace crash
                 args.StartIndex = args.EndIndex = -1;
                 SetSessionIndexEvent(this, args);
             }
+        }
+
+        private void menuItemUseLogarithmicScale_CheckedChanged(object sender, EventArgs e)
+        {                        
+            UpdatePane();
         }
 
         private void btnSubtractBackground_CheckedChanged(object sender, EventArgs e)
