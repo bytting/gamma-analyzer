@@ -29,18 +29,7 @@ namespace crash
         public FormLog()
         {
             InitializeComponent();
-        }
-        
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            tbLog.Clear();
-        }
-
-        private void FormLog_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            Hide();
-        }
+        }        
 
         public RichTextBox GetTextBox()
         {

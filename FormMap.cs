@@ -28,11 +28,14 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using log4net;
 
 namespace crash
 {
     public partial class FormMap : Form
     {
+        ILog Log = null;
+
         Session currentSession = null;
         GMapOverlay overlay = new GMapOverlay();
 
@@ -45,9 +48,11 @@ namespace crash
         private Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);
         private Bitmap bmpRed = new Bitmap(crash.Properties.Resources.marker_red_10);
 
-        public FormMap()
+        public FormMap(ILog log)
         {
             InitializeComponent();
+
+            Log = log;
         }
 
         private void FormMap_Load(object sender, EventArgs e)
@@ -154,6 +159,9 @@ namespace crash
         {
             currentSession = sess;
             RemoveAllMarkers();
+
+            if(currentSession.Spectrums.Count > 0)
+                gmnMap.Position = new GMap.NET.PointLatLng(currentSession.Spectrums[0].Latitude, currentSession.Spectrums[0].Longitude);
         }
 
         public void AddMarker(Spectrum s)
@@ -183,13 +191,6 @@ namespace crash
                 + Environment.NewLine + "Longitude: " + s.Longitude
                 + Environment.NewLine + "Altitude: " + s.Altitude;
             overlay.Markers.Add(marker);
-        }
-
-        private void FormMap_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            gmnMap.Manager.CancelTileCaching();
-            e.Cancel = true;
-            Hide();
         }
 
         private void btnGoToLatLon_Click(object sender, EventArgs e)

@@ -39,35 +39,44 @@
             this.paneMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.tbColorCeil = new System.Windows.Forms.TrackBar();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lblEnergy = new System.Windows.Forms.Label();
-            this.lblChannel = new System.Windows.Forms.Label();
-            this.btnLeftAll = new System.Windows.Forms.Button();
-            this.btnLeft = new System.Windows.Forms.Button();
-            this.btnRight = new System.Windows.Forms.Button();
-            this.btnRightAll = new System.Windows.Forms.Button();
-            this.lblSessionId = new System.Windows.Forms.Label();
-            this.lblColorCeil = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnUpAll = new System.Windows.Forms.Button();
-            this.btnUp = new System.Windows.Forms.Button();
-            this.btnDown = new System.Windows.Forms.Button();
-            this.btnDownAll = new System.Windows.Forms.Button();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.buttonDownAll = new System.Windows.Forms.ToolStripButton();
+            this.buttonDown = new System.Windows.Forms.ToolStripButton();
+            this.buttonUp = new System.Windows.Forms.ToolStripButton();
+            this.buttonUpAll = new System.Windows.Forms.ToolStripButton();
+            this.buttonRightAll = new System.Windows.Forms.ToolStripButton();
+            this.buttonRight = new System.Windows.Forms.ToolStripButton();
+            this.buttonLeft = new System.Windows.Forms.ToolStripButton();
+            this.buttonLeftAll = new System.Windows.Forms.ToolStripButton();
+            this.labelColorCeil = new System.Windows.Forms.ToolStripLabel();
+            this.labelSpectrum = new System.Windows.Forms.ToolStripLabel();
+            this.labelChannel = new System.Windows.Forms.ToolStripLabel();
+            this.labelEnergy = new System.Windows.Forms.ToolStripLabel();
             this.tools.SuspendLayout();
             this.paneMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).BeginInit();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tools
             // 
             this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnShow});
+            this.btnShow,
+            this.buttonDownAll,
+            this.buttonDown,
+            this.buttonUp,
+            this.buttonUpAll,
+            this.buttonRightAll,
+            this.buttonRight,
+            this.buttonLeft,
+            this.buttonLeftAll,
+            this.labelColorCeil,
+            this.labelSpectrum,
+            this.labelChannel,
+            this.labelEnergy});
             this.tools.Location = new System.Drawing.Point(0, 0);
             this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(853, 25);
+            this.tools.Size = new System.Drawing.Size(844, 25);
             this.tools.TabIndex = 0;
             this.tools.Text = "toolStrip1";
             // 
@@ -119,7 +128,7 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(825, 434);
+            this.pane.Size = new System.Drawing.Size(819, 309);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
@@ -146,220 +155,147 @@
             this.tbColorCeil.Location = new System.Drawing.Point(0, 0);
             this.tbColorCeil.Name = "tbColorCeil";
             this.tbColorCeil.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.tbColorCeil.Size = new System.Drawing.Size(28, 282);
+            this.tbColorCeil.Size = new System.Drawing.Size(25, 309);
             this.tbColorCeil.TabIndex = 3;
             this.tbColorCeil.Scroll += new System.EventHandler(this.tbColorCeil_Scroll);
             this.tbColorCeil.ValueChanged += new System.EventHandler(this.tbColorCeil_ValueChanged);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.lblEnergy);
-            this.panel1.Controls.Add(this.lblChannel);
-            this.panel1.Controls.Add(this.btnLeftAll);
-            this.panel1.Controls.Add(this.btnLeft);
-            this.panel1.Controls.Add(this.btnRight);
-            this.panel1.Controls.Add(this.btnRightAll);
-            this.panel1.Controls.Add(this.lblSessionId);
-            this.panel1.Controls.Add(this.lblColorCeil);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 459);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(825, 28);
-            this.panel1.TabIndex = 4;
-            // 
-            // lblEnergy
-            // 
-            this.lblEnergy.AutoSize = true;
-            this.lblEnergy.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblEnergy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEnergy.Location = new System.Drawing.Point(261, 0);
-            this.lblEnergy.Name = "lblEnergy";
-            this.lblEnergy.Padding = new System.Windows.Forms.Padding(5, 2, 0, 0);
-            this.lblEnergy.Size = new System.Drawing.Size(77, 17);
-            this.lblEnergy.TabIndex = 7;
-            this.lblEnergy.Text = "<lblEnergy>";
-            // 
-            // lblChannel
-            // 
-            this.lblChannel.AutoSize = true;
-            this.lblChannel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblChannel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblChannel.Location = new System.Drawing.Point(176, 0);
-            this.lblChannel.Name = "lblChannel";
-            this.lblChannel.Padding = new System.Windows.Forms.Padding(5, 2, 0, 0);
-            this.lblChannel.Size = new System.Drawing.Size(85, 17);
-            this.lblChannel.TabIndex = 5;
-            this.lblChannel.Text = "<lblChannel>";
-            // 
-            // btnLeftAll
-            // 
-            this.btnLeftAll.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnLeftAll.FlatAppearance.BorderSize = 0;
-            this.btnLeftAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLeftAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLeftAll.Image = global::crash.Properties.Resources.left_all_16;
-            this.btnLeftAll.Location = new System.Drawing.Point(665, 0);
-            this.btnLeftAll.Name = "btnLeftAll";
-            this.btnLeftAll.Size = new System.Drawing.Size(40, 28);
-            this.btnLeftAll.TabIndex = 0;
-            this.btnLeftAll.UseVisualStyleBackColor = true;
-            this.btnLeftAll.Click += new System.EventHandler(this.btnLeftAll_Click);
-            // 
-            // btnLeft
-            // 
-            this.btnLeft.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnLeft.FlatAppearance.BorderSize = 0;
-            this.btnLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLeft.Image = global::crash.Properties.Resources.left_16;
-            this.btnLeft.Location = new System.Drawing.Point(705, 0);
-            this.btnLeft.Name = "btnLeft";
-            this.btnLeft.Size = new System.Drawing.Size(40, 28);
-            this.btnLeft.TabIndex = 1;
-            this.btnLeft.UseVisualStyleBackColor = true;
-            this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
-            // 
-            // btnRight
-            // 
-            this.btnRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRight.FlatAppearance.BorderSize = 0;
-            this.btnRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRight.Image = global::crash.Properties.Resources.right_16;
-            this.btnRight.Location = new System.Drawing.Point(745, 0);
-            this.btnRight.Name = "btnRight";
-            this.btnRight.Size = new System.Drawing.Size(40, 28);
-            this.btnRight.TabIndex = 2;
-            this.btnRight.UseVisualStyleBackColor = true;
-            this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
-            // 
-            // btnRightAll
-            // 
-            this.btnRightAll.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRightAll.FlatAppearance.BorderSize = 0;
-            this.btnRightAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRightAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRightAll.Image = global::crash.Properties.Resources.right_all_16;
-            this.btnRightAll.Location = new System.Drawing.Point(785, 0);
-            this.btnRightAll.Name = "btnRightAll";
-            this.btnRightAll.Size = new System.Drawing.Size(40, 28);
-            this.btnRightAll.TabIndex = 3;
-            this.btnRightAll.UseVisualStyleBackColor = true;
-            this.btnRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
-            // 
-            // lblSessionId
-            // 
-            this.lblSessionId.AutoSize = true;
-            this.lblSessionId.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSessionId.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSessionId.Location = new System.Drawing.Point(84, 0);
-            this.lblSessionId.Name = "lblSessionId";
-            this.lblSessionId.Padding = new System.Windows.Forms.Padding(5, 2, 0, 0);
-            this.lblSessionId.Size = new System.Drawing.Size(92, 17);
-            this.lblSessionId.TabIndex = 6;
-            this.lblSessionId.Text = "<lblSpectrum>";
-            // 
-            // lblColorCeil
-            // 
-            this.lblColorCeil.AutoSize = true;
-            this.lblColorCeil.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblColorCeil.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblColorCeil.Location = new System.Drawing.Point(0, 0);
-            this.lblColorCeil.Name = "lblColorCeil";
-            this.lblColorCeil.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblColorCeil.Size = new System.Drawing.Size(84, 17);
-            this.lblColorCeil.TabIndex = 4;
-            this.lblColorCeil.Text = "<lblColorCeil>";
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.tbColorCeil);
-            this.panel2.Controls.Add(this.btnUpAll);
-            this.panel2.Controls.Add(this.btnUp);
-            this.panel2.Controls.Add(this.btnDown);
-            this.panel2.Controls.Add(this.btnDownAll);
-            this.panel2.Controls.Add(this.panel3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(825, 25);
+            this.panel2.Location = new System.Drawing.Point(819, 25);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(28, 462);
+            this.panel2.Size = new System.Drawing.Size(25, 309);
             this.panel2.TabIndex = 5;
             // 
-            // btnUpAll
+            // buttonDownAll
             // 
-            this.btnUpAll.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnUpAll.FlatAppearance.BorderSize = 0;
-            this.btnUpAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUpAll.Image = global::crash.Properties.Resources.up_all_16;
-            this.btnUpAll.Location = new System.Drawing.Point(0, 282);
-            this.btnUpAll.Name = "btnUpAll";
-            this.btnUpAll.Size = new System.Drawing.Size(28, 38);
-            this.btnUpAll.TabIndex = 7;
-            this.btnUpAll.UseVisualStyleBackColor = true;
-            this.btnUpAll.Click += new System.EventHandler(this.btnUpAll_Click);
+            this.buttonDownAll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonDownAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonDownAll.Image = global::crash.Properties.Resources.down_all_16;
+            this.buttonDownAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonDownAll.Name = "buttonDownAll";
+            this.buttonDownAll.Size = new System.Drawing.Size(23, 22);
+            this.buttonDownAll.Text = "toolStripButton1";
+            this.buttonDownAll.Click += new System.EventHandler(this.btnDownAll_Click);
             // 
-            // btnUp
+            // buttonDown
             // 
-            this.btnUp.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnUp.FlatAppearance.BorderSize = 0;
-            this.btnUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUp.Image = global::crash.Properties.Resources.up_16;
-            this.btnUp.Location = new System.Drawing.Point(0, 320);
-            this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(28, 38);
-            this.btnUp.TabIndex = 6;
-            this.btnUp.UseVisualStyleBackColor = true;
-            this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
+            this.buttonDown.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonDown.Image = global::crash.Properties.Resources.down_16;
+            this.buttonDown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonDown.Name = "buttonDown";
+            this.buttonDown.Size = new System.Drawing.Size(23, 22);
+            this.buttonDown.Text = "toolStripButton2";
+            this.buttonDown.Click += new System.EventHandler(this.btnDown_Click);
             // 
-            // btnDown
+            // buttonUp
             // 
-            this.btnDown.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnDown.FlatAppearance.BorderSize = 0;
-            this.btnDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDown.Image = global::crash.Properties.Resources.down_16;
-            this.btnDown.Location = new System.Drawing.Point(0, 358);
-            this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(28, 38);
-            this.btnDown.TabIndex = 5;
-            this.btnDown.UseVisualStyleBackColor = true;
-            this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
+            this.buttonUp.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonUp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonUp.Image = global::crash.Properties.Resources.up_16;
+            this.buttonUp.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonUp.Name = "buttonUp";
+            this.buttonUp.Size = new System.Drawing.Size(23, 22);
+            this.buttonUp.Text = "toolStripButton3";
+            this.buttonUp.Click += new System.EventHandler(this.btnUp_Click);
             // 
-            // btnDownAll
+            // buttonUpAll
             // 
-            this.btnDownAll.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnDownAll.FlatAppearance.BorderSize = 0;
-            this.btnDownAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDownAll.Image = global::crash.Properties.Resources.down_all_16;
-            this.btnDownAll.Location = new System.Drawing.Point(0, 396);
-            this.btnDownAll.Name = "btnDownAll";
-            this.btnDownAll.Size = new System.Drawing.Size(28, 38);
-            this.btnDownAll.TabIndex = 4;
-            this.btnDownAll.UseVisualStyleBackColor = true;
-            this.btnDownAll.Click += new System.EventHandler(this.btnDownAll_Click);
+            this.buttonUpAll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonUpAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonUpAll.Image = global::crash.Properties.Resources.up_all_16;
+            this.buttonUpAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonUpAll.Name = "buttonUpAll";
+            this.buttonUpAll.Size = new System.Drawing.Size(23, 22);
+            this.buttonUpAll.Text = "toolStripButton4";
+            this.buttonUpAll.Click += new System.EventHandler(this.btnUpAll_Click);
             // 
-            // panel3
+            // buttonRightAll
             // 
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 434);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(28, 28);
-            this.panel3.TabIndex = 5;
+            this.buttonRightAll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonRightAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonRightAll.Image = global::crash.Properties.Resources.right_all_16;
+            this.buttonRightAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonRightAll.Name = "buttonRightAll";
+            this.buttonRightAll.Size = new System.Drawing.Size(23, 22);
+            this.buttonRightAll.Text = "toolStripButton5";
+            this.buttonRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
+            // 
+            // buttonRight
+            // 
+            this.buttonRight.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonRight.Image = global::crash.Properties.Resources.right_16;
+            this.buttonRight.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonRight.Name = "buttonRight";
+            this.buttonRight.Size = new System.Drawing.Size(23, 22);
+            this.buttonRight.Text = "toolStripButton6";
+            this.buttonRight.Click += new System.EventHandler(this.btnRight_Click);
+            // 
+            // buttonLeft
+            // 
+            this.buttonLeft.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonLeft.Image = global::crash.Properties.Resources.left_16;
+            this.buttonLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonLeft.Name = "buttonLeft";
+            this.buttonLeft.Size = new System.Drawing.Size(23, 22);
+            this.buttonLeft.Text = "toolStripButton7";
+            this.buttonLeft.Click += new System.EventHandler(this.btnLeft_Click);
+            // 
+            // buttonLeftAll
+            // 
+            this.buttonLeftAll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonLeftAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonLeftAll.Image = global::crash.Properties.Resources.left_all_16;
+            this.buttonLeftAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonLeftAll.Name = "buttonLeftAll";
+            this.buttonLeftAll.Size = new System.Drawing.Size(23, 22);
+            this.buttonLeftAll.Text = "toolStripButton8";
+            this.buttonLeftAll.Click += new System.EventHandler(this.btnLeftAll_Click);
+            // 
+            // labelColorCeil
+            // 
+            this.labelColorCeil.Name = "labelColorCeil";
+            this.labelColorCeil.Size = new System.Drawing.Size(97, 22);
+            this.labelColorCeil.Text = "<labelColorCeil>";
+            // 
+            // labelSpectrum
+            // 
+            this.labelSpectrum.Name = "labelSpectrum";
+            this.labelSpectrum.Size = new System.Drawing.Size(99, 22);
+            this.labelSpectrum.Text = "<labelSpectrum>";
+            // 
+            // labelChannel
+            // 
+            this.labelChannel.Name = "labelChannel";
+            this.labelChannel.Size = new System.Drawing.Size(92, 22);
+            this.labelChannel.Text = "<labelChannel>";
+            // 
+            // labelEnergy
+            // 
+            this.labelEnergy.Name = "labelEnergy";
+            this.labelEnergy.Size = new System.Drawing.Size(84, 22);
+            this.labelEnergy.Text = "<labelEnergy>";
             // 
             // FormWaterfallLive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(853, 487);
+            this.ClientSize = new System.Drawing.Size(844, 334);
+            this.ControlBox = false;
             this.Controls.Add(this.pane);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.tools);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(256, 128);
             this.Name = "FormWaterfallLive";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Gamma Analyzer - Waterfall Live";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormWaterfall_FormClosing);
+            this.Text = "Waterfall";
             this.Load += new System.EventHandler(this.FormWaterfall_Load);
             this.ResizeBegin += new System.EventHandler(this.FormWaterfallLive_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.FormWaterfallLive_ResizeEnd);
@@ -367,8 +303,6 @@
             this.tools.PerformLayout();
             this.paneMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -381,26 +315,24 @@
         private System.Windows.Forms.ToolStrip tools;
         private System.Windows.Forms.Panel pane;
         private System.Windows.Forms.TrackBar tbColorCeil;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btnRightAll;
-        private System.Windows.Forms.Button btnRight;
-        private System.Windows.Forms.Button btnLeft;
-        private System.Windows.Forms.Button btnLeftAll;
-        private System.Windows.Forms.Button btnUpAll;
-        private System.Windows.Forms.Button btnUp;
-        private System.Windows.Forms.Button btnDown;
-        private System.Windows.Forms.Button btnDownAll;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label lblChannel;
-        private System.Windows.Forms.Label lblColorCeil;
         private System.Windows.Forms.ToolStripDropDownButton btnShow;
         private System.Windows.Forms.ToolStripMenuItem btnROI;
         private System.Windows.Forms.ContextMenuStrip paneMenu;
         private System.Windows.Forms.ToolStripMenuItem menuItemUnselect;
         private System.Windows.Forms.ToolStripMenuItem btnSubtractBackground;
-        private System.Windows.Forms.Label lblSessionId;
-        private System.Windows.Forms.Label lblEnergy;
         private System.Windows.Forms.ToolStripMenuItem menuItemUseLogarithmicScale;
+        private System.Windows.Forms.ToolStripButton buttonDownAll;
+        private System.Windows.Forms.ToolStripButton buttonDown;
+        private System.Windows.Forms.ToolStripButton buttonUp;
+        private System.Windows.Forms.ToolStripButton buttonUpAll;
+        private System.Windows.Forms.ToolStripButton buttonRightAll;
+        private System.Windows.Forms.ToolStripButton buttonRight;
+        private System.Windows.Forms.ToolStripButton buttonLeft;
+        private System.Windows.Forms.ToolStripButton buttonLeftAll;
+        private System.Windows.Forms.ToolStripLabel labelColorCeil;
+        private System.Windows.Forms.ToolStripLabel labelSpectrum;
+        private System.Windows.Forms.ToolStripLabel labelChannel;
+        private System.Windows.Forms.ToolStripLabel labelEnergy;
     }
 }

@@ -33,17 +33,15 @@
             this.pane = new System.Windows.Forms.Panel();
             this.paneMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemUnselect = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.lblSpectrum = new System.Windows.Forms.Label();
-            this.lblScaling = new System.Windows.Forms.Label();
-            this.btnLeftAll = new System.Windows.Forms.Button();
-            this.btnLeft = new System.Windows.Forms.Button();
-            this.btnRight = new System.Windows.Forms.Button();
-            this.btnRightAll = new System.Windows.Forms.Button();
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnOptions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.buttonRightAll = new System.Windows.Forms.ToolStripButton();
+            this.buttonRight = new System.Windows.Forms.ToolStripButton();
+            this.buttonLeft = new System.Windows.Forms.ToolStripButton();
+            this.buttonLeftAll = new System.Windows.Forms.ToolStripButton();
+            this.labelScaling = new System.Windows.Forms.ToolStripLabel();
+            this.labelSpectrum = new System.Windows.Forms.ToolStripLabel();
             this.paneMenu.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.tools.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +53,7 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(858, 457);
+            this.pane.Size = new System.Drawing.Size(656, 305);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pane_MouseClick);
@@ -76,107 +74,19 @@
             this.menuItemUnselect.Text = "&Unselect";
             this.menuItemUnselect.Click += new System.EventHandler(this.menuItemUnselect_Click);
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.lblSpectrum);
-            this.panel3.Controls.Add(this.lblScaling);
-            this.panel3.Controls.Add(this.btnLeftAll);
-            this.panel3.Controls.Add(this.btnLeft);
-            this.panel3.Controls.Add(this.btnRight);
-            this.panel3.Controls.Add(this.btnRightAll);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 482);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(858, 28);
-            this.panel3.TabIndex = 4;
-            // 
-            // lblSpectrum
-            // 
-            this.lblSpectrum.AutoSize = true;
-            this.lblSpectrum.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSpectrum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSpectrum.Location = new System.Drawing.Point(75, 0);
-            this.lblSpectrum.Name = "lblSpectrum";
-            this.lblSpectrum.Padding = new System.Windows.Forms.Padding(4, 2, 0, 0);
-            this.lblSpectrum.Size = new System.Drawing.Size(91, 17);
-            this.lblSpectrum.TabIndex = 5;
-            this.lblSpectrum.Text = "<lblSpectrum>";
-            // 
-            // lblScaling
-            // 
-            this.lblScaling.AutoSize = true;
-            this.lblScaling.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblScaling.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScaling.Location = new System.Drawing.Point(0, 0);
-            this.lblScaling.Name = "lblScaling";
-            this.lblScaling.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblScaling.Size = new System.Drawing.Size(75, 17);
-            this.lblScaling.TabIndex = 4;
-            this.lblScaling.Text = "<lblScaling>";
-            // 
-            // btnLeftAll
-            // 
-            this.btnLeftAll.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnLeftAll.FlatAppearance.BorderSize = 0;
-            this.btnLeftAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLeftAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLeftAll.Image = global::crash.Properties.Resources.left_all_16;
-            this.btnLeftAll.Location = new System.Drawing.Point(698, 0);
-            this.btnLeftAll.Name = "btnLeftAll";
-            this.btnLeftAll.Size = new System.Drawing.Size(40, 28);
-            this.btnLeftAll.TabIndex = 0;
-            this.btnLeftAll.UseVisualStyleBackColor = true;
-            this.btnLeftAll.Click += new System.EventHandler(this.btnLeftAll_Click);
-            // 
-            // btnLeft
-            // 
-            this.btnLeft.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnLeft.FlatAppearance.BorderSize = 0;
-            this.btnLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLeft.Image = global::crash.Properties.Resources.left_16;
-            this.btnLeft.Location = new System.Drawing.Point(738, 0);
-            this.btnLeft.Name = "btnLeft";
-            this.btnLeft.Size = new System.Drawing.Size(40, 28);
-            this.btnLeft.TabIndex = 1;
-            this.btnLeft.UseVisualStyleBackColor = true;
-            this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
-            // 
-            // btnRight
-            // 
-            this.btnRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRight.FlatAppearance.BorderSize = 0;
-            this.btnRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRight.Image = global::crash.Properties.Resources.right_16;
-            this.btnRight.Location = new System.Drawing.Point(778, 0);
-            this.btnRight.Name = "btnRight";
-            this.btnRight.Size = new System.Drawing.Size(40, 28);
-            this.btnRight.TabIndex = 2;
-            this.btnRight.UseVisualStyleBackColor = true;
-            this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
-            // 
-            // btnRightAll
-            // 
-            this.btnRightAll.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRightAll.FlatAppearance.BorderSize = 0;
-            this.btnRightAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRightAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRightAll.Image = global::crash.Properties.Resources.right_all_16;
-            this.btnRightAll.Location = new System.Drawing.Point(818, 0);
-            this.btnRightAll.Name = "btnRightAll";
-            this.btnRightAll.Size = new System.Drawing.Size(40, 28);
-            this.btnRightAll.TabIndex = 3;
-            this.btnRightAll.UseVisualStyleBackColor = true;
-            this.btnRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
-            // 
             // tools
             // 
             this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOptions});
+            this.btnOptions,
+            this.buttonRightAll,
+            this.buttonRight,
+            this.buttonLeft,
+            this.buttonLeftAll,
+            this.labelScaling,
+            this.labelSpectrum});
             this.tools.Location = new System.Drawing.Point(0, 0);
             this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(858, 25);
+            this.tools.Size = new System.Drawing.Size(656, 25);
             this.tools.TabIndex = 5;
             this.tools.Text = "toolStrip1";
             // 
@@ -188,24 +98,79 @@
             this.btnOptions.Size = new System.Drawing.Size(78, 22);
             this.btnOptions.Text = "&Options";
             // 
+            // buttonRightAll
+            // 
+            this.buttonRightAll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonRightAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonRightAll.Image = global::crash.Properties.Resources.right_all_16;
+            this.buttonRightAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonRightAll.Name = "buttonRightAll";
+            this.buttonRightAll.Size = new System.Drawing.Size(23, 22);
+            this.buttonRightAll.Text = "toolStripButton1";
+            this.buttonRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
+            // 
+            // buttonRight
+            // 
+            this.buttonRight.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonRight.Image = global::crash.Properties.Resources.right_16;
+            this.buttonRight.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonRight.Name = "buttonRight";
+            this.buttonRight.Size = new System.Drawing.Size(23, 22);
+            this.buttonRight.Text = "toolStripButton2";
+            this.buttonRight.Click += new System.EventHandler(this.btnRight_Click);
+            // 
+            // buttonLeft
+            // 
+            this.buttonLeft.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonLeft.Image = global::crash.Properties.Resources.left_16;
+            this.buttonLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonLeft.Name = "buttonLeft";
+            this.buttonLeft.Size = new System.Drawing.Size(23, 22);
+            this.buttonLeft.Text = "toolStripButton3";
+            this.buttonLeft.Click += new System.EventHandler(this.btnLeft_Click);
+            // 
+            // buttonLeftAll
+            // 
+            this.buttonLeftAll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonLeftAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonLeftAll.Image = global::crash.Properties.Resources.left_all_16;
+            this.buttonLeftAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonLeftAll.Name = "buttonLeftAll";
+            this.buttonLeftAll.Size = new System.Drawing.Size(23, 22);
+            this.buttonLeftAll.Text = "toolStripButton4";
+            this.buttonLeftAll.Click += new System.EventHandler(this.btnLeftAll_Click);
+            // 
+            // labelScaling
+            // 
+            this.labelScaling.Name = "labelScaling";
+            this.labelScaling.Size = new System.Drawing.Size(86, 22);
+            this.labelScaling.Text = "<labelScaling>";
+            // 
+            // labelSpectrum
+            // 
+            this.labelSpectrum.Name = "labelSpectrum";
+            this.labelSpectrum.Size = new System.Drawing.Size(99, 22);
+            this.labelSpectrum.Text = "<labelSpectrum>";
+            // 
             // FormROILive
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(858, 510);
+            this.ClientSize = new System.Drawing.Size(656, 330);
+            this.ControlBox = false;
             this.Controls.Add(this.pane);
-            this.Controls.Add(this.panel3);
             this.Controls.Add(this.tools);
+            this.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(256, 128);
+            this.MinimumSize = new System.Drawing.Size(296, 134);
             this.Name = "FormROILive";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Gamma Analyzer - ROI Live";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormROITableLive_FormClosing);
+            this.Text = "ROI";
             this.Load += new System.EventHandler(this.FormROITableLive_Load);
             this.paneMenu.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
             this.ResumeLayout(false);
@@ -216,16 +181,15 @@
         #endregion
 
         private System.Windows.Forms.Panel pane;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button btnRightAll;
-        private System.Windows.Forms.Button btnRight;
-        private System.Windows.Forms.Button btnLeft;
-        private System.Windows.Forms.Button btnLeftAll;
         private System.Windows.Forms.ToolStrip tools;
-        private System.Windows.Forms.Label lblSpectrum;
-        private System.Windows.Forms.Label lblScaling;
         private System.Windows.Forms.ToolStripDropDownButton btnOptions;
         private System.Windows.Forms.ContextMenuStrip paneMenu;
         private System.Windows.Forms.ToolStripMenuItem menuItemUnselect;
+        private System.Windows.Forms.ToolStripButton buttonRightAll;
+        private System.Windows.Forms.ToolStripButton buttonRight;
+        private System.Windows.Forms.ToolStripButton buttonLeft;
+        private System.Windows.Forms.ToolStripButton buttonLeftAll;
+        private System.Windows.Forms.ToolStripLabel labelScaling;
+        private System.Windows.Forms.ToolStripLabel labelSpectrum;
     }
 }

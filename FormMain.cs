@@ -28,8 +28,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
 using System.Globalization;
-using System.Xml;
-using System.Xml.Serialization;
 using Newtonsoft.Json;
 using ZedGraph;
 using MathNet.Numerics;
@@ -40,10 +38,12 @@ namespace crash
 {
     public partial class FormMain : Form
     {
-        // Structure with application settings stored on disk
-        GASettings settings = new GASettings();
+        ILog Log = null;
+        GASettings settings = null;
 
-        static ILog Log = null;
+        FormMap formMap = null;
+        FormWaterfallLive formWaterfallLive = null;
+        FormROILive formROILive = null;
 
         // Concurrent queue used to pass messages to networking thread
         static ConcurrentQueue<burn.ProtocolMessage> sendq = null;
@@ -63,13 +63,7 @@ namespace crash
         //static ConcurrentQueue<Spectrum> sendUploadQ = null;
 
         // Currently loaded sessions
-        Session session = null, bkgSession = null;
-
-        // External forms
-        FormLog formLog = null;
-        FormWaterfallLive formWaterfallLive = null;
-        FormROILive formROILive = null;
-        FormMap formMap = null;
+        Session session = null, bkgSession = null;        
 
         // Point lists with graph data
         PointPairList setupGraphList = new PointPairList();        
@@ -114,22 +108,22 @@ namespace crash
             EnergyCalibration            
         };
 
-        public FormMain()
+        public FormMain(ILog log, GASettings gaSettings, FormMap fMap, FormWaterfallLive fWaterfallLive, FormROILive fROILive)
         {
             InitializeComponent();
 
-            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+            Log = log;
+            settings = gaSettings;
+
+            formMap = fMap;
+            formWaterfallLive = fWaterfallLive;
+            formROILive = fROILive;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
             try
             {
-                formLog = new FormLog();
-                IntPtr iptr = formLog.Handle; // Force window handle creation
-                Log = Utils.GetLog(formLog.GetTextBox());
-
                 netService = new burn.NetService(Log, ref sendq, ref recvq);
                 netThread = new Thread(netService.DoWork);
 
@@ -164,31 +158,19 @@ namespace crash
 
                 if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua"))
                     File.Copy(InstallDir + "template_osprey-nai3.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua");                
-
-                // Load settings
-                LoadSettings();
+                
                 menuItemConvertToLocalTime.Checked = settings.DisplayLocalTime;
 
                 LoadNuclideLibrary();
 
-                // Create forms                
-                formWaterfallLive = new FormWaterfallLive(settings.ROIList);
-                formROILive = new FormROILive(Log, settings.ROIList);
-                formMap = new FormMap();
-
                 // Set up custom events
-                formWaterfallLive.SetSessionIndexEvent += SetSessionIndexEvent;
-                formROILive.SetSessionIndexEvent += SetSessionIndexEvent;
-                formMap.SetSessionIndexEvent += SetSessionIndexEvent;
-
                 tbNewLivetime.KeyPress += CustomEvents.Integer_KeyPress;
 
                 // Populate UI
                 tbPreferencesSessionDir.Text = settings.SessionRootDirectory;
                 PopulateDetectorList();
                 PopulateDetectors();
-
-                lblLogMessages.Text = "";
+                
                 lblSessionSelChannel.Text = "";
                 lblSessionsDatabase.Text = "";
                 lblSetupChannel.Text = "";
@@ -201,6 +183,8 @@ namespace crash
                 lblComment.Text = "";
                 ClearSpectrumInfo();
                 ClearStatus();
+
+                menu.Visible = false;
 
                 // Start threads
                 netThread.Start();
@@ -235,30 +219,6 @@ namespace crash
             }            
         }        
 
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // FIXME: Disabled for now     
-            /*if (netUpload.IsRunning())
-            {
-                netUpload.RequestStop();
-                netUploadThread.Join();
-                Log.Info("net upload closed");
-            }*/
-
-            if (netService.IsRunning())
-            {                
-                netService.RequestStop();
-                netThread.Join();
-                Log.Info("net service closed");
-            }
-
-            // Stop timer listening for network messages
-            timer.Stop();
-
-            // Save settings
-            SaveSettings();            
-        }
-
         public void makeGraphObjectType(ref object tag, GraphObjectType got)
         {
             // Create a graph object type
@@ -270,30 +230,7 @@ namespace crash
         {
             // Check graph object type
             return tag != null && (GraphObjectType)tag == got;
-        }
-
-        private void SaveSettings()
-        {
-            // Serialize settings to file
-            using (StreamWriter sw = new StreamWriter(GAEnvironment.SettingsFile))
-            {
-                XmlSerializer x = new XmlSerializer(settings.GetType());
-                x.Serialize(sw, settings);
-            }
-        }
-
-        private void LoadSettings()
-        {
-            if (!File.Exists(GAEnvironment.SettingsFile))
-                SaveSettings();
-
-            // Deserialize settings from file
-            using (StreamReader sr = new StreamReader(GAEnvironment.SettingsFile))
-            {
-                XmlSerializer x = new XmlSerializer(settings.GetType());
-                settings = x.Deserialize(sr) as GASettings;
-            }
-        }
+        }        
 
         private bool LoadNuclideLibrary()
         {
@@ -348,14 +285,11 @@ namespace crash
 
             string cmd = msg.Params["command"].ToString();
 
-            if (cmd != "spectrum")
-                lblLogMessages.Text = cmd;
+            Log.Info("Received response: " + cmd);
 
             switch (cmd)
             {
                 case "get_status_success":
-                    Log.Info("Get status success");
-
                     double freeDisk = Convert.ToDouble(msg.Params["free_disk_space"], CultureInfo.InvariantCulture);
                     freeDisk /= 1000000;
                     lblStatusFreeDiskSpace.Text = "Free disk space: " + freeDisk.ToString("#########0.0#") + " MB";
@@ -375,17 +309,11 @@ namespace crash
 
                 case "start_session_success":
                     // New session created successfully                    
-                    if (previewSession)
-                    {
-                        // New session is a preview session, update log
-                        Log.Info("Session started: " + msg.Params["session_name"]);
-                    }
+                    if (previewSession)                    
+                        Log.Info("Preview session started: " + msg.Params["session_name"]);                    
                     else
-                    {
-                        // New session is a normal session
-                        string sessionName = msg.Params["session_name"].ToString();
-                        Log.Info("Session started: " + sessionName);
-                    }
+                        Log.Info("Session started: " + msg.Params["session_name"]);                    
+
                     btnSetupStartTest.Enabled = false;
                     btnSetupStopTest.Enabled = true;
                     break;
@@ -397,6 +325,21 @@ namespace crash
 
                 case "start_session_error":
                     // Creation of new session failed, log error message
+                    Log.Info(msg.Params["message"].ToString());
+                    break;
+
+                case "dump_session_success":
+                    // Session dump successful
+                    Log.Info(msg.Params["message"].ToString());
+                    break;
+
+                case "dump_session_error":
+                    // Session dump error
+                    Log.Info(msg.Params["message"].ToString());
+                    break;
+
+                case "dump_session_none":
+                    // Session dump none
                     Log.Info(msg.Params["message"].ToString());
                     break;
 
@@ -453,9 +396,6 @@ namespace crash
                     break;
 
                 case "detector_config_success":
-                    // Set gain command executed successfully
-                    Log.Info(msg.Params["command"].ToString());
-
                     // Update state                    
                     panelSetupGraph.Enabled = true;
                     btnSetupClose.Enabled = true;
@@ -689,7 +629,7 @@ CREATE TABLE `spectrum` (
             connection.Close();
         }
 
-        void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
+        public void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
         {
             // An external form has changed the spectrum selection, update UI
             if (e.StartIndex == -1 && e.EndIndex == -1)
@@ -915,11 +855,6 @@ CREATE TABLE `spectrum` (
             return -1;
         }
 
-        private void menuItemExit_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void btnMenuSession_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageSessions;
@@ -997,7 +932,7 @@ CREATE TABLE `spectrum` (
             selectedDetector.LLD = lld;
             selectedDetector.ULD = uld;
 
-            SaveSettings();
+            ((FormContainer)MdiParent).SaveSettings();
 
             // Create and send network message
             burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
@@ -1013,9 +948,8 @@ CREATE TABLE `spectrum` (
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Update UI based on selected tab
-            lblInterface.Text = tabs.SelectedTab.Text.ToUpper();
-
-            tools.Visible = true;
+            Text = "Session - " + tabs.SelectedTab.Text;
+            
             menuItemView.Visible = true;
             menuItemSession.Visible = false;
             menuItemCalibration.Visible = false;
@@ -1038,7 +972,6 @@ CREATE TABLE `spectrum` (
             {
                 menuItemView.Visible = false;
                 menuItemCalibration.Visible = false;
-                tools.Visible = false;
             }
         }             
 
@@ -1156,13 +1089,6 @@ CREATE TABLE `spectrum` (
             lbNuclides.Items.Clear();
         }
 
-        private void menuItemAbout_Click(object sender, EventArgs e)
-        {
-            // Show about form
-            About about = new About();
-            about.ShowDialog();            
-        }
-
         private void menuItemLoadSession_Click(object sender, EventArgs e)
         {
             if(Directory.Exists(settings.SessionRootDirectory))
@@ -1238,13 +1164,6 @@ CREATE TABLE `spectrum` (
             }
         }
 
-        private void menuItemROITable_Click(object sender, EventArgs e)
-        {
-            // Show ROI table form
-            FormROITable form = new FormROITable(settings.ROIList);
-            form.ShowDialog();
-        }
-
         private void graphSetup_MouseMove(object sender, MouseEventArgs e)
         {
             int x, y;
@@ -1305,37 +1224,11 @@ CREATE TABLE `spectrum` (
             ClearBackground();
         }
 
-        private void menuItemShowMap_Click(object sender, EventArgs e)
-        {
-            formMap.Show();
-            formMap.BringToFront();
-        }
-
-        private void menuItemShowWaterfall_Click(object sender, EventArgs e)
-        {            
-            formWaterfallLive.Show();
-            formWaterfallLive.BringToFront();
-            formWaterfallLive.UpdatePane();
-        }
-
-        private void menuItemShowROIChart_Click(object sender, EventArgs e)
-        {
-            formROILive.Show();
-            formROILive.BringToFront();
-            formROILive.UpdatePane();
-        }
-
         private void menuItemShowROIHistory_Click(object sender, EventArgs e)
         {
             FormROIHist form = new FormROIHist(Log, session, settings.ROIList);
             form.ShowDialog();
         }        
-
-        private void menuItemShowLog_Click(object sender, EventArgs e)
-        {
-            formLog.Show();
-            formLog.BringToFront();
-        }
 
         private void menuItemSaveAsCHN_Click(object sender, EventArgs e)
         {
@@ -1390,8 +1283,8 @@ CREATE TABLE `spectrum` (
             det.PluginName = form.PluginName;
             det.GEScript = form.GEScript;
             settings.Detectors.Add(det);
-
-            SaveSettings();
+            
+            ((FormContainer)MdiParent).SaveSettings();
 
             PopulateDetectorList();
             PopulateDetectors();
@@ -1420,6 +1313,8 @@ CREATE TABLE `spectrum` (
             ClearStatus();
             tbStatusIPAddress.Text = settings.LastHostname;            
             tabs.SelectedTab = pageStatus;
+
+            ((FormContainer)MdiParent).menuItemLayoutSetup_Click(sender, e);
         }
 
         private void menuItemStopSession_Click(object sender, EventArgs e)
@@ -1574,113 +1469,8 @@ CREATE TABLE `spectrum` (
             selectedDetector.EnergyCurveCoefficients.Clear();
             selectedDetector.EnergyCurveCoefficients.AddRange(coefficients);
 
-            SaveSettings();
+            ((FormContainer)MdiParent).SaveSettings();
         }        
-
-        private void menuItemLayoutSetup1_Click(object sender, EventArgs e)
-        {
-            // Predefined layout: Organize windows
-            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
-            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
-
-            formMap.Hide();
-            formWaterfallLive.Hide();
-            formROILive.Hide();            
-
-            WindowState = FormWindowState.Normal;
-            Left = 0;
-            Top = 0;
-            Width = screenWidth;
-            Height = screenHeight - (screenHeight / 5);
-
-            formLog.Show();
-            formLog.WindowState = FormWindowState.Normal;
-            formLog.Left = 0;
-            formLog.Top = screenHeight - (screenHeight / 5);
-            formLog.Width = screenWidth;
-            formLog.Height = screenHeight / 5;
-
-            Activate();
-        }
-
-        private void menuItemLayoutSession1_Click(object sender, EventArgs e)
-        {
-            // Predefined layout: Organize windows
-            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
-            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
-                        
-            formROILive.Hide();
-            //Utils.Log.Hide();
-
-            WindowState = FormWindowState.Normal;
-            Left = 0;
-            Top = 0;
-            Width = screenWidth;
-            Height = (screenHeight / 3) * 2;
-
-            formWaterfallLive.Show();
-            formWaterfallLive.WindowState = FormWindowState.Normal;
-            formWaterfallLive.Left = 0;
-            formWaterfallLive.Top = (screenHeight / 3) * 2;
-            formWaterfallLive.Width = screenWidth / 2;
-            formWaterfallLive.Height = screenHeight / 3;
-
-            formMap.Show();
-            formMap.WindowState = FormWindowState.Normal;
-            formMap.Left = screenWidth / 2;
-            formMap.Top = (screenHeight / 3) * 2;
-            formMap.Width = screenWidth / 2;
-            formMap.Height = screenHeight / 3;
-
-            Activate();
-        }
-
-        private void menuItemLayoutSession2_Click(object sender, EventArgs e)
-        {
-            // Predefined layout: Organize windows
-            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
-            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
-            int screenWidthThird = screenWidth / 3;
-            int screenHeightThird = screenHeight / 3;
-            int screenHeightHalfThird = screenHeightThird / 2;
-
-            WindowState = FormWindowState.Normal;
-            Left = 0;
-            Top = 0;
-            Width = screenWidthThird * 2;
-            Height = screenHeightThird * 2;
-
-            formMap.Show();
-            formMap.WindowState = FormWindowState.Normal;
-            formMap.Left = screenWidthThird * 2;
-            formMap.Top = 0;
-            formMap.Width = screenWidthThird;
-            formMap.Height = screenHeightThird + screenHeightHalfThird;
-
-            formROILive.Show();
-            formROILive.WindowState = FormWindowState.Normal;
-            formROILive.Left = screenWidthThird * 2;
-            formROILive.Top = screenHeightThird + screenHeightHalfThird;
-            formROILive.Width = screenWidthThird;
-            formROILive.Height = screenHeightThird;
-
-            formLog.Show();
-            formLog.WindowState = FormWindowState.Normal;
-            formLog.Left = screenWidthThird * 2;
-            formLog.Top = (screenHeightThird * 2) + screenHeightHalfThird;
-            formLog.Width = screenWidthThird;
-            //formLog.Height = screenHeightHalfThird;
-            formLog.Height = screenHeight - (formMap.Height + formROILive.Height);
-
-            formWaterfallLive.Show();
-            formWaterfallLive.WindowState = FormWindowState.Normal;
-            formWaterfallLive.Left = 0;
-            formWaterfallLive.Top = screenHeightThird * 2;
-            formWaterfallLive.Width = screenWidthThird * 2;
-            formWaterfallLive.Height = screenHeightThird;
-
-            Activate();
-        }
 
         private void btnEditDetector_Click(object sender, EventArgs e)
         {
@@ -1709,7 +1499,7 @@ CREATE TABLE `spectrum` (
             det.PluginName = form.PluginName;
             det.GEScript = form.GEScript;
 
-            SaveSettings();
+            ((FormContainer)MdiParent).SaveSettings();
 
             PopulateDetectorList();
             PopulateDetectors();
@@ -1847,7 +1637,7 @@ CREATE TABLE `spectrum` (
 
             selectedDetector.Livetime = ltime;
 
-            SaveSettings();
+            ((FormContainer)MdiParent).SaveSettings();
 
             string ip = tbStatusIPAddress.Text.Trim();
             float livetime = selectedDetector.Livetime;
@@ -1888,11 +1678,15 @@ CREATE TABLE `spectrum` (
             formROILive.UpdatePane();
 
             tabs.SelectedTab = pageSessions;
+
+            ((FormContainer)MdiParent).menuItemLayoutSession_Click(sender, e);
         }
 
         private void btnNewCancel_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageSessions;
+
+            ((FormContainer)MdiParent).menuItemLayoutSession_Click(sender, e);
         }
 
         private void btnSetupClose_Click(object sender, EventArgs e)
@@ -1961,6 +1755,8 @@ CREATE TABLE `spectrum` (
         private void btnStatusCancel_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageMenu;
+
+            ((FormContainer)MdiParent).menuItemLayoutSession_Click(sender, e);
         }
 
         private void btnSetupCancel_Click(object sender, EventArgs e)
@@ -1968,12 +1764,14 @@ CREATE TABLE `spectrum` (
             if (returnFromSetup == pageNew)
                 tabs.SelectedTab = pageSessions;
             else tabs.SelectedTab = pageMenu;
+
+            ((FormContainer)MdiParent).menuItemLayoutSession_Click(sender, e);
         }
 
         private void btnStatusNext_Click(object sender, EventArgs e)
         {
             settings.LastHostname = tbStatusIPAddress.Text;
-            SaveSettings();
+            ((FormContainer)MdiParent).SaveSettings();
 
             // FIXME: Disabled for now
             //netUpload.SetCredentials(tbStatusIPAddressUpload.Text, tbStatusUploadUser.Text, tbStatusUploadPass.Text);
@@ -1996,7 +1794,7 @@ CREATE TABLE `spectrum` (
         private void btnPreferencesSave_Click(object sender, EventArgs e)
         {
             settings.SessionRootDirectory = tbPreferencesSessionDir.Text;
-            SaveSettings();
+            ((FormContainer)MdiParent).SaveSettings();
             tabs.SelectedTab = pageMenu;
         }
 
@@ -2146,7 +1944,7 @@ CREATE TABLE `spectrum` (
                         return;
                     }
                     settingsDetector.EnergyCurveCoefficients = session.Detector.EnergyCurveCoefficients;
-                    SaveSettings();
+                    ((FormContainer)MdiParent).SaveSettings();
                 }
             }
         }
@@ -2183,7 +1981,7 @@ CREATE TABLE `spectrum` (
             settings.LastUploadHostname = tbUploadHostname.Text.Trim();
             settings.LastUploadUsername = tbUploadUsername.Text.Trim();
             settings.LastUploadPassword = tbUploadPassword.Text;
-            SaveSettings();
+            ((FormContainer)MdiParent).SaveSettings();
 
             // FIXME: Disabled for now
             /*netUpload.SetCredentials(settings.LastUploadHostname, settings.LastUploadUsername, settings.LastUploadPassword);
@@ -2204,6 +2002,27 @@ CREATE TABLE `spectrum` (
         private void btnUploadClose_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageMenu;
+        }
+
+        public void Shutdown()
+        {
+            // FIXME: Disabled for now     
+            /*if (netUpload.IsRunning())
+            {
+                netUpload.RequestStop();
+                netUploadThread.Join();
+                Log.Info("net upload closed");
+            }*/
+
+            if (netService.IsRunning())
+            {
+                netService.RequestStop();
+                netThread.Join();
+                Log.Info("net service closed");
+            }
+
+            // Stop timer listening for network messages
+            timer.Stop();
         }
 
         private void menuItemChangeIPAddress_Click(object sender, EventArgs e)

@@ -26,11 +26,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 
 namespace crash
 {
     public partial class FormWaterfallLive : Form
     {
+        ILog Log = null;
         private Session session = null;
         private Bitmap bmpPane = null;
         private bool colorCeilInitialized = false;
@@ -50,10 +52,12 @@ namespace crash
         private FontFamily fontFamily = new FontFamily("Arial");
         private Font font = null;
 
-        public FormWaterfallLive(List<ROIData> roiList)
+        public FormWaterfallLive(ILog log, List<ROIData> roiList)
         {
             InitializeComponent();
+            
             DoubleBuffered = true;
+            Log = log;
             ROIList = roiList;            
         }        
 
@@ -61,10 +65,10 @@ namespace crash
         {            
             font = new Font(fontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
 
-            lblColorCeil.Text = "";
-            lblChannel.Text = "";
-            lblSessionId.Text = "";
-            lblEnergy.Text = "";
+            labelColorCeil.Text = "";
+            labelChannel.Text = "";
+            labelSpectrum.Text = "";
+            labelEnergy.Text = "";
 
             timer.Interval = 500;
             timer.Tick += timer_Tick;
@@ -270,7 +274,7 @@ namespace crash
 
         private void UpdateStats()
         {
-            lblColorCeil.Text = "Color ceiling: " + tbColorCeil.Value + " [" + tbColorCeil.Minimum + ", " + tbColorCeil.Maximum + "]";
+            labelColorCeil.Text = "Color ceiling: " + tbColorCeil.Value + " [" + tbColorCeil.Minimum + ", " + tbColorCeil.Maximum + "]";
         }
 
         public void SetSession(Session sess)
@@ -287,12 +291,6 @@ namespace crash
         {
             needRepaint = true;
         }        
-
-        private void FormWaterfall_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            Hide();
-        }
 
         private void pane_Paint(object sender, PaintEventArgs e)        
         {
@@ -432,24 +430,24 @@ namespace crash
 
             // Show channel
             int mouseChannel = leftX + e.X;
-            lblChannel.Text = "Ch: " + String.Format("{0:###0}", mouseChannel);
+            labelChannel.Text = "Ch: " + String.Format("{0:###0}", mouseChannel);
 
             // Show session index
             if(e.Y < session.Spectrums.Count - 1 && e.Y >= 0 && e.Y <= bmpPane.Height)
             {
                 int sessionId = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));
-                lblSessionId.Text = "Idx: " + sessionId.ToString();
+                labelSpectrum.Text = "Idx: " + sessionId.ToString();
             }
-            else lblSessionId.Text = "";
+            else labelSpectrum.Text = "";
 
             // Show energy
             if (session.IsLoaded && currentDetector != null)
             {
                 //double E = Utils.EnergyCalculationFunc((double)e.X);
                 double en = currentDetector.GetEnergy(e.X);
-                lblEnergy.Text = "En: " + String.Format("{0:#######0.0###}", en);
+                labelEnergy.Text = "En: " + String.Format("{0:#######0.0###}", en);
             }
-            else lblEnergy.Text = "";
+            else labelEnergy.Text = "";
         }
 
         private void btnUpAll_Click(object sender, EventArgs e)

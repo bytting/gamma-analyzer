@@ -39,7 +39,6 @@
             this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
             this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
             this.btnZoomToMax = new System.Windows.Forms.ToolStripButton();
-            this.status = new System.Windows.Forms.StatusStrip();
             this.gmnMap = new GMap.NET.WindowsForms.GMapControl();
             this.toolsMap.SuspendLayout();
             this.SuspendLayout();
@@ -60,7 +59,7 @@
             this.toolsMap.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolsMap.Location = new System.Drawing.Point(0, 0);
             this.toolsMap.Name = "toolsMap";
-            this.toolsMap.Size = new System.Drawing.Size(851, 25);
+            this.toolsMap.Size = new System.Drawing.Size(708, 25);
             this.toolsMap.TabIndex = 4;
             this.toolsMap.Text = "toolStrip1";
             // 
@@ -163,14 +162,6 @@
             this.btnZoomToMax.Text = "toolStripButton1";
             this.btnZoomToMax.Click += new System.EventHandler(this.btnZoomToMax_Click);
             // 
-            // status
-            // 
-            this.status.Location = new System.Drawing.Point(0, 633);
-            this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(851, 22);
-            this.status.TabIndex = 6;
-            this.status.Text = "statusStrip1";
-            // 
             // gmnMap
             // 
             this.gmnMap.Bearing = 0F;
@@ -193,7 +184,7 @@
             this.gmnMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gmnMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gmnMap.ShowTileGridLines = false;
-            this.gmnMap.Size = new System.Drawing.Size(851, 608);
+            this.gmnMap.Size = new System.Drawing.Size(708, 451);
             this.gmnMap.TabIndex = 7;
             this.gmnMap.Zoom = 10D;
             this.gmnMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.gmap_OnMarkerClick);
@@ -202,15 +193,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(851, 655);
+            this.ClientSize = new System.Drawing.Size(708, 476);
+            this.ControlBox = false;
             this.Controls.Add(this.gmnMap);
-            this.Controls.Add(this.status);
             this.Controls.Add(this.toolsMap);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(256, 128);
             this.Name = "FormMap";
-            this.Text = "Gamma Analyzer - Map";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMap_FormClosing);
+            this.Text = "Map";
             this.Load += new System.EventHandler(this.FormMap_Load);
             this.toolsMap.ResumeLayout(false);
             this.toolsMap.PerformLayout();
@@ -226,7 +217,6 @@
         private System.Windows.Forms.ToolStripComboBox cboxMapProvider;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox cboxMapMode;
-        private System.Windows.Forms.StatusStrip status;
         private System.Windows.Forms.ToolStripButton btnGoToLatLon;
         private System.Windows.Forms.ToolStripButton btnZoomToMax;
         private System.Windows.Forms.ToolStripButton btnZoomOut;

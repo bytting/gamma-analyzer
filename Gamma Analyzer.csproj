@@ -145,6 +145,12 @@
     <Compile Include="FormAskZeroPolynomial.Designer.cs">
       <DependentUpon>FormAskZeroPolynomial.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormContainer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormContainer.Designer.cs">
+      <DependentUpon>FormContainer.cs</DependentUpon>
+    </Compile>
     <Compile Include="NetService.cs" />
     <Compile Include="CustomEventArgs.cs" />
     <Compile Include="CustomEvents.cs" />
@@ -260,6 +266,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAskZeroPolynomial.resx">
       <DependentUpon>FormAskZeroPolynomial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormContainer.resx">
+      <DependentUpon>FormContainer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormEnergyCurve.resx">
       <DependentUpon>FormEnergyCurve.cs</DependentUpon>
