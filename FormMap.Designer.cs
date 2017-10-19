@@ -192,6 +192,7 @@
             this.MinimumSize = new System.Drawing.Size(256, 128);
             this.Name = "FormMap";
             this.Text = "Map";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMap_FormClosing);
             this.Load += new System.EventHandler(this.FormMap_Load);
             this.toolsMap.ResumeLayout(false);
             this.toolsMap.PerformLayout();

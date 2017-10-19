@@ -256,5 +256,10 @@ namespace crash
         {
             gmnMap.Zoom += 1.0;
         }
+
+        private void FormMap_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            gmnMap.Manager.CancelTileCaching();
+        }
     }    
 }
