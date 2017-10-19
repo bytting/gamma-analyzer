@@ -191,16 +191,7 @@ namespace crash
                 + Environment.NewLine + "Longitude: " + s.Longitude
                 + Environment.NewLine + "Altitude: " + s.Altitude;
             overlay.Markers.Add(marker);
-        }
-
-        private void btnGoToLatLon_Click(object sender, EventArgs e)
-        {
-            FormAskCoordinates form = new FormAskCoordinates();
-            if (form.ShowDialog() == DialogResult.Cancel)
-                return;            
-
-            gmnMap.Position = new GMap.NET.PointLatLng(form.Latitude, form.Longitude);
-        }                
+        }                        
 
         private void gmap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {            

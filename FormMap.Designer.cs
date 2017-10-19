@@ -34,7 +34,6 @@
             this.cboxMapProvider = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.cboxMapMode = new System.Windows.Forms.ToolStripComboBox();
-            this.btnGoToLatLon = new System.Windows.Forms.ToolStripButton();
             this.btnZoomToMin = new System.Windows.Forms.ToolStripButton();
             this.btnZoomIn = new System.Windows.Forms.ToolStripButton();
             this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
@@ -51,7 +50,6 @@
             this.cboxMapProvider,
             this.toolStripLabel1,
             this.cboxMapMode,
-            this.btnGoToLatLon,
             this.btnZoomToMin,
             this.btnZoomIn,
             this.btnZoomOut,
@@ -109,14 +107,6 @@
             this.cboxMapMode.Name = "cboxMapMode";
             this.cboxMapMode.Size = new System.Drawing.Size(105, 25);
             this.cboxMapMode.SelectedIndexChanged += new System.EventHandler(this.cboxMapMode_SelectedIndexChanged);
-            // 
-            // btnGoToLatLon
-            // 
-            this.btnGoToLatLon.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnGoToLatLon.Name = "btnGoToLatLon";
-            this.btnGoToLatLon.Size = new System.Drawing.Size(49, 22);
-            this.btnGoToLatLon.Text = "Go to...";
-            this.btnGoToLatLon.Click += new System.EventHandler(this.btnGoToLatLon_Click);
             // 
             // btnZoomToMin
             // 
@@ -217,7 +207,6 @@
         private System.Windows.Forms.ToolStripComboBox cboxMapProvider;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox cboxMapMode;
-        private System.Windows.Forms.ToolStripButton btnGoToLatLon;
         private System.Windows.Forms.ToolStripButton btnZoomToMax;
         private System.Windows.Forms.ToolStripButton btnZoomOut;
         private System.Windows.Forms.ToolStripButton btnZoomIn;

@@ -951,16 +951,14 @@ CREATE TABLE `spectrum` (
             Text = "Session - " + tabs.SelectedTab.Text;
             
             menuItemView.Visible = true;
-            menuItemSession.Visible = false;
-            menuItemCalibration.Visible = false;
+            menuItemSession.Visible = false;            
 
             if (tabs.SelectedTab == pageDetectors)
             {
             }
             else if (tabs.SelectedTab == pageSessions)
             {
-                menuItemSession.Visible = true;
-                menuItemCalibration.Visible = true;
+                menuItemSession.Visible = true;            
             }
             else if (tabs.SelectedTab == pageSetup)
             {
@@ -971,7 +969,6 @@ CREATE TABLE `spectrum` (
             else if (tabs.SelectedTab == pageMenu)
             {
                 menuItemView.Visible = false;
-                menuItemCalibration.Visible = false;
             }
         }             
 

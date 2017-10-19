@@ -45,6 +45,7 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(895, 25);
@@ -81,7 +82,7 @@
             this.MinimumSize = new System.Drawing.Size(256, 128);
             this.Name = "FormROIHist";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Gamma Analyzer - ROI History";
+            this.Text = "ROI History";
             this.Load += new System.EventHandler(this.FormROIHist_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

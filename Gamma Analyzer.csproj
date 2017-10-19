@@ -163,12 +163,6 @@
     <Compile Include="FormAddDetector.Designer.cs">
       <DependentUpon>FormAddDetector.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormAskCoordinates.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormAskCoordinates.Designer.cs">
-      <DependentUpon>FormAskCoordinates.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormAskDecimal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -254,9 +248,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAddDetector.resx">
       <DependentUpon>FormAddDetector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormAskCoordinates.resx">
-      <DependentUpon>FormAskCoordinates.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAskDecimal.resx">
       <DependentUpon>FormAskDecimal.cs</DependentUpon>
