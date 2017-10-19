@@ -85,7 +85,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(320, 212);
+            this.MinimumSize = new System.Drawing.Size(200, 100);
             this.Name = "FormLog";
             this.Text = "Gamma Analyzer - Log";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLog_FormClosing);

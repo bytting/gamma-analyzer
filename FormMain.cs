@@ -1669,7 +1669,8 @@ CREATE TABLE `spectrum` (
             formLog.Left = screenWidthThird * 2;
             formLog.Top = (screenHeightThird * 2) + screenHeightHalfThird;
             formLog.Width = screenWidthThird;
-            formLog.Height = screenHeightHalfThird;
+            //formLog.Height = screenHeightHalfThird;
+            formLog.Height = screenHeight - (formMap.Height + formROILive.Height);
 
             formWaterfallLive.Show();
             formWaterfallLive.WindowState = FormWindowState.Normal;

@@ -37,7 +37,7 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 480);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 519);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(895, 22);
             this.statusStrip1.TabIndex = 0;
@@ -63,21 +63,22 @@
             this.graph.ScrollMinX = 0D;
             this.graph.ScrollMinY = 0D;
             this.graph.ScrollMinY2 = 0D;
-            this.graph.Size = new System.Drawing.Size(895, 455);
+            this.graph.Size = new System.Drawing.Size(895, 494);
             this.graph.TabIndex = 2;
             this.graph.UseExtendedPrintDialog = true;
             // 
             // FormROIHist
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(895, 502);
+            this.ClientSize = new System.Drawing.Size(895, 541);
             this.Controls.Add(this.graph);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(256, 128);
             this.Name = "FormROIHist";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Gamma Analyzer - ROI History";

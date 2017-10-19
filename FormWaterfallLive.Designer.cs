@@ -33,6 +33,7 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnShow = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnROI = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemUseLogarithmicScale = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSubtractBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.pane = new System.Windows.Forms.Panel();
             this.paneMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -53,7 +54,6 @@
             this.btnDown = new System.Windows.Forms.Button();
             this.btnDownAll = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.menuItemUseLogarithmicScale = new System.Windows.Forms.ToolStripMenuItem();
             this.tools.SuspendLayout();
             this.paneMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).BeginInit();
@@ -92,6 +92,16 @@
             this.btnROI.Size = new System.Drawing.Size(216, 22);
             this.btnROI.Text = "Show &ROI lines";
             this.btnROI.CheckedChanged += new System.EventHandler(this.btnROI_CheckedChanged);
+            // 
+            // menuItemUseLogarithmicScale
+            // 
+            this.menuItemUseLogarithmicScale.Checked = true;
+            this.menuItemUseLogarithmicScale.CheckOnClick = true;
+            this.menuItemUseLogarithmicScale.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuItemUseLogarithmicScale.Name = "menuItemUseLogarithmicScale";
+            this.menuItemUseLogarithmicScale.Size = new System.Drawing.Size(216, 22);
+            this.menuItemUseLogarithmicScale.Text = "Use logarithmic color scale";
+            this.menuItemUseLogarithmicScale.CheckedChanged += new System.EventHandler(this.menuItemUseLogarithmicScale_CheckedChanged);
             // 
             // btnSubtractBackground
             // 
@@ -335,16 +345,6 @@
             this.panel3.Size = new System.Drawing.Size(28, 28);
             this.panel3.TabIndex = 5;
             // 
-            // menuItemUseLogarithmicScale
-            // 
-            this.menuItemUseLogarithmicScale.Checked = true;
-            this.menuItemUseLogarithmicScale.CheckOnClick = true;
-            this.menuItemUseLogarithmicScale.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.menuItemUseLogarithmicScale.Name = "menuItemUseLogarithmicScale";
-            this.menuItemUseLogarithmicScale.Size = new System.Drawing.Size(216, 22);
-            this.menuItemUseLogarithmicScale.Text = "Use logarithmic color scale";
-            this.menuItemUseLogarithmicScale.CheckedChanged += new System.EventHandler(this.menuItemUseLogarithmicScale_CheckedChanged);
-            // 
             // FormWaterfallLive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -355,7 +355,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.tools);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(500, 342);
+            this.MinimumSize = new System.Drawing.Size(256, 128);
             this.Name = "FormWaterfallLive";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Gamma Analyzer - Waterfall Live";

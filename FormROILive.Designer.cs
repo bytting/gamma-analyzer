@@ -197,7 +197,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.tools);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(320, 342);
+            this.MinimumSize = new System.Drawing.Size(256, 128);
             this.Name = "FormROILive";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Gamma Analyzer - ROI Live";
