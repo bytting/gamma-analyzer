@@ -28,14 +28,12 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
-using log4net;
 
 namespace crash
 {
     public partial class FormMap : Form
     {
-        ILog Log = null;
-
+        FormContainer parent = null;
         Session currentSession = null;
         GMapOverlay overlay = new GMapOverlay();
 
@@ -48,11 +46,11 @@ namespace crash
         private Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);
         private Bitmap bmpRed = new Bitmap(crash.Properties.Resources.marker_red_10);
 
-        public FormMap(ILog log)
+        public FormMap(FormContainer p)
         {
             InitializeComponent();
 
-            Log = log;
+            MdiParent = parent = p;
         }
 
         private void FormMap_Load(object sender, EventArgs e)

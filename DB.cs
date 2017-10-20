@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 using System.Globalization;
 using Newtonsoft.Json;
 using System.Data.SQLite;
-using log4net;
 
 namespace crash
 {
     public static class DB
     {
-        public static Session LoadSessionFile(ILog log, string sessionFile)
+        public static Session LoadSessionFile(string sessionFile)
         {
             Session s = new Session();
 

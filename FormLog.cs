@@ -26,9 +26,12 @@ namespace crash
 {
     public partial class FormLog : Form
     {
-        public FormLog()
+        private FormContainer parent = null;
+
+        public FormLog(FormContainer p)
         {
             InitializeComponent();
+            MdiParent = parent = p;
         }        
 
         public RichTextBox GetTextBox()

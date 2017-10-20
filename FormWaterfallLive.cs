@@ -20,19 +20,16 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using log4net;
 
 namespace crash
 {
     public partial class FormWaterfallLive : Form
     {
-        ILog Log = null;
+        private FormContainer parent = null;
         private Session session = null;
         private Bitmap bmpPane = null;
         private bool colorCeilInitialized = false;
@@ -52,12 +49,12 @@ namespace crash
         private FontFamily fontFamily = new FontFamily("Arial");
         private Font font = null;
 
-        public FormWaterfallLive(ILog log, List<ROIData> roiList)
+        public FormWaterfallLive(FormContainer p, List<ROIData> roiList)
         {
             InitializeComponent();
             
             DoubleBuffered = true;
-            Log = log;
+            MdiParent = parent = p;
             ROIList = roiList;            
         }        
 

@@ -31,15 +31,19 @@ using System.Threading;
 using System.Globalization;
 using System.Windows.Forms;
 using log4net;
+using log4net.Core;
+using log4net.Appender;
+using log4net.Layout;
+using log4net.Repository.Hierarchy;
 
 namespace crash
 {
     public partial class FormContainer : Form
     {
-        // Structure with application settings stored on disk
-        GASettings settings = new GASettings();
+        public ILog log = null;
 
-        static ILog Log = null;
+        // Structure with application settings stored on disk
+        GASettings settings = new GASettings();        
 
         // External forms
         FormMain formMain = null;
@@ -58,25 +62,20 @@ namespace crash
 
         private void FormContainer_Load(object sender, EventArgs e)
         {            
-            formLog = new FormLog();
-            formLog.MdiParent = this;
+            formLog = new FormLog(this);
             IntPtr iptr = formLog.Handle; // Force window handle creation
-            Log = Utils.GetLog(formLog.GetTextBox());            
+            log = GetLog(formLog.GetTextBox());            
 
             // Load settings
             LoadSettings();
 
-            formWaterfallLive = new FormWaterfallLive(Log, settings.ROIList);
-            formWaterfallLive.MdiParent = this;            
+            formWaterfallLive = new FormWaterfallLive(this, settings.ROIList);
 
-            formROILive = new FormROILive(Log, settings.ROIList);
-            formROILive.MdiParent = this;            
+            formROILive = new FormROILive(this, settings.ROIList);
 
-            formMap = new FormMap(Log);
-            formMap.MdiParent = this;            
+            formMap = new FormMap(this);
 
-            formMain = new FormMain(Log, settings, formMap, formWaterfallLive, formROILive);
-            formMain.MdiParent = this;            
+            formMain = new FormMain(this, settings, formMap, formWaterfallLive, formROILive);
 
             menuItemLayoutSession_Click(sender, e);
 
@@ -86,6 +85,40 @@ namespace crash
             formMap.SetSessionIndexEvent += formMain.SetSessionIndexEvent;
 
             statusLabel.Text = "";
+        }
+
+        private ILog GetLog(RichTextBox tb)
+        {
+            if (log != null)
+                throw new Exception("Log already initalized");
+                
+            Hierarchy hierarchy = (Hierarchy)LogManager.GetRepository();
+
+            PatternLayout patternLayout = new PatternLayout();
+            patternLayout.ConversionPattern = "%date [%thread] - %message%newline";
+            patternLayout.ActivateOptions();
+
+            RollingFileAppender roller = new RollingFileAppender();
+            roller.AppendToFile = false;
+            roller.File = GAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "gamma-analyzer.log";
+            roller.Layout = patternLayout;
+            roller.MaxSizeRollBackups = 3;
+            roller.MaximumFileSize = "10MB";
+            roller.RollingStyle = RollingFileAppender.RollingMode.Size;
+            roller.StaticLogFileName = true;
+            roller.ActivateOptions();
+            hierarchy.Root.AddAppender(roller);
+
+            TextBoxAppender textBoxAppender = new TextBoxAppender(tb);
+            textBoxAppender.Threshold = Level.All;
+            textBoxAppender.Layout = patternLayout;
+            textBoxAppender.ActivateOptions();
+            hierarchy.Root.AddAppender(textBoxAppender);
+
+            hierarchy.Root.Level = Level.All;
+            hierarchy.Configured = true;
+
+            return LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         }
 
         public void SaveSettings()
@@ -258,6 +291,24 @@ namespace crash
             formROILive.Close();
             formMap.Close();
             formLog.Close();
+        }
+    }
+
+    public class TextBoxAppender : AppenderSkeleton
+    {
+        private RichTextBox mTextBox;
+
+        public TextBoxAppender(RichTextBox tb)
+        {
+            mTextBox = tb;
+        }
+
+        protected override void Append(LoggingEvent loggingEvent)
+        {
+            mTextBox.BeginInvoke((MethodInvoker)delegate
+            {
+                mTextBox.Text = RenderLoggingEvent(loggingEvent) + mTextBox.Text;
+            });
         }
     }
 }
