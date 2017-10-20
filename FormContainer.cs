@@ -63,6 +63,7 @@ namespace crash
         private void FormContainer_Load(object sender, EventArgs e)
         {            
             formLog = new FormLog(this);
+            formLog.Left = -1000;
             IntPtr iptr = formLog.Handle; // Force window handle creation
             log = GetLog(formLog.GetTextBox());            
 
@@ -70,12 +71,13 @@ namespace crash
             LoadSettings();
 
             formWaterfallLive = new FormWaterfallLive(this, settings.ROIList);
-
+            formWaterfallLive.Left = -1000;
             formROILive = new FormROILive(this, settings.ROIList);
-
+            formROILive.Left = -1000;
             formMap = new FormMap(this);
-
+            formMap.Left = -1000;
             formMain = new FormMain(this, settings, formMap, formWaterfallLive, formROILive);
+            formMain.Left = -1000;
 
             menuItemLayoutSession_Click(sender, e);
 

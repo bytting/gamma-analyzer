@@ -55,6 +55,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(200, 100);
             this.Name = "FormLog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Log";
             this.ResumeLayout(false);
 

@@ -2544,7 +2544,7 @@
             this.MainMenuStrip = this.menu;
             this.MinimumSize = new System.Drawing.Size(480, 320);
             this.Name = "FormMain";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Session";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.menu.ResumeLayout(false);

@@ -1171,6 +1171,9 @@ CREATE TABLE `spectrum` (
             graphSession.RestoreScale(graphSession.GraphPane);
             graphSession.AxisChange();
             graphSession.Refresh();
+
+            lbNuclides.ClearSelected();
+            lbNuclides.Items.Clear();
         }        
 
         private void menuItemSessionInfo_Click(object sender, EventArgs e)

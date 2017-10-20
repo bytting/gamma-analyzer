@@ -167,7 +167,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(296, 134);
             this.Name = "FormROILive";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "ROI";
             this.Load += new System.EventHandler(this.FormROITableLive_Load);
             this.paneMenu.ResumeLayout(false);

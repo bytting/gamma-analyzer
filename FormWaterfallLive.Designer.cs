@@ -35,11 +35,6 @@
             this.btnROI = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemUseLogarithmicScale = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSubtractBackground = new System.Windows.Forms.ToolStripMenuItem();
-            this.pane = new System.Windows.Forms.Panel();
-            this.paneMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuItemUnselect = new System.Windows.Forms.ToolStripMenuItem();
-            this.tbColorCeil = new System.Windows.Forms.TrackBar();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.buttonDownAll = new System.Windows.Forms.ToolStripButton();
             this.buttonDown = new System.Windows.Forms.ToolStripButton();
             this.buttonUp = new System.Windows.Forms.ToolStripButton();
@@ -52,6 +47,11 @@
             this.labelSpectrum = new System.Windows.Forms.ToolStripLabel();
             this.labelChannel = new System.Windows.Forms.ToolStripLabel();
             this.labelEnergy = new System.Windows.Forms.ToolStripLabel();
+            this.pane = new System.Windows.Forms.Panel();
+            this.paneMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuItemUnselect = new System.Windows.Forms.ToolStripMenuItem();
+            this.tbColorCeil = new System.Windows.Forms.TrackBar();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.tools.SuspendLayout();
             this.paneMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).BeginInit();
@@ -119,55 +119,6 @@
             this.btnSubtractBackground.Size = new System.Drawing.Size(216, 22);
             this.btnSubtractBackground.Text = "Subtract &background";
             this.btnSubtractBackground.CheckedChanged += new System.EventHandler(this.btnSubtractBackground_CheckedChanged);
-            // 
-            // pane
-            // 
-            this.pane.BackColor = System.Drawing.Color.Blue;
-            this.pane.ContextMenuStrip = this.paneMenu;
-            this.pane.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pane.Location = new System.Drawing.Point(0, 25);
-            this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(819, 309);
-            this.pane.TabIndex = 2;
-            this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
-            this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
-            this.pane.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pane_MouseMove);
-            this.pane.Resize += new System.EventHandler(this.pane_Resize);
-            // 
-            // paneMenu
-            // 
-            this.paneMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemUnselect});
-            this.paneMenu.Name = "paneMenu";
-            this.paneMenu.Size = new System.Drawing.Size(120, 26);
-            // 
-            // menuItemUnselect
-            // 
-            this.menuItemUnselect.Name = "menuItemUnselect";
-            this.menuItemUnselect.Size = new System.Drawing.Size(119, 22);
-            this.menuItemUnselect.Text = "&Unselect";
-            this.menuItemUnselect.Click += new System.EventHandler(this.menuItemUnselect_Click);
-            // 
-            // tbColorCeil
-            // 
-            this.tbColorCeil.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbColorCeil.Location = new System.Drawing.Point(0, 0);
-            this.tbColorCeil.Name = "tbColorCeil";
-            this.tbColorCeil.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.tbColorCeil.Size = new System.Drawing.Size(25, 309);
-            this.tbColorCeil.TabIndex = 3;
-            this.tbColorCeil.Scroll += new System.EventHandler(this.tbColorCeil_Scroll);
-            this.tbColorCeil.ValueChanged += new System.EventHandler(this.tbColorCeil_ValueChanged);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.tbColorCeil);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(819, 25);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(25, 309);
-            this.panel2.TabIndex = 5;
             // 
             // buttonDownAll
             // 
@@ -281,6 +232,55 @@
             this.labelEnergy.Size = new System.Drawing.Size(84, 22);
             this.labelEnergy.Text = "<labelEnergy>";
             // 
+            // pane
+            // 
+            this.pane.BackColor = System.Drawing.Color.Blue;
+            this.pane.ContextMenuStrip = this.paneMenu;
+            this.pane.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pane.Location = new System.Drawing.Point(0, 25);
+            this.pane.Name = "pane";
+            this.pane.Size = new System.Drawing.Size(819, 309);
+            this.pane.TabIndex = 2;
+            this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
+            this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
+            this.pane.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pane_MouseMove);
+            this.pane.Resize += new System.EventHandler(this.pane_Resize);
+            // 
+            // paneMenu
+            // 
+            this.paneMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemUnselect});
+            this.paneMenu.Name = "paneMenu";
+            this.paneMenu.Size = new System.Drawing.Size(120, 26);
+            // 
+            // menuItemUnselect
+            // 
+            this.menuItemUnselect.Name = "menuItemUnselect";
+            this.menuItemUnselect.Size = new System.Drawing.Size(119, 22);
+            this.menuItemUnselect.Text = "&Unselect";
+            this.menuItemUnselect.Click += new System.EventHandler(this.menuItemUnselect_Click);
+            // 
+            // tbColorCeil
+            // 
+            this.tbColorCeil.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbColorCeil.Location = new System.Drawing.Point(0, 0);
+            this.tbColorCeil.Name = "tbColorCeil";
+            this.tbColorCeil.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.tbColorCeil.Size = new System.Drawing.Size(25, 309);
+            this.tbColorCeil.TabIndex = 3;
+            this.tbColorCeil.Scroll += new System.EventHandler(this.tbColorCeil_Scroll);
+            this.tbColorCeil.ValueChanged += new System.EventHandler(this.tbColorCeil_ValueChanged);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tbColorCeil);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel2.Location = new System.Drawing.Point(819, 25);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(25, 309);
+            this.panel2.TabIndex = 5;
+            // 
             // FormWaterfallLive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -294,7 +294,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(256, 128);
             this.Name = "FormWaterfallLive";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Waterfall";
             this.Load += new System.EventHandler(this.FormWaterfall_Load);
             this.ResizeBegin += new System.EventHandler(this.FormWaterfallLive_ResizeBegin);
