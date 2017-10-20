@@ -79,11 +79,6 @@ namespace crash
 
             menuItemLayoutSession_Click(sender, e);
 
-            // Set up custom events
-            formWaterfallLive.SetSessionIndexEvent += formMain.SetSessionIndexEvent;
-            formROILive.SetSessionIndexEvent += formMain.SetSessionIndexEvent;
-            formMap.SetSessionIndexEvent += formMain.SetSessionIndexEvent;
-
             statusLabel.Text = "";
         }
 
@@ -142,6 +137,49 @@ namespace crash
                 XmlSerializer x = new XmlSerializer(settings.GetType());
                 settings = x.Deserialize(sr) as GASettings;
             }
+        }
+
+        public void AddSpectrum(Spectrum s)
+        {
+            formMap.AddMarker(s);
+            formWaterfallLive.UpdatePane();
+            formROILive.UpdatePane();
+        }
+
+        public void ClearSession()
+        {
+            formMain.ClearSession();
+            formWaterfallLive.ClearSession();
+            formROILive.ClearSession();
+            formMap.ClearSession();
+        }
+
+        public void SetSelectedSessionIndex(int index)
+        {
+            formMain.SetSelectedSessionIndex(index);
+            formWaterfallLive.SetSelectedSessionIndex(index);
+            formMap.SetSelectedSessionIndex(index);
+            formROILive.SetSelectedSessionIndex(index);
+        }
+
+        public void SetSelectedSessionIndices(int index1, int index2)
+        {
+            formMain.SetSelectedSessionIndices(index1, index2);
+            formWaterfallLive.SetSelectedSessionIndices(index1, index2);
+            formMap.SetSelectedSessionIndices(index1, index2);
+            formROILive.SetSelectedSessionIndices(index1, index2);
+        }
+
+        public void SetSession(Session s)
+        {
+            formMain.SetSession(s);
+            formWaterfallLive.SetSession(s);
+            formWaterfallLive.SetDetector(s.Detector);
+            formROILive.SetSession(s);
+            formMap.SetSession(s);
+            
+            formWaterfallLive.UpdatePane();
+            formROILive.UpdatePane();
         }
 
         private void menuItemFileExit_Click(object sender, EventArgs e)

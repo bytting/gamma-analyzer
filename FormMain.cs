@@ -32,18 +32,13 @@ using Newtonsoft.Json;
 using ZedGraph;
 using MathNet.Numerics;
 using System.Data.SQLite;
-//using log4net;
 
 namespace crash
 {
     public partial class FormMain : Form
     {        
         FormContainer parent = null;
-        GASettings settings = null;
-
-        FormMap formMap = null;
-        FormWaterfallLive formWaterfallLive = null;
-        FormROILive formROILive = null;
+        GASettings settings = null;        
 
         // Concurrent queue used to pass messages to networking thread
         static ConcurrentQueue<burn.ProtocolMessage> sendq = null;
@@ -74,9 +69,6 @@ namespace crash
 
         // Livetime scale factor for currently loaded background
         float bkgScale = 1f;
-
-        // Flag used for tracking multi selection of spectrums
-        bool selectionRun = false;
 
         // Structure containing loaded nuclide library
         List<NuclideInfo> NuclideLibrary = new List<NuclideInfo>();
@@ -115,9 +107,9 @@ namespace crash
             MdiParent = parent = p;
             settings = gaSettings;
 
-            formMap = fMap;
+            /*formMap = fMap;
             formWaterfallLive = fWaterfallLive;
-            formROILive = fROILive;
+            formROILive = fROILive;*/
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -558,9 +550,8 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                             }
 
                             // Notify external forms about new spectrum
-                            formMap.AddMarker(spec);
-                            formWaterfallLive.UpdatePane();
-                            formROILive.UpdatePane();
+
+                            parent.AddSpectrum(spec);
                         }
 
                         // FIXME: Disabled for now
@@ -636,48 +627,109 @@ CREATE TABLE `spectrum` (
             connection.Close();
         }
 
-        public void SetSessionIndexEvent(object sender, SetSessionIndexEventArgs e)
+        public void SetSelectedSessionIndex(int index)
         {
-            // An external form has changed the spectrum selection, update UI
-            if (e.StartIndex == -1 && e.EndIndex == -1)
-            {
-                lbSession.ClearSelected();
-                return;
-            }
-
-            if (e.StartIndex >= lbSession.Items.Count || e.EndIndex >= lbSession.Items.Count || e.StartIndex < 0 || e.EndIndex < 0)
+            int idx = lbSession.FindStringExact(session.Name + " - " + index);
+            if (idx == -1)
                 return;
 
+            ClearSpectrumInfo();
+
+            lbSession.SelectedIndexChanged -= lbSession_SelectedIndexChanged;
             lbSession.ClearSelected();
+            lbSession.SetSelected(idx, true);
+            lbSession.SelectedIndexChanged += lbSession_SelectedIndexChanged;
 
-            if (e.StartIndex < e.EndIndex)
+            // Populate session UI with one spectrum
+            bkgScale = 1;
+
+            Spectrum s = lbSession.Items[idx] as Spectrum;
+
+            ShowSpectrum(s.SessionName + " - " + s.SessionIndex, s.Channels.ToArray(), s.MaxCount, s.MinCount);
+            lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
+            lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
+            lblSession.Text = "Session: " + s.SessionName;
+            lblSessionDetector.Text = "Det." + session.Detector.Serialnumber + " (" + session.Detector.TypeName + ")";
+            lblIndex.Text = "Index: " + s.SessionIndex;
+            lblLatitude.Text = "Latitude: " + s.Latitude.ToString("#00.0000000") + " ±" + s.LatitudeError.ToString("###0.0#");
+            lblLongitude.Text = "Longitude: " + s.Longitude.ToString("#00.0000000") + " ±" + s.LongitudeError.ToString("###0.0#");
+            lblAltitude.Text = "Altitude: " + s.Altitude.ToString("#####0.0#") + " ±" + s.AltitudeError.ToString("###0.0#");
+            lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s.GpsTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") : s.GpsTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            lblMaxCount.Text = "Max count: " + s.MaxCount;
+            lblMinCount.Text = "Min count: " + s.MinCount;
+            lblTotalCount.Text = "Total count: " + s.TotalCount;
+            if (s.Doserate == 0.0)
+                lblDoserate.Text = "";
+            else lblDoserate.Text = "Doserate (μSv/h): " + String.Format("{0:###0.0##}", s.Doserate / 1000.0);
+        }
+
+        public void SetSelectedSessionIndices(int index1, int index2)
+        {
+            int idx1 = lbSession.FindStringExact(session.Name + " - " + index1);
+            int idx2 = lbSession.FindStringExact(session.Name + " - " + index2);
+            if (idx1 == -1 || idx2 == -1)
+                return;            
+
+            if (idx1 > idx2)
             {
-                int tmp = e.StartIndex;
-                e.StartIndex = e.EndIndex;
-                e.EndIndex = tmp;
+                int tmp = idx1;
+                idx1 = idx2;
+                idx2 = tmp;
             }
 
-            if (e.StartIndex == e.EndIndex)
-            {
-                int idx1 = lbSession.FindStringExact(session.Name + " - " + e.StartIndex.ToString());
-                if (idx1 != ListBox.NoMatches)
-                    lbSession.SetSelected(idx1, true);
-            }
-            else
-            {
-                int idx1 = lbSession.FindStringExact(session.Name + " - " + e.StartIndex.ToString());
-                int idx2 = lbSession.FindStringExact(session.Name + " - " + e.EndIndex.ToString());
-                for (int i = idx1; i < idx2; i++)
-                {
-                    if (i == idx2 - 1)
-                        selectionRun = false;
+            ClearSpectrumInfo();
 
-                    lbSession.SetSelected(i, true);
+            lbSession.SelectedIndexChanged -= lbSession_SelectedIndexChanged;
+            lbSession.ClearSelected();
+            for (int i = idx1; i <= idx2; i++)
+                lbSession.SetSelected(i, true);
+            lbSession.SelectedIndexChanged += lbSession_SelectedIndexChanged;
 
-                    if (i == idx1)
-                        selectionRun = true;
-                }
+            bkgScale = (float)lbSession.SelectedIndices.Count; // Store scalefactor for background livetime
+
+            Spectrum s1 = (Spectrum)lbSession.Items[idx2];
+            Spectrum s2 = (Spectrum)lbSession.Items[idx1];
+
+            double realTime = 0;
+            double liveTime = 0;
+
+            // Merge spectrums
+            string title = "Merged: " + s1.SessionIndex + " - " + s2.SessionIndex;
+            float[] chans = new float[(int)s1.NumChannels];
+            float maxCnt = s1.MaxCount, minCnt = s1.MinCount;
+            float totCnt = 0;
+            for (int i = 0; i < lbSession.SelectedItems.Count; i++)
+            {
+                Spectrum s = (Spectrum)lbSession.SelectedItems[i];
+                for (int j = 0; j < s.NumChannels; j++)
+                    chans[j] += s.Channels[j];
+
+                if (s.MaxCount > maxCnt)
+                    maxCnt = s.MaxCount;
+                if (s.MinCount < minCnt)
+                    minCnt = s.MinCount;
+
+                totCnt += s.TotalCount;
+
+                realTime += ((double)s.Realtime) / 1000000.0;
+                liveTime += ((double)s.Livetime) / 1000000.0;
             }
+
+            // Populate controls
+            ShowSpectrum(title, chans, maxCnt, minCnt);
+
+            lblRealtime.Text = "Realtime:" + realTime;
+            lblLivetime.Text = "Livetime:" + liveTime;
+            lblSession.Text = "Session: " + s1.SessionName;
+            lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;
+            lblLatitude.Text = "Latitude: " + s1.Latitude.ToString("#00.0000000") + " ±" + s2.LatitudeError.ToString("###0.0#");
+            lblLongitude.Text = "Longitude: " + s1.Longitude.ToString("#00.0000000") + " ±" + s2.LongitudeError.ToString("###0.0#");
+            lblAltitude.Text = "Altitude: " + s1.Altitude.ToString("#####0.0#") + " ±" + s2.AltitudeError.ToString("###0.0#");
+            lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s1.GpsTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") : s1.GpsTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            lblMaxCount.Text = "Max count: " + maxCnt;
+            lblMinCount.Text = "Min count: " + minCnt;
+            lblTotalCount.Text = "Total count: " + totCnt;
+            lblDoserate.Text = "";
         }
 
         private void ClearSpectrumInfo()
@@ -697,6 +749,10 @@ CREATE TABLE `spectrum` (
             lblDoserate.Text = "";
             lblSessionChannel.Text = "";
             lblSessionEnergy.Text = "";
+
+            // Reset nuclide UI
+            graphSession.GraphPane.GraphObjList.Clear();
+            lbNuclides.Items.Clear();
         }
 
         private void ClearSetup()
@@ -707,21 +763,13 @@ CREATE TABLE `spectrum` (
             graphSetup.Invalidate();
         }
 
-        private void ClearSession()
+        public void ClearSession()
         {
             // Clear currently loaded session
             lbSession.Items.Clear();
             lblSessionDetector.Text = "";
             lblBackground.Text = "";
-            graphSession.GraphPane.CurveList.Clear();
-            graphSession.GraphPane.GraphObjList.Clear();
-            graphSession.Invalidate();
-            ClearSpectrumInfo();
-
-            // Notify external forms about clearing session
-            formWaterfallLive.ClearSession();
-            formROILive.ClearSession();
-            formMap.ClearSession();
+            ClearSpectrumInfo();            
 
             if (session != null)
                 session.Clear();
@@ -797,6 +845,10 @@ CREATE TABLE `spectrum` (
             pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
             pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
             pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+
+            graphSession.RestoreScale(pane);
+            graphSession.AxisChange();
+            graphSession.Refresh();
         }
 
         private void GetGraphPointFromMousePos(int posX, int posY, ZedGraphControl graph, out int x, out int y)
@@ -984,113 +1036,20 @@ CREATE TABLE `spectrum` (
             // Update session UI
 
             if (lbSession.SelectedItems.Count < 1)
-            {
-                // Clear UI
-                formWaterfallLive.SetSelectedSessionIndex(-1);
-                formMap.SetSelectedSessionIndex(-1);
-                formROILive.SetSelectedSessionIndex(-1);
-                return;
+            {                
+                parent.SetSelectedSessionIndex(-1);
             }                
             else if (lbSession.SelectedItems.Count == 1)
-            {            
-                // Populate session UI with one spectrum
-                bkgScale = 1;
+            {
                 Spectrum s = lbSession.SelectedItem as Spectrum;
-                ShowSpectrum(s.SessionName + " - " + s.SessionIndex.ToString(), s.Channels.ToArray(), s.MaxCount, s.MinCount);
-                lblRealtime.Text = "Realtime:" + ((double)s.Realtime) / 1000000.0;
-                lblLivetime.Text = "Livetime:" + ((double)s.Livetime) / 1000000.0;
-                lblSession.Text = "Session: " + s.SessionName;
-                lblSessionDetector.Text = "Det." + session.Detector.Serialnumber + " (" + session.Detector.TypeName + ")";
-                lblIndex.Text = "Index: " + s.SessionIndex;
-                lblLatitude.Text = "Latitude: " + s.Latitude.ToString("#00.0000000") + " ±" + s.LatitudeError.ToString("###0.0#");
-                lblLongitude.Text = "Longitude: " + s.Longitude.ToString("#00.0000000") + " ±" + s.LongitudeError.ToString("###0.0#");
-                lblAltitude.Text = "Altitude: " + s.Altitude.ToString("#####0.0#") + " ±" + s.AltitudeError.ToString("###0.0#");
-                lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s.GpsTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") : s.GpsTime.ToString("yyyy-MM-dd HH:mm:ss"));
-                lblMaxCount.Text = "Max count: " + s.MaxCount;
-                lblMinCount.Text = "Min count: " + s.MinCount;
-                lblTotalCount.Text = "Total count: " + s.TotalCount;                
-                if(s.Doserate == 0.0)
-                    lblDoserate.Text = "";
-                else lblDoserate.Text = "Doserate (μSv/h): " + String.Format("{0:###0.0##}", s.Doserate / 1000.0);
-
-                // Inform other forms of new spectrum selection
-                if (formWaterfallLive.Visible)
-                    formWaterfallLive.SetSelectedSessionIndex(s.SessionIndex);
-                if (formMap.Visible)
-                    formMap.SetSelectedSessionIndex(s.SessionIndex);
-                if (formROILive.Visible)
-                    formROILive.SetSelectedSessionIndex(s.SessionIndex);
+                parent.SetSelectedSessionIndex(s.SessionIndex);
             }
             else
-            {
-                // Populate session UI with multiple spectrums
-                if (selectionRun == true)
-                    return;
-
-                bkgScale = (float)lbSession.SelectedIndices.Count; // Store scalefactor for background livetime
-
-                Spectrum s1 = (Spectrum)lbSession.Items[lbSession.SelectedIndices[lbSession.SelectedIndices.Count - 1]];
-                Spectrum s2 = (Spectrum)lbSession.Items[lbSession.SelectedIndices[0]];
-
-                double realTime = 0;
-                double liveTime = 0;
-
-                // Merge spectrums
-                string title = "Merged: " + s1.SessionIndex + " - " + s2.SessionIndex;
-                float[] chans = new float[(int)s1.NumChannels];
-                float maxCnt = s1.MaxCount, minCnt = s1.MinCount;
-                float totCnt = 0;
-                for(int i=0; i<lbSession.SelectedItems.Count; i++)
-                {
-                    Spectrum s = (Spectrum)lbSession.SelectedItems[i];
-                    for (int j = 0; j < s.NumChannels; j++)
-                        chans[j] += s.Channels[j];
-
-                    if (s.MaxCount > maxCnt)
-                        maxCnt = s.MaxCount;
-                    if (s.MinCount < minCnt)
-                        minCnt = s.MinCount;
-
-                    totCnt += s.TotalCount;
-
-                    realTime += ((double)s.Realtime) / 1000000.0;
-                    liveTime += ((double)s.Livetime) / 1000000.0;
-                }
-
-                // Populate controls
-                ShowSpectrum(title, chans, maxCnt, minCnt);
-
-                lblRealtime.Text = "Realtime:" + realTime;
-                lblLivetime.Text = "Livetime:" + liveTime;
-                lblSession.Text = "Session: " + s1.SessionName;
-                lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;
-                lblLatitude.Text = "Latitude: " + s1.Latitude.ToString("#00.0000000") + " ±" + s2.LatitudeError.ToString("###0.0#");
-                lblLongitude.Text = "Longitude: " + s1.Longitude.ToString("#00.0000000") + " ±" + s2.LongitudeError.ToString("###0.0#");
-                lblAltitude.Text = "Altitude: " + s1.Altitude.ToString("#####0.0#") + " ±" + s2.AltitudeError.ToString("###0.0#");
-                lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s1.GpsTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") : s1.GpsTime.ToString("yyyy-MM-dd HH:mm:ss"));
-                lblMaxCount.Text = "Max count: " + maxCnt;
-                lblMinCount.Text = "Min count: " + minCnt;
-                lblTotalCount.Text = "Total count: " + totCnt;
-                lblDoserate.Text = "";
-
-                // Notify external forms about new spectrum selection
-                if (formWaterfallLive.Visible)
-                    formWaterfallLive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
-                if (formMap.Visible)
-                    formMap.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
-                if (formROILive.Visible)
-                    formROILive.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
+            {                
+                Spectrum s1 = lbSession.SelectedItems[lbSession.SelectedIndices.Count - 1] as Spectrum;
+                Spectrum s2 = lbSession.SelectedItems[0] as Spectrum;
+                parent.SetSelectedSessionIndices(s1.SessionIndex, s2.SessionIndex);
             }
-
-            // Update session graph            
-            GraphPane pane = graphSession.GraphPane;
-            pane.GraphObjList.Clear();
-            graphSession.RestoreScale(pane);
-            graphSession.AxisChange();
-            graphSession.Refresh();            
-
-            // Reset nuclide UI
-            lbNuclides.Items.Clear();
         }
 
         private void menuItemLoadSession_Click(object sender, EventArgs e)
@@ -1101,7 +1060,7 @@ CREATE TABLE `spectrum` (
             if (openSessionDialog.ShowDialog() != DialogResult.OK)
                 return;
             
-            ClearSession();
+            parent.ClearSession();
 
             try
             {
@@ -1119,30 +1078,22 @@ CREATE TABLE `spectrum` (
             lblSession.Text = session.Name;
             lblComment.Text = session.Comment;
 
-            // Inform other forms
-            formWaterfallLive.SetSession(session);
-            formWaterfallLive.SetDetector(session.Detector);
-            formROILive.SetSession(session);
-            formMap.SetSession(session);
-
-            // Add spectrums to map
-            foreach(Spectrum s in session.Spectrums)
-            {
-                lbSession.Items.Insert(0, s);
-                formMap.AddMarker(s);
-            }
-
-            // Update plots
-            formWaterfallLive.UpdatePane();
-            formROILive.UpdatePane();
-
-            lblSession.Text = "Session: " + session.Name;
+            parent.SetSession(session);
+                        
             parent.log.Info("session " + session.Name + " loaded");
 
             burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
             msg.Params.Add("command", "dump_session");
             sendMsg(msg);
-        }        
+        }
+
+        public void SetSession(Session s)
+        {
+            foreach (Spectrum spec in s.Spectrums)            
+                lbSession.Items.Insert(0, spec);
+
+            lblSession.Text = "Session: " + session.Name;
+        }
 
         private void menuItemLoadBackgroundSession_Click(object sender, EventArgs e)
         {
@@ -1236,7 +1187,7 @@ CREATE TABLE `spectrum` (
 
         private void menuItemClearSession_Click(object sender, EventArgs e)
         {
-            ClearSession();
+            parent.ClearSession();
         }
 
         private void menuItemClearBackground_Click(object sender, EventArgs e)
@@ -1362,6 +1313,11 @@ CREATE TABLE `spectrum` (
             GetGraphPointFromMousePos(e.X, e.Y, graphSession, out x, out y);
 
             double E = session.Detector.GetEnergy(x);
+            if(E == 0.0)
+            {
+                parent.log.Warn("Unable to get energy for detector " + session.Detector.Serialnumber);
+                return;
+            }
 
             GraphPane pane = graphSession.GraphPane;
             pane.GraphObjList.Clear();            
@@ -1664,7 +1620,7 @@ CREATE TABLE `spectrum` (
             string comment = tbNewComment.Text.Trim();
             string sessionName = String.Format("{0:yyyyMMdd_HHmmss}", DateTime.Now);
 
-            ClearSession();
+            parent.ClearSession();
 
             try
             {
@@ -1697,14 +1653,7 @@ CREATE TABLE `spectrum` (
             lblSession.Text = session.Name;
             lblComment.Text = session.Comment;
 
-            // Notify external forms about new session
-            formWaterfallLive.SetSession(session);
-            formWaterfallLive.SetDetector(session.Detector);
-            formROILive.SetSession(session);
-            formMap.SetSession(session);
-
-            formWaterfallLive.UpdatePane();
-            formROILive.UpdatePane();
+            parent.SetSession(session);
 
             tabs.SelectedTab = pageSessions;
 

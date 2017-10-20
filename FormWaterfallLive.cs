@@ -40,8 +40,6 @@ namespace crash
 
         private int SelectedSessionIndex1 = -1;
         private int SelectedSessionIndex2 = -1;
-        public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
-        public event SetSessionIndexEventHandler SetSessionIndexEvent;
 
         private bool resizeing = false;
         private int leftX = 1, topY = 0;
@@ -329,19 +327,12 @@ namespace crash
             if (e.Y < 0 || e.Y >= bmpPane.Height)
                 return;
 
-            if (e.Button == MouseButtons.Left && SetSessionIndexEvent != null)
-            {
-                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
-                if (ModifierKeys.HasFlag(Keys.Shift) && SelectedSessionIndex1 != -1)
-                {                    
-                    args.StartIndex = SelectedSessionIndex1;
-                    args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));                
-                }
-                else
-                {                    
-                    args.StartIndex = args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));                    
-                }
-                SetSessionIndexEvent(this, args);
+            if (e.Button == MouseButtons.Left)
+            {                
+                if (ModifierKeys.HasFlag(Keys.Shift) && SelectedSessionIndex1 != -1)                
+                    parent.SetSelectedSessionIndices(SelectedSessionIndex1, Utils.ToArgb(bmpPane.GetPixel(0, e.Y)));                
+                else                
+                    parent.SetSelectedSessionIndex(Utils.ToArgb(bmpPane.GetPixel(0, e.Y)));
             }            
         }
 
@@ -514,12 +505,7 @@ namespace crash
 
         private void menuItemUnselect_Click(object sender, EventArgs e)
         {
-            if (SetSessionIndexEvent != null)
-            {
-                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
-                args.StartIndex = args.EndIndex = -1;
-                SetSessionIndexEvent(this, args);
-            }
+            parent.SetSelectedSessionIndex(-1);
         }
 
         private void menuItemUseLogarithmicScale_CheckedChanged(object sender, EventArgs e)

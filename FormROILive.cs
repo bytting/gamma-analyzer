@@ -37,9 +37,6 @@ namespace crash
         private Bitmap bmpPane = null;        
         private int SelectedSessionIndex1 = -1;
         private int SelectedSessionIndex2 = -1;
-
-        public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
-        public event SetSessionIndexEventHandler SetSessionIndexEvent;        
         
         private int firstSpectrum = 0;
 
@@ -189,20 +186,12 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            if (e.Button == MouseButtons.Left && SetSessionIndexEvent != null)
-            {                
-                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
-                if (ModifierKeys.HasFlag(Keys.Shift) && SelectedSessionIndex1 != -1)
-                {
-                    args.StartIndex = SelectedSessionIndex1;
-                    args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1));
-                }
-                else
-                {
-                    args.StartIndex = args.EndIndex = Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1));
-                }
-
-                SetSessionIndexEvent(this, args);            
+            if (e.Button == MouseButtons.Left)
+            {                                
+                if (ModifierKeys.HasFlag(Keys.Shift) && SelectedSessionIndex1 != -1)                
+                    parent.SetSelectedSessionIndices(SelectedSessionIndex1, Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1)));                
+                else                
+                    parent.SetSelectedSessionIndex(Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1)));                
             }
         }
 
@@ -300,12 +289,7 @@ namespace crash
 
         private void menuItemUnselect_Click(object sender, EventArgs e)
         {
-            if (SetSessionIndexEvent != null)
-            {
-                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
-                args.StartIndex = args.EndIndex = -1;
-                SetSessionIndexEvent(this, args);
-            }
+            parent.SetSelectedSessionIndex(-1);
         }        
     }    
 }

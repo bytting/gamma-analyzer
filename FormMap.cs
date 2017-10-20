@@ -37,9 +37,6 @@ namespace crash
         Session currentSession = null;
         GMapOverlay overlay = new GMapOverlay();
 
-        public delegate void SetSessionIndexEventHandler(object sender, SetSessionIndexEventArgs e);
-        public event SetSessionIndexEventHandler SetSessionIndexEvent;
-
         private Bitmap bmpBlue = new Bitmap(crash.Properties.Resources.marker_blue_10);
         private Bitmap bmpGreen = new Bitmap(crash.Properties.Resources.marker_green_10);
         private Bitmap bmpYellow = new Bitmap(crash.Properties.Resources.marker_yellow_10);
@@ -158,6 +155,9 @@ namespace crash
             currentSession = sess;
             RemoveAllMarkers();
 
+            foreach(Spectrum spec in currentSession.Spectrums)            
+                AddMarker(spec);            
+
             if(currentSession.Spectrums.Count > 0)
                 gmnMap.Position = new GMap.NET.PointLatLng(currentSession.Spectrums[0].Latitude, currentSession.Spectrums[0].Longitude);
         }
@@ -192,14 +192,9 @@ namespace crash
         }                        
 
         private void gmap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
-        {            
-            if (SetSessionIndexEvent != null)
-            {
-                SetSessionIndexEventArgs args = new SetSessionIndexEventArgs();
-                Spectrum s = (Spectrum)item.Tag;
-                args.StartIndex = args.EndIndex =  s.SessionIndex;
-                SetSessionIndexEvent(this, args);
-            }
+        {                                    
+            Spectrum s = (Spectrum)item.Tag;
+            parent.SetSelectedSessionIndex(s.SessionIndex);
         }
 
         public void SetSelectedSessionIndex(int index)
@@ -217,7 +212,6 @@ namespace crash
 
         public void SetSelectedSessionIndices(int index1, int index2)
         {
-            // FIXME
             foreach (GMarkerGoogle m in overlay.Markers)
             {
                 Spectrum s = (Spectrum)m.Tag;

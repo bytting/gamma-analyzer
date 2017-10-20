@@ -152,7 +152,6 @@
       <DependentUpon>FormContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="NetService.cs" />
-    <Compile Include="CustomEventArgs.cs" />
     <Compile Include="CustomEvents.cs" />
     <Compile Include="Detector.cs" />
     <Compile Include="EnergyComp.cs" />
