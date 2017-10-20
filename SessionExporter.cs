@@ -77,6 +77,8 @@ namespace crash
             if (!Directory.Exists(sessionPath))
                 Directory.CreateDirectory(sessionPath);
 
+            byte[] footerData = new byte[510]; // Dummy data for footer
+
             foreach (Spectrum s in session.Spectrums)
             {
                 string filename = sessionPath + Path.DirectorySeparatorChar + s.SessionIndex.ToString() + ".chn";
@@ -86,6 +88,7 @@ namespace crash
                     string timeStr = s.GpsTime.ToString("HHmm");
                     string secStr = s.GpsTime.ToString("ss");
 
+                    // Write CHN header
                     writer.Write(Convert.ToInt16(-1)); // signature
                     writer.Write(Convert.ToInt16(1)); // detector id
                     writer.Write(Convert.ToInt16(0)); // segment
@@ -101,9 +104,13 @@ namespace crash
                     writer.Write(Convert.ToInt16(0)); // channel offset
                     writer.Write(Convert.ToInt16(s.NumChannels)); // number of channels
 
-                    // Channel counts
+                    // Write channels
                     foreach (float ch in s.Channels)
                         writer.Write(Convert.ToInt32(ch));
+
+                    // Write CHN footer
+                    writer.Write(Convert.ToInt16(-102)); // footer signature                    
+                    writer.Write(footerData); // No relevant data available, fill with zero
                 }
             }            
         }
