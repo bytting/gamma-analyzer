@@ -14,7 +14,7 @@ namespace crash
     {
         public static Session LoadSessionFile(ILog log, string sessionFile)
         {
-            Session s = new Session(log);
+            Session s = new Session();
 
             // Deserialize session object
             SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");

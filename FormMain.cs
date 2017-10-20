@@ -517,7 +517,14 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                         // Add spectrum to session
                         if (session != null && session.IsLoaded && session.Name == spec.SessionName)
                         {
-                            spec.CalculateDoserate(session.Detector, session.GEScriptFunc);                            
+                            try
+                            {
+                                spec.CalculateDoserate(session.Detector, session.GEScriptFunc);
+                            }
+                            catch(Exception ex)
+                            {
+                                Log.Warn(ex.Message, ex);
+                            }
 
                             session.Add(spec);
 
@@ -643,7 +650,7 @@ CREATE TABLE `spectrum` (
 
             lbSession.ClearSelected();
 
-            if (e.StartIndex < e.EndIndex) // Bizarre, but true
+            if (e.StartIndex < e.EndIndex)
             {
                 int tmp = e.StartIndex;
                 e.StartIndex = e.EndIndex;
@@ -1641,6 +1648,24 @@ CREATE TABLE `spectrum` (
             string comment = tbNewComment.Text.Trim();
             string sessionName = String.Format("{0:yyyyMMdd_HHmmss}", DateTime.Now);
 
+            ClearSession();
+
+            try
+            {
+                string sessionFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + sessionName + ".db";
+                session = new Session(ip, sessionFile, sessionName, comment, livetime, selectedDetector);
+
+                // Create session database
+                CreateSessionFile(session);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+                return;
+            }
+
+            Log.Info("Sending start_session");
+
             burn.ProtocolMessage msg = new burn.ProtocolMessage(ip);
             msg.Params.Add("command", "start_session");
             msg.Params.Add("session_name", sessionName);
@@ -1650,15 +1675,6 @@ CREATE TABLE `spectrum` (
             sendMsg(msg);
 
             previewSession = false;
-            Log.Info("Sending start_session");
-
-            ClearSession();
-            
-            string sessionFile = settings.SessionRootDirectory + Path.DirectorySeparatorChar + sessionName + ".db";            
-            session = new Session(Log, ip, sessionFile, sessionName, comment, livetime, selectedDetector);
-
-            // Create session database
-            CreateSessionFile(session);
 
             lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
 

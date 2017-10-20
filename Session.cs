@@ -20,7 +20,6 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using log4net;
 using NLua;
 
 namespace crash
@@ -28,8 +27,6 @@ namespace crash
     // Class to store a session
     public class Session
     {
-        ILog Log = null;
-
         // Global Lua object
         private static Lua LuaEngine = new Lua();
 
@@ -81,16 +78,14 @@ namespace crash
         // Empty state for this session
         public bool IsEmpty { get { return Spectrums.Count == 0; } }
 
-        public Session(ILog log)
+        public Session()
         {
-            Log = log;
             Spectrums = new List<Spectrum>();
             Clear();            
         }
 
-        public Session(ILog log, string ip, string sessionFile, string name, string comment, float livetime, Detector det)
+        public Session(string ip, string sessionFile, string name, string comment, float livetime, Detector det)
         {
-            Log = log;
             Spectrums = new List<Spectrum>();
             Clear();
 
@@ -142,21 +137,13 @@ namespace crash
 
             string geScriptFile = GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + mDetector.GEScript;
 
-            if (!File.Exists(geScriptFile))
-                return false;
+            if (!File.Exists(geScriptFile))            
+                throw new Exception("GE script does not exist: " + geScriptFile);            
 
-            GEScriptFunc = null;
-
-            try
-            {
-                string script = File.ReadAllText(geScriptFile);
-                LuaEngine.DoString(script);
-                GEScriptFunc = LuaEngine["gevalue"] as LuaFunction;
-            }
-            catch(Exception ex)
-            {
-                Log.Error("LoadGEScriptFunc: Loading GE script failed", ex);
-            }
+            GEScriptFunc = null;            
+            string script = File.ReadAllText(geScriptFile);
+            LuaEngine.DoString(script);
+            GEScriptFunc = LuaEngine["gevalue"] as LuaFunction;
             
             return GEScriptFunc != null;
         }

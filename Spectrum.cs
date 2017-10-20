@@ -174,9 +174,12 @@ namespace crash
         {
             // Calculate doserate for this spectrum
 
-            if (det == null || GEFactorFunc == null)
-                return 0d;                        
-            
+            if (det == null)
+                throw new Exception("Unable to calculate doserate, detector is null");
+
+            if (GEFactorFunc == null)
+                throw new Exception("Unable to calculate doserate, GEFactorFunc is null");
+
             Doserate = 0.0;
 
             // Trim off discriminators
