@@ -35,34 +35,34 @@ namespace burn
      */
     public partial class NetService
     {
-        ILog Log = null;
+        private ILog log = null;
         //! Running state for this service
         private volatile bool running;
 
         //! UDP configuration
-        const int servicePort = 9999;
-        const int recvTimeout = 100;
-        const int recvBufferSize = 1048576;
+        private const int servicePort = 9999;
+        private const int recvTimeout = 100;
+        private const int recvBufferSize = 1048576;
 
         //! Network utilities        
         private Socket socket = null;
         private EndPoint endPoint = null;
 
         //! Queue with messages from GUI client
-        ConcurrentQueue<ProtocolMessage> sendq = new ConcurrentQueue<ProtocolMessage>();
+        private ConcurrentQueue<ProtocolMessage> sendq = new ConcurrentQueue<ProtocolMessage>();
 
         //! Queue with messages from server
-        ConcurrentQueue<ProtocolMessage> recvq = new ConcurrentQueue<ProtocolMessage>();        
+        private ConcurrentQueue<ProtocolMessage> recvq = new ConcurrentQueue<ProtocolMessage>();        
 
         /** 
          * Constructor for the NetService
          * \param sendQueue - Queue with messages from GUI client
          * \param recvQueue - Queue with messages from server
          */
-        public NetService(ILog log, ref ConcurrentQueue<ProtocolMessage> sendQueue, ref ConcurrentQueue<ProtocolMessage> recvQueue)
+        public NetService(ILog l, ref ConcurrentQueue<ProtocolMessage> sendQueue, ref ConcurrentQueue<ProtocolMessage> recvQueue)
         {            
-            Log = log;
-            Log.Info("Creating Net Service");
+            log = l;
+            log.Info("Creating Net Service");
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), servicePort);
             running = true;
@@ -77,7 +77,7 @@ namespace burn
         {
             try
             {
-                Log.Info("Initializing Net Service");
+                log.Info("Initializing Net Service");
                 var buffer = new byte[recvBufferSize]; // FIXME: configurable size
                 socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, recvTimeout);
 
@@ -113,7 +113,7 @@ namespace burn
             }
             catch (Exception ex)
             {
-                Log.Error("Network failure", ex);
+                log.Error(ex.Message, ex);
             }
         }
 
@@ -123,6 +123,7 @@ namespace burn
         public void RequestStop()
         {
             running = false;
+            log.Info("Stopping Net Service");
         }
 
         /**

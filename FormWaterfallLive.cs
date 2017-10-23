@@ -85,7 +85,6 @@ namespace crash
 
         void timer_Tick(object sender, EventArgs e)
         {
-
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
@@ -114,120 +113,127 @@ namespace crash
                 return;
             needRepaint = false;
 
-            Graphics graphics = Graphics.FromImage(bmpPane);
-            Pen penSelected = new Pen(Color.White);
-            penSelected.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            SolidBrush whiteBrush = new SolidBrush(Color.White);
-            Pen penROI = new Pen(Color.Black);
-            penROI.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-
-            graphics.Clear(Color.FromArgb(255, 0, 0, 255));
-
-            float max = tbColorCeil.Value;
-            float sectorSize = max / 4f;
-            float scale = 255f / sectorSize;
-            int sectorSkip, adjustment;
-            int y = 0;
-
-            for (int i = session.Spectrums.Count - 1 - topY; i >= 0; i--)
+            try
             {
-                if (y >= bmpPane.Height)
-                    break;
+                Graphics graphics = Graphics.FromImage(bmpPane);
+                Pen penSelected = new Pen(Color.White);
+                penSelected.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                SolidBrush whiteBrush = new SolidBrush(Color.White);
+                Pen penROI = new Pen(Color.Black);
+                penROI.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
 
-                Spectrum s = session.Spectrums[i];
-                int w = s.Channels.Count > bmpPane.Width ? bmpPane.Width : s.Channels.Count;
+                graphics.Clear(Color.FromArgb(255, 0, 0, 255));
 
-                bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
+                float max = tbColorCeil.Value;
+                float sectorSize = max / 4f;
+                float scale = 255f / sectorSize;
+                int sectorSkip, adjustment;
+                int y = 0;
 
-                for (int x = 1; x < w; x++)
+                for (int i = session.Spectrums.Count - 1 - topY; i >= 0; i--)
                 {
-                    if (leftX + x >= s.Channels.Count)
+                    if (y >= bmpPane.Height)
                         break;
 
-                    int a = 255, r = 0, g = 0, b = 255;
+                    Spectrum s = session.Spectrums[i];
+                    int w = s.Channels.Count > bmpPane.Width ? bmpPane.Width : s.Channels.Count;
 
-                    float cps = 0f;
-                    if (menuItemUseLogarithmicScale.Checked)
-                    {
-                        cps = (float)Math.Log(s.Channels[leftX + x]);
-                        if (cps < 0f)
-                            cps = 0f;
-                    }
-                    else
-                    {
-                        cps = (float)s.Channels[leftX + x];
-                    }
+                    bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
 
-                    if (btnSubtractBackground.Checked && session.Background != null)
+                    for (int x = 1; x < w; x++)
                     {
-                        if (leftX + x < session.Background.Length)
+                        if (leftX + x >= s.Channels.Count)
+                            break;
+
+                        int a = 255, r = 0, g = 0, b = 255;
+
+                        float cps = 0f;
+                        if (menuItemUseLogarithmicScale.Checked)
                         {
-                            float sub = 0f;
-                            if (menuItemUseLogarithmicScale.Checked)
-                            {
-                                sub = (float)Math.Log(session.Background[leftX + x]);
-                                if (sub < 0f)
-                                    sub = 0f;
-                            }
-                            else
-                            {
-                                sub = (float)session.Background[leftX + x];
-                            }
+                            cps = (float)Math.Log(s.Channels[leftX + x]);
+                            if (cps < 0f)
+                                cps = 0f;
+                        }
+                        else
+                        {
+                            cps = (float)s.Channels[leftX + x];
+                        }
 
-                            cps -= sub;
+                        if (btnSubtractBackground.Checked && session.Background != null)
+                        {
+                            if (leftX + x < session.Background.Length)
+                            {
+                                float sub = 0f;
+                                if (menuItemUseLogarithmicScale.Checked)
+                                {
+                                    sub = (float)Math.Log(session.Background[leftX + x]);
+                                    if (sub < 0f)
+                                        sub = 0f;
+                                }
+                                else
+                                {
+                                    sub = (float)session.Background[leftX + x];
+                                }
 
-                            if (cps < 0)
-                                cps = 0;
+                                cps -= sub;
+
+                                if (cps < 0)
+                                    cps = 0;
+                            }
+                        }
+
+                        sectorSkip = CalculateSectorSkip(cps, sectorSize);
+
+                        adjustment = CalculateColorAdjustment(cps, sectorSkip, sectorSize, scale);
+
+                        AdjustColorComponents(sectorSkip, adjustment, ref r, ref g, ref b);
+
+                        bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
+
+                        if (((leftX + x) % 200) == 0)
+                        {
+                            int ch = leftX + x;
+                            graphics.DrawString(ch.ToString(), font, whiteBrush, x, bmpPane.Height - 20);
                         }
                     }
 
-                    sectorSkip = CalculateSectorSkip(cps, sectorSize);
-
-                    adjustment = CalculateColorAdjustment(cps, sectorSkip, sectorSize, scale);
-
-                    AdjustColorComponents(sectorSkip, adjustment, ref r, ref g, ref b);
-
-                    bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
-
-                    if (((leftX + x) % 200) == 0)
+                    if (s.SessionIndex == SelectedSessionIndex1)
                     {
-                        int ch = leftX + x;
-                        graphics.DrawString(ch.ToString(), font, whiteBrush, x, bmpPane.Height - 20);
+                        graphics.DrawLine(penSelected, new Point(1, y), new Point(bmpPane.Width, y));
+                    }
+
+                    if (s.SessionIndex == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)
+                    {
+                        graphics.DrawLine(penSelected, new Point(1, y), new Point(bmpPane.Width, y));
+                    }
+
+                    y++;
+                }
+
+                if (btnROI.Checked)
+                {
+                    foreach (ROIData rd in settings.ROIList)
+                    {
+                        if (!rd.Active)
+                            continue;
+
+                        if (rd.StartChannel > leftX && rd.StartChannel < leftX + bmpPane.Width)
+                        {
+                            graphics.DrawLine(penSelected, new Point((int)rd.StartChannel - leftX, 0), new Point((int)rd.StartChannel - leftX, bmpPane.Height - 25));
+                            graphics.DrawString(rd.Name, font, whiteBrush, (int)rd.StartChannel - leftX + 4, bmpPane.Height - 40);
+                        }
+
+                        if (rd.EndChannel > leftX && rd.EndChannel < leftX + bmpPane.Width)
+                            graphics.DrawLine(penSelected, new Point((int)rd.EndChannel - leftX, 0), new Point((int)rd.EndChannel - leftX, bmpPane.Height - 25));
                     }
                 }
 
-                if (s.SessionIndex == SelectedSessionIndex1)
-                {
-                    graphics.DrawLine(penSelected, new Point(1, y), new Point(bmpPane.Width, y));
-                }
-
-                if (s.SessionIndex == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)
-                {
-                    graphics.DrawLine(penSelected, new Point(1, y), new Point(bmpPane.Width, y));
-                }
-
-                y++;
+                pane.Refresh();
             }
-
-            if (btnROI.Checked)
+            catch (Exception ex)
             {
-                foreach (ROIData rd in settings.ROIList)
-                {
-                    if (!rd.Active)
-                        continue;
-
-                    if (rd.StartChannel > leftX && rd.StartChannel < leftX + bmpPane.Width)
-                    {
-                        graphics.DrawLine(penSelected, new Point((int)rd.StartChannel - leftX, 0), new Point((int)rd.StartChannel - leftX, bmpPane.Height - 25));
-                        graphics.DrawString(rd.Name, font, whiteBrush, (int)rd.StartChannel - leftX + 4, bmpPane.Height - 40);
-                    }
-
-                    if (rd.EndChannel > leftX && rd.EndChannel < leftX + bmpPane.Width)
-                        graphics.DrawLine(penSelected, new Point((int)rd.EndChannel - leftX, 0), new Point((int)rd.EndChannel - leftX, bmpPane.Height - 25));
-                }
+                log.Info(ex.Message, ex);
             }
-
-            pane.Refresh();
         }
 
         private int CalculateSectorSkip(float cps, float sectorSize)
@@ -427,26 +433,33 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            // Show channel
-            int mouseChannel = leftX + e.X;
-            labelChannel.Text = "Ch: " + String.Format("{0:###0}", mouseChannel);
-
-            // Show session index
-            if (e.Y < session.Spectrums.Count - 1 && e.Y >= 0 && e.Y <= bmpPane.Height)
+            try
             {
-                int sessionId = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));
-                labelSpectrum.Text = "Idx: " + sessionId.ToString();
-            }
-            else labelSpectrum.Text = "";
+                // Show channel
+                int mouseChannel = leftX + e.X;
+                labelChannel.Text = "Ch: " + String.Format("{0:###0}", mouseChannel);
 
-            // Show energy
-            if (session.IsLoaded && currentDetector != null)
-            {
-                //double E = Utils.EnergyCalculationFunc((double)e.X);
-                double en = currentDetector.GetEnergy(e.X);
-                labelEnergy.Text = "En: " + String.Format("{0:#######0.0###}", en);
+                // Show session index
+                if (e.Y < session.Spectrums.Count - 1 && e.Y >= 0 && e.Y <= bmpPane.Height)
+                {
+                    int sessionId = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));
+                    labelSpectrum.Text = "Idx: " + sessionId.ToString();
+                }
+                else labelSpectrum.Text = "";
+
+                // Show energy
+                if (session.IsLoaded && currentDetector != null)
+                {
+                    //double E = Utils.EnergyCalculationFunc((double)e.X);
+                    double en = currentDetector.GetEnergy(e.X);
+                    labelEnergy.Text = "En: " + String.Format("{0:#######0.0###}", en);
+                }
+                else labelEnergy.Text = "";
             }
-            else labelEnergy.Text = "";
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         private void btnUpAll_Click(object sender, EventArgs e)

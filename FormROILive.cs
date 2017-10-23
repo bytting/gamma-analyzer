@@ -79,94 +79,101 @@ namespace crash
             if (settings.ROIList.Count < 1)
                 return;
 
-            Graphics g = Graphics.FromImage(bmpPane);
-            g.Clear(SystemColors.ButtonFace);
-
-            Pen penSelect = new Pen(Color.Black);
-            penSelect.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-
-            Pen penMarker = new Pen(Color.FromArgb(255, 120, 120, 120));
-            penMarker.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-
-            FontFamily fontFamily = new FontFamily("Arial");
-            Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
-            
-            float scaling = -1f;
-
-            foreach (ROIData rd in settings.ROIList)
+            try
             {
-                if (!rd.Active)
-                    continue;
+                Graphics g = Graphics.FromImage(bmpPane);
+                g.Clear(SystemColors.ButtonFace);
 
-                if (rd.StartChannel < 0 || rd.StartChannel >= session.NumChannels || rd.EndChannel < 0 || rd.EndChannel >= session.NumChannels)
-                {
-                    log.Warn("ROI entry " + rd.Name + " is outside spectrum");
-                    continue;
-                }
+                Pen penSelect = new Pen(Color.Black);
+                penSelect.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
 
-                float s = (bmpPane.Height - 40) / session.GetMaxCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
+                Pen penMarker = new Pen(Color.FromArgb(255, 120, 120, 120));
+                penMarker.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
 
-                if(scaling == -1f)
+                FontFamily fontFamily = new FontFamily("Arial");
+                Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
+
+                float scaling = -1f;
+
+                foreach (ROIData rd in settings.ROIList)
                 {
-                    scaling = s;
-                }
-                else
-                {
-                    if (s < scaling)
+                    if (!rd.Active)
+                        continue;
+
+                    if (rd.StartChannel < 0 || rd.StartChannel >= session.NumChannels || rd.EndChannel < 0 || rd.EndChannel >= session.NumChannels)
+                    {
+                        log.Warn("ROI entry " + rd.Name + " is outside spectrum");
+                        continue;
+                    }
+
+                    float s = (bmpPane.Height - 40) / session.GetMaxCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
+
+                    if (scaling == -1f)
+                    {
                         scaling = s;
+                    }
+                    else
+                    {
+                        if (s < scaling)
+                            scaling = s;
+                    }
                 }
-            }
 
-            labelScaling.Text = "Scale factor: " + String.Format("{0:0.0#}", scaling);
+                labelScaling.Text = "Scale factor: " + String.Format("{0:0.0#}", scaling);
 
-            foreach (ROIData rd in settings.ROIList)
-            {
-                if (!rd.Active)
-                    continue;
-
-                Pen pen = new Pen(Color.FromName(rd.ColorName), 1);
-                int x = 0;
-                int last_x = 0, last_y = pane.Height - 40;
-
-                for (int i = firstSpectrum; i < firstSpectrum + bmpPane.Width; i++)
+                foreach (ROIData rd in settings.ROIList)
                 {
-                    if (i >= (int)session.Spectrums.Count)
-                        break;                    
+                    if (!rd.Active)
+                        continue;
 
-                    Spectrum s = session.Spectrums[i];
-                    float weightedCount = s.GetCountInROI((int)rd.StartChannel, (int)rd.EndChannel) * scaling;                    
+                    Pen pen = new Pen(Color.FromName(rd.ColorName), 1);
+                    int x = 0;
+                    int last_x = 0, last_y = pane.Height - 40;
 
-                    int y = pane.Height - 40 - (int)weightedCount;
+                    for (int i = firstSpectrum; i < firstSpectrum + bmpPane.Width; i++)
+                    {
+                        if (i >= (int)session.Spectrums.Count)
+                            break;
 
-                    if (x >= 0 && x < bmpPane.Width && y >= 0 && y < bmpPane.Height)                    
-                        g.DrawLine(pen, last_x, last_y, x, y);                    
-                    
-                    bmpPane.SetPixel(x, bmpPane.Height - 1, Utils.ToColor(s.SessionIndex));
+                        Spectrum s = session.Spectrums[i];
+                        float weightedCount = s.GetCountInROI((int)rd.StartChannel, (int)rd.EndChannel) * scaling;
 
-                    last_x = x;
-                    last_y = y;
-                    x++;
+                        int y = pane.Height - 40 - (int)weightedCount;
+
+                        if (x >= 0 && x < bmpPane.Width && y >= 0 && y < bmpPane.Height)
+                            g.DrawLine(pen, last_x, last_y, x, y);
+
+                        bmpPane.SetPixel(x, bmpPane.Height - 1, Utils.ToColor(s.SessionIndex));
+
+                        last_x = x;
+                        last_y = y;
+                        x++;
+                    }
                 }
-            }
 
-            for(int j=0; j<bmpPane.Width; j++)
-            {
-                int idx = Utils.ToArgb(bmpPane.GetPixel(j, bmpPane.Height - 1));
-
-                if(idx % 100 == 0)                
+                for (int j = 0; j < bmpPane.Width; j++)
                 {
-                    g.DrawLine(penMarker, new Point(j, 0), new Point(j, bmpPane.Height - 30));                                    
-                    g.DrawString(idx.ToString(), font, new SolidBrush(Color.FromArgb(255, 125, 125, 125)), j, bmpPane.Height - 20);
+                    int idx = Utils.ToArgb(bmpPane.GetPixel(j, bmpPane.Height - 1));
+
+                    if (idx % 100 == 0)
+                    {
+                        g.DrawLine(penMarker, new Point(j, 0), new Point(j, bmpPane.Height - 30));
+                        g.DrawString(idx.ToString(), font, new SolidBrush(Color.FromArgb(255, 125, 125, 125)), j, bmpPane.Height - 20);
+                    }
+
+                    if (idx == SelectedSessionIndex1)
+                        g.DrawLine(penSelect, new Point(j, 0), new Point(j, bmpPane.Height - 30));
+
+                    if (idx == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)
+                        g.DrawLine(penSelect, new Point(j, 0), new Point(j, bmpPane.Height - 30));
                 }
 
-                if(idx == SelectedSessionIndex1)                
-                    g.DrawLine(penSelect, new Point(j, 0), new Point(j, bmpPane.Height - 30));                                    
-
-                if (idx == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)                
-                    g.DrawLine(penSelect, new Point(j, 0), new Point(j, bmpPane.Height - 30));                
-            }            
-
-            pane.Refresh();
+                pane.Refresh();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         private void pane_Paint(object sender, PaintEventArgs e)

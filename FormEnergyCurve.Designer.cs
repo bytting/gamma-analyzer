@@ -42,9 +42,9 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnStore);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 374);
+            this.panel1.Location = new System.Drawing.Point(0, 403);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(860, 31);
+            this.panel1.Size = new System.Drawing.Size(860, 33);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
@@ -52,7 +52,7 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(660, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 31);
+            this.btnCancel.Size = new System.Drawing.Size(100, 33);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -63,7 +63,7 @@
             this.btnStore.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnStore.Location = new System.Drawing.Point(760, 0);
             this.btnStore.Name = "btnStore";
-            this.btnStore.Size = new System.Drawing.Size(100, 31);
+            this.btnStore.Size = new System.Drawing.Size(100, 33);
             this.btnStore.TabIndex = 0;
             this.btnStore.Text = "Store";
             this.btnStore.UseVisualStyleBackColor = true;
@@ -81,18 +81,20 @@
             this.graph.ScrollMinX = 0D;
             this.graph.ScrollMinY = 0D;
             this.graph.ScrollMinY2 = 0D;
-            this.graph.Size = new System.Drawing.Size(860, 374);
+            this.graph.Size = new System.Drawing.Size(860, 403);
             this.graph.TabIndex = 1;
             this.graph.UseExtendedPrintDialog = true;
             // 
             // FormEnergyCurve
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(860, 405);
+            this.ClientSize = new System.Drawing.Size(860, 436);
             this.Controls.Add(this.graph);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormEnergyCurve";
             this.Text = "Gamma Analyzer - Energy Curve";
             this.Load += new System.EventHandler(this.FormEnergyCurve_Load);

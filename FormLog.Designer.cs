@@ -53,6 +53,8 @@
             this.Controls.Add(this.tbLog);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(200, 100);
             this.Name = "FormLog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

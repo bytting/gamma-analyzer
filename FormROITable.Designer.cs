@@ -96,7 +96,7 @@
             // 
             // status
             // 
-            this.status.Location = new System.Drawing.Point(0, 324);
+            this.status.Location = new System.Drawing.Point(0, 351);
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(563, 22);
             this.status.SizingGrip = false;
@@ -111,7 +111,7 @@
             this.gridROI.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridROI.Location = new System.Drawing.Point(0, 25);
             this.gridROI.Name = "gridROI";
-            this.gridROI.Size = new System.Drawing.Size(563, 270);
+            this.gridROI.Size = new System.Drawing.Size(563, 295);
             this.gridROI.TabIndex = 2;
             // 
             // panel1
@@ -119,9 +119,9 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 295);
+            this.panel1.Location = new System.Drawing.Point(0, 320);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(563, 29);
+            this.panel1.Size = new System.Drawing.Size(563, 31);
             this.panel1.TabIndex = 3;
             // 
             // btnCancel
@@ -130,7 +130,7 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(413, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 29);
+            this.btnCancel.Size = new System.Drawing.Size(75, 31);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -141,7 +141,7 @@
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOk.Location = new System.Drawing.Point(488, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 29);
+            this.btnOk.Size = new System.Drawing.Size(75, 31);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -204,17 +204,17 @@
             this.tableLayoutROI.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutROI.Name = "tableLayoutROI";
             this.tableLayoutROI.RowCount = 10;
-            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutROI.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutROI.Size = new System.Drawing.Size(563, 270);
+            this.tableLayoutROI.Size = new System.Drawing.Size(563, 295);
             this.tableLayoutROI.TabIndex = 4;
             // 
             // label1
@@ -222,7 +222,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(34, 14);
             this.label1.TabIndex = 0;
             this.label1.Text = "Name";
             // 
@@ -231,7 +231,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(171, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 13);
+            this.label2.Size = new System.Drawing.Size(71, 14);
             this.label2.TabIndex = 1;
             this.label2.Text = "Start channel";
             // 
@@ -240,7 +240,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(283, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 13);
+            this.label3.Size = new System.Drawing.Size(66, 14);
             this.label3.TabIndex = 2;
             this.label3.Text = "End channel";
             // 
@@ -249,7 +249,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(395, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.Size = new System.Drawing.Size(38, 14);
             this.label4.TabIndex = 3;
             this.label4.Text = "Active";
             // 
@@ -258,14 +258,14 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(451, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 13);
+            this.label5.Size = new System.Drawing.Size(32, 14);
             this.label5.TabIndex = 4;
             this.label5.Text = "Color";
             // 
             // tbName1
             // 
             this.tbName1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbName1.Location = new System.Drawing.Point(3, 31);
+            this.tbName1.Location = new System.Drawing.Point(3, 33);
             this.tbName1.Name = "tbName1";
             this.tbName1.Size = new System.Drawing.Size(162, 20);
             this.tbName1.TabIndex = 5;
@@ -273,7 +273,7 @@
             // tbName2
             // 
             this.tbName2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbName2.Location = new System.Drawing.Point(3, 59);
+            this.tbName2.Location = new System.Drawing.Point(3, 63);
             this.tbName2.Name = "tbName2";
             this.tbName2.Size = new System.Drawing.Size(162, 20);
             this.tbName2.TabIndex = 6;
@@ -281,7 +281,7 @@
             // tbName3
             // 
             this.tbName3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbName3.Location = new System.Drawing.Point(3, 87);
+            this.tbName3.Location = new System.Drawing.Point(3, 93);
             this.tbName3.Name = "tbName3";
             this.tbName3.Size = new System.Drawing.Size(162, 20);
             this.tbName3.TabIndex = 7;
@@ -289,7 +289,7 @@
             // tbName4
             // 
             this.tbName4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbName4.Location = new System.Drawing.Point(3, 115);
+            this.tbName4.Location = new System.Drawing.Point(3, 123);
             this.tbName4.Name = "tbName4";
             this.tbName4.Size = new System.Drawing.Size(162, 20);
             this.tbName4.TabIndex = 8;
@@ -297,7 +297,7 @@
             // tbName5
             // 
             this.tbName5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbName5.Location = new System.Drawing.Point(3, 143);
+            this.tbName5.Location = new System.Drawing.Point(3, 153);
             this.tbName5.Name = "tbName5";
             this.tbName5.Size = new System.Drawing.Size(162, 20);
             this.tbName5.TabIndex = 9;
@@ -305,7 +305,7 @@
             // tbName6
             // 
             this.tbName6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbName6.Location = new System.Drawing.Point(3, 171);
+            this.tbName6.Location = new System.Drawing.Point(3, 183);
             this.tbName6.Name = "tbName6";
             this.tbName6.Size = new System.Drawing.Size(162, 20);
             this.tbName6.TabIndex = 10;
@@ -313,7 +313,7 @@
             // tbName7
             // 
             this.tbName7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbName7.Location = new System.Drawing.Point(3, 199);
+            this.tbName7.Location = new System.Drawing.Point(3, 213);
             this.tbName7.Name = "tbName7";
             this.tbName7.Size = new System.Drawing.Size(162, 20);
             this.tbName7.TabIndex = 11;
@@ -321,7 +321,7 @@
             // tbStart1
             // 
             this.tbStart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbStart1.Location = new System.Drawing.Point(171, 31);
+            this.tbStart1.Location = new System.Drawing.Point(171, 33);
             this.tbStart1.Name = "tbStart1";
             this.tbStart1.Size = new System.Drawing.Size(106, 20);
             this.tbStart1.TabIndex = 12;
@@ -329,7 +329,7 @@
             // tbStart2
             // 
             this.tbStart2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbStart2.Location = new System.Drawing.Point(171, 59);
+            this.tbStart2.Location = new System.Drawing.Point(171, 63);
             this.tbStart2.Name = "tbStart2";
             this.tbStart2.Size = new System.Drawing.Size(106, 20);
             this.tbStart2.TabIndex = 13;
@@ -337,7 +337,7 @@
             // tbStart3
             // 
             this.tbStart3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbStart3.Location = new System.Drawing.Point(171, 87);
+            this.tbStart3.Location = new System.Drawing.Point(171, 93);
             this.tbStart3.Name = "tbStart3";
             this.tbStart3.Size = new System.Drawing.Size(106, 20);
             this.tbStart3.TabIndex = 14;
@@ -345,7 +345,7 @@
             // tbStart4
             // 
             this.tbStart4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbStart4.Location = new System.Drawing.Point(171, 115);
+            this.tbStart4.Location = new System.Drawing.Point(171, 123);
             this.tbStart4.Name = "tbStart4";
             this.tbStart4.Size = new System.Drawing.Size(106, 20);
             this.tbStart4.TabIndex = 15;
@@ -353,7 +353,7 @@
             // tbStart5
             // 
             this.tbStart5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbStart5.Location = new System.Drawing.Point(171, 143);
+            this.tbStart5.Location = new System.Drawing.Point(171, 153);
             this.tbStart5.Name = "tbStart5";
             this.tbStart5.Size = new System.Drawing.Size(106, 20);
             this.tbStart5.TabIndex = 16;
@@ -361,7 +361,7 @@
             // tbStart6
             // 
             this.tbStart6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbStart6.Location = new System.Drawing.Point(171, 171);
+            this.tbStart6.Location = new System.Drawing.Point(171, 183);
             this.tbStart6.Name = "tbStart6";
             this.tbStart6.Size = new System.Drawing.Size(106, 20);
             this.tbStart6.TabIndex = 17;
@@ -369,7 +369,7 @@
             // tbStart7
             // 
             this.tbStart7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbStart7.Location = new System.Drawing.Point(171, 199);
+            this.tbStart7.Location = new System.Drawing.Point(171, 213);
             this.tbStart7.Name = "tbStart7";
             this.tbStart7.Size = new System.Drawing.Size(106, 20);
             this.tbStart7.TabIndex = 18;
@@ -377,7 +377,7 @@
             // tbEnd1
             // 
             this.tbEnd1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEnd1.Location = new System.Drawing.Point(283, 31);
+            this.tbEnd1.Location = new System.Drawing.Point(283, 33);
             this.tbEnd1.Name = "tbEnd1";
             this.tbEnd1.Size = new System.Drawing.Size(106, 20);
             this.tbEnd1.TabIndex = 19;
@@ -385,7 +385,7 @@
             // tbEnd2
             // 
             this.tbEnd2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEnd2.Location = new System.Drawing.Point(283, 59);
+            this.tbEnd2.Location = new System.Drawing.Point(283, 63);
             this.tbEnd2.Name = "tbEnd2";
             this.tbEnd2.Size = new System.Drawing.Size(106, 20);
             this.tbEnd2.TabIndex = 20;
@@ -393,7 +393,7 @@
             // tbEnd3
             // 
             this.tbEnd3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEnd3.Location = new System.Drawing.Point(283, 87);
+            this.tbEnd3.Location = new System.Drawing.Point(283, 93);
             this.tbEnd3.Name = "tbEnd3";
             this.tbEnd3.Size = new System.Drawing.Size(106, 20);
             this.tbEnd3.TabIndex = 21;
@@ -401,7 +401,7 @@
             // tbEnd4
             // 
             this.tbEnd4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEnd4.Location = new System.Drawing.Point(283, 115);
+            this.tbEnd4.Location = new System.Drawing.Point(283, 123);
             this.tbEnd4.Name = "tbEnd4";
             this.tbEnd4.Size = new System.Drawing.Size(106, 20);
             this.tbEnd4.TabIndex = 22;
@@ -409,7 +409,7 @@
             // tbEnd5
             // 
             this.tbEnd5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEnd5.Location = new System.Drawing.Point(283, 143);
+            this.tbEnd5.Location = new System.Drawing.Point(283, 153);
             this.tbEnd5.Name = "tbEnd5";
             this.tbEnd5.Size = new System.Drawing.Size(106, 20);
             this.tbEnd5.TabIndex = 23;
@@ -417,7 +417,7 @@
             // tbEnd6
             // 
             this.tbEnd6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEnd6.Location = new System.Drawing.Point(283, 171);
+            this.tbEnd6.Location = new System.Drawing.Point(283, 183);
             this.tbEnd6.Name = "tbEnd6";
             this.tbEnd6.Size = new System.Drawing.Size(106, 20);
             this.tbEnd6.TabIndex = 24;
@@ -425,7 +425,7 @@
             // tbEnd7
             // 
             this.tbEnd7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEnd7.Location = new System.Drawing.Point(283, 199);
+            this.tbEnd7.Location = new System.Drawing.Point(283, 213);
             this.tbEnd7.Name = "tbEnd7";
             this.tbEnd7.Size = new System.Drawing.Size(106, 20);
             this.tbEnd7.TabIndex = 25;
@@ -433,7 +433,7 @@
             // tbName8
             // 
             this.tbName8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbName8.Location = new System.Drawing.Point(3, 227);
+            this.tbName8.Location = new System.Drawing.Point(3, 243);
             this.tbName8.Name = "tbName8";
             this.tbName8.Size = new System.Drawing.Size(162, 20);
             this.tbName8.TabIndex = 26;
@@ -441,7 +441,7 @@
             // tbStart8
             // 
             this.tbStart8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbStart8.Location = new System.Drawing.Point(171, 227);
+            this.tbStart8.Location = new System.Drawing.Point(171, 243);
             this.tbStart8.Name = "tbStart8";
             this.tbStart8.Size = new System.Drawing.Size(106, 20);
             this.tbStart8.TabIndex = 27;
@@ -449,7 +449,7 @@
             // tbEnd8
             // 
             this.tbEnd8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEnd8.Location = new System.Drawing.Point(283, 227);
+            this.tbEnd8.Location = new System.Drawing.Point(283, 243);
             this.tbEnd8.Name = "tbEnd8";
             this.tbEnd8.Size = new System.Drawing.Size(106, 20);
             this.tbEnd8.TabIndex = 28;
@@ -457,7 +457,7 @@
             // cbActive1
             // 
             this.cbActive1.AutoSize = true;
-            this.cbActive1.Location = new System.Drawing.Point(412, 31);
+            this.cbActive1.Location = new System.Drawing.Point(412, 33);
             this.cbActive1.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.cbActive1.Name = "cbActive1";
             this.cbActive1.Size = new System.Drawing.Size(15, 14);
@@ -467,7 +467,7 @@
             // cbActive2
             // 
             this.cbActive2.AutoSize = true;
-            this.cbActive2.Location = new System.Drawing.Point(412, 59);
+            this.cbActive2.Location = new System.Drawing.Point(412, 63);
             this.cbActive2.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.cbActive2.Name = "cbActive2";
             this.cbActive2.Size = new System.Drawing.Size(15, 14);
@@ -477,7 +477,7 @@
             // cbActive3
             // 
             this.cbActive3.AutoSize = true;
-            this.cbActive3.Location = new System.Drawing.Point(412, 87);
+            this.cbActive3.Location = new System.Drawing.Point(412, 93);
             this.cbActive3.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.cbActive3.Name = "cbActive3";
             this.cbActive3.Size = new System.Drawing.Size(15, 14);
@@ -487,7 +487,7 @@
             // cbActive4
             // 
             this.cbActive4.AutoSize = true;
-            this.cbActive4.Location = new System.Drawing.Point(412, 115);
+            this.cbActive4.Location = new System.Drawing.Point(412, 123);
             this.cbActive4.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.cbActive4.Name = "cbActive4";
             this.cbActive4.Size = new System.Drawing.Size(15, 14);
@@ -497,7 +497,7 @@
             // cbActive5
             // 
             this.cbActive5.AutoSize = true;
-            this.cbActive5.Location = new System.Drawing.Point(412, 143);
+            this.cbActive5.Location = new System.Drawing.Point(412, 153);
             this.cbActive5.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.cbActive5.Name = "cbActive5";
             this.cbActive5.Size = new System.Drawing.Size(15, 14);
@@ -507,7 +507,7 @@
             // cbActive6
             // 
             this.cbActive6.AutoSize = true;
-            this.cbActive6.Location = new System.Drawing.Point(412, 171);
+            this.cbActive6.Location = new System.Drawing.Point(412, 183);
             this.cbActive6.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.cbActive6.Name = "cbActive6";
             this.cbActive6.Size = new System.Drawing.Size(15, 14);
@@ -517,7 +517,7 @@
             // cbActive7
             // 
             this.cbActive7.AutoSize = true;
-            this.cbActive7.Location = new System.Drawing.Point(412, 199);
+            this.cbActive7.Location = new System.Drawing.Point(412, 213);
             this.cbActive7.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.cbActive7.Name = "cbActive7";
             this.cbActive7.Size = new System.Drawing.Size(15, 14);
@@ -527,7 +527,7 @@
             // cbActive8
             // 
             this.cbActive8.AutoSize = true;
-            this.cbActive8.Location = new System.Drawing.Point(412, 227);
+            this.cbActive8.Location = new System.Drawing.Point(412, 243);
             this.cbActive8.Margin = new System.Windows.Forms.Padding(20, 3, 3, 3);
             this.cbActive8.Name = "cbActive8";
             this.cbActive8.Size = new System.Drawing.Size(15, 14);
@@ -538,79 +538,79 @@
             // 
             this.color1.BackColor = System.Drawing.Color.Red;
             this.color1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.color1.Location = new System.Drawing.Point(451, 31);
+            this.color1.Location = new System.Drawing.Point(451, 33);
             this.color1.Name = "color1";
-            this.color1.Size = new System.Drawing.Size(109, 22);
+            this.color1.Size = new System.Drawing.Size(109, 24);
             this.color1.TabIndex = 37;
             // 
             // color2
             // 
             this.color2.BackColor = System.Drawing.Color.Blue;
             this.color2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.color2.Location = new System.Drawing.Point(451, 59);
+            this.color2.Location = new System.Drawing.Point(451, 63);
             this.color2.Name = "color2";
-            this.color2.Size = new System.Drawing.Size(109, 22);
+            this.color2.Size = new System.Drawing.Size(109, 24);
             this.color2.TabIndex = 38;
             // 
             // color3
             // 
             this.color3.BackColor = System.Drawing.Color.Green;
             this.color3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.color3.Location = new System.Drawing.Point(451, 87);
+            this.color3.Location = new System.Drawing.Point(451, 93);
             this.color3.Name = "color3";
-            this.color3.Size = new System.Drawing.Size(109, 22);
+            this.color3.Size = new System.Drawing.Size(109, 24);
             this.color3.TabIndex = 39;
             // 
             // color4
             // 
             this.color4.BackColor = System.Drawing.Color.Lime;
             this.color4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.color4.Location = new System.Drawing.Point(451, 115);
+            this.color4.Location = new System.Drawing.Point(451, 123);
             this.color4.Name = "color4";
-            this.color4.Size = new System.Drawing.Size(109, 22);
+            this.color4.Size = new System.Drawing.Size(109, 24);
             this.color4.TabIndex = 40;
             // 
             // color5
             // 
             this.color5.BackColor = System.Drawing.Color.Fuchsia;
             this.color5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.color5.Location = new System.Drawing.Point(451, 143);
+            this.color5.Location = new System.Drawing.Point(451, 153);
             this.color5.Name = "color5";
-            this.color5.Size = new System.Drawing.Size(109, 22);
+            this.color5.Size = new System.Drawing.Size(109, 24);
             this.color5.TabIndex = 41;
             // 
             // color6
             // 
             this.color6.BackColor = System.Drawing.Color.Aqua;
             this.color6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.color6.Location = new System.Drawing.Point(451, 171);
+            this.color6.Location = new System.Drawing.Point(451, 183);
             this.color6.Name = "color6";
-            this.color6.Size = new System.Drawing.Size(109, 22);
+            this.color6.Size = new System.Drawing.Size(109, 24);
             this.color6.TabIndex = 42;
             // 
             // color7
             // 
             this.color7.BackColor = System.Drawing.Color.Yellow;
             this.color7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.color7.Location = new System.Drawing.Point(451, 199);
+            this.color7.Location = new System.Drawing.Point(451, 213);
             this.color7.Name = "color7";
-            this.color7.Size = new System.Drawing.Size(109, 22);
+            this.color7.Size = new System.Drawing.Size(109, 24);
             this.color7.TabIndex = 43;
             // 
             // color8
             // 
             this.color8.BackColor = System.Drawing.Color.Maroon;
             this.color8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.color8.Location = new System.Drawing.Point(451, 227);
+            this.color8.Location = new System.Drawing.Point(451, 243);
             this.color8.Name = "color8";
-            this.color8.Size = new System.Drawing.Size(109, 22);
+            this.color8.Size = new System.Drawing.Size(109, 24);
             this.color8.TabIndex = 44;
             // 
             // FormROITable
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(563, 346);
+            this.ClientSize = new System.Drawing.Size(563, 373);
             this.Controls.Add(this.tableLayoutROI);
             this.Controls.Add(this.gridROI);
             this.Controls.Add(this.panel1);

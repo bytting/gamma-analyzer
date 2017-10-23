@@ -2542,6 +2542,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(480, 320);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

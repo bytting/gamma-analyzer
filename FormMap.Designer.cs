@@ -189,6 +189,8 @@
             this.Controls.Add(this.toolsMap);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(256, 128);
             this.Name = "FormMap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
