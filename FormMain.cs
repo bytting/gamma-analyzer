@@ -948,7 +948,7 @@ CREATE TABLE `spectrum` (
                 uld = Convert.ToInt32(tbSetupULD.Text);
                 nchannels = Convert.ToInt32(cboxSetupChannels.Text);
             }
-            catch(Exception ex)
+            catch
             {
                 MessageBox.Show("Invalid number format found");
                 return;
@@ -1221,7 +1221,7 @@ CREATE TABLE `spectrum` (
             {
                 try
                 {
-                    SessionExporter.ExportAsCHN(session, dialog.SelectedPath);
+                    SessionExporter.ExportAsCHN(log, session, dialog.SelectedPath);
                     log.Info("session " + session.Name + " stored with CHN format in " + dialog.SelectedPath);
                 }
                 catch (Exception ex)
@@ -1553,7 +1553,7 @@ CREATE TABLE `spectrum` (
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            SessionExporter.ExportAsCSV(session, dialog.FileName);            
+            SessionExporter.ExportAsCSV(log, session, dialog.FileName);            
         }
 
         private void menuItemNuclidesUnselect_Click(object sender, EventArgs e)
@@ -1586,7 +1586,7 @@ CREATE TABLE `spectrum` (
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            SessionExporter.ExportAsKMZ(session, dialog.FileName);
+            SessionExporter.ExportAsKMZ(log, session, dialog.FileName);
         }
 
         private void menuItemConvertToLocalTime_CheckedChanged(object sender, EventArgs e)
