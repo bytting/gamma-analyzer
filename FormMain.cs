@@ -32,13 +32,15 @@ using Newtonsoft.Json;
 using ZedGraph;
 using MathNet.Numerics;
 using System.Data.SQLite;
+using log4net;
 
 namespace crash
 {
     public partial class FormMain : Form
     {        
         FormContainer parent = null;
-        GASettings settings = null;        
+        GASettings settings = null;
+        ILog log = null;
 
         // Concurrent queue used to pass messages to networking thread
         static ConcurrentQueue<burn.ProtocolMessage> sendq = null;
@@ -100,23 +102,20 @@ namespace crash
             EnergyCalibration            
         };
 
-        public FormMain(FormContainer p, GASettings gaSettings, FormMap fMap, FormWaterfallLive fWaterfallLive, FormROILive fROILive)
+        public FormMain(FormContainer p, GASettings s, ILog l)
         {
             InitializeComponent();
 
             MdiParent = parent = p;
-            settings = gaSettings;
-
-            /*formMap = fMap;
-            formWaterfallLive = fWaterfallLive;
-            formROILive = fROILive;*/
+            settings = s;
+            log = l;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
             try
             {
-                netService = new burn.NetService(parent.log, ref sendq, ref recvq);
+                netService = new burn.NetService(log, ref sendq, ref recvq);
                 netThread = new Thread(netService.DoWork);
 
                 // FIXME: Disabled for now
@@ -194,7 +193,7 @@ namespace crash
             }
             catch(Exception ex)
             {
-                parent.log.Fatal("Unable to load application", ex);
+                log.Fatal("Unable to load application", ex);
                 MessageBox.Show("Unable to load application. See log for details", "Error");
                 Environment.Exit(1);
             }
@@ -277,7 +276,7 @@ namespace crash
 
             string cmd = msg.Params["command"].ToString();
 
-            parent.log.Info("Received response: " + cmd);
+            log.Info("Received response: " + cmd);
 
             switch (cmd)
             {
@@ -302,9 +301,9 @@ namespace crash
                 case "start_session_success":
                     // New session created successfully                    
                     if (previewSession)
-                        parent.log.Info("Preview session started: " + msg.Params["session_name"]);                    
+                        log.Info("Preview session started: " + msg.Params["session_name"]);                    
                     else
-                        parent.log.Info("Session started: " + msg.Params["session_name"]);                    
+                        log.Info("Session started: " + msg.Params["session_name"]);                    
 
                     btnSetupStartTest.Enabled = false;
                     btnSetupStopTest.Enabled = true;
@@ -312,79 +311,79 @@ namespace crash
 
                 case "start_session_busy":
                     // Session already started
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "start_session_error":
                     // Creation of new session failed, log error message
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "dump_session_success":
                     // Session dump successful
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "dump_session_error":
                     // Session dump error
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "dump_session_none":
                     // Session dump none
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "sync_session_success":
                     // Session sync successful
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "sync_session_noexist":
                     // Session sync failed, does not exist
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "sync_session_wrongname":
                     // Session sync failed, wrong name
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "sync_session_error":
                     // Session sync failed
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "stop_session_success":
                     // Stop session successful, update state
-                    parent.log.Info("Session stopped");
+                    log.Info("Session stopped");
                     btnSetupStartTest.Enabled = true;
                     btnSetupStopTest.Enabled = false;
                     break;
 
                 case "stop_session_noexist":
                     // Stopping a session that does not exist
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "stop_session_wrongname":
                     // Stopping a session that is not running
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "stop_session_error":
                     // Session stopped successfully
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "error":
                     // An error occurred, log error message
-                    parent.log.Info(msg.Params["message"].ToString());
+                    log.Info(msg.Params["message"].ToString());
                     break;
 
                 case "error_socket":
                     // An socket error occurred, log error message
-                    parent.log.Info("Socket error: " + msg.Params["message"]);
+                    log.Info("Socket error: " + msg.Params["message"]);
                     break;
 
                 case "detector_config_success":
@@ -400,7 +399,7 @@ namespace crash
                     if (previewSession)
                     {
                         // Spectrum is a preview spectrum
-                        parent.log.Info(spec.Label + " received");
+                        log.Info(spec.Label + " received");
 
                         // Merge spectrum with the preview spectrum
                         if (previewSpec == null)
@@ -443,13 +442,13 @@ namespace crash
                     else
                     {
                         // Normal session spectrum received
-                        parent.log.Info(spec.Label + " received");                        
+                        log.Info(spec.Label + " received");                        
 
                         // Add spectrum to database
                         string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + spec.SessionName + ".db";
                         if (!File.Exists(sessionPath))
                         {
-                            parent.log.Error("Unable to find session database: " + sessionPath);
+                            log.Error("Unable to find session database: " + sessionPath);
                             return false;
                         }
 
@@ -461,7 +460,7 @@ namespace crash
                         object o = command.ExecuteScalar();
                         if(o == null || o == DBNull.Value)
                         {
-                            parent.log.Error("Unable to find session name " + spec.SessionName + " in database");
+                            log.Error("Unable to find session name " + spec.SessionName + " in database");
                             return false;
                         }
                         int sessionId = Convert.ToInt32(o);
@@ -472,7 +471,7 @@ namespace crash
                         int cnt = Convert.ToInt32(command.ExecuteScalar());
                         if (cnt > 0)
                         {
-                            parent.log.Warn("Spectrum " + spec.SessionIndex + " already exists in database " + spec.SessionName);
+                            log.Warn("Spectrum " + spec.SessionIndex + " already exists in database " + spec.SessionName);
                             return false;
                         }
 
@@ -515,7 +514,7 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                             }
                             catch(Exception ex)
                             {
-                                parent.log.Warn(ex.Message, ex);
+                                log.Warn(ex.Message, ex);
                             }
 
                             session.Add(spec);
@@ -562,7 +561,7 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
 
                 default:
                     // Unhandled message received, update log
-                    parent.log.Warn("Unknown message: " + msg.Params["command"].ToString()); // FIXME
+                    log.Warn("Unknown message: " + msg.Params["command"].ToString()); // FIXME
                     break;
             }
 
@@ -948,7 +947,7 @@ CREATE TABLE `spectrum` (
             }
             catch(Exception ex)
             {
-                parent.log.Error("Setup: Invalid number format", ex);
+                log.Error("Setup: Invalid number format", ex);
                 MessageBox.Show("Setup: Invalid number format");
                 return;
             }
@@ -999,7 +998,7 @@ CREATE TABLE `spectrum` (
             msg.Params.Add("detector_data", selectedDetector);
             sendMsg(msg);
 
-            parent.log.Info("Sending detector_config");
+            log.Info("Sending detector_config");
 
             previewSession = true;
         }
@@ -1068,7 +1067,7 @@ CREATE TABLE `spectrum` (
             }
             catch (Exception ex)
             {
-                parent.log.Error(ex.Message, ex);
+                log.Error(ex.Message, ex);
                 return;
             }
 
@@ -1080,7 +1079,7 @@ CREATE TABLE `spectrum` (
 
             parent.SetSession(session);
                         
-            parent.log.Info("session " + session.Name + " loaded");
+            log.Info("session " + session.Name + " loaded");
 
             burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
             msg.Params.Add("command", "dump_session");
@@ -1115,7 +1114,7 @@ CREATE TABLE `spectrum` (
                 }
                 catch(Exception ex)
                 {
-                    parent.log.Error(ex.Message, ex);
+                    log.Error(ex.Message, ex);
                     return;
                 }
 
@@ -1131,7 +1130,7 @@ CREATE TABLE `spectrum` (
                 session.SetBackgroundSession(bkgSession);
 
                 lblBackground.Text = "Background: " + bkgSession.Name;
-                parent.log.Info("Background " + bkgSession.Name + " loaded for session " + session.Name);
+                log.Info("Background " + bkgSession.Name + " loaded for session " + session.Name);
             }
         }
 
@@ -1184,7 +1183,7 @@ CREATE TABLE `spectrum` (
                 return;
             }
 
-            FormSessionInfo form = new FormSessionInfo(session, "Session Info");
+            FormSessionInfo form = new FormSessionInfo(settings, log, session, "Session Info");
             form.ShowDialog();
         }
 
@@ -1200,7 +1199,7 @@ CREATE TABLE `spectrum` (
 
         private void menuItemShowROIHistory_Click(object sender, EventArgs e)
         {
-            FormROIHist form = new FormROIHist(parent.log, session, settings.ROIList);
+            FormROIHist form = new FormROIHist(settings, log, session);
             form.ShowDialog();
         }        
 
@@ -1220,11 +1219,11 @@ CREATE TABLE `spectrum` (
                 try
                 {
                     SessionExporter.ExportAsCHN(session, dialog.SelectedPath);
-                    parent.log.Info("session " + session.Name + " stored with CHN format in " + dialog.SelectedPath);
+                    log.Info("session " + session.Name + " stored with CHN format in " + dialog.SelectedPath);
                 }
                 catch (Exception ex)
                 {
-                    parent.log.Error("Failed to export session " + session.Name + " with CHN format in " + dialog.SelectedPath, ex);
+                    log.Error("Failed to export session " + session.Name + " with CHN format in " + dialog.SelectedPath, ex);
                     MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
                 }
             }
@@ -1237,7 +1236,7 @@ CREATE TABLE `spectrum` (
 
         private void btnAddDetector_Click(object sender, EventArgs e)
         {
-            FormAddDetector form = new FormAddDetector(parent.log, null);
+            FormAddDetector form = new FormAddDetector(log, null);
             if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
@@ -1304,7 +1303,7 @@ CREATE TABLE `spectrum` (
             msg.Params.Add("session_name", session.Name);
             sendMsg(msg);
 
-            parent.log.Info("Sending stop_session");
+            log.Info("Sending stop_session");
         }
 
         private void graphSession_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -1318,7 +1317,7 @@ CREATE TABLE `spectrum` (
             double E = session.Detector.GetEnergy(x);
             if(E == 0.0)
             {
-                parent.log.Warn("Unable to get energy for detector " + session.Detector.Serialnumber);
+                log.Warn("Unable to get energy for detector " + session.Detector.Serialnumber);
                 return;
             }
 
@@ -1405,7 +1404,7 @@ CREATE TABLE `spectrum` (
             ClearSetup();
             previewSession = true;
             previewSpec = null;
-            parent.log.Info("Sending start_session (setup)");
+            log.Info("Sending start_session (setup)");
         }
 
         private void btnSetupStopTest_Click(object sender, EventArgs e)
@@ -1420,7 +1419,7 @@ CREATE TABLE `spectrum` (
             msg.Params.Add("command", "stop_session");
             msg.Params.Add("session_name", previewSessionName);
             sendMsg(msg);
-            parent.log.Info("Sending stop_session (setup)");
+            log.Info("Sending stop_session (setup)");
         }
 
         private void menuItemResetCoefficients_Click(object sender, EventArgs e)
@@ -1457,7 +1456,7 @@ CREATE TABLE `spectrum` (
                 return;
 
             // Show edit detector form
-            FormAddDetector form = new FormAddDetector(parent.log, (Detector)lvDetectors.SelectedItems[0].Tag);
+            FormAddDetector form = new FormAddDetector(log, (Detector)lvDetectors.SelectedItems[0].Tag);
             if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
@@ -1511,7 +1510,7 @@ CREATE TABLE `spectrum` (
                     if(ch == -1)
                     {
                         // If no channel is found, or energy is outside current spectrum, continue to next energy
-                        parent.log.Warn("No channel found for energy: " + ni.Name + " " + ne.Energy.ToString());
+                        log.Warn("No channel found for energy: " + ni.Name + " " + ne.Energy.ToString());
                         continue;
                     }
 
@@ -1635,11 +1634,11 @@ CREATE TABLE `spectrum` (
             }
             catch (Exception ex)
             {
-                parent.log.Error(ex.Message, ex);
+                log.Error(ex.Message, ex);
                 return;
             }
 
-            parent.log.Info("Sending start_session");
+            log.Info("Sending start_session");
 
             burn.ProtocolMessage msg = new burn.ProtocolMessage(ip);
             msg.Params.Add("command", "start_session");
@@ -1818,7 +1817,7 @@ CREATE TABLE `spectrum` (
             msg.Params.Add("indices_list", missingIndices.Take(50).ToArray()); // Max 50 indices at a time
             sendMsg(msg);
 
-            parent.log.Info("Sending sync_session");
+            log.Info("Sending sync_session");
         }
 
         private void menuItemLoadBackgroundSelection_Click(object sender, EventArgs e)
@@ -1862,7 +1861,7 @@ CREATE TABLE `spectrum` (
             session.SetBackground(spectrumSelection);
 
             lblBackground.Text = "Background: " + minIndex + " -> " + maxIndex;
-            parent.log.Info("Background selection " + minIndex + " -> " + maxIndex + " loaded for session " + session.Name);            
+            log.Info("Background selection " + minIndex + " -> " + maxIndex + " loaded for session " + session.Name);            
         }
 
         private void menuItemAdjustZero_Click(object sender, EventArgs e)
@@ -1881,7 +1880,7 @@ CREATE TABLE `spectrum` (
 
             bool canUpdateSettingsDetector = settings.Detectors.Exists(x => x.Serialnumber == session.Detector.Serialnumber);
 
-            FormAskZeroPolynomial form = new FormAskZeroPolynomial(parent.log, session.Detector, selectedChannel, canUpdateSettingsDetector);
+            FormAskZeroPolynomial form = new FormAskZeroPolynomial(log, session.Detector, selectedChannel, canUpdateSettingsDetector);
             if(form.ShowDialog() == DialogResult.OK)
             {
                 session.Detector.EnergyCurveCoefficients[0] = form.ZeroPolynomial;
@@ -1902,7 +1901,7 @@ CREATE TABLE `spectrum` (
                 object o = command.ExecuteScalar();
                 if (o == null || o == DBNull.Value)
                 {
-                    parent.log.Error("Unable to find session name " + session.Name + " in database");
+                    log.Error("Unable to find session name " + session.Name + " in database");
                     return;
                 }
                 int sessionId = Convert.ToInt32(o);
@@ -1999,7 +1998,7 @@ CREATE TABLE `spectrum` (
             {
                 netService.RequestStop();
                 netThread.Join();
-                parent.log.Info("net service closed");
+                log.Info("net service closed");
             }
 
             // Stop timer listening for network messages

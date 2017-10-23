@@ -1,9 +1,26 @@
-﻿using System;
+﻿/*	
+	Gamma Analyzer - Controlling application for Burn
+    Copyright (C) 2016  Norwegian Radiation Protection Authority
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Authors: Dag robole,
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using ZedGraph;
@@ -13,18 +30,20 @@ namespace crash
 {
     public partial class FormROIHist : Form
     {
-        ILog Log = null;
-        Session session = null;
-        List<ROIData> ROIList = null;        
-        List<PointPairList> pointLists = new List<PointPairList>();
-        GraphPane pane = null;        
+        private GASettings settings = null;
+        private ILog log = null;
 
-        public FormROIHist(ILog log, Session sess, List<ROIData> roiList)
+        private Session session = null;
+        private List<PointPairList> pointLists = new List<PointPairList>();
+        private GraphPane pane = null;        
+
+        public FormROIHist(GASettings s, ILog l, Session sess)
         {
             InitializeComponent();
-            Log = log;
+
+            settings = s;
+            log = l;
             session = sess;
-            ROIList = roiList;            
         }
 
         private void FormROIHist_Load(object sender, EventArgs e)
@@ -41,17 +60,17 @@ namespace crash
 
             pointLists.Clear();
 
-            if (session == null || ROIList.Count == 0)
+            if (session == null || settings.ROIList.Count == 0)
                 return;
 
-            foreach (ROIData rd in ROIList)
+            foreach (ROIData rd in settings.ROIList)
             {
                 if (!rd.Active)
                     continue;
 
                 if(rd.StartChannel < 0 || rd.StartChannel >= session.NumChannels || rd.EndChannel < 0 || rd.EndChannel >= session.NumChannels)
                 {
-                    Log.Warn("ROI entry " + rd.Name + " is outside spectrum");
+                    log.Warn("ROI entry " + rd.Name + " is outside spectrum");
                     continue;
                 }
 

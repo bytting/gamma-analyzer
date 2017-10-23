@@ -18,21 +18,20 @@
 // Authors: Dag robole,
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 
 namespace crash
 {
     public partial class FormROILive : Form
     {
         private FormContainer parent = null;
-        private List<ROIData> ROIList = null;
+        private GASettings settings = null;
+        private ILog log = null;
+
         private Session session = null;        
         private Bitmap bmpPane = null;        
         private int SelectedSessionIndex1 = -1;
@@ -40,13 +39,14 @@ namespace crash
         
         private int firstSpectrum = 0;
 
-        public FormROILive(FormContainer p, List<ROIData> roiList)
+        public FormROILive(FormContainer p, GASettings s, ILog l)
         {
             InitializeComponent();
             
             DoubleBuffered = true;
             MdiParent = parent = p;
-            ROIList = roiList;
+            settings = s;
+            log = l;
         }        
 
         private void FormROITableLive_Load(object sender, EventArgs e)
@@ -69,7 +69,7 @@ namespace crash
             if (session.Spectrums.Count < 1)
                 return;
 
-            if (ROIList.Count < 1)
+            if (settings.ROIList.Count < 1)
                 return;
 
             Graphics g = Graphics.FromImage(bmpPane);
@@ -86,14 +86,14 @@ namespace crash
             
             float scaling = -1f;
 
-            foreach (ROIData rd in ROIList)
+            foreach (ROIData rd in settings.ROIList)
             {
                 if (!rd.Active)
                     continue;
 
                 if (rd.StartChannel < 0 || rd.StartChannel >= session.NumChannels || rd.EndChannel < 0 || rd.EndChannel >= session.NumChannels)
                 {
-                    parent.log.Warn("ROI entry " + rd.Name + " is outside spectrum");
+                    log.Warn("ROI entry " + rd.Name + " is outside spectrum");
                     continue;
                 }
 
@@ -112,7 +112,7 @@ namespace crash
 
             labelScaling.Text = "Scale factor: " + String.Format("{0:0.0#}", scaling);
 
-            foreach (ROIData rd in ROIList)
+            foreach (ROIData rd in settings.ROIList)
             {
                 if (!rd.Active)
                     continue;

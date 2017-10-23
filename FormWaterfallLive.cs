@@ -21,21 +21,23 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using log4net;
 
 namespace crash
 {
     public partial class FormWaterfallLive : Form
     {
         private FormContainer parent = null;
+        private GASettings settings = null;
+        private ILog log = null;
+
         private Session session = null;
         private Bitmap bmpPane = null;
         private bool colorCeilInitialized = false;
-        private Detector currentDetector = null;
-        private List<ROIData> ROIList = null;
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        private Detector currentDetector = null;        
+        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         bool needRepaint = false;
 
         private int SelectedSessionIndex1 = -1;
@@ -47,13 +49,14 @@ namespace crash
         private FontFamily fontFamily = new FontFamily("Arial");
         private Font font = null;
 
-        public FormWaterfallLive(FormContainer p, List<ROIData> roiList)
+        public FormWaterfallLive(FormContainer p, GASettings s, ILog l)
         {
             InitializeComponent();
             
             DoubleBuffered = true;
             MdiParent = parent = p;
-            ROIList = roiList;            
+            settings = s;
+            log = l;
         }        
 
         private void FormWaterfall_Load(object sender, EventArgs e)
@@ -201,7 +204,7 @@ namespace crash
 
             if (btnROI.Checked)
             {
-                foreach (ROIData rd in ROIList)
+                foreach (ROIData rd in settings.ROIList)
                 {
                     if (!rd.Active)
                         continue;

@@ -1,5 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*	
+	Gamma Analyzer - Controlling application for Burn
+    Copyright (C) 2016  Norwegian Radiation Protection Authority
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Authors: Dag robole,
+
+using System;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
@@ -10,9 +28,8 @@ namespace crash
 {
     public partial class FormAddDetector : Form
     {
-        ILog Log = null;
-
-        private Detector Det = null;
+        private ILog log = null;
+        private Detector detector = null;
 
         public string DetectorType { get; set; }
         public string Serialnumber { get; set; }
@@ -29,11 +46,11 @@ namespace crash
         public string PluginName { get; set; }
         public string GEScript { get; set; }
 
-        public FormAddDetector(ILog log, Detector detector)
+        public FormAddDetector(ILog l, Detector d)
         {
             InitializeComponent();
-            Log = log;
-            Det = detector;            
+            log = l;
+            detector = d;            
         }
 
         private void FormAddDetector_Load(object sender, EventArgs e)
@@ -49,24 +66,24 @@ namespace crash
             for (int i = 32; i < 65536; i *= 2)
                 cboxMaxNumChannels.Items.Add(i.ToString());
 
-            if (Det != null)
+            if (detector != null)
             {
-                tbTypeName.Text = Det.TypeName;      
-                tbSerialnumber.Text = Det.Serialnumber;
+                tbTypeName.Text = detector.TypeName;      
+                tbSerialnumber.Text = detector.Serialnumber;
                 tbSerialnumber.ReadOnly = true;
-                int idx = cboxMaxNumChannels.FindStringExact(Det.MaxNumChannels.ToString());
+                int idx = cboxMaxNumChannels.FindStringExact(detector.MaxNumChannels.ToString());
                 if (idx > -1)
                     cboxMaxNumChannels.SelectedItem = cboxMaxNumChannels.Items[idx];
-                tbMinHV.Text = Det.MinVoltage.ToString();
-                tbMaxHV.Text = Det.MaxVoltage.ToString();
-                tbHV.Text = Det.Voltage.ToString();
-                cboxCoarseGain.SelectedIndex = cboxCoarseGain.FindStringExact(Det.CoarseGain.ToString());
-                tbFineGain.Text = Det.FineGain.ToString();
-                tbLivetime.Text = Det.Livetime.ToString();
-                tbLLD.Text = Det.LLD.ToString();
-                tbULD.Text = Det.ULD.ToString();
-                tbPluginName.Text = Det.PluginName;
-                tbGEScript.Text = Det.GEScript;
+                tbMinHV.Text = detector.MinVoltage.ToString();
+                tbMaxHV.Text = detector.MaxVoltage.ToString();
+                tbHV.Text = detector.Voltage.ToString();
+                cboxCoarseGain.SelectedIndex = cboxCoarseGain.FindStringExact(detector.CoarseGain.ToString());
+                tbFineGain.Text = detector.FineGain.ToString();
+                tbLivetime.Text = detector.Livetime.ToString();
+                tbLLD.Text = detector.LLD.ToString();
+                tbULD.Text = detector.ULD.ToString();
+                tbPluginName.Text = detector.PluginName;
+                tbGEScript.Text = detector.GEScript;
             }
         }
         
@@ -115,42 +132,42 @@ namespace crash
             }
             catch(Exception ex)
             {
-                Log.Error("Add detector: Invalid number format", ex);
+                log.Error("Add detector: Invalid number format", ex);
                 MessageBox.Show("Invalid number format");
                 return;
             }
 
             if (FineGain < 1.0 || FineGain > 5.0)
             {
-                Log.Error("Fine gain out of range");
+                log.Error("Fine gain out of range");
                 MessageBox.Show("Fine gain out of range");
                 return;
             }
 
             if (LLD < 0)
             {
-                Log.Error("LLD can not be less than zero");
+                log.Error("LLD can not be less than zero");
                 MessageBox.Show("LLD can not be less than zero");
                 return;
             }
 
             if (ULD > 130)
             {
-                Log.Error("ULD can not be bigger than 130%");
+                log.Error("ULD can not be bigger than 130%");
                 MessageBox.Show("ULD can not be bigger than 130%");
                 return;
             }
 
             if (LLD > ULD)
             {
-                Log.Error("LLD can not be bigger than ULD");
+                log.Error("LLD can not be bigger than ULD");
                 MessageBox.Show("LLD can not be bigger than ULD");
                 return;
             }
 
             if (HV < MinHV || HV > MaxHV)
             {
-                Log.Error("Voltage out of range");
+                log.Error("Voltage out of range");
                 MessageBox.Show("Voltage out of range");
                 return;
             }
@@ -167,9 +184,9 @@ namespace crash
             for (int i = 32; i <= max; i *= 2)
                 cboxNumChannels.Items.Add(i.ToString());
 
-            if (Det != null)
+            if (detector != null)
             {
-                int idx = cboxNumChannels.FindStringExact(Det.NumChannels.ToString());
+                int idx = cboxNumChannels.FindStringExact(detector.NumChannels.ToString());
                 if (idx > -1)
                     cboxNumChannels.SelectedItem = cboxNumChannels.Items[idx];
                 else

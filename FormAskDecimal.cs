@@ -18,11 +18,7 @@
 // Authors: Dag robole,
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
@@ -31,13 +27,14 @@ namespace crash
 {
     public partial class FormAskDecimal : Form
     {
-        private string Description;
+        private string description;
+
         public double Value;
 
-        public FormAskDecimal(string description, double? defaultValue)
+        public FormAskDecimal(string desc, double? defaultValue)
         {
             InitializeComponent();
-            Description = description;
+            description = desc;
             if(defaultValue != null)
                 tbValue.Text = defaultValue.ToString();
             tbValue.KeyPress += CustomEvents.Numeric_KeyPress;
@@ -45,7 +42,7 @@ namespace crash
 
         private void FormAskDecimal_Load(object sender, EventArgs e)
         {
-            lblDescription.Text = Description;
+            lblDescription.Text = description;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

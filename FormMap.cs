@@ -18,24 +18,26 @@
 // Authors: Dag robole,
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using log4net;
 
 namespace crash
 {
     public partial class FormMap : Form
     {
-        FormContainer parent = null;
-        Session currentSession = null;
-        GMapOverlay overlay = new GMapOverlay();
+        private FormContainer parent = null;
+        private GASettings settings = null;
+        private ILog log = null;
+
+        private Session currentSession = null;
+        private GMapOverlay overlay = new GMapOverlay();
 
         private Bitmap bmpBlue = new Bitmap(crash.Properties.Resources.marker_blue_10);
         private Bitmap bmpGreen = new Bitmap(crash.Properties.Resources.marker_green_10);
@@ -43,11 +45,13 @@ namespace crash
         private Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);
         private Bitmap bmpRed = new Bitmap(crash.Properties.Resources.marker_red_10);
 
-        public FormMap(FormContainer p)
+        public FormMap(FormContainer p, GASettings s, ILog l)
         {
             InitializeComponent();
 
             MdiParent = parent = p;
+            settings = s;
+            log = l;
         }
 
         private void FormMap_Load(object sender, EventArgs e)

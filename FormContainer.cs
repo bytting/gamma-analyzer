@@ -40,17 +40,17 @@ namespace crash
 {
     public partial class FormContainer : Form
     {
-        public ILog log = null;
+        private ILog log = null;
 
         // Structure with application settings stored on disk
-        GASettings settings = new GASettings();        
+        private GASettings settings = new GASettings();        
 
         // External forms
-        FormMain formMain = null;
-        FormLog formLog = null;
-        FormWaterfallLive formWaterfallLive = null;
-        FormROILive formROILive = null;
-        FormMap formMap = null;
+        private FormMain formMain = null;
+        private FormLog formLog = null;
+        private FormWaterfallLive formWaterfallLive = null;
+        private FormROILive formROILive = null;
+        private FormMap formMap = null;
 
         public FormContainer()
         {
@@ -66,17 +66,16 @@ namespace crash
             formLog.Left = -1000;
             IntPtr iptr = formLog.Handle; // Force window handle creation
             log = GetLog(formLog.GetTextBox());            
-
-            // Load settings
+            
             LoadSettings();
 
-            formWaterfallLive = new FormWaterfallLive(this, settings.ROIList);
+            formWaterfallLive = new FormWaterfallLive(this, settings, log);
             formWaterfallLive.Left = -1000;
-            formROILive = new FormROILive(this, settings.ROIList);
+            formROILive = new FormROILive(this, settings, log);
             formROILive.Left = -1000;
-            formMap = new FormMap(this);
+            formMap = new FormMap(this, settings, log);
             formMap.Left = -1000;
-            formMain = new FormMain(this, settings, formMap, formWaterfallLive, formROILive);
+            formMain = new FormMain(this, settings, log);
             formMain.Left = -1000;
 
             menuItemLayoutSession_Click(sender, e);
@@ -301,7 +300,7 @@ namespace crash
 
         private void menuItemWindowROITable_Click(object sender, EventArgs e)
         {
-            FormROITable form = new FormROITable(settings.ROIList);
+            FormROITable form = new FormROITable(settings, log);
             form.ShowDialog();
         }
 
