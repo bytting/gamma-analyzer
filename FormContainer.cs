@@ -40,7 +40,9 @@ namespace crash
         private ILog log = null;
 
         // Structure with application settings stored on disk
-        private GASettings settings = new GASettings();        
+        private GASettings settings = new GASettings();
+
+        public string installDir;
 
         // External forms
         private FormMain formMain = null;
@@ -65,6 +67,24 @@ namespace crash
                 formLog.Left = -1000;
                 IntPtr iptr = formLog.Handle; // Force window handle creation
                 log = GetLog(formLog.GetTextBox());
+
+                // Create directories and files
+                if (!Directory.Exists(GAEnvironment.SettingsPath))
+                    Directory.CreateDirectory(GAEnvironment.SettingsPath);
+
+                if (!Directory.Exists(GAEnvironment.GEScriptPath))
+                    Directory.CreateDirectory(GAEnvironment.GEScriptPath);
+
+                installDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]) + Path.DirectorySeparatorChar;
+
+                if (!File.Exists(GAEnvironment.NuclideLibraryFile))
+                    File.Copy(installDir + "template_nuclides.lib", GAEnvironment.NuclideLibraryFile);
+
+                if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai2.lua"))
+                    File.Copy(installDir + "template_osprey-nai2.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai2.lua");
+
+                if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua"))
+                    File.Copy(installDir + "template_osprey-nai3.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua");
 
                 LoadSettings();
 
@@ -102,6 +122,9 @@ namespace crash
                     formWaterfallLive.Shutdown();
                     formWaterfallLive.Close();
                 }
+
+                if (formLog != null)
+                    formLog.Close();
 
                 Environment.Exit(1);
             }

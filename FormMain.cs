@@ -38,9 +38,9 @@ namespace crash
 {
     public partial class FormMain : Form
     {        
-        FormContainer parent = null;
-        GASettings settings = null;
-        ILog log = null;
+        private FormContainer parent = null;
+        private GASettings settings = null;
+        private ILog log = null;
 
         // Concurrent queue used to pass messages to networking thread
         static ConcurrentQueue<burn.ProtocolMessage> sendq = null;
@@ -51,8 +51,9 @@ namespace crash
         // Networking thread        
         static burn.NetService netService = null;
         static Thread netThread = null;
+
         // Timer used to poll for network messages
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
         // FIXME: Disable for now
         //static NetUpload netUpload = null;
@@ -60,37 +61,35 @@ namespace crash
         //static ConcurrentQueue<Spectrum> sendUploadQ = null;
 
         // Currently loaded sessions
-        Session session = null, bkgSession = null;        
+        private Session session = null, bkgSession = null;
 
         // Point lists with graph data
-        PointPairList setupGraphList = new PointPairList();        
-        PointPairList sessionGraphList = new PointPairList();        
-        PointPairList bkgGraphList = new PointPairList();
-
-        string InstallDir;
+        private PointPairList setupGraphList = new PointPairList();
+        private PointPairList sessionGraphList = new PointPairList();
+        private PointPairList bkgGraphList = new PointPairList();
 
         // Livetime scale factor for currently loaded background
-        float bkgScale = 1f;
+        private float bkgScale = 1f;
 
         // Structure containing loaded nuclide library
-        List<NuclideInfo> NuclideLibrary = new List<NuclideInfo>();
+        private List<NuclideInfo> NuclideLibrary = new List<NuclideInfo>();
 
-        bool previewSession = false;
-        string previewSessionName = String.Empty;
+        private bool previewSession = false;
+        private string previewSessionName = String.Empty;
 
-        TabPage returnFromSetup = null;
+        private TabPage returnFromSetup = null;
 
         // Spectrum used to accumulate counts for setup UI
-        Spectrum previewSpec = null;
+        private Spectrum previewSpec = null;
 
-        Detector selectedDetector = null;
-        int selectedChannel = 0;
+        private Detector selectedDetector = null;
+        private int selectedChannel = 0;
 
         // Array containing currently selected energies/channels
-        List<ChannelEnergy> energyLines = new List<ChannelEnergy>();
+        private List<ChannelEnergy> energyLines = new List<ChannelEnergy>();
 
         // Array containing curve fitting coefficients
-        List<double> coefficients = new List<double>();
+        private List<double> coefficients = new List<double>();
 
         // Enumeration used to keep track of graph object types
         public enum GraphObjectType
@@ -131,24 +130,6 @@ namespace crash
                 tbSetupFineGain.KeyPress += CustomEvents.Numeric_KeyPress;
                 tbSetupLLD.KeyPress += CustomEvents.Integer_KeyPress;
                 tbSetupULD.KeyPress += CustomEvents.Integer_KeyPress;
-
-                // Create directories and files
-                if (!Directory.Exists(GAEnvironment.SettingsPath))
-                    Directory.CreateDirectory(GAEnvironment.SettingsPath);
-
-                if (!Directory.Exists(GAEnvironment.GEScriptPath))
-                    Directory.CreateDirectory(GAEnvironment.GEScriptPath);
-
-                InstallDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]) + Path.DirectorySeparatorChar;
-
-                if (!File.Exists(GAEnvironment.NuclideLibraryFile))
-                    File.Copy(InstallDir + "template_nuclides.lib", GAEnvironment.NuclideLibraryFile);
-
-                if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai2.lua"))
-                    File.Copy(InstallDir + "template_osprey-nai2.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai2.lua");
-
-                if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua"))
-                    File.Copy(InstallDir + "template_osprey-nai3.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua");
 
                 menuItemConvertToLocalTime.Checked = settings.DisplayLocalTime;
 
@@ -945,8 +926,7 @@ CREATE TABLE `spectrum` (
             }
             catch(Exception ex)
             {
-                log.Error("Setup: Invalid number format", ex);
-                MessageBox.Show("Setup: Invalid number format");
+                MessageBox.Show("Invalid number format found");
                 return;
             }
             
@@ -988,7 +968,7 @@ CREATE TABLE `spectrum` (
             selectedDetector.LLD = lld;
             selectedDetector.ULD = uld;
 
-            ((FormContainer)MdiParent).SaveSettings();
+            parent.SaveSettings();
 
             // Create and send network message
             burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
@@ -1255,7 +1235,7 @@ CREATE TABLE `spectrum` (
             det.GEScript = form.GEScript;
             settings.Detectors.Add(det);
             
-            ((FormContainer)MdiParent).SaveSettings();
+            parent.SaveSettings();
 
             PopulateDetectorList();
             PopulateDetectors();
@@ -1285,7 +1265,7 @@ CREATE TABLE `spectrum` (
             tbStatusIPAddress.Text = settings.LastHostname;            
             tabs.SelectedTab = pageStatus;
 
-            ((FormContainer)MdiParent).menuItemLayoutSetup_Click(sender, e);
+            parent.menuItemLayoutSetup_Click(sender, e);
         }
 
         private void menuItemStopSession_Click(object sender, EventArgs e)
@@ -1445,7 +1425,7 @@ CREATE TABLE `spectrum` (
             selectedDetector.EnergyCurveCoefficients.Clear();
             selectedDetector.EnergyCurveCoefficients.AddRange(coefficients);
 
-            ((FormContainer)MdiParent).SaveSettings();
+            parent.SaveSettings();
         }        
 
         private void btnEditDetector_Click(object sender, EventArgs e)
@@ -1475,7 +1455,7 @@ CREATE TABLE `spectrum` (
             det.PluginName = form.PluginName;
             det.GEScript = form.GEScript;
 
-            ((FormContainer)MdiParent).SaveSettings();
+            parent.SaveSettings();
 
             PopulateDetectorList();
             PopulateDetectors();
@@ -1613,7 +1593,7 @@ CREATE TABLE `spectrum` (
 
             selectedDetector.Livetime = ltime;
 
-            ((FormContainer)MdiParent).SaveSettings();
+            parent.SaveSettings();
 
             string ip = tbStatusIPAddress.Text.Trim();
             float livetime = selectedDetector.Livetime;
@@ -1657,14 +1637,14 @@ CREATE TABLE `spectrum` (
 
             tabs.SelectedTab = pageSessions;
 
-            ((FormContainer)MdiParent).menuItemLayoutSession_Click(sender, e);
+            parent.menuItemLayoutSession_Click(sender, e);
         }
 
         private void btnNewCancel_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageSessions;
 
-            ((FormContainer)MdiParent).menuItemLayoutSession_Click(sender, e);
+            parent.menuItemLayoutSession_Click(sender, e);
         }
 
         private void btnSetupClose_Click(object sender, EventArgs e)
@@ -1734,7 +1714,7 @@ CREATE TABLE `spectrum` (
         {
             tabs.SelectedTab = pageMenu;
 
-            ((FormContainer)MdiParent).menuItemLayoutSession_Click(sender, e);
+            parent.menuItemLayoutSession_Click(sender, e);
         }
 
         private void btnSetupCancel_Click(object sender, EventArgs e)
@@ -1743,13 +1723,13 @@ CREATE TABLE `spectrum` (
                 tabs.SelectedTab = pageSessions;
             else tabs.SelectedTab = pageMenu;
 
-            ((FormContainer)MdiParent).menuItemLayoutSession_Click(sender, e);
+            parent.menuItemLayoutSession_Click(sender, e);
         }
 
         private void btnStatusNext_Click(object sender, EventArgs e)
         {
             settings.LastHostname = tbStatusIPAddress.Text;
-            ((FormContainer)MdiParent).SaveSettings();
+            parent.SaveSettings();
 
             // FIXME: Disabled for now
             //netUpload.SetCredentials(tbStatusIPAddressUpload.Text, tbStatusUploadUser.Text, tbStatusUploadPass.Text);
@@ -1772,7 +1752,7 @@ CREATE TABLE `spectrum` (
         private void btnPreferencesSave_Click(object sender, EventArgs e)
         {
             settings.SessionRootDirectory = tbPreferencesSessionDir.Text;
-            ((FormContainer)MdiParent).SaveSettings();
+            parent.SaveSettings();
             tabs.SelectedTab = pageMenu;
         }
 
@@ -1922,7 +1902,7 @@ CREATE TABLE `spectrum` (
                         return;
                     }
                     settingsDetector.EnergyCurveCoefficients = session.Detector.EnergyCurveCoefficients;
-                    ((FormContainer)MdiParent).SaveSettings();
+                    parent.SaveSettings();
                 }
             }
         }
@@ -1959,7 +1939,7 @@ CREATE TABLE `spectrum` (
             settings.LastUploadHostname = tbUploadHostname.Text.Trim();
             settings.LastUploadUsername = tbUploadUsername.Text.Trim();
             settings.LastUploadPassword = tbUploadPassword.Text;
-            ((FormContainer)MdiParent).SaveSettings();
+            parent.SaveSettings();
 
             // FIXME: Disabled for now
             /*netUpload.SetCredentials(settings.LastUploadHostname, settings.LastUploadUsername, settings.LastUploadPassword);
