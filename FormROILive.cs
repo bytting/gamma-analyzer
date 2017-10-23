@@ -223,8 +223,10 @@ namespace crash
             {
                 Graphics g = Graphics.FromImage(bmpPane);
                 g.Clear(SystemColors.ButtonFace);
-            }            
-            session = null;            
+                pane.Refresh();
+            }
+            
+            session = null;
         }
 
         private void btnLeftAll_Click(object sender, EventArgs e)

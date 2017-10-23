@@ -207,39 +207,48 @@ namespace crash
             if (!File.Exists(GAEnvironment.NuclideLibraryFile))
                 return false;
 
-            // Load nuclide library from file
-            using (TextReader reader = File.OpenText(GAEnvironment.NuclideLibraryFile))
+            try
             {
-                NuclideLibrary.Clear();
-                char[] itemDelims = new char[] { ' ', '\t' };
-                char[] energyDelims = new char[] { ':' };
-                string line;
-                while ((line = reader.ReadLine()) != null)
+                // Load nuclide library from file
+                using (TextReader reader = File.OpenText(GAEnvironment.NuclideLibraryFile))
                 {
-                    line = line.Trim();
-                    if (String.IsNullOrEmpty(line) || line.StartsWith("#")) // Skip comments
-                        continue;
-                    string[] items = line.Split(itemDelims, StringSplitOptions.RemoveEmptyEntries);
-                    string name = items[0];
-                    double halfLife = Convert.ToDouble(items[1], CultureInfo.InvariantCulture);
-                    string halfLifeUnit = items[2];
-
-                    // Parse nuclide
-                    NuclideInfo ni = new NuclideInfo(name, halfLife, halfLifeUnit);
-
-                    // Parse energies
-                    for (int i = 3; i < items.Length; i++)
+                    NuclideLibrary.Clear();
+                    char[] itemDelims = new char[] { ' ', '\t' };
+                    char[] energyDelims = new char[] { ':' };
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        string[] energy = items[i].Split(energyDelims, StringSplitOptions.RemoveEmptyEntries);
-                        double e = Convert.ToDouble(energy[0], CultureInfo.InvariantCulture);
-                        double p = Convert.ToDouble(energy[1], CultureInfo.InvariantCulture);
-                        ni.Energies.Add(new NuclideEnergy(e, p));
-                    }
+                        line = line.Trim();
+                        if (String.IsNullOrEmpty(line) || line.StartsWith("#")) // Skip comments
+                            continue;
+                        string[] items = line.Split(itemDelims, StringSplitOptions.RemoveEmptyEntries);
+                        string name = items[0];
+                        double halfLife = Convert.ToDouble(items[1], CultureInfo.InvariantCulture);
+                        string halfLifeUnit = items[2];
 
-                    // Store nuclide
-                    NuclideLibrary.Add(ni);
+                        // Parse nuclide
+                        NuclideInfo ni = new NuclideInfo(name, halfLife, halfLifeUnit);
+
+                        // Parse energies
+                        for (int i = 3; i < items.Length; i++)
+                        {
+                            string[] energy = items[i].Split(energyDelims, StringSplitOptions.RemoveEmptyEntries);
+                            double e = Convert.ToDouble(energy[0], CultureInfo.InvariantCulture);
+                            double p = Convert.ToDouble(energy[1], CultureInfo.InvariantCulture);
+                            ni.Energies.Add(new NuclideEnergy(e, p));
+                        }
+
+                        // Store nuclide
+                        NuclideLibrary.Add(ni);
+                    }
                 }
             }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return false;
+            }
+
             return true;
         }
 
@@ -253,295 +262,303 @@ namespace crash
         {
             // Handle messages received from network                        
 
-            string cmd = msg.Params["command"].ToString();
-
-            log.Info("Received response: " + cmd);
-
-            switch (cmd)
+            try
             {
-                case "get_status_success":
-                    double freeDisk = Convert.ToDouble(msg.Params["free_disk_space"], CultureInfo.InvariantCulture);
-                    freeDisk /= 1000000;
-                    lblStatusFreeDiskSpace.Text = "Free disk space: " + freeDisk.ToString("#########0.0#") + " MB";
+                string cmd = msg.Params["command"].ToString();
 
-                    bool sessionRunning = Convert.ToBoolean(msg.Params["session_running"]);
-                    lblStatusSessionRunning.Text = "Session running: " + sessionRunning;
-                    if (!sessionRunning)
-                        btnStatusNext.Enabled = true;
+                log.Info("Received response: " + cmd);
 
-                    int spectrumIndex = Convert.ToInt32(msg.Params["spectrum_index"]);
-                    lblStatusSpectrumIndex.Text = "Spectrum index: " + spectrumIndex;
+                switch (cmd)
+                {
+                    case "get_status_success":
+                        double freeDisk = Convert.ToDouble(msg.Params["free_disk_space"], CultureInfo.InvariantCulture);
+                        freeDisk /= 1000000;
+                        lblStatusFreeDiskSpace.Text = "Free disk space: " + freeDisk.ToString("#########0.0#") + " MB";
 
-                    bool detectorConfigured = Convert.ToBoolean(msg.Params["detector_configured"]);
-                    lblStatusDetectorConfigured.Text = "Detector configured: " + detectorConfigured;
+                        bool sessionRunning = Convert.ToBoolean(msg.Params["session_running"]);
+                        lblStatusSessionRunning.Text = "Session running: " + sessionRunning;
+                        if (!sessionRunning)
+                            btnStatusNext.Enabled = true;
 
-                    break;
+                        int spectrumIndex = Convert.ToInt32(msg.Params["spectrum_index"]);
+                        lblStatusSpectrumIndex.Text = "Spectrum index: " + spectrumIndex;
 
-                case "start_session_success":
-                    // New session created successfully                    
-                    if (previewSession)
-                        log.Info("Preview session started: " + msg.Params["session_name"]);                    
-                    else
-                        log.Info("Session started: " + msg.Params["session_name"]);                    
+                        bool detectorConfigured = Convert.ToBoolean(msg.Params["detector_configured"]);
+                        lblStatusDetectorConfigured.Text = "Detector configured: " + detectorConfigured;
 
-                    btnSetupStartTest.Enabled = false;
-                    btnSetupStopTest.Enabled = true;
-                    break;
+                        break;
 
-                case "start_session_busy":
-                    // Session already started
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "start_session_success":
+                        // New session created successfully                    
+                        if (previewSession)
+                            log.Info("Preview session started: " + msg.Params["session_name"]);
+                        else
+                            log.Info("Session started: " + msg.Params["session_name"]);
 
-                case "start_session_error":
-                    // Creation of new session failed, log error message
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                        btnSetupStartTest.Enabled = false;
+                        btnSetupStopTest.Enabled = true;
+                        break;
 
-                case "dump_session_success":
-                    // Session dump successful
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "start_session_busy":
+                        // Session already started
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "dump_session_error":
-                    // Session dump error
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "start_session_error":
+                        // Creation of new session failed, log error message
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "dump_session_none":
-                    // Session dump none
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "dump_session_success":
+                        // Session dump successful
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "sync_session_success":
-                    // Session sync successful
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "dump_session_error":
+                        // Session dump error
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "sync_session_noexist":
-                    // Session sync failed, does not exist
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "dump_session_none":
+                        // Session dump none
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "sync_session_wrongname":
-                    // Session sync failed, wrong name
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "sync_session_success":
+                        // Session sync successful
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "sync_session_error":
-                    // Session sync failed
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "sync_session_noexist":
+                        // Session sync failed, does not exist
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "stop_session_success":
-                    // Stop session successful, update state
-                    log.Info("Session stopped");
-                    btnSetupStartTest.Enabled = true;
-                    btnSetupStopTest.Enabled = false;
-                    break;
+                    case "sync_session_wrongname":
+                        // Session sync failed, wrong name
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "stop_session_noexist":
-                    // Stopping a session that does not exist
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "sync_session_error":
+                        // Session sync failed
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "stop_session_wrongname":
-                    // Stopping a session that is not running
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "stop_session_success":
+                        // Stop session successful, update state
+                        log.Info("Session stopped");
+                        btnSetupStartTest.Enabled = true;
+                        btnSetupStopTest.Enabled = false;
+                        break;
 
-                case "stop_session_error":
-                    // Session stopped successfully
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "stop_session_noexist":
+                        // Stopping a session that does not exist
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "error":
-                    // An error occurred, log error message
-                    log.Info(msg.Params["message"].ToString());
-                    break;
+                    case "stop_session_wrongname":
+                        // Stopping a session that is not running
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "error_socket":
-                    // An socket error occurred, log error message
-                    log.Info("Socket error: " + msg.Params["message"]);
-                    break;
+                    case "stop_session_error":
+                        // Session stopped successfully
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "detector_config_success":
-                    // Update state                    
-                    panelSetupGraph.Enabled = true;
-                    btnSetupClose.Enabled = true;
-                    break;
+                    case "error":
+                        // An error occurred, log error message
+                        log.Info(msg.Params["message"].ToString());
+                        break;
 
-                case "spectrum":
-                    // Session spectrum received successfully
-                    Spectrum spec = new Spectrum(msg);
+                    case "error_socket":
+                        // An socket error occurred, log error message
+                        log.Info("Socket error: " + msg.Params["message"]);
+                        break;
 
-                    if (previewSession)
-                    {
-                        // Spectrum is a preview spectrum
-                        log.Info(spec.Label + " received");
+                    case "detector_config_success":
+                        // Update state                    
+                        panelSetupGraph.Enabled = true;
+                        btnSetupClose.Enabled = true;
+                        break;
 
-                        // Merge spectrum with the preview spectrum
-                        if (previewSpec == null)
-                            previewSpec = spec;
-                        else previewSpec.Merge(spec);
+                    case "spectrum":
+                        // Session spectrum received successfully
+                        Spectrum spec = new Spectrum(msg);
 
-                        // Reset and prepare setup graph
-                        GraphPane pane = graphSetup.GraphPane;
-                        pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
-                        pane.Fill = new Fill(SystemColors.ButtonFace);
-
-                        pane.Title.Text = "Setup";
-                        pane.XAxis.Title.Text = "Channel";
-                        pane.YAxis.Title.Text = "Counts";
-
-                        // Update setup graph
-                        setupGraphList.Clear();
-                        for (int i = 0; i < previewSpec.Channels.Count; i++)
-                            setupGraphList.Add((double)i, (double)previewSpec.Channels[i]);
-
-                        pane.XAxis.Scale.Min = 0;
-                        pane.XAxis.Scale.Max = previewSpec.MaxCount;
-
-                        pane.YAxis.Scale.Min = 0;
-                        pane.YAxis.Scale.Max = previewSpec.MaxCount + (previewSpec.MaxCount / 10.0);
-
-                        pane.CurveList.Clear();
-
-                        LineItem curve = pane.AddCurve("Spectrum", setupGraphList, Color.Red, SymbolType.None);
-                        curve.Line.Fill = new Fill(SystemColors.ButtonFace, Color.Red, 45F);
-
-                        pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
-                        pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
-                        pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
-
-                        graphSetup.RestoreScale(pane);
-                        graphSetup.AxisChange();
-                        graphSetup.Refresh();
-                    }
-                    else
-                    {
-                        // Normal session spectrum received
-                        log.Info(spec.Label + " received");                        
-
-                        // Add spectrum to database
-                        string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + spec.SessionName + ".db";
-                        if (!File.Exists(sessionPath))
+                        if (previewSession)
                         {
-                            log.Error("Unable to find session database: " + sessionPath);
-                            return false;
-                        }
+                            // Spectrum is a preview spectrum
+                            log.Info(spec.Label + " received");
 
-                        SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionPath + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
-                        connection.Open();
-                        SQLiteCommand command = new SQLiteCommand(connection);
-                        command.CommandText = "select id from session where name = @name";
-                        command.Parameters.AddWithValue("@name", spec.SessionName);
-                        object o = command.ExecuteScalar();
-                        if(o == null || o == DBNull.Value)
+                            // Merge spectrum with the preview spectrum
+                            if (previewSpec == null)
+                                previewSpec = spec;
+                            else previewSpec.Merge(spec);
+
+                            // Reset and prepare setup graph
+                            GraphPane pane = graphSetup.GraphPane;
+                            pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
+                            pane.Fill = new Fill(SystemColors.ButtonFace);
+
+                            pane.Title.Text = "Setup";
+                            pane.XAxis.Title.Text = "Channel";
+                            pane.YAxis.Title.Text = "Counts";
+
+                            // Update setup graph
+                            setupGraphList.Clear();
+                            for (int i = 0; i < previewSpec.Channels.Count; i++)
+                                setupGraphList.Add((double)i, (double)previewSpec.Channels[i]);
+
+                            pane.XAxis.Scale.Min = 0;
+                            pane.XAxis.Scale.Max = previewSpec.MaxCount;
+
+                            pane.YAxis.Scale.Min = 0;
+                            pane.YAxis.Scale.Max = previewSpec.MaxCount + (previewSpec.MaxCount / 10.0);
+
+                            pane.CurveList.Clear();
+
+                            LineItem curve = pane.AddCurve("Spectrum", setupGraphList, Color.Red, SymbolType.None);
+                            curve.Line.Fill = new Fill(SystemColors.ButtonFace, Color.Red, 45F);
+
+                            pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+                            pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+                            pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+
+                            graphSetup.RestoreScale(pane);
+                            graphSetup.AxisChange();
+                            graphSetup.Refresh();
+                        }
+                        else
                         {
-                            log.Error("Unable to find session name " + spec.SessionName + " in database");
-                            return false;
-                        }
-                        int sessionId = Convert.ToInt32(o);
+                            // Normal session spectrum received
+                            log.Info(spec.Label + " received");
 
-                        command.CommandText = "select count(*) from spectrum where session_index = @session_index";
-                        command.Parameters.Clear();
-                        command.Parameters.AddWithValue("@session_index", spec.SessionIndex);
-                        int cnt = Convert.ToInt32(command.ExecuteScalar());
-                        if (cnt > 0)
-                        {
-                            log.Warn("Spectrum " + spec.SessionIndex + " already exists in database " + spec.SessionName);
-                            return false;
-                        }
+                            // Add spectrum to database
+                            string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + spec.SessionName + ".db";
+                            if (!File.Exists(sessionPath))
+                            {
+                                log.Error("Unable to find session database: " + sessionPath);
+                                return false;
+                            }
 
-                        command.Parameters.Clear();
-                        command.CommandText = @"
+                            SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionPath + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
+                            connection.Open();
+                            SQLiteCommand command = new SQLiteCommand(connection);
+                            command.CommandText = "select id from session where name = @name";
+                            command.Parameters.AddWithValue("@name", spec.SessionName);
+                            object o = command.ExecuteScalar();
+                            if (o == null || o == DBNull.Value)
+                            {
+                                log.Error("Unable to find session name " + spec.SessionName + " in database");
+                                return false;
+                            }
+                            int sessionId = Convert.ToInt32(o);
+
+                            command.CommandText = "select count(*) from spectrum where session_index = @session_index";
+                            command.Parameters.Clear();
+                            command.Parameters.AddWithValue("@session_index", spec.SessionIndex);
+                            int cnt = Convert.ToInt32(command.ExecuteScalar());
+                            if (cnt > 0)
+                            {
+                                log.Warn("Spectrum " + spec.SessionIndex + " already exists in database " + spec.SessionName);
+                                return false;
+                            }
+
+                            command.Parameters.Clear();
+                            command.CommandText = @"
 insert into spectrum(session_id, session_name, session_index, start_time, latitude, latitude_error, longitude, longitude_error, altitude, altitude_error, track, track_error, speed, speed_error, climb, climb_error, livetime, realtime, total_count, num_channels, channels) 
 values (@session_id, @session_name, @session_index, @start_time, @latitude, @latitude_error, @longitude, @longitude_error, @altitude, @altitude_error, @track, @track_error, @speed, @speed_error, @climb, @climb_error, @livetime, @realtime, @total_count, @num_channels, @channels)";
 
-                        command.Parameters.AddWithValue("@session_id", sessionId);
-                        command.Parameters.AddWithValue("@session_name", spec.SessionName);
-                        command.Parameters.AddWithValue("@session_index", spec.SessionIndex);
-                        command.Parameters.AddWithValue("@start_time", spec.GpsTime.ToString("yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture));
-                        command.Parameters.AddWithValue("@latitude", spec.Latitude);
-                        command.Parameters.AddWithValue("@latitude_error", spec.LatitudeError);
-                        command.Parameters.AddWithValue("@longitude", spec.Longitude);
-                        command.Parameters.AddWithValue("@longitude_error", spec.LongitudeError);
-                        command.Parameters.AddWithValue("@altitude", spec.Altitude);
-                        command.Parameters.AddWithValue("@altitude_error", spec.AltitudeError);
-                        command.Parameters.AddWithValue("@track", spec.GpsTrack);
-                        command.Parameters.AddWithValue("@track_error", spec.GpsTrackError);
-                        command.Parameters.AddWithValue("@speed", spec.GpsSpeed);
-                        command.Parameters.AddWithValue("@speed_error", spec.GpsSpeedError);
-                        command.Parameters.AddWithValue("@climb", spec.GpsClimb);
-                        command.Parameters.AddWithValue("@climb_error", spec.GpsClimbError);
-                        command.Parameters.AddWithValue("@livetime", spec.Livetime);
-                        command.Parameters.AddWithValue("@realtime", spec.Realtime);
-                        command.Parameters.AddWithValue("@total_count", spec.TotalCount);
-                        command.Parameters.AddWithValue("@num_channels", spec.NumChannels);
-                        command.Parameters.AddWithValue("@channels", string.Join(" ", spec.Channels.ToArray()));
-                        command.ExecuteNonQuery();
+                            command.Parameters.AddWithValue("@session_id", sessionId);
+                            command.Parameters.AddWithValue("@session_name", spec.SessionName);
+                            command.Parameters.AddWithValue("@session_index", spec.SessionIndex);
+                            command.Parameters.AddWithValue("@start_time", spec.GpsTime.ToString("yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture));
+                            command.Parameters.AddWithValue("@latitude", spec.Latitude);
+                            command.Parameters.AddWithValue("@latitude_error", spec.LatitudeError);
+                            command.Parameters.AddWithValue("@longitude", spec.Longitude);
+                            command.Parameters.AddWithValue("@longitude_error", spec.LongitudeError);
+                            command.Parameters.AddWithValue("@altitude", spec.Altitude);
+                            command.Parameters.AddWithValue("@altitude_error", spec.AltitudeError);
+                            command.Parameters.AddWithValue("@track", spec.GpsTrack);
+                            command.Parameters.AddWithValue("@track_error", spec.GpsTrackError);
+                            command.Parameters.AddWithValue("@speed", spec.GpsSpeed);
+                            command.Parameters.AddWithValue("@speed_error", spec.GpsSpeedError);
+                            command.Parameters.AddWithValue("@climb", spec.GpsClimb);
+                            command.Parameters.AddWithValue("@climb_error", spec.GpsClimbError);
+                            command.Parameters.AddWithValue("@livetime", spec.Livetime);
+                            command.Parameters.AddWithValue("@realtime", spec.Realtime);
+                            command.Parameters.AddWithValue("@total_count", spec.TotalCount);
+                            command.Parameters.AddWithValue("@num_channels", spec.NumChannels);
+                            command.Parameters.AddWithValue("@channels", string.Join(" ", spec.Channels.ToArray()));
+                            command.ExecuteNonQuery();
 
-                        connection.Close();
+                            connection.Close();
 
-                        // Add spectrum to session
-                        if (session != null && session.IsLoaded && session.Name == spec.SessionName)
-                        {
-                            try
+                            // Add spectrum to session
+                            if (session != null && session.IsLoaded && session.Name == spec.SessionName)
                             {
-                                spec.CalculateDoserate(session.Detector, session.GEScriptFunc);
-                            }
-                            catch(Exception ex)
-                            {
-                                log.Warn(ex.Message, ex);
-                            }
-
-                            session.Add(spec);
-
-                            // Add spectrum to UI list
-                            bool updateSelectedIndex = false;
-                            if (lbSession.SelectedIndex == 0)
-                                updateSelectedIndex = true;
-
-                            int index = 0, last_index = 0;
-
-                            for (int i = 0; i < lbSession.Items.Count; i++)
-                            {
-                                Spectrum s = lbSession.Items[i] as Spectrum;
-                                last_index = s.SessionIndex;
-                                if (last_index < spec.SessionIndex)
+                                try
                                 {
-                                    index = i;
-                                    break;
+                                    spec.CalculateDoserate(session.Detector, session.GEScriptFunc);
                                 }
+                                catch (Exception ex)
+                                {
+                                    log.Warn(ex.Message, ex);
+                                }
+
+                                session.Add(spec);
+
+                                // Add spectrum to UI list
+                                bool updateSelectedIndex = false;
+                                if (lbSession.SelectedIndex == 0)
+                                    updateSelectedIndex = true;
+
+                                int index = 0, last_index = 0;
+
+                                for (int i = 0; i < lbSession.Items.Count; i++)
+                                {
+                                    Spectrum s = lbSession.Items[i] as Spectrum;
+                                    last_index = s.SessionIndex;
+                                    if (last_index < spec.SessionIndex)
+                                    {
+                                        index = i;
+                                        break;
+                                    }
+                                }
+
+                                if (last_index > spec.SessionIndex)
+                                    lbSession.Items.Add(spec);
+                                else
+                                    lbSession.Items.Insert(index, spec);
+
+                                if (updateSelectedIndex)
+                                {
+                                    lbSession.ClearSelected();
+                                    lbSession.SetSelected(0, true);
+                                }
+
+                                // Notify external forms about new spectrum
+
+                                parent.AddSpectrum(spec);
                             }
 
-                            if (last_index > spec.SessionIndex)
-                                lbSession.Items.Add(spec);
-                            else
-                                lbSession.Items.Insert(index, spec);
-
-                            if (updateSelectedIndex)
-                            {
-                                lbSession.ClearSelected();
-                                lbSession.SetSelected(0, true);
-                            }
-
-                            // Notify external forms about new spectrum
-
-                            parent.AddSpectrum(spec);
+                            // FIXME: Disabled for now
+                            // Send spectrum to gamma-store
+                            //sendUploadQ.Enqueue(spec);
                         }
+                        break;
 
-                        // FIXME: Disabled for now
-                        // Send spectrum to gamma-store
-                        //sendUploadQ.Enqueue(spec);
-                    }
-                    break;
-
-                default:
-                    // Unhandled message received, update log
-                    log.Warn("Unknown message: " + msg.Params["command"].ToString()); // FIXME
-                    break;
+                    default:
+                        // Unhandled message received, update log
+                        log.Warn("Unknown message: " + msg.Params["command"].ToString()); // FIXME
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return false;
             }
 
             return true;
@@ -736,6 +753,7 @@ CREATE TABLE `spectrum` (
         private void ClearSetup()
         {
             // Clear info about current setup
+            graphSetup.GraphPane.Title.Text = " ";
             graphSetup.GraphPane.CurveList.Clear();
             graphSetup.GraphPane.GraphObjList.Clear();
             graphSetup.Invalidate();
@@ -746,8 +764,14 @@ CREATE TABLE `spectrum` (
             // Clear currently loaded session
             lbSession.Items.Clear();
             lblSessionDetector.Text = "";
+            lblComment.Text = "";
             lblBackground.Text = "";
-            ClearSpectrumInfo();            
+            ClearSpectrumInfo();
+
+            graphSession.GraphPane.Title.Text = " ";
+            graphSession.GraphPane.CurveList.Clear();
+            graphSession.GraphPane.GraphObjList.Clear();
+            graphSession.Invalidate();
 
             if (session != null)
                 session.Clear();
@@ -1033,7 +1057,8 @@ CREATE TABLE `spectrum` (
         {
             if(Directory.Exists(settings.SessionRootDirectory))
                 openSessionDialog.InitialDirectory = settings.SessionRootDirectory;
-            openSessionDialog.Title = "Select session file";
+            openSessionDialog.Title = "Select session database";
+            openSessionDialog.Filter = "Session database (*.db)|*.db";
             if (openSessionDialog.ShowDialog() != DialogResult.OK)
                 return;
             
@@ -1856,54 +1881,61 @@ CREATE TABLE `spectrum` (
                 return;
             }
 
-            bool canUpdateSettingsDetector = settings.Detectors.Exists(x => x.Serialnumber == session.Detector.Serialnumber);
-
-            FormAskZeroPolynomial form = new FormAskZeroPolynomial(log, session.Detector, selectedChannel, canUpdateSettingsDetector);
-            if(form.ShowDialog() == DialogResult.OK)
+            try
             {
-                session.Detector.EnergyCurveCoefficients[0] = form.ZeroPolynomial;
-                // FIXME: Save session.Detector to database
+                bool canUpdateSettingsDetector = settings.Detectors.Exists(x => x.Serialnumber == session.Detector.Serialnumber);
 
-                string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + session.Name + ".db";
-                if (!File.Exists(sessionPath))
+                FormAskZeroPolynomial form = new FormAskZeroPolynomial(log, session.Detector, selectedChannel, canUpdateSettingsDetector);
+                if (form.ShowDialog() == DialogResult.OK)
                 {
-                    MessageBox.Show("Unable to find session database: " + sessionPath);
-                    return;
-                }
+                    session.Detector.EnergyCurveCoefficients[0] = form.ZeroPolynomial;
+                    // FIXME: Save session.Detector to database
 
-                SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionPath + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
-                connection.Open();
-                SQLiteCommand command = new SQLiteCommand(connection);
-                command.CommandText = "select id from session where name = @name";
-                command.Parameters.AddWithValue("@name", session.Name);
-                object o = command.ExecuteScalar();
-                if (o == null || o == DBNull.Value)
-                {
-                    log.Error("Unable to find session name " + session.Name + " in database");
-                    return;
-                }
-                int sessionId = Convert.ToInt32(o);
-
-                string detectorData = JsonConvert.SerializeObject(session.Detector, Newtonsoft.Json.Formatting.None);
-
-                command.Parameters.Clear();
-                command.CommandText = "update session set detector_data=@detector_data where id=@id";
-                command.Parameters.AddWithValue("@detector_data", detectorData);
-                command.Parameters.AddWithValue("@id", sessionId);
-                command.ExecuteNonQuery();
-                connection.Close();
-
-                if (form.SaveToSettings)
-                {
-                    Detector settingsDetector = settings.Detectors.Find(x => x.Serialnumber == session.Detector.Serialnumber);
-                    if(settingsDetector == null)
+                    string sessionPath = settings.SessionRootDirectory + Path.DirectorySeparatorChar + session.Name + ".db";
+                    if (!File.Exists(sessionPath))
                     {
-                        MessageBox.Show("Detector " + session.Detector.Serialnumber + " was not found in settings");
+                        MessageBox.Show("Unable to find session database: " + sessionPath);
                         return;
                     }
-                    settingsDetector.EnergyCurveCoefficients = session.Detector.EnergyCurveCoefficients;
-                    parent.SaveSettings();
+
+                    SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionPath + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
+                    connection.Open();
+                    SQLiteCommand command = new SQLiteCommand(connection);
+                    command.CommandText = "select id from session where name = @name";
+                    command.Parameters.AddWithValue("@name", session.Name);
+                    object o = command.ExecuteScalar();
+                    if (o == null || o == DBNull.Value)
+                    {
+                        log.Error("Unable to find session name " + session.Name + " in database");
+                        return;
+                    }
+                    int sessionId = Convert.ToInt32(o);
+
+                    string detectorData = JsonConvert.SerializeObject(session.Detector, Newtonsoft.Json.Formatting.None);
+
+                    command.Parameters.Clear();
+                    command.CommandText = "update session set detector_data=@detector_data where id=@id";
+                    command.Parameters.AddWithValue("@detector_data", detectorData);
+                    command.Parameters.AddWithValue("@id", sessionId);
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                    if (form.SaveToSettings)
+                    {
+                        Detector settingsDetector = settings.Detectors.Find(x => x.Serialnumber == session.Detector.Serialnumber);
+                        if (settingsDetector == null)
+                        {
+                            MessageBox.Show("Detector " + session.Detector.Serialnumber + " was not found in settings");
+                            return;
+                        }
+                        settingsDetector.EnergyCurveCoefficients = session.Detector.EnergyCurveCoefficients;
+                        parent.SaveSettings();
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
             }
         }
 
@@ -1995,17 +2027,24 @@ CREATE TABLE `spectrum` (
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            session.IPAddress = form.IPAddress;
+            try
+            {
+                session.IPAddress = form.IPAddress;
 
-            SQLiteConnection connection = new SQLiteConnection("Data Source=" + session.SessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
-            connection.Open();
-            SQLiteCommand command = new SQLiteCommand(connection);
-            command.CommandText = "update session set ip=@ip"; // FIXME: Updates all sessions in db
-            command.Parameters.AddWithValue("@ip", session.IPAddress);
-            command.ExecuteScalar();
-            connection.Close();
+                SQLiteConnection connection = new SQLiteConnection("Data Source=" + session.SessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(connection);
+                command.CommandText = "update session set ip=@ip"; // FIXME: Updates all sessions in db
+                command.Parameters.AddWithValue("@ip", session.IPAddress);
+                command.ExecuteScalar();
+                connection.Close();
 
-            lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
+                lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
     }
 }

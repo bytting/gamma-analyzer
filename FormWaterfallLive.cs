@@ -367,6 +367,7 @@ namespace crash
             {
                 Graphics g = Graphics.FromImage(bmpPane);
                 g.Clear(Color.FromArgb(0, 0, 255));
+                pane.Refresh();
             }
             session = null;
         }
