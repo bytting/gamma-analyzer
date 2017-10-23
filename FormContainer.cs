@@ -19,11 +19,8 @@
 
 using System;
 using System.IO;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -61,26 +58,53 @@ namespace crash
         }
 
         private void FormContainer_Load(object sender, EventArgs e)
-        {            
-            formLog = new FormLog(this);
-            formLog.Left = -1000;
-            IntPtr iptr = formLog.Handle; // Force window handle creation
-            log = GetLog(formLog.GetTextBox());            
-            
-            LoadSettings();
+        {
+            try
+            {
+                formLog = new FormLog(this);
+                formLog.Left = -1000;
+                IntPtr iptr = formLog.Handle; // Force window handle creation
+                log = GetLog(formLog.GetTextBox());
 
-            formWaterfallLive = new FormWaterfallLive(this, settings, log);
-            formWaterfallLive.Left = -1000;
-            formROILive = new FormROILive(this, settings, log);
-            formROILive.Left = -1000;
-            formMap = new FormMap(this, settings, log);
-            formMap.Left = -1000;
-            formMain = new FormMain(this, settings, log);
-            formMain.Left = -1000;
+                LoadSettings();
 
-            menuItemLayoutSession_Click(sender, e);
+                formWaterfallLive = new FormWaterfallLive(this, settings, log);
+                formWaterfallLive.Left = -1000;
+                formROILive = new FormROILive(this, settings, log);
+                formROILive.Left = -1000;
+                formMap = new FormMap(this, settings, log);
+                formMap.Left = -1000;
+                formMain = new FormMain(this, settings, log);
+                formMain.Left = -1000;
 
-            statusLabel.Text = "";
+                menuItemLayoutSession_Click(sender, e);
+
+                statusLabel.Text = "";
+            }
+            catch (Exception ex)
+            {
+                log.Fatal(ex.Message, ex);
+                MessageBox.Show("Unable to load application. See log for details", "Error");
+                if (formMain != null)
+                {
+                    formMain.Shutdown();
+                    formMain.Close();
+                }
+
+                if (formMap != null)
+                    formMap.Close();
+
+                if (formROILive != null)                
+                    formROILive.Close();
+
+                if (formWaterfallLive != null)
+                {
+                    formWaterfallLive.Shutdown();
+                    formWaterfallLive.Close();
+                }
+
+                Environment.Exit(1);
+            }
         }
 
         private ILog GetLog(RichTextBox tb)
@@ -119,68 +143,117 @@ namespace crash
 
         public void SaveSettings()
         {
-            // Serialize settings to file
-            using (StreamWriter sw = new StreamWriter(GAEnvironment.SettingsFile))
+            try
             {
-                XmlSerializer x = new XmlSerializer(settings.GetType());
-                x.Serialize(sw, settings);
+                // Serialize settings to file
+                using (StreamWriter sw = new StreamWriter(GAEnvironment.SettingsFile))
+                {
+                    XmlSerializer x = new XmlSerializer(settings.GetType());
+                    x.Serialize(sw, settings);
+                }
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
             }
         }
 
-        private void LoadSettings()
+        public void LoadSettings()
         {
-            if (!File.Exists(GAEnvironment.SettingsFile))
-                SaveSettings();
-
-            // Deserialize settings from file
-            using (StreamReader sr = new StreamReader(GAEnvironment.SettingsFile))
+            try
             {
-                XmlSerializer x = new XmlSerializer(settings.GetType());
-                settings = x.Deserialize(sr) as GASettings;
+                if (!File.Exists(GAEnvironment.SettingsFile))
+                    SaveSettings();
+
+                // Deserialize settings from file
+                using (StreamReader sr = new StreamReader(GAEnvironment.SettingsFile))
+                {
+                    XmlSerializer x = new XmlSerializer(settings.GetType());
+                    settings = x.Deserialize(sr) as GASettings;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
             }
         }
 
         public void AddSpectrum(Spectrum s)
         {
-            formMap.AddMarker(s);
-            formWaterfallLive.UpdatePane();
-            formROILive.UpdatePane();
+            try
+            {
+                formMap.AddMarker(s);
+                formWaterfallLive.UpdatePane();
+                formROILive.UpdatePane();
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void ClearSession()
         {
-            formMain.ClearSession();
-            formWaterfallLive.ClearSession();
-            formROILive.ClearSession();
-            formMap.ClearSession();
+            try
+            {
+                formMain.ClearSession();
+                formWaterfallLive.ClearSession();
+                formROILive.ClearSession();
+                formMap.ClearSession();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void SetSelectedSessionIndex(int index)
         {
-            formMain.SetSelectedSessionIndex(index);
-            formWaterfallLive.SetSelectedSessionIndex(index);
-            formMap.SetSelectedSessionIndex(index);
-            formROILive.SetSelectedSessionIndex(index);
+            try
+            {
+                formMain.SetSelectedSessionIndex(index);
+                formWaterfallLive.SetSelectedSessionIndex(index);
+                formMap.SetSelectedSessionIndex(index);
+                formROILive.SetSelectedSessionIndex(index);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void SetSelectedSessionIndices(int index1, int index2)
         {
-            formMain.SetSelectedSessionIndices(index1, index2);
-            formWaterfallLive.SetSelectedSessionIndices(index1, index2);
-            formMap.SetSelectedSessionIndices(index1, index2);
-            formROILive.SetSelectedSessionIndices(index1, index2);
+            try
+            {
+                formMain.SetSelectedSessionIndices(index1, index2);
+                formWaterfallLive.SetSelectedSessionIndices(index1, index2);
+                formMap.SetSelectedSessionIndices(index1, index2);
+                formROILive.SetSelectedSessionIndices(index1, index2);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void SetSession(Session s)
         {
-            formMain.SetSession(s);
-            formWaterfallLive.SetSession(s);
-            formWaterfallLive.SetDetector(s.Detector);
-            formROILive.SetSession(s);
-            formMap.SetSession(s);
-            
-            formWaterfallLive.UpdatePane();
-            formROILive.UpdatePane();
+            try
+            {
+                formMain.SetSession(s);
+                formWaterfallLive.SetSession(s);
+                formWaterfallLive.SetDetector(s.Detector);
+                formROILive.SetSession(s);
+                formMap.SetSession(s);
+
+                formWaterfallLive.UpdatePane();
+                formROILive.UpdatePane();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         private void menuItemFileExit_Click(object sender, EventArgs e)
@@ -306,30 +379,45 @@ namespace crash
 
         private void menuItemWindowShowAll_Click(object sender, EventArgs e)
         {
-            formLog.Show();
-            formLog.WindowState = FormWindowState.Normal;
-            formROILive.Show();
-            formROILive.WindowState = FormWindowState.Normal;
-            formROILive.UpdatePane();
-            formMap.Show();
-            formMap.WindowState = FormWindowState.Normal;
-            formWaterfallLive.Show();
-            formWaterfallLive.WindowState = FormWindowState.Normal;
-            formWaterfallLive.UpdatePane();
-            formMain.Show();
-            formMain.WindowState = FormWindowState.Normal;
+            try
+            {
+                formLog.Show();
+                formLog.WindowState = FormWindowState.Normal;
+                formROILive.Show();
+                formROILive.WindowState = FormWindowState.Normal;
+                formROILive.UpdatePane();
+                formMap.Show();
+                formMap.WindowState = FormWindowState.Normal;
+                formWaterfallLive.Show();
+                formWaterfallLive.WindowState = FormWindowState.Normal;
+                formWaterfallLive.UpdatePane();
+                formMain.Show();
+                formMain.WindowState = FormWindowState.Normal;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }        
 
         private void FormContainer_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveSettings();
+            try
+            {
+                SaveSettings();
 
-            formMain.Shutdown();
-            formMain.Close();
-            formWaterfallLive.Close();
-            formROILive.Close();
-            formMap.Close();
-            formLog.Close();
+                formMain.Shutdown();
+                formMain.Close();
+                formWaterfallLive.Shutdown();
+                formWaterfallLive.Close();
+                formROILive.Close();
+                formMap.Close();
+                formLog.Close();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
     }
 

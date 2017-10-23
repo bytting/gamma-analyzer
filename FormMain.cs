@@ -137,8 +137,8 @@ namespace crash
                     Directory.CreateDirectory(GAEnvironment.SettingsPath);
 
                 if (!Directory.Exists(GAEnvironment.GEScriptPath))
-                    Directory.CreateDirectory(GAEnvironment.GEScriptPath);                
-                
+                    Directory.CreateDirectory(GAEnvironment.GEScriptPath);
+
                 InstallDir = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]) + Path.DirectorySeparatorChar;
 
                 if (!File.Exists(GAEnvironment.NuclideLibraryFile))
@@ -148,8 +148,8 @@ namespace crash
                     File.Copy(InstallDir + "template_osprey-nai2.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai2.lua");
 
                 if (!File.Exists(GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua"))
-                    File.Copy(InstallDir + "template_osprey-nai3.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua");                
-                
+                    File.Copy(InstallDir + "template_osprey-nai3.lua", GAEnvironment.GEScriptPath + Path.DirectorySeparatorChar + "osprey-nai3.lua");
+
                 menuItemConvertToLocalTime.Checked = settings.DisplayLocalTime;
 
                 LoadNuclideLibrary();
@@ -161,7 +161,7 @@ namespace crash
                 tbPreferencesSessionDir.Text = settings.SessionRootDirectory;
                 PopulateDetectorList();
                 PopulateDetectors();
-                
+
                 lblSessionSelChannel.Text = "";
                 lblSessionsDatabase.Text = "";
                 lblSetupChannel.Text = "";
@@ -193,9 +193,7 @@ namespace crash
             }
             catch(Exception ex)
             {
-                log.Fatal("Unable to load application", ex);
-                MessageBox.Show("Unable to load application. See log for details", "Error");
-                Environment.Exit(1);
+                log.Error(ex.Message, ex);
             }
         }        
 

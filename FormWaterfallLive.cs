@@ -36,7 +36,7 @@ namespace crash
         private Session session = null;
         private Bitmap bmpPane = null;
         private bool colorCeilInitialized = false;
-        private Detector currentDetector = null;        
+        private Detector currentDetector = null;
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         bool needRepaint = false;
 
@@ -52,32 +52,39 @@ namespace crash
         public FormWaterfallLive(FormContainer p, GASettings s, ILog l)
         {
             InitializeComponent();
-            
+
             DoubleBuffered = true;
             MdiParent = parent = p;
             settings = s;
             log = l;
-        }        
+        }
 
         private void FormWaterfall_Load(object sender, EventArgs e)
-        {            
-            font = new Font(fontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
+        {
+            try
+            {
+                font = new Font(fontFamily, 11, FontStyle.Regular, GraphicsUnit.Pixel);
 
-            labelColorCeil.Text = "";
-            labelChannel.Text = "";
-            labelSpectrum.Text = "";
-            labelEnergy.Text = "";
+                labelColorCeil.Text = "";
+                labelChannel.Text = "";
+                labelSpectrum.Text = "";
+                labelEnergy.Text = "";
 
-            timer.Interval = 500;
-            timer.Tick += timer_Tick;
-            timer.Start();
+                timer.Interval = 500;
+                timer.Tick += timer_Tick;
+                timer.Start();
 
-            pane_Resize(sender, e);        
-            UpdateStats();
+                pane_Resize(sender, e);
+                UpdateStats();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         void timer_Tick(object sender, EventArgs e)
-        {            
+        {
 
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
@@ -119,16 +126,16 @@ namespace crash
             float max = tbColorCeil.Value;
             float sectorSize = max / 4f;
             float scale = 255f / sectorSize;
-            int sectorSkip, adjustment;            
+            int sectorSkip, adjustment;
             int y = 0;
 
             for (int i = session.Spectrums.Count - 1 - topY; i >= 0; i--)
             {
                 if (y >= bmpPane.Height)
-                    break;                
+                    break;
 
                 Spectrum s = session.Spectrums[i];
-                int w = s.Channels.Count > bmpPane.Width ? bmpPane.Width : s.Channels.Count;                
+                int w = s.Channels.Count > bmpPane.Width ? bmpPane.Width : s.Channels.Count;
 
                 bmpPane.SetPixel(0, y, Utils.ToColor(s.SessionIndex));
 
@@ -178,7 +185,7 @@ namespace crash
 
                     adjustment = CalculateColorAdjustment(cps, sectorSkip, sectorSize, scale);
 
-                    AdjustColorComponents(sectorSkip, adjustment, ref r, ref g, ref b);                                        
+                    AdjustColorComponents(sectorSkip, adjustment, ref r, ref g, ref b);
 
                     bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
 
@@ -277,36 +284,36 @@ namespace crash
 
         public void SetSession(Session sess)
         {
-            session = sess;            
+            session = sess;
         }
 
         public void SetDetector(Detector det)
         {
-            currentDetector = det;            
+            currentDetector = det;
         }
 
         public void UpdatePane()
         {
             needRepaint = true;
-        }        
+        }
 
-        private void pane_Paint(object sender, PaintEventArgs e)        
+        private void pane_Paint(object sender, PaintEventArgs e)
         {
             if (bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
-            
+
             e.Graphics.DrawImage(bmpPane, 0, 0);
         }
 
         private void pane_Resize(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Minimized || pane.Width < 1 || pane.Height < 1 || resizeing == true)
-                return;            
+                return;
 
             bmpPane = new Bitmap(pane.Width, pane.Height);
             leftX = 1;
             UpdatePane();
-        }        
+        }
 
         private void tbColorCeil_ValueChanged(object sender, EventArgs e)
         {
@@ -331,19 +338,19 @@ namespace crash
                 return;
 
             if (e.Button == MouseButtons.Left)
-            {                
-                if (ModifierKeys.HasFlag(Keys.Shift) && SelectedSessionIndex1 != -1)                
-                    parent.SetSelectedSessionIndices(SelectedSessionIndex1, Utils.ToArgb(bmpPane.GetPixel(0, e.Y)));                
-                else                
+            {
+                if (ModifierKeys.HasFlag(Keys.Shift) && SelectedSessionIndex1 != -1)
+                    parent.SetSelectedSessionIndices(SelectedSessionIndex1, Utils.ToArgb(bmpPane.GetPixel(0, e.Y)));
+                else
                     parent.SetSelectedSessionIndex(Utils.ToArgb(bmpPane.GetPixel(0, e.Y)));
-            }            
+            }
         }
 
         public void SetSelectedSessionIndex(int index)
         {
             SelectedSessionIndex1 = SelectedSessionIndex2 = index;
 
-            UpdatePane();            
+            UpdatePane();
         }
 
         public void SetSelectedSessionIndices(int index1, int index2)
@@ -355,12 +362,12 @@ namespace crash
         }
 
         public void ClearSession()
-        {            
-            if(bmpPane != null)
+        {
+            if (bmpPane != null)
             {
                 Graphics g = Graphics.FromImage(bmpPane);
                 g.Clear(Color.FromArgb(0, 0, 255));
-            }                
+            }
             session = null;
         }
 
@@ -424,7 +431,7 @@ namespace crash
             labelChannel.Text = "Ch: " + String.Format("{0:###0}", mouseChannel);
 
             // Show session index
-            if(e.Y < session.Spectrums.Count - 1 && e.Y >= 0 && e.Y <= bmpPane.Height)
+            if (e.Y < session.Spectrums.Count - 1 && e.Y >= 0 && e.Y <= bmpPane.Height)
             {
                 int sessionId = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));
                 labelSpectrum.Text = "Idx: " + sessionId.ToString();
@@ -446,7 +453,7 @@ namespace crash
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
-            topY = 0;            
+            topY = 0;
             UpdatePane();
         }
 
@@ -492,13 +499,13 @@ namespace crash
 
         private void FormWaterfallLive_ResizeBegin(object sender, EventArgs e)
         {
-            resizeing = true;            
+            resizeing = true;
         }
 
         private void FormWaterfallLive_ResizeEnd(object sender, EventArgs e)
         {
             resizeing = false;
-            pane_Resize(sender, e);            
+            pane_Resize(sender, e);
         }
 
         private void btnROI_CheckedChanged(object sender, EventArgs e)
@@ -512,13 +519,18 @@ namespace crash
         }
 
         private void menuItemUseLogarithmicScale_CheckedChanged(object sender, EventArgs e)
-        {                        
+        {
             UpdatePane();
         }
 
         private void btnSubtractBackground_CheckedChanged(object sender, EventArgs e)
-        {                 
+        {
             UpdatePane();
+        }
+
+        public void Shutdown()
+        {
+            timer.Stop();
         }
     }
 }

@@ -51,9 +51,16 @@ namespace crash
 
         private void FormROITableLive_Load(object sender, EventArgs e)
         {
-            labelScaling.Text = "";
-            labelSpectrum.Text = "";
-            pane_Resize(sender, e);
+            try
+            {
+                labelScaling.Text = "";
+                labelSpectrum.Text = "";
+                pane_Resize(sender, e);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void SetSession(Session sess)
