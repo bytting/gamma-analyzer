@@ -27,7 +27,7 @@ using log4net;
 
 namespace crash
 {
-    public partial class FormWaterfallLive : Form
+    public partial class FormWaterfall : Form
     {
         private FormContainer parent = null;
         private GASettings settings = null;
@@ -49,7 +49,7 @@ namespace crash
         private FontFamily fontFamily = new FontFamily("Arial");
         private Font font = null;
 
-        public FormWaterfallLive(FormContainer p, GASettings s, ILog l)
+        public FormWaterfall(FormContainer p, GASettings s, ILog l)
         {
             InitializeComponent();
 

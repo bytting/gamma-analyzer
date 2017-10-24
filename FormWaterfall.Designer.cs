@@ -1,6 +1,6 @@
 ﻿namespace crash
 {
-    partial class FormWaterfallLive
+    partial class FormWaterfall
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWaterfallLive));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWaterfall));
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnShow = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnROI = new System.Windows.Forms.ToolStripMenuItem();

@@ -1,6 +1,6 @@
 ﻿namespace crash
 {
-    partial class FormROILive
+    partial class FormROI
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormROILive));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormROI));
             this.pane = new System.Windows.Forms.Panel();
             this.paneMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemUnselect = new System.Windows.Forms.ToolStripMenuItem();

@@ -47,8 +47,8 @@ namespace crash
         // External forms
         private FormMain formMain = null;
         private FormLog formLog = null;
-        private FormWaterfallLive formWaterfallLive = null;
-        private FormROILive formROILive = null;
+        private FormWaterfall formWaterfall = null;
+        private FormROI formROI = null;
         private FormMap formMap = null;
 
         public FormContainer()
@@ -88,10 +88,10 @@ namespace crash
 
                 LoadSettings();
 
-                formWaterfallLive = new FormWaterfallLive(this, settings, log);
-                formWaterfallLive.Left = -1000;
-                formROILive = new FormROILive(this, settings, log);
-                formROILive.Left = -1000;
+                formWaterfall = new FormWaterfall(this, settings, log);
+                formWaterfall.Left = -1000;
+                formROI = new FormROI(this, settings, log);
+                formROI.Left = -1000;
                 formMap = new FormMap(this, settings, log);
                 formMap.Left = -1000;
                 formMain = new FormMain(this, settings, log);
@@ -105,6 +105,7 @@ namespace crash
             {
                 log.Fatal(ex.Message, ex);
                 MessageBox.Show("Unable to load application. See log for details", "Error");
+
                 if (formMain != null)
                 {
                     formMain.Shutdown();
@@ -114,13 +115,13 @@ namespace crash
                 if (formMap != null)
                     formMap.Close();
 
-                if (formROILive != null)                
-                    formROILive.Close();
+                if (formROI != null)                
+                    formROI.Close();
 
-                if (formWaterfallLive != null)
+                if (formWaterfall != null)
                 {
-                    formWaterfallLive.Shutdown();
-                    formWaterfallLive.Close();
+                    formWaterfall.Shutdown();
+                    formWaterfall.Close();
                 }
 
                 if (formLog != null)
@@ -133,7 +134,7 @@ namespace crash
         private ILog GetLog(RichTextBox tb)
         {
             if (log != null)
-                throw new Exception("Log already initalized");
+                throw new Exception("Log already initialized");
                 
             Hierarchy hierarchy = (Hierarchy)LogManager.GetRepository();
 
@@ -206,8 +207,8 @@ namespace crash
             try
             {
                 formMap.AddMarker(s);
-                formWaterfallLive.UpdatePane();
-                formROILive.UpdatePane();
+                formWaterfall.UpdatePane();
+                formROI.UpdatePane();
             }
             catch(Exception ex)
             {
@@ -220,8 +221,8 @@ namespace crash
             try
             {
                 formMain.ClearSession();
-                formWaterfallLive.ClearSession();
-                formROILive.ClearSession();
+                formWaterfall.ClearSession();
+                formROI.ClearSession();
                 formMap.ClearSession();
             }
             catch (Exception ex)
@@ -235,9 +236,9 @@ namespace crash
             try
             {
                 formMain.SetSelectedSessionIndex(index);
-                formWaterfallLive.SetSelectedSessionIndex(index);
+                formWaterfall.SetSelectedSessionIndex(index);
                 formMap.SetSelectedSessionIndex(index);
-                formROILive.SetSelectedSessionIndex(index);
+                formROI.SetSelectedSessionIndex(index);
             }
             catch (Exception ex)
             {
@@ -250,9 +251,9 @@ namespace crash
             try
             {
                 formMain.SetSelectedSessionIndices(index1, index2);
-                formWaterfallLive.SetSelectedSessionIndices(index1, index2);
+                formWaterfall.SetSelectedSessionIndices(index1, index2);
                 formMap.SetSelectedSessionIndices(index1, index2);
-                formROILive.SetSelectedSessionIndices(index1, index2);
+                formROI.SetSelectedSessionIndices(index1, index2);
             }
             catch (Exception ex)
             {
@@ -265,13 +266,13 @@ namespace crash
             try
             {
                 formMain.SetSession(s);
-                formWaterfallLive.SetSession(s);
-                formWaterfallLive.SetDetector(s.Detector);
-                formROILive.SetSession(s);
+                formWaterfall.SetSession(s);
+                formWaterfall.SetDetector(s.Detector);
+                formROI.SetSession(s);
                 formMap.SetSession(s);
 
-                formWaterfallLive.UpdatePane();
-                formROILive.UpdatePane();
+                formWaterfall.UpdatePane();
+                formROI.UpdatePane();
             }
             catch (Exception ex)
             {
@@ -322,8 +323,8 @@ namespace crash
 
         public void menuItemLayoutSetup_Click(object sender, EventArgs e)
         {
-            formWaterfallLive.Hide();
-            formROILive.Hide();
+            formWaterfall.Hide();
+            formROI.Hide();
             formMap.Hide();
             formMain.Show();
             formMain.WindowState = FormWindowState.Normal;
@@ -373,24 +374,24 @@ namespace crash
             formMain.Top = rect.Top;
             formMain.Height = rect.Top + thirdHeight * 2;
 
-            formWaterfallLive.Left = rect.Left;
-            formWaterfallLive.Width = rect.Left + thirdWidth * 2;
-            formWaterfallLive.Top = rect.Top + thirdHeight * 2;
-            formWaterfallLive.Height = thirdHeight;
+            formWaterfall.Left = rect.Left;
+            formWaterfall.Width = rect.Left + thirdWidth * 2;
+            formWaterfall.Top = rect.Top + thirdHeight * 2;
+            formWaterfall.Height = thirdHeight;
 
             formMap.Left = formMain.Left + formMain.Width;
             formMap.Width = thirdWidth;
             formMap.Top = rect.Top;
             formMap.Height = thirdHeight + thirdHeight / 2;
 
-            formROILive.Left = formMain.Left + formMain.Width;
-            formROILive.Width = thirdWidth;
-            formROILive.Top = formMap.Top + formMap.Height;
-            formROILive.Height = thirdHeight;
+            formROI.Left = formMain.Left + formMain.Width;
+            formROI.Width = thirdWidth;
+            formROI.Top = formMap.Top + formMap.Height;
+            formROI.Height = thirdHeight;
 
             formLog.Left = formMain.Left + formMain.Width;
             formLog.Width = thirdWidth;
-            formLog.Top = formROILive.Top + formROILive.Height;
+            formLog.Top = formROI.Top + formROI.Height;
             formLog.Height = thirdHeight - thirdHeight / 2;
         }
 
@@ -406,14 +407,14 @@ namespace crash
             {
                 formLog.Show();
                 formLog.WindowState = FormWindowState.Normal;
-                formROILive.Show();
-                formROILive.WindowState = FormWindowState.Normal;
-                formROILive.UpdatePane();
+                formROI.Show();
+                formROI.WindowState = FormWindowState.Normal;
+                formROI.UpdatePane();
                 formMap.Show();
                 formMap.WindowState = FormWindowState.Normal;
-                formWaterfallLive.Show();
-                formWaterfallLive.WindowState = FormWindowState.Normal;
-                formWaterfallLive.UpdatePane();
+                formWaterfall.Show();
+                formWaterfall.WindowState = FormWindowState.Normal;
+                formWaterfall.UpdatePane();
                 formMain.Show();
                 formMain.WindowState = FormWindowState.Normal;
             }
@@ -431,9 +432,9 @@ namespace crash
 
                 formMain.Shutdown();
                 formMain.Close();
-                formWaterfallLive.Shutdown();
-                formWaterfallLive.Close();
-                formROILive.Close();
+                formWaterfall.Shutdown();
+                formWaterfall.Close();
+                formROI.Close();
                 formMap.Close();
                 formLog.Close();
             }

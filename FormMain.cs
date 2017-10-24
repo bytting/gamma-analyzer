@@ -349,6 +349,8 @@ namespace crash
                         log.Info("Session stopped");
                         btnSetupStartTest.Enabled = true;
                         btnSetupStopTest.Enabled = false;
+                        btnSetupClose.Enabled = true;
+                        btnSetupCancel.Enabled = true;
                         break;
 
                     case "stop_session_noexist":
@@ -1219,16 +1221,8 @@ CREATE TABLE `spectrum` (
             dialog.Description = "Select folder to store CHN files";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                try
-                {
-                    SessionExporter.ExportAsCHN(log, session, dialog.SelectedPath);
-                    log.Info("session " + session.Name + " stored with CHN format in " + dialog.SelectedPath);
-                }
-                catch (Exception ex)
-                {
-                    log.Error("Failed to export session " + session.Name + " with CHN format in " + dialog.SelectedPath, ex);
-                    MessageBox.Show("Failed to export session to CHN format: " + ex.Message);
-                }
+                SessionExporter.ExportAsCHN(log, session, dialog.SelectedPath);
+                log.Info("session " + session.Name + " stored with CHN format in " + dialog.SelectedPath);                
             }
         }
 
@@ -1278,9 +1272,9 @@ CREATE TABLE `spectrum` (
 
         private void menuItemStartNewSession_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(settings.SessionRootDirectory))
+            if (String.IsNullOrEmpty(settings.SessionRootDirectory) || !Directory.Exists(settings.SessionRootDirectory))
             {
-                MessageBox.Show("You must provide a session directory under preferences");
+                MessageBox.Show("You must provide a valid session directory under preferences");
                 return;
             }
 
@@ -1407,6 +1401,8 @@ CREATE TABLE `spectrum` (
             ClearSetup();
             previewSession = true;
             previewSpec = null;
+            btnSetupClose.Enabled = false;
+            btnSetupCancel.Enabled = false;
             log.Info("Sending start_session (setup)");
         }
 

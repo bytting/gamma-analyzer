@@ -204,11 +204,11 @@
     <Compile Include="FormROITable.Designer.cs">
       <DependentUpon>FormROITable.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormROILive.cs">
+    <Compile Include="FormROI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormROILive.Designer.cs">
-      <DependentUpon>FormROILive.cs</DependentUpon>
+    <Compile Include="FormROI.Designer.cs">
+      <DependentUpon>FormROI.cs</DependentUpon>
     </Compile>
     <Compile Include="FormSessionInfo.cs">
       <SubType>Form</SubType>
@@ -216,11 +216,11 @@
     <Compile Include="FormSessionInfo.Designer.cs">
       <DependentUpon>FormSessionInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormWaterfallLive.cs">
+    <Compile Include="FormWaterfall.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormWaterfallLive.Designer.cs">
-      <DependentUpon>FormWaterfallLive.cs</DependentUpon>
+    <Compile Include="FormWaterfall.Designer.cs">
+      <DependentUpon>FormWaterfall.cs</DependentUpon>
     </Compile>
     <Compile Include="NetUpload.cs" />
     <Compile Include="NuclideInfo.cs" />
@@ -278,14 +278,14 @@
     <EmbeddedResource Include="FormROITable.resx">
       <DependentUpon>FormROITable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormROILive.resx">
-      <DependentUpon>FormROILive.cs</DependentUpon>
+    <EmbeddedResource Include="FormROI.resx">
+      <DependentUpon>FormROI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSessionInfo.resx">
       <DependentUpon>FormSessionInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormWaterfallLive.resx">
-      <DependentUpon>FormWaterfallLive.cs</DependentUpon>
+    <EmbeddedResource Include="FormWaterfall.resx">
+      <DependentUpon>FormWaterfall.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

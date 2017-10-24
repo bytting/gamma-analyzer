@@ -26,7 +26,7 @@ using log4net;
 
 namespace crash
 {
-    public partial class FormROILive : Form
+    public partial class FormROI : Form
     {
         private FormContainer parent = null;
         private GASettings settings = null;
@@ -39,7 +39,7 @@ namespace crash
         
         private int firstSpectrum = 0;
 
-        public FormROILive(FormContainer p, GASettings s, ILog l)
+        public FormROI(FormContainer p, GASettings s, ILog l)
         {
             InitializeComponent();
             
