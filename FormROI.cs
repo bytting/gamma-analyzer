@@ -290,15 +290,15 @@ namespace crash
         {
             if (session == null || session.IsEmpty)
                 return;
+            
+            int index = e.X;
 
-            int index = firstSpectrum + e.X;
-
-            if(index < 0 || index >= session.Spectrums.Count)
+            if (index < 0 || index >= session.Spectrums.Count)
             {
                 labelSpectrum.Text = "";
                 return;
-            }                
-
+            }
+            
             int sessionIndex = Utils.ToArgb(bmpPane.GetPixel(index, bmpPane.Height - 1));
             labelSpectrum.Text = "Idx: " + sessionIndex.ToString();
         }
