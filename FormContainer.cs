@@ -97,7 +97,7 @@ namespace crash
                 formMain = new FormMain(this, settings, log);
                 formMain.Left = -1000;
 
-                menuItemLayoutSession_Click(sender, e);
+                menuItemLayoutMenu_Click(sender, e);
 
                 statusLabel.Text = "";
             }
@@ -319,6 +319,30 @@ namespace crash
         private void menuItemLayoutArrangeIcons_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.ArrangeIcons);
+        }
+
+        public void menuItemLayoutMenu_Click(object sender, EventArgs e)
+        {
+            formWaterfall.Hide();
+            formROI.Hide();
+            formMap.Hide();
+            formLog.Hide();
+            formMain.Show();
+            formMain.WindowState = FormWindowState.Normal;            
+
+            Rectangle rect = ClientRectangle;
+            Size size = ClientSize;
+
+            int height = size.Height - menu.Height - 4;
+            if (tools.Visible)
+                height -= tools.Height;
+            if (status.Visible)
+                height -= status.Height;
+
+            formMain.Left = rect.Left;
+            formMain.Width = size.Width - 4;
+            formMain.Top = rect.Top;
+            formMain.Height = height;
         }
 
         public void menuItemLayoutSetup_Click(object sender, EventArgs e)

@@ -1018,14 +1018,19 @@ CREATE TABLE `spectrum` (
             Text = "Session - " + tabs.SelectedTab.Text;
             
             menuItemView.Visible = true;
-            menuItemSession.Visible = false;            
+            menuItemSession.Visible = false;
 
             if (tabs.SelectedTab == pageDetectors)
             {
             }
             else if (tabs.SelectedTab == pageSessions)
             {
-                menuItemSession.Visible = true;            
+                parent.menuItemLayoutSession_Click(sender, e);
+                menuItemSession.Visible = true;
+            }
+            else if (tabs.SelectedTab == pageStatus)
+            {
+                parent.menuItemLayoutSetup_Click(sender, e);
             }
             else if (tabs.SelectedTab == pageSetup)
             {
@@ -1035,8 +1040,9 @@ CREATE TABLE `spectrum` (
             }
             else if (tabs.SelectedTab == pageMenu)
             {
+                parent.menuItemLayoutMenu_Click(sender, e);
                 menuItemView.Visible = false;
-            }
+            }            
         }             
 
         private void lbSession_SelectedIndexChanged(object sender, EventArgs e)
@@ -1286,8 +1292,6 @@ CREATE TABLE `spectrum` (
             ClearStatus();
             tbStatusIPAddress.Text = settings.LastHostname;            
             tabs.SelectedTab = pageStatus;
-
-            parent.menuItemLayoutSetup_Click(sender, e);
         }
 
         private void menuItemStopSession_Click(object sender, EventArgs e)
@@ -1660,15 +1664,11 @@ CREATE TABLE `spectrum` (
             parent.SetSession(session);
 
             tabs.SelectedTab = pageSessions;
-
-            parent.menuItemLayoutSession_Click(sender, e);
         }
 
         private void btnNewCancel_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageSessions;
-
-            parent.menuItemLayoutSession_Click(sender, e);
         }
 
         private void btnSetupClose_Click(object sender, EventArgs e)
@@ -1736,9 +1736,9 @@ CREATE TABLE `spectrum` (
 
         private void btnStatusCancel_Click(object sender, EventArgs e)
         {
-            tabs.SelectedTab = pageMenu;
-
-            parent.menuItemLayoutSession_Click(sender, e);
+            if (returnFromSetup == pageNew)
+                tabs.SelectedTab = pageSessions;
+            else tabs.SelectedTab = pageMenu;
         }
 
         private void btnSetupCancel_Click(object sender, EventArgs e)
@@ -1746,8 +1746,6 @@ CREATE TABLE `spectrum` (
             if (returnFromSetup == pageNew)
                 tabs.SelectedTab = pageSessions;
             else tabs.SelectedTab = pageMenu;
-
-            parent.menuItemLayoutSession_Click(sender, e);
         }
 
         private void btnStatusNext_Click(object sender, EventArgs e)

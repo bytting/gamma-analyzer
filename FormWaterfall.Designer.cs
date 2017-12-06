@@ -128,7 +128,7 @@
             this.buttonDownAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonDownAll.Name = "buttonDownAll";
             this.buttonDownAll.Size = new System.Drawing.Size(23, 22);
-            this.buttonDownAll.Text = "toolStripButton1";
+            this.buttonDownAll.Text = "Down All";
             this.buttonDownAll.Click += new System.EventHandler(this.btnDownAll_Click);
             // 
             // buttonDown
@@ -139,7 +139,7 @@
             this.buttonDown.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonDown.Name = "buttonDown";
             this.buttonDown.Size = new System.Drawing.Size(23, 22);
-            this.buttonDown.Text = "toolStripButton2";
+            this.buttonDown.Text = "Down";
             this.buttonDown.Click += new System.EventHandler(this.btnDown_Click);
             // 
             // buttonUp
@@ -150,7 +150,7 @@
             this.buttonUp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonUp.Name = "buttonUp";
             this.buttonUp.Size = new System.Drawing.Size(23, 22);
-            this.buttonUp.Text = "toolStripButton3";
+            this.buttonUp.Text = "Up";
             this.buttonUp.Click += new System.EventHandler(this.btnUp_Click);
             // 
             // buttonUpAll
@@ -161,7 +161,7 @@
             this.buttonUpAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonUpAll.Name = "buttonUpAll";
             this.buttonUpAll.Size = new System.Drawing.Size(23, 22);
-            this.buttonUpAll.Text = "toolStripButton4";
+            this.buttonUpAll.Text = "Up All";
             this.buttonUpAll.Click += new System.EventHandler(this.btnUpAll_Click);
             // 
             // buttonRightAll
@@ -172,7 +172,7 @@
             this.buttonRightAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonRightAll.Name = "buttonRightAll";
             this.buttonRightAll.Size = new System.Drawing.Size(23, 22);
-            this.buttonRightAll.Text = "toolStripButton5";
+            this.buttonRightAll.Text = "Right All";
             this.buttonRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
             // 
             // buttonRight
@@ -183,7 +183,7 @@
             this.buttonRight.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonRight.Name = "buttonRight";
             this.buttonRight.Size = new System.Drawing.Size(23, 22);
-            this.buttonRight.Text = "toolStripButton6";
+            this.buttonRight.Text = "Right";
             this.buttonRight.Click += new System.EventHandler(this.btnRight_Click);
             // 
             // buttonLeft
@@ -194,7 +194,7 @@
             this.buttonLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonLeft.Name = "buttonLeft";
             this.buttonLeft.Size = new System.Drawing.Size(23, 22);
-            this.buttonLeft.Text = "toolStripButton7";
+            this.buttonLeft.Text = "Left";
             this.buttonLeft.Click += new System.EventHandler(this.btnLeft_Click);
             // 
             // buttonLeftAll
@@ -205,7 +205,7 @@
             this.buttonLeftAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonLeftAll.Name = "buttonLeftAll";
             this.buttonLeftAll.Size = new System.Drawing.Size(23, 22);
-            this.buttonLeftAll.Text = "toolStripButton8";
+            this.buttonLeftAll.Text = "Left All";
             this.buttonLeftAll.Click += new System.EventHandler(this.btnLeftAll_Click);
             // 
             // labelColorCeil

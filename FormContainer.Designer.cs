@@ -36,26 +36,28 @@
             this.menuItemViewToolbar = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemViewStatus = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemLayout = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutSetup = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemLayoutSession = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemLayoutCascade = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemLayoutTileVertical = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemLayoutTileHorizontal = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemLayoutArrangeIcons = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.tools = new System.Windows.Forms.ToolStrip();
-            this.status = new System.Windows.Forms.StatusStrip();
-            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.menuItemLayoutSession = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuItemWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemWindowROITable = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemWindowShowAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuItemLayoutSetup = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tools = new System.Windows.Forms.ToolStrip();
+            this.btnLayoutMenu = new System.Windows.Forms.ToolStripButton();
             this.btnLayoutSetup = new System.Windows.Forms.ToolStripButton();
             this.btnLayoutSession = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnROITable = new System.Windows.Forms.ToolStripButton();
+            this.status = new System.Windows.Forms.StatusStrip();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menu.SuspendLayout();
             this.tools.SuspendLayout();
             this.status.SuspendLayout();
@@ -88,7 +90,7 @@
             // menuItemFileExit
             // 
             this.menuItemFileExit.Name = "menuItemFileExit";
-            this.menuItemFileExit.Size = new System.Drawing.Size(152, 22);
+            this.menuItemFileExit.Size = new System.Drawing.Size(92, 22);
             this.menuItemFileExit.Text = "E&xit";
             this.menuItemFileExit.Click += new System.EventHandler(this.menuItemFileExit_Click);
             // 
@@ -107,7 +109,7 @@
             this.menuItemViewToolbar.CheckOnClick = true;
             this.menuItemViewToolbar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuItemViewToolbar.Name = "menuItemViewToolbar";
-            this.menuItemViewToolbar.Size = new System.Drawing.Size(152, 22);
+            this.menuItemViewToolbar.Size = new System.Drawing.Size(115, 22);
             this.menuItemViewToolbar.Text = "&Toolbar";
             this.menuItemViewToolbar.Click += new System.EventHandler(this.menuItemViewToolbar_Click);
             // 
@@ -115,13 +117,14 @@
             // 
             this.menuItemViewStatus.CheckOnClick = true;
             this.menuItemViewStatus.Name = "menuItemViewStatus";
-            this.menuItemViewStatus.Size = new System.Drawing.Size(152, 22);
+            this.menuItemViewStatus.Size = new System.Drawing.Size(115, 22);
             this.menuItemViewStatus.Text = "&Status";
             this.menuItemViewStatus.Click += new System.EventHandler(this.menuItemViewStatus_Click);
             // 
             // menuItemLayout
             // 
             this.menuItemLayout.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemLayoutMenu,
             this.menuItemLayoutSetup,
             this.menuItemLayoutSession,
             this.toolStripSeparator1,
@@ -132,6 +135,32 @@
             this.menuItemLayout.Name = "menuItemLayout";
             this.menuItemLayout.Size = new System.Drawing.Size(55, 20);
             this.menuItemLayout.Text = "&Layout";
+            // 
+            // menuItemLayoutMenu
+            // 
+            this.menuItemLayoutMenu.Name = "menuItemLayoutMenu";
+            this.menuItemLayoutMenu.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutMenu.Text = "Menu";
+            this.menuItemLayoutMenu.Click += new System.EventHandler(this.menuItemLayoutMenu_Click);
+            // 
+            // menuItemLayoutSetup
+            // 
+            this.menuItemLayoutSetup.Name = "menuItemLayoutSetup";
+            this.menuItemLayoutSetup.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutSetup.Text = "S&etup";
+            this.menuItemLayoutSetup.Click += new System.EventHandler(this.menuItemLayoutSetup_Click);
+            // 
+            // menuItemLayoutSession
+            // 
+            this.menuItemLayoutSession.Name = "menuItemLayoutSession";
+            this.menuItemLayoutSession.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutSession.Text = "&Session";
+            this.menuItemLayoutSession.Click += new System.EventHandler(this.menuItemLayoutSession_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // menuItemLayoutCascade
             // 
@@ -160,65 +189,6 @@
             this.menuItemLayoutArrangeIcons.Size = new System.Drawing.Size(152, 22);
             this.menuItemLayoutArrangeIcons.Text = "&Arrange Icons";
             this.menuItemLayoutArrangeIcons.Click += new System.EventHandler(this.menuItemLayoutArrangeIcons_Click);
-            // 
-            // menuItemHelp
-            // 
-            this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemHelpAbout});
-            this.menuItemHelp.Name = "menuItemHelp";
-            this.menuItemHelp.Size = new System.Drawing.Size(44, 20);
-            this.menuItemHelp.Text = "&Help";
-            // 
-            // menuItemHelpAbout
-            // 
-            this.menuItemHelpAbout.Name = "menuItemHelpAbout";
-            this.menuItemHelpAbout.Size = new System.Drawing.Size(152, 22);
-            this.menuItemHelpAbout.Text = "&About";
-            this.menuItemHelpAbout.Click += new System.EventHandler(this.menuItemHelpAbout_Click);
-            // 
-            // tools
-            // 
-            this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnLayoutSetup,
-            this.btnLayoutSession,
-            this.toolStripSeparator3,
-            this.btnROITable});
-            this.tools.Location = new System.Drawing.Point(0, 24);
-            this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(1159, 25);
-            this.tools.TabIndex = 1;
-            this.tools.Text = "tools";
-            // 
-            // status
-            // 
-            this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel});
-            this.status.Location = new System.Drawing.Point(0, 612);
-            this.status.Name = "status";
-            this.status.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            this.status.Size = new System.Drawing.Size(1159, 22);
-            this.status.TabIndex = 4;
-            this.status.Text = "status";
-            this.status.Visible = false;
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(82, 17);
-            this.statusLabel.Text = "<statusLabel>";
-            // 
-            // menuItemLayoutSession
-            // 
-            this.menuItemLayoutSession.Name = "menuItemLayoutSession";
-            this.menuItemLayoutSession.Size = new System.Drawing.Size(152, 22);
-            this.menuItemLayoutSession.Text = "&Session";
-            this.menuItemLayoutSession.Click += new System.EventHandler(this.menuItemLayoutSession_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // menuItemWindow
             // 
@@ -249,12 +219,45 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
             // 
-            // menuItemLayoutSetup
+            // menuItemHelp
             // 
-            this.menuItemLayoutSetup.Name = "menuItemLayoutSetup";
-            this.menuItemLayoutSetup.Size = new System.Drawing.Size(152, 22);
-            this.menuItemLayoutSetup.Text = "S&etup";
-            this.menuItemLayoutSetup.Click += new System.EventHandler(this.menuItemLayoutSetup_Click);
+            this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemHelpAbout});
+            this.menuItemHelp.Name = "menuItemHelp";
+            this.menuItemHelp.Size = new System.Drawing.Size(44, 20);
+            this.menuItemHelp.Text = "&Help";
+            // 
+            // menuItemHelpAbout
+            // 
+            this.menuItemHelpAbout.Name = "menuItemHelpAbout";
+            this.menuItemHelpAbout.Size = new System.Drawing.Size(107, 22);
+            this.menuItemHelpAbout.Text = "&About";
+            this.menuItemHelpAbout.Click += new System.EventHandler(this.menuItemHelpAbout_Click);
+            // 
+            // tools
+            // 
+            this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnLayoutMenu,
+            this.btnLayoutSetup,
+            this.btnLayoutSession,
+            this.toolStripSeparator3,
+            this.btnROITable});
+            this.tools.Location = new System.Drawing.Point(0, 24);
+            this.tools.Name = "tools";
+            this.tools.Size = new System.Drawing.Size(1159, 25);
+            this.tools.TabIndex = 1;
+            this.tools.Text = "tools";
+            // 
+            // btnLayoutMenu
+            // 
+            this.btnLayoutMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLayoutMenu.Image = ((System.Drawing.Image)(resources.GetObject("btnLayoutMenu.Image")));
+            this.btnLayoutMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLayoutMenu.Name = "btnLayoutMenu";
+            this.btnLayoutMenu.Size = new System.Drawing.Size(23, 22);
+            this.btnLayoutMenu.Text = "toolStripButton1";
+            this.btnLayoutMenu.Click += new System.EventHandler(this.menuItemLayoutMenu_Click);
             // 
             // btnLayoutSetup
             // 
@@ -290,6 +293,24 @@
             this.btnROITable.Size = new System.Drawing.Size(23, 22);
             this.btnROITable.Text = "toolStripButton1";
             this.btnROITable.Click += new System.EventHandler(this.menuItemWindowROITable_Click);
+            // 
+            // status
+            // 
+            this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel});
+            this.status.Location = new System.Drawing.Point(0, 612);
+            this.status.Name = "status";
+            this.status.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
+            this.status.Size = new System.Drawing.Size(1159, 22);
+            this.status.TabIndex = 4;
+            this.status.Text = "status";
+            this.status.Visible = false;
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(82, 17);
+            this.statusLabel.Text = "<statusLabel>";
             // 
             // FormContainer
             // 
@@ -350,5 +371,7 @@
         private System.Windows.Forms.ToolStripButton btnLayoutSession;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton btnROITable;
+        private System.Windows.Forms.ToolStripMenuItem menuItemLayoutMenu;
+        private System.Windows.Forms.ToolStripButton btnLayoutMenu;
     }
 }

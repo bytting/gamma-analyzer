@@ -35,13 +35,13 @@
             this.menuItemUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnOptions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnSubtractBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonRightAll = new System.Windows.Forms.ToolStripButton();
             this.buttonRight = new System.Windows.Forms.ToolStripButton();
             this.buttonLeft = new System.Windows.Forms.ToolStripButton();
             this.buttonLeftAll = new System.Windows.Forms.ToolStripButton();
             this.labelScaling = new System.Windows.Forms.ToolStripLabel();
             this.labelSpectrum = new System.Windows.Forms.ToolStripLabel();
-            this.btnSubtractBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.paneMenu.SuspendLayout();
             this.tools.SuspendLayout();
             this.SuspendLayout();
@@ -101,6 +101,14 @@
             this.btnOptions.Size = new System.Drawing.Size(78, 22);
             this.btnOptions.Text = "&Options";
             // 
+            // btnSubtractBackground
+            // 
+            this.btnSubtractBackground.CheckOnClick = true;
+            this.btnSubtractBackground.Name = "btnSubtractBackground";
+            this.btnSubtractBackground.Size = new System.Drawing.Size(185, 22);
+            this.btnSubtractBackground.Text = "Subtract &background";
+            this.btnSubtractBackground.CheckedChanged += new System.EventHandler(this.btnSubtractBackground_CheckedChanged);
+            // 
             // buttonRightAll
             // 
             this.buttonRightAll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -109,7 +117,7 @@
             this.buttonRightAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonRightAll.Name = "buttonRightAll";
             this.buttonRightAll.Size = new System.Drawing.Size(23, 22);
-            this.buttonRightAll.Text = "toolStripButton1";
+            this.buttonRightAll.Text = "Right All";
             this.buttonRightAll.Click += new System.EventHandler(this.btnRightAll_Click);
             // 
             // buttonRight
@@ -120,7 +128,7 @@
             this.buttonRight.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonRight.Name = "buttonRight";
             this.buttonRight.Size = new System.Drawing.Size(23, 22);
-            this.buttonRight.Text = "toolStripButton2";
+            this.buttonRight.Text = "Right";
             this.buttonRight.Click += new System.EventHandler(this.btnRight_Click);
             // 
             // buttonLeft
@@ -131,7 +139,7 @@
             this.buttonLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonLeft.Name = "buttonLeft";
             this.buttonLeft.Size = new System.Drawing.Size(23, 22);
-            this.buttonLeft.Text = "toolStripButton3";
+            this.buttonLeft.Text = "Left";
             this.buttonLeft.Click += new System.EventHandler(this.btnLeft_Click);
             // 
             // buttonLeftAll
@@ -142,7 +150,7 @@
             this.buttonLeftAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonLeftAll.Name = "buttonLeftAll";
             this.buttonLeftAll.Size = new System.Drawing.Size(23, 22);
-            this.buttonLeftAll.Text = "toolStripButton4";
+            this.buttonLeftAll.Text = "Left All";
             this.buttonLeftAll.Click += new System.EventHandler(this.btnLeftAll_Click);
             // 
             // labelScaling
@@ -156,14 +164,6 @@
             this.labelSpectrum.Name = "labelSpectrum";
             this.labelSpectrum.Size = new System.Drawing.Size(99, 22);
             this.labelSpectrum.Text = "<labelSpectrum>";
-            // 
-            // btnSubtractBackground
-            // 
-            this.btnSubtractBackground.CheckOnClick = true;
-            this.btnSubtractBackground.Name = "btnSubtractBackground";
-            this.btnSubtractBackground.Size = new System.Drawing.Size(185, 22);
-            this.btnSubtractBackground.Text = "Subtract &background";
-            this.btnSubtractBackground.CheckedChanged += new System.EventHandler(this.btnSubtractBackground_CheckedChanged);
             // 
             // FormROI
             // 
