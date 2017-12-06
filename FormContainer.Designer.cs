@@ -139,54 +139,54 @@
             // menuItemLayoutMenu
             // 
             this.menuItemLayoutMenu.Name = "menuItemLayoutMenu";
-            this.menuItemLayoutMenu.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutMenu.Size = new System.Drawing.Size(151, 22);
             this.menuItemLayoutMenu.Text = "Menu";
             this.menuItemLayoutMenu.Click += new System.EventHandler(this.menuItemLayoutMenu_Click);
             // 
             // menuItemLayoutSetup
             // 
             this.menuItemLayoutSetup.Name = "menuItemLayoutSetup";
-            this.menuItemLayoutSetup.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutSetup.Size = new System.Drawing.Size(151, 22);
             this.menuItemLayoutSetup.Text = "S&etup";
             this.menuItemLayoutSetup.Click += new System.EventHandler(this.menuItemLayoutSetup_Click);
             // 
             // menuItemLayoutSession
             // 
             this.menuItemLayoutSession.Name = "menuItemLayoutSession";
-            this.menuItemLayoutSession.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutSession.Size = new System.Drawing.Size(151, 22);
             this.menuItemLayoutSession.Text = "&Session";
             this.menuItemLayoutSession.Click += new System.EventHandler(this.menuItemLayoutSession_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(148, 6);
             // 
             // menuItemLayoutCascade
             // 
             this.menuItemLayoutCascade.Name = "menuItemLayoutCascade";
-            this.menuItemLayoutCascade.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutCascade.Size = new System.Drawing.Size(151, 22);
             this.menuItemLayoutCascade.Text = "&Cascade";
             this.menuItemLayoutCascade.Click += new System.EventHandler(this.menuItemLayoutCascade_Click);
             // 
             // menuItemLayoutTileVertical
             // 
             this.menuItemLayoutTileVertical.Name = "menuItemLayoutTileVertical";
-            this.menuItemLayoutTileVertical.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutTileVertical.Size = new System.Drawing.Size(151, 22);
             this.menuItemLayoutTileVertical.Text = "Tile &Vertical";
             this.menuItemLayoutTileVertical.Click += new System.EventHandler(this.menuItemLayoutTileVertical_Click);
             // 
             // menuItemLayoutTileHorizontal
             // 
             this.menuItemLayoutTileHorizontal.Name = "menuItemLayoutTileHorizontal";
-            this.menuItemLayoutTileHorizontal.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutTileHorizontal.Size = new System.Drawing.Size(151, 22);
             this.menuItemLayoutTileHorizontal.Text = "Tile &Horizontal";
             this.menuItemLayoutTileHorizontal.Click += new System.EventHandler(this.menuItemLayoutTileHorizontal_Click);
             // 
             // menuItemLayoutArrangeIcons
             // 
             this.menuItemLayoutArrangeIcons.Name = "menuItemLayoutArrangeIcons";
-            this.menuItemLayoutArrangeIcons.Size = new System.Drawing.Size(152, 22);
+            this.menuItemLayoutArrangeIcons.Size = new System.Drawing.Size(151, 22);
             this.menuItemLayoutArrangeIcons.Text = "&Arrange Icons";
             this.menuItemLayoutArrangeIcons.Click += new System.EventHandler(this.menuItemLayoutArrangeIcons_Click);
             // 
@@ -257,6 +257,7 @@
             this.btnLayoutMenu.Name = "btnLayoutMenu";
             this.btnLayoutMenu.Size = new System.Drawing.Size(23, 22);
             this.btnLayoutMenu.Text = "toolStripButton1";
+            this.btnLayoutMenu.Visible = false;
             this.btnLayoutMenu.Click += new System.EventHandler(this.menuItemLayoutMenu_Click);
             // 
             // btnLayoutSetup
