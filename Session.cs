@@ -229,15 +229,32 @@ namespace crash
         {
             // Find highest count for a given region
 
-            float max = 0f;
+            float max = -1f;
 
             foreach (Spectrum s in Spectrums)
             {
                 float curr = s.GetCountInROI(start, end);
-                if (curr > max)
+                if (max == -1f)
+                    max = curr;
+                else if(curr > max)
                     max = curr;
             }
             return max;
+        }
+
+        public double GetBackgroundCountInROI(int start, int end)
+        {
+            // Find highest count for a given region in background
+
+            if (Background == null)
+                return 0d;
+
+            double cnt = 0d;
+
+            for (int i=start; i<end; i++)            
+                cnt += Background[i];
+            
+            return cnt;
         }
     }    
 }

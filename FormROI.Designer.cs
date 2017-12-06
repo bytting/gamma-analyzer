@@ -41,6 +41,7 @@
             this.buttonLeftAll = new System.Windows.Forms.ToolStripButton();
             this.labelScaling = new System.Windows.Forms.ToolStripLabel();
             this.labelSpectrum = new System.Windows.Forms.ToolStripLabel();
+            this.btnSubtractBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.paneMenu.SuspendLayout();
             this.tools.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +93,8 @@
             // 
             // btnOptions
             // 
+            this.btnOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSubtractBackground});
             this.btnOptions.Image = global::crash.Properties.Resources.options1_16;
             this.btnOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOptions.Name = "btnOptions";
@@ -154,7 +157,15 @@
             this.labelSpectrum.Size = new System.Drawing.Size(99, 22);
             this.labelSpectrum.Text = "<labelSpectrum>";
             // 
-            // FormROILive
+            // btnSubtractBackground
+            // 
+            this.btnSubtractBackground.CheckOnClick = true;
+            this.btnSubtractBackground.Name = "btnSubtractBackground";
+            this.btnSubtractBackground.Size = new System.Drawing.Size(185, 22);
+            this.btnSubtractBackground.Text = "Subtract &background";
+            this.btnSubtractBackground.CheckedChanged += new System.EventHandler(this.btnSubtractBackground_CheckedChanged);
+            // 
+            // FormROI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -168,7 +179,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(296, 134);
-            this.Name = "FormROILive";
+            this.Name = "FormROI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "ROI";
             this.Load += new System.EventHandler(this.FormROITableLive_Load);
@@ -193,5 +204,6 @@
         private System.Windows.Forms.ToolStripButton buttonLeftAll;
         private System.Windows.Forms.ToolStripLabel labelScaling;
         private System.Windows.Forms.ToolStripLabel labelSpectrum;
+        private System.Windows.Forms.ToolStripMenuItem btnSubtractBackground;
     }
 }

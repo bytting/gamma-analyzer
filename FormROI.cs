@@ -92,8 +92,8 @@ namespace crash
 
                 FontFamily fontFamily = new FontFamily("Arial");
                 Font font = new Font(fontFamily, 10, FontStyle.Regular, GraphicsUnit.Pixel);
-
-                float scaling = -1f;
+                
+                double maxRoiCount = -1d;
 
                 foreach (ROIData rd in settings.ROIList)
                 {
@@ -106,20 +106,27 @@ namespace crash
                         continue;
                     }
 
-                    float s = (bmpPane.Height - 40) / session.GetMaxCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
+                    double mc = session.GetMaxCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
+                    if(btnSubtractBackground.Checked)
+                    {
+                        mc -= session.GetBackgroundCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
+                        if (mc < 0d)
+                            mc = 0d;
+                    }
 
-                    if (scaling == -1f)
-                    {
-                        scaling = s;
-                    }
-                    else
-                    {
-                        if (s < scaling)
-                            scaling = s;
-                    }
+                    double maxCount = 0d;
+                    if (mc > 0d)
+                        maxCount = Math.Log(mc);
+
+                    if (maxRoiCount == -1d)
+                        maxRoiCount = maxCount;
+                    else if (maxCount > maxRoiCount)
+                        maxRoiCount = maxCount;
                 }
 
-                labelScaling.Text = "Scale factor: " + String.Format("{0:0.0#}", scaling);
+                double unit = (bmpPane.Height - 40) / maxRoiCount;
+
+                labelScaling.Text = "Scale factor: " + String.Format("{0:0.0#}", unit);
 
                 foreach (ROIData rd in settings.ROIList)
                 {
@@ -128,20 +135,39 @@ namespace crash
 
                     Pen pen = new Pen(Color.FromName(rd.ColorName), 1);
                     int x = 0;
-                    int last_x = 0, last_y = pane.Height - 40;
+                    int last_x = 0, last_y = bmpPane.Height - 40;
 
-                    for (int i = firstSpectrum; i < firstSpectrum + bmpPane.Width; i++)
+                    for (int i = firstSpectrum; i < firstSpectrum + bmpPane.Width && i < session.Spectrums.Count; i++)
                     {
-                        if (i >= (int)session.Spectrums.Count)
-                            break;
-
                         Spectrum s = session.Spectrums[i];
-                        float weightedCount = s.GetCountInROI((int)rd.StartChannel, (int)rd.EndChannel) * scaling;
+                        double roiCount = s.GetCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
+                        if(btnSubtractBackground.Checked)
+                        {
+                            roiCount -= session.GetBackgroundCountInROI((int)rd.StartChannel, (int)rd.EndChannel);
+                            if (roiCount < 0d)
+                                roiCount = 0d;
+                        }
 
-                        int y = pane.Height - 40 - (int)weightedCount;
+                        double weightedCount = 0d;
+                        if (roiCount > 0d)
+                            weightedCount = Math.Log(roiCount);
 
-                        if (x >= 0 && x < bmpPane.Width && y >= 0 && y < bmpPane.Height)
-                            g.DrawLine(pen, last_x, last_y, x, y);
+                        weightedCount *= unit;
+
+                        if (weightedCount < 0d)
+                            weightedCount = 0d;
+
+                        int y = bmpPane.Height - 40 - (int)weightedCount;
+
+                        try
+                        {
+                            if (x >= 0 && x < bmpPane.Width && y >= 0 && y < bmpPane.Height - 40)
+                                g.DrawLine(pen, last_x, last_y, x, y);
+                        }
+                        catch(Exception ex)
+                        {
+                            MessageBox.Show("last_x: " + last_x + " last_y: " + last_y + " x: " + x + " y: " + y);
+                        }
 
                         bmpPane.SetPixel(x, bmpPane.Height - 1, Utils.ToColor(s.SessionIndex));
 
@@ -306,6 +332,11 @@ namespace crash
         private void menuItemUnselect_Click(object sender, EventArgs e)
         {
             parent.SetSelectedSessionIndex(-1);
-        }        
+        }
+
+        private void btnSubtractBackground_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdatePane();
+        }
     }    
 }

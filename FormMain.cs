@@ -651,6 +651,11 @@ CREATE TABLE `spectrum` (
             lblLatitude.Text = "Latitude: " + s.Latitude.ToString("#00.0000000") + " ±" + s.LatitudeError.ToString("###0.0#");
             lblLongitude.Text = "Longitude: " + s.Longitude.ToString("#00.0000000") + " ±" + s.LongitudeError.ToString("###0.0#");
             lblAltitude.Text = "Altitude: " + s.Altitude.ToString("#####0.0#") + " ±" + s.AltitudeError.ToString("###0.0#");
+            if(session.Spectrums.Count > 0)
+            {
+                double relativeHeight = s.Altitude - session.Spectrums[0].Altitude;
+                lblAltitude.Text += " (rel. " + relativeHeight.ToString("######0.0#") + ")";
+            }
             lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s.GpsTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") : s.GpsTime.ToString("yyyy-MM-dd HH:mm:ss"));
             lblMaxCount.Text = "Max count: " + s.MaxCount;
             lblMinCount.Text = "Min count: " + s.MinCount;
@@ -719,10 +724,10 @@ CREATE TABLE `spectrum` (
             lblLivetime.Text = "Livetime:" + liveTime;
             lblSession.Text = "Session: " + s1.SessionName;
             lblIndex.Text = "Index: " + s1.SessionIndex + " - " + s2.SessionIndex;
-            lblLatitude.Text = "Latitude: " + s1.Latitude.ToString("#00.0000000") + " ±" + s2.LatitudeError.ToString("###0.0#");
-            lblLongitude.Text = "Longitude: " + s1.Longitude.ToString("#00.0000000") + " ±" + s2.LongitudeError.ToString("###0.0#");
-            lblAltitude.Text = "Altitude: " + s1.Altitude.ToString("#####0.0#") + " ±" + s2.AltitudeError.ToString("###0.0#");
-            lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s1.GpsTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") : s1.GpsTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            lblLatitude.Text = "";
+            lblLongitude.Text = "";
+            lblAltitude.Text = "";
+            lblGpsTime.Text = "";
             lblMaxCount.Text = "Max count: " + maxCnt;
             lblMinCount.Text = "Min count: " + minCnt;
             lblTotalCount.Text = "Total count: " + totCnt;
@@ -1036,8 +1041,6 @@ CREATE TABLE `spectrum` (
 
         private void lbSession_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Update session UI
-
             if (lbSession.SelectedItems.Count < 1)
             {                
                 parent.SetSelectedSessionIndex(-1);

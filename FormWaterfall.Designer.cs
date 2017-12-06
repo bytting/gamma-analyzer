@@ -240,7 +240,7 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(819, 309);
+            this.pane.Size = new System.Drawing.Size(819, 285);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
@@ -267,7 +267,7 @@
             this.tbColorCeil.Location = new System.Drawing.Point(0, 0);
             this.tbColorCeil.Name = "tbColorCeil";
             this.tbColorCeil.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.tbColorCeil.Size = new System.Drawing.Size(25, 309);
+            this.tbColorCeil.Size = new System.Drawing.Size(25, 285);
             this.tbColorCeil.TabIndex = 3;
             this.tbColorCeil.Scroll += new System.EventHandler(this.tbColorCeil_Scroll);
             this.tbColorCeil.ValueChanged += new System.EventHandler(this.tbColorCeil_ValueChanged);
@@ -278,14 +278,14 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel2.Location = new System.Drawing.Point(819, 25);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(25, 309);
+            this.panel2.Size = new System.Drawing.Size(25, 285);
             this.panel2.TabIndex = 5;
             // 
-            // FormWaterfallLive
+            // FormWaterfall
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(844, 334);
+            this.ClientSize = new System.Drawing.Size(844, 310);
             this.ControlBox = false;
             this.Controls.Add(this.pane);
             this.Controls.Add(this.panel2);
@@ -294,8 +294,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(256, 128);
-            this.Name = "FormWaterfallLive";
+            this.MinimumSize = new System.Drawing.Size(256, 122);
+            this.Name = "FormWaterfall";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Waterfall";
             this.Load += new System.EventHandler(this.FormWaterfall_Load);
