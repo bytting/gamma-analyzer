@@ -57,7 +57,7 @@
             this.pane.Size = new System.Drawing.Size(656, 305);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
-            this.pane.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pane_MouseClick);
+            this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
             this.pane.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pane_MouseMove);
             this.pane.Resize += new System.EventHandler(this.pane_Resize);
             // 

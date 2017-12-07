@@ -440,7 +440,7 @@ namespace crash
                 labelChannel.Text = "Ch: " + String.Format("{0:###0}", mouseChannel);
 
                 // Show session index
-                if (e.Y < session.Spectrums.Count - 1 && e.Y >= 0 && e.Y <= bmpPane.Height)
+                if (e.Y < session.Spectrums.Count - 1 && e.Y >= 0 && e.Y < bmpPane.Height)
                 {
                     int sessionId = Utils.ToArgb(bmpPane.GetPixel(0, e.Y));
                     labelSpectrum.Text = "Idx: " + sessionId.ToString();
@@ -449,8 +449,7 @@ namespace crash
 
                 // Show energy
                 if (session.IsLoaded && currentDetector != null)
-                {
-                    //double E = Utils.EnergyCalculationFunc((double)e.X);
+                {                    
                     double en = currentDetector.GetEnergy(e.X);
                     labelEnergy.Text = "En: " + String.Format("{0:#######0.0###}", en);
                 }

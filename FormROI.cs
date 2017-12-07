@@ -219,19 +219,19 @@ namespace crash
             firstSpectrum = 0;
 
             UpdatePane();            
-        }        
+        }
 
-        private void pane_MouseClick(object sender, MouseEventArgs e)
+        private void pane_MouseDown(object sender, MouseEventArgs e)
         {
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
                 return;
 
             if (e.Button == MouseButtons.Left)
-            {                                
-                if (ModifierKeys.HasFlag(Keys.Shift) && SelectedSessionIndex1 != -1)                
-                    parent.SetSelectedSessionIndices(SelectedSessionIndex1, Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1)));                
-                else                
-                    parent.SetSelectedSessionIndex(Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1)));                
+            {
+                if (ModifierKeys.HasFlag(Keys.Shift) && SelectedSessionIndex1 != -1)
+                    parent.SetSelectedSessionIndices(SelectedSessionIndex1, Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1)));
+                else
+                    parent.SetSelectedSessionIndex(Utils.ToArgb(bmpPane.GetPixel(e.X, bmpPane.Height - 1)));
             }
         }
 
@@ -319,7 +319,7 @@ namespace crash
             
             int index = e.X;
 
-            if (index < 0 || index >= session.Spectrums.Count)
+            if (index < 0 || index >= bmpPane.Width || index >= session.Spectrums.Count)
             {
                 labelSpectrum.Text = "";
                 return;
@@ -337,6 +337,6 @@ namespace crash
         private void btnSubtractBackground_CheckedChanged(object sender, EventArgs e)
         {
             UpdatePane();
-        }
+        }        
     }    
 }
