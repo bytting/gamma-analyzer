@@ -332,7 +332,6 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormContainer_FormClosing);
             this.Load += new System.EventHandler(this.FormContainer_Load);
-            this.Shown += new System.EventHandler(this.FormContainer_Shown);
             this.ResizeEnd += new System.EventHandler(this.FormContainer_ResizeEnd);
             this.Resize += new System.EventHandler(this.FormContainer_Resize);
             this.menu.ResumeLayout(false);

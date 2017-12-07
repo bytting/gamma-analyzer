@@ -41,10 +41,8 @@ namespace crash
     {
         private ILog log = null;
 
-        bool initialized = false;
-
         UILayout currentLayout = UILayout.Menu;
-        FormWindowState lastWindowState = FormWindowState.Normal;
+        FormWindowState lastWindowState = FormWindowState.Maximized;
 
         // Structure with application settings stored on disk
         private GASettings settings = new GASettings();
@@ -103,7 +101,7 @@ namespace crash
                 formMap.Left = -1000;
                 formMain = new FormMain(this, settings, log);
                 formMain.Left = -1000;
-
+                
                 menuItemLayoutMenu_Click(sender, e);
 
                 statusLabel.Text = "";
@@ -499,30 +497,17 @@ namespace crash
 
         private void FormContainer_ResizeEnd(object sender, EventArgs e)
         {
-            if (!initialized)
-                return;
-
             SetUILayout(sender, e);
         }
 
         private void FormContainer_Resize(object sender, EventArgs e)
         {
-            if (!initialized)
-                return;
-
             if (WindowState != lastWindowState)
             {
                 lastWindowState = WindowState;
-                if (WindowState == FormWindowState.Maximized || WindowState == FormWindowState.Normal)
-                {
+                if (WindowState == FormWindowState.Maximized || WindowState == FormWindowState.Normal)        
                     SetUILayout(sender, e);
-                }
             }
-        }
-
-        private void FormContainer_Shown(object sender, EventArgs e)
-        {
-            initialized = true;
         }
     }
 
