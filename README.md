@@ -14,7 +14,7 @@ Dependencies:
 
 
 ##### Screenshot 1
-![gamma-analyzer-4](https://user-images.githubusercontent.com/1276717/33714217-781d9ce2-db4e-11e7-87a2-c4956b00d082.png)
+![gamma-analyzer-5](https://user-images.githubusercontent.com/1276717/33714669-11be8dec-db50-11e7-8220-735f71265f82.png)
 
 ##### Screenshot 2
 ![gamma-analyzer-3](https://user-images.githubusercontent.com/1276717/33714263-9990573e-db4e-11e7-84eb-2dbb4ca79f95.png)
