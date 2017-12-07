@@ -91,6 +91,8 @@ namespace crash
         // Array containing curve fitting coefficients
         private List<double> coefficients = new List<double>();
 
+        private int currentGroundLevelIndex = -1;
+
         // Enumeration used to keep track of graph object types
         public enum GraphObjectType
         {
@@ -143,6 +145,7 @@ namespace crash
                 PopulateDetectorList();
                 PopulateDetectors();
 
+                lblGroundLevelIndex.Text = "";
                 lblSessionSelChannel.Text = "";
                 lblSessionsDatabase.Text = "";
                 lblSetupChannel.Text = "";
@@ -651,9 +654,9 @@ CREATE TABLE `spectrum` (
             lblLatitude.Text = "Latitude: " + s.Latitude.ToString("#00.0000000") + " ±" + s.LatitudeError.ToString("###0.0#");
             lblLongitude.Text = "Longitude: " + s.Longitude.ToString("#00.0000000") + " ±" + s.LongitudeError.ToString("###0.0#");
             lblAltitude.Text = "Altitude: " + s.Altitude.ToString("#####0.0#") + " ±" + s.AltitudeError.ToString("###0.0#");
-            if(session.Spectrums.Count > 0)
+            if(currentGroundLevelIndex > -1 && currentGroundLevelIndex < session.Spectrums.Count)
             {
-                double relativeHeight = s.Altitude - session.Spectrums[0].Altitude;
+                double relativeHeight = s.Altitude - session.Spectrums[currentGroundLevelIndex].Altitude;
                 lblAltitude.Text += " (rel. " + relativeHeight.ToString("######0.0#") + ")";
             }
             lblGpsTime.Text = "Time: " + (menuItemConvertToLocalTime.Checked ? s.GpsTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss") : s.GpsTime.ToString("yyyy-MM-dd HH:mm:ss"));
@@ -2010,6 +2013,22 @@ CREATE TABLE `spectrum` (
 
             // Stop timer listening for network messages
             timer.Stop();
+        }
+
+        private void menuItemUseAsGroundLevel_Click(object sender, EventArgs e)
+        {
+            if (session == null || !session.IsLoaded)            
+                return;
+
+            if (lbSession.SelectedItems.Count != 1)
+            {
+                MessageBox.Show("Only a single spectrum can be used as ground level");
+                return;
+            }
+
+            Spectrum spec = lbSession.SelectedItems[0] as Spectrum;
+            currentGroundLevelIndex = spec.SessionIndex;
+            lblGroundLevelIndex.Text = "Gnd idx: " + currentGroundLevelIndex;
         }
 
         private void menuItemChangeIPAddress_Click(object sender, EventArgs e)

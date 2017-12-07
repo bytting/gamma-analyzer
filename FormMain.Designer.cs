@@ -234,6 +234,8 @@
             this.panel25 = new System.Windows.Forms.Panel();
             this.btnUploadClose = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
+            this.menuItemUseAsGroundLevel = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblGroundLevelIndex = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.contextMenuSession.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -477,21 +479,22 @@
             // 
             this.contextMenuSession.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemSessionUnselect,
-            this.menuItemSetAsBackground});
+            this.menuItemSetAsBackground,
+            this.menuItemUseAsGroundLevel});
             this.contextMenuSession.Name = "contextMenuSession";
-            this.contextMenuSession.Size = new System.Drawing.Size(172, 48);
+            this.contextMenuSession.Size = new System.Drawing.Size(177, 70);
             // 
             // menuItemSessionUnselect
             // 
             this.menuItemSessionUnselect.Name = "menuItemSessionUnselect";
-            this.menuItemSessionUnselect.Size = new System.Drawing.Size(171, 22);
+            this.menuItemSessionUnselect.Size = new System.Drawing.Size(176, 22);
             this.menuItemSessionUnselect.Text = "&Unselect";
             this.menuItemSessionUnselect.Click += new System.EventHandler(this.menuItemSessionUnselect_Click);
             // 
             // menuItemSetAsBackground
             // 
             this.menuItemSetAsBackground.Name = "menuItemSetAsBackground";
-            this.menuItemSetAsBackground.Size = new System.Drawing.Size(171, 22);
+            this.menuItemSetAsBackground.Size = new System.Drawing.Size(176, 22);
             this.menuItemSetAsBackground.Text = "Set as background";
             this.menuItemSetAsBackground.Click += new System.EventHandler(this.menuItemLoadBackgroundSelection_Click);
             // 
@@ -1619,6 +1622,7 @@
             this.panel1.Controls.Add(this.lblSessionSelChannel);
             this.panel1.Controls.Add(this.btnSessionsClose);
             this.panel1.Controls.Add(this.lblSessionChannel);
+            this.panel1.Controls.Add(this.lblGroundLevelIndex);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 547);
             this.panel1.Name = "panel1";
@@ -1629,7 +1633,7 @@
             // 
             this.lblSessionEnergy.AutoSize = true;
             this.lblSessionEnergy.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblSessionEnergy.Location = new System.Drawing.Point(266, 0);
+            this.lblSessionEnergy.Location = new System.Drawing.Point(400, 0);
             this.lblSessionEnergy.Name = "lblSessionEnergy";
             this.lblSessionEnergy.Size = new System.Drawing.Size(116, 15);
             this.lblSessionEnergy.TabIndex = 1;
@@ -1640,7 +1644,7 @@
             this.lblSessionSelChannel.AutoSize = true;
             this.lblSessionSelChannel.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblSessionSelChannel.ForeColor = System.Drawing.Color.Crimson;
-            this.lblSessionSelChannel.Location = new System.Drawing.Point(124, 0);
+            this.lblSessionSelChannel.Location = new System.Drawing.Point(258, 0);
             this.lblSessionSelChannel.Name = "lblSessionSelChannel";
             this.lblSessionSelChannel.Size = new System.Drawing.Size(142, 15);
             this.lblSessionSelChannel.TabIndex = 3;
@@ -1663,7 +1667,7 @@
             this.lblSessionChannel.AutoSize = true;
             this.lblSessionChannel.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblSessionChannel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSessionChannel.Location = new System.Drawing.Point(0, 0);
+            this.lblSessionChannel.Location = new System.Drawing.Point(134, 0);
             this.lblSessionChannel.Name = "lblSessionChannel";
             this.lblSessionChannel.Size = new System.Drawing.Size(124, 15);
             this.lblSessionChannel.TabIndex = 0;
@@ -2529,6 +2533,23 @@
             // 
             this.openSessionDialog.DefaultExt = "db";
             // 
+            // menuItemUseAsGroundLevel
+            // 
+            this.menuItemUseAsGroundLevel.Name = "menuItemUseAsGroundLevel";
+            this.menuItemUseAsGroundLevel.Size = new System.Drawing.Size(176, 22);
+            this.menuItemUseAsGroundLevel.Text = "Use as ground level";
+            this.menuItemUseAsGroundLevel.Click += new System.EventHandler(this.menuItemUseAsGroundLevel_Click);
+            // 
+            // lblGroundLevelIndex
+            // 
+            this.lblGroundLevelIndex.AutoSize = true;
+            this.lblGroundLevelIndex.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblGroundLevelIndex.Location = new System.Drawing.Point(0, 0);
+            this.lblGroundLevelIndex.Name = "lblGroundLevelIndex";
+            this.lblGroundLevelIndex.Size = new System.Drawing.Size(134, 15);
+            this.lblGroundLevelIndex.TabIndex = 4;
+            this.lblGroundLevelIndex.Text = "<lblGroundLevelIndex>";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2847,6 +2868,8 @@
         private System.Windows.Forms.Button btnUploadClose;
         private System.Windows.Forms.TextBox tbUploadLog;
         private System.Windows.Forms.ToolStripMenuItem menuItemAdjustZeroCoefficient;
+        private System.Windows.Forms.ToolStripMenuItem menuItemUseAsGroundLevel;
+        private System.Windows.Forms.Label lblGroundLevelIndex;
     }
 }
 

@@ -35,9 +35,16 @@ using log4net.Repository.Hierarchy;
 
 namespace crash
 {
+    public enum UILayout { Menu, Session, Setup };
+
     public partial class FormContainer : Form
     {
         private ILog log = null;
+
+        bool initialized = false;
+
+        UILayout currentLayout = UILayout.Menu;
+        FormWindowState lastWindowState = FormWindowState.Normal;
 
         // Structure with application settings stored on disk
         private GASettings settings = new GASettings();
@@ -343,6 +350,8 @@ namespace crash
             formMain.Width = size.Width - 4;
             formMain.Top = rect.Top;
             formMain.Height = height;
+
+            currentLayout = UILayout.Menu;
         }
 
         public void menuItemLayoutSetup_Click(object sender, EventArgs e)
@@ -376,6 +385,8 @@ namespace crash
             formLog.Width = size.Width - 4;
             formLog.Top = mainHeight;
             formLog.Height = logHeight;
+
+            currentLayout = UILayout.Setup;
         }
 
         public void menuItemLayoutSession_Click(object sender, EventArgs e)
@@ -417,6 +428,8 @@ namespace crash
             formLog.Width = thirdWidth;
             formLog.Top = formROI.Top + formROI.Height;
             formLog.Height = thirdHeight - thirdHeight / 2;
+
+            currentLayout = UILayout.Session;
         }
 
         private void menuItemWindowROITable_Click(object sender, EventArgs e)
@@ -466,6 +479,50 @@ namespace crash
             {
                 log.Error(ex.Message, ex);
             }
+        }
+
+        private void SetUILayout(object sender, EventArgs e)
+        {
+            switch (currentLayout)
+            {
+                case UILayout.Menu:
+                    menuItemLayoutMenu_Click(sender, e);
+                    break;
+                case UILayout.Setup:
+                    menuItemLayoutSetup_Click(sender, e);
+                    break;
+                case UILayout.Session:
+                    menuItemLayoutSession_Click(sender, e);
+                    break;
+            }
+        }
+
+        private void FormContainer_ResizeEnd(object sender, EventArgs e)
+        {
+            if (!initialized)
+                return;
+
+            SetUILayout(sender, e);
+        }
+
+        private void FormContainer_Resize(object sender, EventArgs e)
+        {
+            if (!initialized)
+                return;
+
+            if (WindowState != lastWindowState)
+            {
+                lastWindowState = WindowState;
+                if (WindowState == FormWindowState.Maximized || WindowState == FormWindowState.Normal)
+                {
+                    SetUILayout(sender, e);
+                }
+            }
+        }
+
+        private void FormContainer_Shown(object sender, EventArgs e)
+        {
+            initialized = true;
         }
     }
 
