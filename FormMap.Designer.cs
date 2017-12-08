@@ -174,16 +174,16 @@
             this.gmnMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gmnMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gmnMap.ShowTileGridLines = false;
-            this.gmnMap.Size = new System.Drawing.Size(708, 451);
+            this.gmnMap.Size = new System.Drawing.Size(708, 417);
             this.gmnMap.TabIndex = 7;
             this.gmnMap.Zoom = 10D;
             this.gmnMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.gmap_OnMarkerClick);
             // 
             // FormMap
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(708, 476);
+            this.ClientSize = new System.Drawing.Size(708, 442);
             this.ControlBox = false;
             this.Controls.Add(this.gmnMap);
             this.Controls.Add(this.toolsMap);
@@ -191,7 +191,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(256, 128);
+            this.MinimumSize = new System.Drawing.Size(256, 122);
             this.Name = "FormMap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Map";

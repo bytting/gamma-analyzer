@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Text;
+using System.Linq;
 using System.Windows.Forms;
 using GMap.NET;
 using GMap.NET.MapProviders;
@@ -39,11 +40,7 @@ namespace crash
         private Session currentSession = null;
         private GMapOverlay overlay = new GMapOverlay();
 
-        private Bitmap bmpBlue = new Bitmap(crash.Properties.Resources.marker_blue_10);
-        private Bitmap bmpGreen = new Bitmap(crash.Properties.Resources.marker_green_10);
-        private Bitmap bmpYellow = new Bitmap(crash.Properties.Resources.marker_yellow_10);
-        private Bitmap bmpOrange = new Bitmap(crash.Properties.Resources.marker_orange_10);
-        private Bitmap bmpRed = new Bitmap(crash.Properties.Resources.marker_red_10);
+        private double minDoserate, maxDoserate;
 
         public FormMap(FormContainer p, GASettings s, ILog l)
         {
@@ -174,43 +171,29 @@ namespace crash
         public void AddMarker(Spectrum s)
         {
             if (currentSession == null)
-                return;            
+                return;
 
-            Bitmap bmp = null;
-            double dose = s.Doserate / 1000.0;
+            maxDoserate = currentSession.Spectrums.Max(x => x.Doserate);
+            minDoserate = currentSession.Spectrums.Min(x => x.Doserate);
 
-            if (dose <= 1.0)
-                bmp = bmpBlue;
-            else if (dose <= 5.0)
-                bmp = bmpGreen;
-            else if (dose <= 10.0)
-                bmp = bmpYellow;
-            else if (dose <= 20.0)
-                bmp = bmpOrange;
-            else bmp = bmpRed;
-
-            // Add map marker            
-            GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(s.Latitude, s.Longitude), bmp);
+            // Add map marker
+            GMapPoint marker = new GMapPoint(minDoserate, maxDoserate, new PointLatLng(s.Latitude, s.Longitude), new Size(10, 10));
             marker.Tag = s;
             marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-            marker.ToolTipText = s.ToString() 
-                + Environment.NewLine + "Latitude: " + s.Latitude
-                + Environment.NewLine + "Longitude: " + s.Longitude
-                + Environment.NewLine + "Altitude: " + s.Altitude;
             overlay.Markers.Add(marker);
         }                        
 
         private void gmap_OnMarkerClick(GMapMarker item, MouseEventArgs e)
         {                                    
-            Spectrum s = (Spectrum)item.Tag;
+            Spectrum s = item.Tag as Spectrum;
             parent.SetSelectedSessionIndex(s.SessionIndex);
         }
 
         public void SetSelectedSessionIndex(int index)
         {
-            foreach (GMarkerGoogle m in overlay.Markers)
+            foreach (GMapPoint m in overlay.Markers)
             {                   
-                Spectrum s = (Spectrum)m.Tag;
+                Spectrum s = m.Tag as Spectrum;
                 if (s.SessionIndex == index)                
                     m.ToolTipMode = MarkerTooltipMode.Always;                                
                 else                
@@ -221,9 +204,9 @@ namespace crash
 
         public void SetSelectedSessionIndices(int index1, int index2)
         {
-            foreach (GMarkerGoogle m in overlay.Markers)
+            foreach (GMapPoint m in overlay.Markers)
             {
-                Spectrum s = (Spectrum)m.Tag;
+                Spectrum s = m.Tag as Spectrum;
                 if (s.SessionIndex >= index1 && s.SessionIndex <= index2)                
                     m.ToolTipMode = MarkerTooltipMode.Always;
                 else                
@@ -262,5 +245,65 @@ namespace crash
         {
             gmnMap.Manager.CancelTileCaching();
         }
-    }    
+    }
+
+    public class GMapPoint : GMapMarker
+    {
+        private static double MinDoserate;
+        private static double MaxDoserate;
+
+        public GMapPoint(double minDose, double maxDose, PointLatLng pos, Size siz) : base(pos)
+        {            
+            Size = siz;
+            Position = pos;
+            Offset = new Point(-siz.Width / 2, -siz.Height / 2);
+            MinDoserate = minDose;
+            MaxDoserate = maxDose;
+        }
+
+        public override void OnRender(Graphics g)
+        {
+            Spectrum spec = Tag as Spectrum;
+
+            double minDose = Math.Log(MinDoserate);
+            double maxDose = Math.Log(MaxDoserate);
+            double dose = Math.Log(spec.Doserate);
+
+            ToolTipText = spec.ToString()
+                + Environment.NewLine + "Latitude: " + spec.Latitude.ToString("#00.0000000")
+                + Environment.NewLine + "Longitude: " + spec.Longitude.ToString("#00.0000000")
+                + Environment.NewLine + "Altitude: " + spec.Altitude.ToString("#####0.0#")
+                + Environment.NewLine + "Doserate: " + String.Format("{0:###0.0##}", spec.Doserate / 1000.0) + " μSv/h";
+
+            double f = (dose - minDose) / (maxDose - minDose);
+            double a = (1.0 - f) / 0.25;  // invert and group            
+            double x = Math.Floor(a); // the integer part
+            double y = Math.Floor(255.0 * (a - x)); // the fractional part from 0 to 255
+
+            Color c = new Color();
+            switch ((int)x)
+            {
+                case 0:
+                    c = Color.FromArgb(255, 255, (int)y, 0);
+                    break;
+                case 1:
+                    c = Color.FromArgb(255 - (int)y, 255, 0);
+                    break;
+                case 2:
+                    c = Color.FromArgb(0, 255, (int)y);
+                    break;
+                case 3:
+                    c = Color.FromArgb(0, 255 - (int)y, 255);
+                    break;
+                case 4:
+                    c = Color.FromArgb(0, 0, 255);
+                    break;
+            }            
+
+            using (SolidBrush brush = new SolidBrush(c))
+            {
+                g.FillEllipse(brush, LocalPosition.X, LocalPosition.Y, Size.Width, Size.Height);
+            }
+        }
+    }
 }

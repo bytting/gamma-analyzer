@@ -205,9 +205,6 @@
   <data name="doserate-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\doserate-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="marker-orange-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\marker-orange-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="left-all-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\left-all-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -216,9 +213,6 @@
   </data>
   <data name="connection-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\connection-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="marker-red-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\marker-red-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="layout2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\layout2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -247,17 +241,8 @@
   <data name="connect-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\connect-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="marker-blue-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\marker-blue-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="marker-yellow-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\marker-yellow-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="setup-store-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\setup-store-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="marker-green-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\marker-green-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="setup-clear-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\setup-clear-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -288,9 +273,6 @@
   </data>
   <data name="layout1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\layout1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="marker-cyan-10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\images\marker-cyan-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="upload-128" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\upload-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
