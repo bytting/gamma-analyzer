@@ -1028,12 +1028,12 @@ CREATE TABLE `spectrum` (
             }
             else if (tabs.SelectedTab == pageSessions)
             {
-                parent.menuItemLayoutSession_Click(sender, e);
+                parent.SetUILayout(UILayout.Session);
                 menuItemSession.Visible = true;
             }
             else if (tabs.SelectedTab == pageStatus)
-            {
-                parent.menuItemLayoutSetup_Click(sender, e);
+            {                
+                parent.SetUILayout(UILayout.Setup);
             }
             else if (tabs.SelectedTab == pageSetup)
             {
@@ -1043,7 +1043,7 @@ CREATE TABLE `spectrum` (
             }
             else if (tabs.SelectedTab == pageMenu)
             {
-                parent.menuItemLayoutMenu_Click(sender, e);
+                parent.SetUILayout(UILayout.Menu);
                 menuItemView.Visible = false;
             }            
         }             

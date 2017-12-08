@@ -326,108 +326,19 @@ namespace crash
             LayoutMdi(MdiLayout.ArrangeIcons);
         }
 
-        public void menuItemLayoutMenu_Click(object sender, EventArgs e)
+        private void menuItemLayoutMenu_Click(object sender, EventArgs e)
         {
-            formWaterfall.Hide();
-            formROI.Hide();
-            formMap.Hide();
-            formLog.Hide();
-            formMain.Show();
-            formMain.WindowState = FormWindowState.Normal;            
-
-            Rectangle rect = ClientRectangle;
-            Size size = ClientSize;
-
-            int height = size.Height - menu.Height - 4;
-            if (tools.Visible)
-                height -= tools.Height;
-            if (status.Visible)
-                height -= status.Height;
-
-            formMain.Left = rect.Left;
-            formMain.Width = size.Width - 4;
-            formMain.Top = rect.Top;
-            formMain.Height = height;
-
-            currentLayout = UILayout.Menu;
+            SetUILayout(UILayout.Menu);
         }
 
-        public void menuItemLayoutSetup_Click(object sender, EventArgs e)
+        private void menuItemLayoutSetup_Click(object sender, EventArgs e)
         {
-            formWaterfall.Hide();
-            formROI.Hide();
-            formMap.Hide();
-            formMain.Show();
-            formMain.WindowState = FormWindowState.Normal;
-            formLog.Show();
-            formLog.WindowState = FormWindowState.Normal;
-
-            Rectangle rect = ClientRectangle;
-            Size size = ClientSize;
-
-            int height = size.Height - menu.Height - 4;
-            if (tools.Visible)
-                height -= tools.Height;
-            if (status.Visible)
-                height -= status.Height;
-
-            int mainHeight = (int)((double)height * 0.8);
-            int logHeight = (int)((double)height * 0.2);
-
-            formMain.Left = rect.Left;
-            formMain.Width = size.Width - 4;
-            formMain.Top = rect.Top;
-            formMain.Height = mainHeight;
-
-            formLog.Left = rect.Left;
-            formLog.Width = size.Width - 4;
-            formLog.Top = mainHeight;
-            formLog.Height = logHeight;
-
-            currentLayout = UILayout.Setup;
+            SetUILayout(UILayout.Setup);
         }
 
-        public void menuItemLayoutSession_Click(object sender, EventArgs e)
+        private void menuItemLayoutSession_Click(object sender, EventArgs e)
         {
-            menuItemWindowShowAll_Click(sender, e);
-
-            Rectangle rect = ClientRectangle;
-            Size size = ClientSize;
-
-            int thirdWidth = (size.Width - 4) / 3;
-            int height = size.Height - menu.Height - 4;
-            if (tools.Visible)
-                height -= tools.Height;
-            if(status.Visible)
-                height -= status.Height;
-            int thirdHeight = height / 3;
-
-            formMain.Left = rect.Left;
-            formMain.Width = rect.Left + thirdWidth * 2;
-            formMain.Top = rect.Top;
-            formMain.Height = rect.Top + thirdHeight * 2;
-
-            formWaterfall.Left = rect.Left;
-            formWaterfall.Width = rect.Left + thirdWidth * 2;
-            formWaterfall.Top = rect.Top + thirdHeight * 2;
-            formWaterfall.Height = thirdHeight;
-
-            formMap.Left = formMain.Left + formMain.Width;
-            formMap.Width = thirdWidth;
-            formMap.Top = rect.Top;
-            formMap.Height = thirdHeight + thirdHeight / 2;
-
-            formROI.Left = formMain.Left + formMain.Width;
-            formROI.Width = thirdWidth;
-            formROI.Top = formMap.Top + formMap.Height;
-            formROI.Height = thirdHeight;
-
-            formLog.Left = formMain.Left + formMain.Width;
-            formLog.Width = thirdWidth;
-            formLog.Top = formROI.Top + formROI.Height;
-            formLog.Height = thirdHeight - thirdHeight / 2;
-
-            currentLayout = UILayout.Session;
+            SetUILayout(UILayout.Session);
         }
 
         private void menuItemWindowROITable_Click(object sender, EventArgs e)
@@ -436,27 +347,25 @@ namespace crash
             form.ShowDialog();
         }
 
+        private void ShowAllWindows()
+        {
+            formLog.Show();
+            formLog.WindowState = FormWindowState.Normal;
+            formROI.Show();
+            formROI.WindowState = FormWindowState.Normal;
+            formROI.UpdatePane();
+            formMap.Show();
+            formMap.WindowState = FormWindowState.Normal;
+            formWaterfall.Show();
+            formWaterfall.WindowState = FormWindowState.Normal;
+            formWaterfall.UpdatePane();
+            formMain.Show();
+            formMain.WindowState = FormWindowState.Normal;
+        }
+
         private void menuItemWindowShowAll_Click(object sender, EventArgs e)
         {
-            try
-            {
-                formLog.Show();
-                formLog.WindowState = FormWindowState.Normal;
-                formROI.Show();
-                formROI.WindowState = FormWindowState.Normal;
-                formROI.UpdatePane();
-                formMap.Show();
-                formMap.WindowState = FormWindowState.Normal;
-                formWaterfall.Show();
-                formWaterfall.WindowState = FormWindowState.Normal;
-                formWaterfall.UpdatePane();
-                formMain.Show();
-                formMain.WindowState = FormWindowState.Normal;
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-            }
+            ShowAllWindows();
         }        
 
         private void FormContainer_FormClosing(object sender, FormClosingEventArgs e)
@@ -477,27 +386,116 @@ namespace crash
             {
                 log.Error(ex.Message, ex);
             }
-        }
+        }        
 
-        private void SetUILayout(object sender, EventArgs e)
+        public void SetUILayout(UILayout layout)
         {
-            switch (currentLayout)
+            int height;
+
+            switch (layout)
             {
                 case UILayout.Menu:
-                    menuItemLayoutMenu_Click(sender, e);
+                    formWaterfall.Hide();
+                    formROI.Hide();
+                    formMap.Hide();
+                    formLog.Hide();
+                    formMain.Show();
+                    formMain.WindowState = FormWindowState.Normal;
+
+                    height = ClientSize.Height - menu.Height - 4;
+                    if (tools.Visible)
+                        height -= tools.Height;
+                    if (status.Visible)
+                        height -= status.Height;
+
+                    formMain.Left = ClientRectangle.Left;
+                    formMain.Width = ClientSize.Width - 4;
+                    formMain.Top = ClientRectangle.Top;
+                    formMain.Height = height;
+
+                    currentLayout = UILayout.Menu;
                     break;
+
                 case UILayout.Setup:
-                    menuItemLayoutSetup_Click(sender, e);
+                    formWaterfall.Hide();
+                    formROI.Hide();
+                    formMap.Hide();
+                    formMain.Show();
+                    formMain.WindowState = FormWindowState.Normal;
+                    formLog.Show();
+                    formLog.WindowState = FormWindowState.Normal;                    
+
+                    height = ClientSize.Height - menu.Height - 4;
+                    if (tools.Visible)
+                        height -= tools.Height;
+                    if (status.Visible)
+                        height -= status.Height;
+
+                    int mainHeight = (int)((double)height * 0.8);
+                    int logHeight = (int)((double)height * 0.2);
+
+                    formMain.Left = ClientRectangle.Left;
+                    formMain.Width = ClientSize.Width - 4;
+                    formMain.Top = ClientRectangle.Top;
+                    formMain.Height = mainHeight;
+
+                    formLog.Left = ClientRectangle.Left;
+                    formLog.Width = ClientSize.Width - 4;
+                    formLog.Top = mainHeight;
+                    formLog.Height = logHeight;
+
+                    currentLayout = UILayout.Setup;
                     break;
+
                 case UILayout.Session:
-                    menuItemLayoutSession_Click(sender, e);
+                    ShowAllWindows();
+
+                    int thirdWidth = (ClientSize.Width - 4) / 3;
+                    height = ClientSize.Height - menu.Height - 4;
+                    if (tools.Visible)
+                        height -= tools.Height;
+                    if (status.Visible)
+                        height -= status.Height;
+                    int thirdHeight = height / 3;
+
+                    formMain.Left = ClientRectangle.Left;
+                    formMain.Width = ClientRectangle.Left + thirdWidth * 2;
+                    formMain.Top = ClientRectangle.Top;
+                    formMain.Height = ClientRectangle.Top + thirdHeight * 2;
+
+                    formWaterfall.Left = ClientRectangle.Left;
+                    formWaterfall.Width = ClientRectangle.Left + thirdWidth * 2;
+                    formWaterfall.Top = ClientRectangle.Top + thirdHeight * 2;
+                    formWaterfall.Height = thirdHeight;
+
+                    formMap.Left = formMain.Left + formMain.Width;
+                    formMap.Width = thirdWidth;
+                    formMap.Top = ClientRectangle.Top;
+                    formMap.Height = thirdHeight + thirdHeight / 2;
+
+                    formROI.Left = formMain.Left + formMain.Width;
+                    formROI.Width = thirdWidth;
+                    formROI.Top = formMap.Top + formMap.Height;
+                    formROI.Height = thirdHeight;
+
+                    formLog.Left = formMain.Left + formMain.Width;
+                    formLog.Width = thirdWidth;
+                    formLog.Top = formROI.Top + formROI.Height;
+                    formLog.Height = thirdHeight - thirdHeight / 2;
+
+                    currentLayout = UILayout.Session;
                     break;
             }
         }
 
+        private void UpdateUILayout()
+        {
+            SetUILayout(currentLayout);
+        }
+
         private void FormContainer_ResizeEnd(object sender, EventArgs e)
         {
-            SetUILayout(sender, e);
+            UpdateUILayout();
         }
 
         private void FormContainer_Resize(object sender, EventArgs e)
@@ -506,7 +504,7 @@ namespace crash
             {
                 lastWindowState = WindowState;
                 if (WindowState == FormWindowState.Maximized || WindowState == FormWindowState.Normal)        
-                    SetUILayout(sender, e);
+                    UpdateUILayout();
             }
         }
     }

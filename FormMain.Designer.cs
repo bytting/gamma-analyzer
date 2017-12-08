@@ -55,6 +55,7 @@
             this.contextMenuSession = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemSessionUnselect = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemSetAsBackground = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuItemUseAsGroundLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.tabs = new System.Windows.Forms.TabControl();
             this.pageSetup = new System.Windows.Forms.TabPage();
             this.panelSetupGraph = new System.Windows.Forms.Panel();
@@ -153,6 +154,7 @@
             this.lblSessionSelChannel = new System.Windows.Forms.Label();
             this.btnSessionsClose = new System.Windows.Forms.Button();
             this.lblSessionChannel = new System.Windows.Forms.Label();
+            this.lblGroundLevelIndex = new System.Windows.Forms.Label();
             this.panelSessionsControl = new System.Windows.Forms.Panel();
             this.lblSessionsDatabase = new System.Windows.Forms.Label();
             this.btnSessionsBrowse = new System.Windows.Forms.Button();
@@ -234,8 +236,6 @@
             this.panel25 = new System.Windows.Forms.Panel();
             this.btnUploadClose = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
-            this.menuItemUseAsGroundLevel = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblGroundLevelIndex = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.contextMenuSession.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -497,6 +497,13 @@
             this.menuItemSetAsBackground.Size = new System.Drawing.Size(176, 22);
             this.menuItemSetAsBackground.Text = "Set as background";
             this.menuItemSetAsBackground.Click += new System.EventHandler(this.menuItemLoadBackgroundSelection_Click);
+            // 
+            // menuItemUseAsGroundLevel
+            // 
+            this.menuItemUseAsGroundLevel.Name = "menuItemUseAsGroundLevel";
+            this.menuItemUseAsGroundLevel.Size = new System.Drawing.Size(176, 22);
+            this.menuItemUseAsGroundLevel.Text = "Use as ground level";
+            this.menuItemUseAsGroundLevel.Click += new System.EventHandler(this.menuItemUseAsGroundLevel_Click);
             // 
             // tabs
             // 
@@ -1673,6 +1680,16 @@
             this.lblSessionChannel.TabIndex = 0;
             this.lblSessionChannel.Text = "<lblSessionChannel>";
             // 
+            // lblGroundLevelIndex
+            // 
+            this.lblGroundLevelIndex.AutoSize = true;
+            this.lblGroundLevelIndex.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblGroundLevelIndex.Location = new System.Drawing.Point(0, 0);
+            this.lblGroundLevelIndex.Name = "lblGroundLevelIndex";
+            this.lblGroundLevelIndex.Size = new System.Drawing.Size(134, 15);
+            this.lblGroundLevelIndex.TabIndex = 4;
+            this.lblGroundLevelIndex.Text = "<lblGroundLevelIndex>";
+            // 
             // panelSessionsControl
             // 
             this.panelSessionsControl.Controls.Add(this.lblSessionsDatabase);
@@ -2532,23 +2549,6 @@
             // openSessionDialog
             // 
             this.openSessionDialog.DefaultExt = "db";
-            // 
-            // menuItemUseAsGroundLevel
-            // 
-            this.menuItemUseAsGroundLevel.Name = "menuItemUseAsGroundLevel";
-            this.menuItemUseAsGroundLevel.Size = new System.Drawing.Size(176, 22);
-            this.menuItemUseAsGroundLevel.Text = "Use as ground level";
-            this.menuItemUseAsGroundLevel.Click += new System.EventHandler(this.menuItemUseAsGroundLevel_Click);
-            // 
-            // lblGroundLevelIndex
-            // 
-            this.lblGroundLevelIndex.AutoSize = true;
-            this.lblGroundLevelIndex.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblGroundLevelIndex.Location = new System.Drawing.Point(0, 0);
-            this.lblGroundLevelIndex.Name = "lblGroundLevelIndex";
-            this.lblGroundLevelIndex.Size = new System.Drawing.Size(134, 15);
-            this.lblGroundLevelIndex.TabIndex = 4;
-            this.lblGroundLevelIndex.Text = "<lblGroundLevelIndex>";
             // 
             // FormMain
             // 
