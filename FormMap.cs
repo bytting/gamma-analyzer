@@ -177,7 +177,7 @@ namespace crash
             minDoserate = currentSession.Spectrums.Min(x => x.Doserate);
 
             // Add map marker
-            GMapPoint marker = new GMapPoint(minDoserate, maxDoserate, new PointLatLng(s.Latitude, s.Longitude), new Size(10, 10));
+            GMapPoint marker = new GMapPoint(minDoserate, maxDoserate, new PointLatLng(s.Latitude, s.Longitude), new Size(12, 12));
             marker.Tag = s;
             marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
             overlay.Markers.Add(marker);
