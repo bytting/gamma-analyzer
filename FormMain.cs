@@ -571,12 +571,15 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
 
         public void CreateSessionFile(Session s)
         {
-            SQLiteConnection.CreateFile(s.SessionFile);
-            SQLiteConnection connection = new SQLiteConnection("Data Source=" + s.SessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
-            connection.Open();
-            SQLiteCommand command = new SQLiteCommand(connection);
+            try
+            {
+                SQLiteConnection.CreateFile(s.SessionFile);
+                using (SQLiteConnection connection = new SQLiteConnection("Data Source=" + s.SessionFile + "; Version=3; FailIfMissing=True; Foreign Keys=True;"))
+                {
+                    connection.Open();
+                    SQLiteCommand command = new SQLiteCommand(connection);
 
-            command.CommandText = @"
+                    command.CommandText = @"
 CREATE TABLE `session` (
 	`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	`name` TEXT NOT NULL UNIQUE,
@@ -611,20 +614,25 @@ CREATE TABLE `spectrum` (
 	`channels` TEXT NOT NULL
 );
 ";
-            command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
-            command.CommandText = "insert into session(name, ip, comment, livetime, detector_data) values (@name, @ip, @comment, @livetime, @detector_data)";
+                    command.CommandText = "insert into session(name, ip, comment, livetime, detector_data) values (@name, @ip, @comment, @livetime, @detector_data)";
 
-            string detectorData = JsonConvert.SerializeObject(s.Detector, Newtonsoft.Json.Formatting.None);
+                    string detectorData = JsonConvert.SerializeObject(s.Detector, Newtonsoft.Json.Formatting.None);
 
-            command.Parameters.Clear();
-            command.Parameters.AddWithValue("@name", s.Name);
-            command.Parameters.AddWithValue("@ip", s.IPAddress);
-            command.Parameters.AddWithValue("@comment", s.Comment);
-            command.Parameters.AddWithValue("@livetime", s.Livetime);
-            command.Parameters.AddWithValue("@detector_data", detectorData);
-            command.ExecuteNonQuery();
-            connection.Close();
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@name", s.Name);
+                    command.Parameters.AddWithValue("@ip", s.IPAddress);
+                    command.Parameters.AddWithValue("@comment", s.Comment);
+                    command.Parameters.AddWithValue("@livetime", s.Livetime);
+                    command.Parameters.AddWithValue("@detector_data", detectorData);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         public void SetSelectedSessionIndex(int index)
@@ -804,63 +812,70 @@ CREATE TABLE `spectrum` (
             if (session == null)
                 return;
 
-            // Reset spectrum graphpane
-            GraphPane pane = graphSession.GraphPane;
-            pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
-            pane.Fill = new Fill(SystemColors.ButtonFace);
-
-            pane.Title.Text = title;
-            pane.XAxis.Title.Text = "Channel";
-            pane.YAxis.Title.Text = "Counts";
-
-            pane.XAxis.Scale.Min = 0;
-            pane.XAxis.Scale.Max = maxCount;
-
-            pane.YAxis.Scale.Min = minCount;
-            pane.YAxis.Scale.Max = maxCount + (maxCount / 10.0);
-
-            pane.CurveList.Clear();
-
-            // Update background graph
-            if (session.Background != null && !menuItemSubtractBackground.Checked)
+            try
             {
-                bkgGraphList.Clear();
-                for (int i = 0; i < session.Background.Length; i++)
-                    bkgGraphList.Add((double)i, (double)session.Background[i] * bkgScale);
+                // Reset spectrum graphpane
+                GraphPane pane = graphSession.GraphPane;
+                pane.Chart.Fill = new Fill(SystemColors.ButtonFace);
+                pane.Fill = new Fill(SystemColors.ButtonFace);
 
-                LineItem bkgCurve = pane.AddCurve("Background", bkgGraphList, Color.Blue, SymbolType.None);
-                bkgCurve.Line.IsSmooth = true;
-                bkgCurve.Line.SmoothTension = 0.5f;
-            }
+                pane.Title.Text = title;
+                pane.XAxis.Title.Text = "Channel";
+                pane.YAxis.Title.Text = "Counts";
 
-            // Update spectrum graph
-            sessionGraphList.Clear();
-            for (int i = 0; i < channels.Length; i++)
-            {
-                double cnt = (double)channels[i];
-                if (session.Background != null && menuItemSubtractBackground.Checked)
+                pane.XAxis.Scale.Min = 0;
+                pane.XAxis.Scale.Max = maxCount;
+
+                pane.YAxis.Scale.Min = minCount;
+                pane.YAxis.Scale.Max = maxCount + (maxCount / 10.0);
+
+                pane.CurveList.Clear();
+
+                // Update background graph
+                if (session.Background != null && !menuItemSubtractBackground.Checked)
                 {
-                    cnt -= session.Background[i] * bkgScale;
-                    if(menuItemLockBackgroundToZero.Checked)
-                        if (cnt < 0.0)
-                            cnt = 0.0;
+                    bkgGraphList.Clear();
+                    for (int i = 0; i < session.Background.Length; i++)
+                        bkgGraphList.Add((double)i, (double)session.Background[i] * bkgScale);
+
+                    LineItem bkgCurve = pane.AddCurve("Background", bkgGraphList, Color.Blue, SymbolType.None);
+                    bkgCurve.Line.IsSmooth = true;
+                    bkgCurve.Line.SmoothTension = 0.5f;
                 }
 
-                sessionGraphList.Add((double)i, cnt);
+                // Update spectrum graph
+                sessionGraphList.Clear();
+                for (int i = 0; i < channels.Length; i++)
+                {
+                    double cnt = (double)channels[i];
+                    if (session.Background != null && menuItemSubtractBackground.Checked)
+                    {
+                        cnt -= session.Background[i] * bkgScale;
+                        if (menuItemLockBackgroundToZero.Checked)
+                            if (cnt < 0.0)
+                                cnt = 0.0;
+                    }
+
+                    sessionGraphList.Add((double)i, cnt);
+                }
+
+                LineItem curve = pane.AddCurve("Spectrum", sessionGraphList, Color.Red, SymbolType.None);
+                curve.Line.IsSmooth = true;
+                curve.Line.SmoothTension = 0.5f;
+
+                // Update state
+                pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+                pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+                pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
+
+                graphSession.RestoreScale(pane);
+                graphSession.AxisChange();
+                graphSession.Refresh();
             }
-
-            LineItem curve = pane.AddCurve("Spectrum", sessionGraphList, Color.Red, SymbolType.None);
-            curve.Line.IsSmooth = true;
-            curve.Line.SmoothTension = 0.5f;
-
-            // Update state
-            pane.Chart.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
-            pane.Legend.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
-            pane.Fill = new Fill(SystemColors.ButtonFace, SystemColors.ButtonFace);
-
-            graphSession.RestoreScale(pane);
-            graphSession.AxisChange();
-            graphSession.Refresh();
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         private void GetGraphPointFromMousePos(int posX, int posY, ZedGraphControl graph, out int x, out int y)
@@ -933,86 +948,93 @@ CREATE TABLE `spectrum` (
         
         private void btnSetupSetParams_Click(object sender, EventArgs e)
         {
-            if (cboxSetupDetector.SelectedItem == null)
-            {
-                MessageBox.Show("No detector selected");
-                return;
-            }
-
-            if (String.IsNullOrEmpty(tbStatusIPAddress.Text.Trim()))
-            {
-                MessageBox.Show("No IP address selected");
-                return;
-            }
-
-            // Convert parameters            
-            double coarseGain = 0d, fineGain = 0d;
-            int voltage = 0, lld = 0, uld = 0, nchannels = 0;
-
             try
             {
-                coarseGain = Convert.ToDouble(cboxSetupCoarseGain.Text, CultureInfo.InvariantCulture);
-                fineGain = Convert.ToDouble(tbSetupFineGain.Text, CultureInfo.InvariantCulture);
-                voltage = Convert.ToInt32(tbSetupVoltage.Text);
-                lld = Convert.ToInt32(tbSetupLLD.Text);
-                uld = Convert.ToInt32(tbSetupULD.Text);
-                nchannels = Convert.ToInt32(cboxSetupChannels.Text);
+                if (cboxSetupDetector.SelectedItem == null)
+                {
+                    MessageBox.Show("No detector selected");
+                    return;
+                }
+
+                if (String.IsNullOrEmpty(tbStatusIPAddress.Text.Trim()))
+                {
+                    MessageBox.Show("No IP address selected");
+                    return;
+                }
+
+                // Convert parameters            
+                double coarseGain = 0d, fineGain = 0d;
+                int voltage = 0, lld = 0, uld = 0, nchannels = 0;
+
+                try
+                {
+                    coarseGain = Convert.ToDouble(cboxSetupCoarseGain.Text, CultureInfo.InvariantCulture);
+                    fineGain = Convert.ToDouble(tbSetupFineGain.Text, CultureInfo.InvariantCulture);
+                    voltage = Convert.ToInt32(tbSetupVoltage.Text);
+                    lld = Convert.ToInt32(tbSetupLLD.Text);
+                    uld = Convert.ToInt32(tbSetupULD.Text);
+                    nchannels = Convert.ToInt32(cboxSetupChannels.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("Invalid number format found");
+                    return;
+                }
+
+                if (voltage < selectedDetector.MinVoltage || voltage > selectedDetector.MaxVoltage)
+                {
+                    MessageBox.Show("Voltage out of range");
+                    return;
+                }
+
+                if (fineGain < 1.0 || fineGain > 5.0)
+                {
+                    MessageBox.Show("Fine gain out of range");
+                    return;
+                }
+
+                if (lld < 0)
+                {
+                    MessageBox.Show("LLD can not be less than zero");
+                    return;
+                }
+
+                if (uld > 130)
+                {
+                    MessageBox.Show("ULD can not be bigger than 130%");
+                    return;
+                }
+
+                if (lld > uld)
+                {
+                    MessageBox.Show("LLD can not be bigger than ULD");
+                    return;
+                }
+
+                // Update selected detector parameters
+                selectedDetector.Voltage = voltage;
+                selectedDetector.CoarseGain = coarseGain;
+                selectedDetector.FineGain = fineGain;
+                selectedDetector.NumChannels = nchannels;
+                selectedDetector.LLD = lld;
+                selectedDetector.ULD = uld;
+
+                parent.SaveSettings();
+
+                // Create and send network message
+                burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
+                msg.Params.Add("command", "detector_config");
+                msg.Params.Add("detector_data", selectedDetector);
+                sendMsg(msg);
+
+                log.Info("Sending detector_config");
+
+                previewSession = true;
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("Invalid number format found");
-                return;
+                log.Error(ex.Message, ex);
             }
-            
-            if(voltage < selectedDetector.MinVoltage || voltage > selectedDetector.MaxVoltage)
-            {
-                MessageBox.Show("Voltage out of range");
-                return;
-            }
-
-            if(fineGain < 1.0 || fineGain > 5.0)
-            {
-                MessageBox.Show("Fine gain out of range");
-                return;
-            }
-
-            if(lld < 0)
-            {
-                MessageBox.Show("LLD can not be less than zero");
-                return;
-            }
-
-            if (uld > 130)
-            {
-                MessageBox.Show("ULD can not be bigger than 130%");
-                return;
-            }
-
-            if (lld > uld)
-            {
-                MessageBox.Show("LLD can not be bigger than ULD");
-                return;
-            }
-
-            // Update selected detector parameters
-            selectedDetector.Voltage = voltage;
-            selectedDetector.CoarseGain = coarseGain;
-            selectedDetector.FineGain = fineGain;
-            selectedDetector.NumChannels = nchannels;
-            selectedDetector.LLD = lld;
-            selectedDetector.ULD = uld;
-
-            parent.SaveSettings();
-
-            // Create and send network message
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
-            msg.Params.Add("command", "detector_config");
-            msg.Params.Add("detector_data", selectedDetector);
-            sendMsg(msg);
-
-            log.Info("Sending detector_config");
-
-            previewSession = true;
         }
 
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
@@ -1069,38 +1091,38 @@ CREATE TABLE `spectrum` (
 
         private void menuItemLoadSession_Click(object sender, EventArgs e)
         {
-            if(Directory.Exists(settings.SessionRootDirectory))
-                openSessionDialog.InitialDirectory = settings.SessionRootDirectory;
-            openSessionDialog.Title = "Select session database";
-            openSessionDialog.Filter = "Session database (*.db)|*.db";
-            if (openSessionDialog.ShowDialog() != DialogResult.OK)
-                return;
-            
-            parent.ClearSession();
-
             try
             {
+                if (Directory.Exists(settings.SessionRootDirectory))
+                    openSessionDialog.InitialDirectory = settings.SessionRootDirectory;
+                openSessionDialog.Title = "Select session database";
+                openSessionDialog.Filter = "Session database (*.db)|*.db";
+                if (openSessionDialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                parent.ClearSession();
+                
                 session = DB.LoadSessionFile(openSessionDialog.FileName);
+
+                lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
+
+                // Update UI
+                lblSession.Text = session.Name;
+                lblComment.Text = session.Comment;
+
+                parent.SetSession(session);
+
+                log.Info("session " + session.Name + " loaded");
+
+                burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
+                msg.Params.Add("command", "dump_session");
+                sendMsg(msg);
             }
             catch (Exception ex)
             {
                 log.Error(ex.Message, ex);
                 return;
             }
-
-            lblSessionsDatabase.Text = session.SessionFile + " [" + session.IPAddress + "]";
-
-            // Update UI
-            lblSession.Text = session.Name;
-            lblComment.Text = session.Comment;
-
-            parent.SetSession(session);
-                        
-            log.Info("session " + session.Name + " loaded");
-
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
-            msg.Params.Add("command", "dump_session");
-            sendMsg(msg);
         }
 
         public void SetSession(Session s)
@@ -1119,35 +1141,35 @@ CREATE TABLE `spectrum` (
                 return;
             }
 
-            openSessionDialog.InitialDirectory = settings.SessionRootDirectory;
-            openSessionDialog.Title = "Select background session file";
-            if (openSessionDialog.ShowDialog() == DialogResult.OK)
+            try
             {
-                ClearBackground();
-
-                try
+                openSessionDialog.InitialDirectory = settings.SessionRootDirectory;
+                openSessionDialog.Title = "Select background session file";
+                if (openSessionDialog.ShowDialog() == DialogResult.OK)
                 {
+                    ClearBackground();
+                    
                     bkgSession = DB.LoadSessionFile(openSessionDialog.FileName);
-                }
-                catch(Exception ex)
-                {
-                    log.Error(ex.Message, ex);
-                    return;
-                }
 
-                // Make sure session and backgrouns has the same number of channels
-                if (bkgSession.NumChannels != session.NumChannels)
-                {
-                    bkgSession.Clear();
-                    MessageBox.Show("Cannot load a background with different number of channels than the session");
-                    return;
+                    // Make sure session and backgrouns has the same number of channels
+                    if (bkgSession.NumChannels != session.NumChannels)
+                    {
+                        bkgSession.Clear();
+                        MessageBox.Show("Cannot load a background with different number of channels than the session");
+                        return;
+                    }
+
+                    // Store background in session
+                    session.SetBackgroundSession(bkgSession);
+
+                    lblBackground.Text = "Background: " + bkgSession.Name;
+                    log.Info("Background " + bkgSession.Name + " loaded for session " + session.Name);
                 }
-
-                // Store background in session
-                session.SetBackgroundSession(bkgSession);
-
-                lblBackground.Text = "Background: " + bkgSession.Name;
-                log.Info("Background " + bkgSession.Name + " loaded for session " + session.Name);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return;
             }
         }
 
@@ -1220,24 +1242,6 @@ CREATE TABLE `spectrum` (
             form.ShowDialog();
         }        
 
-        private void menuItemSaveAsCHN_Click(object sender, EventArgs e)
-        {
-            if (session == null || session.IsEmpty)
-            {
-                MessageBox.Show("No session active");
-                return;
-            }
-
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.ShowNewFolderButton = true;
-            dialog.Description = "Select folder to store CHN files";
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                SessionExporter.ExportAsCHN(log, session, dialog.SelectedPath);
-                log.Info("session " + session.Name + " stored with CHN format in " + dialog.SelectedPath);                
-            }
-        }
-
         private void btnMenuPreferences_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = pageDetectors;
@@ -1305,12 +1309,19 @@ CREATE TABLE `spectrum` (
                 return;
             }
 
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
-            msg.Params.Add("command", "stop_session");
-            msg.Params.Add("session_name", session.Name);
-            sendMsg(msg);
+            try
+            {
+                burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
+                msg.Params.Add("command", "stop_session");
+                msg.Params.Add("session_name", session.Name);
+                sendMsg(msg);
 
-            log.Info("Sending stop_session");
+                log.Info("Sending stop_session");
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         private void graphSession_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -1397,23 +1408,30 @@ CREATE TABLE `spectrum` (
 
         private void btnSetupStartTest_Click(object sender, EventArgs e)
         {
-            string ip = tbStatusIPAddress.Text.Trim();
-            previewSessionName = String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now) + "-setup";
+            try
+            {
+                string ip = tbStatusIPAddress.Text.Trim();
+                previewSessionName = String.Format("{0:ddMMyyyy_HHmmss}", DateTime.Now) + "-setup";
 
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(ip);
-            msg.Params.Add("command", "start_session");            
-            msg.Params.Add("session_name", previewSessionName);
-            msg.Params.Add("ip", ip);
-            msg.Params.Add("livetime", 1);
-            msg.Params.Add("comment", "Setup session");
-            sendMsg(msg);
+                burn.ProtocolMessage msg = new burn.ProtocolMessage(ip);
+                msg.Params.Add("command", "start_session");
+                msg.Params.Add("session_name", previewSessionName);
+                msg.Params.Add("ip", ip);
+                msg.Params.Add("livetime", 1);
+                msg.Params.Add("comment", "Setup session");
+                sendMsg(msg);
 
-            ClearSetup();
-            previewSession = true;
-            previewSpec = null;
-            btnSetupClose.Enabled = false;
-            btnSetupCancel.Enabled = false;
-            log.Info("Sending start_session (setup)");
+                ClearSetup();
+                previewSession = true;
+                previewSpec = null;
+                btnSetupClose.Enabled = false;
+                btnSetupCancel.Enabled = false;
+                log.Info("Sending start_session (setup)");
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         private void btnSetupStopTest_Click(object sender, EventArgs e)
@@ -1424,11 +1442,18 @@ CREATE TABLE `spectrum` (
                 return;
             }
 
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
-            msg.Params.Add("command", "stop_session");
-            msg.Params.Add("session_name", previewSessionName);
-            sendMsg(msg);
-            log.Info("Sending stop_session (setup)");
+            try
+            {
+                burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
+                msg.Params.Add("command", "stop_session");
+                msg.Params.Add("session_name", previewSessionName);
+                sendMsg(msg);
+                log.Info("Sending stop_session (setup)");
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         private void menuItemResetCoefficients_Click(object sender, EventArgs e)
@@ -1559,22 +1584,39 @@ CREATE TABLE `spectrum` (
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            SessionExporter.ExportAsCSV(log, session, dialog.FileName);            
+            try
+            {
+                SessionExporter.ExportAsCSV(log, session, dialog.FileName);
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
-        private void menuItemNuclidesUnselect_Click(object sender, EventArgs e)
+        private void menuItemSaveAsCHN_Click(object sender, EventArgs e)
         {
-            // Clear nuclide UI
-            lbNuclides.ClearSelected();
+            if (session == null || session.IsEmpty)
+            {
+                MessageBox.Show("No session active");
+                return;
+            }
 
-            // Remove energy lines from graph
-            GraphPane pane = graphSession.GraphPane;
-            pane.GraphObjList.RemoveAll(o => o.Tag != null && (Int32)o.Tag == 2);   
-         
-            // Update graph
-            graphSession.RestoreScale(pane);
-            graphSession.AxisChange();
-            graphSession.Refresh();
+            try
+            {
+                FolderBrowserDialog dialog = new FolderBrowserDialog();
+                dialog.ShowNewFolderButton = true;
+                dialog.Description = "Select folder to store CHN files";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    SessionExporter.ExportAsCHN(log, session, dialog.SelectedPath);
+                    log.Info("session " + session.Name + " stored with CHN format in " + dialog.SelectedPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         private void menuItemSaveAsKMZ_Click(object sender, EventArgs e)
@@ -1592,7 +1634,29 @@ CREATE TABLE `spectrum` (
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            SessionExporter.ExportAsKMZ(log, session, dialog.FileName);
+            try
+            {
+                SessionExporter.ExportAsKMZ(log, session, dialog.FileName);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+        }
+
+        private void menuItemNuclidesUnselect_Click(object sender, EventArgs e)
+        {
+            // Clear nuclide UI
+            lbNuclides.ClearSelected();
+
+            // Remove energy lines from graph
+            GraphPane pane = graphSession.GraphPane;
+            pane.GraphObjList.RemoveAll(o => o.Tag != null && (Int32)o.Tag == 2);   
+         
+            // Update graph
+            graphSession.RestoreScale(pane);
+            graphSession.AxisChange();
+            graphSession.Refresh();
         }
 
         private void menuItemConvertToLocalTime_CheckedChanged(object sender, EventArgs e)
@@ -1639,23 +1703,23 @@ CREATE TABLE `spectrum` (
                 session = new Session(ip, sessionFile, sessionName, comment, livetime, selectedDetector);
 
                 // Create session database
-                CreateSessionFile(session);
+                CreateSessionFile(session);            
+
+                log.Info("Sending start_session");
+
+                burn.ProtocolMessage msg = new burn.ProtocolMessage(ip);
+                msg.Params.Add("command", "start_session");
+                msg.Params.Add("session_name", sessionName);
+                msg.Params.Add("ip", ip);
+                msg.Params.Add("livetime", livetime);
+                msg.Params.Add("comment", comment);            
+                sendMsg(msg);
             }
             catch (Exception ex)
             {
                 log.Error(ex.Message, ex);
                 return;
             }
-
-            log.Info("Sending start_session");
-
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(ip);
-            msg.Params.Add("command", "start_session");
-            msg.Params.Add("session_name", sessionName);
-            msg.Params.Add("ip", ip);
-            msg.Params.Add("livetime", livetime);
-            msg.Params.Add("comment", comment);            
-            sendMsg(msg);
 
             previewSession = false;
 
@@ -1804,23 +1868,30 @@ CREATE TABLE `spectrum` (
                 return;
             }
 
-            // Sync session
-            int lastKnownIndex = session.Spectrums.Max(s => s.SessionIndex);
+            try
+            {
+                // Sync session
+                int lastKnownIndex = session.Spectrums.Max(s => s.SessionIndex);
 
-            var existingIndices = new List<int>();
-            foreach(Spectrum s in session.Spectrums)
-                existingIndices.Add(s.SessionIndex);
+                var existingIndices = new List<int>();
+                foreach (Spectrum s in session.Spectrums)
+                    existingIndices.Add(s.SessionIndex);
 
-            var missingIndices = Enumerable.Range(0, lastKnownIndex).Except(existingIndices);
-                                    
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
-            msg.Params.Add("command", "sync_session");            
-            msg.Params.Add("session_name", session.Name);
-            msg.Params.Add("last_index", lastKnownIndex);
-            msg.Params.Add("indices_list", missingIndices.Take(50).ToArray()); // Max 50 indices at a time
-            sendMsg(msg);
+                var missingIndices = Enumerable.Range(0, lastKnownIndex).Except(existingIndices);
 
-            log.Info("Sending sync_session");
+                burn.ProtocolMessage msg = new burn.ProtocolMessage(session.IPAddress);
+                msg.Params.Add("command", "sync_session");
+                msg.Params.Add("session_name", session.Name);
+                msg.Params.Add("last_index", lastKnownIndex);
+                msg.Params.Add("indices_list", missingIndices.Take(50).ToArray()); // Max 50 indices at a time
+                sendMsg(msg);
+
+                log.Info("Sending sync_session");
+            }
+            catch(Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         private void menuItemLoadBackgroundSelection_Click(object sender, EventArgs e)
@@ -1898,27 +1969,28 @@ CREATE TABLE `spectrum` (
                         return;
                     }
 
-                    SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionPath + "; Version=3; FailIfMissing=True; Foreign Keys=True;");
-                    connection.Open();
-                    SQLiteCommand command = new SQLiteCommand(connection);
-                    command.CommandText = "select id from session where name = @name";
-                    command.Parameters.AddWithValue("@name", session.Name);
-                    object o = command.ExecuteScalar();
-                    if (o == null || o == DBNull.Value)
+                    using (SQLiteConnection connection = new SQLiteConnection("Data Source=" + sessionPath + "; Version=3; FailIfMissing=True; Foreign Keys=True;"))
                     {
-                        log.Error("Unable to find session name " + session.Name + " in database");
-                        return;
+                        connection.Open();
+                        SQLiteCommand command = new SQLiteCommand(connection);
+                        command.CommandText = "select id from session where name = @name";
+                        command.Parameters.AddWithValue("@name", session.Name);
+                        object o = command.ExecuteScalar();
+                        if (o == null || o == DBNull.Value)
+                        {
+                            log.Error("Unable to find session name " + session.Name + " in database");
+                            return;
+                        }
+                        int sessionId = Convert.ToInt32(o);
+
+                        string detectorData = JsonConvert.SerializeObject(session.Detector, Newtonsoft.Json.Formatting.None);
+
+                        command.Parameters.Clear();
+                        command.CommandText = "update session set detector_data=@detector_data where id=@id";
+                        command.Parameters.AddWithValue("@detector_data", detectorData);
+                        command.Parameters.AddWithValue("@id", sessionId);
+                        command.ExecuteNonQuery();
                     }
-                    int sessionId = Convert.ToInt32(o);
-
-                    string detectorData = JsonConvert.SerializeObject(session.Detector, Newtonsoft.Json.Formatting.None);
-
-                    command.Parameters.Clear();
-                    command.CommandText = "update session set detector_data=@detector_data where id=@id";
-                    command.Parameters.AddWithValue("@detector_data", detectorData);
-                    command.Parameters.AddWithValue("@id", sessionId);
-                    command.ExecuteNonQuery();
-                    connection.Close();
 
                     if (form.SaveToSettings)
                     {

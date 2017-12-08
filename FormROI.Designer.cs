@@ -77,6 +77,7 @@
             // 
             // tools
             // 
+            this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnOptions,
             this.buttonRightAll,

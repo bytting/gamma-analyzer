@@ -79,13 +79,13 @@ namespace crash
             if(!String.IsNullOrEmpty(tbName3.Text) && !String.IsNullOrEmpty(tbStart3.Text) && !String.IsNullOrEmpty(tbEnd3.Text))
                 settings.ROIList.Add(new ROIData(tbName3.Text, Convert.ToInt32(tbStart3.Text), Convert.ToInt32(tbEnd3.Text), cbActive3.Checked, KnownColor.Green.ToString()));
             if(!String.IsNullOrEmpty(tbName4.Text) && !String.IsNullOrEmpty(tbStart4.Text) && !String.IsNullOrEmpty(tbEnd4.Text))
-                settings.ROIList.Add(new ROIData(tbName4.Text, Convert.ToInt32(tbStart4.Text), Convert.ToInt32(tbEnd4.Text), cbActive4.Checked, KnownColor.Lime.ToString()));
+                settings.ROIList.Add(new ROIData(tbName4.Text, Convert.ToInt32(tbStart4.Text), Convert.ToInt32(tbEnd4.Text), cbActive4.Checked, KnownColor.DarkKhaki.ToString()));
             if(!String.IsNullOrEmpty(tbName5.Text) && !String.IsNullOrEmpty(tbStart5.Text) && !String.IsNullOrEmpty(tbEnd5.Text))
-                settings.ROIList.Add(new ROIData(tbName5.Text, Convert.ToInt32(tbStart5.Text), Convert.ToInt32(tbEnd5.Text), cbActive5.Checked, KnownColor.Yellow.ToString()));
+                settings.ROIList.Add(new ROIData(tbName5.Text, Convert.ToInt32(tbStart5.Text), Convert.ToInt32(tbEnd5.Text), cbActive5.Checked, KnownColor.Fuchsia.ToString()));
             if(!String.IsNullOrEmpty(tbName6.Text) && !String.IsNullOrEmpty(tbStart6.Text) && !String.IsNullOrEmpty(tbEnd6.Text))
                 settings.ROIList.Add(new ROIData(tbName6.Text, Convert.ToInt32(tbStart6.Text), Convert.ToInt32(tbEnd6.Text), cbActive6.Checked, KnownColor.Aqua.ToString()));
             if(!String.IsNullOrEmpty(tbName7.Text) && !String.IsNullOrEmpty(tbStart7.Text) && !String.IsNullOrEmpty(tbEnd7.Text))
-                settings.ROIList.Add(new ROIData(tbName7.Text, Convert.ToInt32(tbStart7.Text), Convert.ToInt32(tbEnd7.Text), cbActive7.Checked, KnownColor.Fuchsia.ToString()));
+                settings.ROIList.Add(new ROIData(tbName7.Text, Convert.ToInt32(tbStart7.Text), Convert.ToInt32(tbEnd7.Text), cbActive7.Checked, KnownColor.DimGray.ToString()));
             if(!String.IsNullOrEmpty(tbName8.Text) && !String.IsNullOrEmpty(tbStart8.Text) && !String.IsNullOrEmpty(tbEnd8.Text))
                 settings.ROIList.Add(new ROIData(tbName8.Text, Convert.ToInt32(tbStart8.Text), Convert.ToInt32(tbEnd8.Text), cbActive8.Checked, KnownColor.Maroon.ToString()));
         }
