@@ -142,6 +142,9 @@ namespace crash
       
         private void RemoveAllMarkers()
         {
+            GMapPoint.MinDoserate = 0d;
+            GMapPoint.MaxDoserate = 0d;
+
             if (overlay == null)
                 return;
 
@@ -172,12 +175,12 @@ namespace crash
         {
             if (currentSession == null)
                 return;
-
-            maxDoserate = currentSession.Spectrums.Max(x => x.Doserate);
-            minDoserate = currentSession.Spectrums.Min(x => x.Doserate);
+                        
+            GMapPoint.MinDoserate = currentSession.Spectrums.Min(x => x.Doserate);
+            GMapPoint.MaxDoserate = currentSession.Spectrums.Max(x => x.Doserate);
 
             // Add map marker
-            GMapPoint marker = new GMapPoint(minDoserate, maxDoserate, new PointLatLng(s.Latitude, s.Longitude), new Size(12, 12));
+            GMapPoint marker = new GMapPoint(new PointLatLng(s.Latitude, s.Longitude), new Size(12, 12));
             marker.Tag = s;
             marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
             overlay.Markers.Add(marker);
@@ -249,16 +252,14 @@ namespace crash
 
     public class GMapPoint : GMapMarker
     {
-        private static double MinDoserate;
-        private static double MaxDoserate;
+        public static double MinDoserate;
+        public static double MaxDoserate;
 
-        public GMapPoint(double minDose, double maxDose, PointLatLng pos, Size siz) : base(pos)
+        public GMapPoint(PointLatLng pos, Size siz) : base(pos)
         {            
             Size = siz;
             Position = pos;
             Offset = new Point(-siz.Width / 2, -siz.Height / 2);
-            MinDoserate = minDose;
-            MaxDoserate = maxDose;
         }
 
         public override void OnRender(Graphics g)
@@ -276,9 +277,9 @@ namespace crash
                 + Environment.NewLine + "Doserate: " + String.Format("{0:###0.0##}", spec.Doserate / 1000.0) + " μSv/h";
 
             double f = (dose - minDose) / (maxDose - minDose);
-            double a = (1.0 - f) / 0.25;  // invert and group            
-            double x = Math.Floor(a); // the integer part
-            double y = Math.Floor(255.0 * (a - x)); // the fractional part from 0 to 255
+            double a = (1.0 - f) / 0.25;
+            double x = Math.Floor(a);
+            double y = Math.Floor(255.0 * (a - x));
 
             Color c = new Color();
             switch ((int)x)
