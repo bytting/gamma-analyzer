@@ -39,6 +39,8 @@
             this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
             this.btnZoomToMax = new System.Windows.Forms.ToolStripButton();
             this.gmnMap = new GMap.NET.WindowsForms.GMapControl();
+            this.ddbOptions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.menuItemIAEAColors = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsMap.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,6 +48,7 @@
             // 
             this.toolsMap.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolsMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ddbOptions,
             this.toolStripLabel2,
             this.cboxMapProvider,
             this.toolStripLabel1,
@@ -179,6 +182,24 @@
             this.gmnMap.Zoom = 10D;
             this.gmnMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.gmap_OnMarkerClick);
             // 
+            // ddbOptions
+            // 
+            this.ddbOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemIAEAColors});
+            this.ddbOptions.Image = global::crash.Properties.Resources.options1_16;
+            this.ddbOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ddbOptions.Name = "ddbOptions";
+            this.ddbOptions.Size = new System.Drawing.Size(78, 22);
+            this.ddbOptions.Text = "Options";
+            // 
+            // menuItemIAEAColors
+            // 
+            this.menuItemIAEAColors.CheckOnClick = true;
+            this.menuItemIAEAColors.Name = "menuItemIAEAColors";
+            this.menuItemIAEAColors.Size = new System.Drawing.Size(156, 22);
+            this.menuItemIAEAColors.Text = "Use IAEA colors";
+            this.menuItemIAEAColors.CheckedChanged += new System.EventHandler(this.menuItemIAEAColors_CheckedChanged);
+            // 
             // FormMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -216,5 +237,7 @@
         private System.Windows.Forms.ToolStripButton btnZoomIn;
         private System.Windows.Forms.ToolStripButton btnZoomToMin;
         private GMap.NET.WindowsForms.GMapControl gmnMap;
+        private System.Windows.Forms.ToolStripDropDownButton ddbOptions;
+        private System.Windows.Forms.ToolStripMenuItem menuItemIAEAColors;
     }
 }

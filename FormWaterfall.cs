@@ -276,10 +276,9 @@ namespace crash
             }
             else
             {
-                g = 255;
+                g = 255 - adjustment;
                 b = 0;
                 r = 255;
-                g -= adjustment;
             }
         }
 

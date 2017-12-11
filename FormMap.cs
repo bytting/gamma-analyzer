@@ -244,6 +244,12 @@ namespace crash
             gmnMap.Zoom += 1.0;
         }
 
+        private void menuItemIAEAColors_CheckedChanged(object sender, EventArgs e)
+        {
+            GMapPoint.UseIAEAColors = menuItemIAEAColors.Checked;
+            gmnMap.Refresh();
+        }
+
         private void FormMap_FormClosing(object sender, FormClosingEventArgs e)
         {
             gmnMap.Manager.CancelTileCaching();
@@ -252,6 +258,7 @@ namespace crash
 
     public class GMapPoint : GMapMarker
     {
+        public static bool UseIAEAColors;
         public static double MinDoserate;
         public static double MaxDoserate;
 
@@ -264,11 +271,7 @@ namespace crash
 
         public override void OnRender(Graphics g)
         {
-            Spectrum spec = Tag as Spectrum;
-
-            double minDose = Math.Log(MinDoserate);
-            double maxDose = Math.Log(MaxDoserate);
-            double dose = Math.Log(spec.Doserate);
+            Spectrum spec = Tag as Spectrum;                        
 
             ToolTipText = spec.ToString()
                 + Environment.NewLine + "Latitude: " + spec.Latitude.ToString("#00.0000000")
@@ -276,35 +279,58 @@ namespace crash
                 + Environment.NewLine + "Altitude: " + spec.Altitude.ToString("#####0.0#")
                 + Environment.NewLine + "Doserate: " + String.Format("{0:###0.0##}", spec.Doserate / 1000.0) + " μSv/h";
 
-            double f = (dose - minDose) / (maxDose - minDose);
-            double a = (1.0 - f) / 0.25;
-            double x = Math.Floor(a);
-            double y = Math.Floor(255.0 * (a - x));
-
             Color c = new Color();
-            switch ((int)x)
+
+            if (UseIAEAColors)
             {
-                case 0:
-                    c = Color.FromArgb(255, 255, (int)y, 0);
-                    break;
-                case 1:
-                    c = Color.FromArgb(255 - (int)y, 255, 0);
-                    break;
-                case 2:
-                    c = Color.FromArgb(0, 255, (int)y);
-                    break;
-                case 3:
-                    c = Color.FromArgb(0, 255 - (int)y, 255);
-                    break;
-                case 4:
-                    c = Color.FromArgb(0, 0, 255);
-                    break;
-            }            
+                double dose = spec.Doserate / 1000.0;
+
+                if (dose <= 1.0)
+                    c = Color.FromArgb(255, 0, 0, 255);
+                else if (dose <= 5.0)
+                    c = Color.FromArgb(255, 0, 255, 0);
+                else if (dose <= 10.0)
+                    c = Color.FromArgb(255, 255, 255, 0);
+                else if (dose <= 20.0)
+                    c = Color.FromArgb(255, 255, 165, 0);
+                else
+                    c = Color.FromArgb(255, 255, 0, 0);
+            }
+            else
+            {
+                double minDose = Math.Log(MinDoserate);
+                double maxDose = Math.Log(MaxDoserate);
+                double dose = Math.Log(spec.Doserate);
+
+                double f = (dose - minDose) / (maxDose - minDose);
+                double a = (1.0 - f) / 0.25;
+                double x = Math.Floor(a);
+                double y = Math.Floor(255.0 * (a - x));
+                
+                switch ((int)x)
+                {
+                    case 0:
+                        c = Color.FromArgb(255, 255, (int)y, 0);
+                        break;
+                    case 1:
+                        c = Color.FromArgb(255 - (int)y, 255, 0);
+                        break;
+                    case 2:
+                        c = Color.FromArgb(0, 255, (int)y);
+                        break;
+                    case 3:
+                        c = Color.FromArgb(0, 255 - (int)y, 255);
+                        break;
+                    case 4:
+                        c = Color.FromArgb(0, 0, 255);
+                        break;
+                }
+            }
 
             using (SolidBrush brush = new SolidBrush(c))
             {
-                g.FillEllipse(brush, LocalPosition.X, LocalPosition.Y, Size.Width, Size.Height);
-            }
+                g.FillEllipse(brush, LocalPosition.X + Offset.X, LocalPosition.Y + Offset.Y, Size.Width, Size.Height);
+            }            
         }
     }
 }
