@@ -263,10 +263,9 @@ namespace crash
         public static double MaxDoserate;
 
         public GMapPoint(PointLatLng pos, Size siz) : base(pos)
-        {            
+        {
             Size = siz;
-            Position = pos;
-            Offset = new Point(-siz.Width / 2, -siz.Height / 2);
+            Offset = new Point(-Size.Width / 2, -Size.Height / 2);
         }
 
         public override void OnRender(Graphics g)
@@ -329,8 +328,14 @@ namespace crash
 
             using (SolidBrush brush = new SolidBrush(c))
             {
-                g.FillEllipse(brush, LocalPosition.X + Offset.X, LocalPosition.Y + Offset.Y, Size.Width, Size.Height);
+                g.FillEllipse(brush, LocalPosition.X, LocalPosition.Y, Size.Width, Size.Height);
             }            
+        }
+
+        public override void Dispose()
+        {
+            // Dispose
+            base.Dispose();
         }
     }
 }
