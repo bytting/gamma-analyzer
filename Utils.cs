@@ -40,6 +40,35 @@ namespace crash
         {
             byte[] b = BitConverter.GetBytes(argb);
             return Color.FromArgb(b[3], b[2], b[1], b[0]);
-        }        
+        }
+
+        public static Color MapColor(double min, double max, double val)
+        {
+            Color c = new Color();
+            double f = (val - min) / (max - min);
+            double a = (1.0 - f) / 0.25;
+            double x = Math.Floor(a);
+            double y = Math.Floor(255.0 * (a - x));
+
+            switch ((int)x)
+            {
+                case 0:
+                    c = Color.FromArgb(255, 255, (int)y, 0);
+                    break;
+                case 1:
+                    c = Color.FromArgb(255 - (int)y, 255, 0);
+                    break;
+                case 2:
+                    c = Color.FromArgb(0, 255, (int)y);
+                    break;
+                case 3:
+                    c = Color.FromArgb(0, 255 - (int)y, 255);
+                    break;
+                case 4:
+                    c = Color.FromArgb(0, 0, 255);
+                    break;
+            }
+            return c;
+        }
     }
 }

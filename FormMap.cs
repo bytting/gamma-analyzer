@@ -40,8 +40,6 @@ namespace crash
         private Session currentSession = null;
         private GMapOverlay overlay = new GMapOverlay();
 
-        private double minDoserate, maxDoserate;
-
         public FormMap(FormContainer p, GASettings s, ILog l)
         {
             InitializeComponent();
@@ -300,30 +298,7 @@ namespace crash
                 double minDose = Math.Log(MinDoserate);
                 double maxDose = Math.Log(MaxDoserate);
                 double dose = Math.Log(spec.Doserate);
-
-                double f = (dose - minDose) / (maxDose - minDose);
-                double a = (1.0 - f) / 0.25;
-                double x = Math.Floor(a);
-                double y = Math.Floor(255.0 * (a - x));
-                
-                switch ((int)x)
-                {
-                    case 0:
-                        c = Color.FromArgb(255, 255, (int)y, 0);
-                        break;
-                    case 1:
-                        c = Color.FromArgb(255 - (int)y, 255, 0);
-                        break;
-                    case 2:
-                        c = Color.FromArgb(0, 255, (int)y);
-                        break;
-                    case 3:
-                        c = Color.FromArgb(0, 255 - (int)y, 255);
-                        break;
-                    case 4:
-                        c = Color.FromArgb(0, 0, 255);
-                        break;
-                }
+                c = Utils.MapColor(minDose, maxDose, dose);
             }
 
             using (SolidBrush brush = new SolidBrush(c))

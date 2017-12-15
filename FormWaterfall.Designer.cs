@@ -50,12 +50,8 @@
             this.pane = new System.Windows.Forms.Panel();
             this.paneMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemUnselect = new System.Windows.Forms.ToolStripMenuItem();
-            this.tbColorCeil = new System.Windows.Forms.TrackBar();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.tools.SuspendLayout();
             this.paneMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).BeginInit();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tools
@@ -241,7 +237,7 @@
             this.pane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pane.Location = new System.Drawing.Point(0, 25);
             this.pane.Name = "pane";
-            this.pane.Size = new System.Drawing.Size(819, 285);
+            this.pane.Size = new System.Drawing.Size(844, 285);
             this.pane.TabIndex = 2;
             this.pane.Paint += new System.Windows.Forms.PaintEventHandler(this.pane_Paint);
             this.pane.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pane_MouseDown);
@@ -262,26 +258,6 @@
             this.menuItemUnselect.Text = "&Unselect";
             this.menuItemUnselect.Click += new System.EventHandler(this.menuItemUnselect_Click);
             // 
-            // tbColorCeil
-            // 
-            this.tbColorCeil.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbColorCeil.Location = new System.Drawing.Point(0, 0);
-            this.tbColorCeil.Name = "tbColorCeil";
-            this.tbColorCeil.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.tbColorCeil.Size = new System.Drawing.Size(25, 285);
-            this.tbColorCeil.TabIndex = 3;
-            this.tbColorCeil.Scroll += new System.EventHandler(this.tbColorCeil_Scroll);
-            this.tbColorCeil.ValueChanged += new System.EventHandler(this.tbColorCeil_ValueChanged);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.tbColorCeil);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(819, 25);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(25, 285);
-            this.panel2.TabIndex = 5;
-            // 
             // FormWaterfall
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -289,7 +265,6 @@
             this.ClientSize = new System.Drawing.Size(844, 310);
             this.ControlBox = false;
             this.Controls.Add(this.pane);
-            this.Controls.Add(this.panel2);
             this.Controls.Add(this.tools);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -305,9 +280,6 @@
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
             this.paneMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.tbColorCeil)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -317,8 +289,6 @@
 
         private System.Windows.Forms.ToolStrip tools;
         private System.Windows.Forms.Panel pane;
-        private System.Windows.Forms.TrackBar tbColorCeil;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ToolStripDropDownButton btnShow;
         private System.Windows.Forms.ToolStripMenuItem btnROI;
         private System.Windows.Forms.ContextMenuStrip paneMenu;

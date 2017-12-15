@@ -75,7 +75,6 @@ namespace crash
                 timer.Start();
 
                 pane_Resize(sender, e);
-                UpdateStats();
             }
             catch (Exception ex)
             {
@@ -86,27 +85,6 @@ namespace crash
         void timer_Tick(object sender, EventArgs e)
         {
             if (session == null || bmpPane == null || WindowState == FormWindowState.Minimized)
-                return;
-
-            if (menuItemUseLogarithmicScale.Checked)
-            {
-                tbColorCeil.Maximum = (int)Math.Log(session.MaxChannelCount);
-                tbColorCeil.Minimum = (int)Math.Log(session.MinChannelCount);
-                if (tbColorCeil.Minimum < 0)
-                    tbColorCeil.Minimum = 0;
-            }
-            else
-            {
-                tbColorCeil.Maximum = (int)session.MaxChannelCount;
-                tbColorCeil.Minimum = (int)session.MinChannelCount;
-            }
-
-            if (!colorCeilInitialized)
-                tbColorCeil.Value = tbColorCeil.Maximum;
-
-            UpdateStats();
-
-            if (tbColorCeil.Value < 1)
                 return;
 
             if (!needRepaint)
@@ -124,10 +102,6 @@ namespace crash
 
                 graphics.Clear(Color.FromArgb(255, 0, 0, 255));
 
-                float max = tbColorCeil.Value;
-                float sectorSize = max / 4f;
-                float scale = 255f / sectorSize;
-                int sectorSkip, adjustment;
                 int y = 0;
 
                 for (int i = session.Spectrums.Count - 1 - topY; i >= 0; i--)
@@ -145,50 +119,20 @@ namespace crash
                         if (leftX + x >= s.Channels.Count)
                             break;
 
-                        int a = 255, r = 0, g = 0, b = 255;
+                        float cps = s.Channels[leftX + x];
 
-                        float cps = 0f;
-                        if (menuItemUseLogarithmicScale.Checked)
-                        {
-                            cps = (float)Math.Log(s.Channels[leftX + x]);
-                            if (cps < 0f)
-                                cps = 0f;
-                        }
-                        else
-                        {
-                            cps = (float)s.Channels[leftX + x];
-                        }
+                        if (btnSubtractBackground.Checked && session.Background != null && leftX + x < session.Background.Length)
+                            cps -= session.Background[leftX + x];
 
-                        if (btnSubtractBackground.Checked && session.Background != null)
-                        {
-                            if (leftX + x < session.Background.Length)
-                            {
-                                float sub = 0f;
-                                if (menuItemUseLogarithmicScale.Checked)
-                                {
-                                    sub = (float)Math.Log(session.Background[leftX + x]);
-                                    if (sub < 0f)
-                                        sub = 0f;
-                                }
-                                else
-                                {
-                                    sub = (float)session.Background[leftX + x];
-                                }
+                        if (cps < 0f)
+                            cps = 0f;
 
-                                cps -= sub;
+                        double minCnt = session.MinChannelCount <= 0 ? 0 : Math.Log(session.MinChannelCount);
+                        double maxCnt = session.MaxChannelCount <= 0 ? 0 : Math.Log(session.MaxChannelCount);
+                        double cnt = cps <= 0 ? 0 : Math.Log(cps);
+                        Color col = Utils.MapColor(minCnt, maxCnt, cnt);
 
-                                if (cps < 0)
-                                    cps = 0;
-                            }
-                        }
-
-                        sectorSkip = CalculateSectorSkip(cps, sectorSize);
-
-                        adjustment = CalculateColorAdjustment(cps, sectorSkip, sectorSize, scale);
-
-                        AdjustColorComponents(sectorSkip, adjustment, ref r, ref g, ref b);
-
-                        bmpPane.SetPixel(x, y, Color.FromArgb(a, r, g, b));
+                        bmpPane.SetPixel(x, y, col);
 
                         if (((leftX + x) % 200) == 0)
                         {
@@ -236,57 +180,6 @@ namespace crash
             }
         }
 
-        private int CalculateSectorSkip(float cps, float sectorSize)
-        {
-            if (cps < sectorSize)
-                return 0;
-            else if (cps < sectorSize * 2f)
-                return 1;
-            else if (cps < sectorSize * 3f)
-                return 2;
-            else return 3;
-        }
-
-        private int CalculateColorAdjustment(float cps, int sectorSkip, float sectorSize, float scale)
-        {
-            float a = (cps - (float)sectorSkip * sectorSize) * scale;
-            if (a < 0)
-                a = 0;
-            else if (a > 255)
-                a = 255;
-            return (int)a;
-        }
-
-        private void AdjustColorComponents(int sectorSkip, int adjustment, ref int r, ref int g, ref int b)
-        {
-            if (sectorSkip == 0)
-            {
-                g += adjustment;
-            }
-            else if (sectorSkip == 1)
-            {
-                g = 255;
-                b -= adjustment;
-            }
-            else if (sectorSkip == 2)
-            {
-                g = 255;
-                b = 0;
-                r += adjustment;
-            }
-            else
-            {
-                g = 255 - adjustment;
-                b = 0;
-                r = 255;
-            }
-        }
-
-        private void UpdateStats()
-        {
-            labelColorCeil.Text = "Color ceiling: " + tbColorCeil.Value + " [" + tbColorCeil.Minimum + ", " + tbColorCeil.Maximum + "]";
-        }
-
         public void SetSession(Session sess)
         {
             session = sess;
@@ -317,20 +210,6 @@ namespace crash
 
             bmpPane = new Bitmap(pane.Width, pane.Height);
             leftX = 1;
-            UpdatePane();
-        }
-
-        private void tbColorCeil_ValueChanged(object sender, EventArgs e)
-        {
-            if (tbColorCeil.Value <= tbColorCeil.Minimum)
-                tbColorCeil.Value = tbColorCeil.Minimum + 1;
-
-            UpdateStats();
-        }
-
-        private void tbColorCeil_Scroll(object sender, EventArgs e)
-        {
-            colorCeilInitialized = true;
             UpdatePane();
         }
 
