@@ -8,10 +8,10 @@ Status:
 
 Dependencies:
 
+	Visual C++ 2013 Redistributable Package
 	.NET 4.5
-
-
-
+	
+	
 ##### Screenshot 1
 ![gasession1](https://user-images.githubusercontent.com/1276717/34042728-51a95122-e19e-11e7-9009-c569e92db478.png)
 
