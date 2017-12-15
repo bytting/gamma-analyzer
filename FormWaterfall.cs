@@ -141,15 +141,11 @@ namespace crash
                         }
                     }
 
-                    if (s.SessionIndex == SelectedSessionIndex1)
-                    {
+                    if (s.SessionIndex == SelectedSessionIndex1)                    
                         graphics.DrawLine(penSelected, new Point(1, y), new Point(bmpPane.Width, y));
-                    }
 
-                    if (s.SessionIndex == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)
-                    {
+                    if (s.SessionIndex == SelectedSessionIndex2 && SelectedSessionIndex1 != SelectedSessionIndex2)                    
                         graphics.DrawLine(penSelected, new Point(1, y), new Point(bmpPane.Width, y));
-                    }
 
                     y++;
                 }

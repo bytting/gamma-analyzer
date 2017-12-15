@@ -35,7 +35,7 @@ using log4net.Repository.Hierarchy;
 
 namespace crash
 {
-    public enum UILayout { Menu, Session, Setup };
+    public enum UILayout { Menu, Session1, Session2, Setup };
 
     public partial class FormContainer : Form
     {
@@ -341,7 +341,7 @@ namespace crash
 
         private void menuItemLayoutSession_Click(object sender, EventArgs e)
         {
-            SetUILayout(UILayout.Session);
+            SetUILayout(UILayout.Session1);
         }
 
         private void menuItemWindowROITable_Click(object sender, EventArgs e)
@@ -393,7 +393,7 @@ namespace crash
 
         public void SetUILayout(UILayout layout)
         {
-            int height;
+            int height, thirdHeight;
 
             switch (layout)
             {
@@ -426,7 +426,7 @@ namespace crash
                     formMain.Show();
                     formMain.WindowState = FormWindowState.Normal;
                     formLog.Show();
-                    formLog.WindowState = FormWindowState.Normal;                    
+                    formLog.WindowState = FormWindowState.Normal;
 
                     height = ClientSize.Height - menu.Height - 4;
                     if (tools.Visible)
@@ -450,7 +450,7 @@ namespace crash
                     currentLayout = UILayout.Setup;
                     break;
 
-                case UILayout.Session:
+                case UILayout.Session1:
                     ShowAllWindows();
 
                     int thirdWidth = (ClientSize.Width - 4) / 3;
@@ -459,7 +459,7 @@ namespace crash
                         height -= tools.Height;
                     if (status.Visible)
                         height -= status.Height;
-                    int thirdHeight = height / 3;
+                    thirdHeight = height / 3;
 
                     formMain.Left = ClientRectangle.Left;
                     formMain.Width = ClientRectangle.Left + thirdWidth * 2;
@@ -486,7 +486,40 @@ namespace crash
                     formLog.Top = formROI.Top + formROI.Height;
                     formLog.Height = thirdHeight - thirdHeight / 2;
 
-                    currentLayout = UILayout.Session;
+                    currentLayout = UILayout.Session1;
+                    break;
+
+                case UILayout.Session2:
+                    formWaterfall.Show();
+                    formROI.Hide();
+                    formMap.Show();
+                    formMain.Show();
+                    formLog.Hide();                    
+
+                    int halfWidth = (ClientSize.Width - 4) / 2;
+                    height = ClientSize.Height - menu.Height - 4;
+                    if (tools.Visible)
+                        height -= tools.Height;
+                    if (status.Visible)
+                        height -= status.Height;
+                    thirdHeight = height / 3;
+
+                    formMain.Left = ClientRectangle.Left;
+                    formMain.Width = ClientRectangle.Left + halfWidth * 2;
+                    formMain.Top = ClientRectangle.Top;
+                    formMain.Height = ClientRectangle.Top + thirdHeight * 2;
+
+                    formWaterfall.Left = ClientRectangle.Left;
+                    formWaterfall.Width = ClientRectangle.Left + halfWidth;
+                    formWaterfall.Top = ClientRectangle.Top + thirdHeight * 2;
+                    formWaterfall.Height = thirdHeight;
+
+                    formMap.Left = formMain.Left + formWaterfall.Width;
+                    formMap.Width = halfWidth;
+                    formMap.Top = ClientRectangle.Top + thirdHeight * 2;
+                    formMap.Height = thirdHeight;
+
+                    currentLayout = UILayout.Session2;
                     break;
             }
         }
@@ -509,6 +542,11 @@ namespace crash
                 if (WindowState == FormWindowState.Maximized || WindowState == FormWindowState.Normal)        
                     UpdateUILayout();
             }
+        }
+
+        private void menuItemLayoutSession2_Click(object sender, EventArgs e)
+        {
+            SetUILayout(UILayout.Session2);
         }
     }
 

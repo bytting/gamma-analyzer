@@ -1046,7 +1046,7 @@ CREATE TABLE `spectrum` (
             }
             else if (tabs.SelectedTab == pageSessions)
             {
-                parent.SetUILayout(UILayout.Session);
+                parent.SetUILayout(UILayout.Session1);
                 menuItemSession.Visible = true;
             }
             else if (tabs.SelectedTab == pageStatus)
