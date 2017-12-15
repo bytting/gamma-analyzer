@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMap));
             this.toolsMap = new System.Windows.Forms.ToolStrip();
+            this.ddbOptions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.menuItemIAEAColors = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.cboxMapProvider = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -39,8 +41,6 @@
             this.btnZoomOut = new System.Windows.Forms.ToolStripButton();
             this.btnZoomToMax = new System.Windows.Forms.ToolStripButton();
             this.gmnMap = new GMap.NET.WindowsForms.GMapControl();
-            this.ddbOptions = new System.Windows.Forms.ToolStripDropDownButton();
-            this.menuItemIAEAColors = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsMap.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,6 +63,24 @@
             this.toolsMap.Size = new System.Drawing.Size(708, 25);
             this.toolsMap.TabIndex = 4;
             this.toolsMap.Text = "toolStrip1";
+            // 
+            // ddbOptions
+            // 
+            this.ddbOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemIAEAColors});
+            this.ddbOptions.Image = global::crash.Properties.Resources.options1_16;
+            this.ddbOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ddbOptions.Name = "ddbOptions";
+            this.ddbOptions.Size = new System.Drawing.Size(78, 22);
+            this.ddbOptions.Text = "Options";
+            // 
+            // menuItemIAEAColors
+            // 
+            this.menuItemIAEAColors.CheckOnClick = true;
+            this.menuItemIAEAColors.Name = "menuItemIAEAColors";
+            this.menuItemIAEAColors.Size = new System.Drawing.Size(156, 22);
+            this.menuItemIAEAColors.Text = "Use IAEA colors";
+            this.menuItemIAEAColors.CheckedChanged += new System.EventHandler(this.menuItemIAEAColors_CheckedChanged);
             // 
             // toolStripLabel2
             // 
@@ -119,7 +137,7 @@
             this.btnZoomToMin.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomToMin.Name = "btnZoomToMin";
             this.btnZoomToMin.Size = new System.Drawing.Size(23, 22);
-            this.btnZoomToMin.Text = "toolStripButton4";
+            this.btnZoomToMin.Text = "Right All";
             this.btnZoomToMin.Click += new System.EventHandler(this.btnZoomToMin_Click);
             // 
             // btnZoomIn
@@ -130,7 +148,7 @@
             this.btnZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomIn.Name = "btnZoomIn";
             this.btnZoomIn.Size = new System.Drawing.Size(23, 22);
-            this.btnZoomIn.Text = "toolStripButton3";
+            this.btnZoomIn.Text = "Right";
             this.btnZoomIn.Click += new System.EventHandler(this.btnZoomIn_Click);
             // 
             // btnZoomOut
@@ -141,7 +159,7 @@
             this.btnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomOut.Name = "btnZoomOut";
             this.btnZoomOut.Size = new System.Drawing.Size(23, 22);
-            this.btnZoomOut.Text = "toolStripButton2";
+            this.btnZoomOut.Text = "Left";
             this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
             // 
             // btnZoomToMax
@@ -152,7 +170,7 @@
             this.btnZoomToMax.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomToMax.Name = "btnZoomToMax";
             this.btnZoomToMax.Size = new System.Drawing.Size(23, 22);
-            this.btnZoomToMax.Text = "toolStripButton1";
+            this.btnZoomToMax.Text = "Left All";
             this.btnZoomToMax.Click += new System.EventHandler(this.btnZoomToMax_Click);
             // 
             // gmnMap
@@ -181,24 +199,6 @@
             this.gmnMap.TabIndex = 7;
             this.gmnMap.Zoom = 10D;
             this.gmnMap.OnMarkerClick += new GMap.NET.WindowsForms.MarkerClick(this.gmap_OnMarkerClick);
-            // 
-            // ddbOptions
-            // 
-            this.ddbOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuItemIAEAColors});
-            this.ddbOptions.Image = global::crash.Properties.Resources.options1_16;
-            this.ddbOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ddbOptions.Name = "ddbOptions";
-            this.ddbOptions.Size = new System.Drawing.Size(78, 22);
-            this.ddbOptions.Text = "Options";
-            // 
-            // menuItemIAEAColors
-            // 
-            this.menuItemIAEAColors.CheckOnClick = true;
-            this.menuItemIAEAColors.Name = "menuItemIAEAColors";
-            this.menuItemIAEAColors.Size = new System.Drawing.Size(156, 22);
-            this.menuItemIAEAColors.Text = "Use IAEA colors";
-            this.menuItemIAEAColors.CheckedChanged += new System.EventHandler(this.menuItemIAEAColors_CheckedChanged);
             // 
             // FormMap
             // 
