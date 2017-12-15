@@ -683,12 +683,8 @@ CREATE TABLE `spectrum` (
             if (idx1 == -1 || idx2 == -1)
                 return;            
 
-            if (idx1 > idx2)
-            {
-                int tmp = idx1;
-                idx1 = idx2;
-                idx2 = tmp;
-            }
+            if (idx1 > idx2)            
+                Utils.Swap(ref idx1, ref idx2);
 
             ClearSpectrumInfo();
 

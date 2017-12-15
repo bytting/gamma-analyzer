@@ -253,6 +253,9 @@ namespace crash
 
         public void SetSelectedSessionIndices(int index1, int index2)
         {
+            if(index1 > index2)            
+                Utils.Swap(ref index1, ref index2);
+
             try
             {
                 formMain.SetSelectedSessionIndices(index1, index2);

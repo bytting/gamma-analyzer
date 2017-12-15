@@ -25,6 +25,13 @@ namespace crash
     // Class with global helper functions and objects
     public static class Utils
     {
+        public static void Swap<T>(ref T arg1, ref T arg2)
+        {
+            T tmp = arg1;
+            arg1 = arg2;
+            arg2 = tmp;
+        }
+
         // Convert a color to an integer
         public static int ToArgb(Color color)
         {
