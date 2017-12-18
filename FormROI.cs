@@ -113,15 +113,14 @@ namespace crash
                         if (mc < 0d)
                             mc = 0d;
                     }
-
-                    double maxCount = 0d;
+                    
                     if (mc > 0d)
-                        maxCount = Math.Log(mc);
+                        mc = Math.Log(mc);
 
                     if (maxRoiCount == -1d)
-                        maxRoiCount = maxCount;
-                    else if (maxCount > maxRoiCount)
-                        maxRoiCount = maxCount;
+                        maxRoiCount = mc;
+                    else if (mc > maxRoiCount)
+                        maxRoiCount = mc;
                 }
 
                 double unit = (bmpPane.Height - 40) / maxRoiCount;

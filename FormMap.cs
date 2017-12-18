@@ -174,12 +174,19 @@ namespace crash
             if (currentSession == null)
                 return;
                         
-            GMapPoint.MinDoserate = currentSession.Spectrums.Min(x => x.Doserate);
-            GMapPoint.MaxDoserate = currentSession.Spectrums.Max(x => x.Doserate);
+            double minDose = currentSession.Spectrums.Min(x => x.Doserate);
+            GMapPoint.MinDoserate = minDose <= 0 ? 0 : Math.Log(minDose);
+            double maxDose = currentSession.Spectrums.Max(x => x.Doserate);
+            GMapPoint.MaxDoserate = maxDose <= 0 ? 0 : Math.Log(maxDose);
 
             // Add map marker
             GMapPoint marker = new GMapPoint(new PointLatLng(s.Latitude, s.Longitude), new Size(12, 12));
             marker.Tag = s;
+            marker.ToolTipText = s.ToString()
+                + Environment.NewLine + "Latitude: " + s.Latitude.ToString("#00.0000000")
+                + Environment.NewLine + "Longitude: " + s.Longitude.ToString("#00.0000000")
+                + Environment.NewLine + "Altitude: " + s.Altitude.ToString("#####0.0#")
+                + Environment.NewLine + "Doserate: " + String.Format("{0:###0.0##}", s.Doserate / 1000.0) + " μSv/h";
             marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
             overlay.Markers.Add(marker);
         }                        
@@ -268,40 +275,31 @@ namespace crash
 
         public override void OnRender(Graphics g)
         {
-            Spectrum spec = Tag as Spectrum;                        
-
-            ToolTipText = spec.ToString()
-                + Environment.NewLine + "Latitude: " + spec.Latitude.ToString("#00.0000000")
-                + Environment.NewLine + "Longitude: " + spec.Longitude.ToString("#00.0000000")
-                + Environment.NewLine + "Altitude: " + spec.Altitude.ToString("#####0.0#")
-                + Environment.NewLine + "Doserate: " + String.Format("{0:###0.0##}", spec.Doserate / 1000.0) + " μSv/h";
-
-            Color c = new Color();
+            Spectrum spec = Tag as Spectrum;
+            Color color = new Color();
 
             if (UseIAEAColors)
             {
                 double dose = spec.Doserate / 1000.0;
 
                 if (dose <= 1.0)
-                    c = Color.FromArgb(255, 0, 0, 255);
+                    color = Color.FromArgb(255, 0, 0, 255);
                 else if (dose <= 5.0)
-                    c = Color.FromArgb(255, 0, 255, 0);
+                    color = Color.FromArgb(255, 0, 255, 0);
                 else if (dose <= 10.0)
-                    c = Color.FromArgb(255, 255, 255, 0);
+                    color = Color.FromArgb(255, 255, 255, 0);
                 else if (dose <= 20.0)
-                    c = Color.FromArgb(255, 255, 165, 0);
+                    color = Color.FromArgb(255, 255, 165, 0);
                 else
-                    c = Color.FromArgb(255, 255, 0, 0);
+                    color = Color.FromArgb(255, 255, 0, 0);
             }
             else
             {
-                double minDose = Math.Log(MinDoserate);
-                double maxDose = Math.Log(MaxDoserate);
                 double dose = Math.Log(spec.Doserate);
-                c = Utils.MapColor(minDose, maxDose, dose);
+                color = Utils.MapColor(MinDoserate, MaxDoserate, dose);
             }
 
-            using (SolidBrush brush = new SolidBrush(c))
+            using (SolidBrush brush = new SolidBrush(color))
             {
                 g.FillEllipse(brush, LocalPosition.X, LocalPosition.Y, Size.Width, Size.Height);
             }            
