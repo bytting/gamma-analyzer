@@ -80,9 +80,9 @@
             // btnShow
             // 
             this.btnShow.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSubtractBackground,
             this.btnROI,
-            this.menuItemUseLogarithmicScale,
-            this.btnSubtractBackground});
+            this.menuItemUseLogarithmicScale});
             this.btnShow.Image = global::crash.Properties.Resources.options1_16;
             this.btnShow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnShow.Name = "btnShow";

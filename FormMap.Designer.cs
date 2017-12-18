@@ -137,7 +137,7 @@
             this.btnZoomToMin.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomToMin.Name = "btnZoomToMin";
             this.btnZoomToMin.Size = new System.Drawing.Size(23, 22);
-            this.btnZoomToMin.Text = "Right All";
+            this.btnZoomToMin.Text = "Zoom in all";
             this.btnZoomToMin.Click += new System.EventHandler(this.btnZoomToMin_Click);
             // 
             // btnZoomIn
@@ -148,7 +148,7 @@
             this.btnZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomIn.Name = "btnZoomIn";
             this.btnZoomIn.Size = new System.Drawing.Size(23, 22);
-            this.btnZoomIn.Text = "Right";
+            this.btnZoomIn.Text = "Zoom in";
             this.btnZoomIn.Click += new System.EventHandler(this.btnZoomIn_Click);
             // 
             // btnZoomOut
@@ -159,7 +159,7 @@
             this.btnZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomOut.Name = "btnZoomOut";
             this.btnZoomOut.Size = new System.Drawing.Size(23, 22);
-            this.btnZoomOut.Text = "Left";
+            this.btnZoomOut.Text = "Zoom out";
             this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
             // 
             // btnZoomToMax
@@ -170,7 +170,7 @@
             this.btnZoomToMax.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnZoomToMax.Name = "btnZoomToMax";
             this.btnZoomToMax.Size = new System.Drawing.Size(23, 22);
-            this.btnZoomToMax.Text = "Left All";
+            this.btnZoomToMax.Text = "Zoom out all";
             this.btnZoomToMax.Click += new System.EventHandler(this.btnZoomToMax_Click);
             // 
             // gmnMap

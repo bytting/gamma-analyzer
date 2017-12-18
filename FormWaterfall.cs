@@ -102,6 +102,8 @@ namespace crash
 
                 graphics.Clear(Color.FromArgb(255, 0, 0, 255));
 
+                double minCnt = session.MinChannelCount <= 0 ? 0 : Math.Log(session.MinChannelCount);
+                double maxCnt = session.MaxChannelCount <= 0 ? 0 : Math.Log(session.MaxChannelCount);
                 int y = 0;
 
                 for (int i = session.Spectrums.Count - 1 - topY; i >= 0; i--)
@@ -126,9 +128,7 @@ namespace crash
 
                         if (cps < 0f)
                             cps = 0f;
-
-                        double minCnt = session.MinChannelCount <= 0 ? 0 : Math.Log(session.MinChannelCount);
-                        double maxCnt = session.MaxChannelCount <= 0 ? 0 : Math.Log(session.MaxChannelCount);
+                        
                         double cnt = cps <= 0 ? 0 : Math.Log(cps);
                         Color col = Utils.MapColor(minCnt, maxCnt, cnt);
 
