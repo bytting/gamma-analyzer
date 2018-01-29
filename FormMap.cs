@@ -99,7 +99,13 @@ namespace crash
                         gmnMap.MapProvider = GoogleTerrainMapProvider.Instance;
                         break;
                     case "Google Map Satellite":
-                        gmnMap.MapProvider = GoogleSatelliteMapProvider.Instance;                        
+                        gmnMap.MapProvider = GoogleSatelliteMapProvider.Instance;
+                        GMaps.Instance.Mode = AccessMode.ServerAndCache;
+                        gmnMap.Zoom = 5;
+                        gmnMap.MaxZoom = 18;
+                        gmnMap.MinZoom = 2;
+                        gmnMap.Bearing = 0;
+                        gmnMap.CanDragMap = true;
                         break;
                     case "Open Street Map":
                         gmnMap.MapProvider = OpenStreetMapProvider.Instance;
