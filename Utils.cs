@@ -51,7 +51,7 @@ namespace crash
 
         public static Color MapColor(double min, double max, double val)
         {
-            Color c = new Color();
+            Color c = Color.FromArgb(0, 0, 255);
             double f = (val - min) / (max - min);
             double a = (1.0 - f) / 0.25;
             double x = Math.Floor(a);
@@ -60,7 +60,7 @@ namespace crash
             switch ((int)x)
             {
                 case 0:
-                    c = Color.FromArgb(255, 255, (int)y, 0);
+                    c = Color.FromArgb(255, (int)y, 0);
                     break;
                 case 1:
                     c = Color.FromArgb(255 - (int)y, 255, 0);
