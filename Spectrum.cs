@@ -248,9 +248,9 @@ namespace crash
         }
     }
 
-    public class SimpleSpectrum
+    public class APISpectrum
     {
-        public SimpleSpectrum(Spectrum spec)
+        public APISpectrum(Spectrum spec)
         {
             SessionName = spec.SessionName;
             SessionIndex = spec.SessionIndex;

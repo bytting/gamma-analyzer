@@ -45,59 +45,53 @@ namespace crash
 
                         try
                         {
-                            request = (HttpWebRequest)WebRequest.Create("http://" + Hostname + "/add-spectrum");
+                            request = (HttpWebRequest)WebRequest.Create(Hostname + "/spectrums");
                             string credentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(Username + ":" + Password));
                             request.Headers.Add("Authorization", "Basic " + credentials);
-                            request.Timeout = 2000;
+                            request.Timeout = 5000;
                             request.Method = WebRequestMethods.Http.Post;
                             request.Accept = "application/json";
 
-                            SimpleSpectrum simpleSpec = new SimpleSpectrum(spec);
-                            Log.Info("Sending " + simpleSpec.SessionName + ":" + simpleSpec.SessionIndex);
+                            APISpectrum apiSpec = new APISpectrum(spec);
+                            Log.Info("Sending " + apiSpec.SessionName + ":" + apiSpec.SessionIndex);
 
-                            var jsonRequest = JsonConvert.SerializeObject(simpleSpec);
-                            var data = Encoding.UTF8.GetBytes(jsonRequest);
-
-                            request.Method = "POST";
+                            var jsonRequest = JsonConvert.SerializeObject(apiSpec);
+                            var sendData = Encoding.UTF8.GetBytes(jsonRequest);
+                            
                             request.ContentType = "application/json";
-                            request.ContentLength = data.Length;
+                            request.ContentLength = sendData.Length;
 
                             using (var stream = request.GetRequestStream())
                             {
-                                stream.Write(data, 0, data.Length);
+                                stream.Write(sendData, 0, sendData.Length);
                             }
 
-                            string jsonText;
-                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                            if (response == null || response.StatusCode != HttpStatusCode.OK)
+                            string recvData;
+                            HttpStatusCode code = Utils.GetResponseData(request, out recvData);
+
+                            if (code == HttpStatusCode.OK)
                             {
-                                Log.Error("Upload failed (" + response.StatusCode + ")");
-                                continue;
+                                Log.Info(recvData);
                             }
-
-                            using (var sr = new StreamReader(response.GetResponseStream()))
+                            else if(code == HttpStatusCode.RequestTimeout)
                             {
-                                jsonText = sr.ReadToEnd();
+                                Log.Error("Request timeout");
                             }
-
-                            Log.Info(jsonText);
-                        }
-                        catch(WebException ex)
-                        {
-                            if (request != null)
-                                request.Abort();
-
-                            if (ex.Status == WebExceptionStatus.Timeout)
-                                Log.Error("Web request timeout");
                             else
-                                Log.Error(ex.Message);
+                            {
+                                Log.Error(code.ToString() + ": " + recvData);
+                            }                            
+                        }
+                        catch(Exception ex)
+                        {
+                            Log.Error(ex.Message);
                         }
                     }
                 }
 
                 Thread.Sleep(50);
             }
-        }
+        }        
 
         public void SetCredentials(string hostname, string user, string pass)
         {

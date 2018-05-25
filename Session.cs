@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using NLua;
+using Newtonsoft.Json;
 
 namespace crash
 {
@@ -256,5 +257,32 @@ namespace crash
             
             return cnt;
         }
-    }    
+    }
+
+    public class APISession
+    {
+        public APISession(Session s)
+        {
+            Name = s.Name;
+            IPAddress = s.IPAddress;
+            Comment = s.Comment;
+            Livetime = s.Livetime;
+            DetectorData = JsonConvert.SerializeObject(s.Detector, Newtonsoft.Json.Formatting.None);
+        }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("ip_address")]
+        public string IPAddress { get; set; }
+
+        [JsonProperty("comment")]
+        public string Comment { get; set; }
+
+        [JsonProperty("livetime")]
+        public double Livetime { get; set; }
+
+        [JsonProperty("detector_data")]
+        public string DetectorData { get; set; }
+    }
 }

@@ -196,7 +196,6 @@
             this.pageStatus = new System.Windows.Forms.TabPage();
             this.tableStatus = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.lblStatusDetectorConfigured = new System.Windows.Forms.Label();
             this.lblStatusSpectrumIndex = new System.Windows.Forms.Label();
             this.lblStatusSessionRunning = new System.Windows.Forms.Label();
@@ -236,6 +235,8 @@
             this.panel25 = new System.Windows.Forms.Panel();
             this.btnUploadClose = new System.Windows.Forms.Button();
             this.openSessionDialog = new System.Windows.Forms.OpenFileDialog();
+            this.cbStatusReachback = new System.Windows.Forms.CheckBox();
+            this.btnStatusGetReachback = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.contextMenuSession.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -2071,21 +2072,22 @@
             this.tableStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableStatus.Controls.Add(this.label3, 0, 0);
-            this.tableStatus.Controls.Add(this.label11, 1, 0);
-            this.tableStatus.Controls.Add(this.lblStatusDetectorConfigured, 0, 11);
-            this.tableStatus.Controls.Add(this.lblStatusSpectrumIndex, 0, 10);
-            this.tableStatus.Controls.Add(this.lblStatusSessionRunning, 0, 9);
-            this.tableStatus.Controls.Add(this.lblStatusFreeDiskSpace, 0, 8);
-            this.tableStatus.Controls.Add(this.tbStatusIPAddress, 0, 2);
-            this.tableStatus.Controls.Add(this.label13, 0, 1);
             this.tableStatus.Controls.Add(this.tbStatusIPAddressUpload, 1, 2);
             this.tableStatus.Controls.Add(this.label14, 1, 1);
-            this.tableStatus.Controls.Add(this.btnStatusGet, 2, 2);
             this.tableStatus.Controls.Add(this.label15, 1, 3);
             this.tableStatus.Controls.Add(this.label17, 1, 5);
             this.tableStatus.Controls.Add(this.tbStatusUploadUser, 1, 4);
             this.tableStatus.Controls.Add(this.tbStatusUploadPass, 1, 6);
-            this.tableStatus.Controls.Add(this.lblStatusUpload, 1, 8);
+            this.tableStatus.Controls.Add(this.cbStatusReachback, 1, 0);
+            this.tableStatus.Controls.Add(this.label13, 0, 1);
+            this.tableStatus.Controls.Add(this.tbStatusIPAddress, 0, 2);
+            this.tableStatus.Controls.Add(this.btnStatusGetReachback, 1, 7);
+            this.tableStatus.Controls.Add(this.btnStatusGet, 0, 3);
+            this.tableStatus.Controls.Add(this.lblStatusFreeDiskSpace, 0, 6);
+            this.tableStatus.Controls.Add(this.lblStatusSessionRunning, 0, 7);
+            this.tableStatus.Controls.Add(this.lblStatusSpectrumIndex, 0, 8);
+            this.tableStatus.Controls.Add(this.lblStatusDetectorConfigured, 0, 9);
+            this.tableStatus.Controls.Add(this.lblStatusUpload, 1, 9);
             this.tableStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableStatus.Location = new System.Drawing.Point(3, 3);
             this.tableStatus.Name = "tableStatus";
@@ -2108,31 +2110,19 @@
             // 
             // label3
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 13);
+            this.label3.Location = new System.Drawing.Point(3, 6);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(188, 17);
             this.label3.TabIndex = 1;
             this.label3.Text = "Info for Gamma Collector";
             // 
-            // label11
-            // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(485, 9);
-            this.label11.Name = "label11";
-            this.label11.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
-            this.label11.Size = new System.Drawing.Size(238, 21);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "Info for Gamma Store (optional)";
-            // 
             // lblStatusDetectorConfigured
             // 
             this.lblStatusDetectorConfigured.AutoSize = true;
-            this.lblStatusDetectorConfigured.Location = new System.Drawing.Point(3, 330);
+            this.lblStatusDetectorConfigured.Location = new System.Drawing.Point(3, 270);
             this.lblStatusDetectorConfigured.Name = "lblStatusDetectorConfigured";
             this.lblStatusDetectorConfigured.Size = new System.Drawing.Size(174, 15);
             this.lblStatusDetectorConfigured.TabIndex = 8;
@@ -2141,7 +2131,7 @@
             // lblStatusSpectrumIndex
             // 
             this.lblStatusSpectrumIndex.AutoSize = true;
-            this.lblStatusSpectrumIndex.Location = new System.Drawing.Point(3, 300);
+            this.lblStatusSpectrumIndex.Location = new System.Drawing.Point(3, 240);
             this.lblStatusSpectrumIndex.Name = "lblStatusSpectrumIndex";
             this.lblStatusSpectrumIndex.Size = new System.Drawing.Size(151, 15);
             this.lblStatusSpectrumIndex.TabIndex = 7;
@@ -2150,7 +2140,7 @@
             // lblStatusSessionRunning
             // 
             this.lblStatusSessionRunning.AutoSize = true;
-            this.lblStatusSessionRunning.Location = new System.Drawing.Point(3, 270);
+            this.lblStatusSessionRunning.Location = new System.Drawing.Point(3, 210);
             this.lblStatusSessionRunning.Name = "lblStatusSessionRunning";
             this.lblStatusSessionRunning.Size = new System.Drawing.Size(159, 15);
             this.lblStatusSessionRunning.TabIndex = 6;
@@ -2159,7 +2149,7 @@
             // lblStatusFreeDiskSpace
             // 
             this.lblStatusFreeDiskSpace.AutoSize = true;
-            this.lblStatusFreeDiskSpace.Location = new System.Drawing.Point(3, 240);
+            this.lblStatusFreeDiskSpace.Location = new System.Drawing.Point(3, 180);
             this.lblStatusFreeDiskSpace.Name = "lblStatusFreeDiskSpace";
             this.lblStatusFreeDiskSpace.Size = new System.Drawing.Size(152, 15);
             this.lblStatusFreeDiskSpace.TabIndex = 5;
@@ -2201,16 +2191,16 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(485, 45);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(84, 15);
+            this.label14.Size = new System.Drawing.Size(120, 15);
             this.label14.TabIndex = 13;
-            this.label14.Text = "Hostname / IP";
+            this.label14.Text = "Web service address";
             // 
             // btnStatusGet
             // 
-            this.btnStatusGet.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStatusGet.Location = new System.Drawing.Point(967, 63);
+            this.btnStatusGet.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnStatusGet.Location = new System.Drawing.Point(348, 93);
             this.btnStatusGet.Name = "btnStatusGet";
-            this.btnStatusGet.Size = new System.Drawing.Size(235, 24);
+            this.btnStatusGet.Size = new System.Drawing.Size(131, 24);
             this.btnStatusGet.TabIndex = 4;
             this.btnStatusGet.Text = "Check status";
             this.btnStatusGet.UseVisualStyleBackColor = true;
@@ -2248,7 +2238,6 @@
             // 
             // tbStatusUploadPass
             // 
-            this.tbStatusUploadPass.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbStatusUploadPass.Enabled = false;
             this.tbStatusUploadPass.Location = new System.Drawing.Point(485, 183);
             this.tbStatusUploadPass.MaxLength = 256;
@@ -2260,7 +2249,7 @@
             // lblStatusUpload
             // 
             this.lblStatusUpload.AutoSize = true;
-            this.lblStatusUpload.Location = new System.Drawing.Point(485, 240);
+            this.lblStatusUpload.Location = new System.Drawing.Point(485, 270);
             this.lblStatusUpload.Name = "lblStatusUpload";
             this.lblStatusUpload.Size = new System.Drawing.Size(108, 15);
             this.lblStatusUpload.TabIndex = 18;
@@ -2454,9 +2443,9 @@
             this.label20.AutoSize = true;
             this.label20.Location = new System.Drawing.Point(3, 45);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(84, 15);
+            this.label20.Size = new System.Drawing.Size(120, 15);
             this.label20.TabIndex = 1;
-            this.label20.Text = "Hostname / IP";
+            this.label20.Text = "Web service address";
             // 
             // tbUploadHostname
             // 
@@ -2549,6 +2538,29 @@
             // openSessionDialog
             // 
             this.openSessionDialog.DefaultExt = "db";
+            // 
+            // cbStatusReachback
+            // 
+            this.cbStatusReachback.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbStatusReachback.AutoSize = true;
+            this.cbStatusReachback.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbStatusReachback.Location = new System.Drawing.Point(485, 6);
+            this.cbStatusReachback.Name = "cbStatusReachback";
+            this.cbStatusReachback.Size = new System.Drawing.Size(140, 21);
+            this.cbStatusReachback.TabIndex = 19;
+            this.cbStatusReachback.Text = "Use Reachback";
+            this.cbStatusReachback.UseVisualStyleBackColor = true;
+            // 
+            // btnStatusGetReachback
+            // 
+            this.btnStatusGetReachback.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnStatusGetReachback.Location = new System.Drawing.Point(830, 213);
+            this.btnStatusGetReachback.Name = "btnStatusGetReachback";
+            this.btnStatusGetReachback.Size = new System.Drawing.Size(131, 24);
+            this.btnStatusGetReachback.TabIndex = 20;
+            this.btnStatusGetReachback.Text = "Check status";
+            this.btnStatusGetReachback.UseVisualStyleBackColor = true;
+            this.btnStatusGetReachback.Click += new System.EventHandler(this.btnStatusGetReachback_Click);
             // 
             // FormMain
             // 
@@ -2845,7 +2857,6 @@
         private System.Windows.Forms.Panel panel23;
         private System.Windows.Forms.Panel panel24;
         private System.Windows.Forms.ToolStripMenuItem menuItemLockBackgroundToZero;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox tbStatusIPAddressUpload;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
@@ -2870,6 +2881,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuItemAdjustZeroCoefficient;
         private System.Windows.Forms.ToolStripMenuItem menuItemUseAsGroundLevel;
         private System.Windows.Forms.Label lblGroundLevelIndex;
+        private System.Windows.Forms.CheckBox cbStatusReachback;
+        private System.Windows.Forms.Button btnStatusGetReachback;
     }
 }
 

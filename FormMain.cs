@@ -33,6 +33,7 @@ using ZedGraph;
 using MathNet.Numerics;
 using System.Data.SQLite;
 using log4net;
+using System.Net;
 
 namespace crash
 {
@@ -54,11 +55,10 @@ namespace crash
 
         // Timer used to poll for network messages
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-
-        // FIXME: Disable for now
-        //static NetUpload netUpload = null;
-        //static Thread netUploadThread = null;
-        //static ConcurrentQueue<Spectrum> sendUploadQ = null;
+        
+        static NetUpload netUpload = null;
+        static Thread netUploadThread = null;
+        static ConcurrentQueue<Spectrum> sendUploadQ = null;
 
         // Currently loaded sessions
         private Session session = null, bkgSession = null;
@@ -93,6 +93,9 @@ namespace crash
 
         private int currentGroundLevelIndex = -1;
 
+        private bool uploadServiceAvailable = false;
+        private bool uploadServiceActive = false;
+
         // Enumeration used to keep track of graph object types
         public enum GraphObjectType
         {
@@ -118,10 +121,9 @@ namespace crash
             {
                 netService = new burn.NetService(log, ref sendq, ref recvq);
                 netThread = new Thread(netService.DoWork);
-
-                // FIXME: Disabled for now
-                //netUpload = new NetUpload(Log, ref sendUploadQ);
-                //netUploadThread = new Thread(netUpload.DoWork);
+                
+                netUpload = new NetUpload(log, ref sendUploadQ);
+                netUploadThread = new Thread(netUpload.DoWork);
 
                 // Hide tabs on tabcontrol
                 tabs.ItemSize = new Size(0, 1);
@@ -164,11 +166,10 @@ namespace crash
                 // Start threads
                 netThread.Start();
                 while (!netThread.IsAlive) ;
-
-                // FIXME: Disabled for now
-                //netUploadThread.Start();
-                //while (!netUploadThread.IsAlive) ;
-                //Log.Info("net upload started");
+                
+                netUploadThread.Start();
+                while (!netUploadThread.IsAlive) ;
+                log.Info("net upload started");
 
                 // Start timer listening for network messages
                 timer.Interval = 10;
@@ -546,11 +547,11 @@ values (@session_id, @session_name, @session_index, @start_time, @latitude, @lat
                                 // Notify external forms about new spectrum
 
                                 parent.AddSpectrum(spec);
-                            }
 
-                            // FIXME: Disabled for now
-                            // Send spectrum to gamma-store
-                            //sendUploadQ.Enqueue(spec);
+                                // Send spectrum to gamma-store
+                                if(uploadServiceActive)
+                                    sendUploadQ.Enqueue(spec);
+                            }                            
                         }
                         break;
 
@@ -1050,7 +1051,12 @@ CREATE TABLE `spectrum` (
                 menuItemSession.Visible = true;
             }
             else if (tabs.SelectedTab == pageStatus)
-            {                
+            {
+                uploadServiceAvailable = false;
+                tbStatusIPAddressUpload.Text = settings.LastUploadHostname;
+                tbStatusUploadUser.Text = settings.LastUploadUsername;
+                tbStatusUploadPass.Text = settings.LastUploadPassword;
+
                 parent.SetUILayout(UILayout.Setup);
             }
             else if (tabs.SelectedTab == pageSetup)
@@ -1816,8 +1822,19 @@ CREATE TABLE `spectrum` (
             settings.LastHostname = tbStatusIPAddress.Text;
             parent.SaveSettings();
 
-            // FIXME: Disabled for now
-            //netUpload.SetCredentials(tbStatusIPAddressUpload.Text, tbStatusUploadUser.Text, tbStatusUploadPass.Text);
+            if(cbStatusReachback.Checked && uploadServiceAvailable)            
+                uploadServiceActive = true;
+            else uploadServiceActive = false;
+
+            if (uploadServiceActive)
+            {
+                settings.LastUploadHostname = tbStatusIPAddressUpload.Text.Trim();
+                settings.LastUploadUsername = tbStatusUploadUser.Text.Trim();
+                settings.LastUploadPassword = tbStatusUploadPass.Text;
+                parent.SaveSettings();
+
+                netUpload.SetCredentials(settings.LastUploadHostname, settings.LastUploadUsername, settings.LastUploadPassword);
+            }
 
             lblSetupIPAddress.Text = "IP Address: " + settings.LastHostname;
             btnSetupClose.Enabled = false;
@@ -2018,34 +2035,76 @@ CREATE TABLE `spectrum` (
 
         private void btnUploadSelectSession_Click(object sender, EventArgs e)
         {
-            // FIXME: Don't run this while a session is running
+            // FIXME: Don't run this while a session is running            
 
-            // FIXME: Temporary guard
-            MessageBox.Show("This function is disabled");
-            return;
-
-            if(String.IsNullOrEmpty(tbUploadHostname.Text.Trim()) 
-                || String.IsNullOrEmpty(tbUploadUsername.Text.Trim()) 
-                || String.IsNullOrEmpty(tbUploadPassword.Text))
+            try
             {
-                MessageBox.Show("You must specify a hostname, username and password");
-                return;
+                if (String.IsNullOrEmpty(tbUploadHostname.Text.Trim())
+                    || String.IsNullOrEmpty(tbUploadUsername.Text.Trim())
+                    || String.IsNullOrEmpty(tbUploadPassword.Text))
+                {
+                    MessageBox.Show("You must specify a hostname, username and password");
+                    return;
+                }
+
+                OpenFileDialog dialog = new OpenFileDialog();
+                if (dialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                settings.LastUploadHostname = tbUploadHostname.Text.Trim();
+                settings.LastUploadUsername = tbUploadUsername.Text.Trim();
+                settings.LastUploadPassword = tbUploadPassword.Text;
+                parent.SaveSettings();
+
+                netUpload.SetCredentials(settings.LastUploadHostname, settings.LastUploadUsername, settings.LastUploadPassword);
+                Session session = DB.LoadSessionFile(dialog.FileName);
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(settings.LastUploadHostname + "/sessions");
+                string credentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(settings.LastUploadUsername + ":" + settings.LastUploadPassword));
+                request.Headers.Add("Authorization", "Basic " + credentials);
+                request.Timeout = 8000;
+                request.Method = WebRequestMethods.Http.Post;
+                request.Accept = "application/json";
+
+                APISession apiSession = new APISession(session);
+
+                var jsonRequest = JsonConvert.SerializeObject(apiSession);
+                var sendData = Encoding.UTF8.GetBytes(jsonRequest);
+
+                request.ContentType = "application/json";
+                request.ContentLength = sendData.Length;
+
+                using (var stream = request.GetRequestStream())
+                {
+                    stream.Write(sendData, 0, sendData.Length);
+                }
+
+                string recvData;
+                HttpStatusCode code = Utils.GetResponseData(request, out recvData);
+
+                if (code == HttpStatusCode.OK)
+                {
+                    log.Info(recvData);
+                }
+                else if (code == HttpStatusCode.RequestTimeout)
+                {
+                    log.Error("Request timeout");
+                }
+                else
+                {
+                    log.Error(code.ToString() + ": " + recvData);
+                }
+
+                foreach (Spectrum spec in session.Spectrums)
+                {
+                    sendUploadQ.Enqueue(spec);
+                    System.Threading.Thread.Sleep(20);
+                }
             }
-
-            OpenFileDialog dialog = new OpenFileDialog();
-            if (dialog.ShowDialog() != DialogResult.OK)
-                return;
-
-            settings.LastUploadHostname = tbUploadHostname.Text.Trim();
-            settings.LastUploadUsername = tbUploadUsername.Text.Trim();
-            settings.LastUploadPassword = tbUploadPassword.Text;
-            parent.SaveSettings();
-
-            // FIXME: Disabled for now
-            /*netUpload.SetCredentials(settings.LastUploadHostname, settings.LastUploadUsername, settings.LastUploadPassword);
-            Session session = DB.LoadSessionFile(Log, dialog.FileName);
-            foreach (Spectrum spec in session.Spectrums)
-                sendUploadQ.Enqueue(spec);*/
+            catch(Exception ex)
+            {
+                log.Error(ex);
+            }
         }
 
         private void btnMenuUpload_Click(object sender, EventArgs e)
@@ -2063,14 +2122,13 @@ CREATE TABLE `spectrum` (
         }
 
         public void Shutdown()
-        {
-            // FIXME: Disabled for now     
-            /*if (netUpload.IsRunning())
+        {            
+            if (netUpload.IsRunning())
             {
                 netUpload.RequestStop();
                 netUploadThread.Join();
-                Log.Info("net upload closed");
-            }*/
+                log.Info("net upload closed");
+            }
 
             if (netService.IsRunning())
             {
@@ -2097,6 +2155,40 @@ CREATE TABLE `spectrum` (
             Spectrum spec = lbSession.SelectedItems[0] as Spectrum;
             currentGroundLevelIndex = spec.SessionIndex;
             lblGroundLevelIndex.Text = "Gnd idx: " + currentGroundLevelIndex;
+        }
+
+        private void btnStatusGetReachback_Click(object sender, EventArgs e)
+        {
+            lblStatusUpload.Text = "";
+            uploadServiceAvailable = false;
+
+            string url = tbStatusIPAddressUpload.Text.Trim();
+            string username = tbStatusUploadUser.Text.Trim();
+            string password = tbStatusUploadPass.Text.Trim();
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + "/sessions/names");
+            string credentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(username + ":" + password));
+            request.Headers.Add("Authorization", "Basic " + credentials);
+            request.Timeout = 8000;
+            request.Method = WebRequestMethods.Http.Get;
+            request.Accept = "application/json";
+
+            string data;
+            HttpStatusCode code = Utils.GetResponseData(request, out data);
+
+            if (code == HttpStatusCode.OK)
+            {
+                uploadServiceAvailable = true;
+                lblStatusUpload.Text = "Web service available";
+            }
+            else if(code == HttpStatusCode.RequestTimeout)
+            {                
+                lblStatusUpload.Text = "Web service timeout";
+            }
+            else
+            {            
+                lblStatusUpload.Text = "Web service unavailable";
+            }
         }
 
         private void menuItemChangeIPAddress_Click(object sender, EventArgs e)

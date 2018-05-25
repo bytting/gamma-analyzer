@@ -19,6 +19,8 @@
 
 using System;
 using System.Drawing;
+using System.IO;
+using System.Net;
 
 namespace crash
 {
@@ -76,6 +78,45 @@ namespace crash
                     break;
             }
             return c;
+        }
+
+        public static HttpStatusCode GetResponseData(HttpWebRequest request, out string data)
+        {
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (var sr = new StreamReader(response.GetResponseStream()))
+                    {
+                        data = sr.ReadToEnd();
+                    }
+                }
+            }
+            catch (WebException wex)
+            {
+                HttpWebResponse response = (HttpWebResponse)wex.Response;
+
+                if (request != null)
+                    request.Abort();
+
+                if (wex.Status == WebExceptionStatus.Timeout)
+                {
+                    data = WebExceptionStatus.Timeout.ToString();
+                    return HttpStatusCode.RequestTimeout;
+                }
+                else if (response == null)
+                {
+                    data = HttpStatusCode.InternalServerError.ToString();
+                    return HttpStatusCode.InternalServerError;
+                }
+                else
+                {
+                    data = response.StatusCode.ToString();
+                    return response.StatusCode;
+                }
+            }
+
+            return HttpStatusCode.OK;
         }
     }
 }
