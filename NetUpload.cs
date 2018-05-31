@@ -71,7 +71,7 @@ namespace crash
 
                             if (code == HttpStatusCode.OK)
                             {
-                                Log.Info(recvData);
+                                Log.Info(apiSpec.SessionName + ":" + apiSpec.SessionIndex + " uploaded successfully");
                             }
                             else if(code == HttpStatusCode.RequestTimeout)
                             {

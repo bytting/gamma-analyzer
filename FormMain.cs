@@ -297,7 +297,60 @@ namespace crash
                         if (previewSession)
                             log.Info("Preview session started: " + msg.Params["session_name"]);
                         else
+                        {
                             log.Info("Session started: " + msg.Params["session_name"]);
+
+                            if(uploadServiceActive)
+                            {
+                                APISession apiSession = new APISession(session);
+                                HttpWebRequest request = null;
+
+                                try
+                                {
+                                    request = (HttpWebRequest)WebRequest.Create(settings.LastUploadHostname + "/sessions");
+                                    string credentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(settings.LastUploadUsername + ":" + settings.LastUploadPassword));
+                                    request.Headers.Add("Authorization", "Basic " + credentials);
+                                    request.Timeout = 8000;
+                                    request.Method = WebRequestMethods.Http.Post;
+                                    request.Accept = "application/json";
+                                    
+                                    log.Info("Sending " + apiSession.Name + " to web service");
+
+                                    var jsonRequest = JsonConvert.SerializeObject(apiSession);
+                                    var sendData = Encoding.UTF8.GetBytes(jsonRequest);
+
+                                    request.ContentType = "application/json";
+                                    request.ContentLength = sendData.Length;
+
+                                    using (var stream = request.GetRequestStream())
+                                    {
+                                        stream.Write(sendData, 0, sendData.Length);
+                                    }
+
+                                    string recvData;
+                                    HttpStatusCode code = Utils.GetResponseData(request, out recvData);
+
+                                    if (code == HttpStatusCode.OK)
+                                    {
+                                        log.Info(recvData);
+                                    }
+                                    else if (code == HttpStatusCode.RequestTimeout)
+                                    {
+                                        uploadServiceActive = false;
+                                        log.Error("Request timeout");
+                                    }
+                                    else
+                                    {
+                                        uploadServiceActive = false;
+                                        log.Error(code.ToString() + ": " + recvData);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    log.Error(ex.Message);
+                                }
+                            }
+                        }
 
                         btnSetupStartTest.Enabled = false;
                         btnSetupStopTest.Enabled = true;
@@ -2098,7 +2151,7 @@ CREATE TABLE `spectrum` (
                 foreach (Spectrum spec in session.Spectrums)
                 {
                     sendUploadQ.Enqueue(spec);
-                    System.Threading.Thread.Sleep(20);
+                    System.Threading.Thread.Sleep(1);
                 }
             }
             catch(Exception ex)
@@ -2188,6 +2241,22 @@ CREATE TABLE `spectrum` (
             else
             {            
                 lblStatusUpload.Text = "Web service unavailable";
+            }
+        }
+
+        private void cbStatusReachback_CheckedChanged(object sender, EventArgs e)
+        {
+            if(cbStatusReachback.Checked)
+            {
+                tbStatusIPAddressUpload.Enabled = true;
+                tbStatusUploadUser.Enabled = true;
+                tbStatusUploadPass.Enabled = true;
+            }
+            else
+            {
+                tbStatusIPAddressUpload.Enabled = false;
+                tbStatusUploadUser.Enabled = false;
+                tbStatusUploadPass.Enabled = false;
             }
         }
 
