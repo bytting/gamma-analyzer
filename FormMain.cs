@@ -59,6 +59,7 @@ namespace crash
         static NetUpload netUpload = null;
         static Thread netUploadThread = null;
         static ConcurrentQueue<Spectrum> sendUploadQ = null;
+        static NetUploadArgs netUploadArgs = new NetUploadArgs();
 
         // Currently loaded sessions
         private Session session = null, bkgSession = null;
@@ -307,8 +308,8 @@ namespace crash
 
                                 try
                                 {
-                                    request = (HttpWebRequest)WebRequest.Create(settings.LastUploadHostname + "/sessions");
-                                    string credentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(settings.LastUploadUsername + ":" + settings.LastUploadPassword));
+                                    request = (HttpWebRequest)WebRequest.Create(netUploadArgs.Hostname + "/sessions");
+                                    string credentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(netUploadArgs.Username + ":" + netUploadArgs.Password));
                                     request.Headers.Add("Authorization", "Basic " + credentials);
                                     request.Timeout = 8000;
                                     request.Method = WebRequestMethods.Http.Post;
@@ -322,10 +323,8 @@ namespace crash
                                     request.ContentType = "application/json";
                                     request.ContentLength = sendData.Length;
 
-                                    using (var stream = request.GetRequestStream())
-                                    {
+                                    using (var stream = request.GetRequestStream())                                    
                                         stream.Write(sendData, 0, sendData.Length);
-                                    }
 
                                     string recvData;
                                     HttpStatusCode code = Utils.GetResponseData(request, out recvData);
@@ -333,6 +332,7 @@ namespace crash
                                     if (code == HttpStatusCode.OK)
                                     {
                                         log.Info(recvData);
+                                        netUpload.Activate(netUploadArgs);
                                     }
                                     else if (code == HttpStatusCode.RequestTimeout)
                                     {
@@ -1886,7 +1886,9 @@ CREATE TABLE `spectrum` (
                 settings.LastUploadPassword = tbStatusUploadPass.Text;
                 parent.SaveSettings();
 
-                netUpload.SetCredentials(settings.LastUploadHostname, settings.LastUploadUsername, settings.LastUploadPassword);
+                netUploadArgs.Hostname = settings.LastUploadHostname;
+                netUploadArgs.Username = settings.LastUploadUsername;
+                netUploadArgs.Password = settings.LastUploadPassword;
             }
 
             lblSetupIPAddress.Text = "IP Address: " + settings.LastHostname;
@@ -2109,7 +2111,11 @@ CREATE TABLE `spectrum` (
                 settings.LastUploadPassword = tbUploadPassword.Text;
                 parent.SaveSettings();
 
-                netUpload.SetCredentials(settings.LastUploadHostname, settings.LastUploadUsername, settings.LastUploadPassword);
+                netUploadArgs.Hostname = settings.LastUploadHostname;
+                netUploadArgs.Username = settings.LastUploadUsername;
+                netUploadArgs.Password = settings.LastUploadPassword;
+                netUpload.Activate(netUploadArgs);
+                
                 Session session = DB.LoadSessionFile(dialog.FileName);
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(settings.LastUploadHostname + "/sessions");
@@ -2127,10 +2133,8 @@ CREATE TABLE `spectrum` (
                 request.ContentType = "application/json";
                 request.ContentLength = sendData.Length;
 
-                using (var stream = request.GetRequestStream())
-                {
+                using (var stream = request.GetRequestStream())                
                     stream.Write(sendData, 0, sendData.Length);
-                }
 
                 string recvData;
                 HttpStatusCode code = Utils.GetResponseData(request, out recvData);
