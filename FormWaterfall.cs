@@ -23,6 +23,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using CTimer = System.Windows.Forms.Timer;
 using log4net;
 
 namespace crash
@@ -34,10 +35,9 @@ namespace crash
         private ILog log = null;
 
         private Session session = null;
-        private Bitmap bmpPane = null;
-        private bool colorCeilInitialized = false;
+        private Bitmap bmpPane = null;        
         private Detector currentDetector = null;
-        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        private CTimer timer = new CTimer();
         bool needRepaint = false;
 
         private int SelectedSessionIndex1 = -1;

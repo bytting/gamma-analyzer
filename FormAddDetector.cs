@@ -41,8 +41,8 @@ namespace crash
         public double CoarseGain { get; set; }
         public double FineGain { get; set; }        
         public int Livetime { get; set; }
-        public int LLD { get; set; }
-        public int ULD { get; set; }
+        public double LLD { get; set; }
+        public double ULD { get; set; }
         public string PluginName { get; set; }
         public string GEScript { get; set; }
 
@@ -60,8 +60,8 @@ namespace crash
             tbHV.KeyPress += CustomEvents.Integer_KeyPress;
             tbFineGain.KeyPress += CustomEvents.Numeric_KeyPress;
             tbLivetime.KeyPress += CustomEvents.Integer_KeyPress;
-            tbLLD.KeyPress += CustomEvents.Integer_KeyPress;
-            tbULD.KeyPress += CustomEvents.Integer_KeyPress;
+            tbLLD.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbULD.KeyPress += CustomEvents.Numeric_KeyPress;
 
             for (int i = 32; i < 65536; i *= 2)
                 cboxMaxNumChannels.Items.Add(i.ToString());
@@ -125,8 +125,8 @@ namespace crash
                 CoarseGain = Convert.ToDouble(cboxCoarseGain.Text, CultureInfo.InvariantCulture);
                 FineGain = Convert.ToDouble(tbFineGain.Text.Trim(), CultureInfo.InvariantCulture);
                 Livetime = Convert.ToInt32(tbLivetime.Text.Trim());
-                LLD = Convert.ToInt32(tbLLD.Text.Trim());
-                ULD = Convert.ToInt32(tbULD.Text.Trim());
+                LLD = Convert.ToDouble(tbLLD.Text.Trim());
+                ULD = Convert.ToDouble(tbULD.Text.Trim());
                 PluginName = tbPluginName.Text.Trim();
                 GEScript = tbGEScript.Text.Trim();
             }
@@ -144,14 +144,14 @@ namespace crash
                 return;
             }
 
-            if (LLD < 0)
+            if (LLD < 0d)
             {
                 log.Error("LLD can not be less than zero");
                 MessageBox.Show("LLD can not be less than zero");
                 return;
             }
 
-            if (ULD > 130)
+            if (ULD > 130d)
             {
                 log.Error("ULD can not be bigger than 130%");
                 MessageBox.Show("ULD can not be bigger than 130%");

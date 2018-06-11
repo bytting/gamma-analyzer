@@ -133,8 +133,8 @@ namespace crash
 
                 tbSetupVoltage.KeyPress += CustomEvents.Numeric_KeyPress;
                 tbSetupFineGain.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbSetupLLD.KeyPress += CustomEvents.Integer_KeyPress;
-                tbSetupULD.KeyPress += CustomEvents.Integer_KeyPress;
+                tbSetupLLD.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbSetupULD.KeyPress += CustomEvents.Numeric_KeyPress;
 
                 menuItemConvertToLocalTime.Checked = settings.DisplayLocalTime;
 
@@ -1013,16 +1013,16 @@ CREATE TABLE `spectrum` (
                 }
 
                 // Convert parameters            
-                double coarseGain = 0d, fineGain = 0d;
-                int voltage = 0, lld = 0, uld = 0, nchannels = 0;
+                double coarseGain = 0d, fineGain = 0d, lld = 0d, uld = 0d;
+                int voltage = 0, nchannels = 0;
 
                 try
                 {
                     coarseGain = Convert.ToDouble(cboxSetupCoarseGain.Text, CultureInfo.InvariantCulture);
                     fineGain = Convert.ToDouble(tbSetupFineGain.Text, CultureInfo.InvariantCulture);
                     voltage = Convert.ToInt32(tbSetupVoltage.Text);
-                    lld = Convert.ToInt32(tbSetupLLD.Text);
-                    uld = Convert.ToInt32(tbSetupULD.Text);
+                    lld = Convert.ToDouble(tbSetupLLD.Text);
+                    uld = Convert.ToDouble(tbSetupULD.Text);
                     nchannels = Convert.ToInt32(cboxSetupChannels.Text);
                 }
                 catch
@@ -1043,13 +1043,13 @@ CREATE TABLE `spectrum` (
                     return;
                 }
 
-                if (lld < 0)
+                if (lld < 0d)
                 {
                     MessageBox.Show("LLD can not be less than zero");
                     return;
                 }
 
-                if (uld > 130)
+                if (uld > 130d)
                 {
                     MessageBox.Show("ULD can not be bigger than 130%");
                     return;

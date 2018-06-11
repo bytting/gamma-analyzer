@@ -183,15 +183,15 @@ namespace crash
             Doserate = 0.0;
 
             // Trim off discriminators
-            int startChan = (int)((double)det.NumChannels * ((double)det.LLD / 100.0));
-            int endChan = (int)((double)det.NumChannels * ((double)det.ULD / 100.0));
+            int startChan = (int)((double)det.NumChannels * (det.LLD / 100.0));
+            int endChan = (int)((double)det.NumChannels * (det.ULD / 100.0));
             if(endChan > det.NumChannels) // FIXME: Can not exceed 100% atm
                 endChan = det.NumChannels;
 
             // Accumulate doserates of each channel
             for (int i = startChan; i < endChan; i++)
             {
-                float sec = (float)Livetime / 1000000f;                
+                float sec = (float)Livetime / 1000000f;
                 float cps = Channels[i] / sec;
                 double E = det.GetEnergy(i);
                 if (E < 0.05) // Energies below 0.05 are invalid
@@ -199,7 +199,7 @@ namespace crash
 
                 double GE = (double)GEFactorFunc.Call(E / 1000.0).GetValue(0);
                 double chanDose = GE * (cps * 60.0);
-                Doserate += chanDose;                
+                Doserate += chanDose;
             }
 
             return Doserate;

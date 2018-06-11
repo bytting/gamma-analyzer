@@ -74,11 +74,11 @@ namespace crash
 
         // Lower level discriminator for detector
         [JsonProperty("lld")]
-        public int LLD { get; set; }
+        public double LLD { get; set; }
 
         // Upper level discriminator for detector
         [JsonProperty("uld")]
-        public int ULD { get; set; }
+        public double ULD { get; set; }
 
         // Name of plugin to use on gamma-collector
         [JsonProperty("plugin_name")]
