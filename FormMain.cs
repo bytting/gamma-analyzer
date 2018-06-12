@@ -1850,13 +1850,13 @@ CREATE TABLE `spectrum` (
         {
             string ip = tbStatusIPAddress.Text.Trim();
 
-            if (!Utils.ValidateIPv4(ip))
+            if (!Utils.ValidateIP(ip))
             {
                 MessageBox.Show("IP address is not valid");
                 return;
             }
 
-            burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
+            burn.ProtocolMessage msg = new burn.ProtocolMessage(ip);
             msg.Params.Add("command", "get_status");
             sendMsg(msg);
 

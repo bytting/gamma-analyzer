@@ -81,17 +81,10 @@ namespace crash
             return c;
         }
 
-        public static bool ValidateIPv4(string ip)
+        public static bool ValidateIP(string ip)
         {
-            if (String.IsNullOrWhiteSpace(ip))            
-                return false;            
-
-            string[] items = ip.Split('.');
-            if (items.Length != 4)            
-                return false;
-
-            byte tmp;
-            return items.All(b => byte.TryParse(b, out tmp));
+            IPAddress ipAddr = null;
+            return IPAddress.TryParse(ip, out ipAddr);
         }
 
         public static bool ValidateUri(string uri)
