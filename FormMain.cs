@@ -2102,11 +2102,19 @@ CREATE TABLE `spectrum` (
 
             try
             {
-                if (String.IsNullOrEmpty(tbUploadHostname.Text.Trim())
-                    || String.IsNullOrEmpty(tbUploadUsername.Text.Trim())
-                    || String.IsNullOrEmpty(tbUploadPassword.Text))
+                string url = tbUploadHostname.Text.Trim();
+                string username = tbUploadUsername.Text.Trim();
+                string password = tbUploadPassword.Text;
+
+                if (String.IsNullOrEmpty(url) || String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password))
                 {
-                    MessageBox.Show("You must specify a hostname, username and password");
+                    MessageBox.Show("You must specify a web service address, username and password");
+                    return;
+                }
+
+                if(!Utils.ValidateUri(url))
+                {
+                    MessageBox.Show("Web service address is not valid");
                     return;
                 }
 
@@ -2114,9 +2122,9 @@ CREATE TABLE `spectrum` (
                 if (dialog.ShowDialog() != DialogResult.OK)
                     return;
 
-                settings.LastUploadHostname = tbUploadHostname.Text.Trim();
-                settings.LastUploadUsername = tbUploadUsername.Text.Trim();
-                settings.LastUploadPassword = tbUploadPassword.Text;
+                settings.LastUploadHostname = url;
+                settings.LastUploadUsername = username;
+                settings.LastUploadPassword = password;
                 parent.SaveSettings();
 
                 netUploadArgs.Hostname = settings.LastUploadHostname;
