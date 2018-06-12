@@ -2216,6 +2216,7 @@
             // btnStatusGetReachback
             // 
             this.btnStatusGetReachback.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnStatusGetReachback.Enabled = false;
             this.btnStatusGetReachback.Location = new System.Drawing.Point(830, 213);
             this.btnStatusGetReachback.Name = "btnStatusGetReachback";
             this.btnStatusGetReachback.Size = new System.Drawing.Size(131, 24);

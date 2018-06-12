@@ -1848,6 +1848,14 @@ CREATE TABLE `spectrum` (
 
         private void btnStatusGet_Click(object sender, EventArgs e)
         {
+            string ip = tbStatusIPAddress.Text.Trim();
+
+            if (!Utils.ValidateIPv4(ip))
+            {
+                MessageBox.Show("IP address is not valid");
+                return;
+            }
+
             burn.ProtocolMessage msg = new burn.ProtocolMessage(tbStatusIPAddress.Text.Trim());
             msg.Params.Add("command", "get_status");
             sendMsg(msg);
@@ -2223,6 +2231,18 @@ CREATE TABLE `spectrum` (
             string username = tbStatusUploadUser.Text.Trim();
             string password = tbStatusUploadPass.Text.Trim();
 
+            if(String.IsNullOrEmpty(url) || String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Web service address, username and password is required");
+                return;
+            }
+            
+            if(!Utils.ValidateUri(url))
+            {
+                MessageBox.Show("Web service address is not valid");
+                return;
+            }
+
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + "/sessions/names");
             string credentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(username + ":" + password));
             request.Headers.Add("Authorization", "Basic " + credentials);
@@ -2250,18 +2270,10 @@ CREATE TABLE `spectrum` (
 
         private void cbStatusReachback_CheckedChanged(object sender, EventArgs e)
         {
-            if(cbStatusReachback.Checked)
-            {
-                tbStatusIPAddressUpload.Enabled = true;
-                tbStatusUploadUser.Enabled = true;
-                tbStatusUploadPass.Enabled = true;
-            }
-            else
-            {
-                tbStatusIPAddressUpload.Enabled = false;
-                tbStatusUploadUser.Enabled = false;
-                tbStatusUploadPass.Enabled = false;
-            }
+            tbStatusIPAddressUpload.Enabled = cbStatusReachback.Checked;
+            tbStatusUploadUser.Enabled = cbStatusReachback.Checked;
+            tbStatusUploadPass.Enabled = cbStatusReachback.Checked;
+            btnStatusGetReachback.Enabled = cbStatusReachback.Checked;
         }
 
         private void menuItemChangeIPAddress_Click(object sender, EventArgs e)
