@@ -118,7 +118,10 @@ namespace crash
             LongitudeError = Convert.ToDouble(msg.Params["longitude_error"], CultureInfo.InvariantCulture);
             Altitude = Convert.ToDouble(msg.Params["altitude"], CultureInfo.InvariantCulture);
             AltitudeError = Convert.ToDouble(msg.Params["altitude_error"], CultureInfo.InvariantCulture);
-            GpsTime = Convert.ToDateTime(msg.Params["time"]);
+            if(msg.Params["time"] == null || String.IsNullOrEmpty(msg.Params["time"].ToString().Trim()) || (Latitude == 0d && Longitude == 0d))
+                GpsTime = new DateTime(1900, 1, 1, 1, 1, 1);
+            else
+                GpsTime = Convert.ToDateTime(msg.Params["time"]);
             GpsTrack = Convert.ToSingle(msg.Params["track"], CultureInfo.InvariantCulture);
             GpsTrackError = Convert.ToSingle(msg.Params["track_error"], CultureInfo.InvariantCulture);
             GpsSpeed = Convert.ToSingle(msg.Params["speed"], CultureInfo.InvariantCulture);
@@ -193,11 +196,11 @@ namespace crash
             {
                 float sec = (float)Livetime / 1000000f;
                 float cps = Channels[i] / sec;
-                double E = det.GetEnergy(i);
+                double E = det.GetEnergy(i) / 1000.0;
                 if (E < 0.05) // Energies below 0.05 are invalid
                     continue;
 
-                double GE = (double)GEFactorFunc.Call(E / 1000.0).GetValue(0);
+                double GE = (double)GEFactorFunc.Call(E).GetValue(0);
                 double chanDose = GE * (cps * 60.0);
                 Doserate += chanDose;
             }
