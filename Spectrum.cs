@@ -118,7 +118,7 @@ namespace crash
             LongitudeError = Convert.ToDouble(msg.Params["longitude_error"], CultureInfo.InvariantCulture);
             Altitude = Convert.ToDouble(msg.Params["altitude"], CultureInfo.InvariantCulture);
             AltitudeError = Convert.ToDouble(msg.Params["altitude_error"], CultureInfo.InvariantCulture);
-            if(msg.Params["time"] == null || String.IsNullOrEmpty(msg.Params["time"].ToString().Trim()) || (Latitude == 0d && Longitude == 0d))
+            if(msg.Params["time"] == null || String.IsNullOrEmpty(msg.Params["time"].ToString().Trim()))
                 GpsTime = new DateTime(1900, 1, 1, 1, 1, 1);
             else
                 GpsTime = Convert.ToDateTime(msg.Params["time"]);
